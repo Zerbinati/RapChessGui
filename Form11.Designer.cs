@@ -61,56 +61,6 @@ namespace RapChessGui {
         }
         
         /// <summary>
-        ///   Wyszukuje zlokalizowany zasób typu System.Boolean podobny do zasobu True.
-        /// </summary>
-        internal static bool button1_Locked {
-            get {
-                object obj = ResourceManager.GetObject("button1.Locked", resourceCulture);
-                return ((bool)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Wyszukuje zlokalizowany zasób typu System.Boolean podobny do zasobu True.
-        /// </summary>
-        internal static bool comboBoxB_Locked {
-            get {
-                object obj = ResourceManager.GetObject("comboBoxB.Locked", resourceCulture);
-                return ((bool)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Wyszukuje zlokalizowany zasób typu System.Boolean podobny do zasobu True.
-        /// </summary>
-        internal static bool comboBoxW_Locked {
-            get {
-                object obj = ResourceManager.GetObject("comboBoxW.Locked", resourceCulture);
-                return ((bool)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Wyszukuje zlokalizowany zasób typu System.Boolean podobny do zasobu True.
-        /// </summary>
-        internal static bool groupBox1_Locked {
-            get {
-                object obj = ResourceManager.GetObject("groupBox1.Locked", resourceCulture);
-                return ((bool)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Wyszukuje zlokalizowany zasób typu System.Boolean podobny do zasobu True.
-        /// </summary>
-        internal static bool groupBox2_Locked {
-            get {
-                object obj = ResourceManager.GetObject("groupBox2.Locked", resourceCulture);
-                return ((bool)(obj));
-            }
-        }
-        
-        /// <summary>
         ///   Wyszukuje zlokalizowany zasób typu System.Windows.Forms.ImageListStreamer.
         /// </summary>
         internal static System.Windows.Forms.ImageListStreamer imageList1_ImageStream {
@@ -131,42 +81,12 @@ namespace RapChessGui {
         }
         
         /// <summary>
-        ///   Wyszukuje zlokalizowany zasób typu System.Boolean podobny do zasobu True.
-        /// </summary>
-        internal static bool menuStrip1_Locked {
-            get {
-                object obj = ResourceManager.GetObject("menuStrip1.Locked", resourceCulture);
-                return ((bool)(obj));
-            }
-        }
-        
-        /// <summary>
         ///   Wyszukuje zlokalizowany zasób typu System.Drawing.Point podobny do zasobu {X=190,Y=11}.
         /// </summary>
         internal static System.Drawing.Point menuStrip1_TrayLocation {
             get {
                 object obj = ResourceManager.GetObject("menuStrip1.TrayLocation", resourceCulture);
                 return ((System.Drawing.Point)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Wyszukuje zlokalizowany zasób typu System.Boolean podobny do zasobu True.
-        /// </summary>
-        internal static bool panel1_Locked {
-            get {
-                object obj = ResourceManager.GetObject("panel1.Locked", resourceCulture);
-                return ((bool)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Wyszukuje zlokalizowany zasób typu System.Boolean podobny do zasobu True.
-        /// </summary>
-        internal static bool pictureBox1_Locked {
-            get {
-                object obj = ResourceManager.GetObject("pictureBox1.Locked", resourceCulture);
-                return ((bool)(obj));
             }
         }
         

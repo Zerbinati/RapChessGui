@@ -11,29 +11,25 @@ namespace RapChessGui
 	class CPlayerEng
 	{
 		public CReader Reader = new CReader();
-		Process process = new Process();
+		public Process process = new Process();
 		public StreamWriter streamWriter;
 
 		public void Kill()
 		{
-			streamWriter.Close();
-			process.Kill();
-		}
-
-		public void MakeMove()
-		{
-			if (!process.HasExited)
+			process.StartInfo.FileName = "";
+			try
 			{
-				string position = CHistory.GetPosition();
-				streamWriter.WriteLine(position);
-				Console.WriteLine(position);
-				streamWriter.WriteLine("go movetime 1");
+				process.Kill();
+			}
+			catch
+			{
 			}
 		}
 
 		public void SetEngine(string eng, string arg)
 		{
-			process.StartInfo.FileName = eng;
+			Kill();
+			process.StartInfo.FileName = "Engines/" + eng;
 			process.StartInfo.Arguments = arg;
 			process.StartInfo.UseShellExecute = false;
 			process.StartInfo.CreateNoWindow = true;
