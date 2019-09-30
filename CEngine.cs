@@ -17,6 +17,7 @@ namespace RapChessGui
 
 	class CUci
 	{
+		public string command;
 		public string[] tokens;
 
 		public int GetIndex(string key, int def)
@@ -43,9 +44,26 @@ namespace RapChessGui
 			return def;
 		}
 
+		public string GetValue(string name)
+		{
+			int i = GetIndex(name, tokens.Length);
+			if (i < tokens.Length)
+				return tokens[i];
+			return "";
+		}
+
 		public void SetMsg(string msg)
 		{
-			tokens = msg.Split(new[] { ' ', '\t' }, StringSplitOptions.RemoveEmptyEntries);
+			if ((msg == null) || (msg == ""))
+			{
+				tokens = new string[0];
+				command = "";
+			}
+			else
+			{
+				tokens = msg.Split(new[] { ' ', '\t' }, StringSplitOptions.RemoveEmptyEntries);
+				command = tokens[0];
+			}
 		}
 	}
 

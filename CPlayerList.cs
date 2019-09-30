@@ -11,10 +11,28 @@ namespace RapChessGui
 		public int index;
 		public CPlayerEng PlayerEng = new CPlayerEng();
 		public CUser user;
+		public DateTime timeStart;
+		public double timeTotal;
+		public string score;
+		public string depth;
+		public string seldepth;
+		public string nps;
+		public string ponder;
 
 		public CPlayer(int i)
 		{
 			index = i;
+			Init();
+		}
+
+		public void Init()
+		{
+			timeTotal = 0;
+			score = "0";
+			depth = "0";
+			seldepth = "0";
+			nps = "0";
+			ponder = "";
 		}
 
 		public bool IsHuman()
@@ -29,6 +47,7 @@ namespace RapChessGui
 
 		public void MakeMove()
 		{
+			timeStart = DateTime.Now;
 			if (IsHuman())
 				return;
 			string position = CHistory.GetPosition();
@@ -76,6 +95,8 @@ namespace RapChessGui
 
 		public void NewGame()
 		{
+			player[0].Init();
+			player[1].Init();
 			curIndex = 0;
 			CurPlayer().MakeMove();
 		}

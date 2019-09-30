@@ -14,7 +14,6 @@ namespace RapChessGui
 		private AutoResetEvent getInput;
 		private AutoResetEvent gotInput;
 		private string input;
-		public bool inputReady;
 		private StreamReader stream;
 
 		private void Reader()
@@ -22,40 +21,30 @@ namespace RapChessGui
 			while (true)
 			{
 				getInput.WaitOne();
-				if (!inputReady)
-				{
-					input = stream.ReadLine();
-					inputReady = true;
-					gotInput.Set();
-				}
+				input = "";
+				input = stream.ReadLine();
+				gotInput.Set();
+				getInput.Reset();
 			}
 		}
 
 		public string ReadLine(bool wait = false)
 		{
-			if (inputReady)
+			string s = input;
+			getInput.Set();
+			if (s == "")
 			{
-				inputReady = false;
+				if (wait)
+					gotInput.WaitOne();
 				return input;
 			}
 			else
-			{
-				getInput.Set();
-				if (wait)
-				{
-					gotInput.WaitOne();
-					inputReady = false;
-					return input;
-				}
-				else
-					return "";
-			}
+				return s;
 		}
 
 		public void SetStream(StreamReader sr)
 		{
 			stream = sr;
-			inputReady = false;
 			getInput = new AutoResetEvent(false);
 			gotInput = new AutoResetEvent(false);
 			inputThread = new Thread(Reader);

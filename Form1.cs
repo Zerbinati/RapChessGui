@@ -55,7 +55,10 @@ namespace RapChessGui
 				labLast.ForeColor = Color.Red;
 				return;
 			}
-
+			double t = (DateTime.Now - PlayerList.CurPlayer().timeStart).TotalMilliseconds;
+			PlayerList.CurPlayer().timeTotal+=t;
+			//labTimeB.Text = PlayerList.player[0].timeTotal.ToString("HH:mm:ss");
+			//labTimeT.Text = PlayerList.player[1].timeTotal.ToString("HH:mm:ss");
 			int moveNumber = (Engine.g_moveNumber >> 1) + 1;
 			if ((Engine.g_moveNumber & 1) == 0)
 			{
@@ -101,6 +104,12 @@ namespace RapChessGui
 
 		void NewGame()
 		{
+			labTimeT.Text = "00:00:00";
+			labTimeB.Text = "00:00:00";
+			labScoreT.Text = "Score 0";
+			labScoreB.Text = "Score 0";
+			labDepthT.Text = "Depth 0";
+			labDepthB.Text = "Depth 0";
 			richTextBox1.Clear();
 			labMove.Text = "Move 1 0";
 			labLast.ForeColor = Color.Gainsboro;
@@ -236,26 +245,77 @@ namespace RapChessGui
 		private void Timer1_Tick_1(object sender, EventArgs e)
 		{
 			var cp = PlayerList.CurPlayer();
-			if (cp.IsHuman())
-				return;
-			string msg = cp.PlayerEng.Reader.ReadLine();
-			if (msg == "") return;
-			Uci.SetMsg(msg);
-			if (Uci.tokens[0] == "bestmove")
+			double dif = (DateTime.Now - cp.timeStart).TotalMilliseconds;
+			DateTime tot = new DateTime().AddMilliseconds(cp.timeTotal + dif);
+			if (!cp.IsHuman())
 			{
-				string em = Uci.tokens[1];
-				MakeMove(em);
+				string msg = cp.PlayerEng.Reader.ReadLine();
+				Uci.SetMsg(msg);
+				if (Uci.command != "")
+				{
+					string s = Uci.GetValue("cp");
+					if (s != "")
+						cp.score = s;
+					s = Uci.GetValue("mate");
+					if (s != "")
+					{
+						if (Int32.Parse(s) > 0)
+							cp.score = $"+{s}M";
+						else
+							cp.score = $"{s}M";
+					}
+					s = Uci.GetValue("depth");
+					if (s != "")
+						cp.depth = s;
+					s = Uci.GetValue("seldepth");
+					if (s != "")
+						cp.seldepth = s;
+					s = Uci.GetValue("nps");
+					if (s != "")
+						cp.nps = s;
+					s = Uci.GetValue("ponder");
+					if (s != "")
+						cp.ponder = s;
+					if (Uci.tokens[0] == "bestmove")
+					{
+						string em = Uci.tokens[1];
+						MakeMove(em);
+					}
+					else
+					{
+						int i = Uci.GetIndex("pv", 0);
+						if (i > 0)
+						{
+							string pv = "";
+							for (int n = i; n < Uci.tokens.Length; n++)
+								pv += Uci.tokens[n] + " ";
+							labLast.Text = pv;
+						}
+					}
+				}
+			}
+			if (boardRotate ^ cp.IsWhite())
+			{
+				labTimeB.Text = tot.ToString("HH:mm:ss");
+				labScoreB.Text = $"Score {cp.score}";
+				labNpsB.Text = $"Nps {cp.nps}";
+				labPonderB.Text = $"Ponder {cp.ponder}";
+				if (cp.seldepth != "0")
+					if (cp.seldepth != "0")
+						labDepthB.Text = $"Depth {cp.depth} / {cp.seldepth}";
+					else
+						labDepthB.Text = $"Depth {cp.depth}";
 			}
 			else
 			{
-				int i = Uci.GetIndex("pv", 0);
-				if (i > 0)
-				{
-					string pv = "";
-					for (int n = i; n < Uci.tokens.Length; n++)
-						pv += Uci.tokens[n] + " ";
-					labLast.Text = pv;
-				}
+				labTimeT.Text = tot.ToString("HH:mm:ss");
+				labScoreT.Text = $"Score {cp.score}";
+				labNpsT.Text = $"Nps {cp.nps}";
+				labPonderT.Text = $"Ponder {cp.ponder}";
+				if (cp.seldepth != "0")
+					labDepthT.Text = $"Depth {cp.depth} / {cp.seldepth}";
+				else
+					labDepthT.Text = $"Depth {cp.depth}";
 			}
 		}
 
