@@ -47,12 +47,13 @@ namespace RapChessGui
 
 		public void MakeMove()
 		{
+			if (!IsHuman())
+			{
+				string position = CHistory.GetPosition();
+				PlayerEng.streamWriter.WriteLine(position);
+				PlayerEng.streamWriter.WriteLine($"go {user.mode} {user.value}");
+			}
 			timeStart = DateTime.Now;
-			if (IsHuman())
-				return;
-			string position = CHistory.GetPosition();
-			PlayerEng.streamWriter.WriteLine(position);
-			PlayerEng.streamWriter.WriteLine($"go {user.mode} {user.value}");
 		}
 
 		public void SendMessage(string msg)

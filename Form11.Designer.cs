@@ -91,7 +91,7 @@ namespace RapChessGui {
         }
         
         /// <summary>
-        ///   Wyszukuje zlokalizowany zasób typu System.Drawing.Point podobny do zasobu {X=102,Y=13}.
+        ///   Wyszukuje zlokalizowany zasób typu System.Drawing.Point podobny do zasobu {X=106,Y=13}.
         /// </summary>
         internal static System.Drawing.Point timer1_TrayLocation {
             get {

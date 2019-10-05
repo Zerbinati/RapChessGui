@@ -8,6 +8,7 @@ namespace RapChessGui
 {
 	public static class CData
 	{
+		public static int gameState;
 		public static string[] arrModeNames = new string[] { "depth","movetime" };
 		public static List<string> playerNames = new List<string>();
 		public static CIniFile Inifile = new CIniFile();
@@ -24,5 +25,6 @@ namespace RapChessGui
 		{
 			return arrModeNames[i];
 		}
+
 	}
 }

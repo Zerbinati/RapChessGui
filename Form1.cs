@@ -11,11 +11,11 @@ namespace RapChessGui
 	{
 		bool boardRotate;
 		int lastDes = -1;
-		const int margin = 16;
 		int field = 0;
 		CIniFile IniFile = new CIniFile();
 		CEngine Engine = new CEngine();
 		CPlayerList PlayerList = new CPlayerList();
+		CPieceList PieceList = new CPieceList();
 		CUci Uci = new CUci();
 		FrmPlayer FPlayer = new FrmPlayer();
 
@@ -23,6 +23,8 @@ namespace RapChessGui
 		{
 			InitializeComponent();
 			richTextBox1.AddContextMenu();
+			CPieceBoard.Prepare();
+			pictureBox1.Size = new Size(CPieceBoard.size, CPieceBoard.size);
 			Reset();
 		}
 
@@ -49,16 +51,14 @@ namespace RapChessGui
 
 		void MakeMove(string em)
 		{
-			if (!Engine.IsValidMove(em))
+			if (Engine.IsValidMove(em) == 0)
 			{
 				labLast.Text = "Move error " + em;
 				labLast.ForeColor = Color.Red;
 				return;
 			}
 			double t = (DateTime.Now - PlayerList.CurPlayer().timeStart).TotalMilliseconds;
-			PlayerList.CurPlayer().timeTotal+=t;
-			//labTimeB.Text = PlayerList.player[0].timeTotal.ToString("HH:mm:ss");
-			//labTimeT.Text = PlayerList.player[1].timeTotal.ToString("HH:mm:ss");
+			PlayerList.CurPlayer().timeTotal += t;
 			int moveNumber = (Engine.g_moveNumber >> 1) + 1;
 			if ((Engine.g_moveNumber & 1) == 0)
 			{
@@ -67,21 +67,21 @@ namespace RapChessGui
 			}
 			richTextBox1.AppendText($"{em} ");
 			int gm = Engine.GetMoveFromString(em);
+			CPieceBoard.MakeMove(gm);
 			Engine.MakeMove(gm);
 			labMove.Text = "Move " + moveNumber.ToString() + " " + Engine.g_move50.ToString();
 			CHistory.moves.Add(em);
 			int x = "abcdefgh".IndexOf(em[2]);
 			int y = 8 - Int32.Parse(em[3].ToString());
 			lastDes = y * 8 + x;
-			RenderBoard();
-			int state = Engine.GetGameState();
-			if (state == 0)
+			//RenderBoard();
+			CData.gameState = Engine.GetGameState();
+			if (CData.gameState == 0)
 				PlayerList.MakeMove();
 			else
 			{
-				timer1.Enabled = false;
 				labLast.ForeColor = Color.Yellow;
-				switch (state)
+				switch (CData.gameState)
 				{
 					case (int)CGameState.mate:
 						labLast.Text = "Mate";
@@ -110,12 +110,15 @@ namespace RapChessGui
 			labScoreB.Text = "Score 0";
 			labDepthT.Text = "Depth 0";
 			labDepthB.Text = "Depth 0";
+			labNpsT.Text = "Nps 0";
+			labNpsB.Text = "Nps 0";
 			richTextBox1.Clear();
 			labMove.Text = "Move 1 0";
 			labLast.ForeColor = Color.Gainsboro;
 			labLast.Text = "Good luck";
 			lastDes = -1;
 			Engine.InitializeFromFen("");
+			CData.gameState = 0;
 			CHistory.NewGame(Engine.GetFen());
 			var nw = comboBoxW.Text;
 			PlayerList.player[0].SetUser(nw);
@@ -123,7 +126,7 @@ namespace RapChessGui
 			PlayerList.player[1].SetUser(nb);
 			IniFile.Write("white", nw);
 			IniFile.Write("black", nb);
-			RenderBoard();
+			PieceList.Fill();
 			PlayerList.NewGame();
 			timer1.Enabled = true;
 		}
@@ -155,63 +158,50 @@ namespace RapChessGui
 				panTop.BackColor = curColor;
 				panBottom.BackColor = Color.Silver;
 			}
-			field = (pictureBox1.Width - margin * 2) / 8;
-			pictureBox1.Image = RapChessGui.Properties.Resources.black;
+			field = (pictureBox1.Width - CPieceBoard.margin * 2) / 8;
+			pictureBox1.Image = new Bitmap(CPieceBoard.bitmap);
 			Graphics g = Graphics.FromImage(pictureBox1.Image);
-			Brush brush1 = new SolidBrush(Color.FromArgb(0x30, 0xff, 0xff, 0xff));
-			Brush brush2 = new SolidBrush(Color.FromArgb(0x70, 0xff, 0xff, 0xff));
 			Brush brush3 = new SolidBrush(Color.FromArgb(0x80, 0xff, 0xff, 0x00));
 			Font font = new Font(FontFamily.GenericSansSerif, 12, FontStyle.Regular);
 			for (int y = 0; y < 8; y++)
 			{
-				int y2 = margin + y * field;
+				int y2 = CPieceBoard.margin + y * field;
 				if (boardRotate)
-					y2 = y2 = margin + (7 - y) * field;
+					y2 = y2 = CPieceBoard.margin + (7 - y) * field;
 				string letter = (8 - y).ToString();
 				SizeF size = g.MeasureString(letter, font);
-				g.DrawString(letter, font, new SolidBrush(Color.White), 0, y2 + (field - size.Height) / 2);
-				g.DrawString(letter, font, new SolidBrush(Color.White), pictureBox1.Width - size.Width - 4, y2 + (field - size.Height) / 2);
+				g.DrawString(letter, font, new SolidBrush(Color.White), (CPieceBoard.margin - size.Width) / 2, y2 + (field - size.Height) / 2);
+				g.DrawString(letter, font, new SolidBrush(Color.White), pictureBox1.Width - size.Width - (CPieceBoard.margin - size.Width) / 2, y2 + (field - size.Height) / 2);
 				for (int x = 0; x < 8; x++)
 				{
-					int x2 = margin + x * field;
+					int i = y * 8 + x;
+					int x2 = CPieceBoard.margin + x * field;
 					if (boardRotate)
-						x2 = margin + (7 - x) * field;
+						x2 = CPieceBoard.margin + (7 - x) * field;
 					letter = abc[x].ToString();
 					size = g.MeasureString(letter, font);
-					g.DrawString(letter, font, new SolidBrush(Color.White), x2 + (field - size.Width) / 2, 0);
-					g.DrawString(letter, font, new SolidBrush(Color.White), x2 + (field - size.Width) / 2, pictureBox1.Height - size.Height - 4);
-					int i = y * 8 + x;
-					bool bgColor = ((y ^ x) & 1) == 1;
-					if (bgColor)
-					{
-						g.FillRectangle(brush1, x2, y2, field, field);
-					}
-					else
-					{
-						g.FillRectangle(brush2, x2, y2, field, field);
-					}
+					g.DrawString(letter, font, new SolidBrush(Color.White), x2 + (field - size.Width) / 2, (CPieceBoard.margin - size.Height) / 2);
+					g.DrawString(letter, font, new SolidBrush(Color.White), x2 + (field - size.Width) / 2, pictureBox1.Height - size.Height - (CPieceBoard.margin - size.Height) / 2);
 					if (i == lastDes)
 						g.FillRectangle(brush3, x2, y2, field, field);
-					i = Engine.arrField[i];
-					i = Engine.g_board[i];
-					if ((i & CEngine.colorEmpty) > 0)
+					CPiece piece = CPieceBoard.list[i];
+					if (piece == null)
 						continue;
-					int p = (i & 7) - 1;
-					if ((i & CEngine.colorBlack) > 0)
-						p += 6;
-					imageList1.Draw(g, new Point(x2, y2), p);
+					piece.SetDes(x2, y2);
+					imageList1.Draw(g, piece.curXY, piece.image);
 				}
 			}
-			brush1.Dispose();
-			brush2.Dispose();
 			brush3.Dispose();
 			g.Dispose();
 			pictureBox1.Refresh();
+			if((CData.gameState > 0)&&(!CPieceBoard.animated))
+				timer1.Enabled = false;
+			CPieceBoard.Render();
 		}
 
 		bool TryMove(int s, int d)
 		{
-			int m = Engine.TryMove(s, d, "q");
+			int m = Engine.IsValidMove(s, d, "q");
 			if (m == 0)
 				return false;
 			string em = Engine.FormatMove(m);
@@ -223,9 +213,10 @@ namespace RapChessGui
 		{
 			if (!PlayerList.CurPlayer().IsHuman())
 				return;
+			CPieceBoard.animated = true;
 			int sou = lastDes;
-			int x = (e.Location.X - margin) / field;
-			int y = (e.Location.Y - margin) / field;
+			int x = (e.Location.X - CPieceBoard.margin) / field;
+			int y = (e.Location.Y - CPieceBoard.margin) / field;
 			if (boardRotate)
 			{
 				x = 7 - x;
@@ -233,7 +224,6 @@ namespace RapChessGui
 			}
 			lastDes = y * 8 + x;
 			TryMove(sou, lastDes);
-			RenderBoard();
 		}
 
 		private void FormChess_FormClosed(object sender, FormClosedEventArgs e)
@@ -244,9 +234,10 @@ namespace RapChessGui
 
 		private void Timer1_Tick_1(object sender, EventArgs e)
 		{
+			if(CPieceBoard.animated)
+				RenderBoard();
 			var cp = PlayerList.CurPlayer();
-			double dif = (DateTime.Now - cp.timeStart).TotalMilliseconds;
-			DateTime tot = new DateTime().AddMilliseconds(cp.timeTotal + dif);
+			double dif = CData.gameState > 0 ? 0 : (DateTime.Now - cp.timeStart).TotalMilliseconds;
 			if (!cp.IsHuman())
 			{
 				string msg = cp.PlayerEng.Reader.ReadLine();
@@ -280,6 +271,7 @@ namespace RapChessGui
 					{
 						string em = Uci.tokens[1];
 						MakeMove(em);
+						dif = 0;
 					}
 					else
 					{
@@ -294,6 +286,7 @@ namespace RapChessGui
 					}
 				}
 			}
+			DateTime tot = new DateTime().AddMilliseconds(cp.timeTotal + dif);
 			if (boardRotate ^ cp.IsWhite())
 			{
 				labTimeB.Text = tot.ToString("HH:mm:ss");
@@ -338,6 +331,11 @@ namespace RapChessGui
 		private void ButStop_Click(object sender, EventArgs e)
 		{
 			PlayerList.CurPlayer().SendMessage("stop");
+		}
+
+		private void PictureBox1_Click(object sender, EventArgs e)
+		{
+
 		}
 	}
 

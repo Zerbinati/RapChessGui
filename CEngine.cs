@@ -81,8 +81,8 @@ namespace RapChessGui
 		public const int colorWhite = 0x10;
 		public const int colorEmpty = 0x20;
 		const int moveflagPassing = 0x02 << 16;
-		const int moveflagCastleKing = 0x04 << 16;
-		const int moveflagCastleQueen = 0x08 << 16;
+		public const int moveflagCastleKing = 0x04 << 16;
+		public const int moveflagCastleQueen = 0x08 << 16;
 		const int moveflagPromotion = 0xf0 << 16;
 		const int moveflagPromoteQueen = 0x10 << 16;
 		const int moveflagPromoteRook = 0x20 << 16;
@@ -121,8 +121,8 @@ namespace RapChessGui
 		int bsDepth = 0;
 		string bsFm = "";
 		string bsPv = "";
-		public int[] arrField = new int[64];
-		public int[] g_board = new int[256];
+		public static int[] arrField = new int[64];
+		public static int[] g_board = new int[256];
 		int[,] tmpMaterial = new int[7, 2] { { 0, 0 }, { 171, 240 }, { 764, 848 }, { 826, 891 }, { 1282, 1373 }, { 2526, 2646 }, { 0xffff, 0xffff } };
 		int[,] arrMaterial = new int[33, 7];
 		int[,,] tmpMobility = new int[7, 28, 2] {
@@ -170,7 +170,7 @@ namespace RapChessGui
 			return ((row + 4) << 4) | (column + 4);
 		}
 
-		public int TryMove(int s, int d, string q)
+		public int IsValidMove(int s, int d, string q)
 		{
 			int max = s & 7;
 			int mbx = d & 7;
@@ -179,34 +179,29 @@ namespace RapChessGui
 			int sa = MakeSquare(may, max);
 			int sb = MakeSquare(mby, mbx);
 			int move = sa | (sb << 8);
-			if (q != null)
-			{
+			int piece = g_board[sa] & 0xf;
+			if (((piece & 7) == piecePawn)&&((mby == 0)||(mby==7)))
+				{
 				if (q == "q") move = move | moveflagPromoteQueen;
 				else if (q == "r") move = move | moveflagPromoteRook;
 				else if (q == "b") move = move | moveflagPromoteBishop;
 				else move = move | moveflagPromoteKnight;
 			}
-			List<int> moves = GenerateValidMoves();
-			for (int i = 0; i < moves.Count; i++)
-			{
-				if ((move & 0xFFFF) == (moves[i] & 0xFFFF))
-					if ((moves[i] & moveflagPromotion) > 0)
-					{
-						if ((move & 0xF0FFFF) == (moves[i] & 0xF0FFFF))
-							return moves[i];
-					}
-					else return moves[i];
-			}
-			return 0;
+			return IsValidMove(move);
 		}
 
-		public bool IsValidMove(string m)
+		public int IsValidMove(int m)
 		{
 			List<int> moves = GenerateValidMoves();
 			for (int i = 0; i < moves.Count; i++)
-				if (FormatMove(moves[i]) == m)
-					return true;
-			return false;
+				if (moves[i] == m)
+					return m;
+			return 0;
+		}
+
+		public int IsValidMove(string m)
+		{
+			return IsValidMove(GetMoveFromString(m));
 		}
 
 		int RAND_32()

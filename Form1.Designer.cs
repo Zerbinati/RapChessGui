@@ -234,7 +234,7 @@
 			this.panel4.Dock = System.Windows.Forms.DockStyle.Top;
 			this.panel4.Location = new System.Drawing.Point(0, 54);
 			this.panel4.Name = "panel4";
-			this.panel4.Size = new System.Drawing.Size(848, 522);
+			this.panel4.Size = new System.Drawing.Size(848, 576);
 			this.panel4.TabIndex = 9;
 			// 
 			// panel5
@@ -245,9 +245,9 @@
 			this.panel5.Controls.Add(this.groupBox2);
 			this.panel5.Controls.Add(this.groupBox1);
 			this.panel5.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.panel5.Location = new System.Drawing.Point(518, 0);
+			this.panel5.Location = new System.Drawing.Point(576, 0);
 			this.panel5.Name = "panel5";
-			this.panel5.Size = new System.Drawing.Size(330, 522);
+			this.panel5.Size = new System.Drawing.Size(272, 576);
 			this.panel5.TabIndex = 9;
 			// 
 			// richTextBox1
@@ -255,7 +255,7 @@
 			this.richTextBox1.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.richTextBox1.Location = new System.Drawing.Point(0, 139);
 			this.richTextBox1.Name = "richTextBox1";
-			this.richTextBox1.Size = new System.Drawing.Size(330, 383);
+			this.richTextBox1.Size = new System.Drawing.Size(272, 437);
 			this.richTextBox1.TabIndex = 17;
 			this.richTextBox1.Text = "";
 			// 
@@ -264,9 +264,9 @@
 			this.butStop.Dock = System.Windows.Forms.DockStyle.Top;
 			this.butStop.Location = new System.Drawing.Point(0, 116);
 			this.butStop.Name = "butStop";
-			this.butStop.Size = new System.Drawing.Size(330, 23);
+			this.butStop.Size = new System.Drawing.Size(272, 23);
 			this.butStop.TabIndex = 16;
-			this.butStop.Text = "Stop";
+			this.butStop.Text = "Stop calculating";
 			this.butStop.UseVisualStyleBackColor = true;
 			this.butStop.Click += new System.EventHandler(this.ButStop_Click);
 			// 
@@ -275,9 +275,9 @@
 			this.bStart.Dock = System.Windows.Forms.DockStyle.Top;
 			this.bStart.Location = new System.Drawing.Point(0, 93);
 			this.bStart.Name = "bStart";
-			this.bStart.Size = new System.Drawing.Size(330, 23);
+			this.bStart.Size = new System.Drawing.Size(272, 23);
 			this.bStart.TabIndex = 15;
-			this.bStart.Text = "Start";
+			this.bStart.Text = "New game";
 			this.bStart.UseVisualStyleBackColor = true;
 			this.bStart.Click += new System.EventHandler(this.ButStart_Click);
 			// 
@@ -287,7 +287,7 @@
 			this.groupBox2.Dock = System.Windows.Forms.DockStyle.Top;
 			this.groupBox2.Location = new System.Drawing.Point(0, 47);
 			this.groupBox2.Name = "groupBox2";
-			this.groupBox2.Size = new System.Drawing.Size(330, 46);
+			this.groupBox2.Size = new System.Drawing.Size(272, 46);
 			this.groupBox2.TabIndex = 14;
 			this.groupBox2.TabStop = false;
 			this.groupBox2.Text = "Black";
@@ -299,7 +299,7 @@
 			this.comboBoxB.FormattingEnabled = true;
 			this.comboBoxB.Location = new System.Drawing.Point(3, 16);
 			this.comboBoxB.Name = "comboBoxB";
-			this.comboBoxB.Size = new System.Drawing.Size(324, 21);
+			this.comboBoxB.Size = new System.Drawing.Size(266, 21);
 			this.comboBoxB.Sorted = true;
 			this.comboBoxB.TabIndex = 1;
 			// 
@@ -309,7 +309,7 @@
 			this.groupBox1.Dock = System.Windows.Forms.DockStyle.Top;
 			this.groupBox1.Location = new System.Drawing.Point(0, 0);
 			this.groupBox1.Name = "groupBox1";
-			this.groupBox1.Size = new System.Drawing.Size(330, 47);
+			this.groupBox1.Size = new System.Drawing.Size(272, 47);
 			this.groupBox1.TabIndex = 13;
 			this.groupBox1.TabStop = false;
 			this.groupBox1.Text = "White";
@@ -320,7 +320,7 @@
 			this.comboBoxW.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.comboBoxW.Location = new System.Drawing.Point(3, 16);
 			this.comboBoxW.Name = "comboBoxW";
-			this.comboBoxW.Size = new System.Drawing.Size(324, 21);
+			this.comboBoxW.Size = new System.Drawing.Size(266, 21);
 			this.comboBoxW.Sorted = true;
 			this.comboBoxW.TabIndex = 2;
 			// 
@@ -329,11 +329,10 @@
 			this.pictureBox1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
 			this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Left;
 			this.pictureBox1.ErrorImage = global::RapChessGui.Properties.Resources.black;
-			this.pictureBox1.Image = global::RapChessGui.Properties.Resources.black;
 			this.pictureBox1.InitialImage = global::RapChessGui.Properties.Resources.black;
 			this.pictureBox1.Location = new System.Drawing.Point(0, 0);
 			this.pictureBox1.Name = "pictureBox1";
-			this.pictureBox1.Size = new System.Drawing.Size(518, 522);
+			this.pictureBox1.Size = new System.Drawing.Size(576, 576);
 			this.pictureBox1.TabIndex = 8;
 			this.pictureBox1.TabStop = false;
 			this.pictureBox1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.PictureBox1_MouseClick);
@@ -350,7 +349,7 @@
 			this.panel3.Controls.Add(this.labNameB);
 			this.panel3.Controls.Add(this.panBottom);
 			this.panel3.Dock = System.Windows.Forms.DockStyle.Top;
-			this.panel3.Location = new System.Drawing.Point(0, 576);
+			this.panel3.Location = new System.Drawing.Point(0, 630);
 			this.panel3.Name = "panel3";
 			this.panel3.Size = new System.Drawing.Size(848, 30);
 			this.panel3.TabIndex = 10;
@@ -451,9 +450,9 @@
 			this.panel1.Controls.Add(this.labMove);
 			this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.panel1.ForeColor = System.Drawing.Color.Gainsboro;
-			this.panel1.Location = new System.Drawing.Point(0, 606);
+			this.panel1.Location = new System.Drawing.Point(0, 660);
 			this.panel1.Name = "panel1";
-			this.panel1.Size = new System.Drawing.Size(848, 31);
+			this.panel1.Size = new System.Drawing.Size(848, 38);
 			this.panel1.TabIndex = 11;
 			// 
 			// labLast
@@ -464,7 +463,7 @@
 			this.labLast.ForeColor = System.Drawing.Color.Gainsboro;
 			this.labLast.Location = new System.Drawing.Point(137, 0);
 			this.labLast.Name = "labLast";
-			this.labLast.Size = new System.Drawing.Size(707, 27);
+			this.labLast.Size = new System.Drawing.Size(707, 34);
 			this.labLast.TabIndex = 2;
 			this.labLast.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
@@ -477,7 +476,7 @@
 			this.labMove.ForeColor = System.Drawing.Color.Gainsboro;
 			this.labMove.Location = new System.Drawing.Point(0, 0);
 			this.labMove.Name = "labMove";
-			this.labMove.Size = new System.Drawing.Size(137, 27);
+			this.labMove.Size = new System.Drawing.Size(137, 34);
 			this.labMove.TabIndex = 1;
 			this.labMove.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
@@ -486,7 +485,7 @@
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.BackColor = System.Drawing.SystemColors.Control;
-			this.ClientSize = new System.Drawing.Size(848, 637);
+			this.ClientSize = new System.Drawing.Size(848, 698);
 			this.Controls.Add(this.panel1);
 			this.Controls.Add(this.panel3);
 			this.Controls.Add(this.panel4);
