@@ -64,6 +64,7 @@
 			this.panel1 = new System.Windows.Forms.Panel();
 			this.labLast = new System.Windows.Forms.Label();
 			this.labMove = new System.Windows.Forms.Label();
+			this.backToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.menuStrip1.SuspendLayout();
 			this.panel2.SuspendLayout();
 			this.panel4.SuspendLayout();
@@ -101,6 +102,7 @@
 			// 
 			this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.newGameToolStripMenuItem,
+            this.backToolStripMenuItem,
             this.playersToolStripMenuItem});
 			this.menuStrip1.Location = new System.Drawing.Point(0, 0);
 			this.menuStrip1.Name = "menuStrip1";
@@ -480,6 +482,13 @@
 			this.labMove.TabIndex = 1;
 			this.labMove.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
+			// backToolStripMenuItem
+			// 
+			this.backToolStripMenuItem.Name = "backToolStripMenuItem";
+			this.backToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
+			this.backToolStripMenuItem.Text = "Back";
+			this.backToolStripMenuItem.Click += new System.EventHandler(this.BackToolStripMenuItem_Click);
+			// 
 			// FormChess
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -548,6 +557,7 @@
 		private System.Windows.Forms.Label labPonderB;
 		private System.Windows.Forms.Label labNpsB;
 		private System.Windows.Forms.Label labDepthB;
+		private System.Windows.Forms.ToolStripMenuItem backToolStripMenuItem;
 	}
 }
 

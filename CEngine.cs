@@ -116,7 +116,6 @@ namespace RapChessGui
 		public bool whiteTurn = true;
 		int usColor = 0;
 		int enColor = 0;
-		int eeColor = 0;
 		int bsIn = -1;
 		int bsDepth = 0;
 		string bsFm = "";
@@ -178,15 +177,12 @@ namespace RapChessGui
 			int mby = d >> 3;
 			int sa = MakeSquare(may, max);
 			int sb = MakeSquare(mby, mbx);
-			int move = sa | (sb << 8);
+			string fa = FormatSquare(sa);
+			string fb = FormatSquare(sb);
+			string move = fa + fb;
 			int piece = g_board[sa] & 0xf;
-			if (((piece & 7) == piecePawn)&&((mby == 0)||(mby==7)))
-				{
-				if (q == "q") move = move | moveflagPromoteQueen;
-				else if (q == "r") move = move | moveflagPromoteRook;
-				else if (q == "b") move = move | moveflagPromoteBishop;
-				else move = move | moveflagPromoteKnight;
-			}
+			if (((piece & 7) == piecePawn) && ((mby == 0) || (mby == 7)))
+				move += q;
 			return IsValidMove(move);
 		}
 
@@ -207,6 +203,16 @@ namespace RapChessGui
 		int RAND_32()
 		{
 			return random.Next();
+		}
+
+		public static int EmoToIndex(string emo)
+		{
+			if (emo == "")
+				return -1;
+			string fl = "abcdefgh";
+			int x = fl.IndexOf(emo[2]);
+			int y = 8 - Int32.Parse(emo[3].ToString());
+			return y * 8 + x;
 		}
 
 		public string FormatMove(int move)
@@ -328,7 +334,6 @@ namespace RapChessGui
 			g_inCheck = false;
 			usColor = wt ? colorWhite : colorBlack;
 			enColor = wt ? colorBlack : colorWhite;
-			eeColor = enColor | colorEmpty;
 			int pieceM = 0;
 			int pieceN = 0;
 			int pieceB = 0;
@@ -492,12 +497,11 @@ namespace RapChessGui
 			}
 		}
 
-		public void InitializeFromFen(string fen)
+		public void InitializeFromFen(string fen = defFen)
 		{
 			g_phase = 0;
 			for (int n = 0; n < 64; n++)
 				g_board[arrField[n]] = colorEmpty;
-			if (fen == "") fen = defFen;
 			string[] chunks = fen.Split(' ');
 			int row = 0;
 			int col = 0;

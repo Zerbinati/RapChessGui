@@ -12,6 +12,19 @@ namespace RapChessGui
 		public static string fen = "";
 		public static List<string> moves = new List<string>();
 
+		public static void Back()
+		{
+			if (moves.Count > 1)
+				moves.RemoveRange(moves.Count - 2,2);
+		}
+
+		public static string LastMove()
+		{
+			if (moves.Count == 0)
+				return "";
+			return moves[moves.Count - 1];
+		}
+
 		public static void NewGame(string f)
 		{
 			startpos = f == CEngine.defFen;
@@ -22,7 +35,7 @@ namespace RapChessGui
 		public static string GetPosition()
 		{
 			string result = "position ";
-			result += startpos ? "startpos" : "fen "+fen;
+			result += startpos ? "startpos" : "fen " + fen;
 			return result + " moves " + String.Join(" ", moves);
 		}
 	}

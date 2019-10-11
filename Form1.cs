@@ -59,22 +59,13 @@ namespace RapChessGui
 			}
 			double t = (DateTime.Now - PlayerList.CurPlayer().timeStart).TotalMilliseconds;
 			PlayerList.CurPlayer().timeTotal += t;
-			int moveNumber = (Engine.g_moveNumber >> 1) + 1;
-			if ((Engine.g_moveNumber & 1) == 0)
-			{
-				int i = (Engine.g_moveNumber >> 1) + 1;
-				richTextBox1.AppendText($"{i} ", Color.Red);
-			}
-			richTextBox1.AppendText($"{em} ");
 			int gm = Engine.GetMoveFromString(em);
 			CPieceBoard.MakeMove(gm);
 			Engine.MakeMove(gm);
+			int moveNumber = (Engine.g_moveNumber >> 1) + 1;
 			labMove.Text = "Move " + moveNumber.ToString() + " " + Engine.g_move50.ToString();
 			CHistory.moves.Add(em);
-			int x = "abcdefgh".IndexOf(em[2]);
-			int y = 8 - Int32.Parse(em[3].ToString());
-			lastDes = y * 8 + x;
-			//RenderBoard();
+			ShowHistory();
 			CData.gameState = Engine.GetGameState();
 			if (CData.gameState == 0)
 				PlayerList.MakeMove();
@@ -117,7 +108,7 @@ namespace RapChessGui
 			labLast.ForeColor = Color.Gainsboro;
 			labLast.Text = "Good luck";
 			lastDes = -1;
-			Engine.InitializeFromFen("");
+			Engine.InitializeFromFen();
 			CData.gameState = 0;
 			CHistory.NewGame(Engine.GetFen());
 			var nw = comboBoxW.Text;
@@ -194,9 +185,39 @@ namespace RapChessGui
 			brush3.Dispose();
 			g.Dispose();
 			pictureBox1.Refresh();
-			if((CData.gameState > 0)&&(!CPieceBoard.animated))
+			if ((CData.gameState > 0) && (!CPieceBoard.animated))
 				timer1.Enabled = false;
 			CPieceBoard.Render();
+		}
+
+		void RenderHistory()
+		{
+			Engine.InitializeFromFen();
+			for (int n = 0; n < CHistory.moves.Count; n++)
+			{
+				string emo = CHistory.moves[n];
+				int gmo = Engine.GetMoveFromString(emo);
+				Engine.MakeMove(gmo);
+			}
+			PieceList.Fill();
+			ShowHistory();
+		}
+
+		void ShowHistory()
+		{
+			richTextBox1.Clear();
+			for (int n = 0; n < CHistory.moves.Count; n++)
+			{
+				if ((n & 1) == 0)
+				{
+					int moveNumber = (n >> 1) + 1;
+					richTextBox1.AppendText($"{moveNumber} ", Color.Red);
+				}
+				string emo = CHistory.moves[n];
+				richTextBox1.AppendText($"{emo} ");
+			}
+			string lm = CHistory.LastMove();
+			lastDes = CEngine.EmoToIndex(lm);
 		}
 
 		bool TryMove(int s, int d)
@@ -234,7 +255,7 @@ namespace RapChessGui
 
 		private void Timer1_Tick_1(object sender, EventArgs e)
 		{
-			if(CPieceBoard.animated)
+			if (CPieceBoard.animated)
 				RenderBoard();
 			var cp = PlayerList.CurPlayer();
 			double dif = CData.gameState > 0 ? 0 : (DateTime.Now - cp.timeStart).TotalMilliseconds;
@@ -333,9 +354,10 @@ namespace RapChessGui
 			PlayerList.CurPlayer().SendMessage("stop");
 		}
 
-		private void PictureBox1_Click(object sender, EventArgs e)
+		private void BackToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-
+			CHistory.Back();
+			RenderHistory();
 		}
 	}
 
