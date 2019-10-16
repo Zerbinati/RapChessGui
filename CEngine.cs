@@ -69,7 +69,7 @@ namespace RapChessGui
 
 	class CEngine
 	{
-		public const string defFen = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
+		public const string defFen = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 0";
 		private static Random random = new Random();
 		const int piecePawn = 0x01;
 		const int pieceKnight = 0x02;
@@ -155,12 +155,12 @@ namespace RapChessGui
 				return (int)CGameState.move50;
 			if (IsRepetition())
 				return (int)CGameState.repetition;
+			GenerateAllMoves(!whiteTurn, false);
+			if (adjInsufficient && myInsufficient)
+				return (int)CGameState.material;
 			List<int> moves = GenerateValidMoves();
 			if (moves.Count > 0)
 				return (int)CGameState.normal;
-			GenerateAllMoves(!whiteTurn, true);
-			if (adjInsufficient && myInsufficient)
-				return (int)CGameState.material;
 			return g_inCheck ? (int)CGameState.mate : (int)CGameState.drawn;
 		}
 
@@ -281,11 +281,13 @@ namespace RapChessGui
 				result += '-';
 			else
 				result += FormatSquare(g_passing);
-			return result + ' ' + g_move50 + ' ' + ((g_moveNumber >> 1) + 1);
+			return result + ' ' + g_move50 + ' ' + g_moveNumber;
 		}
 
 		int StrToSquare(string s)
 		{
+			if (s.Length < 2)
+				return 0;
 			string fl = "abcdefgh";
 			int x = fl.IndexOf(s[0]);
 			int y = 12 - Int32.Parse(s[1].ToString());
@@ -294,7 +296,7 @@ namespace RapChessGui
 
 		bool IsRepetition()
 		{
-			for (int n = undoIndex - 4; n >= undoIndex - g_move50; n -= 2)
+			for (int n = undoIndex - 6; n >= undoIndex - g_move50; n -= 2)
 				if (undoStack[n].hash == g_hash)
 				{
 					return true;
@@ -497,12 +499,14 @@ namespace RapChessGui
 			}
 		}
 
-		public void InitializeFromFen(string fen = defFen)
+		public bool InitializeFromFen(string fen = defFen)
 		{
+			string[] chunks = fen.Split(' ');
+			if (chunks.Length != 6)
+				return false;
 			g_phase = 0;
 			for (int n = 0; n < 64; n++)
 				g_board[arrField[n]] = colorEmpty;
-			string[] chunks = fen.Split(' ');
 			int row = 0;
 			int col = 0;
 			string pieces = chunks[0];
@@ -531,11 +535,11 @@ namespace RapChessGui
 						case 'p':
 							piece |= piecePawn;
 							break;
-						case 'b':
-							piece |= pieceBishop;
-							break;
 						case 'n':
 							piece |= pieceKnight;
+							break;
+						case 'b':
+							piece |= pieceBishop;
 							break;
 						case 'r':
 							piece |= pieceRook;
@@ -561,15 +565,11 @@ namespace RapChessGui
 				g_castleRights |= 4;
 			if (chunks[2].IndexOf('q') != -1)
 				g_castleRights |= 8;
-			g_passing = 0;
-			if (chunks[3].IndexOf('-') == -1)
-				g_passing = StrToSquare(chunks[3]);
-			g_move50 = 0;
+			g_passing = StrToSquare(chunks[3]);
+			g_move50 = Int32.Parse(chunks[4]);
 			g_moveNumber = Int32.Parse(chunks[5]);
-			if (g_moveNumber > 0) g_moveNumber--;
-			g_moveNumber *= 2;
-			if (!whiteTurn) g_moveNumber++;
 			undoIndex = 0;
+			return true;
 		}
 
 		public void MakeMove(int move)

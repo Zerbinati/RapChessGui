@@ -16,7 +16,7 @@ namespace RapChessGui
 		{
 			Application.EnableVisualStyles();
 			Application.SetCompatibleTextRenderingDefault(false);
-			Application.Run(new FormChess());
+			Application.Run(new Form1());
 		}
 	}
 }

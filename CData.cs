@@ -6,12 +6,15 @@ using System.Threading.Tasks;
 
 namespace RapChessGui
 {
+	enum CMode { normal, training }
 	public static class CData
 	{
-		public static int gameState;
+		public static bool rotateBoard = false;
+		public static int gameState = 0;
+		public static int gameMode = 0;
 		public static string[] arrModeNames = new string[] { "depth","movetime" };
+		public static List<string> engineNames = new List<string>();
 		public static List<string> playerNames = new List<string>();
-		public static CIniFile Inifile = new CIniFile();
 
 		public static int ModeStoi(string s)
 		{

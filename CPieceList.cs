@@ -14,36 +14,52 @@ namespace RapChessGui
 		public const int field = 64;
 		public const int margin = 32;
 		public const int size = field * 8 + margin * 2;
-		public static Bitmap bitmap = new Bitmap(size,size);
+		public static Bitmap bitmap = new Bitmap(size, size);
+		public static Color color;
+
+		public static void SaveToIni()
+		{
+			CIniFile.Write("colorR",color.R.ToString());
+			CIniFile.Write("colorG", color.G.ToString());
+			CIniFile.Write("colorB", color.B.ToString());
+		}
+
+
+		public static void LoadFromIni()
+		{
+			int r = Convert.ToInt32(CIniFile.Read("colorR", "64"));
+			int g = Convert.ToInt32(CIniFile.Read("colorG", "0"));
+			int b = Convert.ToInt32(CIniFile.Read("colorB", "0"));
+			color = Color.FromArgb(r,g,b);
+		}
 
 		public static void Prepare()
 		{
 			Graphics g = Graphics.FromImage(bitmap);
-			g.DrawImage(RapChessGui.Properties.Resources.black, 0, 0, size, size);
-			Brush brush1 = new SolidBrush(Color.FromArgb(0x30, 0xff, 0xff, 0xff));
-			Brush brush2 = new SolidBrush(Color.FromArgb(0x70, 0xff, 0xff, 0xff));
-			Font font = new Font(FontFamily.GenericSansSerif, 12, FontStyle.Regular);
+			SolidBrush brush1 = new SolidBrush(color);
+			SolidBrush brush2 = new SolidBrush(Color.FromArgb(0x60, 0x00, 0x00, 0x00));
+			SolidBrush brush3 = new SolidBrush(Color.FromArgb(0x60, 0xff, 0xff, 0xff));
+			g.FillRectangle(brush1, 0, 0, size, size);
 			for (int y = 0; y < 8; y++)
 			{
 				int y2 = margin + y * field;
 				for (int x = 0; x < 8; x++)
 				{
-					int i = y * 8 + x;
 					int x2 = margin + x * field;
 					bool bgColor = ((y ^ x) & 1) == 1;
 					if (bgColor)
 					{
-						g.FillRectangle(brush1, x2, y2, field, field);
+						g.FillRectangle(brush2, x2, y2, field, field);
 					}
 					else
 					{
-						g.FillRectangle(brush2, x2, y2, field, field);
+						g.FillRectangle(brush3, x2, y2, field, field);
 					}
 				}
 			}
 		}
 
-		static void MakeMove(int sou,int des)
+		static void MakeMove(int sou, int des)
 		{
 			list[des] = list[sou];
 			list[sou] = null;
@@ -61,21 +77,24 @@ namespace RapChessGui
 			int yd = (des >> 4) - 4;
 			sou = ys * 8 + xs;
 			des = yd * 8 + xd;
-			MakeMove(sou,des);
+			var pd = list[des];
+			if (pd != null)
+				list[sou].desImage = pd.image;
+			MakeMove(sou, des);
 			if ((flags & CEngine.moveflagCastleKing) > 0)
 			{
-				MakeMove(sou + 3,sou+1);
+				MakeMove(sou + 3, sou + 1);
 			}
 			if ((flags & CEngine.moveflagCastleQueen) > 0)
 			{
-				MakeMove(sou -4, sou - 1);
+				MakeMove(sou - 4, sou - 1);
 			}
 		}
 
 		public static void Render()
 		{
 			animated = false;
-			for(int n = 0; n < 64; n++)
+			for (int n = 0; n < 64; n++)
 			{
 				var p = list[n];
 				if (p != null)
@@ -85,12 +104,15 @@ namespace RapChessGui
 		}
 	}
 
-	class CPiece{
+	class CPiece
+	{
 		bool visible = false;
-		public int image = 0;
+		public int desImage = -1;
+		public int image = -1;
+		public int index = -1;
 		public Point curXY = new Point();
 		Point souXY = new Point();
-		Point desXY = new Point();
+		public Point desXY = new Point();
 		DateTime dt;
 		double time = 200;
 
@@ -99,10 +121,11 @@ namespace RapChessGui
 			if ((curXY.X == desXY.X) && (curXY.Y == desXY.Y))
 				return false;
 			double dif = (DateTime.Now - dt).TotalMilliseconds / time;
-			if(dif >= 1)
+			if (dif >= 1)
 			{
 				curXY.X = desXY.X;
 				curXY.Y = desXY.Y;
+				SetImage();
 			}
 			else
 			{
@@ -112,7 +135,17 @@ namespace RapChessGui
 			return true;
 		}
 
-		public void SetDes(int x,int y)
+		public void SetImage()
+		{
+			desImage = -1;
+			int i = CEngine.arrField[index];
+			int f = CEngine.g_board[i];
+			image = (f & 7) - 1;
+			if ((f & CEngine.colorBlack) > 0)
+				image += 6;
+		}
+
+		public void SetDes(int i, int x, int y)
 		{
 			if (!visible)
 			{
@@ -122,6 +155,7 @@ namespace RapChessGui
 			}
 			if ((x == desXY.X) && (y == desXY.Y))
 				return;
+			index = i;
 			souXY.X = curXY.X;
 			souXY.Y = curXY.Y;
 			dt = DateTime.Now;
@@ -141,11 +175,9 @@ namespace RapChessGui
 				int f = CEngine.g_board[i];
 				if ((f & CEngine.colorEmpty) > 0)
 					continue;
-				int image = (f & 7) - 1;
-				if ((f & CEngine.colorBlack) > 0)
-					image += 6;
 				CPiece piece = new CPiece();
-				piece.image = image;
+				piece.index = n;
+				piece.SetImage();
 				CPieceBoard.list[n] = piece;
 			}
 			CPieceBoard.animated = true;

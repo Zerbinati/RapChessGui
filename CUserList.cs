@@ -11,6 +11,7 @@ namespace RapChessGui
 	{
 		public string name = "Human";
 		public string engine ="Human";
+		public string parameters = "";
 		public string mode = "movetime";
 		public string value = "1000";
 
@@ -21,16 +22,18 @@ namespace RapChessGui
 
 		public void LoadFromIni()
 		{
-			engine = CData.Inifile.Read("engine","Human", "player " + name);
-			mode = CData.Inifile.Read("mode","movetime", "player " + name);
-			value = CData.Inifile.Read("value", "1000", "player " + name);
+			engine = CIniFile.Read("engine","Human", "player " + name);
+			parameters = CIniFile.Read("parameters", "", "player " + name);
+			mode = CIniFile.Read("mode","movetime", "player " + name);
+			value = CIniFile.Read("value", "1000", "player " + name);
 		}
 
 		public void SaveToIni()
 		{
-			CData.Inifile.Write("engine",engine, "player " + name);
-			CData.Inifile.Write("mode", mode, "player " + name);
-			CData.Inifile.Write("value", value, "player " + name);
+			CIniFile.Write("engine",engine, "player " + name);
+			CIniFile.Write("parameters", parameters, "player " + name);
+			CIniFile.Write("mode", mode, "player " + name);
+			CIniFile.Write("value", value, "player " + name);
 		}
 	}
 
@@ -63,7 +66,7 @@ namespace RapChessGui
 		public static void LoadFromIni()
 		{
 			list.Clear();
-			string player = CData.Inifile.Read("playerNames");
+			string player = CIniFile.Read("playerNames");
 			var apn = player.Split(new[] { '|' }, StringSplitOptions.RemoveEmptyEntries);
 			for(int n = 0; n < apn.Length; n++)
 			{
@@ -96,7 +99,7 @@ namespace RapChessGui
 				user.SaveToIni();
 			}
 			names.Sort();
-			CData.Inifile.Write("playerNames", String.Join("|",names.ToArray()));
+			CIniFile.Write("playerNames", String.Join("|",names.ToArray()));
 		}
 	}
 }

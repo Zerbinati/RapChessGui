@@ -62,13 +62,19 @@ namespace RapChessGui
 				PlayerEng.streamWriter.WriteLine(msg);
 		}
 
-		public void SetUser(string name)
+		public void SetUser(CUser u)
 		{
-			user = CUserList.GetUser(name);
+			user = u;
 			if (user.engine != "Human")
-				PlayerEng.SetEngine(user.engine, "");
+				PlayerEng.SetEngine(user.engine, user.parameters);
 			else
 				PlayerEng.Kill();
+		}
+
+		public void SetUser(string name)
+		{
+			CUser u = CUserList.GetUser(name);
+			SetUser(u);
 		}
 	}
 
@@ -100,6 +106,15 @@ namespace RapChessGui
 			player[1].Init();
 			curIndex = 0;
 			CurPlayer().MakeMove();
+		}
+
+		public void Rotate()
+		{
+			CPlayer p = player[0];
+			player[0] = player[1];
+			player[1] = p;
+			player[0].index = 0;
+			player[1].index = 1;
 		}
 
 		public bool WhiteTurn()

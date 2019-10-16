@@ -10,36 +10,51 @@ namespace RapChessGui
 {
 	class CReader
 	{
+
 		private Thread inputThread;
 		private AutoResetEvent getInput;
 		private AutoResetEvent gotInput;
+		private AutoResetEvent semInput;
 		private string input;
 		private StreamReader stream;
+
+		private string Input
+		{
+			get
+			{
+				semInput.WaitOne(10, false)
+					;
+				string s = input;
+				input = "";
+				semInput.Set();
+				return s;
+			}
+			set
+			{
+				semInput.WaitOne(10, false);
+				input = value;
+				semInput.Set();
+			}
+		}
 
 		private void Reader()
 		{
 			while (true)
 			{
 				getInput.WaitOne();
-				input = "";
-				input = stream.ReadLine();
+				string s = stream.ReadLine();
+				Input = s;
 				gotInput.Set();
 				getInput.Reset();
 			}
 		}
 
-		public string ReadLine(bool wait = false)
+		public string ReadLine(bool wait)
 		{
-			string s = input;
 			getInput.Set();
-			if (s == "")
-			{
-				if (wait)
-					gotInput.WaitOne();
-				return input;
-			}
-			else
-				return s;
+			if (wait)
+				gotInput.WaitOne();
+			return Input;
 		}
 
 		public void SetStream(StreamReader sr)
@@ -47,6 +62,7 @@ namespace RapChessGui
 			stream = sr;
 			getInput = new AutoResetEvent(false);
 			gotInput = new AutoResetEvent(false);
+			semInput = new AutoResetEvent(true);
 			inputThread = new Thread(Reader);
 			inputThread.IsBackground = true;
 			inputThread.Start();

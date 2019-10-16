@@ -8,8 +8,7 @@ namespace RapChessGui
 {
 	public static class CHistory
 	{
-		public static bool startpos = true;
-		public static string fen = "";
+		public static string fen = CEngine.defFen;
 		public static List<string> moves = new List<string>();
 
 		public static void Back()
@@ -25,9 +24,8 @@ namespace RapChessGui
 			return moves[moves.Count - 1];
 		}
 
-		public static void NewGame(string f)
+		public static void NewGame(string f = CEngine.defFen)
 		{
-			startpos = f == CEngine.defFen;
 			fen = f;
 			moves.Clear();
 		}
@@ -35,7 +33,7 @@ namespace RapChessGui
 		public static string GetPosition()
 		{
 			string result = "position ";
-			result += startpos ? "startpos" : "fen " + fen;
+			result += fen == CEngine.defFen ? "startpos" : "fen " + fen;
 			return result + " moves " + String.Join(" ", moves);
 		}
 	}
