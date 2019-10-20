@@ -11,13 +11,16 @@ using System.Collections.Generic;
 
 namespace RapChessGui
 {
-	public partial class Form1 : Form
+	public partial class FormChessGui : Form
 	{
 		[DllImport("user32.dll")]
 		private static extern int ShowWindow(IntPtr hWnd, int nCmdShow);
 
 		[DllImport("user32.dll")]
 		private static extern int SetForegroundWindow(IntPtr hWnd);
+
+		[DllImport("gdi32.dll")]
+		private static extern IntPtr AddFontMemResourceEx(IntPtr pbFont, uint cbFont, IntPtr pdv, [In] ref uint pcFonts);
 
 		bool boardRotate;
 		int lastDes = -1;
@@ -29,8 +32,9 @@ namespace RapChessGui
 		FormOptions FOptions = new FormOptions();
 		FormPlayer FPlayer = new FormPlayer();
 		PrivateFontCollection pfc = new PrivateFontCollection();
+		Font fontChess;
 
-		public Form1()
+		public FormChessGui()
 		{
 			KillApplication();
 			InitializeComponent();
@@ -39,29 +43,79 @@ namespace RapChessGui
 			IniRead();
 			CPieceBoard.Prepare();
 			pictureBox1.Size = new Size(CPieceBoard.size, CPieceBoard.size);
+			CData.FLog = new FormLog();
 		}
 
 		private void FormChess_Load(object sender, EventArgs e)
 		{
-
-			//Select your font from the resources.
-			//My font here is "Digireu.ttf"
 			int fontLength = Properties.Resources.ChessPiece.Length;
-
-			// create a buffer to read in to
-			byte[] fontdata = Properties.Resources.ChessPiece;
-
-			// create an unsafe memory block for the font data
+			byte[] fontData = Properties.Resources.ChessPiece;
 			System.IntPtr data = Marshal.AllocCoTaskMem(fontLength);
-
-			// copy the bytes to the unsafe memory block
-			Marshal.Copy(fontdata, 0, data, fontLength);
-
-			// pass the font to the font collection
+			Marshal.Copy(fontData, 0, data, fontLength);
+			uint cFonts = 0;
+			AddFontMemResourceEx(data, (uint)fontData.Length, IntPtr.Zero, ref cFonts);
 			pfc.AddMemoryFont(data, fontLength);
+			Marshal.FreeCoTaskMem(data);
+			fontChess = new Font(pfc.Families[0], 16);
+			labTakenT.Font = fontChess;
+			labTakenB.Font = fontChess;
 			ShowTraining();
 			Engine.Initialize();
 			NewGame();
+		}
+
+		public void GetMessage(CPlayer p)
+		{
+			string msg = p.GetMessage();
+			if (msg == "")
+				return;
+			Uci.SetMsg(msg);
+			switch (Uci.command)
+			{
+				case "uciok":
+					p.uciok = true;
+					p.SendMessage("ucinewgame");
+					p.SendMessage("isready");
+					break;
+				case "readyok":
+					p.readyok = true;
+					break;
+				case "bestmove":
+					p.ponder = Uci.GetValue("ponder");
+					string em = Uci.tokens[1];
+					MakeMove(em);
+					break;
+				case "info":
+					string s = Uci.GetValue("cp");
+					if (s != "")
+						p.score = s;
+					s = Uci.GetValue("mate");
+					if (s != "")
+					{
+						if (Int32.Parse(s) > 0)
+							p.score = $"+{s}M";
+						else
+							p.score = $"{s}M";
+					}
+					s = Uci.GetValue("depth");
+					if (s != "")
+						p.depth = s;
+					s = Uci.GetValue("seldepth");
+					if (s != "")
+						p.seldepth = s;
+					s = Uci.GetValue("nps");
+					if (s != "")
+						p.nps = s;
+					string pv = "";
+					int i = Uci.GetIndex("pv", 0);
+					if (i > 0)
+					{
+						for (int n = i; n < Uci.tokens.Length; n++)
+							pv += Uci.tokens[n] + " ";
+						labLast.Text = pv;
+					}
+					break;
+			}
 		}
 
 		void KillApplication()
@@ -82,28 +136,6 @@ namespace RapChessGui
 
 							cp.Kill();
 						}
-				}
-				catch
-				{
-				}
-
-			}
-		}
-
-		void KillProcess()
-		{
-			string eDir = AppDomain.CurrentDomain.BaseDirectory + "Engines";
-			Process[] processlist = Process.GetProcesses();
-			foreach (Process process in processlist)
-			{
-				try
-				{
-					String fileName = process.MainModule.FileName;
-					if (fileName.IndexOf(eDir) == 0)
-					{
-						process.Kill();
-					}
-
 				}
 				catch
 				{
@@ -166,13 +198,14 @@ namespace RapChessGui
 
 		bool MakeMove(string emo)
 		{
+			emo = emo.ToLower();
 			string cpName = PlayerList.CurPlayer().user.name;
 			if (Engine.IsValidMove(emo) == 0)
 			{
 				labLast.Text = "Move error " + emo;
 				labLast.ForeColor = Color.Red;
-				richTextBox1.AppendText($" error {emo}", Color.Red);
-				richTextBox1.SaveFile("last error.rtf");
+				CData.FLog.richTextBox1.AppendText($" error {emo}\n", Color.Red);
+				CData.FLog.richTextBox1.SaveFile("last error.rtf");
 				MessageBox.Show($"{cpName} do wrong move {emo}");
 				return false;
 			}
@@ -187,7 +220,7 @@ namespace RapChessGui
 			ShowHistory();
 			CData.gameState = Engine.GetGameState();
 			if (CData.gameState == 0)
-				PlayerList.MakeMove();
+				PlayerList.Next();
 			else
 			{
 				labLast.ForeColor = Color.Yellow;
@@ -233,7 +266,7 @@ namespace RapChessGui
 						Trainer.time += 100;
 					}
 					ShowTraining();
-					richTextBox1.SaveFile("last game.rtf");
+					CData.FLog.richTextBox1.SaveFile("last game.rtf");
 					timerStart.Start();
 				}
 			}
@@ -261,11 +294,16 @@ namespace RapChessGui
 			PieceList.Fill();
 			PlayerList.NewGame();
 			timer1.Enabled = true;
+			CPlayer pw = PlayerList.player[0];
+			CPlayer pb = PlayerList.player[1];
+			CData.FLog.richTextBox1.Clear();
+			CData.FLog.richTextBox1.AppendText($"White {pw.user.name} {pw.user.engine} {pw.user.parameters}\n");
+			CData.FLog.richTextBox1.AppendText($"Black {pb.user.name} {pb.user.engine} {pb.user.parameters}\n");
 		}
 
 		void NewGame()
 		{
-			KillProcess();
+			PlayerList.KillProcess();
 			CData.gameMode = (int)CMode.normal;
 			PlayerList.player[0].SetUser(comboBoxW.Text);
 			PlayerList.player[1].SetUser(comboBoxB.Text);
@@ -274,30 +312,37 @@ namespace RapChessGui
 
 		public void RenderBoard()
 		{
-			Color curColor = Engine.whiteTurn ? Color.White : Color.Black;
 			string abc = "ABCDEFGH";
-			boardRotate = (PlayerList.player[1].IsHuman() && !PlayerList.player[0].IsHuman()) ^ CData.rotateBoard;
-			if (PlayerList.player[1].IsHuman() && PlayerList.player[0].IsHuman())
-				boardRotate = !PlayerList.CurPlayer().IsWhite();
+			boardRotate = (!PlayerList.player[1].computer && PlayerList.player[0].computer) ^ CData.rotateBoard;
+			if (!PlayerList.player[1].computer && !PlayerList.player[0].computer)
+				boardRotate = !Engine.whiteTurn;
 			if (boardRotate)
 			{
 				labNameT.Text = PlayerList.player[0].user.name;
 				labNameB.Text = PlayerList.player[1].user.name;
+				panTop.BackColor = Color.White;
+				panBottom.BackColor = Color.Black;
+				labTakenT.ForeColor = Color.White;
+				labTakenB.ForeColor = Color.Black;
 			}
 			else
 			{
 				labNameT.Text = PlayerList.player[1].user.name;
 				labNameB.Text = PlayerList.player[0].user.name;
+				panTop.BackColor = Color.Black;
+				panBottom.BackColor = Color.White;
+				labTakenT.ForeColor = Color.Black;
+				labTakenB.ForeColor = Color.White;
 			}
 			if (boardRotate ^ Engine.whiteTurn)
 			{
-				panBottom.BackColor = curColor;
-				panTop.BackColor = Color.Silver;
+				labTimeT.BackColor = Color.LightGray;
+				labTimeB.BackColor = Color.Yellow;
 			}
 			else
 			{
-				panTop.BackColor = curColor;
-				panBottom.BackColor = Color.Silver;
+				labTimeT.BackColor = Color.Yellow;
+				labTimeB.BackColor = Color.LightGray;
 			}
 			pictureBox1.Image = new Bitmap(CPieceBoard.bitmap);
 			Graphics g = Graphics.FromImage(pictureBox1.Image);
@@ -318,7 +363,7 @@ namespace RapChessGui
 			sf.LineAlignment = StringAlignment.Center;
 			g.SmoothingMode = SmoothingMode.HighQuality;
 			Rectangle rec = new Rectangle();
-			for(int n= 0; n < 8; n++)
+			for (int n = 0; n < 8; n++)
 			{
 				int x = boardRotate ? 7 - n : n;
 				int y = boardRotate ? 7 - n : n;
@@ -355,7 +400,7 @@ namespace RapChessGui
 					rec.Width = CPieceBoard.field;
 					rec.Height = CPieceBoard.field;
 					if (i == lastDes)
-						g.FillRectangle(brush3,rec);
+						g.FillRectangle(brush3, rec);
 					CPiece piece = CPieceBoard.list[i];
 					if (piece == null)
 						continue;
@@ -381,6 +426,7 @@ namespace RapChessGui
 			g.FillPath(brushW, gpW);
 			g.DrawPath(penB, gpB);
 			g.FillPath(brushB, gpB);
+			sf.Dispose();
 			outline.Dispose();
 			penW.Dispose();
 			penB.Dispose();
@@ -398,6 +444,8 @@ namespace RapChessGui
 				PieceList.Fill();
 			}
 			CPieceBoard.Render();
+			if (!CPieceBoard.animated)
+				RenderTaken();
 		}
 
 		void RenderHistory()
@@ -411,6 +459,41 @@ namespace RapChessGui
 			}
 			PieceList.Fill();
 			ShowHistory();
+		}
+
+		void RenderTaken()
+		{
+			int[] arrPiece = { 0, 0, 0, 0, 0, 0, 0, 0 };
+			for (int y = 0; y < 8; y++)
+			{
+				for (int x = 0; x < 8; x++)
+				{
+					int piece = CEngine.g_board[((y + 4) << 4) + x + 4];
+					if ((piece & CEngine.colorWhite)>0)
+						arrPiece[piece & 7]++;
+					if ((piece & CEngine.colorBlack) > 0)
+						arrPiece[piece & 7]--;
+				}
+			}
+			string w = "";
+			string b = "";
+			for(int n = 5; n > 0; n--)
+			{
+				for (int c = 0; c < arrPiece[n]; c++)
+					w += " pnbrqk"[n];
+				for (int c = 0; c > arrPiece[n]; c--)
+					b += " pnbrqk"[n];
+			}
+			if (boardRotate)
+			{
+				labTakenT.Text = w;
+				labTakenB.Text = b;
+			}
+			else
+			{
+				labTakenT.Text = b;
+				labTakenB.Text = w;
+			}
 		}
 
 		void ShowHistory()
@@ -432,7 +515,7 @@ namespace RapChessGui
 
 		void TrainerStart()
 		{
-			KillProcess();
+			PlayerList.KillProcess();
 			CData.gameMode = (int)CMode.training;
 			Trainer.user.engine = comboBoxTeacher.Text;
 			Trainer.user.mode = "movetime";
@@ -457,7 +540,7 @@ namespace RapChessGui
 
 		private void PictureBox1_MouseClick(object sender, MouseEventArgs e)
 		{
-			if (!PlayerList.CurPlayer().IsHuman())
+			if (PlayerList.CurPlayer().computer)
 				return;
 			CPieceBoard.animated = true;
 			int sou = lastDes;
@@ -475,7 +558,7 @@ namespace RapChessGui
 		private void FormChess_FormClosed(object sender, FormClosedEventArgs e)
 		{
 			IniSave();
-			KillProcess();
+			PlayerList.KillProcess();
 		}
 
 		private void Timer1_Tick_1(object sender, EventArgs e)
@@ -487,78 +570,37 @@ namespace RapChessGui
 			}
 			var cp = PlayerList.CurPlayer();
 			double dif = CData.gameState > 0 ? 0 : (DateTime.Now - cp.timeStart).TotalMilliseconds;
-			if (!cp.IsHuman())
-			{
-				string msg = cp.PlayerEng.Reader.ReadLine(false);
-				Uci.SetMsg(msg);
-				if (Uci.command != "")
-				{
-					string s = Uci.GetValue("cp");
-					if (s != "")
-						cp.score = s;
-					s = Uci.GetValue("mate");
-					if (s != "")
-					{
-						if (Int32.Parse(s) > 0)
-							cp.score = $"+{s}M";
-						else
-							cp.score = $"{s}M";
-					}
-					s = Uci.GetValue("depth");
-					if (s != "")
-						cp.depth = s;
-					s = Uci.GetValue("seldepth");
-					if (s != "")
-						cp.seldepth = s;
-					s = Uci.GetValue("nps");
-					if (s != "")
-						cp.nps = s;
-					s = Uci.GetValue("ponder");
-					if (s != "")
-						cp.ponder = s;
-					if (Uci.tokens[0] == "bestmove")
-					{
-						string em = Uci.tokens[1];
-						MakeMove(em);
-						dif = 0;
-					}
-					else
-					{
-						int i = Uci.GetIndex("pv", 0);
-						if (i > 0)
-						{
-							string pv = "";
-							for (int n = i; n < Uci.tokens.Length; n++)
-								pv += Uci.tokens[n] + " ";
-							labLast.Text = pv;
-						}
-					}
-				}
-			}
 			DateTime tot = new DateTime().AddMilliseconds(cp.timeTotal + dif);
-			if (boardRotate ^ cp.IsWhite())
-			{
-				labTimeB.Text = tot.ToString("HH:mm:ss");
-				labScoreB.Text = $"Score {cp.score}";
-				labNpsB.Text = $"Nps {cp.nps}";
-				labPonderB.Text = $"Ponder {cp.ponder}";
-				if (cp.seldepth != "0")
+			if (CData.gameState == 0)
+				if (boardRotate ^ Engine.whiteTurn)
+				{
+					labTimeB.Text = tot.ToString("HH:mm:ss");
+					labScoreB.Text = $"Score {cp.score}";
+					labNpsB.Text = $"Nps {cp.nps}";
 					if (cp.seldepth != "0")
 						labDepthB.Text = $"Depth {cp.depth} / {cp.seldepth}";
 					else
 						labDepthB.Text = $"Depth {cp.depth}";
-			}
-			else
-			{
-				labTimeT.Text = tot.ToString("HH:mm:ss");
-				labScoreT.Text = $"Score {cp.score}";
-				labNpsT.Text = $"Nps {cp.nps}";
-				labPonderT.Text = $"Ponder {cp.ponder}";
-				if (cp.seldepth != "0")
-					labDepthT.Text = $"Depth {cp.depth} / {cp.seldepth}";
+				}
 				else
-					labDepthT.Text = $"Depth {cp.depth}";
-			}
+				{
+					labTimeT.Text = tot.ToString("HH:mm:ss");
+					labScoreT.Text = $"Score {cp.score}";
+					labNpsT.Text = $"Nps {cp.nps}";
+					if (cp.seldepth != "0")
+						labDepthT.Text = $"Depth {cp.depth} / {cp.seldepth}";
+					else
+						labDepthT.Text = $"Depth {cp.depth}";
+				}
+			if (cp.computer)
+				if (!cp.started)
+					cp.Start();
+				else if (cp.readyok && !cp.go)
+				{
+					cp.CompMakeMove();
+				}
+				else
+					GetMessage(cp);
 		}
 
 		private void NewGameToolStripMenuItem_Click(object sender, EventArgs e)
@@ -629,74 +671,11 @@ namespace RapChessGui
 			PieceList.Fill();
 			RenderBoard();
 		}
-	}
 
-	public static class RichTextBoxExtensions
-	{
-		public static void AppendText(this RichTextBox box, string text, Color color)
+		private void logToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			box.SelectionStart = box.TextLength;
-			box.SelectionLength = 0;
-
-			box.SelectionColor = color;
-			box.AppendText(text);
-			box.SelectionColor = box.ForeColor;
-		}
-
-		public static void AddContextMenu(this RichTextBox rtb)
-		{
-			if (rtb.ContextMenuStrip == null)
-			{
-				ContextMenuStrip cms = new ContextMenuStrip()
-				{
-					ShowImageMargin = false
-				};
-
-				ToolStripMenuItem tsmiUndo = new ToolStripMenuItem("Undo");
-				tsmiUndo.Click += (sender, e) => rtb.Undo();
-				cms.Items.Add(tsmiUndo);
-
-				ToolStripMenuItem tsmiRedo = new ToolStripMenuItem("Redo");
-				tsmiRedo.Click += (sender, e) => rtb.Redo();
-				cms.Items.Add(tsmiRedo);
-
-				cms.Items.Add(new ToolStripSeparator());
-
-				ToolStripMenuItem tsmiCut = new ToolStripMenuItem("Cut");
-				tsmiCut.Click += (sender, e) => rtb.Cut();
-				cms.Items.Add(tsmiCut);
-
-				ToolStripMenuItem tsmiCopy = new ToolStripMenuItem("Copy");
-				tsmiCopy.Click += (sender, e) => rtb.Copy();
-				cms.Items.Add(tsmiCopy);
-
-				ToolStripMenuItem tsmiPaste = new ToolStripMenuItem("Paste");
-				tsmiPaste.Click += (sender, e) => rtb.Paste();
-				cms.Items.Add(tsmiPaste);
-
-				ToolStripMenuItem tsmiDelete = new ToolStripMenuItem("Delete");
-				tsmiDelete.Click += (sender, e) => rtb.SelectedText = "";
-				cms.Items.Add(tsmiDelete);
-
-				cms.Items.Add(new ToolStripSeparator());
-
-				ToolStripMenuItem tsmiSelectAll = new ToolStripMenuItem("Select All");
-				tsmiSelectAll.Click += (sender, e) => rtb.SelectAll();
-				cms.Items.Add(tsmiSelectAll);
-
-				cms.Opening += (sender, e) =>
-				{
-					tsmiUndo.Enabled = !rtb.ReadOnly && rtb.CanUndo;
-					tsmiRedo.Enabled = !rtb.ReadOnly && rtb.CanRedo;
-					tsmiCut.Enabled = !rtb.ReadOnly && rtb.SelectionLength > 0;
-					tsmiCopy.Enabled = rtb.SelectionLength > 0;
-					tsmiPaste.Enabled = !rtb.ReadOnly && Clipboard.ContainsText();
-					tsmiDelete.Enabled = !rtb.ReadOnly && rtb.SelectionLength > 0;
-					tsmiSelectAll.Enabled = rtb.TextLength > 0 && rtb.SelectionLength < rtb.TextLength;
-				};
-
-				rtb.ContextMenuStrip = cms;
-			}
+			if (!CData.FLog.Visible)
+				CData.FLog.Show(this);
 		}
 	}
 }

@@ -1,6 +1,6 @@
 ﻿namespace RapChessGui
 {
-	partial class Form1
+	partial class FormChessGui
 	{
 		/// <summary>
 		/// Wymagana zmienna projektanta.
@@ -29,7 +29,7 @@
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
-			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
+			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormChessGui));
 			this.timer1 = new System.Windows.Forms.Timer(this.components);
 			this.menuStrip1 = new System.Windows.Forms.MenuStrip();
 			this.newGameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -39,8 +39,9 @@
 			this.loadFromClipboardToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.playersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.logToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.panel2 = new System.Windows.Forms.Panel();
-			this.labPonderT = new System.Windows.Forms.Label();
+			this.labTakenT = new System.Windows.Forms.Label();
 			this.labNpsT = new System.Windows.Forms.Label();
 			this.labDepthT = new System.Windows.Forms.Label();
 			this.labScoreT = new System.Windows.Forms.Label();
@@ -84,7 +85,7 @@
 			this.comboBoxTrained = new System.Windows.Forms.ComboBox();
 			this.pictureBox1 = new System.Windows.Forms.PictureBox();
 			this.panel3 = new System.Windows.Forms.Panel();
-			this.labPonderB = new System.Windows.Forms.Label();
+			this.labTakenB = new System.Windows.Forms.Label();
 			this.labNpsB = new System.Windows.Forms.Label();
 			this.labDepthB = new System.Windows.Forms.Label();
 			this.labScoreB = new System.Windows.Forms.Label();
@@ -124,7 +125,8 @@
             this.backToolStripMenuItem,
             this.fenToolStripMenuItem,
             this.playersToolStripMenuItem,
-            this.optionsToolStripMenuItem});
+            this.optionsToolStripMenuItem,
+            this.logToolStripMenuItem});
 			this.menuStrip1.Location = new System.Drawing.Point(0, 0);
 			this.menuStrip1.Name = "menuStrip1";
 			this.menuStrip1.Size = new System.Drawing.Size(848, 24);
@@ -182,11 +184,18 @@
 			this.optionsToolStripMenuItem.Text = "Options";
 			this.optionsToolStripMenuItem.Click += new System.EventHandler(this.OptionsToolStripMenuItem_Click);
 			// 
+			// logToolStripMenuItem
+			// 
+			this.logToolStripMenuItem.Name = "logToolStripMenuItem";
+			this.logToolStripMenuItem.Size = new System.Drawing.Size(39, 20);
+			this.logToolStripMenuItem.Text = "Log";
+			this.logToolStripMenuItem.Click += new System.EventHandler(this.logToolStripMenuItem_Click);
+			// 
 			// panel2
 			// 
 			this.panel2.BackColor = System.Drawing.Color.Silver;
 			this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-			this.panel2.Controls.Add(this.labPonderT);
+			this.panel2.Controls.Add(this.labTakenT);
 			this.panel2.Controls.Add(this.labNpsT);
 			this.panel2.Controls.Add(this.labDepthT);
 			this.panel2.Controls.Add(this.labScoreT);
@@ -199,18 +208,18 @@
 			this.panel2.Size = new System.Drawing.Size(848, 30);
 			this.panel2.TabIndex = 7;
 			// 
-			// labPonderT
+			// labTakenT
 			// 
-			this.labPonderT.BackColor = System.Drawing.Color.LightGray;
-			this.labPonderT.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-			this.labPonderT.Dock = System.Windows.Forms.DockStyle.Left;
-			this.labPonderT.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-			this.labPonderT.ForeColor = System.Drawing.Color.Black;
-			this.labPonderT.Location = new System.Drawing.Point(711, 0);
-			this.labPonderT.Name = "labPonderT";
-			this.labPonderT.Size = new System.Drawing.Size(137, 26);
-			this.labPonderT.TabIndex = 8;
-			this.labPonderT.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.labTakenT.BackColor = System.Drawing.Color.DarkGray;
+			this.labTakenT.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+			this.labTakenT.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.labTakenT.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+			this.labTakenT.ForeColor = System.Drawing.Color.Black;
+			this.labTakenT.Location = new System.Drawing.Point(626, 0);
+			this.labTakenT.Name = "labTakenT";
+			this.labTakenT.Size = new System.Drawing.Size(218, 26);
+			this.labTakenT.TabIndex = 8;
+			this.labTakenT.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
 			// labNpsT
 			// 
@@ -219,9 +228,9 @@
 			this.labNpsT.Dock = System.Windows.Forms.DockStyle.Left;
 			this.labNpsT.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
 			this.labNpsT.ForeColor = System.Drawing.Color.Black;
-			this.labNpsT.Location = new System.Drawing.Point(574, 0);
+			this.labNpsT.Location = new System.Drawing.Point(506, 0);
 			this.labNpsT.Name = "labNpsT";
-			this.labNpsT.Size = new System.Drawing.Size(137, 26);
+			this.labNpsT.Size = new System.Drawing.Size(120, 26);
 			this.labNpsT.TabIndex = 7;
 			this.labNpsT.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
@@ -232,9 +241,9 @@
 			this.labDepthT.Dock = System.Windows.Forms.DockStyle.Left;
 			this.labDepthT.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
 			this.labDepthT.ForeColor = System.Drawing.Color.Black;
-			this.labDepthT.Location = new System.Drawing.Point(437, 0);
+			this.labDepthT.Location = new System.Drawing.Point(386, 0);
 			this.labDepthT.Name = "labDepthT";
-			this.labDepthT.Size = new System.Drawing.Size(137, 26);
+			this.labDepthT.Size = new System.Drawing.Size(120, 26);
 			this.labDepthT.TabIndex = 6;
 			this.labDepthT.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
@@ -245,9 +254,9 @@
 			this.labScoreT.Dock = System.Windows.Forms.DockStyle.Left;
 			this.labScoreT.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
 			this.labScoreT.ForeColor = System.Drawing.Color.Black;
-			this.labScoreT.Location = new System.Drawing.Point(300, 0);
+			this.labScoreT.Location = new System.Drawing.Point(266, 0);
 			this.labScoreT.Name = "labScoreT";
-			this.labScoreT.Size = new System.Drawing.Size(137, 26);
+			this.labScoreT.Size = new System.Drawing.Size(120, 26);
 			this.labScoreT.TabIndex = 5;
 			this.labScoreT.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
@@ -258,9 +267,9 @@
 			this.labTimeT.Dock = System.Windows.Forms.DockStyle.Left;
 			this.labTimeT.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
 			this.labTimeT.ForeColor = System.Drawing.Color.Black;
-			this.labTimeT.Location = new System.Drawing.Point(163, 0);
+			this.labTimeT.Location = new System.Drawing.Point(146, 0);
 			this.labTimeT.Name = "labTimeT";
-			this.labTimeT.Size = new System.Drawing.Size(137, 26);
+			this.labTimeT.Size = new System.Drawing.Size(120, 26);
 			this.labTimeT.TabIndex = 3;
 			this.labTimeT.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
@@ -273,7 +282,7 @@
 			this.labNameT.ForeColor = System.Drawing.Color.Black;
 			this.labNameT.Location = new System.Drawing.Point(26, 0);
 			this.labNameT.Name = "labNameT";
-			this.labNameT.Size = new System.Drawing.Size(137, 26);
+			this.labNameT.Size = new System.Drawing.Size(120, 26);
 			this.labNameT.TabIndex = 2;
 			this.labNameT.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
@@ -326,10 +335,11 @@
 			// 
 			// richTextBox1
 			// 
-			this.richTextBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.richTextBox1.Location = new System.Drawing.Point(3, 142);
+			this.richTextBox1.Dock = System.Windows.Forms.DockStyle.Bottom;
+			this.richTextBox1.Location = new System.Drawing.Point(3, 148);
 			this.richTextBox1.Name = "richTextBox1";
-			this.richTextBox1.Size = new System.Drawing.Size(258, 402);
+			this.richTextBox1.ReadOnly = true;
+			this.richTextBox1.Size = new System.Drawing.Size(258, 396);
 			this.richTextBox1.TabIndex = 22;
 			this.richTextBox1.Text = "";
 			// 
@@ -751,6 +761,7 @@
 			// 
 			this.pictureBox1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
 			this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Left;
+			this.pictureBox1.ErrorImage = null;
 			this.pictureBox1.Location = new System.Drawing.Point(0, 0);
 			this.pictureBox1.Name = "pictureBox1";
 			this.pictureBox1.Size = new System.Drawing.Size(576, 576);
@@ -762,7 +773,7 @@
 			// 
 			this.panel3.BackColor = System.Drawing.Color.Silver;
 			this.panel3.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-			this.panel3.Controls.Add(this.labPonderB);
+			this.panel3.Controls.Add(this.labTakenB);
 			this.panel3.Controls.Add(this.labNpsB);
 			this.panel3.Controls.Add(this.labDepthB);
 			this.panel3.Controls.Add(this.labScoreB);
@@ -775,18 +786,18 @@
 			this.panel3.Size = new System.Drawing.Size(848, 30);
 			this.panel3.TabIndex = 10;
 			// 
-			// labPonderB
+			// labTakenB
 			// 
-			this.labPonderB.BackColor = System.Drawing.Color.LightGray;
-			this.labPonderB.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-			this.labPonderB.Dock = System.Windows.Forms.DockStyle.Left;
-			this.labPonderB.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-			this.labPonderB.ForeColor = System.Drawing.Color.Black;
-			this.labPonderB.Location = new System.Drawing.Point(711, 0);
-			this.labPonderB.Name = "labPonderB";
-			this.labPonderB.Size = new System.Drawing.Size(137, 26);
-			this.labPonderB.TabIndex = 8;
-			this.labPonderB.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.labTakenB.BackColor = System.Drawing.Color.DarkGray;
+			this.labTakenB.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+			this.labTakenB.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.labTakenB.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+			this.labTakenB.ForeColor = System.Drawing.Color.Black;
+			this.labTakenB.Location = new System.Drawing.Point(626, 0);
+			this.labTakenB.Name = "labTakenB";
+			this.labTakenB.Size = new System.Drawing.Size(218, 26);
+			this.labTakenB.TabIndex = 8;
+			this.labTakenB.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
 			// labNpsB
 			// 
@@ -795,9 +806,9 @@
 			this.labNpsB.Dock = System.Windows.Forms.DockStyle.Left;
 			this.labNpsB.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
 			this.labNpsB.ForeColor = System.Drawing.Color.Black;
-			this.labNpsB.Location = new System.Drawing.Point(574, 0);
+			this.labNpsB.Location = new System.Drawing.Point(506, 0);
 			this.labNpsB.Name = "labNpsB";
-			this.labNpsB.Size = new System.Drawing.Size(137, 26);
+			this.labNpsB.Size = new System.Drawing.Size(120, 26);
 			this.labNpsB.TabIndex = 7;
 			this.labNpsB.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
@@ -808,9 +819,9 @@
 			this.labDepthB.Dock = System.Windows.Forms.DockStyle.Left;
 			this.labDepthB.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
 			this.labDepthB.ForeColor = System.Drawing.Color.Black;
-			this.labDepthB.Location = new System.Drawing.Point(437, 0);
+			this.labDepthB.Location = new System.Drawing.Point(386, 0);
 			this.labDepthB.Name = "labDepthB";
-			this.labDepthB.Size = new System.Drawing.Size(137, 26);
+			this.labDepthB.Size = new System.Drawing.Size(120, 26);
 			this.labDepthB.TabIndex = 6;
 			this.labDepthB.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
@@ -821,9 +832,9 @@
 			this.labScoreB.Dock = System.Windows.Forms.DockStyle.Left;
 			this.labScoreB.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
 			this.labScoreB.ForeColor = System.Drawing.Color.Black;
-			this.labScoreB.Location = new System.Drawing.Point(300, 0);
+			this.labScoreB.Location = new System.Drawing.Point(266, 0);
 			this.labScoreB.Name = "labScoreB";
-			this.labScoreB.Size = new System.Drawing.Size(137, 26);
+			this.labScoreB.Size = new System.Drawing.Size(120, 26);
 			this.labScoreB.TabIndex = 5;
 			this.labScoreB.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
@@ -834,9 +845,9 @@
 			this.labTimeB.Dock = System.Windows.Forms.DockStyle.Left;
 			this.labTimeB.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
 			this.labTimeB.ForeColor = System.Drawing.Color.Black;
-			this.labTimeB.Location = new System.Drawing.Point(163, 0);
+			this.labTimeB.Location = new System.Drawing.Point(146, 0);
 			this.labTimeB.Name = "labTimeB";
-			this.labTimeB.Size = new System.Drawing.Size(137, 26);
+			this.labTimeB.Size = new System.Drawing.Size(120, 26);
 			this.labTimeB.TabIndex = 4;
 			this.labTimeB.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
@@ -849,7 +860,7 @@
 			this.labNameB.ForeColor = System.Drawing.Color.Black;
 			this.labNameB.Location = new System.Drawing.Point(26, 0);
 			this.labNameB.Name = "labNameB";
-			this.labNameB.Size = new System.Drawing.Size(137, 26);
+			this.labNameB.Size = new System.Drawing.Size(120, 26);
 			this.labNameB.TabIndex = 3;
 			this.labNameB.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
@@ -906,7 +917,7 @@
 			this.timerStart.Interval = 6000;
 			this.timerStart.Tick += new System.EventHandler(this.TimerStart_Tick);
 			// 
-			// Form1
+			// FormChessGui
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -921,7 +932,7 @@
 			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.MainMenuStrip = this.menuStrip1;
 			this.MaximizeBox = false;
-			this.Name = "Form1";
+			this.Name = "FormChessGui";
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
 			this.Text = "RapChessGui";
 			this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FormChess_FormClosed);
@@ -968,10 +979,10 @@
 		private System.Windows.Forms.Label labTimeB;
 		private System.Windows.Forms.Label labScoreT;
 		private System.Windows.Forms.Label labScoreB;
-		private System.Windows.Forms.Label labPonderT;
+		private System.Windows.Forms.Label labTakenT;
 		private System.Windows.Forms.Label labNpsT;
 		private System.Windows.Forms.Label labDepthT;
-		private System.Windows.Forms.Label labPonderB;
+		private System.Windows.Forms.Label labTakenB;
 		private System.Windows.Forms.Label labNpsB;
 		private System.Windows.Forms.Label labDepthB;
 		private System.Windows.Forms.ToolStripMenuItem backToolStripMenuItem;
@@ -1014,6 +1025,7 @@
 		private System.Windows.Forms.ToolStripMenuItem saveToClipboardToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem loadFromClipboardToolStripMenuItem;
 		private System.Windows.Forms.NumericUpDown nudTime;
+		private System.Windows.Forms.ToolStripMenuItem logToolStripMenuItem;
 	}
 }
 

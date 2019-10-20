@@ -15,6 +15,7 @@ namespace RapChessGui
 		public static string[] arrModeNames = new string[] { "depth","movetime" };
 		public static List<string> engineNames = new List<string>();
 		public static List<string> playerNames = new List<string>();
+		public static FormLog FLog = null;
 
 		public static int ModeStoi(string s)
 		{

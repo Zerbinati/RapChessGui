@@ -1,15 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace RapChessGui
 {
-	class CPlayer
+	public class MessageEventArgs : EventArgs
 	{
-		public int index;
-		public CPlayerEng PlayerEng = new CPlayerEng();
+		public MessageEventArgs(string s)
+		{ Message = s; }
+		public string Message { get; set; }
+	}
+
+	public class CPlayer
+	{
+		public bool computer = false;
+		public bool started = false;
+		public bool uciok = false;
+		public bool readyok = false;
+		public bool go = false;
+		public CPlayerEng PlayerEng;
 		public CUser user;
 		public DateTime timeStart;
 		public double timeTotal;
@@ -18,57 +30,76 @@ namespace RapChessGui
 		public string seldepth;
 		public string nps;
 		public string ponder;
+		public List<string> messages = new List<string>();
 
-		public CPlayer(int i)
+		public CPlayer()
 		{
-			index = i;
+			PlayerEng = new CPlayerEng();
 			Init();
 		}
 
 		public void Init()
 		{
+			started = false;
+			go = false;
 			timeTotal = 0;
 			score = "0";
 			depth = "0";
 			seldepth = "0";
 			nps = "0";
 			ponder = "";
-		}
-
-		public bool IsHuman()
-		{
-			return PlayerEng.process.StartInfo.FileName == "";
-		}
-
-		public bool IsWhite()
-		{
-			return index == 0;
-		}
-
-		public void MakeMove()
-		{
-			if (!IsHuman())
-			{
-				string position = CHistory.GetPosition();
-				PlayerEng.streamWriter.WriteLine(position);
-				PlayerEng.streamWriter.WriteLine($"go {user.mode} {user.value}");
-			}
 			timeStart = DateTime.Now;
+		}
+
+		public void Start()
+		{
+			SendMessage("uci");
+			started = true;
+		}
+
+		public void CompMakeMove()
+		{
+			messages.Clear();
+				string position = CHistory.GetPosition();
+				//PlayerEng.streamWriter.Flush();
+				//stream.DiscardBufferedData();
+				SendMessage(position);
+				SendMessage($"go {user.mode} {user.value}");
+			go = true;
 		}
 
 		public void SendMessage(string msg)
 		{
-			if (!IsHuman())
+			if (computer)
+			{
+				CData.FLog.richTextBox1.AppendText($"{user.name} < {msg}\n");
 				PlayerEng.streamWriter.WriteLine(msg);
+			}
+		}
+
+		public string GetMessage()
+		{
+			string msg = "";
+			if (computer)
+			{
+				if (messages.Count > 0)
+				{
+					msg = messages[0];
+					messages.RemoveAt(0);
+				}
+				if (msg != "")
+					CData.FLog.richTextBox1.AppendText($"{user.name} > {msg}\n");
+			}
+			return msg;
 		}
 
 		public void SetUser(CUser u)
 		{
+			uciok = false;
+			readyok = false;
 			user = u;
-			if (user.engine != "Human")
-				PlayerEng.SetEngine(user.engine, user.parameters);
-			else
-				PlayerEng.Kill();
+			computer = user.engine != "Human";
+			PlayerEng.SetPlayer(this);
 		}
 
 		public void SetUser(string name)
@@ -85,8 +116,30 @@ namespace RapChessGui
 
 		public CPlayerList()
 		{
-			player[0] = new CPlayer(0);
-			player[1] = new CPlayer(1);
+			player[0] = new CPlayer();
+			player[1] = new CPlayer();
+		}
+
+		public void KillProcess()
+		{
+			string eDir = AppDomain.CurrentDomain.BaseDirectory + "Engines";
+			Process[] processlist = Process.GetProcesses();
+			foreach (Process process in processlist)
+			{
+				try
+				{
+					String fileName = process.MainModule.FileName;
+					if (fileName.IndexOf(eDir) == 0)
+					{
+						process.Kill();
+					}
+
+				}
+				catch
+				{
+				}
+
+			}
 		}
 
 		public CPlayer CurPlayer()
@@ -94,10 +147,11 @@ namespace RapChessGui
 			return player[curIndex];
 		}
 
-		public void MakeMove()
+		public void Next()
 		{
+			CurPlayer().go = false;
 			curIndex ^= 1;
-			CurPlayer().MakeMove();
+			CurPlayer().timeStart = DateTime.Now;
 		}
 
 		public void NewGame()
@@ -105,21 +159,21 @@ namespace RapChessGui
 			player[0].Init();
 			player[1].Init();
 			curIndex = 0;
-			CurPlayer().MakeMove();
 		}
 
 		public void Rotate()
 		{
-			CPlayer p = player[0];
+			KillProcess();
+			CUser u1 = player[0].user;
+			CUser u2 = player[1].user;
+			player[0].SetUser(u2);
+			player[1].SetUser(u1);
+			/*CPlayer p = player[0];
 			player[0] = player[1];
 			player[1] = p;
 			player[0].index = 0;
-			player[1].index = 1;
+			player[1].index = 1;*/
 		}
 
-		public bool WhiteTurn()
-		{
-			return curIndex == 0;
-		}
 	}
 }

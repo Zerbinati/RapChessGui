@@ -15,6 +15,7 @@ namespace RapChessGui
 	public partial class FormPlayer : Form
 	{
 		string curUserName;
+
 		public FormPlayer()
 		{
 			InitializeComponent();
@@ -36,6 +37,7 @@ namespace RapChessGui
 			if (user == null)
 				return;
 			tbUserName.Text = user.name;
+			tbParameters.Text = user.parameters;
 			cbEngList.Text = user.engine;
 			curUserName = user.name;
 			List<RadioButton> list = gbMode.Controls.OfType<RadioButton>().ToList();
@@ -122,5 +124,6 @@ namespace RapChessGui
 			CUserList.SaveToIni();
 			UpdateListBox();
 		}
+
 	}
 }

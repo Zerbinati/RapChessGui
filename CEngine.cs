@@ -238,14 +238,14 @@ namespace RapChessGui
 		{
 			string result = "";
 			string[] arr = { " ", "p", "n", "b", "r", "q", "k", " " };
-			for (int row = 0; row < 8; row++)
+			for (int y = 0; y < 8; y++)
 			{
-				if (row != 0)
+				if (y != 0)
 					result += '/';
 				int empty = 0;
-				for (int col = 0; col < 8; col++)
+				for (int x = 0; x < 8; x++)
 				{
-					int piece = g_board[((row + 4) << 4) + col + 4];
+					int piece = g_board[((y + 4) << 4) + x + 4];
 					if (piece == colorEmpty)
 						empty++;
 					else

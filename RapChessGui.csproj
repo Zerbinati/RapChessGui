@@ -52,12 +52,12 @@
   <ItemGroup>
     <Compile Include="CData.cs" />
     <Compile Include="CEngine.cs" />
+    <Compile Include="CExtensions.cs" />
     <Compile Include="CHistory.cs" />
     <Compile Include="CIniFile.cs" />
     <Compile Include="CPieceList.cs" />
     <Compile Include="CPlayerEng.cs" />
     <Compile Include="CPlayerList.cs" />
-    <Compile Include="CReader.cs" />
     <Compile Include="CTrainer.cs" />
     <Compile Include="CUserList.cs" />
     <Compile Include="FormChess.cs">
@@ -66,10 +66,11 @@
     <Compile Include="FormChess.Designer.cs">
       <DependentUpon>FormChess.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormChess1.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>FormChess.resx</DependentUpon>
+    <Compile Include="FormLog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormLog.Designer.cs">
+      <DependentUpon>FormLog.cs</DependentUpon>
     </Compile>
     <Compile Include="FormOptions.cs">
       <SubType>Form</SubType>
@@ -88,7 +89,10 @@
     <EmbeddedResource Include="FormChess.resx">
       <DependentUpon>FormChess.cs</DependentUpon>
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>FormChess1.Designer.cs</LastGenOutput>
+      <LastGenOutput>FormChess2.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormLog.resx">
+      <DependentUpon>FormLog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormOptions.resx">
       <DependentUpon>FormOptions.cs</DependentUpon>

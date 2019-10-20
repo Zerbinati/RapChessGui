@@ -8,36 +8,38 @@ using System.Threading.Tasks;
 
 namespace RapChessGui
 {
-	class CPlayerEng
+	public class CPlayerEng
 	{
-		public CReader Reader = new CReader();
-		public Process process = new Process();
 		public StreamWriter streamWriter;
+		private Process process = new Process();
+		private CPlayer player;
 
-		public void Kill()
+		public void SetPlayer(CPlayer p)
 		{
-			process.StartInfo.FileName = "";
-			try
-			{
-				process.Kill();
-			}
-			catch
-			{
-			}
+			process.Dispose();
+			player = p;
+			SetEngine();
 		}
 
-		public void SetEngine(string eng, string arg)
+		private void SetEngine()
 		{
-			Kill();
-			process.StartInfo.FileName = "Engines/" + eng;
-			process.StartInfo.Arguments = arg;
+			if (!player.computer)
+				return;
+			process = new Process();
+			process.StartInfo.FileName = "Engines/" + player.user.engine;
+			process.StartInfo.Arguments = player.user.parameters;
+			process.StartInfo.WorkingDirectory = AppDomain.CurrentDomain.BaseDirectory + "Engines";
 			process.StartInfo.UseShellExecute = false;
 			process.StartInfo.CreateNoWindow = true;
 			process.StartInfo.RedirectStandardInput = true;
 			process.StartInfo.RedirectStandardOutput = true;
+			process.OutputDataReceived += new DataReceivedEventHandler(delegate (object sender, DataReceivedEventArgs e)
+			{
+				player.messages.Add(e.Data);
+			});
 			process.Start();
+			process.BeginOutputReadLine();
 			streamWriter = process.StandardInput;
-			Reader.SetStream(process.StandardOutput);
 		}
 	}
 }
