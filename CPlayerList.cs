@@ -58,6 +58,7 @@ namespace RapChessGui
 			string emo = book.GetMove(CHistory.GetMoves());
 			if (emo != "")
 			{
+				FormChess.curForm.labBook.Text = $"Book {++CData.book}";
 				FormChess.curForm.labLast.ForeColor = Color.Aquamarine;
 				FormChess.curForm.labLast.Text = $"book {emo}";
 				FormChess.curForm.MakeMove(emo);

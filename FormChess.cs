@@ -334,6 +334,7 @@ namespace RapChessGui
 
 		void Clear()
 		{
+			labBook.Text = $"Book {CData.book}";
 			labMove.Text = "Move 1 0";
 			labLast.ForeColor = Color.Gainsboro;
 			labLast.Text = "Good luck";
@@ -347,6 +348,7 @@ namespace RapChessGui
 			CPlayer pw = PlayerList.player[0];
 			CPlayer pb = PlayerList.player[1];
 			richTextBox1.Clear();
+			CData.book = 0;
 			CData.FLog.richTextBox1.Clear();
 			CData.FLog.richTextBox1.AppendText($"White {pw.user.name} {pw.user.engine} {pw.user.parameters}\n");
 			CData.FLog.richTextBox1.AppendText($"Black {pb.user.name} {pb.user.engine} {pb.user.parameters}\n");

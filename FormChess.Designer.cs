@@ -40,6 +40,7 @@
 			this.playersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.logToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.panMenu = new System.Windows.Forms.Panel();
 			this.panel2 = new System.Windows.Forms.Panel();
 			this.labTakenT = new System.Windows.Forms.Label();
 			this.labNpsT = new System.Windows.Forms.Label();
@@ -121,7 +122,9 @@
 			this.labLast = new System.Windows.Forms.Label();
 			this.labMove = new System.Windows.Forms.Label();
 			this.timerStart = new System.Windows.Forms.Timer(this.components);
+			this.labBook = new System.Windows.Forms.Label();
 			this.menuStrip1.SuspendLayout();
+			this.panMenu.SuspendLayout();
 			this.panel2.SuspendLayout();
 			this.panel4.SuspendLayout();
 			this.tabControl1.SuspendLayout();
@@ -150,6 +153,7 @@
 			// 
 			// menuStrip1
 			// 
+			this.menuStrip1.Dock = System.Windows.Forms.DockStyle.None;
 			this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.newGameToolStripMenuItem,
             this.backToolStripMenuItem,
@@ -157,9 +161,9 @@
             this.playersToolStripMenuItem,
             this.optionsToolStripMenuItem,
             this.logToolStripMenuItem});
-			this.menuStrip1.Location = new System.Drawing.Point(0, 0);
+			this.menuStrip1.Location = new System.Drawing.Point(0, 2);
 			this.menuStrip1.Name = "menuStrip1";
-			this.menuStrip1.Size = new System.Drawing.Size(909, 24);
+			this.menuStrip1.Size = new System.Drawing.Size(323, 24);
 			this.menuStrip1.TabIndex = 1;
 			this.menuStrip1.Text = "menuStrip1";
 			// 
@@ -221,6 +225,18 @@
 			this.logToolStripMenuItem.Text = "Log";
 			this.logToolStripMenuItem.Click += new System.EventHandler(this.logToolStripMenuItem_Click);
 			// 
+			// panMenu
+			// 
+			this.panMenu.BackColor = System.Drawing.SystemColors.Control;
+			this.panMenu.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+			this.panMenu.Controls.Add(this.labBook);
+			this.panMenu.Controls.Add(this.menuStrip1);
+			this.panMenu.Dock = System.Windows.Forms.DockStyle.Top;
+			this.panMenu.Location = new System.Drawing.Point(0, 0);
+			this.panMenu.Name = "panMenu";
+			this.panMenu.Size = new System.Drawing.Size(909, 26);
+			this.panMenu.TabIndex = 26;
+			// 
 			// panel2
 			// 
 			this.panel2.BackColor = System.Drawing.Color.Silver;
@@ -233,7 +249,7 @@
 			this.panel2.Controls.Add(this.labNameT);
 			this.panel2.Controls.Add(this.panTop);
 			this.panel2.Dock = System.Windows.Forms.DockStyle.Top;
-			this.panel2.Location = new System.Drawing.Point(0, 24);
+			this.panel2.Location = new System.Drawing.Point(0, 26);
 			this.panel2.Name = "panel2";
 			this.panel2.Size = new System.Drawing.Size(909, 30);
 			this.panel2.TabIndex = 7;
@@ -331,7 +347,7 @@
 			this.panel4.Controls.Add(this.tabControl1);
 			this.panel4.Controls.Add(this.pictureBox1);
 			this.panel4.Dock = System.Windows.Forms.DockStyle.Top;
-			this.panel4.Location = new System.Drawing.Point(0, 54);
+			this.panel4.Location = new System.Drawing.Point(0, 56);
 			this.panel4.Name = "panel4";
 			this.panel4.Size = new System.Drawing.Size(909, 576);
 			this.panel4.TabIndex = 9;
@@ -1112,7 +1128,7 @@
 			this.panel3.Controls.Add(this.labNameB);
 			this.panel3.Controls.Add(this.panBottom);
 			this.panel3.Dock = System.Windows.Forms.DockStyle.Top;
-			this.panel3.Location = new System.Drawing.Point(0, 630);
+			this.panel3.Location = new System.Drawing.Point(0, 632);
 			this.panel3.Name = "panel3";
 			this.panel3.Size = new System.Drawing.Size(909, 30);
 			this.panel3.TabIndex = 10;
@@ -1213,9 +1229,9 @@
 			this.panel1.Controls.Add(this.labMove);
 			this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.panel1.ForeColor = System.Drawing.Color.Gainsboro;
-			this.panel1.Location = new System.Drawing.Point(0, 660);
+			this.panel1.Location = new System.Drawing.Point(0, 662);
 			this.panel1.Name = "panel1";
-			this.panel1.Size = new System.Drawing.Size(909, 38);
+			this.panel1.Size = new System.Drawing.Size(909, 36);
 			this.panel1.TabIndex = 11;
 			// 
 			// labLast
@@ -1226,7 +1242,7 @@
 			this.labLast.ForeColor = System.Drawing.Color.Gainsboro;
 			this.labLast.Location = new System.Drawing.Point(137, 0);
 			this.labLast.Name = "labLast";
-			this.labLast.Size = new System.Drawing.Size(768, 34);
+			this.labLast.Size = new System.Drawing.Size(768, 32);
 			this.labLast.TabIndex = 2;
 			this.labLast.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
@@ -1239,7 +1255,7 @@
 			this.labMove.ForeColor = System.Drawing.Color.Gainsboro;
 			this.labMove.Location = new System.Drawing.Point(0, 0);
 			this.labMove.Name = "labMove";
-			this.labMove.Size = new System.Drawing.Size(137, 34);
+			this.labMove.Size = new System.Drawing.Size(137, 32);
 			this.labMove.TabIndex = 1;
 			this.labMove.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
@@ -1247,6 +1263,16 @@
 			// 
 			this.timerStart.Interval = 6000;
 			this.timerStart.Tick += new System.EventHandler(this.TimerStart_Tick);
+			// 
+			// labBook
+			// 
+			this.labBook.Dock = System.Windows.Forms.DockStyle.Right;
+			this.labBook.Location = new System.Drawing.Point(825, 0);
+			this.labBook.Name = "labBook";
+			this.labBook.Size = new System.Drawing.Size(80, 22);
+			this.labBook.TabIndex = 2;
+			this.labBook.Text = "Book 0";
+			this.labBook.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
 			// FormChess
 			// 
@@ -1258,7 +1284,7 @@
 			this.Controls.Add(this.panel3);
 			this.Controls.Add(this.panel4);
 			this.Controls.Add(this.panel2);
-			this.Controls.Add(this.menuStrip1);
+			this.Controls.Add(this.panMenu);
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
 			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.MainMenuStrip = this.menuStrip1;
@@ -1270,6 +1296,8 @@
 			this.Load += new System.EventHandler(this.FormChess_Load);
 			this.menuStrip1.ResumeLayout(false);
 			this.menuStrip1.PerformLayout();
+			this.panMenu.ResumeLayout(false);
+			this.panMenu.PerformLayout();
 			this.panel2.ResumeLayout(false);
 			this.panel4.ResumeLayout(false);
 			this.tabControl1.ResumeLayout(false);
@@ -1290,7 +1318,6 @@
 			this.panel3.ResumeLayout(false);
 			this.panel1.ResumeLayout(false);
 			this.ResumeLayout(false);
-			this.PerformLayout();
 
 		}
 
@@ -1299,7 +1326,8 @@
 		private System.Windows.Forms.MenuStrip menuStrip1;
 		private System.Windows.Forms.ToolStripMenuItem newGameToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem playersToolStripMenuItem;
-		private System.Windows.Forms.Panel panel2;
+		private System.Windows.Forms.Panel panMenu;
+  		private System.Windows.Forms.Panel panel2;
 		private System.Windows.Forms.Panel panel4;
 		private System.Windows.Forms.PictureBox pictureBox1;
 		private System.Windows.Forms.Panel panel3;
@@ -1386,6 +1414,7 @@
 		private System.Windows.Forms.ComboBox cbPlayer1;
 		private System.Windows.Forms.NumericUpDown nudTrained;
 		private System.Windows.Forms.Label label1;
+		public System.Windows.Forms.Label labBook;
 	}
 }
 
