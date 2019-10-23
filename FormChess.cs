@@ -341,7 +341,6 @@ namespace RapChessGui
 
 		void Clear()
 		{
-			labBook.Text = $"Book {CData.book}";
 			labMove.Text = "Move 1 0";
 			labLast.ForeColor = Color.Gainsboro;
 			labLast.Text = "Good luck";
@@ -355,10 +354,13 @@ namespace RapChessGui
 			CPlayer pw = PlayerList.player[0];
 			CPlayer pb = PlayerList.player[1];
 			richTextBox1.Clear();
+			CData.back = 0;
 			CData.book = 0;
 			CData.FLog.richTextBox1.Clear();
 			CData.FLog.richTextBox1.AppendText($"White {pw.user.name} {pw.user.engine} {pw.user.parameters}\n");
 			CData.FLog.richTextBox1.AppendText($"Black {pb.user.name} {pb.user.engine} {pb.user.parameters}\n");
+			labBack.Text = $"Back {CData.back}";
+			labBook.Text = $"Book {CData.book}";
 			RenderInfo(pw);
 			RenderInfo(pb);
 		}
@@ -721,8 +723,11 @@ namespace RapChessGui
 
 		private void BackToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			CHistory.Back();
-			RenderHistory();
+			if (CHistory.Back())
+			{
+				labBack.Text = $"Back {++CData.back}";
+				RenderHistory();
+			}
 		}
 
 		private void OptionsToolStripMenuItem_Click(object sender, EventArgs e)

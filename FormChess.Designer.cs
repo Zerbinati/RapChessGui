@@ -123,6 +123,7 @@
 			this.labLast = new System.Windows.Forms.Label();
 			this.labMove = new System.Windows.Forms.Label();
 			this.timerStart = new System.Windows.Forms.Timer(this.components);
+			this.labBack = new System.Windows.Forms.Label();
 			this.menuStrip1.SuspendLayout();
 			this.panMenu.SuspendLayout();
 			this.panel2.SuspendLayout();
@@ -229,6 +230,7 @@
 			// 
 			this.panMenu.BackColor = System.Drawing.SystemColors.Control;
 			this.panMenu.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+			this.panMenu.Controls.Add(this.labBack);
 			this.panMenu.Controls.Add(this.labBook);
 			this.panMenu.Controls.Add(this.menuStrip1);
 			this.panMenu.Dock = System.Windows.Forms.DockStyle.Top;
@@ -1279,6 +1281,16 @@
 			this.timerStart.Interval = 6000;
 			this.timerStart.Tick += new System.EventHandler(this.TimerStart_Tick);
 			// 
+			// labBack
+			// 
+			this.labBack.Dock = System.Windows.Forms.DockStyle.Right;
+			this.labBack.Location = new System.Drawing.Point(745, 0);
+			this.labBack.Name = "labBack";
+			this.labBack.Size = new System.Drawing.Size(80, 22);
+			this.labBack.TabIndex = 3;
+			this.labBack.Text = "Back 0";
+			this.labBack.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			// 
 			// FormChess
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1420,6 +1432,7 @@
 		private System.Windows.Forms.NumericUpDown nudTrained;
 		private System.Windows.Forms.Label label1;
 		public System.Windows.Forms.Label labBook;
+		public System.Windows.Forms.Label labBack;
 	}
 }
 

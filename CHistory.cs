@@ -11,10 +11,14 @@ namespace RapChessGui
 		public static string fen = CEngine.defFen;
 		public static List<string> moves = new List<string>();
 
-		public static void Back()
+		public static bool Back()
 		{
 			if (moves.Count > 1)
-				moves.RemoveRange(moves.Count - 2,2);
+			{
+				moves.RemoveRange(moves.Count - 2, 2);
+				return true;
+			}
+			return false;
 		}
 
 		public static string LastMove()
