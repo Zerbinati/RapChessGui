@@ -21,6 +21,49 @@ namespace RapChessGui
 			name = n;
 		}
 
+		public bool SetCommand(string command)
+		{
+			string[] t = command.Split(new[] { ' ', '\t' }, StringSplitOptions.RemoveEmptyEntries);
+			string c1 = "";
+			string c2 = "";
+			int v = 0;
+			if (t.Length > 0)
+				c1 = t[0].ToLower();
+			if (t.Length > 1)
+				if (int.TryParse(t[1], out v))
+					c2 = v.ToString();
+			switch(c1)
+			{
+				case "movetime":
+					if (c2 == "")
+						return false;
+					break;
+				case "depth":
+					if (c2 == "")
+						return false;
+					break;
+				case "nodes":
+					if (c2 == "")
+						return false;
+					break;
+				case "infinite":
+					break;
+				default:
+					return false;
+			}
+			mode = c1;
+			value = c2;
+			return true;
+		}
+
+		public string GetCommand()
+		{
+			if (value == "")
+				return mode;
+			else
+				return $"{mode} {value}";
+		}
+
 		public void SetUser(string name)
 		{
 			CUser u = CUserList.GetUser(name);

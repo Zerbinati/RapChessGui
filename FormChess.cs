@@ -369,7 +369,11 @@ namespace RapChessGui
 		{
 			SetMode(CMode.game);
 			PlayerList.player[0].SetUser("Human");
-			PlayerList.player[1].SetUser(cbComputer.Text);
+			CUser u = new CUser("Trained");
+			u.SetUser(cbComputer.Text);
+			u.SetCommand(cbCommand.Text);
+			cbCommand.Text = u.GetCommand();
+			PlayerList.player[1].SetUser(u);
 			if (cbColor.Text != "White")
 				PlayerList.Rotate();
 			Clear();
