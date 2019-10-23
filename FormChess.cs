@@ -86,6 +86,8 @@ namespace RapChessGui
 				case "bestmove":
 					p.ponder = Uci.GetValue("ponder");
 					string em = Uci.tokens[1];
+					if (Uci.GetIndex("book", 0) > 0)
+						AddBook(em);
 					MakeMove(em);
 					break;
 				case "info":
@@ -146,6 +148,13 @@ namespace RapChessGui
 				}
 
 			}
+		}
+
+		public void AddBook(string emo)
+		{
+			labBook.Text = $"Book {++CData.book}";
+			labLast.ForeColor = Color.Aquamarine;
+			labLast.Text = $"book {emo}";
 		}
 
 		void SetMode(CMode mode)
