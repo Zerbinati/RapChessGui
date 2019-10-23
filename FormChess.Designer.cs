@@ -41,6 +41,7 @@
 			this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.logToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.panMenu = new System.Windows.Forms.Panel();
+			this.labBook = new System.Windows.Forms.Label();
 			this.panel2 = new System.Windows.Forms.Panel();
 			this.labTakenT = new System.Windows.Forms.Label();
 			this.labNpsT = new System.Windows.Forms.Label();
@@ -56,9 +57,9 @@
 			this.butStop = new System.Windows.Forms.Button();
 			this.bStart = new System.Windows.Forms.Button();
 			this.groupBox2 = new System.Windows.Forms.GroupBox();
-			this.comboBoxB = new System.Windows.Forms.ComboBox();
+			this.cbComputer = new System.Windows.Forms.ComboBox();
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
-			this.comboBoxW = new System.Windows.Forms.ComboBox();
+			this.cbColor = new System.Windows.Forms.ComboBox();
 			this.tabPageMatch = new System.Windows.Forms.TabPage();
 			this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
 			this.labMatch24 = new System.Windows.Forms.Label();
@@ -122,7 +123,6 @@
 			this.labLast = new System.Windows.Forms.Label();
 			this.labMove = new System.Windows.Forms.Label();
 			this.timerStart = new System.Windows.Forms.Timer(this.components);
-			this.labBook = new System.Windows.Forms.Label();
 			this.menuStrip1.SuspendLayout();
 			this.panMenu.SuspendLayout();
 			this.panel2.SuspendLayout();
@@ -236,6 +236,16 @@
 			this.panMenu.Name = "panMenu";
 			this.panMenu.Size = new System.Drawing.Size(909, 26);
 			this.panMenu.TabIndex = 26;
+			// 
+			// labBook
+			// 
+			this.labBook.Dock = System.Windows.Forms.DockStyle.Right;
+			this.labBook.Location = new System.Drawing.Point(825, 0);
+			this.labBook.Name = "labBook";
+			this.labBook.Size = new System.Drawing.Size(80, 22);
+			this.labBook.TabIndex = 2;
+			this.labBook.Text = "Book 0";
+			this.labBook.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
 			// panel2
 			// 
@@ -414,46 +424,51 @@
 			// 
 			// groupBox2
 			// 
-			this.groupBox2.Controls.Add(this.comboBoxB);
+			this.groupBox2.Controls.Add(this.cbComputer);
 			this.groupBox2.Dock = System.Windows.Forms.DockStyle.Top;
 			this.groupBox2.Location = new System.Drawing.Point(3, 50);
 			this.groupBox2.Name = "groupBox2";
 			this.groupBox2.Size = new System.Drawing.Size(319, 46);
 			this.groupBox2.TabIndex = 19;
 			this.groupBox2.TabStop = false;
-			this.groupBox2.Text = "Black";
+			this.groupBox2.Text = "Computer";
 			// 
-			// comboBoxB
+			// cbComputer
 			// 
-			this.comboBoxB.Dock = System.Windows.Forms.DockStyle.Top;
-			this.comboBoxB.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.comboBoxB.FormattingEnabled = true;
-			this.comboBoxB.Location = new System.Drawing.Point(3, 16);
-			this.comboBoxB.Name = "comboBoxB";
-			this.comboBoxB.Size = new System.Drawing.Size(313, 21);
-			this.comboBoxB.Sorted = true;
-			this.comboBoxB.TabIndex = 1;
+			this.cbComputer.Dock = System.Windows.Forms.DockStyle.Top;
+			this.cbComputer.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.cbComputer.FormattingEnabled = true;
+			this.cbComputer.Location = new System.Drawing.Point(3, 16);
+			this.cbComputer.Name = "cbComputer";
+			this.cbComputer.Size = new System.Drawing.Size(313, 21);
+			this.cbComputer.Sorted = true;
+			this.cbComputer.TabIndex = 1;
 			// 
 			// groupBox1
 			// 
-			this.groupBox1.Controls.Add(this.comboBoxW);
+			this.groupBox1.Controls.Add(this.cbColor);
 			this.groupBox1.Dock = System.Windows.Forms.DockStyle.Top;
 			this.groupBox1.Location = new System.Drawing.Point(3, 3);
 			this.groupBox1.Name = "groupBox1";
 			this.groupBox1.Size = new System.Drawing.Size(319, 47);
 			this.groupBox1.TabIndex = 18;
 			this.groupBox1.TabStop = false;
-			this.groupBox1.Text = "White";
+			this.groupBox1.Text = "Human";
 			// 
-			// comboBoxW
+			// cbColor
 			// 
-			this.comboBoxW.Dock = System.Windows.Forms.DockStyle.Top;
-			this.comboBoxW.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.comboBoxW.Location = new System.Drawing.Point(3, 16);
-			this.comboBoxW.Name = "comboBoxW";
-			this.comboBoxW.Size = new System.Drawing.Size(313, 21);
-			this.comboBoxW.Sorted = true;
-			this.comboBoxW.TabIndex = 2;
+			this.cbColor.AutoCompleteCustomSource.AddRange(new string[] {
+            "White",
+            "Black"});
+			this.cbColor.Dock = System.Windows.Forms.DockStyle.Top;
+			this.cbColor.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.cbColor.Items.AddRange(new object[] {
+            "White",
+            "Black"});
+			this.cbColor.Location = new System.Drawing.Point(3, 16);
+			this.cbColor.Name = "cbColor";
+			this.cbColor.Size = new System.Drawing.Size(313, 21);
+			this.cbColor.TabIndex = 2;
 			// 
 			// tabPageMatch
 			// 
@@ -1264,16 +1279,6 @@
 			this.timerStart.Interval = 6000;
 			this.timerStart.Tick += new System.EventHandler(this.TimerStart_Tick);
 			// 
-			// labBook
-			// 
-			this.labBook.Dock = System.Windows.Forms.DockStyle.Right;
-			this.labBook.Location = new System.Drawing.Point(825, 0);
-			this.labBook.Name = "labBook";
-			this.labBook.Size = new System.Drawing.Size(80, 22);
-			this.labBook.TabIndex = 2;
-			this.labBook.Text = "Book 0";
-			this.labBook.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			// 
 			// FormChess
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1356,9 +1361,9 @@
 		private System.Windows.Forms.Button butStop;
 		private System.Windows.Forms.Button bStart;
 		private System.Windows.Forms.GroupBox groupBox2;
-		private System.Windows.Forms.ComboBox comboBoxB;
+		private System.Windows.Forms.ComboBox cbComputer;
 		private System.Windows.Forms.GroupBox groupBox1;
-		private System.Windows.Forms.ComboBox comboBoxW;
+		private System.Windows.Forms.ComboBox cbColor;
 		private System.Windows.Forms.Button butTraining;
 		private System.Windows.Forms.GroupBox groupBox4;
 		private System.Windows.Forms.ComboBox comboBoxTeacher;

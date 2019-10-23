@@ -67,6 +67,34 @@ namespace RapChessGui
 			StartGame();
 		}
 
+		void IniLoad()
+		{
+			cbColor.SelectedIndex = cbColor.FindStringExact(CIniFile.Read("color", "White"));
+			cbComputer.SelectedIndex = cbComputer.FindStringExact(CIniFile.Read("black", "Computer"));
+			cbPlayer1.SelectedIndex = cbPlayer1.FindStringExact(CIniFile.Read("player1", "Computer"));
+			cbPlayer2.SelectedIndex = cbPlayer2.FindStringExact(CIniFile.Read("player2", "Computer"));
+			comboBoxTrained.SelectedIndex = comboBoxTrained.FindStringExact(CIniFile.Read("trained", "Computer"));
+			comboBoxTeacher.SelectedIndex = comboBoxTeacher.FindStringExact(CIniFile.Read("teacher", "RapChessCs.exe"));
+			nudTeacher.Value = Convert.ToInt32(CIniFile.Read("timeTeacher", "1000"));
+			nudTrained.Value = Convert.ToInt32(CIniFile.Read("timeTrained", "1000"));
+			Trainer.time = (int)nudTeacher.Value;
+			CPieceBoard.LoadFromIni();
+
+		}
+
+		void IniSave()
+		{
+			CIniFile.Write("color", cbColor.Text);
+			CIniFile.Write("black", cbComputer.Text);
+			CIniFile.Write("player1", cbPlayer1.Text);
+			CIniFile.Write("player2", cbPlayer2.Text);
+			CIniFile.Write("trained", comboBoxTrained.Text);
+			CIniFile.Write("teacher", comboBoxTeacher.Text);
+			CIniFile.Write("timeTeacher", nudTeacher.Value.ToString());
+			CIniFile.Write("timeTrained", nudTrained.Value.ToString());
+			CPieceBoard.SaveToIni();
+		}
+
 		public void GetMessage(CPlayer p)
 		{
 			string msg = p.GetMessage();
@@ -192,38 +220,9 @@ namespace RapChessGui
 			label10.Text = $"{Trainer.Result(true)}%";
 		}
 
-		void IniLoad()
-		{
-			comboBoxW.SelectedIndex = comboBoxW.FindStringExact(CIniFile.Read("white", "Human"));
-			comboBoxB.SelectedIndex = comboBoxB.FindStringExact(CIniFile.Read("black", "Computer"));
-			cbPlayer1.SelectedIndex = cbPlayer1.FindStringExact(CIniFile.Read("player1", "Computer"));
-			cbPlayer2.SelectedIndex = cbPlayer2.FindStringExact(CIniFile.Read("player2", "Computer"));
-			comboBoxTrained.SelectedIndex = comboBoxTrained.FindStringExact(CIniFile.Read("trained", "Computer"));
-			comboBoxTeacher.SelectedIndex = comboBoxTeacher.FindStringExact(CIniFile.Read("teacher", "RapChessCs.exe"));
-			nudTeacher.Value = Convert.ToInt32(CIniFile.Read("timeTeacher", "1000"));
-			nudTrained.Value = Convert.ToInt32(CIniFile.Read("timeTrained", "1000"));
-			Trainer.time = (int)nudTeacher.Value;
-			CPieceBoard.LoadFromIni();
-
-		}
-
-		void IniSave()
-		{
-			CIniFile.Write("white", comboBoxW.Text);
-			CIniFile.Write("black", comboBoxB.Text);
-			CIniFile.Write("player1", cbPlayer1.Text);
-			CIniFile.Write("player2", cbPlayer2.Text);
-			CIniFile.Write("trained", comboBoxTrained.Text);
-			CIniFile.Write("teacher", comboBoxTeacher.Text);
-			CIniFile.Write("timeTeacher", nudTeacher.Value.ToString());
-			CIniFile.Write("timeTrained", nudTrained.Value.ToString());
-			CPieceBoard.SaveToIni();
-		}
-
 		void Reset()
 		{
-			comboBoxW.Items.Clear();
-			comboBoxB.Items.Clear();
+			cbComputer.Items.Clear();
 			cbPlayer1.Items.Clear();
 			cbPlayer2.Items.Clear();
 			comboBoxTrained.Items.Clear();
@@ -231,8 +230,7 @@ namespace RapChessGui
 			for (int n = 0; n < CUserList.list.Count; n++)
 			{
 				CUser u = CUserList.list[n];
-				comboBoxW.Items.Add(u.name);
-				comboBoxB.Items.Add(u.name);
+				cbComputer.Items.Add(u.name);
 				cbPlayer1.Items.Add(u.name);
 				cbPlayer2.Items.Add(u.name);
 				comboBoxTrained.Items.Add(u.name);
@@ -368,8 +366,10 @@ namespace RapChessGui
 		void StartGame()
 		{
 			SetMode(CMode.game);
-			PlayerList.player[0].SetUser(comboBoxW.Text);
-			PlayerList.player[1].SetUser(comboBoxB.Text);
+			PlayerList.player[0].SetUser("Human");
+			PlayerList.player[1].SetUser(cbComputer.Text);
+			if (cbColor.Text != "White")
+				PlayerList.Rotate();
 			Clear();
 		}
 
@@ -389,16 +389,16 @@ namespace RapChessGui
 		{
 			SetMode(CMode.training);
 			ShowTraining();
-			CUser u = new CUser("Teacher");
-			u.engine = comboBoxTeacher.Text;
-			u.mode = "movetime";
-			u.value = nudTeacher.Value.ToString();
-			PlayerList.player[0].SetUser(u);
-			u = new CUser("Trained");
-			u.SetUser(comboBoxTrained.Text);
-			u.mode = "movetime";
-			u.value = nudTrained.Value.ToString();
-			PlayerList.player[1].SetUser(u);
+			CUser uw = new CUser("Trained");
+			uw.SetUser(comboBoxTrained.Text);
+			uw.mode = "movetime";
+			uw.value = nudTrained.Value.ToString();
+			CUser ub = new CUser("Teacher");
+			ub.engine = comboBoxTeacher.Text;
+			ub.mode = "movetime";
+			ub.value = nudTeacher.Value.ToString();
+			PlayerList.player[0].SetUser(uw);
+			PlayerList.player[1].SetUser(ub);
 			if (Trainer.rotate == 1)
 				PlayerList.Rotate();
 			Trainer.rotate ^= 1;
