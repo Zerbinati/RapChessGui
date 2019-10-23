@@ -14,10 +14,21 @@ namespace RapChessGui
 		public string parameters = "";
 		public string mode = "movetime";
 		public string value = "1000";
+		public string book = "None";
 
 		public CUser(string n)
 		{
 			name = n;
+		}
+
+		public void SetUser(string name)
+		{
+			CUser u = CUserList.GetUser(name);
+			engine = u.engine;
+			parameters = u.parameters;
+			mode = u.mode;
+			value = u.value;
+			book = u.book;
 		}
 
 		public void LoadFromIni()
@@ -26,6 +37,7 @@ namespace RapChessGui
 			parameters = CIniFile.Read("parameters", "", "player " + name);
 			mode = CIniFile.Read("mode","movetime", "player " + name);
 			value = CIniFile.Read("value", "1000", "player " + name);
+			book = CIniFile.Read("book", "None", "player " + name);
 		}
 
 		public void SaveToIni()
@@ -34,6 +46,7 @@ namespace RapChessGui
 			CIniFile.Write("parameters", parameters, "player " + name);
 			CIniFile.Write("mode", mode, "player " + name);
 			CIniFile.Write("value", value, "player " + name);
+			CIniFile.Write("book", book, "player " + name);
 		}
 	}
 
@@ -81,6 +94,7 @@ namespace RapChessGui
 				uc.engine = "RapChessCs.exe";
 				uc.mode = "movetime";
 				uc.value = "1000";
+				uc.book = "small.txt";
 				list.Add(uc);
 				var up = new CUser("Human");
 				up.engine = "Human";

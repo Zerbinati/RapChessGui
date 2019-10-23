@@ -54,23 +54,17 @@ namespace RapChessGui
 
 		public void SetMsg(string msg)
 		{
-			if ((msg == null) || (msg == ""))
-			{
-				tokens = new string[0];
-				command = "";
-			}
-			else
-			{
-				tokens = msg.Split(new[] { ' ', '\t' }, StringSplitOptions.RemoveEmptyEntries);
-				command = tokens[0];
-			}
+			if (msg == null)
+				msg = "";
+			tokens = msg.Split(new[] { ' ', '\t' }, StringSplitOptions.RemoveEmptyEntries);
+			command = tokens.Length > 0 ? tokens[0] : "";
 		}
 	}
 
 	class CEngine
 	{
 		public const string defFen = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 0";
-		private static Random random = new Random();
+		public static Random random = new Random();
 		const int piecePawn = 0x01;
 		const int pieceKnight = 0x02;
 		const int pieceBishop = 0x03;
@@ -139,7 +133,6 @@ namespace RapChessGui
 		int[] arrDirRock = { 1, -1, 16, -16 };
 		int[] arrDirQueen = { 1, -1, 15, -15, 16, -16, 17, -17 };
 		DateTime g_startTime = new DateTime();
-		CUci Uci = new CUci();
 		CUndo[] undoStack = new CUndo[0xfff];
 
 		public CEngine()
@@ -149,7 +142,7 @@ namespace RapChessGui
 
 		public int GetGameState()
 		{
-			List<int> mu = GenerateAllMoves(whiteTurn, false);
+			GenerateAllMoves(whiteTurn, false);
 			bool myInsufficient = adjInsufficient;
 			if (g_move50 >= 100)
 				return (int)CGameState.move50;
@@ -579,7 +572,6 @@ namespace RapChessGui
 			int flags = move & 0xFF0000;
 			int piecefr = g_board[fr];
 			int piece = piecefr & 0xf;
-			int capi = to;
 			g_captured = g_board[to];
 			g_lastCastle = (move & maskCastle) | (piecefr & maskColor);
 			if ((flags & moveflagCastleKing) > 0)
@@ -594,7 +586,7 @@ namespace RapChessGui
 			}
 			else if ((flags & moveflagPassing) > 0)
 			{
-				capi = whiteTurn ? to + 16 : to - 16;
+				int capi = whiteTurn ? to + 16 : to - 16;
 				g_captured = g_board[capi];
 				g_board[capi] = colorEmpty;
 			}
@@ -650,7 +642,6 @@ namespace RapChessGui
 			int fr = move & 0xFF;
 			int to = (move >> 8) & 0xFF;
 			int flags = move & 0xFF0000;
-			int piece = g_board[to];
 			int capi = to;
 			CUndo undo = undoStack[--undoIndex];
 			g_passing = undo.passing;
@@ -671,7 +662,7 @@ namespace RapChessGui
 			}
 			if ((flags & moveflagPromotion) > 0)
 			{
-				piece = (g_board[to] & (~0x7)) | piecePawn;
+				int piece = (g_board[to] & (~0x7)) | piecePawn;
 				g_board[fr] = piece;
 			}
 			else g_board[fr] = g_board[to];
@@ -692,7 +683,6 @@ namespace RapChessGui
 			int myMobility = adjMobility;
 			int alphaDe = 0;
 			int index = mu.Count;
-			string alphaFm = "";
 			string alphaPv = "";
 			if (alpha < score)
 				alpha = score;
@@ -718,7 +708,7 @@ namespace RapChessGui
 					{
 						alpha = osScore;
 						alphaDe = g_depth + 1;
-						alphaFm = FormatMove(cm);
+						string alphaFm = FormatMove(cm);
 						alphaPv = alphaFm + ' ' + g_pv;
 					}
 					if (alpha >= beta) break;
@@ -735,7 +725,6 @@ namespace RapChessGui
 			int n = mu.Count;
 			int myMoves = n;
 			int alphaDe = 0;
-			string alphaFm = "";
 			string alphaPv = "";
 			while (n-- > 0)
 			{
@@ -763,7 +752,7 @@ namespace RapChessGui
 				if (alpha < osScore)
 				{
 					alpha = osScore;
-					alphaFm = FormatMove(cm);
+					string alphaFm = FormatMove(cm);
 					alphaPv = alphaFm + ' ' + g_pv;
 					alphaDe = g_depth + 1;
 					if (depth == 1)

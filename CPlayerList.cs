@@ -1,18 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace RapChessGui
 {
-	public class MessageEventArgs : EventArgs
-	{
-		public MessageEventArgs(string s)
-		{ Message = s; }
-		public string Message { get; set; }
-	}
 
 	public class CPlayer
 	{
@@ -21,20 +17,19 @@ namespace RapChessGui
 		public bool uciok = false;
 		public bool readyok = false;
 		public bool go = false;
-		public CPlayerEng PlayerEng;
-		public CUser user;
-		public DateTime timeStart;
 		public double timeTotal;
 		public string score;
 		public string depth;
 		public string seldepth;
 		public string nps;
 		public string ponder;
-		public List<string> messages = new List<string>();
+		public DateTime timeStart;
+		public CBook book = new CBook();
+		public CPlayerEng PlayerEng = new CPlayerEng();
+		public CUser user;
 
 		public CPlayer()
 		{
-			PlayerEng = new CPlayerEng();
 			Init();
 		}
 
@@ -49,6 +44,7 @@ namespace RapChessGui
 			nps = "0";
 			ponder = "";
 			timeStart = DateTime.Now;
+			book.Reset();
 		}
 
 		public void Start()
@@ -59,21 +55,30 @@ namespace RapChessGui
 
 		public void CompMakeMove()
 		{
-			messages.Clear();
+			string emo = book.GetMove(CHistory.GetMoves());
+			if (emo != "")
+			{
+				FormChess.curForm.labLast.ForeColor = Color.Aquamarine;
+				FormChess.curForm.labLast.Text = $"book {emo}";
+				FormChess.curForm.MakeMove(emo);
+			}
+			else
+			{
 				string position = CHistory.GetPosition();
-				//PlayerEng.streamWriter.Flush();
-				//stream.DiscardBufferedData();
 				SendMessage(position);
 				SendMessage($"go {user.mode} {user.value}");
-			go = true;
+				go = true;
+				timeStart = DateTime.Now;
+			}
 		}
 
 		public void SendMessage(string msg)
 		{
 			if (computer)
 			{
-				CData.FLog.richTextBox1.AppendText($"{user.name} < {msg}\n");
+				CData.FLog.richTextBox1.AppendText($"{user.name} < {msg}\n", Color.Brown);
 				PlayerEng.streamWriter.WriteLine(msg);
+				Thread.Sleep(10);
 			}
 		}
 
@@ -82,13 +87,15 @@ namespace RapChessGui
 			string msg = "";
 			if (computer)
 			{
-				if (messages.Count > 0)
+				lock (CData.messages)
 				{
-					msg = messages[0];
-					messages.RemoveAt(0);
+					if (CData.messages.Count > 0)
+					{
+						msg = CData.messages[0];
+						CData.messages.RemoveAt(0);
+						CData.FLog.richTextBox1.AppendText($"{user.name} > {msg}\n");
+					}
 				}
-				if (msg != "")
-					CData.FLog.richTextBox1.AppendText($"{user.name} > {msg}\n");
 			}
 			return msg;
 		}
@@ -100,6 +107,7 @@ namespace RapChessGui
 			user = u;
 			computer = user.engine != "Human";
 			PlayerEng.SetPlayer(this);
+			book.Load(user.book);
 		}
 
 		public void SetUser(string name)

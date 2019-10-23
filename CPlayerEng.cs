@@ -14,6 +14,16 @@ namespace RapChessGui
 		private Process process = new Process();
 		private CPlayer player;
 
+		private static void ProEvent(object sender, DataReceivedEventArgs e)
+		{
+
+			if (!String.IsNullOrEmpty(e.Data))
+				lock (CData.messages)
+				{
+					CData.messages.Add(e.Data);
+				}
+		}
+
 		public void SetPlayer(CPlayer p)
 		{
 			process.Dispose();
@@ -33,13 +43,15 @@ namespace RapChessGui
 			process.StartInfo.CreateNoWindow = true;
 			process.StartInfo.RedirectStandardInput = true;
 			process.StartInfo.RedirectStandardOutput = true;
-			process.OutputDataReceived += new DataReceivedEventHandler(delegate (object sender, DataReceivedEventArgs e)
+			process.OutputDataReceived += ProEvent;
+			/*process.OutputDataReceived += new DataReceivedEventHandler(delegate (object sender, DataReceivedEventArgs e)
 			{
-				player.messages.Add(e.Data);
-			});
+				if (!String.IsNullOrEmpty(e.Data))
+					player.messages.Add(e.Data);
+			});*/
 			process.Start();
-			process.BeginOutputReadLine();
 			streamWriter = process.StandardInput;
+			process.BeginOutputReadLine();
 		}
 	}
 }

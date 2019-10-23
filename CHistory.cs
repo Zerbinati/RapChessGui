@@ -30,11 +30,19 @@ namespace RapChessGui
 			moves.Clear();
 		}
 
+		public static string GetMoves()
+		{
+			return String.Join(" ", moves);
+		}
+
 		public static string GetPosition()
 		{
 			string result = "position ";
 			result += fen == CEngine.defFen ? "startpos" : "fen " + fen;
-			return result + " moves " + String.Join(" ", moves);
+			if (moves.Count > 0)
+				return result + " moves " + String.Join(" ", moves);
+			else
+				return result;
 		}
 	}
 }

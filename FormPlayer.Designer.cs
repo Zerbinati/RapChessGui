@@ -33,6 +33,8 @@
 			this.bDelete = new System.Windows.Forms.Button();
 			this.bCreate = new System.Windows.Forms.Button();
 			this.bUpdate = new System.Windows.Forms.Button();
+			this.groupBox5 = new System.Windows.Forms.GroupBox();
+			this.cbBookList = new System.Windows.Forms.ComboBox();
 			this.gbMode = new System.Windows.Forms.GroupBox();
 			this.nudDepth = new System.Windows.Forms.NumericUpDown();
 			this.nudTime = new System.Windows.Forms.NumericUpDown();
@@ -47,6 +49,7 @@
 			this.groupBox2 = new System.Windows.Forms.GroupBox();
 			this.listBox1 = new System.Windows.Forms.ListBox();
 			this.panel1.SuspendLayout();
+			this.groupBox5.SuspendLayout();
 			this.gbMode.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.nudDepth)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.nudTime)).BeginInit();
@@ -65,6 +68,7 @@
 			this.panel1.Controls.Add(this.bDelete);
 			this.panel1.Controls.Add(this.bCreate);
 			this.panel1.Controls.Add(this.bUpdate);
+			this.panel1.Controls.Add(this.groupBox5);
 			this.panel1.Controls.Add(this.gbMode);
 			this.panel1.Controls.Add(this.groupBox3);
 			this.panel1.Controls.Add(this.groupBox4);
@@ -78,35 +82,57 @@
 			// bDelete
 			// 
 			this.bDelete.Dock = System.Windows.Forms.DockStyle.Top;
-			this.bDelete.Location = new System.Drawing.Point(0, 265);
+			this.bDelete.Location = new System.Drawing.Point(0, 310);
 			this.bDelete.Name = "bDelete";
 			this.bDelete.Size = new System.Drawing.Size(311, 33);
-			this.bDelete.TabIndex = 19;
+			this.bDelete.TabIndex = 23;
 			this.bDelete.Text = "Delete";
 			this.bDelete.UseVisualStyleBackColor = true;
-			this.bDelete.Click += new System.EventHandler(this.bDelete_Click);
 			// 
 			// bCreate
 			// 
 			this.bCreate.Dock = System.Windows.Forms.DockStyle.Top;
-			this.bCreate.Location = new System.Drawing.Point(0, 232);
+			this.bCreate.Location = new System.Drawing.Point(0, 277);
 			this.bCreate.Name = "bCreate";
 			this.bCreate.Size = new System.Drawing.Size(311, 33);
-			this.bCreate.TabIndex = 18;
+			this.bCreate.TabIndex = 22;
 			this.bCreate.Text = "Create";
 			this.bCreate.UseVisualStyleBackColor = true;
-			this.bCreate.Click += new System.EventHandler(this.bCreate_Click);
 			// 
 			// bUpdate
 			// 
 			this.bUpdate.Dock = System.Windows.Forms.DockStyle.Top;
-			this.bUpdate.Location = new System.Drawing.Point(0, 205);
+			this.bUpdate.Location = new System.Drawing.Point(0, 250);
 			this.bUpdate.Name = "bUpdate";
 			this.bUpdate.Size = new System.Drawing.Size(311, 27);
-			this.bUpdate.TabIndex = 17;
+			this.bUpdate.TabIndex = 21;
 			this.bUpdate.Text = "Update";
 			this.bUpdate.UseVisualStyleBackColor = true;
 			this.bUpdate.Click += new System.EventHandler(this.bUpdate_Click);
+			// 
+			// groupBox5
+			// 
+			this.groupBox5.Controls.Add(this.cbBookList);
+			this.groupBox5.Dock = System.Windows.Forms.DockStyle.Top;
+			this.groupBox5.Location = new System.Drawing.Point(0, 205);
+			this.groupBox5.Name = "groupBox5";
+			this.groupBox5.Size = new System.Drawing.Size(311, 45);
+			this.groupBox5.TabIndex = 20;
+			this.groupBox5.TabStop = false;
+			this.groupBox5.Text = "Book";
+			// 
+			// cbBookList
+			// 
+			this.cbBookList.Dock = System.Windows.Forms.DockStyle.Top;
+			this.cbBookList.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.cbBookList.FormattingEnabled = true;
+			this.cbBookList.Items.AddRange(new object[] {
+            "None"});
+			this.cbBookList.Location = new System.Drawing.Point(3, 16);
+			this.cbBookList.Name = "cbBookList";
+			this.cbBookList.Size = new System.Drawing.Size(305, 21);
+			this.cbBookList.Sorted = true;
+			this.cbBookList.TabIndex = 2;
 			// 
 			// gbMode
 			// 
@@ -291,6 +317,7 @@
 			this.Text = "Players";
 			this.TopMost = true;
 			this.panel1.ResumeLayout(false);
+			this.groupBox5.ResumeLayout(false);
 			this.gbMode.ResumeLayout(false);
 			this.gbMode.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.nudDepth)).EndInit();
@@ -314,9 +341,6 @@
 		public System.Windows.Forms.ListBox listBox1;
 		private System.Windows.Forms.GroupBox groupBox4;
 		private System.Windows.Forms.ComboBox cbEngList;
-		private System.Windows.Forms.Button bDelete;
-		private System.Windows.Forms.Button bCreate;
-		private System.Windows.Forms.Button bUpdate;
 		private System.Windows.Forms.GroupBox gbMode;
 		private System.Windows.Forms.NumericUpDown nudDepth;
 		private System.Windows.Forms.NumericUpDown nudTime;
@@ -324,5 +348,10 @@
 		private System.Windows.Forms.RadioButton radioButton1;
 		private System.Windows.Forms.GroupBox groupBox3;
 		private System.Windows.Forms.TextBox tbParameters;
+		private System.Windows.Forms.Button bDelete;
+		private System.Windows.Forms.Button bCreate;
+		private System.Windows.Forms.Button bUpdate;
+		private System.Windows.Forms.GroupBox groupBox5;
+		private System.Windows.Forms.ComboBox cbBookList;
 	}
 }

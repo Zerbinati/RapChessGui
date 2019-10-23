@@ -14,19 +14,30 @@ namespace RapChessGui
 		public int draw = 0;
 		public int loose = 0;
 		public int time = 1000;
-		public CUser user = new CUser("Teacher");
+
+		public void Reset()
+		{
+			rotate = 0;
+			games = 0;
+			win = 0;
+			draw = 0;
+			loose = 0;
+		}
 
 		public int Total()
 		{
 			return win + draw + loose;
 		}
 
-		public int Result()
+		public int Result(bool rev)
 		{
 			int t = Total();
 			if (t == 0)
 				return 100;
-			return ((win * 2 + draw) * 100) / (t * 2);
+			if (rev)
+				return ((loose * 2 + draw) * 100) / (t * 2);
+			else
+				return ((win * 2 + draw) * 100) / (t * 2);
 		}
 
 	}

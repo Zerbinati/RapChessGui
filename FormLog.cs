@@ -10,8 +10,10 @@ using System.Windows.Forms;
 
 namespace RapChessGui
 {
+
 	public partial class FormLog : Form
 	{
+
 		public FormLog()
 		{
 			InitializeComponent();

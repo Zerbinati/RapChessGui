@@ -26,6 +26,13 @@ namespace RapChessGui
 				cbEngList.Items.Add(fn);
 				CData.engineNames.Add(fn);
 			}
+			string[] arrBooks = Directory.GetFiles("Books", "*.txt");
+			for (int n = 0; n < arrBooks.Length; n++)
+			{
+				string fn = Path.GetFileName(arrBooks[n]);
+				cbBookList.Items.Add(fn);
+				CData.bookNames.Add(fn);
+			}
 			CUserList.LoadFromIni();
 			UpdateListBox();
 			listBox1.SetSelected(0, true);
@@ -39,6 +46,7 @@ namespace RapChessGui
 			tbUserName.Text = user.name;
 			tbParameters.Text = user.parameters;
 			cbEngList.Text = user.engine;
+			cbBookList.Text = user.book;
 			curUserName = user.name;
 			List<RadioButton> list = gbMode.Controls.OfType<RadioButton>().ToList();
 			switch (user.mode)
@@ -69,6 +77,7 @@ namespace RapChessGui
 		{
 			user.name = tbUserName.Text;
 			user.engine = cbEngList.Text;
+			user.book = cbBookList.Text;
 			user.parameters = tbParameters.Text;
 			curUserName = user.name;
 			var checkedButton = gbMode.Controls.OfType<RadioButton>().FirstOrDefault(r => r.Checked);
