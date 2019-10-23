@@ -334,15 +334,6 @@ namespace RapChessGui
 
 		void Clear()
 		{
-			labTimeT.Text = "00:00:00";
-			labTimeB.Text = "00:00:00";
-			labScoreT.Text = "Score 0";
-			labScoreB.Text = "Score 0";
-			labDepthT.Text = "Depth 0";
-			labDepthB.Text = "Depth 0";
-			labNpsT.Text = "Nps 0";
-			labNpsB.Text = "Nps 0";
-			richTextBox1.Clear();
 			labMove.Text = "Move 1 0";
 			labLast.ForeColor = Color.Gainsboro;
 			labLast.Text = "Good luck";
@@ -355,9 +346,12 @@ namespace RapChessGui
 			timer1.Enabled = true;
 			CPlayer pw = PlayerList.player[0];
 			CPlayer pb = PlayerList.player[1];
+			richTextBox1.Clear();
 			CData.FLog.richTextBox1.Clear();
 			CData.FLog.richTextBox1.AppendText($"White {pw.user.name} {pw.user.engine} {pw.user.parameters}\n");
 			CData.FLog.richTextBox1.AppendText($"Black {pb.user.name} {pb.user.engine} {pb.user.parameters}\n");
+			RenderInfo(pw);
+			RenderInfo(pb);
 		}
 
 		void StartGame()
@@ -560,6 +554,33 @@ namespace RapChessGui
 			ShowHistory();
 		}
 
+		void RenderInfo(CPlayer cp)
+		{
+			double dif = CData.gameState > 0 ? 0 : (DateTime.Now - cp.timeStart).TotalMilliseconds;
+			DateTime tot = new DateTime().AddMilliseconds(cp.timeTotal + dif);
+			if (CData.gameState == 0)
+				if (boardRotate ^ Engine.whiteTurn)
+				{
+					labTimeB.Text = tot.ToString("HH:mm:ss");
+					labScoreB.Text = $"Score {cp.score}";
+					labNpsB.Text = $"Nps {cp.nps}";
+					if (cp.seldepth != "0")
+						labDepthB.Text = $"Depth {cp.depth} / {cp.seldepth}";
+					else
+						labDepthB.Text = $"Depth {cp.depth}";
+				}
+				else
+				{
+					labTimeT.Text = tot.ToString("HH:mm:ss");
+					labScoreT.Text = $"Score {cp.score}";
+					labNpsT.Text = $"Nps {cp.nps}";
+					if (cp.seldepth != "0")
+						labDepthT.Text = $"Depth {cp.depth} / {cp.seldepth}";
+					else
+						labDepthT.Text = $"Depth {cp.depth}";
+				}
+		}
+
 		void RenderTaken()
 		{
 			int[] arrPiece = { 0, 0, 0, 0, 0, 0, 0, 0 };
@@ -652,29 +673,7 @@ namespace RapChessGui
 				return;
 			}
 			var cp = PlayerList.CurPlayer();
-			double dif = CData.gameState > 0 ? 0 : (DateTime.Now - cp.timeStart).TotalMilliseconds;
-			DateTime tot = new DateTime().AddMilliseconds(cp.timeTotal + dif);
-			if (CData.gameState == 0)
-				if (boardRotate ^ Engine.whiteTurn)
-				{
-					labTimeB.Text = tot.ToString("HH:mm:ss");
-					labScoreB.Text = $"Score {cp.score}";
-					labNpsB.Text = $"Nps {cp.nps}";
-					if (cp.seldepth != "0")
-						labDepthB.Text = $"Depth {cp.depth} / {cp.seldepth}";
-					else
-						labDepthB.Text = $"Depth {cp.depth}";
-				}
-				else
-				{
-					labTimeT.Text = tot.ToString("HH:mm:ss");
-					labScoreT.Text = $"Score {cp.score}";
-					labNpsT.Text = $"Nps {cp.nps}";
-					if (cp.seldepth != "0")
-						labDepthT.Text = $"Depth {cp.depth} / {cp.seldepth}";
-					else
-						labDepthT.Text = $"Depth {cp.depth}";
-				}
+			RenderInfo(cp);
 			if (cp.computer)
 				if (!cp.started)
 					cp.Start();
