@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Diagnostics;
+using System.Threading;
 
 namespace RapChessGui
 {
@@ -33,6 +32,33 @@ namespace RapChessGui
 		public static string ModeItos(int i)
 		{
 			return arrModeNames[i];
+		}
+
+		public static void KillProcess()
+		{
+			Process cp = Process.GetCurrentProcess();
+			string fn = cp.MainModule.FileName;
+			string eDir = AppDomain.CurrentDomain.BaseDirectory + "Engines";
+			Process[] processlist = Process.GetProcesses();
+			foreach (Process process in processlist)
+			{
+				try
+				{
+					String fileName = process.MainModule.FileName;
+					if (fileName == fn)
+						continue;
+					if (fileName.IndexOf(eDir) == 0)
+					{
+						process.Kill();
+					}
+
+				}
+				catch
+				{
+				}
+
+			}
+			Thread.Sleep(10);
 		}
 
 	}

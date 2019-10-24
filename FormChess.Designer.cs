@@ -41,6 +41,7 @@
 			this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.logToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.panMenu = new System.Windows.Forms.Panel();
+			this.labBack = new System.Windows.Forms.Label();
 			this.labBook = new System.Windows.Forms.Label();
 			this.panel2 = new System.Windows.Forms.Panel();
 			this.labTakenT = new System.Windows.Forms.Label();
@@ -57,6 +58,8 @@
 			this.butStop = new System.Windows.Forms.Button();
 			this.bStart = new System.Windows.Forms.Button();
 			this.groupBox2 = new System.Windows.Forms.GroupBox();
+			this.cbCommand = new System.Windows.Forms.ComboBox();
+			this.label17 = new System.Windows.Forms.Label();
 			this.cbComputer = new System.Windows.Forms.ComboBox();
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
 			this.cbColor = new System.Windows.Forms.ComboBox();
@@ -123,9 +126,6 @@
 			this.labLast = new System.Windows.Forms.Label();
 			this.labMove = new System.Windows.Forms.Label();
 			this.timerStart = new System.Windows.Forms.Timer(this.components);
-			this.labBack = new System.Windows.Forms.Label();
-			this.label17 = new System.Windows.Forms.Label();
-			this.cbCommand = new System.Windows.Forms.ComboBox();
 			this.menuStrip1.SuspendLayout();
 			this.panMenu.SuspendLayout();
 			this.panel2.SuspendLayout();
@@ -240,6 +240,17 @@
 			this.panMenu.Name = "panMenu";
 			this.panMenu.Size = new System.Drawing.Size(909, 26);
 			this.panMenu.TabIndex = 26;
+			// 
+			// labBack
+			// 
+			this.labBack.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+			this.labBack.Dock = System.Windows.Forms.DockStyle.Right;
+			this.labBack.Location = new System.Drawing.Point(745, 0);
+			this.labBack.Name = "labBack";
+			this.labBack.Size = new System.Drawing.Size(80, 22);
+			this.labBack.TabIndex = 3;
+			this.labBack.Text = "Back 0";
+			this.labBack.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
 			// labBook
 			// 
@@ -439,6 +450,33 @@
 			this.groupBox2.TabIndex = 19;
 			this.groupBox2.TabStop = false;
 			this.groupBox2.Text = "Computer";
+			// 
+			// cbCommand
+			// 
+			this.cbCommand.AutoCompleteCustomSource.AddRange(new string[] {
+            "mvetime 1000",
+            "depth 3"});
+			this.cbCommand.Dock = System.Windows.Forms.DockStyle.Top;
+			this.cbCommand.FormattingEnabled = true;
+			this.cbCommand.Items.AddRange(new object[] {
+            "movetime 1000",
+            "depth 3",
+            "nodes 100000",
+            "infinite"});
+			this.cbCommand.Location = new System.Drawing.Point(3, 58);
+			this.cbCommand.Name = "cbCommand";
+			this.cbCommand.Size = new System.Drawing.Size(313, 21);
+			this.cbCommand.TabIndex = 29;
+			// 
+			// label17
+			// 
+			this.label17.Dock = System.Windows.Forms.DockStyle.Top;
+			this.label17.Location = new System.Drawing.Point(3, 37);
+			this.label17.Name = "label17";
+			this.label17.Size = new System.Drawing.Size(313, 21);
+			this.label17.TabIndex = 28;
+			this.label17.Text = "Uci command";
+			this.label17.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
 			// cbComputer
 			// 
@@ -1285,45 +1323,6 @@
 			// 
 			this.timerStart.Interval = 6000;
 			this.timerStart.Tick += new System.EventHandler(this.TimerStart_Tick);
-			// 
-			// labBack
-			// 
-			this.labBack.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-			this.labBack.Dock = System.Windows.Forms.DockStyle.Right;
-			this.labBack.Location = new System.Drawing.Point(745, 0);
-			this.labBack.Name = "labBack";
-			this.labBack.Size = new System.Drawing.Size(80, 22);
-			this.labBack.TabIndex = 3;
-			this.labBack.Text = "Back 0";
-			this.labBack.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			// 
-			// label17
-			// 
-			this.label17.Dock = System.Windows.Forms.DockStyle.Top;
-			this.label17.Location = new System.Drawing.Point(3, 37);
-			this.label17.Name = "label17";
-			this.label17.Size = new System.Drawing.Size(313, 21);
-			this.label17.TabIndex = 28;
-			this.label17.Text = "Uci command";
-			this.label17.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			// 
-			// cbCommand
-			// 
-			this.cbCommand.AutoCompleteCustomSource.AddRange(new string[] {
-            "mvetime 1000",
-            "depth 3"});
-			this.cbCommand.Dock = System.Windows.Forms.DockStyle.Top;
-			this.cbCommand.FormattingEnabled = true;
-			this.cbCommand.Items.AddRange(new object[] {
-            "depth 3",
-            "infinite",
-            "movetime 1000",
-            "nodes 100000"});
-			this.cbCommand.Location = new System.Drawing.Point(3, 58);
-			this.cbCommand.Name = "cbCommand";
-			this.cbCommand.Size = new System.Drawing.Size(313, 21);
-			this.cbCommand.Sorted = true;
-			this.cbCommand.TabIndex = 29;
 			// 
 			// FormChess
 			// 

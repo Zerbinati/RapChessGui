@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Diagnostics;
-using System.IO;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Text;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
-using System.Collections.Generic;
 
 
 namespace RapChessGui
@@ -25,6 +23,9 @@ namespace RapChessGui
 		public static FormChess curForm;
 		bool boardRotate;
 		int lastDes = -1;
+		int level = 1000;
+		int levelOrg = 1000;
+		int levelDif = 10;
 		CEngine Engine = new CEngine();
 		CPlayerList PlayerList = new CPlayerList();
 		CMatch Match = new CMatch();
@@ -77,6 +78,7 @@ namespace RapChessGui
 			comboBoxTeacher.SelectedIndex = comboBoxTeacher.FindStringExact(CIniFile.Read("teacher", "RapChessCs.exe"));
 			nudTeacher.Value = Convert.ToInt32(CIniFile.Read("timeTeacher", "1000"));
 			nudTrained.Value = Convert.ToInt32(CIniFile.Read("timeTrained", "1000"));
+			level = Convert.ToInt32(CIniFile.Read("level", "1000"));
 			Trainer.time = (int)nudTeacher.Value;
 			CPieceBoard.LoadFromIni();
 
@@ -92,6 +94,7 @@ namespace RapChessGui
 			CIniFile.Write("teacher", comboBoxTeacher.Text);
 			CIniFile.Write("timeTeacher", nudTeacher.Value.ToString());
 			CIniFile.Write("timeTrained", nudTrained.Value.ToString());
+			CIniFile.Write("level", level.ToString());
 			CPieceBoard.SaveToIni();
 		}
 
@@ -187,7 +190,7 @@ namespace RapChessGui
 
 		void SetMode(CMode mode)
 		{
-			PlayerList.KillProcess();
+			CData.KillProcess();
 			CData.gameMode = (int)mode;
 		}
 
@@ -243,6 +246,13 @@ namespace RapChessGui
 		{
 			emo = emo.ToLower();
 			string cpName = PlayerList.CurPlayer().user.name;
+			if((CData.gameMode == (int)CMode.game)&&(cpName == "Human")&&(PlayerList.SecPlayer().user.name != "Human")&&((Engine.g_moveNumber >> 1) == 10))
+			{
+				level = levelOrg - levelDif;
+				if (level < 0)
+					level = 0;
+				CIniFile.Write("level", level.ToString());
+			}
 			if (Engine.IsValidMove(emo) == 0)
 			{
 				labLast.ForeColor = Color.Red;
@@ -287,6 +297,15 @@ namespace RapChessGui
 						labLast.ForeColor = Color.Yellow;
 						labLast.Text = "Insufficient material";
 						break;
+				}
+				if (CData.gameMode == (int)CMode.game)
+				{
+					if (CData.gameState == (int)CGameState.mate)
+					{
+						if (cpName == "Human")
+							level = levelOrg + levelDif;
+						CIniFile.Write("level", level.ToString());
+					}
 				}
 				if (CData.gameMode == (int)CMode.match)
 				{
@@ -341,6 +360,7 @@ namespace RapChessGui
 
 		void Clear()
 		{
+			levelOrg = level;
 			labMove.Text = "Move 1 0";
 			labLast.ForeColor = Color.Gainsboro;
 			labLast.Text = "Good luck";
@@ -367,11 +387,16 @@ namespace RapChessGui
 
 		void StartGame()
 		{
+			levelDif = Convert.ToInt32(level * 0.1);
+			if (levelDif < 10)
+				levelDif = 10;
 			SetMode(CMode.game);
 			PlayerList.player[0].SetUser("Human");
-			CUser u = new CUser("Trained");
+			CUser u = new CUser(cbComputer.Text);
 			u.SetUser(cbComputer.Text);
 			u.SetCommand(cbCommand.Text);
+			if (u.mode == "movetime")
+				u.value = level.ToString();
 			cbCommand.Text = u.GetCommand();
 			PlayerList.player[1].SetUser(u);
 			if (cbColor.Text != "White")
@@ -679,7 +704,7 @@ namespace RapChessGui
 		private void FormChess_FormClosed(object sender, FormClosedEventArgs e)
 		{
 			IniSave();
-			PlayerList.KillProcess();
+			CData.KillProcess();
 		}
 
 		private void Timer1_Tick_1(object sender, EventArgs e)

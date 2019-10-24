@@ -88,6 +88,7 @@
 			this.bDelete.TabIndex = 23;
 			this.bDelete.Text = "Delete";
 			this.bDelete.UseVisualStyleBackColor = true;
+			this.bDelete.Click += new System.EventHandler(this.bDelete_Click);
 			// 
 			// bCreate
 			// 
@@ -98,6 +99,7 @@
 			this.bCreate.TabIndex = 22;
 			this.bCreate.Text = "Create";
 			this.bCreate.UseVisualStyleBackColor = true;
+			this.bCreate.Click += new System.EventHandler(this.bCreate_Click);
 			// 
 			// bUpdate
 			// 

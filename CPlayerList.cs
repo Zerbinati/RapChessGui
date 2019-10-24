@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Drawing;
 using System.Threading;
 
@@ -123,28 +122,6 @@ namespace RapChessGui
 			player[1] = new CPlayer();
 		}
 
-		public void KillProcess()
-		{
-			string eDir = AppDomain.CurrentDomain.BaseDirectory + "Engines";
-			Process[] processlist = Process.GetProcesses();
-			foreach (Process process in processlist)
-			{
-				try
-				{
-					String fileName = process.MainModule.FileName;
-					if (fileName.IndexOf(eDir) == 0)
-					{
-						process.Kill();
-					}
-
-				}
-				catch
-				{
-				}
-
-			}
-		}
-
 		public CPlayer CurPlayer()
 		{
 			return player[curIndex];
@@ -166,16 +143,14 @@ namespace RapChessGui
 
 		public void Rotate()
 		{
-			KillProcess();
-			CUser u1 = player[0].user;
-			CUser u2 = player[1].user;
-			player[0].SetUser(u2);
-			player[1].SetUser(u1);
-			/*CPlayer p = player[0];
+			CPlayer p = player[0];
 			player[0] = player[1];
 			player[1] = p;
-			player[0].index = 0;
-			player[1].index = 1;*/
+		}
+
+		public CPlayer SecPlayer()
+		{
+			return player[curIndex ^1];
 		}
 
 	}
