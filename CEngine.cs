@@ -63,6 +63,7 @@ namespace RapChessGui
 
 	class CEngine
 	{
+		public static CEngine This;
 		public const string defFen = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 0";
 		public static Random random = new Random();
 		const int piecePawn = 0x01;
@@ -137,7 +138,8 @@ namespace RapChessGui
 
 		public CEngine()
 		{
-			Initialize();
+			This = this;
+		Initialize();
 		}
 
 		public int GetGameState()

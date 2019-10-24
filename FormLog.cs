@@ -13,9 +13,10 @@ namespace RapChessGui
 
 	public partial class FormLog : Form
 	{
-
+		public static FormLog This;
 		public FormLog()
 		{
+			This = this;
 			InitializeComponent();
 		}
 

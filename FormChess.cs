@@ -20,7 +20,7 @@ namespace RapChessGui
 		[DllImport("gdi32.dll")]
 		private static extern IntPtr AddFontMemResourceEx(IntPtr pbFont, uint cbFont, IntPtr pdv, [In] ref uint pcFonts);
 
-		public static FormChess curForm;
+		public static FormChess This;
 		bool boardRotate;
 		int lastDes = -1;
 		int level = 1000;
@@ -40,13 +40,13 @@ namespace RapChessGui
 		{
 			KillApplication();
 			InitializeComponent();
-			curForm = this;
+			This = this;
 			richTextBox1.AddContextMenu();
 			Reset();
 			IniLoad();
 			CPieceBoard.Prepare();
 			pictureBox1.Size = new Size(CPieceBoard.size, CPieceBoard.size);
-			CData.FLog = new FormLog();
+			FormLog.This = new FormLog();
 		}
 
 		private void FormChess_Load(object sender, EventArgs e)
@@ -246,7 +246,7 @@ namespace RapChessGui
 		{
 			emo = emo.ToLower();
 			string cpName = PlayerList.CurPlayer().user.name;
-			if((CData.gameMode == (int)CMode.game)&&(cpName == "Human")&&(PlayerList.SecPlayer().user.name != "Human")&&((Engine.g_moveNumber >> 1) == 10))
+			if((CData.gameMode == (int)CMode.game)&&(cpName == "Human")&&(PlayerList.SecPlayer().user.name != "Human")&& (PlayerList.SecPlayer().user.mode == "movetime") && ((Engine.g_moveNumber >> 1) == 10))
 			{
 				level = levelOrg - levelDif;
 				if (level < 0)
@@ -257,8 +257,8 @@ namespace RapChessGui
 			{
 				labLast.ForeColor = Color.Red;
 				labLast.Text = "Move error " + emo;
-				CData.FLog.richTextBox1.AppendText($" error {emo}\n", Color.Red);
-				CData.FLog.richTextBox1.SaveFile("last error.rtf");
+				FormLog.This.richTextBox1.AppendText($" error {emo}\n", Color.Red);
+				FormLog.This.richTextBox1.SaveFile("last error.rtf");
 				return false;
 			}
 			double t = (DateTime.Now - PlayerList.CurPlayer().timeStart).TotalMilliseconds;
@@ -303,8 +303,10 @@ namespace RapChessGui
 					if (CData.gameState == (int)CGameState.mate)
 					{
 						if (cpName == "Human")
+						{
 							level = levelOrg + levelDif;
-						CIniFile.Write("level", level.ToString());
+							CIniFile.Write("level", level.ToString());
+						}
 					}
 				}
 				if (CData.gameMode == (int)CMode.match)
@@ -352,7 +354,7 @@ namespace RapChessGui
 					}
 					ShowTraining();
 				}
-				CData.FLog.richTextBox1.SaveFile("last game.rtf");
+				FormLog.This.richTextBox1.SaveFile("last game.rtf");
 				timerStart.Start();
 			}
 			return true;
@@ -376,9 +378,9 @@ namespace RapChessGui
 			richTextBox1.Clear();
 			CData.back = 0;
 			CData.book = 0;
-			CData.FLog.richTextBox1.Clear();
-			CData.FLog.richTextBox1.AppendText($"White {pw.user.name} {pw.user.engine} {pw.user.parameters}\n");
-			CData.FLog.richTextBox1.AppendText($"Black {pb.user.name} {pb.user.engine} {pb.user.parameters}\n");
+			FormLog.This.richTextBox1.Clear();
+			FormLog.This.richTextBox1.AppendText($"White {pw.user.name} {pw.user.engine} {pw.user.parameters}\n");
+			FormLog.This.richTextBox1.AppendText($"Black {pb.user.name} {pb.user.engine} {pb.user.parameters}\n");
 			labBack.Text = $"Back {CData.back}";
 			labBook.Text = $"Book {CData.book}";
 			RenderInfo(pw);
@@ -805,8 +807,8 @@ namespace RapChessGui
 
 		private void logToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			if (!CData.FLog.Visible)
-				CData.FLog.Show(this);
+			if (!FormLog.This.Visible)
+				FormLog.This.Show(this);
 		}
 
 		private void bStartMatch_Click(object sender, EventArgs e)

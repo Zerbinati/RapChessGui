@@ -53,8 +53,8 @@ namespace RapChessGui
 			string emo = book.GetMove(CHistory.GetMoves());
 			if (emo != "")
 			{
-				FormChess.curForm.AddBook(emo);
-				FormChess.curForm.MakeMove(emo);
+				FormChess.This.AddBook(emo);
+				FormChess.This.MakeMove(emo);
 			}
 			else
 			{
@@ -70,7 +70,7 @@ namespace RapChessGui
 		{
 			if (computer)
 			{
-				CData.FLog.richTextBox1.AppendText($"{user.name} < {msg}\n", Color.Brown);
+				FormLog.This.richTextBox1.AppendText($"{user.name} < {msg}\n", Color.Brown);
 				PlayerEng.streamWriter.WriteLine(msg);
 				Thread.Sleep(10);
 			}
@@ -87,7 +87,7 @@ namespace RapChessGui
 					{
 						msg = CData.messages[0];
 						CData.messages.RemoveAt(0);
-						CData.FLog.richTextBox1.AppendText($"{user.name} > {msg}\n");
+						FormLog.This.richTextBox1.AppendText($"{user.name} > {msg}\n");
 					}
 				}
 			}

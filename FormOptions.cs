@@ -20,7 +20,7 @@ namespace RapChessGui
 		private void CbRotateBoard_CheckedChanged(object sender, EventArgs e)
 		{
 			CData.rotateBoard = cbRotateBoard.Checked;
-			FormChess.curForm.RenderBoard();
+			FormChess.This.RenderBoard();
 		}
 
 		private void button1_Click(object sender, EventArgs e)
@@ -30,7 +30,7 @@ namespace RapChessGui
 			{
 				CPieceBoard.color = colorDialog1.Color;
 				CPieceBoard.Prepare();
-				FormChess.curForm.RenderBoard();
+				FormChess.This.RenderBoard();
 			}
 		}
 	}

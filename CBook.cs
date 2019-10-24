@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RapChessGui
 {
@@ -11,6 +9,7 @@ namespace RapChessGui
 	{
 		int indexL = 0;
 		int indexH = 0;
+		string path = "";
 		List<string> moves = new List<string>();
 
 		public string GetMove(string m)
@@ -36,7 +35,16 @@ namespace RapChessGui
 			string[] mo = m.Split(new[] {' '}, StringSplitOptions.RemoveEmptyEntries);
 			string[] mr = moves[index].Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
 			if (mr.Length > mo.Length)
-				return mr[mo.Length];
+			{
+				string emo = mr[mo.Length];
+				if (CEngine.This.IsValidMove(emo) == 0)
+				{
+					indexL = moves.Count;
+					return "";
+				}
+				else
+					return emo;
+			}
 			return "";
 		}
 
@@ -45,7 +53,8 @@ namespace RapChessGui
 			moves.Clear();
 			if (book == "None")
 				return;
-			moves = File.ReadAllLines("Books/" + book).ToList();
+			path = "Books/" + book;
+			moves = File.ReadAllLines(path).ToList();
 			Reset();
 		}
 
@@ -53,6 +62,12 @@ namespace RapChessGui
 		{
 			indexL = 0;
 			indexH = moves.Count - 1;
+		}
+
+		public void Sort()
+		{
+			moves.Sort();
+			File.WriteAllLines(path, moves);
 		}
 
 	}

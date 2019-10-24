@@ -18,7 +18,6 @@ namespace RapChessGui
 		public static List<string> bookNames = new List<string>();
 		public static List<string> engineNames = new List<string>();
 		public static List<string> playerNames = new List<string>();
-		public static FormLog FLog = null;
 		public static List<string> messages = new List<string>();
 
 		public static int ModeStoi(string s)
