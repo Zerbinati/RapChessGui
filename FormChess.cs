@@ -193,6 +193,8 @@ namespace RapChessGui
 		{
 			CData.KillProcess();
 			CData.gameMode = (int)mode;
+			lock (CData.messages)
+				CData.messages.Clear();
 		}
 
 		void ShowMatch()
@@ -200,13 +202,13 @@ namespace RapChessGui
 			labMatchGames.Text = $"Games {Match.games}";
 			labMatch10.Text = cbPlayer1.Text;
 			labMatch11.Text = Match.win.ToString();
-			labMatch12.Text = Match.draw.ToString();
-			labMatch13.Text = Match.loose.ToString();
+			labMatch12.Text = Match.loose.ToString();
+			labMatch13.Text = Match.draw.ToString();
 			labMatch14.Text = $"{Match.Result(false)}%";
 			labMatch20.Text = cbPlayer2.Text;
 			labMatch21.Text = Match.loose.ToString();
-			labMatch22.Text = Match.draw.ToString();
-			labMatch23.Text = Match.win.ToString();
+			labMatch22.Text = Match.win.ToString();
+			labMatch23.Text = Match.draw.ToString();
 			labMatch24.Text = $"{Match.Result(true)}%";
 		}
 
@@ -215,12 +217,12 @@ namespace RapChessGui
 			labGames.Text = $"Games {Trainer.games}";
 			nudTeacher.Value = Trainer.time;
 			label12.Text = Trainer.win.ToString();
-			label13.Text = Trainer.draw.ToString();
-			label14.Text = Trainer.loose.ToString();
+			label13.Text = Trainer.loose.ToString();
+			label14.Text = Trainer.draw.ToString();
 			label15.Text = $"{Trainer.Result(false)}%";
 			label7.Text = Trainer.loose.ToString();
-			label8.Text = Trainer.draw.ToString();
-			label9.Text = Trainer.win.ToString();
+			label8.Text = Trainer.win.ToString();
+			label9.Text = Trainer.draw.ToString();
 			label10.Text = $"{Trainer.Result(true)}%";
 		}
 
@@ -596,8 +598,8 @@ namespace RapChessGui
 			for (int n = 0; n < CHistory.moves.Count; n++)
 			{
 				string emo = CHistory.moves[n];
-				int gmo = Engine.GetMoveFromString(emo);
-				Engine.MakeMove(gmo);
+				if (!Engine.MakeMove(emo))
+					break;
 			}
 			CPieceBoard.Fill();
 			ShowHistory();
@@ -826,6 +828,29 @@ namespace RapChessGui
 		{
 			if (!FormBook.This.Visible)
 				FormBook.This.ShowDialog(this);
+		}
+
+		private void saveToClipboardToolStripMenuItem1_Click(object sender, EventArgs e)
+		{
+			Clipboard.SetText(CHistory.GetMoves());
+		}
+
+		private void loadFromClipboardToolStripMenuItem1_Click(object sender, EventArgs e)
+		{
+			SetMode(CMode.game);
+			string pgn = Clipboard.GetText().Trim();
+			string[] moves = pgn.Split(new[] { ' ', '\t' }, StringSplitOptions.RemoveEmptyEntries);
+			Engine.InitializeFromFen();
+			CHistory.NewGame();
+			foreach (string emo in moves)
+			{
+				if (Engine.MakeMove(emo))
+					CHistory.moves.Add(emo);
+			}
+			lastDes = -1;
+			ShowHistory();
+			CPieceBoard.Fill();
+			RenderBoard();
 		}
 	}
 }

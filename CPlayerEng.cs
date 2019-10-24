@@ -26,16 +26,18 @@ namespace RapChessGui
 
 		public void SetPlayer(CPlayer p)
 		{
+			//process.CancelOutputRead();
+			//process.Close();
 			process.Dispose();
 			player = p;
 			SetEngine();
 		}
 
-		private void SetEngine()
+		void SetEngine()
 		{
+			process = new Process();
 			if (!player.computer)
 				return;
-			process = new Process();
 			process.StartInfo.FileName = "Engines/" + player.user.engine;
 			process.StartInfo.Arguments = player.user.parameters;
 			process.StartInfo.WorkingDirectory = AppDomain.CurrentDomain.BaseDirectory + "Engines";
@@ -44,11 +46,6 @@ namespace RapChessGui
 			process.StartInfo.RedirectStandardInput = true;
 			process.StartInfo.RedirectStandardOutput = true;
 			process.OutputDataReceived += ProEvent;
-			/*process.OutputDataReceived += new DataReceivedEventHandler(delegate (object sender, DataReceivedEventArgs e)
-			{
-				if (!String.IsNullOrEmpty(e.Data))
-					player.messages.Add(e.Data);
-			});*/
 			process.Start();
 			streamWriter = process.StandardInput;
 			process.BeginOutputReadLine();

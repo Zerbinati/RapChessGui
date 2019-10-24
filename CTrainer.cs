@@ -33,7 +33,7 @@ namespace RapChessGui
 		{
 			int t = Total();
 			if (t == 0)
-				return 100;
+				return 50;
 			if (rev)
 				return ((loose * 2 + draw) * 100) / (t * 2);
 			else

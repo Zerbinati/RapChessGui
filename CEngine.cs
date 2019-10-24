@@ -567,6 +567,17 @@ namespace RapChessGui
 			return true;
 		}
 
+		public bool MakeMove(string emo)
+		{
+			int m = GetMoveFromString(emo);
+			if (m > 0)
+			{
+				MakeMove(m);
+				return true;
+			}
+			return false;
+		}
+
 		public void MakeMove(int move)
 		{
 			int fr = move & 0xFF;

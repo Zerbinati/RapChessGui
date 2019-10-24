@@ -38,6 +38,7 @@
 			this.saveToClipboardToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.loadFromClipboardToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.playersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.bookToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.logToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.panMenu = new System.Windows.Forms.Panel();
@@ -126,7 +127,9 @@
 			this.labLast = new System.Windows.Forms.Label();
 			this.labMove = new System.Windows.Forms.Label();
 			this.timerStart = new System.Windows.Forms.Timer(this.components);
-			this.bookToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.pgnToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.saveToClipboardToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+			this.loadFromClipboardToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
 			this.menuStrip1.SuspendLayout();
 			this.panMenu.SuspendLayout();
 			this.panel2.SuspendLayout();
@@ -162,13 +165,14 @@
             this.newGameToolStripMenuItem,
             this.backToolStripMenuItem,
             this.fenToolStripMenuItem,
+            this.pgnToolStripMenuItem,
             this.playersToolStripMenuItem,
             this.bookToolStripMenuItem,
             this.optionsToolStripMenuItem,
             this.logToolStripMenuItem});
 			this.menuStrip1.Location = new System.Drawing.Point(0, 2);
 			this.menuStrip1.Name = "menuStrip1";
-			this.menuStrip1.Size = new System.Drawing.Size(489, 24);
+			this.menuStrip1.Size = new System.Drawing.Size(529, 24);
 			this.menuStrip1.TabIndex = 1;
 			this.menuStrip1.Text = "menuStrip1";
 			// 
@@ -215,6 +219,13 @@
 			this.playersToolStripMenuItem.Size = new System.Drawing.Size(56, 20);
 			this.playersToolStripMenuItem.Text = "Players";
 			this.playersToolStripMenuItem.Click += new System.EventHandler(this.PlayersToolStripMenuItem_Click);
+			// 
+			// bookToolStripMenuItem
+			// 
+			this.bookToolStripMenuItem.Name = "bookToolStripMenuItem";
+			this.bookToolStripMenuItem.Size = new System.Drawing.Size(46, 20);
+			this.bookToolStripMenuItem.Text = "Book";
+			this.bookToolStripMenuItem.Click += new System.EventHandler(this.bookToolStripMenuItem_Click);
 			// 
 			// optionsToolStripMenuItem
 			// 
@@ -685,7 +696,7 @@
 			this.label27.Name = "label27";
 			this.label27.Size = new System.Drawing.Size(47, 32);
 			this.label27.TabIndex = 3;
-			this.label27.Text = "Loose";
+			this.label27.Text = "Draw";
 			this.label27.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
 			// label28
@@ -697,7 +708,7 @@
 			this.label28.Name = "label28";
 			this.label28.Size = new System.Drawing.Size(47, 32);
 			this.label28.TabIndex = 2;
-			this.label28.Text = "Draw";
+			this.label28.Text = "Loose";
 			this.label28.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
 			// label29
@@ -968,7 +979,7 @@
 			this.label4.Name = "label4";
 			this.label4.Size = new System.Drawing.Size(46, 32);
 			this.label4.TabIndex = 3;
-			this.label4.Text = "Loose";
+			this.label4.Text = "Draw";
 			this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
 			// label3
@@ -980,7 +991,7 @@
 			this.label3.Name = "label3";
 			this.label3.Size = new System.Drawing.Size(46, 32);
 			this.label3.TabIndex = 2;
-			this.label3.Text = "Draw";
+			this.label3.Text = "Loose";
 			this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
 			// label2
@@ -1326,12 +1337,28 @@
 			this.timerStart.Interval = 6000;
 			this.timerStart.Tick += new System.EventHandler(this.TimerStart_Tick);
 			// 
-			// bookToolStripMenuItem
+			// pgnToolStripMenuItem
 			// 
-			this.bookToolStripMenuItem.Name = "bookToolStripMenuItem";
-			this.bookToolStripMenuItem.Size = new System.Drawing.Size(46, 20);
-			this.bookToolStripMenuItem.Text = "Book";
-			this.bookToolStripMenuItem.Click += new System.EventHandler(this.bookToolStripMenuItem_Click);
+			this.pgnToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.saveToClipboardToolStripMenuItem1,
+            this.loadFromClipboardToolStripMenuItem1});
+			this.pgnToolStripMenuItem.Name = "pgnToolStripMenuItem";
+			this.pgnToolStripMenuItem.Size = new System.Drawing.Size(40, 20);
+			this.pgnToolStripMenuItem.Text = "Pgn";
+			// 
+			// saveToClipboardToolStripMenuItem1
+			// 
+			this.saveToClipboardToolStripMenuItem1.Name = "saveToClipboardToolStripMenuItem1";
+			this.saveToClipboardToolStripMenuItem1.Size = new System.Drawing.Size(182, 22);
+			this.saveToClipboardToolStripMenuItem1.Text = "Save to clipboard";
+			this.saveToClipboardToolStripMenuItem1.Click += new System.EventHandler(this.saveToClipboardToolStripMenuItem1_Click);
+			// 
+			// loadFromClipboardToolStripMenuItem1
+			// 
+			this.loadFromClipboardToolStripMenuItem1.Name = "loadFromClipboardToolStripMenuItem1";
+			this.loadFromClipboardToolStripMenuItem1.Size = new System.Drawing.Size(182, 22);
+			this.loadFromClipboardToolStripMenuItem1.Text = "Load from clipboard";
+			this.loadFromClipboardToolStripMenuItem1.Click += new System.EventHandler(this.loadFromClipboardToolStripMenuItem1_Click);
 			// 
 			// FormChess
 			// 
@@ -1478,6 +1505,9 @@
 		private System.Windows.Forms.Label label17;
 		private System.Windows.Forms.ComboBox cbCommand;
 		private System.Windows.Forms.ToolStripMenuItem bookToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem pgnToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem saveToClipboardToolStripMenuItem1;
+		private System.Windows.Forms.ToolStripMenuItem loadFromClipboardToolStripMenuItem1;
 	}
 }
 

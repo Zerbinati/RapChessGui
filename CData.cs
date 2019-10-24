@@ -57,7 +57,7 @@ namespace RapChessGui
 				}
 
 			}
-			Thread.Sleep(10);
+			Thread.Sleep(20);
 		}
 
 	}
