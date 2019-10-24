@@ -42,11 +42,12 @@ namespace RapChessGui
 			InitializeComponent();
 			This = this;
 			richTextBox1.AddContextMenu();
+			FormBook.This = new FormBook();
+			FormLog.This = new FormLog();
 			Reset();
 			IniLoad();
 			CPieceBoard.Prepare();
 			pictureBox1.Size = new Size(CPieceBoard.size, CPieceBoard.size);
-			FormLog.This = new FormLog();
 		}
 
 		private void FormChess_Load(object sender, EventArgs e)
@@ -240,6 +241,10 @@ namespace RapChessGui
 			}
 			foreach (string en in CData.engineNames)
 				comboBoxTeacher.Items.Add(en);
+			FormBook.This.cbBookList.Items.Clear();
+			foreach (string b in CData.bookNames)
+				FormBook.This.cbBookList.Items.Add(b);
+			FormBook.This.cbBookList.SelectedIndex = 0;
 		}
 
 		public bool MakeMove(string emo)
@@ -815,6 +820,12 @@ namespace RapChessGui
 		{
 			Match.Reset();
 			StartMatch();
+		}
+
+		private void bookToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			if (!FormBook.This.Visible)
+				FormBook.This.ShowDialog(this);
 		}
 	}
 }

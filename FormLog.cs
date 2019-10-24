@@ -28,10 +28,5 @@ namespace RapChessGui
 				e.Cancel = true; 
 			}
 		}
-
-		private void FormLog_Leave(object sender, EventArgs e)
-		{
-
-		}
 	}
 }

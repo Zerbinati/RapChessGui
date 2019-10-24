@@ -53,7 +53,6 @@
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
 			this.Text = "Log";
 			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormLog_FormClosing);
-			this.Leave += new System.EventHandler(this.FormLog_Leave);
 			this.ResumeLayout(false);
 
 		}

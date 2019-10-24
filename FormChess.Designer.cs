@@ -126,6 +126,7 @@
 			this.labLast = new System.Windows.Forms.Label();
 			this.labMove = new System.Windows.Forms.Label();
 			this.timerStart = new System.Windows.Forms.Timer(this.components);
+			this.bookToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.menuStrip1.SuspendLayout();
 			this.panMenu.SuspendLayout();
 			this.panel2.SuspendLayout();
@@ -162,11 +163,12 @@
             this.backToolStripMenuItem,
             this.fenToolStripMenuItem,
             this.playersToolStripMenuItem,
+            this.bookToolStripMenuItem,
             this.optionsToolStripMenuItem,
             this.logToolStripMenuItem});
 			this.menuStrip1.Location = new System.Drawing.Point(0, 2);
 			this.menuStrip1.Name = "menuStrip1";
-			this.menuStrip1.Size = new System.Drawing.Size(323, 24);
+			this.menuStrip1.Size = new System.Drawing.Size(489, 24);
 			this.menuStrip1.TabIndex = 1;
 			this.menuStrip1.Text = "menuStrip1";
 			// 
@@ -1324,6 +1326,13 @@
 			this.timerStart.Interval = 6000;
 			this.timerStart.Tick += new System.EventHandler(this.TimerStart_Tick);
 			// 
+			// bookToolStripMenuItem
+			// 
+			this.bookToolStripMenuItem.Name = "bookToolStripMenuItem";
+			this.bookToolStripMenuItem.Size = new System.Drawing.Size(46, 20);
+			this.bookToolStripMenuItem.Text = "Book";
+			this.bookToolStripMenuItem.Click += new System.EventHandler(this.bookToolStripMenuItem_Click);
+			// 
 			// FormChess
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1468,6 +1477,7 @@
 		public System.Windows.Forms.Label labBack;
 		private System.Windows.Forms.Label label17;
 		private System.Windows.Forms.ComboBox cbCommand;
+		private System.Windows.Forms.ToolStripMenuItem bookToolStripMenuItem;
 	}
 }
 
