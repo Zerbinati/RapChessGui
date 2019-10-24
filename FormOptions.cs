@@ -33,5 +33,14 @@ namespace RapChessGui
 				FormChess.This.RenderBoard();
 			}
 		}
+
+		private void butDefault_Click(object sender, EventArgs e)
+		{
+			colorDialog1.Color = Color.FromArgb(64,8,8);
+			CData.rotateBoard = cbRotateBoard.Checked = false;
+			CPieceBoard.color = colorDialog1.Color;
+			CPieceBoard.Prepare();
+			FormChess.This.RenderBoard();
+		}
 	}
 }
