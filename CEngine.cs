@@ -151,12 +151,13 @@ namespace RapChessGui
 			if (IsRepetition())
 				return (int)CGameState.repetition;
 			GenerateAllMoves(!whiteTurn, false);
+			bool check = g_inCheck;
 			if (adjInsufficient && myInsufficient)
 				return (int)CGameState.material;
 			List<int> moves = GenerateValidMoves();
 			if (moves.Count > 0)
 				return (int)CGameState.normal;
-			return g_inCheck ? (int)CGameState.mate : (int)CGameState.stalemate;
+			return check ? (int)CGameState.mate : (int)CGameState.stalemate;
 		}
 
 		int MakeSquare(int row, int column)
@@ -317,7 +318,7 @@ namespace RapChessGui
 				{
 					int m = am[i];
 					MakeMove(m);
-					GenerateAllMoves(whiteTurn, true);
+					GenerateAllMoves(whiteTurn, false);
 					if (!g_inCheck)
 						moves.Add(m);
 					UnmakeMove(m);

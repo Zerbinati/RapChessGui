@@ -263,7 +263,7 @@ namespace RapChessGui
 				labLast.ForeColor = Color.Red;
 				labLast.Text = "Move error " + emo;
 				FormLog.This.richTextBox1.AppendText($" error {emo}\n", Color.Red);
-				FormLog.This.richTextBox1.SaveFile("last error.rtf");
+				FormLog.This.richTextBox1.SaveFile("error.rtf");
 				return false;
 			}
 			int gm = Engine.GetMoveFromString(emo);
@@ -357,7 +357,7 @@ namespace RapChessGui
 					}
 					ShowTraining();
 				}
-				FormLog.This.richTextBox1.SaveFile("finished game.rtf");
+				FormLog.This.richTextBox1.SaveFile("game.rtf");
 				timerStart.Start();
 			}
 			return true;
@@ -380,7 +380,7 @@ namespace RapChessGui
 			CData.book = 0;
 			CPlayer pw = PlayerList.player[0];
 			CPlayer pb = PlayerList.player[1];
-			FormLog.This.richTextBox1.SaveFile("last game.rtf");
+			FormLog.This.richTextBox1.SaveFile("temp.rtf");
 			FormLog.This.richTextBox1.Clear();
 			FormLog.This.richTextBox1.AppendText($"White {pw.user.name} {pw.user.engine} {pw.user.parameters}\n");
 			FormLog.This.richTextBox1.AppendText($"Black {pb.user.name} {pb.user.engine} {pb.user.parameters}\n");
@@ -411,12 +411,6 @@ namespace RapChessGui
 			SetMode(CMode.game);
 			PlayerList.player[0].SetUser("Human");
 			CUser u = CommandToUser();
-			/*CUser u = new CUser(cbComputer.Text);
-			u.SetUser(cbComputer.Text);
-			u.SetCommand(cbCommand.Text);
-			if (u.mode == "movetime")
-				u.value = level.ToString();
-			cbCommand.Text = u.GetCommand();*/
 			PlayerList.player[1].SetUser(u);
 			if (cbColor.Text != "White")
 				PlayerList.Rotate();
