@@ -5,7 +5,7 @@ using System.Threading;
 
 namespace RapChessGui
 {
-	enum CMode { game,match, training }
+	enum CMode { game,match, training}
 
 	public static class CDrag
 	{

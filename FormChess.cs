@@ -266,8 +266,8 @@ namespace RapChessGui
 				FormLog.This.richTextBox1.SaveFile("last error.rtf");
 				return false;
 			}
-			double t = (DateTime.Now - PlayerList.CurPlayer().timeStart).TotalMilliseconds;
-			PlayerList.CurPlayer().timeTotal += t;
+			//double t = (DateTime.Now - PlayerList.CurPlayer().timeStart).TotalMilliseconds;
+			//PlayerList.CurPlayer().timeTotal += t;
 			int gm = Engine.GetMoveFromString(emo);
 			CPieceBoard.MakeMove(gm);
 			Engine.MakeMove(gm);
@@ -286,7 +286,7 @@ namespace RapChessGui
 						labLast.ForeColor = Color.Lime;
 						labLast.Text = cpName + " win";
 						break;
-					case (int)CGameState.drawn:
+					case (int)CGameState.stalemate:
 						labLast.ForeColor = Color.Yellow;
 						labLast.Text = "Stalemate";
 						break;
@@ -367,22 +367,21 @@ namespace RapChessGui
 
 		void Clear()
 		{
+			CData.gameState = (int) CGameState.stop;
 			levelOrg = level;
 			labMove.Text = "Move 1 0";
 			labLast.ForeColor = Color.Gainsboro;
 			labLast.Text = "Good luck";
 			CDrag.index = -1;
 			Engine.InitializeFromFen();
-			CData.gameState = 0;
 			CHistory.NewGame(Engine.GetFen());
 			CPieceBoard.Fill();
 			PlayerList.NewGame();
-			timer1.Enabled = true;
-			CPlayer pw = PlayerList.player[0];
-			CPlayer pb = PlayerList.player[1];
 			richTextBox1.Clear();
 			CData.back = 0;
 			CData.book = 0;
+			CPlayer pw = PlayerList.player[0];
+			CPlayer pb = PlayerList.player[1];
 			FormLog.This.richTextBox1.Clear();
 			FormLog.This.richTextBox1.AppendText($"White {pw.user.name} {pw.user.engine} {pw.user.parameters}\n");
 			FormLog.This.richTextBox1.AppendText($"Black {pb.user.name} {pb.user.engine} {pb.user.parameters}\n");
@@ -390,6 +389,8 @@ namespace RapChessGui
 			labBook.Text = $"Book {CData.book}";
 			RenderInfo(pw);
 			RenderInfo(pb);
+			CData.gameState = 0;
+			timer1.Enabled = true;
 		}
 
 		void StartGame()
@@ -615,10 +616,15 @@ namespace RapChessGui
 
 		void RenderInfo(CPlayer cp)
 		{
-			double dif = CData.gameState > 0 ? 0 : (DateTime.Now - cp.timeStart).TotalMilliseconds;
-			DateTime tot = new DateTime().AddMilliseconds(cp.timeTotal + dif);
+			if (CData.gameState == 0) {
+				DateTime dt = DateTime.Now;
+				double dif =(dt - cp.timeStart).TotalMilliseconds;
+				cp.timeStart = dt;
+				cp.timeTotal += dif;
+			}
+			DateTime tot = new DateTime().AddMilliseconds(cp.timeTotal);
 			if (CData.gameState == 0)
-				if (boardRotate ^ Engine.whiteTurn)
+				if (boardRotate ^ cp.white)
 				{
 					labTimeB.Text = tot.ToString("HH:mm:ss");
 					labScoreB.Text = $"Score {cp.score}";
@@ -713,17 +719,22 @@ namespace RapChessGui
 			{
 				RenderBoard();
 			}
-			var cp = PlayerList.CurPlayer();
-			RenderInfo(cp);
-			if (cp.computer)
-				if (!cp.started)
-					cp.Start();
-				else if (cp.readyok && !cp.go)
-				{
-					cp.CompMakeMove();
-				}
-				else
-					GetMessage(cp);
+			else
+			{
+				var cp = PlayerList.CurPlayer();
+				if (cp.computer)
+					if (!cp.started)
+						cp.Start();
+					else if (cp.readyok && !cp.go)
+					{
+						cp.CompMakeMove();
+					}
+					else
+					{
+						RenderInfo(cp);
+						GetMessage(cp);
+					}
+			}
 		}
 
 		private void NewGameToolStripMenuItem_Click(object sender, EventArgs e)

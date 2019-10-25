@@ -12,6 +12,7 @@ namespace RapChessGui
 		public bool uciok = false;
 		public bool readyok = false;
 		public bool go = false;
+		public bool white = true;
 		public double timeTotal;
 		public string score;
 		public string depth;
@@ -25,11 +26,12 @@ namespace RapChessGui
 
 		public CPlayer()
 		{
-			Init();
+			Init(true);
 		}
 
-		public void Init()
+		public void Init(bool w)
 		{
+			white = w;
 			started = false;
 			go = false;
 			timeTotal = 0;
@@ -136,8 +138,8 @@ namespace RapChessGui
 
 		public void NewGame()
 		{
-			player[0].Init();
-			player[1].Init();
+			player[0].Init(true);
+			player[1].Init(false);
 			curIndex = 0;
 		}
 

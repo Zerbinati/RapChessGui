@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace RapChessGui
 {
-	enum CGameState { normal, mate, drawn, repetition, move50, material }
+	enum CGameState { normal, mate, stalemate, repetition, move50, material,stop}
 
 	class CUndo
 	{
@@ -156,7 +156,7 @@ namespace RapChessGui
 			List<int> moves = GenerateValidMoves();
 			if (moves.Count > 0)
 				return (int)CGameState.normal;
-			return g_inCheck ? (int)CGameState.mate : (int)CGameState.drawn;
+			return g_inCheck ? (int)CGameState.mate : (int)CGameState.stalemate;
 		}
 
 		int MakeSquare(int row, int column)
