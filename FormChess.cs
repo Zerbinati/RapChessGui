@@ -727,6 +727,7 @@ namespace RapChessGui
 			else
 			{
 				var cp = PlayerList.CurPlayer();
+				RenderInfo(cp);
 				if (cp.computer)
 					if (!cp.started)
 						cp.Start();
@@ -736,7 +737,6 @@ namespace RapChessGui
 					}
 					else
 					{
-						RenderInfo(cp);
 						GetMessage(cp);
 					}
 			}
