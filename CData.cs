@@ -7,6 +7,15 @@ namespace RapChessGui
 {
 	enum CMode { game,match, training }
 
+	public static class CDrag
+	{
+		public static bool dragged = false;
+		public static int index = -1;
+		public static int last = -1;
+		public static int mouseX = 0;
+		public static int mouseY = 0;
+	}
+
 	public static class CData
 	{
 		public static bool rotateBoard = false;
@@ -26,11 +35,6 @@ namespace RapChessGui
 				if (s == arrModeNames[i])
 					return i;
 			return 0;
-		}
-
-		public static string ModeItos(int i)
-		{
-			return arrModeNames[i];
 		}
 
 		public static void KillProcess()

@@ -37,6 +37,9 @@
 			this.fenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.saveToClipboardToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.loadFromClipboardToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.pgnToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.saveToClipboardToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+			this.loadFromClipboardToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
 			this.playersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.bookToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -127,9 +130,6 @@
 			this.labLast = new System.Windows.Forms.Label();
 			this.labMove = new System.Windows.Forms.Label();
 			this.timerStart = new System.Windows.Forms.Timer(this.components);
-			this.pgnToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.saveToClipboardToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-			this.loadFromClipboardToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
 			this.menuStrip1.SuspendLayout();
 			this.panMenu.SuspendLayout();
 			this.panel2.SuspendLayout();
@@ -172,7 +172,7 @@
             this.logToolStripMenuItem});
 			this.menuStrip1.Location = new System.Drawing.Point(0, 2);
 			this.menuStrip1.Name = "menuStrip1";
-			this.menuStrip1.Size = new System.Drawing.Size(529, 24);
+			this.menuStrip1.Size = new System.Drawing.Size(409, 24);
 			this.menuStrip1.TabIndex = 1;
 			this.menuStrip1.Text = "menuStrip1";
 			// 
@@ -212,6 +212,29 @@
 			this.loadFromClipboardToolStripMenuItem.Size = new System.Drawing.Size(182, 22);
 			this.loadFromClipboardToolStripMenuItem.Text = "Load from clipboard";
 			this.loadFromClipboardToolStripMenuItem.Click += new System.EventHandler(this.loadFromClipboardToolStripMenuItem_Click);
+			// 
+			// pgnToolStripMenuItem
+			// 
+			this.pgnToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.saveToClipboardToolStripMenuItem1,
+            this.loadFromClipboardToolStripMenuItem1});
+			this.pgnToolStripMenuItem.Name = "pgnToolStripMenuItem";
+			this.pgnToolStripMenuItem.Size = new System.Drawing.Size(40, 20);
+			this.pgnToolStripMenuItem.Text = "Pgn";
+			// 
+			// saveToClipboardToolStripMenuItem1
+			// 
+			this.saveToClipboardToolStripMenuItem1.Name = "saveToClipboardToolStripMenuItem1";
+			this.saveToClipboardToolStripMenuItem1.Size = new System.Drawing.Size(182, 22);
+			this.saveToClipboardToolStripMenuItem1.Text = "Save to clipboard";
+			this.saveToClipboardToolStripMenuItem1.Click += new System.EventHandler(this.saveToClipboardToolStripMenuItem1_Click);
+			// 
+			// loadFromClipboardToolStripMenuItem1
+			// 
+			this.loadFromClipboardToolStripMenuItem1.Name = "loadFromClipboardToolStripMenuItem1";
+			this.loadFromClipboardToolStripMenuItem1.Size = new System.Drawing.Size(182, 22);
+			this.loadFromClipboardToolStripMenuItem1.Text = "Load from clipboard";
+			this.loadFromClipboardToolStripMenuItem1.Click += new System.EventHandler(this.loadFromClipboardToolStripMenuItem1_Click);
 			// 
 			// playersToolStripMenuItem
 			// 
@@ -1187,7 +1210,9 @@
 			this.pictureBox1.Size = new System.Drawing.Size(576, 576);
 			this.pictureBox1.TabIndex = 8;
 			this.pictureBox1.TabStop = false;
-			this.pictureBox1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.PictureBox1_MouseClick);
+			this.pictureBox1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseDown);
+			this.pictureBox1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseMove);
+			this.pictureBox1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseUp);
 			// 
 			// panel3
 			// 
@@ -1336,29 +1361,6 @@
 			// 
 			this.timerStart.Interval = 6000;
 			this.timerStart.Tick += new System.EventHandler(this.TimerStart_Tick);
-			// 
-			// pgnToolStripMenuItem
-			// 
-			this.pgnToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.saveToClipboardToolStripMenuItem1,
-            this.loadFromClipboardToolStripMenuItem1});
-			this.pgnToolStripMenuItem.Name = "pgnToolStripMenuItem";
-			this.pgnToolStripMenuItem.Size = new System.Drawing.Size(40, 20);
-			this.pgnToolStripMenuItem.Text = "Pgn";
-			// 
-			// saveToClipboardToolStripMenuItem1
-			// 
-			this.saveToClipboardToolStripMenuItem1.Name = "saveToClipboardToolStripMenuItem1";
-			this.saveToClipboardToolStripMenuItem1.Size = new System.Drawing.Size(182, 22);
-			this.saveToClipboardToolStripMenuItem1.Text = "Save to clipboard";
-			this.saveToClipboardToolStripMenuItem1.Click += new System.EventHandler(this.saveToClipboardToolStripMenuItem1_Click);
-			// 
-			// loadFromClipboardToolStripMenuItem1
-			// 
-			this.loadFromClipboardToolStripMenuItem1.Name = "loadFromClipboardToolStripMenuItem1";
-			this.loadFromClipboardToolStripMenuItem1.Size = new System.Drawing.Size(182, 22);
-			this.loadFromClipboardToolStripMenuItem1.Text = "Load from clipboard";
-			this.loadFromClipboardToolStripMenuItem1.Click += new System.EventHandler(this.loadFromClipboardToolStripMenuItem1_Click);
 			// 
 			// FormChess
 			// 

@@ -22,7 +22,6 @@ namespace RapChessGui
 
 		public static FormChess This;
 		bool boardRotate;
-		int lastDes = -1;
 		int level = 1000;
 		int levelOrg = 1000;
 		int levelDif = 10;
@@ -171,7 +170,6 @@ namespace RapChessGui
 						{
 							ShowWindow(process.MainWindowHandle, 9);
 							SetForegroundWindow(process.MainWindowHandle);
-
 							cp.Kill();
 						}
 				}
@@ -253,7 +251,7 @@ namespace RapChessGui
 		{
 			emo = emo.ToLower();
 			string cpName = PlayerList.CurPlayer().user.name;
-			if((CData.gameMode == (int)CMode.game)&&(cpName == "Human")&&(PlayerList.SecPlayer().user.name != "Human")&& (PlayerList.SecPlayer().user.mode == "movetime") && ((Engine.g_moveNumber >> 1) == 10))
+			if ((CData.gameMode == (int)CMode.game) && (cpName == "Human") && (PlayerList.SecPlayer().user.name != "Human") && (PlayerList.SecPlayer().user.mode == "movetime") && ((Engine.g_moveNumber >> 1) == 10))
 			{
 				level = levelOrg - levelDif;
 				if (level < 0)
@@ -373,7 +371,7 @@ namespace RapChessGui
 			labMove.Text = "Move 1 0";
 			labLast.ForeColor = Color.Gainsboro;
 			labLast.Text = "Good luck";
-			lastDes = -1;
+			CDrag.index = -1;
 			Engine.InitializeFromFen();
 			CData.gameState = 0;
 			CHistory.NewGame(Engine.GetFen());
@@ -534,7 +532,7 @@ namespace RapChessGui
 					rec.Y = y2;
 					rec.Width = CPieceBoard.field;
 					rec.Height = CPieceBoard.field;
-					if (i == lastDes)
+					if (i == CDrag.index)
 						g.FillRectangle(brush3, rec);
 					CPiece piece = CPieceBoard.list[i];
 					if (piece == null)
@@ -548,6 +546,14 @@ namespace RapChessGui
 						gp1.AddString("pnbrqk"[image].ToString(), fontPiece.FontFamily, (int)fontPiece.Style, fontPiece.Size, rec, sf);
 					}
 					piece.SetDes(x2, y2);
+					if ((i == CDrag.index) && CDrag.dragged)
+					{
+						piece.dt = DateTime.Now;
+						piece.curXY.X = CDrag.mouseX - 32;
+						piece.curXY.Y = CDrag.mouseY - 32;
+						piece.souXY.X = piece.curXY.X;
+						piece.souXY.Y = piece.curXY.Y;
+					}
 					rec.X = piece.curXY.X;
 					rec.Y = piece.curXY.Y;
 					gp1 = piece.image > 5 ? gpB : gpW;
@@ -559,17 +565,19 @@ namespace RapChessGui
 			g.FillPath(foreBrush, gp);
 			if (Engine.whiteTurn)
 			{
-				g.DrawPath(penW, gpW);
-				g.FillPath(brushW, gpW);
 				g.DrawPath(penB, gpB);
 				g.FillPath(brushB, gpB);
+				g.DrawPath(penW, gpW);
+				g.FillPath(brushW, gpW);
+
 			}
 			else
 			{
-				g.DrawPath(penB, gpB);
-				g.FillPath(brushB, gpB);
 				g.DrawPath(penW, gpW);
 				g.FillPath(brushW, gpW);
+				g.DrawPath(penB, gpB);
+				g.FillPath(brushB, gpB);
+
 			}
 			sf.Dispose();
 			outline.Dispose();
@@ -681,7 +689,7 @@ namespace RapChessGui
 				richTextBox1.AppendText($"{emo} ");
 			}
 			string lm = CHistory.LastMove();
-			lastDes = CEngine.EmoToIndex(lm);
+			CDrag.index = CEngine.EmoToIndex(lm);
 		}
 
 		bool TryMove(int s, int d)
@@ -693,23 +701,6 @@ namespace RapChessGui
 			return MakeMove(em);
 		}
 
-		private void PictureBox1_MouseClick(object sender, MouseEventArgs e)
-		{
-			if (PlayerList.CurPlayer().computer)
-				return;
-			CPieceBoard.animated = true;
-			int sou = lastDes;
-			int x = (e.Location.X - CPieceBoard.margin) / CPieceBoard.field;
-			int y = (e.Location.Y - CPieceBoard.margin) / CPieceBoard.field;
-			if (boardRotate)
-			{
-				x = 7 - x;
-				y = 7 - y;
-			}
-			lastDes = y * 8 + x;
-			TryMove(sou, lastDes);
-		}
-
 		private void FormChess_FormClosed(object sender, FormClosedEventArgs e)
 		{
 			IniSave();
@@ -718,10 +709,9 @@ namespace RapChessGui
 
 		private void Timer1_Tick_1(object sender, EventArgs e)
 		{
-			if (CPieceBoard.animated || CPieceBoard.finished)
+			if (CPieceBoard.animated || CPieceBoard.finished || CDrag.dragged)
 			{
 				RenderBoard();
-				return;
 			}
 			var cp = PlayerList.CurPlayer();
 			RenderInfo(cp);
@@ -807,7 +797,7 @@ namespace RapChessGui
 				return;
 			}
 			CHistory.NewGame(fen);
-			lastDes = -1;
+			CDrag.index = -1;
 			CPieceBoard.Fill();
 			RenderBoard();
 		}
@@ -847,10 +837,51 @@ namespace RapChessGui
 				if (Engine.MakeMove(emo))
 					CHistory.moves.Add(emo);
 			}
-			lastDes = -1;
+			CDrag.index = -1;
 			ShowHistory();
 			CPieceBoard.Fill();
 			RenderBoard();
+		}
+
+		private void pictureBox1_MouseMove(object sender, MouseEventArgs e)
+		{
+			CDrag.mouseX = e.X;
+			CDrag.mouseY = e.Y;
+		}
+
+		private void pictureBox1_MouseDown(object sender, MouseEventArgs e)
+		{
+			if (PlayerList.CurPlayer().computer)
+				return;
+			int sou = CDrag.index;
+			int x = (e.Location.X - CPieceBoard.margin) / CPieceBoard.field;
+			int y = (e.Location.Y - CPieceBoard.margin) / CPieceBoard.field;
+			if (boardRotate)
+			{
+				x = 7 - x;
+				y = 7 - y;
+			}
+			CDrag.last = CDrag.index;
+			CDrag.index = y * 8 + x;
+			CDrag.dragged = true;
+		}
+
+		private void pictureBox1_MouseUp(object sender, MouseEventArgs e)
+		{
+			int x = (e.Location.X - CPieceBoard.margin) / CPieceBoard.field;
+			int y = (e.Location.Y - CPieceBoard.margin) / CPieceBoard.field;
+			if (boardRotate)
+			{
+				x = 7 - x;
+				y = 7 - y;
+			}
+			int des = y * 8 + x;
+			if (CDrag.index == des)
+				TryMove(CDrag.last, des);
+			else
+				TryMove(CDrag.index, des);
+			CDrag.dragged = false;
+			CPieceBoard.animated = true;
 		}
 	}
 }

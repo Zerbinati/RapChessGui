@@ -13,9 +13,9 @@ namespace RapChessGui
 		public int desImage = -1;
 		public int image = -1;
 		public Point curXY = new Point();
-		Point souXY = new Point();
+		public Point souXY = new Point();
 		public Point desXY = new Point();
-		DateTime dt;
+		public DateTime dt;
 		double time = 200;
 
 		public bool Render()
