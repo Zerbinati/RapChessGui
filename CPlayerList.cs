@@ -136,7 +136,7 @@ namespace RapChessGui
 			CurPlayer().timeStart = DateTime.Now;
 		}
 
-		public void NewGame()
+		public void Init()
 		{
 			player[0].Init(true);
 			player[1].Init(false);

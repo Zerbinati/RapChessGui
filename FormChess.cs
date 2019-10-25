@@ -266,8 +266,6 @@ namespace RapChessGui
 				FormLog.This.richTextBox1.SaveFile("last error.rtf");
 				return false;
 			}
-			//double t = (DateTime.Now - PlayerList.CurPlayer().timeStart).TotalMilliseconds;
-			//PlayerList.CurPlayer().timeTotal += t;
 			int gm = Engine.GetMoveFromString(emo);
 			CPieceBoard.MakeMove(gm);
 			Engine.MakeMove(gm);
@@ -359,7 +357,7 @@ namespace RapChessGui
 					}
 					ShowTraining();
 				}
-				FormLog.This.richTextBox1.SaveFile("last game.rtf");
+				FormLog.This.richTextBox1.SaveFile("finished game.rtf");
 				timerStart.Start();
 			}
 			return true;
@@ -376,12 +374,13 @@ namespace RapChessGui
 			Engine.InitializeFromFen();
 			CHistory.NewGame(Engine.GetFen());
 			CPieceBoard.Fill();
-			PlayerList.NewGame();
+			PlayerList.Init();
 			richTextBox1.Clear();
 			CData.back = 0;
 			CData.book = 0;
 			CPlayer pw = PlayerList.player[0];
 			CPlayer pb = PlayerList.player[1];
+			FormLog.This.richTextBox1.SaveFile("last game.rtf");
 			FormLog.This.richTextBox1.Clear();
 			FormLog.This.richTextBox1.AppendText($"White {pw.user.name} {pw.user.engine} {pw.user.parameters}\n");
 			FormLog.This.richTextBox1.AppendText($"Black {pb.user.name} {pb.user.engine} {pb.user.parameters}\n");
@@ -393,6 +392,17 @@ namespace RapChessGui
 			timer1.Enabled = true;
 		}
 
+		CUser CommandToUser()
+		{
+			CUser u = new CUser(cbComputer.Text);
+			u.SetUser(cbComputer.Text);
+			u.SetCommand(cbCommand.Text);
+			if (u.mode == "movetime")
+				u.value = level.ToString();
+			cbCommand.Text = u.GetCommand();
+			return u;
+		}
+
 		void StartGame()
 		{
 			levelDif = Convert.ToInt32(level * 0.1);
@@ -400,12 +410,13 @@ namespace RapChessGui
 				levelDif = 10;
 			SetMode(CMode.game);
 			PlayerList.player[0].SetUser("Human");
-			CUser u = new CUser(cbComputer.Text);
+			CUser u = CommandToUser();
+			/*CUser u = new CUser(cbComputer.Text);
 			u.SetUser(cbComputer.Text);
 			u.SetCommand(cbCommand.Text);
 			if (u.mode == "movetime")
 				u.value = level.ToString();
-			cbCommand.Text = u.GetCommand();
+			cbCommand.Text = u.GetCommand();*/
 			PlayerList.player[1].SetUser(u);
 			if (cbColor.Text != "White")
 				PlayerList.Rotate();
@@ -499,15 +510,15 @@ namespace RapChessGui
 			Rectangle rec = new Rectangle();
 			for (int n = 0; n < 8; n++)
 			{
-				int x = boardRotate ? 7 - n : n;
-				int y = boardRotate ? 7 - n : n;
-				int x2 = CPieceBoard.margin + x * CPieceBoard.field;
-				int y2 = CPieceBoard.margin + y * CPieceBoard.field;
+				int xr = boardRotate ? 7 - n : n;
+				int yr = boardRotate ? 7 - n : n;
+				int x2 = CPieceBoard.margin + xr * CPieceBoard.field;
+				int y2 = CPieceBoard.margin + yr * CPieceBoard.field;
 				rec.X = 0;
 				rec.Y = y2;
 				rec.Width = CPieceBoard.margin;
 				rec.Height = CPieceBoard.field;
-				string letter = (8 - y).ToString();
+				string letter = (8-n).ToString();
 				gp.AddString(letter, font.FontFamily, (int)font.Style, font.Size, rec, sf);
 				rec.X = pictureBox1.Width - CPieceBoard.margin;
 				gp.AddString(letter, font.FontFamily, (int)font.Style, font.Size, rec, sf);
@@ -515,7 +526,7 @@ namespace RapChessGui
 				rec.Y = 0;
 				rec.Width = CPieceBoard.field;
 				rec.Height = CPieceBoard.margin;
-				letter = abc[x].ToString();
+				letter = abc[n].ToString();
 				gp.AddString(letter, font.FontFamily, (int)font.Style, font.Size, rec, sf);
 				rec.Y = pictureBox1.Height - CPieceBoard.margin;
 				gp.AddString(letter, font.FontFamily, (int)font.Style, font.Size, rec, sf);
@@ -807,10 +818,68 @@ namespace RapChessGui
 				MessageBox.Show("Wrong fen");
 				return;
 			}
-			CHistory.NewGame(fen);
+			PlayerList.curIndex = Engine.g_moveNumber & 1;
+			CUser u = CommandToUser();
+			PlayerList.CurPlayer().SetUser("Human");
+			PlayerList.SecPlayer().SetUser(u);
+			PlayerList.player[0].Init(true);
+			PlayerList.player[1].Init(false);
+			cbColor.SelectedIndex = PlayerList.curIndex;
 			CDrag.index = -1;
+			CHistory.NewGame(fen);
 			CPieceBoard.Fill();
 			RenderBoard();
+			CPlayer pw = PlayerList.player[0];
+			CPlayer pb = PlayerList.player[1];
+			FormLog.This.richTextBox1.SaveFile("temp.rtf");
+			FormLog.This.richTextBox1.Clear();
+			FormLog.This.richTextBox1.AppendText($"Fen {Engine.GetFen()}\n",Color.Gray);
+			FormLog.This.richTextBox1.AppendText($"White {pw.user.name} {pw.user.engine} {pw.user.parameters}\n",Color.Gray);
+			FormLog.This.richTextBox1.AppendText($"Black {pb.user.name} {pb.user.engine} {pb.user.parameters}\n",Color.Gray);
+			labBack.Text = $"Back {CData.back}";
+			labBook.Text = $"Book {CData.book}";
+			RenderInfo(pw);
+			RenderInfo(pb);
+			CData.gameState = 0;
+			timer1.Enabled = true;
+		}
+
+		private void loadFromClipboardToolStripMenuItem1_Click(object sender, EventArgs e)
+		{
+			SetMode(CMode.game);
+			string pgn = Clipboard.GetText().Trim();
+			string[] moves = pgn.Split(new[] { ' ', '\t' }, StringSplitOptions.RemoveEmptyEntries);
+			Engine.InitializeFromFen();
+			CHistory.NewGame();
+			foreach (string emo in moves)
+			{
+				if (Engine.MakeMove(emo))
+					CHistory.moves.Add(emo);
+			}
+			PlayerList.curIndex = Engine.g_moveNumber & 1;
+			CUser u = CommandToUser();
+			PlayerList.CurPlayer().SetUser("Human");
+			PlayerList.SecPlayer().SetUser(u);
+			PlayerList.player[0].Init(true);
+			PlayerList.player[1].Init(false);
+			cbColor.SelectedIndex = PlayerList.curIndex;
+			CDrag.index = -1;
+			ShowHistory();
+			CPieceBoard.Fill();
+			RenderBoard();
+			CPlayer pw = PlayerList.player[0];
+			CPlayer pb = PlayerList.player[1];
+			FormLog.This.richTextBox1.SaveFile("temp.rtf");
+			FormLog.This.richTextBox1.Clear();
+			FormLog.This.richTextBox1.AppendText($"Pgn {CHistory.GetMoves()}\n", Color.Gray);
+			FormLog.This.richTextBox1.AppendText($"White {pw.user.name} {pw.user.engine} {pw.user.parameters}\n", Color.Gray);
+			FormLog.This.richTextBox1.AppendText($"Black {pb.user.name} {pb.user.engine} {pb.user.parameters}\n", Color.Gray);
+			labBack.Text = $"Back {CData.back}";
+			labBook.Text = $"Book {CData.book}";
+			RenderInfo(pw);
+			RenderInfo(pb);
+			CData.gameState = 0;
+			timer1.Enabled = true;
 		}
 
 		private void logToolStripMenuItem_Click(object sender, EventArgs e)
@@ -834,24 +903,6 @@ namespace RapChessGui
 		private void saveToClipboardToolStripMenuItem1_Click(object sender, EventArgs e)
 		{
 			Clipboard.SetText(CHistory.GetMoves());
-		}
-
-		private void loadFromClipboardToolStripMenuItem1_Click(object sender, EventArgs e)
-		{
-			SetMode(CMode.game);
-			string pgn = Clipboard.GetText().Trim();
-			string[] moves = pgn.Split(new[] { ' ', '\t' }, StringSplitOptions.RemoveEmptyEntries);
-			Engine.InitializeFromFen();
-			CHistory.NewGame();
-			foreach (string emo in moves)
-			{
-				if (Engine.MakeMove(emo))
-					CHistory.moves.Add(emo);
-			}
-			CDrag.index = -1;
-			ShowHistory();
-			CPieceBoard.Fill();
-			RenderBoard();
 		}
 
 		private void pictureBox1_MouseMove(object sender, MouseEventArgs e)
