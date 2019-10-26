@@ -365,7 +365,7 @@ namespace RapChessGui
 
 		void Clear()
 		{
-			CData.gameState = (int) CGameState.stop;
+			CData.gameState = (int)CGameState.stop;
 			levelOrg = level;
 			labMove.Text = "Move 1 0";
 			labLast.ForeColor = Color.Gainsboro;
@@ -512,7 +512,7 @@ namespace RapChessGui
 				rec.Y = y2;
 				rec.Width = CPieceBoard.margin;
 				rec.Height = CPieceBoard.field;
-				string letter = (8-n).ToString();
+				string letter = (8 - n).ToString();
 				gp.AddString(letter, font.FontFamily, (int)font.Style, font.Size, rec, sf);
 				rec.X = pictureBox1.Width - CPieceBoard.margin;
 				gp.AddString(letter, font.FontFamily, (int)font.Style, font.Size, rec, sf);
@@ -621,34 +621,35 @@ namespace RapChessGui
 
 		void RenderInfo(CPlayer cp)
 		{
-			if (CData.gameState == 0) {
+			DateTime tot = new DateTime();
+			if (CData.gameState == 0)
+			{
 				DateTime dt = DateTime.Now;
-				double dif =(dt - cp.timeStart).TotalMilliseconds;
+				double dif = (dt - cp.timeStart).TotalMilliseconds;
 				cp.timeStart = dt;
 				cp.timeTotal += dif;
+				tot.AddMilliseconds(cp.timeTotal);
 			}
-			DateTime tot = new DateTime().AddMilliseconds(cp.timeTotal);
-			if (CData.gameState == 0)
-				if (boardRotate ^ cp.white)
-				{
-					labTimeB.Text = tot.ToString("HH:mm:ss");
-					labScoreB.Text = $"Score {cp.score}";
-					labNpsB.Text = $"Nps {cp.nps}";
-					if (cp.seldepth != "0")
-						labDepthB.Text = $"Depth {cp.depth} / {cp.seldepth}";
-					else
-						labDepthB.Text = $"Depth {cp.depth}";
-				}
+			if (boardRotate ^ cp.white)
+			{
+				labTimeB.Text = tot.ToString("HH:mm:ss");
+				labScoreB.Text = $"Score {cp.score}";
+				labNpsB.Text = $"Nps {cp.nps}";
+				if (cp.seldepth != "0")
+					labDepthB.Text = $"Depth {cp.depth} / {cp.seldepth}";
 				else
-				{
-					labTimeT.Text = tot.ToString("HH:mm:ss");
-					labScoreT.Text = $"Score {cp.score}";
-					labNpsT.Text = $"Nps {cp.nps}";
-					if (cp.seldepth != "0")
-						labDepthT.Text = $"Depth {cp.depth} / {cp.seldepth}";
-					else
-						labDepthT.Text = $"Depth {cp.depth}";
-				}
+					labDepthB.Text = $"Depth {cp.depth}";
+			}
+			else
+			{
+				labTimeT.Text = tot.ToString("HH:mm:ss");
+				labScoreT.Text = $"Score {cp.score}";
+				labNpsT.Text = $"Nps {cp.nps}";
+				if (cp.seldepth != "0")
+					labDepthT.Text = $"Depth {cp.depth} / {cp.seldepth}";
+				else
+					labDepthT.Text = $"Depth {cp.depth}";
+			}
 		}
 
 		void RenderTaken()
@@ -827,9 +828,11 @@ namespace RapChessGui
 			CPlayer pb = PlayerList.player[1];
 			FormLog.This.richTextBox1.SaveFile("temp.rtf");
 			FormLog.This.richTextBox1.Clear();
-			FormLog.This.richTextBox1.AppendText($"Fen {Engine.GetFen()}\n",Color.Gray);
-			FormLog.This.richTextBox1.AppendText($"White {pw.user.name} {pw.user.engine} {pw.user.parameters}\n",Color.Gray);
-			FormLog.This.richTextBox1.AppendText($"Black {pb.user.name} {pb.user.engine} {pb.user.parameters}\n",Color.Gray);
+			FormLog.This.richTextBox1.AppendText($"Fen {Engine.GetFen()}\n", Color.Gray);
+			FormLog.This.richTextBox1.AppendText($"White {pw.user.name} {pw.user.engine} {pw.user.parameters}\n", Color.Gray);
+			FormLog.This.richTextBox1.AppendText($"Black {pb.user.name} {pb.user.engine} {pb.user.parameters}\n", Color.Gray);
+			labLast.ForeColor = Color.Gainsboro;
+			labLast.Text = $"Fen {Engine.GetFen()}";
 			labBack.Text = $"Back {CData.back}";
 			labBook.Text = $"Book {CData.book}";
 			RenderInfo(pw);
@@ -868,6 +871,8 @@ namespace RapChessGui
 			FormLog.This.richTextBox1.AppendText($"Pgn {CHistory.GetMoves()}\n", Color.Gray);
 			FormLog.This.richTextBox1.AppendText($"White {pw.user.name} {pw.user.engine} {pw.user.parameters}\n", Color.Gray);
 			FormLog.This.richTextBox1.AppendText($"Black {pb.user.name} {pb.user.engine} {pb.user.parameters}\n", Color.Gray);
+			labLast.ForeColor = Color.Gainsboro;
+			labLast.Text = $"Pgn {CHistory.GetMoves()}";
 			labBack.Text = $"Back {CData.back}";
 			labBook.Text = $"Book {CData.book}";
 			RenderInfo(pw);
