@@ -57,7 +57,7 @@
     <Compile Include="CHistory.cs" />
     <Compile Include="CIniFile.cs" />
     <Compile Include="CMatch.cs" />
-    <Compile Include="CPieceBoard.cs" />
+    <Compile Include="CBoard.cs" />
     <Compile Include="CPlayerEng.cs" />
     <Compile Include="CPlayerList.cs" />
     <Compile Include="CTrainer.cs" />

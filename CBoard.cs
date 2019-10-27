@@ -61,16 +61,28 @@ namespace RapChessGui
 		}
 	}
 
-	static class CPieceBoard
+	class CField
+	{
+		public Color color = Color.Empty;
+		public CPiece piece = null;
+	}
+
+	static class CBoard
 	{
 		public static bool animated = true;
 		public static bool finished = true;
-		public static CPiece[] list = new CPiece[64];
+		public static CField[] list = new CField[64];
 		public const int field = 64;
 		public const int margin = 32;
 		public const int size = field * 8 + margin * 2;
 		public static Bitmap bitmap = new Bitmap(size, size);
 		public static Color color;
+
+		public static void Init()
+		{
+			for (int n = 0; n < 64; n++)
+				list[n] = new CField();
+		}
 
 		public static void SaveToIni()
 		{
@@ -88,17 +100,23 @@ namespace RapChessGui
 			color = Color.FromArgb(r, g, b);
 		}
 
+		public static void Clear()
+		{
+			for (int n = 0; n < 64; n++)
+				list[n].color = Color.Empty;
+		}
+
 		public static void Fill()
 		{
 			for (int n = 0; n < 64; n++)
 			{
-				list[n] = null;
+				list[n].piece = null;
 				int i = CEngine.arrField[n];
 				int f = CEngine.g_board[i];
 				if ((f & CEngine.colorEmpty) > 0)
 					continue;
 				CPiece piece = new CPiece();
-				list[n] = piece;
+				list[n].piece = piece;
 				piece.SetImage(n);
 			}
 			animated = true;
@@ -135,8 +153,8 @@ namespace RapChessGui
 
 		static void MakeMove(int sou, int des)
 		{
-			list[des] = list[sou];
-			list[sou] = null;
+			list[des].piece = list[sou].piece;
+			list[sou].piece = null;
 		}
 
 		public static void MakeMove(int gm)
@@ -151,9 +169,9 @@ namespace RapChessGui
 			int yd = (des >> 4) - 4;
 			sou = ys * 8 + xs;
 			des = yd * 8 + xd;
-			var pd = list[des];
+			CPiece pd = list[des].piece;
 			if (pd != null)
-				list[sou].desImage = pd.image;
+				list[sou].piece.desImage = pd.image;
 			MakeMove(sou, des);
 			if ((flags & CEngine.moveflagCastleKing) > 0)
 			{
@@ -170,7 +188,7 @@ namespace RapChessGui
 			animated = false;
 			for (int n = 0; n < 64; n++)
 			{
-				CPiece p = list[n];
+				CPiece p = list[n].piece;
 				if (p != null)
 					if (p.Render())
 						animated = true;
@@ -184,9 +202,9 @@ namespace RapChessGui
 				int i = CEngine.arrField[n];
 				int f = CEngine.g_board[i];
 				if ((f & CEngine.colorEmpty) > 0)
-					list[n] = null;
+					list[n].piece = null;
 				else
-					list[n].SetImage(n);
+					list[n].piece.SetImage(n);
 			}
 		}
 

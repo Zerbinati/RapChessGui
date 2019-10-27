@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace RapChessGui
 {
-	enum CGameState { normal, mate, stalemate, repetition, move50, material,stop}
+	enum CGameState { normal, mate, stalemate, repetition, move50, material, stop }
 
 	class CUndo
 	{
@@ -139,7 +139,7 @@ namespace RapChessGui
 		public CEngine()
 		{
 			This = this;
-		Initialize();
+			Initialize();
 		}
 
 		public int GetGameState()
@@ -160,7 +160,7 @@ namespace RapChessGui
 			return check ? (int)CGameState.mate : (int)CGameState.stalemate;
 		}
 
-		int MakeSquare(int row, int column)
+		public int MakeSquare(int row, int column)
 		{
 			return ((row + 4) << 4) | (column + 4);
 		}

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
@@ -25,6 +26,7 @@ namespace RapChessGui
 		int level = 1000;
 		int levelOrg = 1000;
 		int levelDif = 10;
+		List<int> moves = new List<int>();
 		CEngine Engine = new CEngine();
 		CPlayerList PlayerList = new CPlayerList();
 		CMatch Match = new CMatch();
@@ -45,8 +47,9 @@ namespace RapChessGui
 			FormLog.This = new FormLog();
 			Reset();
 			IniLoad();
-			CPieceBoard.Prepare();
-			pictureBox1.Size = new Size(CPieceBoard.size, CPieceBoard.size);
+			CBoard.Init();
+			CBoard.Prepare();
+			pictureBox1.Size = new Size(CBoard.size, CBoard.size);
 		}
 
 		private void FormChess_Load(object sender, EventArgs e)
@@ -80,7 +83,7 @@ namespace RapChessGui
 			nudTrained.Value = Convert.ToInt32(CIniFile.Read("timeTrained", "1000"));
 			level = Convert.ToInt32(CIniFile.Read("level", "1000"));
 			Trainer.time = (int)nudTeacher.Value;
-			CPieceBoard.LoadFromIni();
+			CBoard.LoadFromIni();
 
 		}
 
@@ -95,7 +98,7 @@ namespace RapChessGui
 			CIniFile.Write("timeTeacher", nudTeacher.Value.ToString());
 			CIniFile.Write("timeTrained", nudTrained.Value.ToString());
 			CIniFile.Write("level", level.ToString());
-			CPieceBoard.SaveToIni();
+			CBoard.SaveToIni();
 		}
 
 		public void GetMessage(CPlayer p)
@@ -267,7 +270,7 @@ namespace RapChessGui
 				return false;
 			}
 			int gm = Engine.GetMoveFromString(emo);
-			CPieceBoard.MakeMove(gm);
+			CBoard.MakeMove(gm);
 			Engine.MakeMove(gm);
 			int moveNumber = (Engine.g_moveNumber >> 1) + 1;
 			labMove.Text = "Move " + moveNumber.ToString() + " " + Engine.g_move50.ToString();
@@ -275,7 +278,11 @@ namespace RapChessGui
 			ShowHistory();
 			CData.gameState = Engine.GetGameState();
 			if (CData.gameState == 0)
+			{
 				PlayerList.Next();
+				if (PlayerList.CurPlayer().user.engine == "Human")
+					moves = Engine.GenerateValidMoves();
+			}
 			else
 			{
 				switch (CData.gameState)
@@ -373,7 +380,7 @@ namespace RapChessGui
 			CDrag.index = -1;
 			Engine.InitializeFromFen();
 			CHistory.NewGame(Engine.GetFen());
-			CPieceBoard.Fill();
+			CBoard.Fill();
 			PlayerList.Init();
 			richTextBox1.Clear();
 			CData.back = 0;
@@ -415,6 +422,8 @@ namespace RapChessGui
 			if (cbColor.Text != "White")
 				PlayerList.Rotate();
 			Clear();
+			if (PlayerList.CurPlayer().user.engine == "Human")
+				moves = Engine.GenerateValidMoves();
 		}
 
 		void StartMatch()
@@ -483,11 +492,11 @@ namespace RapChessGui
 				labTimeT.BackColor = Color.Yellow;
 				labTimeB.BackColor = Color.LightGray;
 			}
-			pictureBox1.Image = new Bitmap(CPieceBoard.bitmap);
+			pictureBox1.Image = new Bitmap(CBoard.bitmap);
 			Graphics g = Graphics.FromImage(pictureBox1.Image);
 			Brush brush3 = new SolidBrush(Color.FromArgb(0x80, 0xff, 0xff, 0x00));
 			Font font = new Font(FontFamily.GenericSansSerif, 16, FontStyle.Bold);
-			Font fontPiece = new Font(pfc.Families[0], CPieceBoard.field);
+			Font fontPiece = new Font(pfc.Families[0], CBoard.field);
 			Brush foreBrush = new SolidBrush(Color.White);
 			Brush brushW = new SolidBrush(Color.White);
 			Brush brushB = new SolidBrush(Color.Black);
@@ -506,41 +515,41 @@ namespace RapChessGui
 			{
 				int xr = boardRotate ? 7 - n : n;
 				int yr = boardRotate ? 7 - n : n;
-				int x2 = CPieceBoard.margin + xr * CPieceBoard.field;
-				int y2 = CPieceBoard.margin + yr * CPieceBoard.field;
+				int x2 = CBoard.margin + xr * CBoard.field;
+				int y2 = CBoard.margin + yr * CBoard.field;
 				rec.X = 0;
 				rec.Y = y2;
-				rec.Width = CPieceBoard.margin;
-				rec.Height = CPieceBoard.field;
+				rec.Width = CBoard.margin;
+				rec.Height = CBoard.field;
 				string letter = (8 - n).ToString();
 				gp.AddString(letter, font.FontFamily, (int)font.Style, font.Size, rec, sf);
-				rec.X = pictureBox1.Width - CPieceBoard.margin;
+				rec.X = pictureBox1.Width - CBoard.margin;
 				gp.AddString(letter, font.FontFamily, (int)font.Style, font.Size, rec, sf);
 				rec.X = x2;
 				rec.Y = 0;
-				rec.Width = CPieceBoard.field;
-				rec.Height = CPieceBoard.margin;
+				rec.Width = CBoard.field;
+				rec.Height = CBoard.margin;
 				letter = abc[n].ToString();
 				gp.AddString(letter, font.FontFamily, (int)font.Style, font.Size, rec, sf);
-				rec.Y = pictureBox1.Height - CPieceBoard.margin;
+				rec.Y = pictureBox1.Height - CBoard.margin;
 				gp.AddString(letter, font.FontFamily, (int)font.Style, font.Size, rec, sf);
 			}
 			for (int y = 0; y < 8; y++)
 			{
 				int yr = boardRotate ? 7 - y : y;
-				int y2 = CPieceBoard.margin + yr * CPieceBoard.field;
+				int y2 = CBoard.margin + yr * CBoard.field;
 				for (int x = 0; x < 8; x++)
 				{
 					int i = y * 8 + x;
 					int xr = boardRotate ? 7 - x : x;
-					int x2 = CPieceBoard.margin + xr * CPieceBoard.field;
+					int x2 = CBoard.margin + xr * CBoard.field;
 					rec.X = x2;
 					rec.Y = y2;
-					rec.Width = CPieceBoard.field;
-					rec.Height = CPieceBoard.field;
-					if (i == CDrag.index)
+					rec.Width = CBoard.field;
+					rec.Height = CBoard.field;
+					if ((i == CDrag.index)||(CBoard.list[i].color != Color.Empty))
 						g.FillRectangle(brush3, rec);
-					CPiece piece = CPieceBoard.list[i];
+					CPiece piece = CBoard.list[i].piece;
 					if (piece == null)
 						continue;
 					GraphicsPath gp1;
@@ -597,11 +606,11 @@ namespace RapChessGui
 			fontPiece.Dispose();
 			g.Dispose();
 			pictureBox1.Refresh();
-			CPieceBoard.finished = CPieceBoard.animated;
-			CPieceBoard.Render();
-			if (!CPieceBoard.animated)
+			CBoard.finished = CBoard.animated;
+			CBoard.Render();
+			if (!CBoard.animated)
 			{
-				CPieceBoard.SetImage();
+				CBoard.SetImage();
 				RenderTaken();
 			}
 		}
@@ -615,7 +624,7 @@ namespace RapChessGui
 				if (!Engine.MakeMove(emo))
 					break;
 			}
-			CPieceBoard.Fill();
+			CBoard.Fill();
 			ShowHistory();
 		}
 
@@ -713,6 +722,37 @@ namespace RapChessGui
 			return MakeMove(em);
 		}
 
+		bool IsValid(int i)
+		{
+			foreach (int c in moves)
+			{
+				int x = i & 7;
+				int y = i >> 3;
+				int s = Engine.MakeSquare(y, x);
+				if ((c & 0xff) == s) return true;
+			}
+			return false;
+		}
+
+		void ShowValid()
+		{
+			CDrag.index = -1;
+			foreach (int c in moves)
+			{
+				int sou = c & 0xff;
+				int x = (sou & 0xf) - 4;
+				int y = (sou >> 4) - 4;
+				int i = y * 8 + x;
+				CBoard.list[i].color = Color.Yellow;
+			}
+		}
+
+		void SetIndex(int i)
+		{
+			CDrag.index = i;
+			CBoard.Clear();
+		}
+
 		private void FormChess_FormClosed(object sender, FormClosedEventArgs e)
 		{
 			IniSave();
@@ -721,7 +761,7 @@ namespace RapChessGui
 
 		private void Timer1_Tick_1(object sender, EventArgs e)
 		{
-			if (CPieceBoard.animated || CPieceBoard.finished || CDrag.dragged)
+			if (CBoard.animated || CBoard.finished || CDrag.dragged)
 			{
 				RenderBoard();
 			}
@@ -822,7 +862,7 @@ namespace RapChessGui
 			cbColor.SelectedIndex = PlayerList.curIndex;
 			CDrag.index = -1;
 			CHistory.NewGame(fen);
-			CPieceBoard.Fill();
+			CBoard.Fill();
 			RenderBoard();
 			CPlayer pw = PlayerList.player[0];
 			CPlayer pb = PlayerList.player[1];
@@ -862,7 +902,7 @@ namespace RapChessGui
 			cbColor.SelectedIndex = PlayerList.curIndex;
 			CDrag.index = -1;
 			ShowHistory();
-			CPieceBoard.Fill();
+			CBoard.Fill();
 			RenderBoard();
 			CPlayer pw = PlayerList.player[0];
 			CPlayer pb = PlayerList.player[1];
@@ -914,23 +954,27 @@ namespace RapChessGui
 		{
 			if (PlayerList.CurPlayer().computer)
 				return;
-			int sou = CDrag.index;
-			int x = (e.Location.X - CPieceBoard.margin) / CPieceBoard.field;
-			int y = (e.Location.Y - CPieceBoard.margin) / CPieceBoard.field;
+			int x = (e.Location.X - CBoard.margin) / CBoard.field;
+			int y = (e.Location.Y - CBoard.margin) / CBoard.field;
 			if (boardRotate)
 			{
 				x = 7 - x;
 				y = 7 - y;
 			}
-			CDrag.last = CDrag.index;
-			CDrag.index = y * 8 + x;
-			CDrag.dragged = true;
+			int i = y * 8 + x;
+			if (IsValid(i))
+			{
+				CDrag.last = CDrag.index;
+				CDrag.dragged = true;
+				SetIndex(i);
+			}
+			else ShowValid();
 		}
 
 		private void pictureBox1_MouseUp(object sender, MouseEventArgs e)
 		{
-			int x = (e.Location.X - CPieceBoard.margin) / CPieceBoard.field;
-			int y = (e.Location.Y - CPieceBoard.margin) / CPieceBoard.field;
+			int x = (e.Location.X - CBoard.margin) / CBoard.field;
+			int y = (e.Location.Y - CBoard.margin) / CBoard.field;
 			if (boardRotate)
 			{
 				x = 7 - x;
@@ -942,7 +986,7 @@ namespace RapChessGui
 			else
 				TryMove(CDrag.index, des);
 			CDrag.dragged = false;
-			CPieceBoard.animated = true;
+			CBoard.animated = true;
 		}
 	}
 }
