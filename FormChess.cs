@@ -372,6 +372,7 @@ namespace RapChessGui
 
 		void Clear()
 		{
+			CBoard.Clear();
 			CData.gameState = (int)CGameState.stop;
 			levelOrg = level;
 			labMove.Text = "Move 1 0";
@@ -547,7 +548,7 @@ namespace RapChessGui
 					rec.Y = y2;
 					rec.Width = CBoard.field;
 					rec.Height = CBoard.field;
-					if ((i == CDrag.index)||(CBoard.list[i].color != Color.Empty))
+					if ((i == CDrag.index) || (CBoard.list[i].color != Color.Empty))
 						g.FillRectangle(brush3, rec);
 					CPiece piece = CBoard.list[i].piece;
 					if (piece == null)
@@ -734,9 +735,25 @@ namespace RapChessGui
 			return false;
 		}
 
+		bool IsValid(int sou, int des)
+		{
+			if (sou == des)
+				return true;
+			int sx = sou & 7;
+			int sy = sou >> 3;
+			int sa = Engine.MakeSquare(sy, sx);
+			int dx = des & 7;
+			int dy = des >> 3;
+			int da = Engine.MakeSquare(dy, dx);
+			int a = (da << 8) | sa;
+			foreach (int c in moves)
+				if ((c & 0xffff) == a)
+					return true;
+			return false;
+		}
+
 		void ShowValid()
 		{
-			CDrag.index = -1;
 			foreach (int c in moves)
 			{
 				int sou = c & 0xff;
@@ -747,10 +764,35 @@ namespace RapChessGui
 			}
 		}
 
+		void ShowValid(int index)
+		{
+			int max = index & 7;
+			int may = index >> 3;
+			int sa = Engine.MakeSquare(may, max);
+			foreach (int c in moves)
+				if ((c & 0xff) == sa)
+				{
+					int des = (c >> 8) & 0xff;
+					int x = (des & 0xf) - 4;
+					int y = (des >> 4) - 4;
+					int i = y * 8 + x;
+					CBoard.list[i].color = Color.Yellow;
+				}
+		}
+
 		void SetIndex(int i)
 		{
-			CDrag.index = i;
 			CBoard.Clear();
+			if (i == -1)
+			{
+				ShowValid();
+			}
+			else
+			{
+				if (i == CDrag.index)
+					ShowValid(i);
+			}
+			CDrag.index = i;
 		}
 
 		private void FormChess_FormClosed(object sender, FormClosedEventArgs e)
@@ -968,7 +1010,11 @@ namespace RapChessGui
 				CDrag.dragged = true;
 				SetIndex(i);
 			}
-			else ShowValid();
+			else
+				if (!IsValid(CDrag.index))
+				SetIndex(-1);
+			if (!IsValid(CDrag.index,i))
+				SetIndex(-1);
 		}
 
 		private void pictureBox1_MouseUp(object sender, MouseEventArgs e)
@@ -982,7 +1028,9 @@ namespace RapChessGui
 			}
 			int des = y * 8 + x;
 			if (CDrag.index == des)
+			{
 				TryMove(CDrag.last, des);
+			}
 			else
 				TryMove(CDrag.index, des);
 			CDrag.dragged = false;

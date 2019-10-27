@@ -181,6 +181,7 @@ namespace RapChessGui
 			{
 				MakeMove(sou - 4, sou - 1);
 			}
+			Clear();
 		}
 
 		public static void Render()
