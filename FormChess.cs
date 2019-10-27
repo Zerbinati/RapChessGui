@@ -244,11 +244,21 @@ namespace RapChessGui
 			}
 			foreach (string en in CData.engineNames)
 				comboBoxTeacher.Items.Add(en);
+			cbBookList.Items.Clear();
 			FormBook.This.cbBookList.Items.Clear();
+			FormPlayer.This.cbBookList.Items.Clear();
+			cbBookList.Items.Add("None");
+			FormPlayer.This.cbBookList.Items.Add("None");
 			foreach (string b in CData.bookNames)
+			{
+				cbBookList.Items.Add(b);
 				FormBook.This.cbBookList.Items.Add(b);
+				FormPlayer.This.cbBookList.Items.Add(b);
+			}
+			cbBookList.SelectedIndex = 0;
 			FormBook.This.cbBookList.SelectedIndex = 0;
-		}
+			FormPlayer.This.cbBookList.SelectedIndex = 0;
+	}
 
 		public bool MakeMove(string emo)
 		{
@@ -449,6 +459,7 @@ namespace RapChessGui
 			uw.value = nudTrained.Value.ToString();
 			CUser ub = new CUser("Teacher");
 			ub.engine = comboBoxTeacher.Text;
+			ub.book = cbBookList.Text;
 			ub.mode = "movetime";
 			ub.value = nudTeacher.Value.ToString();
 			PlayerList.player[0].SetUser(uw);

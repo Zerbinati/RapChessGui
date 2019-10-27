@@ -128,8 +128,6 @@
 			this.cbBookList.Dock = System.Windows.Forms.DockStyle.Top;
 			this.cbBookList.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.cbBookList.FormattingEnabled = true;
-			this.cbBookList.Items.AddRange(new object[] {
-            "None"});
 			this.cbBookList.Location = new System.Drawing.Point(3, 16);
 			this.cbBookList.Name = "cbBookList";
 			this.cbBookList.Size = new System.Drawing.Size(305, 21);
@@ -354,6 +352,6 @@
 		private System.Windows.Forms.Button bCreate;
 		private System.Windows.Forms.Button bUpdate;
 		private System.Windows.Forms.GroupBox groupBox5;
-		private System.Windows.Forms.ComboBox cbBookList;
+		public System.Windows.Forms.ComboBox cbBookList;
 	}
 }

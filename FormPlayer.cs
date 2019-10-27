@@ -1,25 +1,21 @@
 ﻿using System;
 using System.IO;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Reflection;
 
 namespace RapChessGui
 {
 	public partial class FormPlayer : Form
 	{
+		public static FormPlayer This;
 		string curUserName;
 
 		public FormPlayer()
 		{
+			This = this;
 			InitializeComponent();
-			string[] filePaths = Directory.GetFiles("Engines","*.exe");
+			string[] filePaths = Directory.GetFiles("Engines", "*.exe");
 			for (int n = 0; n < filePaths.Length; n++)
 			{
 				string fn = Path.GetFileName(filePaths[n]);
@@ -30,7 +26,7 @@ namespace RapChessGui
 			for (int n = 0; n < arrBooks.Length; n++)
 			{
 				string fn = Path.GetFileName(arrBooks[n]);
-				cbBookList.Items.Add(fn);
+				//cbBookList.Items.Add(fn);
 				CData.bookNames.Add(fn);
 			}
 			CUserList.LoadFromIni();
