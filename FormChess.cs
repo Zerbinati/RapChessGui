@@ -430,7 +430,10 @@ namespace RapChessGui
 			PlayerList.player[0].SetUser("Human");
 			CUser u = CommandToUser();
 			PlayerList.player[1].SetUser(u);
-			if (cbColor.Text != "White")
+			bool r = cbColor.Text != "White";
+			if (cbColor.Text == "Auto")
+				r = CEngine.random.Next(2) > 0;
+			if (r)
 				PlayerList.Rotate();
 			Clear();
 			if (PlayerList.CurPlayer().user.engine == "Human")

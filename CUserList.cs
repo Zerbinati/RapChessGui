@@ -12,6 +12,7 @@ namespace RapChessGui
 		public string mode = "movetime";
 		public string value = "1000";
 		public string book = "None";
+		public string elo = "1000";
 
 		public CUser(string n)
 		{
@@ -69,6 +70,7 @@ namespace RapChessGui
 			mode = u.mode;
 			value = u.value;
 			book = u.book;
+			elo = u.elo;
 		}
 
 		public void LoadFromIni()
@@ -78,6 +80,7 @@ namespace RapChessGui
 			mode = CIniFile.Read("mode","movetime", "player " + name);
 			value = CIniFile.Read("value", "1000", "player " + name);
 			book = CIniFile.Read("book", "None", "player " + name);
+			elo = CIniFile.Read("elo", "1000", "player " + name);
 		}
 
 		public void SaveToIni()
@@ -87,6 +90,7 @@ namespace RapChessGui
 			CIniFile.Write("mode", mode, "player " + name);
 			CIniFile.Write("value", value, "player " + name);
 			CIniFile.Write("book", book, "player " + name);
+			CIniFile.Write("elo", elo, "player " + name);
 		}
 	}
 

@@ -110,6 +110,10 @@
 			this.labGames = new System.Windows.Forms.Label();
 			this.butTraining = new System.Windows.Forms.Button();
 			this.groupBox4 = new System.Windows.Forms.GroupBox();
+			this.nudTeacher = new System.Windows.Forms.NumericUpDown();
+			this.label18 = new System.Windows.Forms.Label();
+			this.cbBookList = new System.Windows.Forms.ComboBox();
+			this.labTrainTime = new System.Windows.Forms.Label();
 			this.comboBoxTeacher = new System.Windows.Forms.ComboBox();
 			this.groupBox3 = new System.Windows.Forms.GroupBox();
 			this.nudTrained = new System.Windows.Forms.NumericUpDown();
@@ -128,10 +132,6 @@
 			this.labLast = new System.Windows.Forms.Label();
 			this.labMove = new System.Windows.Forms.Label();
 			this.timerStart = new System.Windows.Forms.Timer(this.components);
-			this.cbBookList = new System.Windows.Forms.ComboBox();
-			this.labTrainTime = new System.Windows.Forms.Label();
-			this.nudTeacher = new System.Windows.Forms.NumericUpDown();
-			this.label18 = new System.Windows.Forms.Label();
 			this.menuStrip1.SuspendLayout();
 			this.panMenu.SuspendLayout();
 			this.panel2.SuspendLayout();
@@ -147,12 +147,12 @@
 			this.tabPageTraining.SuspendLayout();
 			this.tableLayoutPanel1.SuspendLayout();
 			this.groupBox4.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.nudTeacher)).BeginInit();
 			this.groupBox3.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.nudTrained)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
 			this.panel3.SuspendLayout();
 			this.panel1.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.nudTeacher)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// timer1
@@ -546,6 +546,7 @@
 			this.cbColor.Dock = System.Windows.Forms.DockStyle.Top;
 			this.cbColor.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.cbColor.Items.AddRange(new object[] {
+            "Auto",
             "White",
             "Black"});
 			this.cbColor.Location = new System.Drawing.Point(3, 16);
@@ -1091,6 +1092,67 @@
 			this.groupBox4.TabStop = false;
 			this.groupBox4.Text = "Teacher";
 			// 
+			// nudTeacher
+			// 
+			this.nudTeacher.Dock = System.Windows.Forms.DockStyle.Top;
+			this.nudTeacher.Increment = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
+			this.nudTeacher.Location = new System.Drawing.Point(3, 100);
+			this.nudTeacher.Maximum = new decimal(new int[] {
+            1000000,
+            0,
+            0,
+            0});
+			this.nudTeacher.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+			this.nudTeacher.Name = "nudTeacher";
+			this.nudTeacher.Size = new System.Drawing.Size(313, 20);
+			this.nudTeacher.TabIndex = 28;
+			this.nudTeacher.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			this.nudTeacher.ThousandsSeparator = true;
+			this.nudTeacher.Value = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
+			// 
+			// label18
+			// 
+			this.label18.Dock = System.Windows.Forms.DockStyle.Top;
+			this.label18.Location = new System.Drawing.Point(3, 79);
+			this.label18.Name = "label18";
+			this.label18.Size = new System.Drawing.Size(313, 21);
+			this.label18.TabIndex = 27;
+			this.label18.Text = "Time";
+			this.label18.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			// 
+			// cbBookList
+			// 
+			this.cbBookList.Dock = System.Windows.Forms.DockStyle.Top;
+			this.cbBookList.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.cbBookList.FormattingEnabled = true;
+			this.cbBookList.Location = new System.Drawing.Point(3, 58);
+			this.cbBookList.Name = "cbBookList";
+			this.cbBookList.Size = new System.Drawing.Size(313, 21);
+			this.cbBookList.Sorted = true;
+			this.cbBookList.TabIndex = 26;
+			// 
+			// labTrainTime
+			// 
+			this.labTrainTime.Dock = System.Windows.Forms.DockStyle.Top;
+			this.labTrainTime.Location = new System.Drawing.Point(3, 37);
+			this.labTrainTime.Name = "labTrainTime";
+			this.labTrainTime.Size = new System.Drawing.Size(313, 21);
+			this.labTrainTime.TabIndex = 24;
+			this.labTrainTime.Text = "Book";
+			this.labTrainTime.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			// 
 			// comboBoxTeacher
 			// 
 			this.comboBoxTeacher.Dock = System.Windows.Forms.DockStyle.Top;
@@ -1326,67 +1388,6 @@
 			this.timerStart.Interval = 6000;
 			this.timerStart.Tick += new System.EventHandler(this.TimerStart_Tick);
 			// 
-			// cbBookList
-			// 
-			this.cbBookList.Dock = System.Windows.Forms.DockStyle.Top;
-			this.cbBookList.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.cbBookList.FormattingEnabled = true;
-			this.cbBookList.Location = new System.Drawing.Point(3, 58);
-			this.cbBookList.Name = "cbBookList";
-			this.cbBookList.Size = new System.Drawing.Size(313, 21);
-			this.cbBookList.Sorted = true;
-			this.cbBookList.TabIndex = 26;
-			// 
-			// labTrainTime
-			// 
-			this.labTrainTime.Dock = System.Windows.Forms.DockStyle.Top;
-			this.labTrainTime.Location = new System.Drawing.Point(3, 37);
-			this.labTrainTime.Name = "labTrainTime";
-			this.labTrainTime.Size = new System.Drawing.Size(313, 21);
-			this.labTrainTime.TabIndex = 24;
-			this.labTrainTime.Text = "Book";
-			this.labTrainTime.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			// 
-			// nudTeacher
-			// 
-			this.nudTeacher.Dock = System.Windows.Forms.DockStyle.Top;
-			this.nudTeacher.Increment = new decimal(new int[] {
-            100,
-            0,
-            0,
-            0});
-			this.nudTeacher.Location = new System.Drawing.Point(3, 100);
-			this.nudTeacher.Maximum = new decimal(new int[] {
-            1000000,
-            0,
-            0,
-            0});
-			this.nudTeacher.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-			this.nudTeacher.Name = "nudTeacher";
-			this.nudTeacher.Size = new System.Drawing.Size(313, 20);
-			this.nudTeacher.TabIndex = 28;
-			this.nudTeacher.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-			this.nudTeacher.ThousandsSeparator = true;
-			this.nudTeacher.Value = new decimal(new int[] {
-            1000,
-            0,
-            0,
-            0});
-			// 
-			// label18
-			// 
-			this.label18.Dock = System.Windows.Forms.DockStyle.Top;
-			this.label18.Location = new System.Drawing.Point(3, 79);
-			this.label18.Name = "label18";
-			this.label18.Size = new System.Drawing.Size(313, 21);
-			this.label18.TabIndex = 27;
-			this.label18.Text = "Time";
-			this.label18.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			// 
 			// FormChess
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1424,12 +1425,12 @@
 			this.tabPageTraining.ResumeLayout(false);
 			this.tableLayoutPanel1.ResumeLayout(false);
 			this.groupBox4.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this.nudTeacher)).EndInit();
 			this.groupBox3.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.nudTrained)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
 			this.panel3.ResumeLayout(false);
 			this.panel1.ResumeLayout(false);
-			((System.ComponentModel.ISupportInitialize)(this.nudTeacher)).EndInit();
 			this.ResumeLayout(false);
 
 		}
