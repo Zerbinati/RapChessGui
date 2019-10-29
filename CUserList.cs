@@ -221,20 +221,27 @@ namespace RapChessGui
 			if (CountComputer() < 3)
 			{
 				CUser uc;
-				uc = new CUser("Easy");
+				uc = new CUser("RapChessCs D1");
 				uc.engine = "RapChessCs.exe";
 				uc.mode = "depth";
 				uc.value = "1";
-				uc.elo = "100";
+				uc.elo = "200";
 				list.Add(uc);
-				uc = new CUser("Medium");
+				uc = new CUser("RapChessCs D3");
 				uc.engine = "RapChessCs.exe";
 				uc.mode = "depth";
-				uc.value = "4";
+				uc.value = "3";
 				uc.book = "small.txt";
 				uc.elo = "500";
 				list.Add(uc);
-				uc = new CUser("Hard");
+				uc = new CUser("RapChessCs T1");
+				uc.engine = "RapChessCs.exe";
+				uc.mode = "movetime";
+				uc.value = "1000";
+				uc.book = "small.txt";
+				uc.elo = "700";
+				list.Add(uc);
+				uc = new CUser("RapChessCs T3");
 				uc.engine = "RapChessCs.exe";
 				uc.mode = "movetime";
 				uc.value = "3000";

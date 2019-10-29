@@ -292,13 +292,17 @@ namespace RapChessGui
 		public bool MakeMove(string emo)
 		{
 			emo = emo.ToLower();
-			string cpName = PlayerList.CurPlayer().user.name;
-			if ((CData.gameMode == (int)CMode.game) && (cpName == "Human") && (PlayerList.SecPlayer().user.name != "Human") && (PlayerList.SecPlayer().user.mode == "movetime") && ((Engine.g_moveNumber >> 1) == 10))
+			int count = listView1.Items.Count;
+			CUser uw = PlayerList.CurPlayer().user;
+			CUser ul = PlayerList.SecPlayer().user;
+			int eloW = Convert.ToInt32(uw.elo);
+			int eloL = Convert.ToInt32(ul.elo);
+			if ((CData.gameMode == (int)CMode.game) && (uw.name == "Human") && (ul.name != "Human") && (ul.mode == "movetime") && ((Engine.g_moveNumber >> 1) == 10))
 			{
-				level = levelOrg - levelDif;
+				int level = levelOrg - levelDif;
 				if (level < 0)
 					level = 0;
-				CIniFile.Write("level", level.ToString());
+				uw.elo = level.ToString();
 			}
 			if (Engine.IsValidMove(emo) == 0)
 			{
@@ -328,7 +332,7 @@ namespace RapChessGui
 				{
 					case (int)CGameState.mate:
 						labLast.ForeColor = Color.Lime;
-						labLast.Text = cpName + " win";
+						labLast.Text = uw.name + " win";
 						break;
 					case (int)CGameState.stalemate:
 						labLast.ForeColor = Color.Yellow;
@@ -351,10 +355,17 @@ namespace RapChessGui
 				{
 					if (CData.gameState == (int)CGameState.mate)
 					{
-						if (cpName == "Human")
+						if (uw.name == "Human")
 						{
-							level = levelOrg + levelDif;
-							CIniFile.Write("level", level.ToString());
+							int level = levelOrg + levelDif;
+							uw.elo = level.ToString();
+						}
+						else
+						{
+							int level = levelOrg - levelDif;
+							if (level < 0)
+								level = 0;
+							ul.elo = level.ToString();
 						}
 					}
 				}
@@ -363,7 +374,7 @@ namespace RapChessGui
 					Match.games++;
 					if (CData.gameState == (int)CGameState.mate)
 					{
-						if (cpName == labMatch10.Text)
+						if (uw.name == labMatch10.Text)
 						{
 							Match.win++;
 						}
@@ -382,14 +393,10 @@ namespace RapChessGui
 				{
 					if (CData.gameState == (int)CGameState.mate)
 					{
-						CUser uw = PlayerList.CurPlayer().user;
-						CUser ul = PlayerList.SecPlayer().user;
-						int eloW = Convert.ToInt32(uw.elo);
-						int eloL = Convert.ToInt32(ul.elo);
-						if((eloW <= eloL)||(Math.Abs(eloW-eloL) < (3000 / listView1.Items.Count)))
+						if ((eloW <= eloL) || (Math.Abs(eloW - eloL) < (3000 / count)))
 						{
-							eloW += Convert.ToInt32(Math.Floor((4000 - eloW) * 0.1));
-							eloL -= Convert.ToInt32(Math.Floor(eloL * 0.1));
+							eloW += Convert.ToInt32(Math.Floor((4000 - eloW) * (1.0/count)));
+							eloL -= Convert.ToInt32(Math.Floor(eloL * (1.0/count)));
 							uw.elo = eloW.ToString();
 							ul.elo = eloL.ToString();
 							ShowTournament();
@@ -401,7 +408,7 @@ namespace RapChessGui
 					Trainer.games++;
 					if (CData.gameState == (int)CGameState.mate)
 					{
-						if (cpName == "Teacher")
+						if (uw.name == "Teacher")
 						{
 							Trainer.win++;
 							Trainer.time -= 100;
@@ -431,7 +438,7 @@ namespace RapChessGui
 		{
 			CBoard.Clear();
 			CData.gameState = (int)CGameState.stop;
-			levelOrg = level;
+			levelOrg = Convert.ToInt32(CUserList.GetUser("Human").elo);
 			labMove.Text = "Move 1 0";
 			labLast.ForeColor = Color.Gainsboro;
 			labLast.Text = "Good luck";
@@ -471,9 +478,7 @@ namespace RapChessGui
 		void StartGame()
 		{
 			labMode.Text = "Game";
-			levelDif = Convert.ToInt32(level * 0.1);
-			if (levelDif < 10)
-				levelDif = 10;
+			levelDif = 3000 / listView1.Items.Count;
 			SetMode(CMode.game);
 			PlayerList.player[0].SetUser("Human");
 			CUser u = CommandToUser();
@@ -1129,9 +1134,7 @@ namespace RapChessGui
 		private void listView1_ColumnClick(object sender, ColumnClickEventArgs e)
 		{
 			ColumnHeader new_sorting_column = listView1.Columns[e.Column];
-
-			// Figure out the new sorting order.
-			System.Windows.Forms.SortOrder sort_order;
+			SortOrder sort_order;
 			if (SortingColumn == null)
 			{
 				// New column. Sort ascending.
@@ -1174,10 +1177,7 @@ namespace RapChessGui
 			}
 
 			// Create a comparer.
-			listView1.ListViewItemSorter =
-				new ListViewComparer(e.Column, sort_order);
-
-			// Sort.
+			listView1.ListViewItemSorter = new ListViewComparer(e.Column, sort_order);
 			listView1.Sort();
 		}
 	}
