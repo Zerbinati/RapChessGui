@@ -38,9 +38,9 @@ namespace RapChessGui
 			process = new Process();
 			if (!player.computer)
 				return;
-			process.StartInfo.FileName = "Engines/" + player.user.engine;
+			process.StartInfo.FileName = AppDomain.CurrentDomain.BaseDirectory + "Engines\\" + player.user.engine;
 			process.StartInfo.Arguments = player.user.parameters;
-			process.StartInfo.WorkingDirectory = AppDomain.CurrentDomain.BaseDirectory + "Engines";
+			process.StartInfo.WorkingDirectory = AppDomain.CurrentDomain.BaseDirectory + "Engines\\";
 			process.StartInfo.UseShellExecute = false;
 			process.StartInfo.CreateNoWindow = true;
 			process.StartInfo.RedirectStandardInput = true;
@@ -49,6 +49,7 @@ namespace RapChessGui
 			process.Start();
 			streamWriter = process.StandardInput;
 			process.BeginOutputReadLine();
+			Console.WriteLine("ok");
 		}
 	}
 }
