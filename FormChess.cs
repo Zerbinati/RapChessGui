@@ -23,9 +23,8 @@ namespace RapChessGui
 
 		public static FormChess This;
 		bool boardRotate;
-		int level = 1000;
-		int levelOrg = 1000;
-		int levelDif = 10;
+		int levelOrg;
+		int levelDif;
 		private ColumnHeader SortingColumn = null;
 		List<int> moves = new List<int>();
 		CEngine Engine = new CEngine();
@@ -96,7 +95,6 @@ namespace RapChessGui
 			comboBoxTeacher.SelectedIndex = comboBoxTeacher.FindStringExact(CIniFile.Read("teacher", "RapChessCs.exe"));
 			nudTeacher.Value = Convert.ToInt32(CIniFile.Read("timeTeacher", "1000"));
 			nudTrained.Value = Convert.ToInt32(CIniFile.Read("timeTrained", "1000"));
-			level = Convert.ToInt32(CIniFile.Read("level", "1000"));
 			Trainer.time = (int)nudTeacher.Value;
 			CBoard.LoadFromIni();
 			SetHuman();
@@ -113,7 +111,6 @@ namespace RapChessGui
 			CIniFile.Write("teacher", comboBoxTeacher.Text);
 			CIniFile.Write("timeTeacher", nudTeacher.Value.ToString());
 			CIniFile.Write("timeTrained", nudTrained.Value.ToString());
-			CIniFile.Write("level", level.ToString());
 			CBoard.SaveToIni();
 			CUserList.SaveToIni();
 		}
@@ -297,7 +294,7 @@ namespace RapChessGui
 			CUser ul = PlayerList.SecPlayer().user;
 			int eloW = Convert.ToInt32(uw.elo);
 			int eloL = Convert.ToInt32(ul.elo);
-			if ((CData.gameMode == (int)CMode.game) && (uw.name == "Human") && (ul.name != "Human") && (ul.mode == "movetime") && ((Engine.g_moveNumber >> 1) == 10))
+			if ((CData.gameMode == (int)CMode.game) && (uw.name == "Human") && (ul.name != "Human") && (cbComputer.Text == "Auto") && ((Engine.g_moveNumber >> 1) == 10))
 			{
 				int level = levelOrg - levelDif;
 				if (level < 0)
@@ -355,18 +352,19 @@ namespace RapChessGui
 				{
 					if (CData.gameState == (int)CGameState.mate)
 					{
-						if (uw.name == "Human")
-						{
-							int level = levelOrg + levelDif;
-							uw.elo = level.ToString();
-						}
-						else
-						{
-							int level = levelOrg - levelDif;
-							if (level < 0)
-								level = 0;
-							ul.elo = level.ToString();
-						}
+						if (cbComputer.Text == "Auto")
+							if (uw.name == "Human")
+							{
+								int level = levelOrg + levelDif;
+								uw.elo = level.ToString();
+							}
+							else
+							{
+								int level = levelOrg - levelDif;
+								if (level < 0)
+									level = 0;
+								ul.elo = level.ToString();
+							}
 					}
 				}
 				if (CData.gameMode == (int)CMode.match)
@@ -395,8 +393,8 @@ namespace RapChessGui
 					{
 						if ((eloW <= eloL) || (Math.Abs(eloW - eloL) < (3000 / count)))
 						{
-							eloW += Convert.ToInt32(Math.Floor((4000 - eloW) * (1.0/count)));
-							eloL -= Convert.ToInt32(Math.Floor(eloL * (1.0/count)));
+							eloW += Convert.ToInt32(Math.Floor((4000 - eloW) * (1.0 / count)));
+							eloL -= Convert.ToInt32(Math.Floor(eloL * (1.0 / count)));
 							uw.elo = eloW.ToString();
 							ul.elo = eloL.ToString();
 							ShowTournament();
@@ -469,8 +467,6 @@ namespace RapChessGui
 			CUser u = new CUser(cbComputer.Text);
 			u.SetUser(cbComputer.Text);
 			u.SetCommand(cbCommand.Text);
-			if (u.mode == "movetime")
-				u.value = level.ToString();
 			cbCommand.Text = u.GetCommand();
 			return u;
 		}
