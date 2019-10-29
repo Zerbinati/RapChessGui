@@ -56,7 +56,9 @@ namespace RapChessGui
 
 		public string GetCommand()
 		{
-			if (value == "")
+			if (engine == "Human")
+				return "";
+			else if (value == "")
 				return mode;
 			else
 				return $"{mode} {value}";
@@ -113,7 +115,7 @@ namespace RapChessGui
 		{
 			CUser uh = GetUser("Human");
 			int elo = Convert.ToInt32(uh.elo);
-			CUser ue = GetUserElo(elo);
+			CUser ue = GetUserElo(uh);
 			CUser uc = new CUser("Auto");
 			uc.SetUser(ue.name);
 			return uc;
@@ -129,15 +131,23 @@ namespace RapChessGui
 			return uc;
 		}
 
-		static CUser GetUserElo(int elo)
+		static CUser GetUserElo(CUser user, int dir = 0)
 		{
 			CUser u = null;
 			int del = 10000;
+			int elo = Convert.ToInt32(user.elo);
 			foreach (CUser cu in list)
 			{
+				if (cu == user)
+					continue;
 				if (cu.engine == "Human")
 					continue;
-				int curDel = Math.Abs(elo - Convert.ToInt32(cu.elo));
+				int curE = Convert.ToInt32(cu.elo);
+				if ((dir == 1) && (curE > elo))
+					continue;
+				if ((dir == 2) && (curE < elo))
+					continue;
+				int curDel = Math.Abs(elo - curE);
 				if (curDel < del)
 				{
 					del = curDel;
@@ -145,6 +155,17 @@ namespace RapChessGui
 				}
 			}
 			return u;
+		}
+
+		public static CUser GetUserEloHL(CUser user)
+		{
+			CUser eloH = GetUserElo(user, 2);
+			CUser eloL = GetUserElo(user, 1);
+			if (eloH == null)
+				return eloL;
+			if (eloL == null)
+				return eloH;
+			return CEngine.random.Next(2) == 0 ? eloL : eloH;
 		}
 
 		static CUser GetUserHuman()
@@ -166,12 +187,13 @@ namespace RapChessGui
 			return null;
 		}
 
-		static bool IsComputer()
+		static int CountComputer()
 		{
+			int result = 0;
 			foreach (CUser cu in list)
 				if (cu.engine != "Human")
-					return true;
-			return false;
+					result++;
+			return result;
 		}
 
 		static bool IsHuman()
@@ -194,10 +216,32 @@ namespace RapChessGui
 				u.LoadFromIni();
 				list.Add(u);
 			}
-			if(!IsHuman())
+			if (!IsHuman())
 				list.Add(GetUserHuman());
-			if (!IsComputer())
-				list.Add(GetUserComputer());
+			if (CountComputer() < 3)
+			{
+				CUser uc;
+				uc = new CUser("Easy");
+				uc.engine = "RapChessCs.exe";
+				uc.mode = "depth";
+				uc.value = "1";
+				uc.elo = "100";
+				list.Add(uc);
+				uc = new CUser("Medium");
+				uc.engine = "RapChessCs.exe";
+				uc.mode = "depth";
+				uc.value = "4";
+				uc.book = "small.txt";
+				uc.elo = "500";
+				list.Add(uc);
+				uc = new CUser("Hard");
+				uc.engine = "RapChessCs.exe";
+				uc.mode = "movetime";
+				uc.value = "3000";
+				uc.book = "small.txt";
+				uc.elo = "1000";
+				list.Add(uc);
+			}
 			SaveToIni();
 		}
 

@@ -26,6 +26,7 @@ namespace RapChessGui
 		int level = 1000;
 		int levelOrg = 1000;
 		int levelDif = 10;
+		private ColumnHeader SortingColumn = null;
 		List<int> moves = new List<int>();
 		CEngine Engine = new CEngine();
 		CPlayerList PlayerList = new CPlayerList();
@@ -80,7 +81,7 @@ namespace RapChessGui
 		void SetComputer()
 		{
 			CUser uc = CUserList.GetUser(cbComputer.Text);
-			cbGameEngine.SelectedIndex = cbGameEngine.FindStringExact(uc.engine);
+			labEngine.Text = uc.engine;
 			labEloComputer.Text = $"Elo {uc.elo}";
 			cbCommand.Text = uc.GetCommand();
 		}
@@ -114,6 +115,7 @@ namespace RapChessGui
 			CIniFile.Write("timeTrained", nudTrained.Value.ToString());
 			CIniFile.Write("level", level.ToString());
 			CBoard.SaveToIni();
+			CUserList.SaveToIni();
 		}
 
 		public void GetMessage(CPlayer p)
@@ -228,6 +230,14 @@ namespace RapChessGui
 			labMatch24.Text = $"{Match.Result(true)}%";
 		}
 
+		void ShowTournament()
+		{
+			listView1.Items.Clear();
+			foreach (CUser u in CUserList.list)
+				if (u.engine != "Human")
+					listView1.Items.Add(new ListViewItem(new[] { u.name, u.elo }));
+		}
+
 		void ShowTraining()
 		{
 			labGames.Text = $"Games {Trainer.games}";
@@ -245,7 +255,6 @@ namespace RapChessGui
 		void Reset()
 		{
 			cbComputer.Items.Clear();
-			cbGameEngine.Items.Clear();
 			cbPlayer1.Items.Clear();
 			cbPlayer2.Items.Clear();
 			comboBoxTrained.Items.Clear();
@@ -261,7 +270,6 @@ namespace RapChessGui
 			}
 			foreach (string en in CData.engineNames)
 			{
-				cbGameEngine.Items.Add(en);
 				comboBoxTeacher.Items.Add(en);
 			}
 			cbBookList.Items.Clear();
@@ -278,7 +286,8 @@ namespace RapChessGui
 			cbBookList.SelectedIndex = 0;
 			FormBook.This.cbBookList.SelectedIndex = 0;
 			FormPlayer.This.cbBookList.SelectedIndex = 0;
-	}
+			ShowTournament();
+		}
 
 		public bool MakeMove(string emo)
 		{
@@ -369,6 +378,24 @@ namespace RapChessGui
 					}
 					ShowMatch();
 				}
+				if (CData.gameMode == (int)CMode.tournament)
+				{
+					if (CData.gameState == (int)CGameState.mate)
+					{
+						CUser uw = PlayerList.CurPlayer().user;
+						CUser ul = PlayerList.SecPlayer().user;
+						int eloW = Convert.ToInt32(uw.elo);
+						int eloL = Convert.ToInt32(ul.elo);
+						if((eloW <= eloL)||(Math.Abs(eloW-eloL) < (3000 / listView1.Items.Count)))
+						{
+							eloW += Convert.ToInt32(Math.Floor((4000 - eloW) * 0.1));
+							eloL -= Convert.ToInt32(Math.Floor(eloL * 0.1));
+							uw.elo = eloW.ToString();
+							ul.elo = eloL.ToString();
+							ShowTournament();
+						}
+					}
+				}
 				if (CData.gameMode == (int)CMode.training)
 				{
 					Trainer.games++;
@@ -443,6 +470,7 @@ namespace RapChessGui
 
 		void StartGame()
 		{
+			labMode.Text = "Game";
 			levelDif = Convert.ToInt32(level * 0.1);
 			if (levelDif < 10)
 				levelDif = 10;
@@ -462,6 +490,7 @@ namespace RapChessGui
 
 		void StartMatch()
 		{
+			labMode.Text = "Match";
 			SetMode(CMode.match);
 			ShowMatch();
 			PlayerList.player[0].SetUser(cbPlayer1.Text);
@@ -472,8 +501,20 @@ namespace RapChessGui
 			Clear();
 		}
 
+		void StartTournament()
+		{
+			labMode.Text = "Tournament";
+			SetMode(CMode.tournament);
+			int r = CEngine.random.Next(listView1.Items.Count);
+			CUser u = CUserList.GetUser(listView1.Items[r].SubItems[0].Text);
+			PlayerList.player[0].SetUser(u);
+			PlayerList.player[1].SetUser(CUserList.GetUserEloHL(u));
+			Clear();
+		}
+
 		void StartTraing()
 		{
+			labMode.Text = "Training";
 			SetMode(CMode.training);
 			ShowTraining();
 			CUser uw = new CUser("Trained");
@@ -909,6 +950,10 @@ namespace RapChessGui
 			{
 				StartMatch();
 			}
+			if (CData.gameMode == (int)CMode.tournament)
+			{
+				StartTournament();
+			}
 			if (CData.gameMode == (int)CMode.training)
 			{
 				StartTraing();
@@ -1047,7 +1092,7 @@ namespace RapChessGui
 			else
 				if (!IsValid(CDrag.index))
 				SetIndex(-1);
-			if (!IsValid(CDrag.index,i))
+			if (!IsValid(CDrag.index, i))
 				SetIndex(-1);
 		}
 
@@ -1074,6 +1119,66 @@ namespace RapChessGui
 		private void cbComputer_TextChanged(object sender, EventArgs e)
 		{
 			SetComputer();
+		}
+
+		private void butStartTournament_Click(object sender, EventArgs e)
+		{
+			StartTournament();
+		}
+
+		private void listView1_ColumnClick(object sender, ColumnClickEventArgs e)
+		{
+			ColumnHeader new_sorting_column = listView1.Columns[e.Column];
+
+			// Figure out the new sorting order.
+			System.Windows.Forms.SortOrder sort_order;
+			if (SortingColumn == null)
+			{
+				// New column. Sort ascending.
+				sort_order = SortOrder.Ascending;
+			}
+			else
+			{
+				// See if this is the same column.
+				if (new_sorting_column == SortingColumn)
+				{
+					// Same column. Switch the sort order.
+					if (SortingColumn.Text.StartsWith("> "))
+					{
+						sort_order = SortOrder.Descending;
+					}
+					else
+					{
+						sort_order = SortOrder.Ascending;
+					}
+				}
+				else
+				{
+					// New column. Sort ascending.
+					sort_order = SortOrder.Ascending;
+				}
+
+				// Remove the old sort indicator.
+				SortingColumn.Text = SortingColumn.Text.Substring(2);
+			}
+
+			// Display the new sort order.
+			SortingColumn = new_sorting_column;
+			if (sort_order == SortOrder.Ascending)
+			{
+				SortingColumn.Text = "> " + SortingColumn.Text;
+			}
+			else
+			{
+				SortingColumn.Text = "< " + SortingColumn.Text;
+			}
+
+			// Create a comparer.
+			listView1.ListViewItemSorter =
+				new ListViewComparer(e.Column, sort_order);
+
+			// Sort.
+			listView1.Sort();
 		}
 	}
 }

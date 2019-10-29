@@ -101,7 +101,7 @@ namespace RapChessGui
 
 		private void bUpdate_Click(object sender, EventArgs e)
 		{
-			var user = CUserList.GetUser(curUserName);
+			CUser user = CUserList.GetUser(curUserName);
 			if (user == null)
 				return;
 			CIniFile.DeleteSection(curUserName);
@@ -113,7 +113,7 @@ namespace RapChessGui
 		private void bCreate_Click(object sender, EventArgs e)
 		{
 			string name = tbUserName.Text;
-			var user = new CUser(name);
+			CUser user = new CUser(name);
 			user.engine = cbEngList.Text;
 			CUserList.list.Add(user);
 			CUserList.SaveToIni();

@@ -45,6 +45,7 @@
 			this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.logToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.panMenu = new System.Windows.Forms.Panel();
+			this.labMode = new System.Windows.Forms.Label();
 			this.labBack = new System.Windows.Forms.Label();
 			this.labBook = new System.Windows.Forms.Label();
 			this.panel2 = new System.Windows.Forms.Panel();
@@ -62,8 +63,12 @@
 			this.butStop = new System.Windows.Forms.Button();
 			this.bStart = new System.Windows.Forms.Button();
 			this.groupBox2 = new System.Windows.Forms.GroupBox();
+			this.labEloComputer = new System.Windows.Forms.Label();
+			this.labEngine = new System.Windows.Forms.Label();
+			this.cbCommand = new System.Windows.Forms.ComboBox();
 			this.cbComputer = new System.Windows.Forms.ComboBox();
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
+			this.labEloHuman = new System.Windows.Forms.Label();
 			this.cbColor = new System.Windows.Forms.ComboBox();
 			this.tabPageMatch = new System.Windows.Forms.TabPage();
 			this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
@@ -88,6 +93,11 @@
 			this.cbPlayer2 = new System.Windows.Forms.ComboBox();
 			this.groupBox5 = new System.Windows.Forms.GroupBox();
 			this.cbPlayer1 = new System.Windows.Forms.ComboBox();
+			this.tabPageTournament = new System.Windows.Forms.TabPage();
+			this.listView1 = new System.Windows.Forms.ListView();
+			this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.butStartTournament = new System.Windows.Forms.Button();
 			this.tabPageTraining = new System.Windows.Forms.TabPage();
 			this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
 			this.label15 = new System.Windows.Forms.Label();
@@ -130,10 +140,6 @@
 			this.labLast = new System.Windows.Forms.Label();
 			this.labMove = new System.Windows.Forms.Label();
 			this.timerStart = new System.Windows.Forms.Timer(this.components);
-			this.labEloHuman = new System.Windows.Forms.Label();
-			this.cbGameEngine = new System.Windows.Forms.ComboBox();
-			this.cbCommand = new System.Windows.Forms.ComboBox();
-			this.labEloComputer = new System.Windows.Forms.Label();
 			this.menuStrip1.SuspendLayout();
 			this.panMenu.SuspendLayout();
 			this.panel2.SuspendLayout();
@@ -146,6 +152,7 @@
 			this.tableLayoutPanel2.SuspendLayout();
 			this.groupBox6.SuspendLayout();
 			this.groupBox5.SuspendLayout();
+			this.tabPageTournament.SuspendLayout();
 			this.tabPageTraining.SuspendLayout();
 			this.tableLayoutPanel1.SuspendLayout();
 			this.groupBox4.SuspendLayout();
@@ -272,6 +279,7 @@
 			// 
 			this.panMenu.BackColor = System.Drawing.SystemColors.Control;
 			this.panMenu.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+			this.panMenu.Controls.Add(this.labMode);
 			this.panMenu.Controls.Add(this.labBack);
 			this.panMenu.Controls.Add(this.labBook);
 			this.panMenu.Controls.Add(this.menuStrip1);
@@ -280,6 +288,17 @@
 			this.panMenu.Name = "panMenu";
 			this.panMenu.Size = new System.Drawing.Size(909, 26);
 			this.panMenu.TabIndex = 26;
+			// 
+			// labMode
+			// 
+			this.labMode.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+			this.labMode.Dock = System.Windows.Forms.DockStyle.Right;
+			this.labMode.Location = new System.Drawing.Point(665, 0);
+			this.labMode.Name = "labMode";
+			this.labMode.Size = new System.Drawing.Size(80, 22);
+			this.labMode.TabIndex = 4;
+			this.labMode.Text = "Game";
+			this.labMode.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
 			// labBack
 			// 
@@ -423,6 +442,7 @@
 			this.tabControl1.Appearance = System.Windows.Forms.TabAppearance.FlatButtons;
 			this.tabControl1.Controls.Add(this.tabPageGame);
 			this.tabControl1.Controls.Add(this.tabPageMatch);
+			this.tabControl1.Controls.Add(this.tabPageTournament);
 			this.tabControl1.Controls.Add(this.tabPageTraining);
 			this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.tabControl1.Location = new System.Drawing.Point(576, 0);
@@ -481,8 +501,8 @@
 			// groupBox2
 			// 
 			this.groupBox2.Controls.Add(this.labEloComputer);
+			this.groupBox2.Controls.Add(this.labEngine);
 			this.groupBox2.Controls.Add(this.cbCommand);
-			this.groupBox2.Controls.Add(this.cbGameEngine);
 			this.groupBox2.Controls.Add(this.cbComputer);
 			this.groupBox2.Dock = System.Windows.Forms.DockStyle.Top;
 			this.groupBox2.Location = new System.Drawing.Point(3, 67);
@@ -491,6 +511,42 @@
 			this.groupBox2.TabIndex = 19;
 			this.groupBox2.TabStop = false;
 			this.groupBox2.Text = "Computer";
+			// 
+			// labEloComputer
+			// 
+			this.labEloComputer.Dock = System.Windows.Forms.DockStyle.Top;
+			this.labEloComputer.Location = new System.Drawing.Point(3, 79);
+			this.labEloComputer.Name = "labEloComputer";
+			this.labEloComputer.Size = new System.Drawing.Size(313, 21);
+			this.labEloComputer.TabIndex = 46;
+			this.labEloComputer.Text = "Elo 0";
+			this.labEloComputer.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			// 
+			// labEngine
+			// 
+			this.labEngine.Dock = System.Windows.Forms.DockStyle.Top;
+			this.labEngine.Location = new System.Drawing.Point(3, 58);
+			this.labEngine.Name = "labEngine";
+			this.labEngine.Size = new System.Drawing.Size(313, 21);
+			this.labEngine.TabIndex = 45;
+			this.labEngine.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			// 
+			// cbCommand
+			// 
+			this.cbCommand.AutoCompleteCustomSource.AddRange(new string[] {
+            "mvetime 1000",
+            "depth 3"});
+			this.cbCommand.Dock = System.Windows.Forms.DockStyle.Top;
+			this.cbCommand.FormattingEnabled = true;
+			this.cbCommand.Items.AddRange(new object[] {
+            "movetime 1000",
+            "depth 3",
+            "nodes 100000",
+            "infinite"});
+			this.cbCommand.Location = new System.Drawing.Point(3, 37);
+			this.cbCommand.Name = "cbCommand";
+			this.cbCommand.Size = new System.Drawing.Size(313, 21);
+			this.cbCommand.TabIndex = 43;
 			// 
 			// cbComputer
 			// 
@@ -515,6 +571,16 @@
 			this.groupBox1.TabIndex = 18;
 			this.groupBox1.TabStop = false;
 			this.groupBox1.Text = "Human";
+			// 
+			// labEloHuman
+			// 
+			this.labEloHuman.Dock = System.Windows.Forms.DockStyle.Top;
+			this.labEloHuman.Location = new System.Drawing.Point(3, 37);
+			this.labEloHuman.Name = "labEloHuman";
+			this.labEloHuman.Size = new System.Drawing.Size(313, 21);
+			this.labEloHuman.TabIndex = 29;
+			this.labEloHuman.Text = "Elo 0";
+			this.labEloHuman.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
 			// cbColor
 			// 
@@ -812,6 +878,57 @@
 			this.cbPlayer1.Size = new System.Drawing.Size(319, 21);
 			this.cbPlayer1.Sorted = true;
 			this.cbPlayer1.TabIndex = 2;
+			// 
+			// tabPageTournament
+			// 
+			this.tabPageTournament.Controls.Add(this.listView1);
+			this.tabPageTournament.Controls.Add(this.butStartTournament);
+			this.tabPageTournament.Location = new System.Drawing.Point(4, 25);
+			this.tabPageTournament.Name = "tabPageTournament";
+			this.tabPageTournament.Size = new System.Drawing.Size(325, 547);
+			this.tabPageTournament.TabIndex = 3;
+			this.tabPageTournament.Text = "Tournament";
+			this.tabPageTournament.UseVisualStyleBackColor = true;
+			// 
+			// listView1
+			// 
+			this.listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader1,
+            this.columnHeader2});
+			this.listView1.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.listView1.FullRowSelect = true;
+			this.listView1.GridLines = true;
+			this.listView1.HideSelection = false;
+			this.listView1.Location = new System.Drawing.Point(0, 23);
+			this.listView1.Name = "listView1";
+			this.listView1.Size = new System.Drawing.Size(325, 524);
+			this.listView1.Sorting = System.Windows.Forms.SortOrder.Ascending;
+			this.listView1.TabIndex = 23;
+			this.listView1.UseCompatibleStateImageBehavior = false;
+			this.listView1.View = System.Windows.Forms.View.Details;
+			this.listView1.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.listView1_ColumnClick);
+			// 
+			// columnHeader1
+			// 
+			this.columnHeader1.Text = "Engine";
+			this.columnHeader1.Width = 240;
+			// 
+			// columnHeader2
+			// 
+			this.columnHeader2.Text = "Elo";
+			this.columnHeader2.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			this.columnHeader2.Width = 80;
+			// 
+			// butStartTournament
+			// 
+			this.butStartTournament.Dock = System.Windows.Forms.DockStyle.Top;
+			this.butStartTournament.Location = new System.Drawing.Point(0, 0);
+			this.butStartTournament.Name = "butStartTournament";
+			this.butStartTournament.Size = new System.Drawing.Size(325, 23);
+			this.butStartTournament.TabIndex = 21;
+			this.butStartTournament.Text = "Start";
+			this.butStartTournament.UseVisualStyleBackColor = true;
+			this.butStartTournament.Click += new System.EventHandler(this.butStartTournament_Click);
 			// 
 			// tabPageTraining
 			// 
@@ -1366,53 +1483,6 @@
 			this.timerStart.Interval = 6000;
 			this.timerStart.Tick += new System.EventHandler(this.TimerStart_Tick);
 			// 
-			// labEloHuman
-			// 
-			this.labEloHuman.Dock = System.Windows.Forms.DockStyle.Top;
-			this.labEloHuman.Location = new System.Drawing.Point(3, 37);
-			this.labEloHuman.Name = "labEloHuman";
-			this.labEloHuman.Size = new System.Drawing.Size(313, 21);
-			this.labEloHuman.TabIndex = 29;
-			this.labEloHuman.Text = "Elo 0";
-			this.labEloHuman.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			// 
-			// cbGameEngine
-			// 
-			this.cbGameEngine.Dock = System.Windows.Forms.DockStyle.Top;
-			this.cbGameEngine.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.cbGameEngine.Location = new System.Drawing.Point(3, 37);
-			this.cbGameEngine.Name = "cbGameEngine";
-			this.cbGameEngine.Size = new System.Drawing.Size(313, 21);
-			this.cbGameEngine.Sorted = true;
-			this.cbGameEngine.TabIndex = 39;
-			// 
-			// cbCommand
-			// 
-			this.cbCommand.AutoCompleteCustomSource.AddRange(new string[] {
-            "mvetime 1000",
-            "depth 3"});
-			this.cbCommand.Dock = System.Windows.Forms.DockStyle.Top;
-			this.cbCommand.FormattingEnabled = true;
-			this.cbCommand.Items.AddRange(new object[] {
-            "movetime 1000",
-            "depth 3",
-            "nodes 100000",
-            "infinite"});
-			this.cbCommand.Location = new System.Drawing.Point(3, 58);
-			this.cbCommand.Name = "cbCommand";
-			this.cbCommand.Size = new System.Drawing.Size(313, 21);
-			this.cbCommand.TabIndex = 43;
-			// 
-			// labEloComputer
-			// 
-			this.labEloComputer.Dock = System.Windows.Forms.DockStyle.Top;
-			this.labEloComputer.Location = new System.Drawing.Point(3, 79);
-			this.labEloComputer.Name = "labEloComputer";
-			this.labEloComputer.Size = new System.Drawing.Size(313, 21);
-			this.labEloComputer.TabIndex = 44;
-			this.labEloComputer.Text = "Elo 0";
-			this.labEloComputer.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			// 
 			// FormChess
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1447,6 +1517,7 @@
 			this.tableLayoutPanel2.ResumeLayout(false);
 			this.groupBox6.ResumeLayout(false);
 			this.groupBox5.ResumeLayout(false);
+			this.tabPageTournament.ResumeLayout(false);
 			this.tabPageTraining.ResumeLayout(false);
 			this.tableLayoutPanel1.ResumeLayout(false);
 			this.groupBox4.ResumeLayout(false);
@@ -1563,8 +1634,14 @@
 		private System.Windows.Forms.Label labTrainTime;
 		private System.Windows.Forms.Label labEloHuman;
 		private System.Windows.Forms.ComboBox cbCommand;
-		private System.Windows.Forms.ComboBox cbGameEngine;
 		private System.Windows.Forms.Label labEloComputer;
+		private System.Windows.Forms.Label labEngine;
+		private System.Windows.Forms.TabPage tabPageTournament;
+		private System.Windows.Forms.Button butStartTournament;
+		private System.Windows.Forms.ListView listView1;
+		private System.Windows.Forms.ColumnHeader columnHeader1;
+		private System.Windows.Forms.ColumnHeader columnHeader2;
+		public System.Windows.Forms.Label labMode;
 	}
 }
 
