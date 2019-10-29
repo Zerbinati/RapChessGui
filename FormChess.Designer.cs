@@ -911,7 +911,7 @@
 			// columnHeader1
 			// 
 			this.columnHeader1.Text = "Engine";
-			this.columnHeader1.Width = 240;
+			this.columnHeader1.Width = 200;
 			// 
 			// columnHeader2
 			// 

@@ -184,7 +184,7 @@ namespace RapChessGui
 			}
 			if (name == "Auto")
 				return GetUserAuto();
-			return null;
+			return GetUserHuman();
 		}
 
 		static int CountComputer()
@@ -220,6 +220,7 @@ namespace RapChessGui
 				list.Add(GetUserHuman());
 			if (CountComputer() < 3)
 			{
+				list.Add(GetUserComputer());
 				CUser uc;
 				uc = new CUser("RapChessCs D1");
 				uc.engine = "RapChessCs.exe";
@@ -233,13 +234,6 @@ namespace RapChessGui
 				uc.value = "3";
 				uc.book = "small.txt";
 				uc.elo = "500";
-				list.Add(uc);
-				uc = new CUser("RapChessCs T1");
-				uc.engine = "RapChessCs.exe";
-				uc.mode = "movetime";
-				uc.value = "1000";
-				uc.book = "small.txt";
-				uc.elo = "700";
 				list.Add(uc);
 				uc = new CUser("RapChessCs T3");
 				uc.engine = "RapChessCs.exe";

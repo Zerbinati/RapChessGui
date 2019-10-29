@@ -25,6 +25,7 @@ namespace RapChessGui
 		bool boardRotate;
 		int levelOrg;
 		int levelDif;
+		int tournament;
 		private ColumnHeader SortingColumn = null;
 		List<int> moves = new List<int>();
 		CEngine Engine = new CEngine();
@@ -95,6 +96,7 @@ namespace RapChessGui
 			comboBoxTeacher.SelectedIndex = comboBoxTeacher.FindStringExact(CIniFile.Read("teacher", "RapChessCs.exe"));
 			nudTeacher.Value = Convert.ToInt32(CIniFile.Read("timeTeacher", "1000"));
 			nudTrained.Value = Convert.ToInt32(CIniFile.Read("timeTrained", "1000"));
+			tournament = Convert.ToInt32(CIniFile.Read("tournament", "0"));
 			Trainer.time = (int)nudTeacher.Value;
 			CBoard.LoadFromIni();
 			SetHuman();
@@ -111,6 +113,7 @@ namespace RapChessGui
 			CIniFile.Write("teacher", comboBoxTeacher.Text);
 			CIniFile.Write("timeTeacher", nudTeacher.Value.ToString());
 			CIniFile.Write("timeTrained", nudTrained.Value.ToString());
+			CIniFile.Write("tournament", tournament.ToString());
 			CBoard.SaveToIni();
 			CUserList.SaveToIni();
 		}
@@ -289,7 +292,7 @@ namespace RapChessGui
 		public bool MakeMove(string emo)
 		{
 			emo = emo.ToLower();
-			int count = listView1.Items.Count;
+			double count = listView1.Items.Count;
 			CUser uw = PlayerList.CurPlayer().user;
 			CUser ul = PlayerList.SecPlayer().user;
 			int eloW = Convert.ToInt32(uw.elo);
@@ -393,8 +396,8 @@ namespace RapChessGui
 					{
 						if ((eloW <= eloL) || (Math.Abs(eloW - eloL) < (3000 / count)))
 						{
-							eloW += Convert.ToInt32(Math.Floor((4000 - eloW) * (1.0 / count)));
-							eloL -= Convert.ToInt32(Math.Floor(eloL * (1.0 / count)));
+							eloW += Convert.ToInt32(Math.Floor((4000 - eloW)/ count));
+							eloL -= Convert.ToInt32(Math.Floor(eloL / count));
 							uw.elo = eloW.ToString();
 							ul.elo = eloL.ToString();
 							ShowTournament();
@@ -506,8 +509,9 @@ namespace RapChessGui
 		{
 			labMode.Text = "Tournament";
 			SetMode(CMode.tournament);
-			int r = CEngine.random.Next(listView1.Items.Count);
-			CUser u = CUserList.GetUser(listView1.Items[r].SubItems[0].Text);
+			if (++tournament >= listView1.Items.Count)
+				tournament = 0;
+			CUser u = CUserList.GetUser(listView1.Items[tournament].SubItems[0].Text);
 			PlayerList.player[0].SetUser(u);
 			PlayerList.player[1].SetUser(CUserList.GetUserEloHL(u));
 			Clear();
