@@ -71,6 +71,20 @@ namespace RapChessGui
 			StartGame();
 		}
 
+		void SetHuman()
+		{
+			CUser uh = CUserList.GetUser("Human");
+			labEloHuman.Text = $"Elo {uh.elo}";
+		}
+
+		void SetComputer()
+		{
+			CUser uc = CUserList.GetUser(cbComputer.Text);
+			cbGameEngine.SelectedIndex = cbGameEngine.FindStringExact(uc.engine);
+			labEloComputer.Text = $"Elo {uc.elo}";
+			cbCommand.Text = uc.GetCommand();
+		}
+
 		void IniLoad()
 		{
 			cbColor.SelectedIndex = cbColor.FindStringExact(CIniFile.Read("color", "White"));
@@ -84,7 +98,8 @@ namespace RapChessGui
 			level = Convert.ToInt32(CIniFile.Read("level", "1000"));
 			Trainer.time = (int)nudTeacher.Value;
 			CBoard.LoadFromIni();
-
+			SetHuman();
+			SetComputer();
 		}
 
 		void IniSave()
@@ -230,10 +245,12 @@ namespace RapChessGui
 		void Reset()
 		{
 			cbComputer.Items.Clear();
+			cbGameEngine.Items.Clear();
 			cbPlayer1.Items.Clear();
 			cbPlayer2.Items.Clear();
 			comboBoxTrained.Items.Clear();
 			comboBoxTeacher.Items.Clear();
+			cbComputer.Items.Add("Auto");
 			for (int n = 0; n < CUserList.list.Count; n++)
 			{
 				CUser u = CUserList.list[n];
@@ -243,7 +260,10 @@ namespace RapChessGui
 				comboBoxTrained.Items.Add(u.name);
 			}
 			foreach (string en in CData.engineNames)
+			{
+				cbGameEngine.Items.Add(en);
 				comboBoxTeacher.Items.Add(en);
+			}
 			cbBookList.Items.Clear();
 			FormBook.This.cbBookList.Items.Clear();
 			FormPlayer.This.cbBookList.Items.Clear();
@@ -1049,6 +1069,11 @@ namespace RapChessGui
 				TryMove(CDrag.index, des);
 			CDrag.dragged = false;
 			CBoard.animated = true;
+		}
+
+		private void cbComputer_TextChanged(object sender, EventArgs e)
+		{
+			SetComputer();
 		}
 	}
 }

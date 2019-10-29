@@ -62,8 +62,6 @@
 			this.butStop = new System.Windows.Forms.Button();
 			this.bStart = new System.Windows.Forms.Button();
 			this.groupBox2 = new System.Windows.Forms.GroupBox();
-			this.cbCommand = new System.Windows.Forms.ComboBox();
-			this.label17 = new System.Windows.Forms.Label();
 			this.cbComputer = new System.Windows.Forms.ComboBox();
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
 			this.cbColor = new System.Windows.Forms.ComboBox();
@@ -132,6 +130,10 @@
 			this.labLast = new System.Windows.Forms.Label();
 			this.labMove = new System.Windows.Forms.Label();
 			this.timerStart = new System.Windows.Forms.Timer(this.components);
+			this.labEloHuman = new System.Windows.Forms.Label();
+			this.cbGameEngine = new System.Windows.Forms.ComboBox();
+			this.cbCommand = new System.Windows.Forms.ComboBox();
+			this.labEloComputer = new System.Windows.Forms.Label();
 			this.menuStrip1.SuspendLayout();
 			this.panMenu.SuspendLayout();
 			this.panel2.SuspendLayout();
@@ -447,17 +449,17 @@
 			// richTextBox1
 			// 
 			this.richTextBox1.Dock = System.Windows.Forms.DockStyle.Bottom;
-			this.richTextBox1.Location = new System.Drawing.Point(3, 194);
+			this.richTextBox1.Location = new System.Drawing.Point(3, 221);
 			this.richTextBox1.Name = "richTextBox1";
 			this.richTextBox1.ReadOnly = true;
-			this.richTextBox1.Size = new System.Drawing.Size(319, 350);
+			this.richTextBox1.Size = new System.Drawing.Size(319, 323);
 			this.richTextBox1.TabIndex = 22;
 			this.richTextBox1.Text = "";
 			// 
 			// butStop
 			// 
 			this.butStop.Dock = System.Windows.Forms.DockStyle.Top;
-			this.butStop.Location = new System.Drawing.Point(3, 162);
+			this.butStop.Location = new System.Drawing.Point(3, 192);
 			this.butStop.Name = "butStop";
 			this.butStop.Size = new System.Drawing.Size(319, 23);
 			this.butStop.TabIndex = 21;
@@ -468,7 +470,7 @@
 			// bStart
 			// 
 			this.bStart.Dock = System.Windows.Forms.DockStyle.Top;
-			this.bStart.Location = new System.Drawing.Point(3, 139);
+			this.bStart.Location = new System.Drawing.Point(3, 169);
 			this.bStart.Name = "bStart";
 			this.bStart.Size = new System.Drawing.Size(319, 23);
 			this.bStart.TabIndex = 20;
@@ -478,43 +480,17 @@
 			// 
 			// groupBox2
 			// 
+			this.groupBox2.Controls.Add(this.labEloComputer);
 			this.groupBox2.Controls.Add(this.cbCommand);
-			this.groupBox2.Controls.Add(this.label17);
+			this.groupBox2.Controls.Add(this.cbGameEngine);
 			this.groupBox2.Controls.Add(this.cbComputer);
 			this.groupBox2.Dock = System.Windows.Forms.DockStyle.Top;
-			this.groupBox2.Location = new System.Drawing.Point(3, 50);
+			this.groupBox2.Location = new System.Drawing.Point(3, 67);
 			this.groupBox2.Name = "groupBox2";
-			this.groupBox2.Size = new System.Drawing.Size(319, 89);
+			this.groupBox2.Size = new System.Drawing.Size(319, 102);
 			this.groupBox2.TabIndex = 19;
 			this.groupBox2.TabStop = false;
 			this.groupBox2.Text = "Computer";
-			// 
-			// cbCommand
-			// 
-			this.cbCommand.AutoCompleteCustomSource.AddRange(new string[] {
-            "mvetime 1000",
-            "depth 3"});
-			this.cbCommand.Dock = System.Windows.Forms.DockStyle.Top;
-			this.cbCommand.FormattingEnabled = true;
-			this.cbCommand.Items.AddRange(new object[] {
-            "movetime 1000",
-            "depth 3",
-            "nodes 100000",
-            "infinite"});
-			this.cbCommand.Location = new System.Drawing.Point(3, 58);
-			this.cbCommand.Name = "cbCommand";
-			this.cbCommand.Size = new System.Drawing.Size(313, 21);
-			this.cbCommand.TabIndex = 29;
-			// 
-			// label17
-			// 
-			this.label17.Dock = System.Windows.Forms.DockStyle.Top;
-			this.label17.Location = new System.Drawing.Point(3, 37);
-			this.label17.Name = "label17";
-			this.label17.Size = new System.Drawing.Size(313, 21);
-			this.label17.TabIndex = 28;
-			this.label17.Text = "Uci command";
-			this.label17.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
 			// cbComputer
 			// 
@@ -526,14 +502,16 @@
 			this.cbComputer.Size = new System.Drawing.Size(313, 21);
 			this.cbComputer.Sorted = true;
 			this.cbComputer.TabIndex = 1;
+			this.cbComputer.TextChanged += new System.EventHandler(this.cbComputer_TextChanged);
 			// 
 			// groupBox1
 			// 
+			this.groupBox1.Controls.Add(this.labEloHuman);
 			this.groupBox1.Controls.Add(this.cbColor);
 			this.groupBox1.Dock = System.Windows.Forms.DockStyle.Top;
 			this.groupBox1.Location = new System.Drawing.Point(3, 3);
 			this.groupBox1.Name = "groupBox1";
-			this.groupBox1.Size = new System.Drawing.Size(319, 47);
+			this.groupBox1.Size = new System.Drawing.Size(319, 64);
 			this.groupBox1.TabIndex = 18;
 			this.groupBox1.TabStop = false;
 			this.groupBox1.Text = "Human";
@@ -1388,6 +1366,53 @@
 			this.timerStart.Interval = 6000;
 			this.timerStart.Tick += new System.EventHandler(this.TimerStart_Tick);
 			// 
+			// labEloHuman
+			// 
+			this.labEloHuman.Dock = System.Windows.Forms.DockStyle.Top;
+			this.labEloHuman.Location = new System.Drawing.Point(3, 37);
+			this.labEloHuman.Name = "labEloHuman";
+			this.labEloHuman.Size = new System.Drawing.Size(313, 21);
+			this.labEloHuman.TabIndex = 29;
+			this.labEloHuman.Text = "Elo 0";
+			this.labEloHuman.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			// 
+			// cbGameEngine
+			// 
+			this.cbGameEngine.Dock = System.Windows.Forms.DockStyle.Top;
+			this.cbGameEngine.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.cbGameEngine.Location = new System.Drawing.Point(3, 37);
+			this.cbGameEngine.Name = "cbGameEngine";
+			this.cbGameEngine.Size = new System.Drawing.Size(313, 21);
+			this.cbGameEngine.Sorted = true;
+			this.cbGameEngine.TabIndex = 39;
+			// 
+			// cbCommand
+			// 
+			this.cbCommand.AutoCompleteCustomSource.AddRange(new string[] {
+            "mvetime 1000",
+            "depth 3"});
+			this.cbCommand.Dock = System.Windows.Forms.DockStyle.Top;
+			this.cbCommand.FormattingEnabled = true;
+			this.cbCommand.Items.AddRange(new object[] {
+            "movetime 1000",
+            "depth 3",
+            "nodes 100000",
+            "infinite"});
+			this.cbCommand.Location = new System.Drawing.Point(3, 58);
+			this.cbCommand.Name = "cbCommand";
+			this.cbCommand.Size = new System.Drawing.Size(313, 21);
+			this.cbCommand.TabIndex = 43;
+			// 
+			// labEloComputer
+			// 
+			this.labEloComputer.Dock = System.Windows.Forms.DockStyle.Top;
+			this.labEloComputer.Location = new System.Drawing.Point(3, 79);
+			this.labEloComputer.Name = "labEloComputer";
+			this.labEloComputer.Size = new System.Drawing.Size(313, 21);
+			this.labEloComputer.TabIndex = 44;
+			this.labEloComputer.Text = "Elo 0";
+			this.labEloComputer.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			// 
 			// FormChess
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1528,8 +1553,6 @@
 		private System.Windows.Forms.Label label1;
 		public System.Windows.Forms.Label labBook;
 		public System.Windows.Forms.Label labBack;
-		private System.Windows.Forms.Label label17;
-		private System.Windows.Forms.ComboBox cbCommand;
 		private System.Windows.Forms.ToolStripMenuItem bookToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem pgnToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem saveToClipboardToolStripMenuItem1;
@@ -1538,6 +1561,10 @@
 		private System.Windows.Forms.Label label18;
 		private System.Windows.Forms.ComboBox cbBookList;
 		private System.Windows.Forms.Label labTrainTime;
+		private System.Windows.Forms.Label labEloHuman;
+		private System.Windows.Forms.ComboBox cbCommand;
+		private System.Windows.Forms.ComboBox cbGameEngine;
+		private System.Windows.Forms.Label labEloComputer;
 	}
 }
 
