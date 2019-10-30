@@ -1,10 +1,6 @@
 ﻿using System;
 using System.IO;
 using System.Diagnostics;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RapChessGui
 {
@@ -16,18 +12,17 @@ namespace RapChessGui
 
 		private static void ProEvent(object sender, DataReceivedEventArgs e)
 		{
-
 			if (!String.IsNullOrEmpty(e.Data))
-				lock (CData.messages)
+			{
+			lock (CData.messages)
 				{
 					CData.messages.Add(e.Data);
 				}
+			}
 		}
 
 		public void SetPlayer(CPlayer p)
 		{
-			//process.CancelOutputRead();
-			//process.Close();
 			process.Dispose();
 			player = p;
 			SetEngine();

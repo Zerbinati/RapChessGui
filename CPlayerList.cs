@@ -96,6 +96,13 @@ namespace RapChessGui
 			return msg;
 		}
 
+		public string GetTime()
+		{
+			DateTime dt1 = new DateTime();
+			DateTime dt2 = dt1.AddMilliseconds(timeTotal);
+			return dt2.ToString("HH:mm:ss");
+		}
+
 		public void SetUser(CUser u)
 		{
 			uciok = false;

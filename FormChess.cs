@@ -66,24 +66,11 @@ namespace RapChessGui
 			fontChess = new Font(pfc.Families[0], 16);
 			labTakenT.Font = fontChess;
 			labTakenB.Font = fontChess;
+			Engine.Initialize();
+			ShowGame();
 			ShowMatch();
 			ShowTraining();
-			Engine.Initialize();
 			StartGame();
-		}
-
-		void SetHuman()
-		{
-			CUser uh = CUserList.GetUser("Human");
-			labEloHuman.Text = $"Elo {uh.elo}";
-		}
-
-		void SetComputer()
-		{
-			CUser uc = CUserList.GetUser(cbComputer.Text);
-			labEngine.Text = uc.engine;
-			labEloComputer.Text = $"Elo {uc.elo}";
-			cbCommand.Text = uc.GetCommand();
 		}
 
 		void IniLoad()
@@ -99,8 +86,6 @@ namespace RapChessGui
 			tournament = Convert.ToInt32(CIniFile.Read("tournament", "0"));
 			Trainer.time = (int)nudTeacher.Value;
 			CBoard.LoadFromIni();
-			SetHuman();
-			SetComputer();
 		}
 
 		void IniSave()
@@ -121,57 +106,59 @@ namespace RapChessGui
 		public void GetMessage(CPlayer p)
 		{
 			string msg = p.GetMessage();
-			if (msg == "")
-				return;
-			Uci.SetMsg(msg);
-			switch (Uci.command)
+			while (msg != "")
 			{
-				case "uciok":
-					p.uciok = true;
-					p.SendMessage("ucinewgame");
-					p.SendMessage("isready");
-					break;
-				case "readyok":
-					p.readyok = true;
-					break;
-				case "bestmove":
-					p.ponder = Uci.GetValue("ponder");
-					string em = Uci.tokens[1];
-					if (Uci.GetIndex("book", 0) > 0)
-						AddBook(em);
-					MakeMove(em);
-					break;
-				case "info":
-					labLast.ForeColor = Color.Gainsboro;
-					string s = Uci.GetValue("cp");
-					if (s != "")
-						p.score = s;
-					s = Uci.GetValue("mate");
-					if (s != "")
-					{
-						if (Int32.Parse(s) > 0)
-							p.score = $"+{s}M";
-						else
-							p.score = $"{s}M";
-					}
-					s = Uci.GetValue("depth");
-					if (s != "")
-						p.depth = s;
-					s = Uci.GetValue("seldepth");
-					if (s != "")
-						p.seldepth = s;
-					s = Uci.GetValue("nps");
-					if (s != "")
-						p.nps = s;
-					string pv = "";
-					int i = Uci.GetIndex("pv", 0);
-					if (i > 0)
-					{
-						for (int n = i; n < Uci.tokens.Length; n++)
-							pv += Uci.tokens[n] + " ";
-						labLast.Text = pv;
-					}
-					break;
+				Uci.SetMsg(msg);
+				switch (Uci.command)
+				{
+					case "uciok":
+						p.uciok = true;
+						p.SendMessage("ucinewgame");
+						p.SendMessage("isready");
+						break;
+					case "readyok":
+						p.readyok = true;
+						break;
+					case "bestmove":
+						p.ponder = Uci.GetValue("ponder");
+						string em = Uci.tokens[1];
+						if (Uci.GetIndex("book", 0) > 0)
+							AddBook(em);
+						MakeMove(em);
+						break;
+					case "info":
+						labLast.ForeColor = Color.Gainsboro;
+						string s = Uci.GetValue("cp");
+						if (s != "")
+							p.score = s;
+						s = Uci.GetValue("mate");
+						if (s != "")
+						{
+							if (Int32.Parse(s) > 0)
+								p.score = $"+{s}M";
+							else
+								p.score = $"{s}M";
+						}
+						s = Uci.GetValue("depth");
+						if (s != "")
+							p.depth = s;
+						s = Uci.GetValue("seldepth");
+						if (s != "")
+							p.seldepth = s;
+						s = Uci.GetValue("nps");
+						if (s != "")
+							p.nps = s;
+						string pv = "";
+						int i = Uci.GetIndex("pv", 0);
+						if (i > 0)
+						{
+							for (int n = i; n < Uci.tokens.Length; n++)
+								pv += Uci.tokens[n] + " ";
+							labLast.Text = pv;
+						}
+						break;
+				}
+				msg = p.GetMessage();
 			}
 		}
 
@@ -215,7 +202,17 @@ namespace RapChessGui
 				CData.messages.Clear();
 		}
 
-		void ShowMatch()
+		void ShowGame()
+		{
+			CUser uh = CUserList.GetUser("Human");
+			labEloHuman.Text = $"Elo {uh.elo}";
+			CUser uc = CUserList.GetUser(cbComputer.Text);
+			labEngine.Text = uc.engine;
+			labEloComputer.Text = $"Elo {uc.elo}";
+			cbCommand.Text = uc.GetCommand();
+		}
+
+			void ShowMatch()
 		{
 			labMatchGames.Text = $"Games {Match.games}";
 			labMatch10.Text = cbPlayer1.Text;
@@ -351,6 +348,7 @@ namespace RapChessGui
 						labLast.Text = "Insufficient material";
 						break;
 				}
+				FormLog.This.richTextBox1.AppendText($"Finish {labLast.Text}\n", Color.Gray);
 				if (CData.gameMode == (int)CMode.game)
 				{
 					if (CData.gameState == (int)CGameState.mate)
@@ -455,8 +453,8 @@ namespace RapChessGui
 			CPlayer pb = PlayerList.player[1];
 			FormLog.This.richTextBox1.SaveFile("temp.rtf");
 			FormLog.This.richTextBox1.Clear();
-			FormLog.This.richTextBox1.AppendText($"White {pw.user.name} {pw.user.engine} {pw.user.parameters}\n");
-			FormLog.This.richTextBox1.AppendText($"Black {pb.user.name} {pb.user.engine} {pb.user.parameters}\n");
+			FormLog.This.richTextBox1.AppendText($"White {pw.user.name} {pw.user.engine} {pw.user.parameters}\n",Color.Gray);
+			FormLog.This.richTextBox1.AppendText($"Black {pb.user.name} {pb.user.engine} {pb.user.parameters}\n",Color.Gray);
 			labBack.Text = $"Back {CData.back}";
 			labBook.Text = $"Book {CData.book}";
 			RenderInfo(pw);
@@ -479,6 +477,7 @@ namespace RapChessGui
 			labMode.Text = "Game";
 			levelDif = 3000 / listView1.Items.Count;
 			SetMode(CMode.game);
+			ShowGame();
 			PlayerList.player[0].SetUser("Human");
 			CUser u = CommandToUser();
 			PlayerList.player[1].SetUser(u);
@@ -711,20 +710,16 @@ namespace RapChessGui
 
 		void RenderInfo(CPlayer cp)
 		{
-			DateTime tot = new DateTime();
-			if (CData.gameState == 0)
+			if( (CData.gameState == 0)&&(cp.go))
 			{
 				DateTime dt = DateTime.Now;
 				double dif = (dt - cp.timeStart).TotalMilliseconds;
 				cp.timeStart = dt;
 				cp.timeTotal += dif;
-				tot.AddSeconds(1);
-				dt = new DateTime();
-				tot = dt.AddMilliseconds(cp.timeTotal);
 			}
 			if (boardRotate ^ cp.white)
 			{
-				labTimeB.Text = tot.ToString("HH:mm:ss");
+				labTimeB.Text = cp.GetTime();
 				labScoreB.Text = $"Score {cp.score}";
 				labNpsB.Text = $"Nps {cp.nps}";
 				if (cp.seldepth != "0")
@@ -734,7 +729,7 @@ namespace RapChessGui
 			}
 			else
 			{
-				labTimeT.Text = tot.ToString("HH:mm:ss");
+				labTimeT.Text = cp.GetTime();
 				labScoreT.Text = $"Score {cp.score}";
 				labNpsT.Text = $"Nps {cp.nps}";
 				if (cp.seldepth != "0")
@@ -885,14 +880,14 @@ namespace RapChessGui
 
 		private void Timer1_Tick_1(object sender, EventArgs e)
 		{
-			var cp = PlayerList.CurPlayer();
-			RenderInfo(cp);
 			if (CBoard.animated || CBoard.finished || CDrag.dragged)
 			{
 				RenderBoard();
 			}
 			else
 			{
+				var cp = PlayerList.CurPlayer();
+				RenderInfo(cp);
 				if (cp.computer)
 					if (!cp.started)
 						cp.Start();
@@ -1125,7 +1120,7 @@ namespace RapChessGui
 
 		private void cbComputer_TextChanged(object sender, EventArgs e)
 		{
-			SetComputer();
+			ShowGame();
 		}
 
 		private void butStartTournament_Click(object sender, EventArgs e)
