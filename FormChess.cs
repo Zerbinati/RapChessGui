@@ -718,7 +718,9 @@ namespace RapChessGui
 				double dif = (dt - cp.timeStart).TotalMilliseconds;
 				cp.timeStart = dt;
 				cp.timeTotal += dif;
-				tot.AddMilliseconds(cp.timeTotal);
+				tot.AddSeconds(1);
+				dt = new DateTime();
+				tot = dt.AddMilliseconds(cp.timeTotal);
 			}
 			if (boardRotate ^ cp.white)
 			{
@@ -883,14 +885,14 @@ namespace RapChessGui
 
 		private void Timer1_Tick_1(object sender, EventArgs e)
 		{
+			var cp = PlayerList.CurPlayer();
+			RenderInfo(cp);
 			if (CBoard.animated || CBoard.finished || CDrag.dragged)
 			{
 				RenderBoard();
 			}
 			else
 			{
-				var cp = PlayerList.CurPlayer();
-				RenderInfo(cp);
 				if (cp.computer)
 					if (!cp.started)
 						cp.Start();
@@ -1175,8 +1177,6 @@ namespace RapChessGui
 			{
 				SortingColumn.Text = "< " + SortingColumn.Text;
 			}
-
-			// Create a comparer.
 			listView1.ListViewItemSorter = new ListViewComparer(e.Column, sort_order);
 			listView1.Sort();
 		}
