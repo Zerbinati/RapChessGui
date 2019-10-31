@@ -200,6 +200,7 @@ namespace RapChessGui
 			CData.gameMode = (int)mode;
 			lock (CData.messages)
 				CData.messages.Clear();
+			menuItemBack.Visible = mode == (int)CMode.game;
 		}
 
 		void ShowGame()
@@ -475,7 +476,9 @@ namespace RapChessGui
 		void StartGame()
 		{
 			labMode.Text = "Game";
-			levelDif = 3000 / listView1.Items.Count;
+			levelDif = 2000 / listView1.Items.Count;
+			if (levelDif < 10)
+				levelDif = 10;
 			SetMode(CMode.game);
 			ShowGame();
 			PlayerList.player[0].SetUser("Human");
@@ -989,7 +992,7 @@ namespace RapChessGui
 			RenderBoard();
 			CPlayer pw = PlayerList.player[0];
 			CPlayer pb = PlayerList.player[1];
-			FormLog.This.richTextBox1.SaveFile("temp.rtf");
+			//FormLog.This.richTextBox1.SaveFile("temp.rtf");
 			FormLog.This.richTextBox1.Clear();
 			FormLog.This.richTextBox1.AppendText($"Fen {Engine.GetFen()}\n", Color.Gray);
 			FormLog.This.richTextBox1.AppendText($"White {pw.user.name} {pw.user.engine} {pw.user.parameters}\n", Color.Gray);
@@ -1134,15 +1137,12 @@ namespace RapChessGui
 			SortOrder sort_order;
 			if (SortingColumn == null)
 			{
-				// New column. Sort ascending.
 				sort_order = SortOrder.Ascending;
 			}
 			else
 			{
-				// See if this is the same column.
 				if (new_sorting_column == SortingColumn)
 				{
-					// Same column. Switch the sort order.
 					if (SortingColumn.Text.StartsWith("> "))
 					{
 						sort_order = SortOrder.Descending;
@@ -1154,15 +1154,10 @@ namespace RapChessGui
 				}
 				else
 				{
-					// New column. Sort ascending.
 					sort_order = SortOrder.Ascending;
 				}
-
-				// Remove the old sort indicator.
 				SortingColumn.Text = SortingColumn.Text.Substring(2);
 			}
-
-			// Display the new sort order.
 			SortingColumn = new_sorting_column;
 			if (sort_order == SortOrder.Ascending)
 			{

@@ -228,14 +228,14 @@ namespace RapChessGui
 				uc.value = "1";
 				uc.elo = "200";
 				list.Add(uc);
-				uc = new CUser("RapChessCs D3");
+				uc = new CUser("RapChessCs XD3");
 				uc.engine = "RapChessCs.exe";
 				uc.mode = "depth";
 				uc.value = "3";
 				uc.book = "small.txt";
 				uc.elo = "500";
 				list.Add(uc);
-				uc = new CUser("RapChessCs T3");
+				uc = new CUser("RapChessCs XT3");
 				uc.engine = "RapChessCs.exe";
 				uc.mode = "movetime";
 				uc.value = "3000";

@@ -33,7 +33,7 @@
 			this.timer1 = new System.Windows.Forms.Timer(this.components);
 			this.menuStrip1 = new System.Windows.Forms.MenuStrip();
 			this.newGameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.backToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.menuItemBack = new System.Windows.Forms.ToolStripMenuItem();
 			this.fenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.saveToClipboardToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.loadFromClipboardToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -174,7 +174,7 @@
 			this.menuStrip1.Dock = System.Windows.Forms.DockStyle.None;
 			this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.newGameToolStripMenuItem,
-            this.backToolStripMenuItem,
+            this.menuItemBack,
             this.fenToolStripMenuItem,
             this.pgnToolStripMenuItem,
             this.playersToolStripMenuItem,
@@ -183,7 +183,7 @@
             this.logToolStripMenuItem});
 			this.menuStrip1.Location = new System.Drawing.Point(0, 2);
 			this.menuStrip1.Name = "menuStrip1";
-			this.menuStrip1.Size = new System.Drawing.Size(409, 24);
+			this.menuStrip1.Size = new System.Drawing.Size(529, 24);
 			this.menuStrip1.TabIndex = 1;
 			this.menuStrip1.Text = "menuStrip1";
 			// 
@@ -194,12 +194,12 @@
 			this.newGameToolStripMenuItem.Text = "New Game";
 			this.newGameToolStripMenuItem.Click += new System.EventHandler(this.NewGameToolStripMenuItem_Click);
 			// 
-			// backToolStripMenuItem
+			// menuItemBack
 			// 
-			this.backToolStripMenuItem.Name = "backToolStripMenuItem";
-			this.backToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
-			this.backToolStripMenuItem.Text = "Back";
-			this.backToolStripMenuItem.Click += new System.EventHandler(this.BackToolStripMenuItem_Click);
+			this.menuItemBack.Name = "menuItemBack";
+			this.menuItemBack.Size = new System.Drawing.Size(44, 20);
+			this.menuItemBack.Text = "Back";
+			this.menuItemBack.Click += new System.EventHandler(this.BackToolStripMenuItem_Click);
 			// 
 			// fenToolStripMenuItem
 			// 
@@ -1558,7 +1558,7 @@
 		private System.Windows.Forms.Label labTakenB;
 		private System.Windows.Forms.Label labNpsB;
 		private System.Windows.Forms.Label labDepthB;
-		private System.Windows.Forms.ToolStripMenuItem backToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem menuItemBack;
 		private System.Windows.Forms.TabControl tabControl1;
 		private System.Windows.Forms.TabPage tabPageGame;
 		private System.Windows.Forms.TabPage tabPageTraining;
