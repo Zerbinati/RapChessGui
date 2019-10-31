@@ -208,9 +208,8 @@ namespace RapChessGui
 			CUser uh = CUserList.GetUser("Human");
 			labEloHuman.Text = $"Elo {uh.elo}";
 			CUser uc = CUserList.GetUser(cbComputer.Text);
-			labEngine.Text = uc.engine;
 			labEloComputer.Text = $"Elo {uc.elo}";
-			cbCommand.Text = uc.GetCommand();
+			labEngine.Text = uc.engine;
 		}
 
 			void ShowMatch()
@@ -1123,7 +1122,10 @@ namespace RapChessGui
 
 		private void cbComputer_TextChanged(object sender, EventArgs e)
 		{
-			ShowGame();
+			CUser uc = CUserList.GetUser(cbComputer.Text);
+			labEngine.Text = uc.engine;
+			labEloComputer.Text = $"Elo {uc.elo}";
+			cbCommand.Text = uc.GetCommand();
 		}
 
 		private void butStartTournament_Click(object sender, EventArgs e)
