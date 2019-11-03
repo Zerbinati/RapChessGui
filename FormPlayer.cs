@@ -3,6 +3,7 @@ using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
+using RapIni;
 
 namespace RapChessGui
 {
@@ -31,6 +32,7 @@ namespace RapChessGui
 			CUserList.LoadFromIni();
 			UpdateListBox();
 			listBox1.SetSelected(0, true);
+			cbProtocol.SelectedIndex = 0;
 		}
 
 		void SelectUser(string name)
@@ -41,6 +43,7 @@ namespace RapChessGui
 			tbUserName.Text = user.name;
 			tbParameters.Text = user.parameters;
 			cbEngList.Text = user.engine;
+			cbProtocol.Text = user.protocol;
 			cbBookList.Text = user.book;
 			curUserName = user.name;
 			nudElo.Value = Int32.Parse(user.elo);
@@ -73,6 +76,7 @@ namespace RapChessGui
 		{
 			user.name = tbUserName.Text;
 			user.engine = cbEngList.Text;
+			user.protocol = cbProtocol.Text;
 			user.book = cbBookList.Text;
 			user.parameters = tbParameters.Text;
 			user.elo = nudElo.Value.ToString();
@@ -104,7 +108,7 @@ namespace RapChessGui
 			CUser user = CUserList.GetUser(curUserName);
 			if (user == null)
 				return;
-			CIniFile.DeleteSection(curUserName);
+			CRapIni.This.DeleteKey($"player>{curUserName}");
 			SaveToIni(user);
 			MessageBox.Show("Player data has been updated successfully");
 

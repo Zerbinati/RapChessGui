@@ -6,6 +6,7 @@ using System.Drawing.Drawing2D;
 using System.Drawing.Text;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
+using RapIni;
 
 
 namespace RapChessGui
@@ -28,6 +29,7 @@ namespace RapChessGui
 		int tournament;
 		private ColumnHeader SortingColumn = null;
 		List<int> moves = new List<int>();
+		CRapIni RapIni = new CRapIni();
 		CEngine Engine = new CEngine();
 		CPlayerList PlayerList = new CPlayerList();
 		CMatch Match = new CMatch();
@@ -57,7 +59,7 @@ namespace RapChessGui
 		{
 			int fontLength = Properties.Resources.ChessPiece.Length;
 			byte[] fontData = Properties.Resources.ChessPiece;
-			System.IntPtr data = Marshal.AllocCoTaskMem(fontLength);
+			IntPtr data = Marshal.AllocCoTaskMem(fontLength);
 			Marshal.Copy(fontData, 0, data, fontLength);
 			uint cFonts = 0;
 			AddFontMemResourceEx(data, (uint)fontData.Length, IntPtr.Zero, ref cFonts);
@@ -75,32 +77,33 @@ namespace RapChessGui
 
 		void IniLoad()
 		{
-			cbColor.SelectedIndex = cbColor.FindStringExact(CIniFile.Read("color", "White"));
-			cbComputer.SelectedIndex = cbComputer.FindStringExact(CIniFile.Read("black", "Computer"));
-			cbPlayer1.SelectedIndex = cbPlayer1.FindStringExact(CIniFile.Read("player1", "Computer"));
-			cbPlayer2.SelectedIndex = cbPlayer2.FindStringExact(CIniFile.Read("player2", "Computer"));
-			comboBoxTrained.SelectedIndex = comboBoxTrained.FindStringExact(CIniFile.Read("trained", "Computer"));
-			comboBoxTeacher.SelectedIndex = comboBoxTeacher.FindStringExact(CIniFile.Read("teacher", "RapChessCs.exe"));
-			nudTeacher.Value = Convert.ToInt32(CIniFile.Read("timeTeacher", "1000"));
-			nudTrained.Value = Convert.ToInt32(CIniFile.Read("timeTrained", "1000"));
-			tournament = Convert.ToInt32(CIniFile.Read("tournament", "0"));
+			cbColor.SelectedIndex = cbColor.FindStringExact(CRapIni.This.Read("!>color", "White"));
+			cbComputer.SelectedIndex = cbComputer.FindStringExact(CRapIni.This.Read("!>black", "Computer"));
+			cbPlayer1.SelectedIndex = cbPlayer1.FindStringExact(CRapIni.This.Read("!>player1", "Computer"));
+			cbPlayer2.SelectedIndex = cbPlayer2.FindStringExact(CRapIni.This.Read("!>player2", "Computer"));
+			comboBoxTrained.SelectedIndex = comboBoxTrained.FindStringExact(CRapIni.This.Read("!>trained", "Computer"));
+			comboBoxTeacher.SelectedIndex = comboBoxTeacher.FindStringExact(CRapIni.This.Read("!>teacher", "RapChessCs.exe"));
+			nudTeacher.Value = Convert.ToInt32(CRapIni.This.Read("!>timeTeacher", "1000"));
+			nudTrained.Value = Convert.ToInt32(CRapIni.This.Read("!>timeTrained", "1000"));
+			tournament = Convert.ToInt32(CRapIni.This.Read("!>tournament", "0"));
 			Trainer.time = (int)nudTeacher.Value;
 			CBoard.LoadFromIni();
 		}
 
 		void IniSave()
 		{
-			CIniFile.Write("color", cbColor.Text);
-			CIniFile.Write("black", cbComputer.Text);
-			CIniFile.Write("player1", cbPlayer1.Text);
-			CIniFile.Write("player2", cbPlayer2.Text);
-			CIniFile.Write("trained", comboBoxTrained.Text);
-			CIniFile.Write("teacher", comboBoxTeacher.Text);
-			CIniFile.Write("timeTeacher", nudTeacher.Value.ToString());
-			CIniFile.Write("timeTrained", nudTrained.Value.ToString());
-			CIniFile.Write("tournament", tournament.ToString());
+			CRapIni.This.Write("!>color", cbColor.Text);
+			CRapIni.This.Write("!>black", cbComputer.Text);
+			CRapIni.This.Write("!>player1", cbPlayer1.Text);
+			CRapIni.This.Write("!>player2", cbPlayer2.Text);
+			CRapIni.This.Write("!>trained", comboBoxTrained.Text);
+			CRapIni.This.Write("!>teacher", comboBoxTeacher.Text);
+			CRapIni.This.Write("!>timeTeacher", nudTeacher.Value.ToString());
+			CRapIni.This.Write("!>timeTrained", nudTrained.Value.ToString());
+			CRapIni.This.Write("!>tournament", tournament.ToString());
 			CBoard.SaveToIni();
 			CUserList.SaveToIni();
+			RapIni.Save();
 		}
 
 		public void GetMessage(CPlayer p)
@@ -119,6 +122,7 @@ namespace RapChessGui
 					case "readyok":
 						p.readyok = true;
 						break;
+					case "move":
 					case "bestmove":
 						p.ponder = Uci.GetValue("ponder");
 						string em = Uci.tokens[1];

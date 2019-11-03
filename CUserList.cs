@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using RapIni;
 
 namespace RapChessGui
 {
@@ -8,6 +9,7 @@ namespace RapChessGui
 	{
 		public string name = "Human";
 		public string engine = "Human";
+		public string protocol = "Uci";
 		public string parameters = "";
 		public string mode = "movetime";
 		public string value = "1000";
@@ -68,6 +70,7 @@ namespace RapChessGui
 		{
 			CUser u = CUserList.GetUser(name);
 			engine = u.engine;
+			protocol = u.protocol;
 			parameters = u.parameters;
 			mode = u.mode;
 			value = u.value;
@@ -77,27 +80,30 @@ namespace RapChessGui
 
 		public void LoadFromIni()
 		{
-			engine = CIniFile.Read("engine", "Human", "player " + name);
-			parameters = CIniFile.Read("parameters", "", "player " + name);
-			mode = CIniFile.Read("mode", "movetime", "player " + name);
-			value = CIniFile.Read("value", "1000", "player " + name);
-			book = CIniFile.Read("book", "None", "player " + name);
-			elo = CIniFile.Read("elo", "1000", "player " + name);
+			engine = CRapIni.This.Read($"player>{name}>engine", "Human");
+			protocol = CRapIni.This.Read($"player>{name}>protocol", "Uci");
+			parameters = CRapIni.This.Read($"player>{name}>parameters", "");
+			mode = CRapIni.This.Read($"player>{name}>mode", "movetime");
+			value = CRapIni.This.Read($"player>{name}>value", "1000");
+			book = CRapIni.This.Read($"player>{name}>book", "None");
+			elo = CRapIni.This.Read($"player>{name}>elo", "1000");
 		}
 
 		public void SaveToIni()
 		{
-			CIniFile.Write("engine", engine, "player " + name);
-			CIniFile.Write("parameters", parameters, "player " + name);
-			CIniFile.Write("mode", mode, "player " + name);
-			CIniFile.Write("value", value, "player " + name);
-			CIniFile.Write("book", book, "player " + name);
-			CIniFile.Write("elo", elo, "player " + name);
+			CRapIni.This.Write($"player>{name}>engine", engine);
+			CRapIni.This.Write($"player>{name}>protocol", protocol);
+			CRapIni.This.Write($"player>{name}>parameters", parameters);
+			CRapIni.This.Write($"player>{name}>mode", mode);
+			CRapIni.This.Write($"player>{name}>value", value);
+			CRapIni.This.Write($"player>{name}>book", book);
+			CRapIni.This.Write($"player>{name}>elo", elo);
 		}
 	}
 
 	public class CUserList
 	{
+		const string defUser = "RapChessCs XT3";
 		public static List<CUser> list = new List<CUser>();
 
 		public static int GetIndex(string name)
@@ -207,11 +213,9 @@ namespace RapChessGui
 		public static void LoadFromIni()
 		{
 			list.Clear();
-			string player = CIniFile.Read("playerNames");
-			var apn = player.Split(new[] { '|' }, StringSplitOptions.RemoveEmptyEntries);
-			for (int n = 0; n < apn.Length; n++)
+			List<string> pn = CRapIni.This.ReadList("player");
+			foreach(string name in pn)
 			{
-				string name = apn[n];
 				var u = new CUser(name);
 				u.LoadFromIni();
 				list.Add(u);
@@ -228,7 +232,7 @@ namespace RapChessGui
 				uc.value = "1";
 				uc.elo = "200";
 				list.Add(uc);
-				uc = new CUser("RapChessCs XD3");
+				uc = new CUser(defUser);
 				uc.engine = "RapChessCs.exe";
 				uc.mode = "depth";
 				uc.value = "3";
@@ -256,7 +260,6 @@ namespace RapChessGui
 				user.SaveToIni();
 			}
 			names.Sort();
-			CIniFile.Write("playerNames", String.Join("|", names.ToArray()));
 		}
 	}
 }

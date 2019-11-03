@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using RapIni;
 
 namespace RapChessGui
 {
@@ -86,17 +87,17 @@ namespace RapChessGui
 
 		public static void SaveToIni()
 		{
-			CIniFile.Write("colorR", color.R.ToString());
-			CIniFile.Write("colorG", color.G.ToString());
-			CIniFile.Write("colorB", color.B.ToString());
+			CRapIni.This.Write("!>colorR", color.R.ToString());
+			CRapIni.This.Write("!>colorG", color.G.ToString());
+			CRapIni.This.Write("!>colorB", color.B.ToString());
 		}
 
 
 		public static void LoadFromIni()
 		{
-			int r = Convert.ToInt32(CIniFile.Read("colorR", "64"));
-			int g = Convert.ToInt32(CIniFile.Read("colorG", "0"));
-			int b = Convert.ToInt32(CIniFile.Read("colorB", "0"));
+			int r = Convert.ToInt32(CRapIni.This.Read("!>colorR", "64"));
+			int g = Convert.ToInt32(CRapIni.This.Read("!>colorG", "0"));
+			int b = Convert.ToInt32(CRapIni.This.Read("!>colorB", "0"));
 			color = Color.FromArgb(r, g, b);
 		}
 

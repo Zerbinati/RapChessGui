@@ -19,6 +19,8 @@ namespace RapChessGui
 		public string seldepth;
 		public string nps;
 		public string ponder;
+		public string mode;
+		public string value;
 		public DateTime timeStart;
 		public CBook book = new CBook();
 		public CPlayerEng PlayerEng = new CPlayerEng();
@@ -39,14 +41,38 @@ namespace RapChessGui
 			depth = "0";
 			seldepth = "0";
 			nps = "0";
-			ponder = "";
+			ponder = "";	
 			timeStart = DateTime.Now;
 			book.Reset();
 		}
 
 		public void Start()
 		{
-			SendMessage("uci");
+			mode = user.mode;
+			value = user.value;
+			if (user.protocol == "Uci")
+			{
+				SendMessage("uci");
+			}
+			else
+			{
+				SendMessage("xboard");
+				uciok = true;
+				readyok = true;
+				switch (mode)
+				{
+					case "depth":
+						mode = "sd";
+						break;
+					case "movetime":
+						mode = "st";
+						int v = Convert.ToInt32(user.value) / 1000;
+						if (v < 1)
+							v = 1;
+						value = v.ToString();
+						break;
+				}
+			}
 			started = true;
 		}
 
@@ -60,9 +86,21 @@ namespace RapChessGui
 			}
 			else
 			{
-				string position = CHistory.GetPosition();
-				SendMessage(position);
-				SendMessage($"go {user.mode} {user.value}");
+				if (user.protocol == "Uci")
+				{
+					SendMessage(CHistory.GetPosition());
+					SendMessage($"go {mode} {value}");
+				}
+				else
+				{
+					SendMessage("new");
+					SendMessage($"{mode} {value}");
+					SendMessage("post");
+					SendMessage("force");
+					foreach(string m in CHistory.moves)
+						SendMessage(m);
+					SendMessage("go");
+				}
 				go = true;
 				timeStart = DateTime.Now;
 			}
