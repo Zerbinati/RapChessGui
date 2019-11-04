@@ -55,7 +55,6 @@
 			this.panelT1 = new System.Windows.Forms.Panel();
 			this.labProtocolT = new System.Windows.Forms.Label();
 			this.labTimeT = new System.Windows.Forms.Label();
-			this.labTakenT = new System.Windows.Forms.Label();
 			this.labNameT = new System.Windows.Forms.Label();
 			this.panTop = new System.Windows.Forms.Panel();
 			this.panel4 = new System.Windows.Forms.Panel();
@@ -133,7 +132,6 @@
 			this.panelB1 = new System.Windows.Forms.Panel();
 			this.labProtocolB = new System.Windows.Forms.Label();
 			this.labTimeB = new System.Windows.Forms.Label();
-			this.labTakenB = new System.Windows.Forms.Label();
 			this.labNameB = new System.Windows.Forms.Label();
 			this.panBottom = new System.Windows.Forms.Panel();
 			this.panel1 = new System.Windows.Forms.Panel();
@@ -154,6 +152,8 @@
 			this.labNodesT = new System.Windows.Forms.Label();
 			this.labDepthT = new System.Windows.Forms.Label();
 			this.labScoreT = new System.Windows.Forms.Label();
+			this.labTakenB = new System.Windows.Forms.Label();
+			this.labTakenT = new System.Windows.Forms.Label();
 			this.menuStrip1.SuspendLayout();
 			this.panMenu.SuspendLayout();
 			this.panelT1.SuspendLayout();
@@ -371,9 +371,9 @@
 			// 
 			this.panelT1.BackColor = System.Drawing.Color.Silver;
 			this.panelT1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+			this.panelT1.Controls.Add(this.labTakenT);
 			this.panelT1.Controls.Add(this.labProtocolT);
 			this.panelT1.Controls.Add(this.labTimeT);
-			this.panelT1.Controls.Add(this.labTakenT);
 			this.panelT1.Controls.Add(this.labNameT);
 			this.panelT1.Controls.Add(this.panTop);
 			this.panelT1.Dock = System.Windows.Forms.DockStyle.Top;
@@ -407,19 +407,6 @@
 			this.labTimeT.Size = new System.Drawing.Size(140, 26);
 			this.labTimeT.TabIndex = 9;
 			this.labTimeT.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			// 
-			// labTakenT
-			// 
-			this.labTakenT.BackColor = System.Drawing.Color.DarkGray;
-			this.labTakenT.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-			this.labTakenT.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.labTakenT.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-			this.labTakenT.ForeColor = System.Drawing.Color.Black;
-			this.labTakenT.Location = new System.Drawing.Point(186, 0);
-			this.labTakenT.Name = "labTakenT";
-			this.labTakenT.Size = new System.Drawing.Size(714, 26);
-			this.labTakenT.TabIndex = 8;
-			this.labTakenT.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
 			// labNameT
 			// 
@@ -1356,9 +1343,9 @@
 			// 
 			this.panelB1.BackColor = System.Drawing.Color.Silver;
 			this.panelB1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+			this.panelB1.Controls.Add(this.labTakenB);
 			this.panelB1.Controls.Add(this.labProtocolB);
 			this.panelB1.Controls.Add(this.labTimeB);
-			this.panelB1.Controls.Add(this.labTakenB);
 			this.panelB1.Controls.Add(this.labNameB);
 			this.panelB1.Controls.Add(this.panBottom);
 			this.panelB1.Dock = System.Windows.Forms.DockStyle.Top;
@@ -1392,19 +1379,6 @@
 			this.labTimeB.Size = new System.Drawing.Size(140, 26);
 			this.labTimeB.TabIndex = 9;
 			this.labTimeB.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			// 
-			// labTakenB
-			// 
-			this.labTakenB.BackColor = System.Drawing.Color.DarkGray;
-			this.labTakenB.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-			this.labTakenB.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.labTakenB.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-			this.labTakenB.ForeColor = System.Drawing.Color.Black;
-			this.labTakenB.Location = new System.Drawing.Point(186, 0);
-			this.labTakenB.Name = "labTakenB";
-			this.labTakenB.Size = new System.Drawing.Size(714, 26);
-			this.labTakenB.TabIndex = 8;
-			this.labTakenB.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
 			// labNameB
 			// 
@@ -1660,6 +1634,32 @@
 			this.labScoreT.TabIndex = 6;
 			this.labScoreT.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
+			// labTakenB
+			// 
+			this.labTakenB.BackColor = System.Drawing.Color.DarkGray;
+			this.labTakenB.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+			this.labTakenB.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.labTakenB.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+			this.labTakenB.ForeColor = System.Drawing.Color.Black;
+			this.labTakenB.Location = new System.Drawing.Point(466, 0);
+			this.labTakenB.Name = "labTakenB";
+			this.labTakenB.Size = new System.Drawing.Size(434, 26);
+			this.labTakenB.TabIndex = 11;
+			this.labTakenB.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			// 
+			// labTakenT
+			// 
+			this.labTakenT.BackColor = System.Drawing.Color.DarkGray;
+			this.labTakenT.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+			this.labTakenT.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.labTakenT.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+			this.labTakenT.ForeColor = System.Drawing.Color.Black;
+			this.labTakenT.Location = new System.Drawing.Point(466, 0);
+			this.labTakenT.Name = "labTakenT";
+			this.labTakenT.Size = new System.Drawing.Size(434, 26);
+			this.labTakenT.TabIndex = 11;
+			this.labTakenT.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			// 
 			// FormChess
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1729,8 +1729,6 @@
 		private System.Windows.Forms.Panel panBottom;
 		private System.Windows.Forms.Label labNameT;
 		private System.Windows.Forms.Label labNameB;
-		private System.Windows.Forms.Label labTakenT;
-		private System.Windows.Forms.Label labTakenB;
 		private System.Windows.Forms.ToolStripMenuItem menuItemBack;
 		private System.Windows.Forms.TabControl tabControl1;
 		private System.Windows.Forms.TabPage tabPageGame;
@@ -1837,6 +1835,8 @@
 		private System.Windows.Forms.Label labBookT;
 		private System.Windows.Forms.Label labNodesB;
 		private System.Windows.Forms.Label labNodesT;
+		private System.Windows.Forms.Label labTakenT;
+		private System.Windows.Forms.Label labTakenB;
 	}
 }
 
