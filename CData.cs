@@ -23,7 +23,6 @@ namespace RapChessGui
 		public static int gameState = 0;
 		public static int gameMode = 0;
 		public static int back = 0;
-		public static int book = 0;
 		public static string[] arrModeNames = new string[] { "depth", "movetime" };
 		public static List<string> bookNames = new List<string>();
 		public static List<string> engineNames = new List<string>();

@@ -13,10 +13,12 @@ namespace RapChessGui
 		public bool readyok = false;
 		public bool go = false;
 		public bool white = true;
+		public int usedBook;
 		public double timeTotal;
 		public string score;
 		public string depth;
 		public string seldepth;
+		public string nodes;
 		public string nps;
 		public string ponder;
 		public string mode;
@@ -50,9 +52,11 @@ namespace RapChessGui
 			started = false;
 			go = false;
 			timeTotal = 0;
+			usedBook = 0;
 			score = "0";
 			depth = "0";
 			seldepth = "0";
+			nodes = "0";
 			nps = "0";
 			ponder = "";
 			timeStart = DateTime.Now;
@@ -149,6 +153,14 @@ namespace RapChessGui
 				}
 			}
 			return msg;
+		}
+
+		public string GetProtocol()
+		{
+			if (computer)
+				return user.protocol;
+			else
+				return "Protocol";
 		}
 
 		public string GetTime()

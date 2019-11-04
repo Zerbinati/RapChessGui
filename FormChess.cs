@@ -151,6 +151,9 @@ namespace RapChessGui
 						s = Uci.GetValue("seldepth");
 						if (s != "")
 							p.seldepth = s;
+						s = Uci.GetValue("nodes");
+						if (s != "")
+							p.nodes = s;
 						s = Uci.GetValue("nps");
 						if (s != "")
 							p.nps = s;
@@ -195,7 +198,7 @@ namespace RapChessGui
 
 		public void AddBook(string emo)
 		{
-			labBook.Text = $"Book {++CData.book}";
+			PlayerList.CurPlayer().usedBook++;
 			labLast.ForeColor = Color.Aquamarine;
 			labLast.Text = $"book {emo}";
 		}
@@ -454,14 +457,12 @@ namespace RapChessGui
 			PlayerList.Init();
 			richTextBox1.Clear();
 			CData.back = 0;
-			CData.book = 0;
 			CPlayer pw = PlayerList.player[0];
 			CPlayer pb = PlayerList.player[1];
 			FormLog.This.richTextBox1.Clear();
 			FormLog.This.richTextBox1.AppendText($"White {pw.user.name} {pw.user.engine} {pw.user.parameters}\n", Color.Gray);
 			FormLog.This.richTextBox1.AppendText($"Black {pb.user.name} {pb.user.engine} {pb.user.parameters}\n", Color.Gray);
 			labBack.Text = $"Back {CData.back}";
-			labBook.Text = $"Book {CData.book}";
 			RenderInfo(pw);
 			RenderInfo(pb);
 			CData.gameState = 0;
@@ -729,9 +730,12 @@ namespace RapChessGui
 			if (boardRotate ^ cp.white)
 			{
 				labTimeB.Text = cp.GetTime();
+				labProtocolB.Text = cp.GetProtocol();
 				labScoreB.Text = $"Score {cp.score}";
+				labNodesB.Text = $"Nodes {cp.nodes}";
 				labNpsB.Text = $"Nps {cp.nps}";
 				labPonderB.Text = $"Ponder {cp.ponder}";
+				labBookB.Text = $"Book {cp.usedBook}";
 				if (cp.seldepth != "0")
 					labDepthB.Text = $"Depth {cp.depth} / {cp.seldepth}";
 				else
@@ -740,9 +744,12 @@ namespace RapChessGui
 			else
 			{
 				labTimeT.Text = cp.GetTime();
+				labProtocolT.Text = cp.GetProtocol();
 				labScoreT.Text = $"Score {cp.score}";
+				labNodesT.Text = $"Nodes {cp.nodes}";
 				labNpsT.Text = $"Nps {cp.nps}";
 				labPonderT.Text = $"Ponder {cp.ponder}";
+				labBookT.Text = $"Book {cp.usedBook}";
 				if (cp.seldepth != "0")
 					labDepthT.Text = $"Depth {cp.depth} / {cp.seldepth}";
 				else
@@ -1013,7 +1020,6 @@ namespace RapChessGui
 			labLast.ForeColor = Color.Gainsboro;
 			labLast.Text = $"Fen {Engine.GetFen()}";
 			labBack.Text = $"Back {CData.back}";
-			labBook.Text = $"Book {CData.book}";
 			RenderInfo(pw);
 			RenderInfo(pb);
 			CData.gameState = 0;
@@ -1052,7 +1058,6 @@ namespace RapChessGui
 			labLast.ForeColor = Color.Gainsboro;
 			labLast.Text = $"Pgn {CHistory.GetMoves()}";
 			labBack.Text = $"Back {CData.back}";
-			labBook.Text = $"Book {CData.book}";
 			RenderInfo(pw);
 			RenderInfo(pb);
 			CData.gameState = 0;
