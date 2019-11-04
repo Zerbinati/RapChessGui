@@ -46,5 +46,17 @@ namespace RapChessGui
 			process.BeginOutputReadLine();
 			Console.WriteLine("ok");
 		}
+
+		public void Terminate()
+		{
+			try
+			{
+				process.Kill();
+			}
+			catch
+			{
+			}
+		}
+
 	}
 }

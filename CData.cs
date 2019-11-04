@@ -79,14 +79,10 @@ namespace RapChessGui
 			SortOrder = sort_order;
 		}
 
-		// Compare two ListViewItems.
 		public int Compare(object object_x, object object_y)
 		{
-			// Get the objects as ListViewItems.
 			ListViewItem item_x = object_x as ListViewItem;
 			ListViewItem item_y = object_y as ListViewItem;
-
-			// Get the corresponding sub-item values.
 			string string_x;
 			if (item_x.SubItems.Count <= ColumnNumber)
 			{
@@ -106,34 +102,23 @@ namespace RapChessGui
 			{
 				string_y = item_y.SubItems[ColumnNumber].Text;
 			}
-
-			// Compare them.
 			int result;
-			double double_x, double_y;
-			if (double.TryParse(string_x, out double_x) &&
-				double.TryParse(string_y, out double_y))
+			if (double.TryParse(string_x, out double double_x) && double.TryParse(string_y, out double double_y))
 			{
-				// Treat as a number.
 				result = double_x.CompareTo(double_y);
 			}
 			else
 			{
-				DateTime date_x, date_y;
-				if (DateTime.TryParse(string_x, out date_x) &&
-					DateTime.TryParse(string_y, out date_y))
+				if (DateTime.TryParse(string_x, out DateTime date_x) &&
+					DateTime.TryParse(string_y, out DateTime date_y))
 				{
-					// Treat as a date.
 					result = date_x.CompareTo(date_y);
 				}
 				else
 				{
-					// Treat as a string.
 					result = string_x.CompareTo(string_y);
 				}
 			}
-
-			// Return the correct result depending on whether
-			// we're sorting ascending or descending.
 			if (SortOrder == SortOrder.Ascending)
 			{
 				return result;

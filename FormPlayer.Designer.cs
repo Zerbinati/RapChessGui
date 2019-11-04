@@ -42,16 +42,16 @@
 			this.nudTime = new System.Windows.Forms.NumericUpDown();
 			this.radioButton2 = new System.Windows.Forms.RadioButton();
 			this.radioButton1 = new System.Windows.Forms.RadioButton();
-this.groupBox7 = new System.Windows.Forms.GroupBox();
 			this.groupBox3 = new System.Windows.Forms.GroupBox();
 			this.tbParameters = new System.Windows.Forms.TextBox();
+			this.groupBox7 = new System.Windows.Forms.GroupBox();
+			this.cbProtocol = new System.Windows.Forms.ComboBox();
 			this.groupBox4 = new System.Windows.Forms.GroupBox();
 			this.cbEngList = new System.Windows.Forms.ComboBox();
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
 			this.tbUserName = new System.Windows.Forms.TextBox();
 			this.groupBox2 = new System.Windows.Forms.GroupBox();
 			this.listBox1 = new System.Windows.Forms.ListBox();
-			this.cbProtocol = new System.Windows.Forms.ComboBox();
 			this.panel1.SuspendLayout();
 			this.groupBox6.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.nudElo)).BeginInit();
@@ -59,8 +59,8 @@ this.groupBox7 = new System.Windows.Forms.GroupBox();
 			this.gbMode.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.nudDepth)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.nudTime)).BeginInit();
-this.groupBox7.SuspendLayout();
 			this.groupBox3.SuspendLayout();
+			this.groupBox7.SuspendLayout();
 			this.groupBox4.SuspendLayout();
 			this.groupBox1.SuspendLayout();
 			this.groupBox2.SuspendLayout();
@@ -79,7 +79,7 @@ this.groupBox7.SuspendLayout();
 			this.panel1.Controls.Add(this.groupBox5);
 			this.panel1.Controls.Add(this.gbMode);
 			this.panel1.Controls.Add(this.groupBox3);
-this.panel1.Controls.Add(this.groupBox7);
+			this.panel1.Controls.Add(this.groupBox7);
 			this.panel1.Controls.Add(this.groupBox4);
 			this.panel1.Controls.Add(this.groupBox1);
 			this.panel1.Dock = System.Windows.Forms.DockStyle.Right;
@@ -91,41 +91,41 @@ this.panel1.Controls.Add(this.groupBox7);
 			// bDelete
 			// 
 			this.bDelete.Dock = System.Windows.Forms.DockStyle.Top;
-			this.bDelete.Location = new System.Drawing.Point(0, 355);
+			this.bDelete.Location = new System.Drawing.Point(0, 400);
 			this.bDelete.Name = "bDelete";
 			this.bDelete.Size = new System.Drawing.Size(311, 33);
 			this.bDelete.TabIndex = 27;
 			this.bDelete.Text = "Delete";
 			this.bDelete.UseVisualStyleBackColor = true;
-			this.bDelete.Click += new System.EventHandler(this.bDelete_Click);
+			this.bDelete.Click += new System.EventHandler(this.ButDelete_Click);
 			// 
 			// bCreate
 			// 
 			this.bCreate.Dock = System.Windows.Forms.DockStyle.Top;
-			this.bCreate.Location = new System.Drawing.Point(0, 322);
+			this.bCreate.Location = new System.Drawing.Point(0, 367);
 			this.bCreate.Name = "bCreate";
 			this.bCreate.Size = new System.Drawing.Size(311, 33);
 			this.bCreate.TabIndex = 26;
 			this.bCreate.Text = "Create";
 			this.bCreate.UseVisualStyleBackColor = true;
-			this.bCreate.Click += new System.EventHandler(this.bCreate_Click);
+			this.bCreate.Click += new System.EventHandler(this.ButCreate_Click);
 			// 
 			// bUpdate
 			// 
 			this.bUpdate.Dock = System.Windows.Forms.DockStyle.Top;
-			this.bUpdate.Location = new System.Drawing.Point(0, 295);
+			this.bUpdate.Location = new System.Drawing.Point(0, 340);
 			this.bUpdate.Name = "bUpdate";
 			this.bUpdate.Size = new System.Drawing.Size(311, 27);
 			this.bUpdate.TabIndex = 25;
 			this.bUpdate.Text = "Update";
 			this.bUpdate.UseVisualStyleBackColor = true;
-			this.bUpdate.Click += new System.EventHandler(this.bUpdate_Click);
+			this.bUpdate.Click += new System.EventHandler(this.ButUpdate_Click);
 			// 
 			// groupBox6
 			// 
 			this.groupBox6.Controls.Add(this.nudElo);
 			this.groupBox6.Dock = System.Windows.Forms.DockStyle.Top;
-			this.groupBox6.Location = new System.Drawing.Point(0, 250);
+			this.groupBox6.Location = new System.Drawing.Point(0, 295);
 			this.groupBox6.Name = "groupBox6";
 			this.groupBox6.Size = new System.Drawing.Size(311, 45);
 			this.groupBox6.TabIndex = 24;
@@ -156,7 +156,7 @@ this.panel1.Controls.Add(this.groupBox7);
 			// 
 			this.groupBox5.Controls.Add(this.cbBookList);
 			this.groupBox5.Dock = System.Windows.Forms.DockStyle.Top;
-			this.groupBox5.Location = new System.Drawing.Point(0, 205);
+			this.groupBox5.Location = new System.Drawing.Point(0, 250);
 			this.groupBox5.Name = "groupBox5";
 			this.groupBox5.Size = new System.Drawing.Size(311, 45);
 			this.groupBox5.TabIndex = 20;
@@ -181,7 +181,7 @@ this.panel1.Controls.Add(this.groupBox7);
 			this.gbMode.Controls.Add(this.radioButton2);
 			this.gbMode.Controls.Add(this.radioButton1);
 			this.gbMode.Dock = System.Windows.Forms.DockStyle.Top;
-			this.gbMode.Location = new System.Drawing.Point(0, 135);
+			this.gbMode.Location = new System.Drawing.Point(0, 180);
 			this.gbMode.Name = "gbMode";
 			this.gbMode.Size = new System.Drawing.Size(311, 70);
 			this.gbMode.TabIndex = 16;
@@ -257,12 +257,31 @@ this.panel1.Controls.Add(this.groupBox7);
 			this.radioButton1.TabStop = true;
 			this.radioButton1.Text = "Time";
 			this.radioButton1.UseVisualStyleBackColor = true;
-// 
+			// 
+			// groupBox3
+			// 
+			this.groupBox3.Controls.Add(this.tbParameters);
+			this.groupBox3.Dock = System.Windows.Forms.DockStyle.Top;
+			this.groupBox3.Location = new System.Drawing.Point(0, 135);
+			this.groupBox3.Name = "groupBox3";
+			this.groupBox3.Size = new System.Drawing.Size(311, 45);
+			this.groupBox3.TabIndex = 15;
+			this.groupBox3.TabStop = false;
+			this.groupBox3.Text = "Parameters";
+			// 
+			// tbParameters
+			// 
+			this.tbParameters.Dock = System.Windows.Forms.DockStyle.Top;
+			this.tbParameters.Location = new System.Drawing.Point(3, 16);
+			this.tbParameters.Name = "tbParameters";
+			this.tbParameters.Size = new System.Drawing.Size(305, 20);
+			this.tbParameters.TabIndex = 0;
+			// 
 			// groupBox7
 			// 
 			this.groupBox7.Controls.Add(this.cbProtocol);
 			this.groupBox7.Dock = System.Windows.Forms.DockStyle.Top;
-			this.groupBox7.Location = new System.Drawing.Point(0, 388);
+			this.groupBox7.Location = new System.Drawing.Point(0, 90);
 			this.groupBox7.Name = "groupBox7";
 			this.groupBox7.Size = new System.Drawing.Size(311, 45);
 			this.groupBox7.TabIndex = 28;
@@ -282,25 +301,6 @@ this.panel1.Controls.Add(this.groupBox7);
 			this.cbProtocol.Size = new System.Drawing.Size(305, 21);
 			this.cbProtocol.Sorted = true;
 			this.cbProtocol.TabIndex = 2;
-			// 
-			// groupBox3
-			// 
-			this.groupBox3.Controls.Add(this.tbParameters);
-			this.groupBox3.Dock = System.Windows.Forms.DockStyle.Top;
-			this.groupBox3.Location = new System.Drawing.Point(0, 90);
-			this.groupBox3.Name = "groupBox3";
-			this.groupBox3.Size = new System.Drawing.Size(311, 45);
-			this.groupBox3.TabIndex = 15;
-			this.groupBox3.TabStop = false;
-			this.groupBox3.Text = "Parameters";
-			// 
-			// tbParameters
-			// 
-			this.tbParameters.Dock = System.Windows.Forms.DockStyle.Top;
-			this.tbParameters.Location = new System.Drawing.Point(3, 16);
-			this.tbParameters.Name = "tbParameters";
-			this.tbParameters.Size = new System.Drawing.Size(305, 20);
-			this.tbParameters.TabIndex = 0;
 			// 
 			// groupBox4
 			// 
@@ -389,9 +389,9 @@ this.panel1.Controls.Add(this.groupBox7);
 			this.gbMode.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.nudDepth)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.nudTime)).EndInit();
-this.groupBox7.ResumeLayout(false);
 			this.groupBox3.ResumeLayout(false);
 			this.groupBox3.PerformLayout();
+			this.groupBox7.ResumeLayout(false);
 			this.groupBox4.ResumeLayout(false);
 			this.groupBox1.ResumeLayout(false);
 			this.groupBox1.PerformLayout();

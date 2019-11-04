@@ -26,11 +26,10 @@ namespace RapChessGui
 			string[] t = command.Split(new[] { ' ', '\t' }, StringSplitOptions.RemoveEmptyEntries);
 			string c1 = "";
 			string c2 = "";
-			int v = 0;
 			if (t.Length > 0)
 				c1 = t[0].ToLower();
 			if (t.Length > 1)
-				if (int.TryParse(t[1], out v))
+				if (int.TryParse(t[1], out int v))
 					c2 = v.ToString();
 			switch (c1)
 			{
@@ -120,7 +119,6 @@ namespace RapChessGui
 		static CUser GetUserAuto()
 		{
 			CUser uh = GetUser("Human");
-			int elo = Convert.ToInt32(uh.elo);
 			CUser ue = GetUserElo(uh);
 			CUser uc = new CUser("Auto");
 			uc.SetUser(ue.name);

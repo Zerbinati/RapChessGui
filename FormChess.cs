@@ -77,30 +77,32 @@ namespace RapChessGui
 
 		void IniLoad()
 		{
-			cbColor.SelectedIndex = cbColor.FindStringExact(CRapIni.This.Read("!>color", "White"));
-			cbComputer.SelectedIndex = cbComputer.FindStringExact(CRapIni.This.Read("!>black", "Computer"));
-			cbPlayer1.SelectedIndex = cbPlayer1.FindStringExact(CRapIni.This.Read("!>player1", "Computer"));
-			cbPlayer2.SelectedIndex = cbPlayer2.FindStringExact(CRapIni.This.Read("!>player2", "Computer"));
-			comboBoxTrained.SelectedIndex = comboBoxTrained.FindStringExact(CRapIni.This.Read("!>trained", "Computer"));
-			comboBoxTeacher.SelectedIndex = comboBoxTeacher.FindStringExact(CRapIni.This.Read("!>teacher", "RapChessCs.exe"));
-			nudTeacher.Value = Convert.ToInt32(CRapIni.This.Read("!>timeTeacher", "1000"));
-			nudTrained.Value = Convert.ToInt32(CRapIni.This.Read("!>timeTrained", "1000"));
-			tournament = Convert.ToInt32(CRapIni.This.Read("!>tournament", "0"));
+			cbColor.SelectedIndex = cbColor.FindStringExact(CRapIni.This.Read("game>color", "White"));
+			cbComputer.SelectedIndex = cbComputer.FindStringExact(CRapIni.This.Read("game>black", "Computer"));
+			cbPlayer1.SelectedIndex = cbPlayer1.FindStringExact(CRapIni.This.Read("match>player1", "Computer"));
+			cbPlayer2.SelectedIndex = cbPlayer2.FindStringExact(CRapIni.This.Read("match>player2", "Computer"));
+			tournament = Convert.ToInt32(CRapIni.This.Read("tournament>tournament", "0"));
+			comboBoxTrained.SelectedIndex = comboBoxTrained.FindStringExact(CRapIni.This.Read("training>trained", "Computer"));
+			comboBoxTeacher.SelectedIndex = comboBoxTeacher.FindStringExact(CRapIni.This.Read("training>teacher", "RapChessCs.exe"));
+			cbBookList.SelectedIndex = cbBookList.FindStringExact(CRapIni.This.Read("training>book", "small.txt"));
+			nudTeacher.Value = Convert.ToInt32(CRapIni.This.Read("training>timeTeacher", "1000"));
+			nudTrained.Value = Convert.ToInt32(CRapIni.This.Read("training>timeTrained", "1000"));
 			Trainer.time = (int)nudTeacher.Value;
 			CBoard.LoadFromIni();
 		}
 
 		void IniSave()
 		{
-			CRapIni.This.Write("!>color", cbColor.Text);
-			CRapIni.This.Write("!>black", cbComputer.Text);
-			CRapIni.This.Write("!>player1", cbPlayer1.Text);
-			CRapIni.This.Write("!>player2", cbPlayer2.Text);
-			CRapIni.This.Write("!>trained", comboBoxTrained.Text);
-			CRapIni.This.Write("!>teacher", comboBoxTeacher.Text);
-			CRapIni.This.Write("!>timeTeacher", nudTeacher.Value.ToString());
-			CRapIni.This.Write("!>timeTrained", nudTrained.Value.ToString());
-			CRapIni.This.Write("!>tournament", tournament.ToString());
+			CRapIni.This.Write("game>color", cbColor.Text);
+			CRapIni.This.Write("game>black", cbComputer.Text);
+			CRapIni.This.Write("match>player1", cbPlayer1.Text);
+			CRapIni.This.Write("match>player2", cbPlayer2.Text);
+			CRapIni.This.Write("tournament>tournament", tournament.ToString());
+			CRapIni.This.Write("training>trained", comboBoxTrained.Text);
+			CRapIni.This.Write("training>teacher", comboBoxTeacher.Text);
+			CRapIni.This.Write("training>book", cbBookList.Text);
+			CRapIni.This.Write("training>timeTeacher", nudTeacher.Value.ToString());
+			CRapIni.This.Write("training>timeTrained", nudTrained.Value.ToString());
 			CBoard.SaveToIni();
 			CUserList.SaveToIni();
 			RapIni.Save();
@@ -216,7 +218,7 @@ namespace RapChessGui
 			labEngine.Text = uc.engine;
 		}
 
-			void ShowMatch()
+		void ShowMatch()
 		{
 			labMatchGames.Text = $"Games {Match.games}";
 			labMatch10.Text = cbPlayer1.Text;
@@ -398,7 +400,7 @@ namespace RapChessGui
 					{
 						if ((eloW <= eloL) || (Math.Abs(eloW - eloL) < (3000 / count)))
 						{
-							eloW += Convert.ToInt32(Math.Floor((4000 - eloW)/ count));
+							eloW += Convert.ToInt32(Math.Floor((4000 - eloW) / count));
 							eloL -= Convert.ToInt32(Math.Floor(eloL / count));
 							uw.elo = eloW.ToString();
 							ul.elo = eloL.ToString();
@@ -457,8 +459,8 @@ namespace RapChessGui
 			CPlayer pb = PlayerList.player[1];
 			FormLog.This.richTextBox1.SaveFile("temp.rtf");
 			FormLog.This.richTextBox1.Clear();
-			FormLog.This.richTextBox1.AppendText($"White {pw.user.name} {pw.user.engine} {pw.user.parameters}\n",Color.Gray);
-			FormLog.This.richTextBox1.AppendText($"Black {pb.user.name} {pb.user.engine} {pb.user.parameters}\n",Color.Gray);
+			FormLog.This.richTextBox1.AppendText($"White {pw.user.name} {pw.user.engine} {pw.user.parameters}\n", Color.Gray);
+			FormLog.This.richTextBox1.AppendText($"Black {pb.user.name} {pb.user.engine} {pb.user.parameters}\n", Color.Gray);
 			labBack.Text = $"Back {CData.back}";
 			labBook.Text = $"Book {CData.book}";
 			RenderInfo(pw);
@@ -716,7 +718,7 @@ namespace RapChessGui
 
 		void RenderInfo(CPlayer cp)
 		{
-			if( (CData.gameState == 0)&&(cp.go))
+			if ((CData.gameState == 0) && (cp.go))
 			{
 				DateTime dt = DateTime.Now;
 				double dif = (dt - cp.timeStart).TotalMilliseconds;
@@ -928,7 +930,7 @@ namespace RapChessGui
 
 		private void ButStop_Click(object sender, EventArgs e)
 		{
-			PlayerList.CurPlayer().SendMessage("stop");
+			PlayerList.CurPlayer().EngineStop();
 		}
 
 		private void BackToolStripMenuItem_Click(object sender, EventArgs e)
@@ -995,7 +997,6 @@ namespace RapChessGui
 			RenderBoard();
 			CPlayer pw = PlayerList.player[0];
 			CPlayer pb = PlayerList.player[1];
-			//FormLog.This.richTextBox1.SaveFile("temp.rtf");
 			FormLog.This.richTextBox1.Clear();
 			FormLog.This.richTextBox1.AppendText($"Fen {Engine.GetFen()}\n", Color.Gray);
 			FormLog.This.richTextBox1.AppendText($"White {pw.user.name} {pw.user.engine} {pw.user.parameters}\n", Color.Gray);
@@ -1175,6 +1176,26 @@ namespace RapChessGui
 			}
 			listView1.ListViewItemSorter = new ListViewComparer(e.Column, sort_order);
 			listView1.Sort();
+		}
+
+		private void stopToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			PlayerList.CurPlayer().EngineStop();
+		}
+
+		private void restartToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			PlayerList.CurPlayer().SetUser();
+		}
+
+		private void terminateToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			PlayerList.CurPlayer().PlayerEng.Terminate();
+		}
+
+		private void closeToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			PlayerList.CurPlayer().EngineClose();
 		}
 	}
 }

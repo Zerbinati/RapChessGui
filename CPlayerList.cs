@@ -31,6 +31,19 @@ namespace RapChessGui
 			Init(true);
 		}
 
+		public void EngineStop()
+		{
+			if (user.protocol == "Uci")
+				SendMessage("stop");
+			else
+				SendMessage("?");
+		}
+
+		public void EngineClose()
+		{
+			SendMessage("quit");
+		}
+
 		public void Init(bool w)
 		{
 			white = w;
@@ -41,7 +54,7 @@ namespace RapChessGui
 			depth = "0";
 			seldepth = "0";
 			nps = "0";
-			ponder = "";	
+			ponder = "";
 			timeStart = DateTime.Now;
 			book.Reset();
 		}
@@ -96,8 +109,12 @@ namespace RapChessGui
 					SendMessage("new");
 					SendMessage($"{mode} {value}");
 					SendMessage("post");
+					if (CHistory.fen != CEngine.defFen)
+					{
+						SendMessage($"setboard {CHistory.fen}");
+					}
 					SendMessage("force");
-					foreach(string m in CHistory.moves)
+					foreach (string m in CHistory.moves)
 						SendMessage(m);
 					SendMessage("go");
 				}
@@ -151,6 +168,11 @@ namespace RapChessGui
 			book.Load(user.book);
 		}
 
+		public void SetUser()
+		{
+			SetUser(user);
+		}
+
 		public void SetUser(string name)
 		{
 			CUser u = CUserList.GetUser(name);
@@ -197,7 +219,7 @@ namespace RapChessGui
 
 		public CPlayer SecPlayer()
 		{
-			return player[curIndex ^1];
+			return player[curIndex ^ 1];
 		}
 
 	}
