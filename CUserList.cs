@@ -102,7 +102,7 @@ namespace RapChessGui
 
 	public class CUserList
 	{
-		const string defUser = "RapChessCs XT3";
+		public const string defUser = "RapChessCs XT1";
 		public static List<CUser> list = new List<CUser>();
 
 		public static int GetIndex(string name)
@@ -122,16 +122,6 @@ namespace RapChessGui
 			CUser ue = GetUserElo(uh);
 			CUser uc = new CUser("Auto");
 			uc.SetUser(ue.name);
-			return uc;
-		}
-
-		static CUser GetUserComputer()
-		{
-			CUser uc = new CUser("Computer");
-			uc.engine = "RapChessCs.exe";
-			uc.mode = "movetime";
-			uc.value = "1000";
-			uc.book = "small.txt";
 			return uc;
 		}
 
@@ -222,25 +212,32 @@ namespace RapChessGui
 				list.Add(GetUserHuman());
 			if (CountComputer() < 3)
 			{
-				list.Add(GetUserComputer());
 				CUser uc;
 				uc = new CUser("RapChessCs D1");
 				uc.engine = "RapChessCs.exe";
 				uc.mode = "depth";
 				uc.value = "1";
+				uc.book = "rand2.txt";
 				uc.elo = "200";
 				list.Add(uc);
-				uc = new CUser(defUser);
+				uc = new CUser("RapChessCs D2");
+				uc.engine = "RapChessCs.exe";
+				uc.mode = "depth";
+				uc.value = "2";
+				uc.book = "rand1.txt";
+				uc.elo = "400";
+				list.Add(uc);
+				uc = new CUser("RapChessCs D3");
 				uc.engine = "RapChessCs.exe";
 				uc.mode = "depth";
 				uc.value = "3";
 				uc.book = "small.txt";
-				uc.elo = "500";
+				uc.elo = "600";
 				list.Add(uc);
-				uc = new CUser("RapChessCs XT3");
+				uc = new CUser(defUser);
 				uc.engine = "RapChessCs.exe";
 				uc.mode = "movetime";
-				uc.value = "3000";
+				uc.value = "1000";
 				uc.book = "small.txt";
 				uc.elo = "1000";
 				list.Add(uc);

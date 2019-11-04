@@ -44,16 +44,17 @@
 			this.bookToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.logToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.engineToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.stopToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.restartToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.terminateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.closeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.panMenu = new System.Windows.Forms.Panel();
 			this.labMode = new System.Windows.Forms.Label();
 			this.labBack = new System.Windows.Forms.Label();
 			this.labBook = new System.Windows.Forms.Label();
-			this.panel2 = new System.Windows.Forms.Panel();
+			this.panelT1 = new System.Windows.Forms.Panel();
 			this.labTakenT = new System.Windows.Forms.Label();
-			this.labNpsT = new System.Windows.Forms.Label();
-			this.labDepthT = new System.Windows.Forms.Label();
-			this.labScoreT = new System.Windows.Forms.Label();
-			this.labTimeT = new System.Windows.Forms.Label();
 			this.labNameT = new System.Windows.Forms.Label();
 			this.panTop = new System.Windows.Forms.Panel();
 			this.panel4 = new System.Windows.Forms.Panel();
@@ -128,26 +129,29 @@
 			this.label1 = new System.Windows.Forms.Label();
 			this.comboBoxTrained = new System.Windows.Forms.ComboBox();
 			this.pictureBox1 = new System.Windows.Forms.PictureBox();
-			this.panel3 = new System.Windows.Forms.Panel();
+			this.panelB1 = new System.Windows.Forms.Panel();
 			this.labTakenB = new System.Windows.Forms.Label();
-			this.labNpsB = new System.Windows.Forms.Label();
-			this.labDepthB = new System.Windows.Forms.Label();
-			this.labScoreB = new System.Windows.Forms.Label();
-			this.labTimeB = new System.Windows.Forms.Label();
 			this.labNameB = new System.Windows.Forms.Label();
 			this.panBottom = new System.Windows.Forms.Panel();
 			this.panel1 = new System.Windows.Forms.Panel();
 			this.labLast = new System.Windows.Forms.Label();
 			this.labMove = new System.Windows.Forms.Label();
 			this.timerStart = new System.Windows.Forms.Timer(this.components);
-			this.engineToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.stopToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.restartToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.terminateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.closeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.panelB2 = new System.Windows.Forms.Panel();
+			this.panelT2 = new System.Windows.Forms.Panel();
+			this.labPonderT = new System.Windows.Forms.Label();
+			this.labPonderB = new System.Windows.Forms.Label();
+			this.labScoreT = new System.Windows.Forms.Label();
+			this.labScoreB = new System.Windows.Forms.Label();
+			this.labTimeT = new System.Windows.Forms.Label();
+			this.labTimeB = new System.Windows.Forms.Label();
+			this.labDepthB = new System.Windows.Forms.Label();
+			this.labNpsB = new System.Windows.Forms.Label();
+			this.labDepthT = new System.Windows.Forms.Label();
+			this.labNpsT = new System.Windows.Forms.Label();
 			this.menuStrip1.SuspendLayout();
 			this.panMenu.SuspendLayout();
-			this.panel2.SuspendLayout();
+			this.panelT1.SuspendLayout();
 			this.panel4.SuspendLayout();
 			this.tabControl1.SuspendLayout();
 			this.tabPageGame.SuspendLayout();
@@ -165,8 +169,10 @@
 			this.groupBox3.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.nudTrained)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-			this.panel3.SuspendLayout();
+			this.panelB1.SuspendLayout();
 			this.panel1.SuspendLayout();
+			this.panelB2.SuspendLayout();
+			this.panelT2.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// timer1
@@ -190,7 +196,7 @@
             this.engineToolStripMenuItem});
 			this.menuStrip1.Location = new System.Drawing.Point(0, 2);
 			this.menuStrip1.Name = "menuStrip1";
-			this.menuStrip1.Size = new System.Drawing.Size(584, 24);
+			this.menuStrip1.Size = new System.Drawing.Size(464, 24);
 			this.menuStrip1.TabIndex = 1;
 			this.menuStrip1.Text = "menuStrip1";
 			// 
@@ -282,6 +288,45 @@
 			this.logToolStripMenuItem.Text = "Log";
 			this.logToolStripMenuItem.Click += new System.EventHandler(this.logToolStripMenuItem_Click);
 			// 
+			// engineToolStripMenuItem
+			// 
+			this.engineToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.stopToolStripMenuItem,
+            this.restartToolStripMenuItem,
+            this.terminateToolStripMenuItem,
+            this.closeToolStripMenuItem});
+			this.engineToolStripMenuItem.Name = "engineToolStripMenuItem";
+			this.engineToolStripMenuItem.Size = new System.Drawing.Size(55, 20);
+			this.engineToolStripMenuItem.Text = "Engine";
+			// 
+			// stopToolStripMenuItem
+			// 
+			this.stopToolStripMenuItem.Name = "stopToolStripMenuItem";
+			this.stopToolStripMenuItem.Size = new System.Drawing.Size(128, 22);
+			this.stopToolStripMenuItem.Text = "Stop";
+			this.stopToolStripMenuItem.Click += new System.EventHandler(this.stopToolStripMenuItem_Click);
+			// 
+			// restartToolStripMenuItem
+			// 
+			this.restartToolStripMenuItem.Name = "restartToolStripMenuItem";
+			this.restartToolStripMenuItem.Size = new System.Drawing.Size(128, 22);
+			this.restartToolStripMenuItem.Text = "Restart";
+			this.restartToolStripMenuItem.Click += new System.EventHandler(this.restartToolStripMenuItem_Click);
+			// 
+			// terminateToolStripMenuItem
+			// 
+			this.terminateToolStripMenuItem.Name = "terminateToolStripMenuItem";
+			this.terminateToolStripMenuItem.Size = new System.Drawing.Size(128, 22);
+			this.terminateToolStripMenuItem.Text = "Terminate";
+			this.terminateToolStripMenuItem.Click += new System.EventHandler(this.terminateToolStripMenuItem_Click);
+			// 
+			// closeToolStripMenuItem
+			// 
+			this.closeToolStripMenuItem.Name = "closeToolStripMenuItem";
+			this.closeToolStripMenuItem.Size = new System.Drawing.Size(128, 22);
+			this.closeToolStripMenuItem.Text = "Close";
+			this.closeToolStripMenuItem.Click += new System.EventHandler(this.closeToolStripMenuItem_Click);
+			// 
 			// panMenu
 			// 
 			this.panMenu.BackColor = System.Drawing.SystemColors.Control;
@@ -329,22 +374,19 @@
 			this.labBook.Text = "Book 0";
 			this.labBook.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
-			// panel2
+			// panelT1
 			// 
-			this.panel2.BackColor = System.Drawing.Color.Silver;
-			this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-			this.panel2.Controls.Add(this.labTakenT);
-			this.panel2.Controls.Add(this.labNpsT);
-			this.panel2.Controls.Add(this.labDepthT);
-			this.panel2.Controls.Add(this.labScoreT);
-			this.panel2.Controls.Add(this.labTimeT);
-			this.panel2.Controls.Add(this.labNameT);
-			this.panel2.Controls.Add(this.panTop);
-			this.panel2.Dock = System.Windows.Forms.DockStyle.Top;
-			this.panel2.Location = new System.Drawing.Point(0, 26);
-			this.panel2.Name = "panel2";
-			this.panel2.Size = new System.Drawing.Size(909, 30);
-			this.panel2.TabIndex = 7;
+			this.panelT1.BackColor = System.Drawing.Color.Silver;
+			this.panelT1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+			this.panelT1.Controls.Add(this.labTimeT);
+			this.panelT1.Controls.Add(this.labTakenT);
+			this.panelT1.Controls.Add(this.labNameT);
+			this.panelT1.Controls.Add(this.panTop);
+			this.panelT1.Dock = System.Windows.Forms.DockStyle.Top;
+			this.panelT1.Location = new System.Drawing.Point(0, 26);
+			this.panelT1.Name = "panelT1";
+			this.panelT1.Size = new System.Drawing.Size(909, 30);
+			this.panelT1.TabIndex = 7;
 			// 
 			// labTakenT
 			// 
@@ -353,63 +395,11 @@
 			this.labTakenT.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.labTakenT.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
 			this.labTakenT.ForeColor = System.Drawing.Color.Black;
-			this.labTakenT.Location = new System.Drawing.Point(626, 0);
+			this.labTakenT.Location = new System.Drawing.Point(166, 0);
 			this.labTakenT.Name = "labTakenT";
-			this.labTakenT.Size = new System.Drawing.Size(279, 26);
+			this.labTakenT.Size = new System.Drawing.Size(739, 26);
 			this.labTakenT.TabIndex = 8;
 			this.labTakenT.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-			// 
-			// labNpsT
-			// 
-			this.labNpsT.BackColor = System.Drawing.Color.LightGray;
-			this.labNpsT.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-			this.labNpsT.Dock = System.Windows.Forms.DockStyle.Left;
-			this.labNpsT.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-			this.labNpsT.ForeColor = System.Drawing.Color.Black;
-			this.labNpsT.Location = new System.Drawing.Point(506, 0);
-			this.labNpsT.Name = "labNpsT";
-			this.labNpsT.Size = new System.Drawing.Size(120, 26);
-			this.labNpsT.TabIndex = 7;
-			this.labNpsT.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			// 
-			// labDepthT
-			// 
-			this.labDepthT.BackColor = System.Drawing.Color.LightGray;
-			this.labDepthT.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-			this.labDepthT.Dock = System.Windows.Forms.DockStyle.Left;
-			this.labDepthT.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-			this.labDepthT.ForeColor = System.Drawing.Color.Black;
-			this.labDepthT.Location = new System.Drawing.Point(386, 0);
-			this.labDepthT.Name = "labDepthT";
-			this.labDepthT.Size = new System.Drawing.Size(120, 26);
-			this.labDepthT.TabIndex = 6;
-			this.labDepthT.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			// 
-			// labScoreT
-			// 
-			this.labScoreT.BackColor = System.Drawing.Color.LightGray;
-			this.labScoreT.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-			this.labScoreT.Dock = System.Windows.Forms.DockStyle.Left;
-			this.labScoreT.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-			this.labScoreT.ForeColor = System.Drawing.Color.Black;
-			this.labScoreT.Location = new System.Drawing.Point(276, 0);
-			this.labScoreT.Name = "labScoreT";
-			this.labScoreT.Size = new System.Drawing.Size(110, 26);
-			this.labScoreT.TabIndex = 5;
-			this.labScoreT.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			// 
-			// labTimeT
-			// 
-			this.labTimeT.BackColor = System.Drawing.Color.LightGray;
-			this.labTimeT.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-			this.labTimeT.Dock = System.Windows.Forms.DockStyle.Left;
-			this.labTimeT.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-			this.labTimeT.ForeColor = System.Drawing.Color.Black;
-			this.labTimeT.Location = new System.Drawing.Point(166, 0);
-			this.labTimeT.Name = "labTimeT";
-			this.labTimeT.Size = new System.Drawing.Size(110, 26);
-			this.labTimeT.TabIndex = 3;
-			this.labTimeT.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
 			// labNameT
 			// 
@@ -439,7 +429,7 @@
 			this.panel4.Controls.Add(this.tabControl1);
 			this.panel4.Controls.Add(this.pictureBox1);
 			this.panel4.Dock = System.Windows.Forms.DockStyle.Top;
-			this.panel4.Location = new System.Drawing.Point(0, 56);
+			this.panel4.Location = new System.Drawing.Point(0, 86);
 			this.panel4.Name = "panel4";
 			this.panel4.Size = new System.Drawing.Size(909, 576);
 			this.panel4.TabIndex = 9;
@@ -1342,22 +1332,19 @@
 			this.pictureBox1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseMove);
 			this.pictureBox1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseUp);
 			// 
-			// panel3
+			// panelB1
 			// 
-			this.panel3.BackColor = System.Drawing.Color.Silver;
-			this.panel3.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-			this.panel3.Controls.Add(this.labTakenB);
-			this.panel3.Controls.Add(this.labNpsB);
-			this.panel3.Controls.Add(this.labDepthB);
-			this.panel3.Controls.Add(this.labScoreB);
-			this.panel3.Controls.Add(this.labTimeB);
-			this.panel3.Controls.Add(this.labNameB);
-			this.panel3.Controls.Add(this.panBottom);
-			this.panel3.Dock = System.Windows.Forms.DockStyle.Top;
-			this.panel3.Location = new System.Drawing.Point(0, 632);
-			this.panel3.Name = "panel3";
-			this.panel3.Size = new System.Drawing.Size(909, 30);
-			this.panel3.TabIndex = 10;
+			this.panelB1.BackColor = System.Drawing.Color.Silver;
+			this.panelB1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+			this.panelB1.Controls.Add(this.labTimeB);
+			this.panelB1.Controls.Add(this.labTakenB);
+			this.panelB1.Controls.Add(this.labNameB);
+			this.panelB1.Controls.Add(this.panBottom);
+			this.panelB1.Dock = System.Windows.Forms.DockStyle.Top;
+			this.panelB1.Location = new System.Drawing.Point(0, 662);
+			this.panelB1.Name = "panelB1";
+			this.panelB1.Size = new System.Drawing.Size(909, 30);
+			this.panelB1.TabIndex = 10;
 			// 
 			// labTakenB
 			// 
@@ -1366,63 +1353,11 @@
 			this.labTakenB.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.labTakenB.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
 			this.labTakenB.ForeColor = System.Drawing.Color.Black;
-			this.labTakenB.Location = new System.Drawing.Point(626, 0);
+			this.labTakenB.Location = new System.Drawing.Point(166, 0);
 			this.labTakenB.Name = "labTakenB";
-			this.labTakenB.Size = new System.Drawing.Size(279, 26);
+			this.labTakenB.Size = new System.Drawing.Size(739, 26);
 			this.labTakenB.TabIndex = 8;
 			this.labTakenB.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-			// 
-			// labNpsB
-			// 
-			this.labNpsB.BackColor = System.Drawing.Color.LightGray;
-			this.labNpsB.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-			this.labNpsB.Dock = System.Windows.Forms.DockStyle.Left;
-			this.labNpsB.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-			this.labNpsB.ForeColor = System.Drawing.Color.Black;
-			this.labNpsB.Location = new System.Drawing.Point(506, 0);
-			this.labNpsB.Name = "labNpsB";
-			this.labNpsB.Size = new System.Drawing.Size(120, 26);
-			this.labNpsB.TabIndex = 7;
-			this.labNpsB.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			// 
-			// labDepthB
-			// 
-			this.labDepthB.BackColor = System.Drawing.Color.LightGray;
-			this.labDepthB.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-			this.labDepthB.Dock = System.Windows.Forms.DockStyle.Left;
-			this.labDepthB.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-			this.labDepthB.ForeColor = System.Drawing.Color.Black;
-			this.labDepthB.Location = new System.Drawing.Point(386, 0);
-			this.labDepthB.Name = "labDepthB";
-			this.labDepthB.Size = new System.Drawing.Size(120, 26);
-			this.labDepthB.TabIndex = 6;
-			this.labDepthB.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			// 
-			// labScoreB
-			// 
-			this.labScoreB.BackColor = System.Drawing.Color.LightGray;
-			this.labScoreB.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-			this.labScoreB.Dock = System.Windows.Forms.DockStyle.Left;
-			this.labScoreB.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-			this.labScoreB.ForeColor = System.Drawing.Color.Black;
-			this.labScoreB.Location = new System.Drawing.Point(276, 0);
-			this.labScoreB.Name = "labScoreB";
-			this.labScoreB.Size = new System.Drawing.Size(110, 26);
-			this.labScoreB.TabIndex = 5;
-			this.labScoreB.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			// 
-			// labTimeB
-			// 
-			this.labTimeB.BackColor = System.Drawing.Color.LightGray;
-			this.labTimeB.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-			this.labTimeB.Dock = System.Windows.Forms.DockStyle.Left;
-			this.labTimeB.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-			this.labTimeB.ForeColor = System.Drawing.Color.Black;
-			this.labTimeB.Location = new System.Drawing.Point(166, 0);
-			this.labTimeB.Name = "labTimeB";
-			this.labTimeB.Size = new System.Drawing.Size(110, 26);
-			this.labTimeB.TabIndex = 4;
-			this.labTimeB.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
 			// labNameB
 			// 
@@ -1453,9 +1388,9 @@
 			this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
 			this.panel1.Controls.Add(this.labLast);
 			this.panel1.Controls.Add(this.labMove);
-			this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
 			this.panel1.ForeColor = System.Drawing.Color.Gainsboro;
-			this.panel1.Location = new System.Drawing.Point(0, 662);
+			this.panel1.Location = new System.Drawing.Point(0, 723);
 			this.panel1.Name = "panel1";
 			this.panel1.Size = new System.Drawing.Size(909, 36);
 			this.panel1.TabIndex = 11;
@@ -1490,55 +1425,176 @@
 			this.timerStart.Interval = 6000;
 			this.timerStart.Tick += new System.EventHandler(this.TimerStart_Tick);
 			// 
-			// engineToolStripMenuItem
+			// panelB2
 			// 
-			this.engineToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.stopToolStripMenuItem,
-            this.restartToolStripMenuItem,
-            this.terminateToolStripMenuItem,
-            this.closeToolStripMenuItem});
-			this.engineToolStripMenuItem.Name = "engineToolStripMenuItem";
-			this.engineToolStripMenuItem.Size = new System.Drawing.Size(55, 20);
-			this.engineToolStripMenuItem.Text = "Engine";
+			this.panelB2.BackColor = System.Drawing.Color.Silver;
+			this.panelB2.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+			this.panelB2.Controls.Add(this.labNpsB);
+			this.panelB2.Controls.Add(this.labDepthB);
+			this.panelB2.Controls.Add(this.labScoreB);
+			this.panelB2.Controls.Add(this.labPonderB);
+			this.panelB2.Dock = System.Windows.Forms.DockStyle.Top;
+			this.panelB2.Location = new System.Drawing.Point(0, 692);
+			this.panelB2.Name = "panelB2";
+			this.panelB2.Size = new System.Drawing.Size(909, 30);
+			this.panelB2.TabIndex = 27;
 			// 
-			// stopToolStripMenuItem
+			// panelT2
 			// 
-			this.stopToolStripMenuItem.Name = "stopToolStripMenuItem";
-			this.stopToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-			this.stopToolStripMenuItem.Text = "Stop";
-			this.stopToolStripMenuItem.Click += new System.EventHandler(this.stopToolStripMenuItem_Click);
+			this.panelT2.BackColor = System.Drawing.Color.Silver;
+			this.panelT2.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+			this.panelT2.Controls.Add(this.labNpsT);
+			this.panelT2.Controls.Add(this.labDepthT);
+			this.panelT2.Controls.Add(this.labScoreT);
+			this.panelT2.Controls.Add(this.labPonderT);
+			this.panelT2.Dock = System.Windows.Forms.DockStyle.Top;
+			this.panelT2.Location = new System.Drawing.Point(0, 56);
+			this.panelT2.Name = "panelT2";
+			this.panelT2.Size = new System.Drawing.Size(909, 30);
+			this.panelT2.TabIndex = 28;
 			// 
-			// restartToolStripMenuItem
+			// labPonderT
 			// 
-			this.restartToolStripMenuItem.Name = "restartToolStripMenuItem";
-			this.restartToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-			this.restartToolStripMenuItem.Text = "Restart";
-			this.restartToolStripMenuItem.Click += new System.EventHandler(this.restartToolStripMenuItem_Click);
+			this.labPonderT.BackColor = System.Drawing.Color.LightGray;
+			this.labPonderT.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+			this.labPonderT.Dock = System.Windows.Forms.DockStyle.Left;
+			this.labPonderT.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+			this.labPonderT.ForeColor = System.Drawing.Color.Black;
+			this.labPonderT.Location = new System.Drawing.Point(0, 0);
+			this.labPonderT.Name = "labPonderT";
+			this.labPonderT.Size = new System.Drawing.Size(110, 26);
+			this.labPonderT.TabIndex = 5;
+			this.labPonderT.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
-			// terminateToolStripMenuItem
+			// labPonderB
 			// 
-			this.terminateToolStripMenuItem.Name = "terminateToolStripMenuItem";
-			this.terminateToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-			this.terminateToolStripMenuItem.Text = "Terminate";
-			this.terminateToolStripMenuItem.Click += new System.EventHandler(this.terminateToolStripMenuItem_Click);
+			this.labPonderB.BackColor = System.Drawing.Color.LightGray;
+			this.labPonderB.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+			this.labPonderB.Dock = System.Windows.Forms.DockStyle.Left;
+			this.labPonderB.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+			this.labPonderB.ForeColor = System.Drawing.Color.Black;
+			this.labPonderB.Location = new System.Drawing.Point(0, 0);
+			this.labPonderB.Name = "labPonderB";
+			this.labPonderB.Size = new System.Drawing.Size(110, 26);
+			this.labPonderB.TabIndex = 6;
+			this.labPonderB.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
-			// closeToolStripMenuItem
+			// labScoreT
 			// 
-			this.closeToolStripMenuItem.Name = "closeToolStripMenuItem";
-			this.closeToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-			this.closeToolStripMenuItem.Text = "Close";
-			this.closeToolStripMenuItem.Click += new System.EventHandler(this.closeToolStripMenuItem_Click);
+			this.labScoreT.BackColor = System.Drawing.Color.LightGray;
+			this.labScoreT.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+			this.labScoreT.Dock = System.Windows.Forms.DockStyle.Left;
+			this.labScoreT.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+			this.labScoreT.ForeColor = System.Drawing.Color.Black;
+			this.labScoreT.Location = new System.Drawing.Point(110, 0);
+			this.labScoreT.Name = "labScoreT";
+			this.labScoreT.Size = new System.Drawing.Size(110, 26);
+			this.labScoreT.TabIndex = 6;
+			this.labScoreT.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			// 
+			// labScoreB
+			// 
+			this.labScoreB.BackColor = System.Drawing.Color.LightGray;
+			this.labScoreB.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+			this.labScoreB.Dock = System.Windows.Forms.DockStyle.Left;
+			this.labScoreB.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+			this.labScoreB.ForeColor = System.Drawing.Color.Black;
+			this.labScoreB.Location = new System.Drawing.Point(110, 0);
+			this.labScoreB.Name = "labScoreB";
+			this.labScoreB.Size = new System.Drawing.Size(110, 26);
+			this.labScoreB.TabIndex = 7;
+			this.labScoreB.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			// 
+			// labTimeT
+			// 
+			this.labTimeT.BackColor = System.Drawing.Color.LightGray;
+			this.labTimeT.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+			this.labTimeT.Dock = System.Windows.Forms.DockStyle.Left;
+			this.labTimeT.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+			this.labTimeT.ForeColor = System.Drawing.Color.Black;
+			this.labTimeT.Location = new System.Drawing.Point(166, 0);
+			this.labTimeT.Name = "labTimeT";
+			this.labTimeT.Size = new System.Drawing.Size(110, 26);
+			this.labTimeT.TabIndex = 9;
+			this.labTimeT.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			// 
+			// labTimeB
+			// 
+			this.labTimeB.BackColor = System.Drawing.Color.LightGray;
+			this.labTimeB.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+			this.labTimeB.Dock = System.Windows.Forms.DockStyle.Left;
+			this.labTimeB.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+			this.labTimeB.ForeColor = System.Drawing.Color.Black;
+			this.labTimeB.Location = new System.Drawing.Point(166, 0);
+			this.labTimeB.Name = "labTimeB";
+			this.labTimeB.Size = new System.Drawing.Size(110, 26);
+			this.labTimeB.TabIndex = 9;
+			this.labTimeB.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			// 
+			// labDepthB
+			// 
+			this.labDepthB.BackColor = System.Drawing.Color.LightGray;
+			this.labDepthB.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+			this.labDepthB.Dock = System.Windows.Forms.DockStyle.Left;
+			this.labDepthB.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+			this.labDepthB.ForeColor = System.Drawing.Color.Black;
+			this.labDepthB.Location = new System.Drawing.Point(220, 0);
+			this.labDepthB.Name = "labDepthB";
+			this.labDepthB.Size = new System.Drawing.Size(120, 26);
+			this.labDepthB.TabIndex = 8;
+			this.labDepthB.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			// 
+			// labNpsB
+			// 
+			this.labNpsB.BackColor = System.Drawing.Color.LightGray;
+			this.labNpsB.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+			this.labNpsB.Dock = System.Windows.Forms.DockStyle.Left;
+			this.labNpsB.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+			this.labNpsB.ForeColor = System.Drawing.Color.Black;
+			this.labNpsB.Location = new System.Drawing.Point(340, 0);
+			this.labNpsB.Name = "labNpsB";
+			this.labNpsB.Size = new System.Drawing.Size(120, 26);
+			this.labNpsB.TabIndex = 9;
+			this.labNpsB.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			// 
+			// labDepthT
+			// 
+			this.labDepthT.BackColor = System.Drawing.Color.LightGray;
+			this.labDepthT.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+			this.labDepthT.Dock = System.Windows.Forms.DockStyle.Left;
+			this.labDepthT.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+			this.labDepthT.ForeColor = System.Drawing.Color.Black;
+			this.labDepthT.Location = new System.Drawing.Point(220, 0);
+			this.labDepthT.Name = "labDepthT";
+			this.labDepthT.Size = new System.Drawing.Size(120, 26);
+			this.labDepthT.TabIndex = 7;
+			this.labDepthT.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			// 
+			// labNpsT
+			// 
+			this.labNpsT.BackColor = System.Drawing.Color.LightGray;
+			this.labNpsT.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+			this.labNpsT.Dock = System.Windows.Forms.DockStyle.Left;
+			this.labNpsT.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+			this.labNpsT.ForeColor = System.Drawing.Color.Black;
+			this.labNpsT.Location = new System.Drawing.Point(340, 0);
+			this.labNpsT.Name = "labNpsT";
+			this.labNpsT.Size = new System.Drawing.Size(120, 26);
+			this.labNpsT.TabIndex = 8;
+			this.labNpsT.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
 			// FormChess
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.BackColor = System.Drawing.SystemColors.Control;
-			this.ClientSize = new System.Drawing.Size(909, 698);
+			this.ClientSize = new System.Drawing.Size(909, 759);
+			this.Controls.Add(this.panelB2);
 			this.Controls.Add(this.panel1);
-			this.Controls.Add(this.panel3);
+			this.Controls.Add(this.panelB1);
 			this.Controls.Add(this.panel4);
-			this.Controls.Add(this.panel2);
+			this.Controls.Add(this.panelT2);
+			this.Controls.Add(this.panelT1);
 			this.Controls.Add(this.panMenu);
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
 			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -1553,7 +1609,7 @@
 			this.menuStrip1.PerformLayout();
 			this.panMenu.ResumeLayout(false);
 			this.panMenu.PerformLayout();
-			this.panel2.ResumeLayout(false);
+			this.panelT1.ResumeLayout(false);
 			this.panel4.ResumeLayout(false);
 			this.tabControl1.ResumeLayout(false);
 			this.tabPageGame.ResumeLayout(false);
@@ -1571,8 +1627,10 @@
 			this.groupBox3.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.nudTrained)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-			this.panel3.ResumeLayout(false);
+			this.panelB1.ResumeLayout(false);
 			this.panel1.ResumeLayout(false);
+			this.panelB2.ResumeLayout(false);
+			this.panelT2.ResumeLayout(false);
 			this.ResumeLayout(false);
 
 		}
@@ -1583,10 +1641,10 @@
 		private System.Windows.Forms.ToolStripMenuItem newGameToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem playersToolStripMenuItem;
 		private System.Windows.Forms.Panel panMenu;
-  		private System.Windows.Forms.Panel panel2;
+  		private System.Windows.Forms.Panel panelT1;
 		private System.Windows.Forms.Panel panel4;
 		private System.Windows.Forms.PictureBox pictureBox1;
-		private System.Windows.Forms.Panel panel3;
+		private System.Windows.Forms.Panel panelB1;
 		private System.Windows.Forms.Panel panel1;
 		public System.Windows.Forms.Label labLast;
 		private System.Windows.Forms.Label labMove;
@@ -1594,16 +1652,8 @@
 		private System.Windows.Forms.Panel panBottom;
 		private System.Windows.Forms.Label labNameT;
 		private System.Windows.Forms.Label labNameB;
-		private System.Windows.Forms.Label labTimeT;
-		private System.Windows.Forms.Label labTimeB;
-		private System.Windows.Forms.Label labScoreT;
-		private System.Windows.Forms.Label labScoreB;
 		private System.Windows.Forms.Label labTakenT;
-		private System.Windows.Forms.Label labNpsT;
-		private System.Windows.Forms.Label labDepthT;
 		private System.Windows.Forms.Label labTakenB;
-		private System.Windows.Forms.Label labNpsB;
-		private System.Windows.Forms.Label labDepthB;
 		private System.Windows.Forms.ToolStripMenuItem menuItemBack;
 		private System.Windows.Forms.TabControl tabControl1;
 		private System.Windows.Forms.TabPage tabPageGame;
@@ -1693,6 +1743,18 @@
 		private System.Windows.Forms.ToolStripMenuItem restartToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem terminateToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem closeToolStripMenuItem;
+		private System.Windows.Forms.Panel panelB2;
+		private System.Windows.Forms.Panel panelT2;
+		private System.Windows.Forms.Label labPonderB;
+		private System.Windows.Forms.Label labPonderT;
+		private System.Windows.Forms.Label labTimeT;
+		private System.Windows.Forms.Label labTimeB;
+		private System.Windows.Forms.Label labScoreB;
+		private System.Windows.Forms.Label labScoreT;
+		private System.Windows.Forms.Label labNpsB;
+		private System.Windows.Forms.Label labDepthB;
+		private System.Windows.Forms.Label labNpsT;
+		private System.Windows.Forms.Label labDepthT;
 	}
 }
 

@@ -77,12 +77,12 @@ namespace RapChessGui
 
 		void IniLoad()
 		{
-			cbColor.SelectedIndex = cbColor.FindStringExact(CRapIni.This.Read("game>color", "White"));
-			cbComputer.SelectedIndex = cbComputer.FindStringExact(CRapIni.This.Read("game>black", "Computer"));
-			cbPlayer1.SelectedIndex = cbPlayer1.FindStringExact(CRapIni.This.Read("match>player1", "Computer"));
-			cbPlayer2.SelectedIndex = cbPlayer2.FindStringExact(CRapIni.This.Read("match>player2", "Computer"));
+			cbColor.SelectedIndex = cbColor.FindStringExact(CRapIni.This.Read("game>color", "Auto"));
+			cbComputer.SelectedIndex = cbComputer.FindStringExact(CRapIni.This.Read("game>black", "Auto"));
+			cbPlayer1.SelectedIndex = cbPlayer1.FindStringExact(CRapIni.This.Read("match>player1", CUserList.defUser));
+			cbPlayer2.SelectedIndex = cbPlayer2.FindStringExact(CRapIni.This.Read("match>player2", CUserList.defUser));
 			tournament = Convert.ToInt32(CRapIni.This.Read("tournament>tournament", "0"));
-			comboBoxTrained.SelectedIndex = comboBoxTrained.FindStringExact(CRapIni.This.Read("training>trained", "Computer"));
+			comboBoxTrained.SelectedIndex = comboBoxTrained.FindStringExact(CRapIni.This.Read("training>trained", CUserList.defUser));
 			comboBoxTeacher.SelectedIndex = comboBoxTeacher.FindStringExact(CRapIni.This.Read("training>teacher", "RapChessCs.exe"));
 			cbBookList.SelectedIndex = cbBookList.FindStringExact(CRapIni.This.Read("training>book", "small.txt"));
 			nudTeacher.Value = Convert.ToInt32(CRapIni.This.Read("training>timeTeacher", "1000"));
@@ -457,7 +457,6 @@ namespace RapChessGui
 			CData.book = 0;
 			CPlayer pw = PlayerList.player[0];
 			CPlayer pb = PlayerList.player[1];
-			FormLog.This.richTextBox1.SaveFile("temp.rtf");
 			FormLog.This.richTextBox1.Clear();
 			FormLog.This.richTextBox1.AppendText($"White {pw.user.name} {pw.user.engine} {pw.user.parameters}\n", Color.Gray);
 			FormLog.This.richTextBox1.AppendText($"Black {pb.user.name} {pb.user.engine} {pb.user.parameters}\n", Color.Gray);
@@ -510,6 +509,8 @@ namespace RapChessGui
 				PlayerList.Rotate();
 			Match.rotate ^= 1;
 			Clear();
+			if (PlayerList.CurPlayer().user.engine == "Human")
+				moves = Engine.GenerateValidMoves();
 		}
 
 		void StartTournament()
@@ -730,6 +731,7 @@ namespace RapChessGui
 				labTimeB.Text = cp.GetTime();
 				labScoreB.Text = $"Score {cp.score}";
 				labNpsB.Text = $"Nps {cp.nps}";
+				labPonderB.Text = $"Ponder {cp.ponder}";
 				if (cp.seldepth != "0")
 					labDepthB.Text = $"Depth {cp.depth} / {cp.seldepth}";
 				else
@@ -740,6 +742,7 @@ namespace RapChessGui
 				labTimeT.Text = cp.GetTime();
 				labScoreT.Text = $"Score {cp.score}";
 				labNpsT.Text = $"Nps {cp.nps}";
+				labPonderT.Text = $"Ponder {cp.ponder}";
 				if (cp.seldepth != "0")
 					labDepthT.Text = $"Depth {cp.depth} / {cp.seldepth}";
 				else
@@ -894,9 +897,12 @@ namespace RapChessGui
 			}
 			else
 			{
-				var cp = PlayerList.CurPlayer();
+				CPlayer cp = PlayerList.CurPlayer();
+				CPlayer sp = PlayerList.SecPlayer();
 				RenderInfo(cp);
+				RenderInfo(sp);
 				if (cp.computer)
+				{
 					if (!cp.started)
 						cp.Start();
 					else if (cp.readyok && !cp.go)
@@ -907,6 +913,9 @@ namespace RapChessGui
 					{
 						GetMessage(cp);
 					}
+				}
+				else
+					cp.go = true;
 			}
 		}
 
@@ -1036,7 +1045,6 @@ namespace RapChessGui
 			RenderBoard();
 			CPlayer pw = PlayerList.player[0];
 			CPlayer pb = PlayerList.player[1];
-			FormLog.This.richTextBox1.SaveFile("temp.rtf");
 			FormLog.This.richTextBox1.Clear();
 			FormLog.This.richTextBox1.AppendText($"Pgn {CHistory.GetMoves()}\n", Color.Gray);
 			FormLog.This.richTextBox1.AppendText($"White {pw.user.name} {pw.user.engine} {pw.user.parameters}\n", Color.Gray);
