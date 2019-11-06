@@ -7,7 +7,7 @@ namespace RapChessGui
 	public class CPlayerEng
 	{
 		public StreamWriter streamWriter;
-		private Process process = new Process();
+		private Process process = null;
 		private CPlayer player;
 
 		private static void ProEvent(object sender, DataReceivedEventArgs e)
@@ -23,16 +23,19 @@ namespace RapChessGui
 
 		public void SetPlayer(CPlayer p)
 		{
-			process.Dispose();
+			Terminate();
 			player = p;
 			SetEngine();
 		}
 
 		void SetEngine()
 		{
-			process = new Process();
+			if(process != null)
+				process.Dispose();
+			process = null;
 			if (!player.computer)
 				return;
+			process = new Process();
 			process.StartInfo.FileName = AppDomain.CurrentDomain.BaseDirectory + "Engines\\" + player.user.engine;
 			process.StartInfo.Arguments = player.user.parameters;
 			process.StartInfo.WorkingDirectory = AppDomain.CurrentDomain.BaseDirectory + "Engines\\";
@@ -44,11 +47,12 @@ namespace RapChessGui
 			process.Start();
 			streamWriter = process.StandardInput;
 			process.BeginOutputReadLine();
-			Console.WriteLine("ok");
 		}
 
 		public void Terminate()
 		{
+			if (process == null)
+				return;
 			try
 			{
 				process.Kill();

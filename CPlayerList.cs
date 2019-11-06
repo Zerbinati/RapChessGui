@@ -10,16 +10,17 @@ namespace RapChessGui
 		public bool computer = false;
 		public bool started = false;
 		public bool uciok = false;
+		public bool wbok = false;
 		public bool readyok = false;
 		public bool go = false;
 		public bool white = true;
 		public int usedBook;
+		public int nodes;
+		public int nps;
 		public double timeTotal;
 		public string score;
 		public string depth;
 		public string seldepth;
-		public string nodes;
-		public string nps;
 		public string ponder;
 		public string mode;
 		public string value;
@@ -53,11 +54,11 @@ namespace RapChessGui
 			go = false;
 			timeTotal = 0;
 			usedBook = 0;
+			nodes = 0;
+			nps = 0;
 			score = "0";
 			depth = "0";
 			seldepth = "0";
-			nodes = "0";
-			nps = "0";
 			ponder = "";
 			timeStart = DateTime.Now;
 			book.Reset();
@@ -70,12 +71,16 @@ namespace RapChessGui
 			if (user.protocol == "Uci")
 			{
 				SendMessage("uci");
+				uciok = false;
+				readyok = false;
+				wbok = true;
 			}
 			else
 			{
 				SendMessage("xboard");
 				uciok = true;
 				readyok = true;
+				wbok = false;
 				switch (mode)
 				{
 					case "depth":
@@ -110,17 +115,23 @@ namespace RapChessGui
 				}
 				else
 				{
-					SendMessage("new");
-					SendMessage($"{mode} {value}");
-					SendMessage("post");
-					if (CHistory.fen != CEngine.defFen)
+					if (wbok)
 					{
-						SendMessage($"setboard {CHistory.fen}");
+						SendMessage(CHistory.LastMove());
 					}
-					SendMessage("force");
-					foreach (string m in CHistory.moves)
-						SendMessage(m);
-					SendMessage("go");
+						else {
+								SendMessage("new");
+								SendMessage($"{mode} {value}");
+								SendMessage("post");
+								if (CHistory.fen != CEngine.defFen)
+								{
+									SendMessage($"setboard {CHistory.fen}");
+								}
+								SendMessage("force");
+								foreach (string m in CHistory.moves)
+									SendMessage(m);
+								SendMessage("go"); }
+					wbok = true;
 				}
 				go = true;
 				timeStart = DateTime.Now;
@@ -172,8 +183,6 @@ namespace RapChessGui
 
 		public void SetUser(CUser u)
 		{
-			uciok = false;
-			readyok = false;
 			user = u;
 			computer = user.engine != "Human";
 			PlayerEng.SetPlayer(this);

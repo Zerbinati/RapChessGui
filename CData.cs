@@ -29,14 +29,6 @@ namespace RapChessGui
 		public static List<string> playerNames = new List<string>();
 		public static List<string> messages = new List<string>();
 
-		public static int ModeStoi(string s)
-		{
-			for (int i = 0; i < arrModeNames.Length; i++)
-				if (s == arrModeNames[i])
-					return i;
-			return 0;
-		}
-
 		public static void KillProcess()
 		{
 			Process cp = Process.GetCurrentProcess();
@@ -62,6 +54,15 @@ namespace RapChessGui
 
 			}
 			Thread.Sleep(20);
+		}
+
+
+		public static int ModeStoi(string s)
+		{
+			for (int i = 0; i < arrModeNames.Length; i++)
+				if (s == arrModeNames[i])
+					return i;
+			return 0;
 		}
 
 	}

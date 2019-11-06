@@ -53,10 +53,6 @@ namespace RapChessGui
 			CBoard.Init();
 			CBoard.Prepare();
 			pictureBox1.Size = new Size(CBoard.size, CBoard.size);
-		}
-
-		private void FormChess_Load(object sender, EventArgs e)
-		{
 			int fontLength = Properties.Resources.ChessPiece.Length;
 			byte[] fontData = Properties.Resources.ChessPiece;
 			IntPtr data = Marshal.AllocCoTaskMem(fontLength);
@@ -153,10 +149,26 @@ namespace RapChessGui
 							p.seldepth = s;
 						s = Uci.GetValue("nodes");
 						if (s != "")
-							p.nodes = s;
+						{
+							try
+							{
+								p.nodes = Convert.ToInt32(s);
+							}
+							catch
+							{
+							}
+						}
 						s = Uci.GetValue("nps");
 						if (s != "")
-							p.nps = s;
+						{
+							try
+							{
+								p.nps = Convert.ToInt32(s);
+							}
+							catch
+							{
+							}
+						}
 						string pv = "";
 						int i = Uci.GetIndex("pv", 0);
 						if (i > 0)
@@ -732,8 +744,8 @@ namespace RapChessGui
 				labTimeB.Text = cp.GetTime();
 				labProtocolB.Text = cp.GetProtocol();
 				labScoreB.Text = $"Score {cp.score}";
-				labNodesB.Text = $"Nodes {cp.nodes}";
-				labNpsB.Text = $"Nps {cp.nps}";
+				labNodesB.Text = $"Nodes {cp.nodes.ToString("N0")}";
+				labNpsB.Text = $"Nps {cp.nps.ToString("N0")}";
 				labPonderB.Text = $"Ponder {cp.ponder}";
 				labBookB.Text = $"Book {cp.usedBook}";
 				if (cp.seldepth != "0")
@@ -746,8 +758,8 @@ namespace RapChessGui
 				labTimeT.Text = cp.GetTime();
 				labProtocolT.Text = cp.GetProtocol();
 				labScoreT.Text = $"Score {cp.score}";
-				labNodesT.Text = $"Nodes {cp.nodes}";
-				labNpsT.Text = $"Nps {cp.nps}";
+				labNodesT.Text = $"Nodes {cp.nodes.ToString("N0")}";
+				labNpsT.Text = $"Nps {cp.nps.ToString("N0")}";
 				labPonderT.Text = $"Ponder {cp.ponder}";
 				labBookT.Text = $"Book {cp.usedBook}";
 				if (cp.seldepth != "0")
@@ -893,6 +905,8 @@ namespace RapChessGui
 		private void FormChess_FormClosed(object sender, FormClosedEventArgs e)
 		{
 			IniSave();
+			PlayerList.player[0].PlayerEng.Terminate();
+			PlayerList.player[1].PlayerEng.Terminate();
 			CData.KillProcess();
 		}
 
