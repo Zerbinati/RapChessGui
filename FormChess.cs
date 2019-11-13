@@ -84,6 +84,7 @@ namespace RapChessGui
 			nudTeacher.Value = Convert.ToInt32(CRapIni.This.Read("training>timeTeacher", "1000"));
 			nudTrained.Value = Convert.ToInt32(CRapIni.This.Read("training>timeTrained", "1000"));
 			Trainer.time = (int)nudTeacher.Value;
+			FOptions.cbShowPonder.Checked = Convert.ToInt32(CRapIni.This.Read("options>showponder", "1")) == 1;
 			CBoard.LoadFromIni();
 		}
 
@@ -99,6 +100,7 @@ namespace RapChessGui
 			CRapIni.This.Write("training>book", cbBookList.Text);
 			CRapIni.This.Write("training>timeTeacher", nudTeacher.Value.ToString());
 			CRapIni.This.Write("training>timeTrained", nudTrained.Value.ToString());
+			CRapIni.This.Write("options>showponder", FOptions.cbShowPonder.Checked ? "1" : "0");
 			CBoard.SaveToIni();
 			CUserList.SaveToIni();
 			RapIni.Save();
@@ -739,6 +741,8 @@ namespace RapChessGui
 				cp.timeStart = dt;
 				cp.timeTotal += dif;
 			}
+			if (!FOptions.cbShowPonder.Checked)
+				cp.ponder = "";
 			if (boardRotate ^ cp.white)
 			{
 				labTimeB.Text = cp.GetTime();

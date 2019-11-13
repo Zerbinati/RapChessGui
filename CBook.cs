@@ -32,7 +32,7 @@ namespace RapChessGui
 				}
 			}
 			int index = CEngine.random.Next(indexL, indexH + 1);
-			string[] mo = m.Split(new[] {' '}, StringSplitOptions.RemoveEmptyEntries);
+			string[] mo = m.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
 			string[] mr = moves[index].Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
 			if (mr.Length > mo.Length)
 			{
@@ -51,10 +51,9 @@ namespace RapChessGui
 		public void Load(string book)
 		{
 			moves.Clear();
-			if (book == "None")
-				return;
 			path = "Books/" + book;
-			moves = File.ReadAllLines(path).ToList();
+			if (File.Exists(path))
+				moves = File.ReadAllLines(path).ToList();
 			Reset();
 		}
 
