@@ -144,7 +144,7 @@ namespace RapChessGui
 			{
 				FormLog.This.richTextBox1.AppendText($"{user.name} < {msg}\n", Color.Brown);
 				PlayerEng.streamWriter.WriteLine(msg);
-				Thread.Sleep(10);
+				Thread.Sleep(16);
 			}
 		}
 
@@ -241,6 +241,12 @@ namespace RapChessGui
 		public CPlayer SecPlayer()
 		{
 			return player[curIndex ^ 1];
+		}
+
+		public void Terminate()
+		{
+			player[0].PlayerEng.Terminate();
+			player[1].PlayerEng.Terminate();
 		}
 
 	}

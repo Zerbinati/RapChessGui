@@ -13,12 +13,6 @@ namespace RapChessGui
 {
 	public partial class FormChess : Form
 	{
-		[DllImport("user32.dll")]
-		private static extern int ShowWindow(IntPtr hWnd, int nCmdShow);
-
-		[DllImport("user32.dll")]
-		private static extern int SetForegroundWindow(IntPtr hWnd);
-
 		[DllImport("gdi32.dll")]
 		private static extern IntPtr AddFontMemResourceEx(IntPtr pbFont, uint cbFont, IntPtr pdv, [In] ref uint pcFonts);
 
@@ -42,7 +36,6 @@ namespace RapChessGui
 
 		public FormChess()
 		{
-			KillApplication();
 			InitializeComponent();
 			This = this;
 			richTextBox1.AddContextMenu();
@@ -84,7 +77,8 @@ namespace RapChessGui
 			nudTeacher.Value = Convert.ToInt32(CRapIni.This.Read("training>timeTeacher", "1000"));
 			nudTrained.Value = Convert.ToInt32(CRapIni.This.Read("training>timeTrained", "1000"));
 			Trainer.time = (int)nudTeacher.Value;
-			FOptions.cbShowPonder.Checked = Convert.ToInt32(CRapIni.This.Read("options>showponder", "1")) == 1;
+			FOptions.cbShowPonder.Checked = Convert.ToInt32(CRapIni.This.Read("options>interface>showponder", "1")) == 1;
+			FOptions.cbGameAutoElo.Checked = Convert.ToInt32(CRapIni.This.Read("options>game>autoelo", "1")) == 1;
 			CBoard.LoadFromIni();
 		}
 
@@ -100,7 +94,8 @@ namespace RapChessGui
 			CRapIni.This.Write("training>book", cbBookList.Text);
 			CRapIni.This.Write("training>timeTeacher", nudTeacher.Value.ToString());
 			CRapIni.This.Write("training>timeTrained", nudTrained.Value.ToString());
-			CRapIni.This.Write("options>showponder", FOptions.cbShowPonder.Checked ? "1" : "0");
+			CRapIni.This.Write("options>interface>showponder", FOptions.cbShowPonder.Checked ? "1" : "0");
+			CRapIni.This.Write("options>game>autoelo", FOptions.cbGameAutoElo.Checked ? "1" : "0");
 			CBoard.SaveToIni();
 			CUserList.SaveToIni();
 			RapIni.Save();
@@ -185,31 +180,6 @@ namespace RapChessGui
 			}
 		}
 
-		void KillApplication()
-		{
-			Process cp = Process.GetCurrentProcess();
-			string fn = cp.MainModule.FileName;
-			Process[] processlist = Process.GetProcesses();
-			foreach (Process process in processlist)
-			{
-				try
-				{
-					String fileName = process.MainModule.FileName;
-					if (fileName == fn)
-						if (process.MainWindowHandle != cp.MainWindowHandle)
-						{
-							ShowWindow(process.MainWindowHandle, 9);
-							SetForegroundWindow(process.MainWindowHandle);
-							cp.Kill();
-						}
-				}
-				catch
-				{
-				}
-
-			}
-		}
-
 		public void AddBook(string emo)
 		{
 			PlayerList.CurPlayer().usedBook++;
@@ -219,7 +189,7 @@ namespace RapChessGui
 
 		void SetMode(CMode mode)
 		{
-			CData.KillProcess();
+			PlayerList.Terminate();
 			CData.gameMode = (int)mode;
 			lock (CData.messages)
 				CData.messages.Clear();
@@ -376,7 +346,7 @@ namespace RapChessGui
 				{
 					if (CData.gameState == (int)CGameState.mate)
 					{
-						if (cbComputer.Text == "Auto")
+						if ((cbComputer.Text == "Auto") && FOptions.cbGameAutoElo.Checked)
 							if (uw.name == "Human")
 							{
 								int level = levelOrg + levelDif;
@@ -909,9 +879,7 @@ namespace RapChessGui
 		private void FormChess_FormClosed(object sender, FormClosedEventArgs e)
 		{
 			IniSave();
-			PlayerList.player[0].PlayerEng.Terminate();
-			PlayerList.player[1].PlayerEng.Terminate();
-			CData.KillProcess();
+			PlayerList.Terminate();
 		}
 
 		private void Timer1_Tick_1(object sender, EventArgs e)

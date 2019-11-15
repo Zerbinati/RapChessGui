@@ -20,6 +20,7 @@ namespace RapChessGui
 		private void butDefault_Click(object sender, EventArgs e)
 		{
 			colorDialog1.Color = Color.FromArgb(64,8,8);
+			cbShowPonder.Checked = true;
 			CData.rotateBoard = cbRotateBoard.Checked = false;
 			CBoard.color = colorDialog1.Color;
 			CBoard.Prepare();
