@@ -202,7 +202,10 @@ namespace RapChessGui
 			labEloHuman.Text = $"Elo {uh.elo}";
 			CUser uc = CUserList.GetUser(cbComputer.Text);
 			labEloComputer.Text = $"Elo {uc.elo}";
+			if(uc.name == cbComputer.Text)
 			labEngine.Text = uc.engine;
+			else
+				labEngine.Text = uc.name;
 		}
 
 		void ShowMatch()
@@ -1009,6 +1012,7 @@ namespace RapChessGui
 			RenderInfo(pw);
 			RenderInfo(pb);
 			CData.gameState = 0;
+			moves = Engine.GenerateValidMoves();
 			timer1.Enabled = true;
 		}
 
@@ -1016,10 +1020,10 @@ namespace RapChessGui
 		{
 			SetMode(CMode.game);
 			string pgn = Clipboard.GetText().Trim();
-			string[] moves = pgn.Split(new[] { ' ', '\t' }, StringSplitOptions.RemoveEmptyEntries);
+			string[] ml = pgn.Split(new[] { ' ', '\t' }, StringSplitOptions.RemoveEmptyEntries);
 			Engine.InitializeFromFen();
 			CHistory.NewGame();
-			foreach (string emo in moves)
+			foreach (string emo in ml)
 			{
 				if (Engine.MakeMove(emo))
 					CHistory.moves.Add(emo);
@@ -1047,6 +1051,7 @@ namespace RapChessGui
 			RenderInfo(pw);
 			RenderInfo(pb);
 			CData.gameState = 0;
+			moves = Engine.GenerateValidMoves();
 			timer1.Enabled = true;
 		}
 

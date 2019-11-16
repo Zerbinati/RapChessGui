@@ -120,7 +120,7 @@ namespace RapChessGui
 		{
 			CUser uh = GetUser("Human");
 			CUser ue = GetUserElo(uh);
-			CUser uc = new CUser("Auto");
+			CUser uc = new CUser(ue.name);
 			uc.SetUser(ue.name);
 			return uc;
 		}
