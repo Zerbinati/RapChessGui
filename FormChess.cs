@@ -694,7 +694,7 @@ namespace RapChessGui
 
 		void RenderHistory()
 		{
-			Engine.InitializeFromFen();
+			Engine.InitializeFromFen(CHistory.fen);
 			for (int n = 0; n < CHistory.moves.Count; n++)
 			{
 				string emo = CHistory.moves[n];
@@ -944,6 +944,7 @@ namespace RapChessGui
 			{
 				labBack.Text = $"Back {++CData.back}";
 				RenderHistory();
+				moves = Engine.GenerateValidMoves();
 			}
 		}
 
