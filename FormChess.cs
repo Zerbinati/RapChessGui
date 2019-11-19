@@ -175,6 +175,20 @@ namespace RapChessGui
 							labLast.Text = pv;
 						}
 						break;
+					default:
+						if((PlayerList.CurPlayer().user.protocol=="Winboard")&&(Uci.tokens.Length > 4))
+						{
+							p.depth = Uci.tokens[0];
+							p.score = Uci.tokens[1];
+							int ms = Convert.ToInt32(Uci.tokens[2]);
+							p.nodes = Convert.ToInt32(Uci.tokens[3]);
+							p.nps = ms > 0 ? (p.nodes * 100) / ms : 0;
+							pv = "";
+							for (int n = 4; n < Uci.tokens.Length; n++)
+								pv += Uci.tokens[n] + " ";
+							labLast.Text = pv;
+						}
+						break;
 				}
 				msg = p.GetMessage();
 			}
@@ -423,7 +437,7 @@ namespace RapChessGui
 					}
 					ShowTraining();
 				}
-				FormLog.This.richTextBox1.SaveFile("game.rtf");
+				FormLog.This.richTextBox1.SaveFile($"{labMode.Text}.rtf");
 				timerStart.Start();
 			}
 			return true;

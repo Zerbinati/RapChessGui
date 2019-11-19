@@ -29,7 +29,7 @@ namespace RapChessGui
 				Process proc = Process.GetProcessById(pid);
 				proc.Kill();
 			}
-			catch (ArgumentException)
+			catch
 			{
 			}
 		}
