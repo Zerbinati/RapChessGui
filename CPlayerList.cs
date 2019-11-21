@@ -128,8 +128,8 @@ namespace RapChessGui
 									SendMessage($"setboard {CHistory.fen}");
 								}
 								SendMessage("force");
-								foreach (string m in CHistory.moves)
-									SendMessage(m);
+								foreach (CHisMove m in CHistory.moveList)
+									SendMessage(m.emo);
 								SendMessage("go"); }
 					wbok = true;
 				}

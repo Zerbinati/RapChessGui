@@ -3,16 +3,34 @@ using System.Collections.Generic;
 
 namespace RapChessGui
 {
+	public class CHisMove
+	{
+		public int piece;
+		public string emo;
+
+		public CHisMove(int piece,string emo)
+		{
+			this.piece = piece;
+			this.emo = emo;
+		}
+
+	}
+
 	public static class CHistory
 	{
 		public static string fen = CEngine.defFen;
-		public static List<string> moves = new List<string>();
+		public static List<CHisMove> moveList = new List<CHisMove>();
+
+		public static void AddMove(int piece,string emo)
+		{
+			moveList.Add(new CHisMove(piece,emo));
+		}
 
 		public static bool Back()
 		{
-			if (moves.Count > 1)
+			if (moveList.Count > 1)
 			{
-				moves.RemoveRange(moves.Count - 2, 2);
+				moveList.RemoveRange(moveList.Count - 2, 2);
 				return true;
 			}
 			return false;
@@ -20,28 +38,31 @@ namespace RapChessGui
 
 		public static string LastMove()
 		{
-			if (moves.Count == 0)
+			if (moveList.Count == 0)
 				return "";
-			return moves[moves.Count - 1];
+			return moveList[moveList.Count - 1].emo;
 		}
 
 		public static void NewGame(string f = CEngine.defFen)
 		{
 			fen = f;
-			moves.Clear();
+			moveList.Clear();
 		}
 
 		public static string GetMoves()
 		{
-			return String.Join(" ", moves);
+			string result = "";
+			foreach (CHisMove m in moveList)
+				result += $" {m.emo}";
+			return result;
 		}
 
 		public static string GetPosition()
 		{
 			string result = "position ";
-			result += fen == CEngine.defFen ? "startpos" : "fen " + fen;
-			if (moves.Count > 0)
-				return result + " moves " + String.Join(" ", moves);
+			result += (fen == CEngine.defFen) ? "startpos" : "fen " + fen;
+			if (moveList.Count > 0)
+				return result + " moves" + GetMoves();
 			else
 				return result;
 		}

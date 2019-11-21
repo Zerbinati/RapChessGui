@@ -486,11 +486,13 @@
 			// richTextBox1
 			// 
 			this.richTextBox1.Dock = System.Windows.Forms.DockStyle.Bottom;
+			this.richTextBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
 			this.richTextBox1.Location = new System.Drawing.Point(3, 221);
 			this.richTextBox1.Name = "richTextBox1";
 			this.richTextBox1.ReadOnly = true;
 			this.richTextBox1.Size = new System.Drawing.Size(314, 323);
 			this.richTextBox1.TabIndex = 22;
+			this.richTextBox1.Tag = "";
 			this.richTextBox1.Text = "";
 			// 
 			// butStop

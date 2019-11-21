@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Text;
@@ -176,7 +175,7 @@ namespace RapChessGui
 						}
 						break;
 					default:
-						if((PlayerList.CurPlayer().user.protocol=="Winboard")&&(Uci.tokens.Length > 4))
+						if ((PlayerList.CurPlayer().user.protocol == "Winboard") && (Uci.tokens.Length > 4))
 						{
 							p.depth = Uci.tokens[0];
 							p.score = Uci.tokens[1];
@@ -216,8 +215,8 @@ namespace RapChessGui
 			labEloHuman.Text = $"Elo {uh.elo}";
 			CUser uc = CUserList.GetUser(cbComputer.Text);
 			labEloComputer.Text = $"Elo {uc.elo}";
-			if(uc.name == cbComputer.Text)
-			labEngine.Text = uc.engine;
+			if (uc.name == cbComputer.Text)
+				labEngine.Text = uc.engine;
 			else
 				labEngine.Text = uc.name;
 		}
@@ -311,21 +310,30 @@ namespace RapChessGui
 					level = 0;
 				uw.elo = level.ToString();
 			}
-			if (Engine.IsValidMove(emo) == 0)
+			bool ivm = Engine.IsValidMove(emo) != 0;
+			if (!ivm)
+			{
+				string emo2 = $"{emo}q";
+				ivm = Engine.IsValidMove(emo2) != 0;
+				if (ivm)
+					emo = emo2;
+			}
+			if (!ivm)
 			{
 				labLast.ForeColor = Color.Red;
 				labLast.Text = "Move error " + emo;
 				FormLog.This.richTextBox1.AppendText($" error {emo}\n", Color.Red);
-				FormLog.This.richTextBox1.SaveFile("error.rtf");
+				FormLog.This.richTextBox1.SaveFile("Error.rtf");
 				return false;
 			}
 			int gm = Engine.GetMoveFromString(emo);
+			int fr = gm & 0xff;
+			int piece = CEngine.g_board[fr] & 0xf;
+			AddMove(piece, emo);
 			CBoard.MakeMove(gm);
 			Engine.MakeMove(gm);
 			int moveNumber = (Engine.g_moveNumber >> 1) + 1;
 			labMove.Text = "Move " + moveNumber.ToString() + " " + Engine.g_move50.ToString();
-			CHistory.moves.Add(emo);
-			ShowHistory();
 			CData.gameState = Engine.GetGameState();
 			if (CData.gameState == 0)
 			{
@@ -364,18 +372,22 @@ namespace RapChessGui
 					if (CData.gameState == (int)CGameState.mate)
 					{
 						if ((cbComputer.Text == "Auto") && FOptions.cbGameAutoElo.Checked)
+						{
+							int newElo = levelOrg;
 							if (uw.name == "Human")
 							{
-								int level = levelOrg + levelDif;
-								uw.elo = level.ToString();
+								newElo += levelDif;
+								uw.elo = newElo.ToString();
 							}
 							else
 							{
-								int level = levelOrg - levelDif;
-								if (level < 0)
-									level = 0;
-								ul.elo = level.ToString();
+								newElo -= levelDif;
+								if (newElo < 0)
+									newElo = 0;
+								ul.elo = newElo.ToString();
 							}
+							labLast.Text += $" new elo {newElo}";
+						}
 					}
 				}
 				if (CData.gameMode == (int)CMode.match)
@@ -706,19 +718,6 @@ namespace RapChessGui
 			}
 		}
 
-		void RenderHistory()
-		{
-			Engine.InitializeFromFen(CHistory.fen);
-			for (int n = 0; n < CHistory.moves.Count; n++)
-			{
-				string emo = CHistory.moves[n];
-				if (!Engine.MakeMove(emo))
-					break;
-			}
-			CBoard.Fill();
-			ShowHistory();
-		}
-
 		void RenderInfo(CPlayer cp)
 		{
 			if ((CData.gameState == 0) && (cp.go))
@@ -795,21 +794,36 @@ namespace RapChessGui
 			}
 		}
 
+		private void AddMove(int piece, string emo)
+		{
+			int count = CHistory.moveList.Count;
+			if (( count & 1) == 0)
+			{
+				int moveNumber = (count >> 1) + 1;
+				richTextBox1.AppendText($"{moveNumber} ", Color.Red);
+			}
+			CHistory.AddMove(piece, emo);
+			string[] p = { "", "\u2659", "\u2658", "\u2657", "\u2656", "\u2655", "\u2654", "", "", "\u265F", "\u265E", "\u265D", "\u265C", "\u265B", "\u265A", ""};
+			richTextBox1.AppendText($"{p[piece]} {emo} ");
+			CDrag.index = CEngine.EmoToIndex(emo);
+		}
+
 		void ShowHistory()
 		{
 			richTextBox1.Clear();
-			for (int n = 0; n < CHistory.moves.Count; n++)
+			foreach (CHisMove m in CHistory.moveList)
+				AddMove(m.piece,m.emo);
+		}
+
+		void RenderHistory()
+		{
+			Engine.InitializeFromFen(CHistory.fen);
+			foreach (CHisMove m in CHistory.moveList)
 			{
-				if ((n & 1) == 0)
-				{
-					int moveNumber = (n >> 1) + 1;
-					richTextBox1.AppendText($"{moveNumber} ", Color.Red);
-				}
-				string emo = CHistory.moves[n];
-				richTextBox1.AppendText($"{emo} ");
+				Engine.MakeMove(m.emo);
 			}
-			string lm = CHistory.LastMove();
-			CDrag.index = CEngine.EmoToIndex(lm);
+			CBoard.Fill();
+			ShowHistory();
 		}
 
 		bool TryMove(int s, int d)
@@ -1040,8 +1054,9 @@ namespace RapChessGui
 			CHistory.NewGame();
 			foreach (string emo in ml)
 			{
-				if (Engine.MakeMove(emo))
-					CHistory.moves.Add(emo);
+				int piece = Engine.MakeMove(emo);
+				if (piece > 0)
+					CHistory.AddMove(piece,emo);
 			}
 			PlayerList.curIndex = Engine.g_moveNumber & 1;
 			CUser u = CommandToUser();
