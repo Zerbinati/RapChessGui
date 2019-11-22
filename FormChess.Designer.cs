@@ -61,7 +61,7 @@
 			this.panel4 = new System.Windows.Forms.Panel();
 			this.tabControl1 = new System.Windows.Forms.TabControl();
 			this.tabPageGame = new System.Windows.Forms.TabPage();
-			this.richTextBox1 = new System.Windows.Forms.RichTextBox();
+			this.rtbHistory = new System.Windows.Forms.RichTextBox();
 			this.butStop = new System.Windows.Forms.Button();
 			this.bStart = new System.Windows.Forms.Button();
 			this.groupBox2 = new System.Windows.Forms.GroupBox();
@@ -470,7 +470,7 @@
 			// 
 			// tabPageGame
 			// 
-			this.tabPageGame.Controls.Add(this.richTextBox1);
+			this.tabPageGame.Controls.Add(this.rtbHistory);
 			this.tabPageGame.Controls.Add(this.butStop);
 			this.tabPageGame.Controls.Add(this.bStart);
 			this.tabPageGame.Controls.Add(this.groupBox2);
@@ -483,17 +483,17 @@
 			this.tabPageGame.Text = "Game";
 			this.tabPageGame.UseVisualStyleBackColor = true;
 			// 
-			// richTextBox1
+			// rtbHistory
 			// 
-			this.richTextBox1.Dock = System.Windows.Forms.DockStyle.Bottom;
-			this.richTextBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-			this.richTextBox1.Location = new System.Drawing.Point(3, 221);
-			this.richTextBox1.Name = "richTextBox1";
-			this.richTextBox1.ReadOnly = true;
-			this.richTextBox1.Size = new System.Drawing.Size(314, 323);
-			this.richTextBox1.TabIndex = 22;
-			this.richTextBox1.Tag = "";
-			this.richTextBox1.Text = "";
+			this.rtbHistory.Dock = System.Windows.Forms.DockStyle.Bottom;
+			this.rtbHistory.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+			this.rtbHistory.Location = new System.Drawing.Point(3, 221);
+			this.rtbHistory.Name = "rtbHistory";
+			this.rtbHistory.ReadOnly = true;
+			this.rtbHistory.Size = new System.Drawing.Size(314, 323);
+			this.rtbHistory.TabIndex = 22;
+			this.rtbHistory.Tag = "";
+			this.rtbHistory.Text = "";
 			// 
 			// butStop
 			// 
@@ -1734,7 +1734,7 @@
 		private System.Windows.Forms.TabControl tabControl1;
 		private System.Windows.Forms.TabPage tabPageGame;
 		private System.Windows.Forms.TabPage tabPageTraining;
-		private System.Windows.Forms.RichTextBox richTextBox1;
+		private System.Windows.Forms.RichTextBox rtbHistory;
 		private System.Windows.Forms.Button butStop;
 		private System.Windows.Forms.Button bStart;
 		private System.Windows.Forms.GroupBox groupBox2;

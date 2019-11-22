@@ -37,7 +37,7 @@ namespace RapChessGui
 		{
 			InitializeComponent();
 			This = this;
-			richTextBox1.AddContextMenu();
+			rtbHistory.AddContextMenu();
 			FormBook.This = new FormBook();
 			FormLog.This = new FormLog();
 			Reset();
@@ -185,6 +185,7 @@ namespace RapChessGui
 							pv = "";
 							for (int n = 4; n < Uci.tokens.Length; n++)
 								pv += Uci.tokens[n] + " ";
+							labLast.ForeColor = Color.Gainsboro;
 							labLast.Text = pv;
 						}
 						break;
@@ -470,7 +471,7 @@ namespace RapChessGui
 			CHistory.NewGame(Engine.GetFen());
 			CBoard.Fill();
 			PlayerList.Init();
-			richTextBox1.Clear();
+			rtbHistory.Clear();
 			CData.back = 0;
 			CPlayer pw = PlayerList.player[0];
 			CPlayer pb = PlayerList.player[1];
@@ -796,25 +797,32 @@ namespace RapChessGui
 			}
 		}
 
-		private void AddMove(int piece, string emo)
+		private void MoveToRtb(int count,int piece, string emo)
 		{
-			int count = CHistory.moveList.Count;
 			if ((count & 1) == 0)
 			{
 				int moveNumber = (count >> 1) + 1;
-				richTextBox1.AppendText($"{moveNumber} ", Color.Red);
+				rtbHistory.AppendText($"{moveNumber} ", Color.Red);
 			}
-			CHistory.AddMove(piece, emo);
 			string[] p = { "", "\u2659", "\u2658", "\u2657", "\u2656", "\u2655", "\u2654", "", "", "\u265F", "\u265E", "\u265D", "\u265C", "\u265B", "\u265A", "" };
-			richTextBox1.AppendText($"{p[piece]} {emo} ");
+			rtbHistory.AppendText($"{p[piece]} {emo} ");
+		}
+
+		private void AddMove(int piece, string emo)
+		{
+			MoveToRtb(CHistory.moveList.Count, piece,emo);
+			CHistory.AddMove(piece, emo);	
 			CDrag.index = CEngine.EmoToIndex(emo);
 		}
 
 		void ShowHistory()
 		{
-			richTextBox1.Clear();
-			foreach (CHisMove m in CHistory.moveList)
-				AddMove(m.piece, m.emo);
+			rtbHistory.Clear();
+			for (int n = 0; n < CHistory.moveList.Count; n++)
+			{
+				CHisMove m = CHistory.moveList[n];
+				MoveToRtb(n, m.piece, m.emo);
+			}
 		}
 
 		void RenderHistory()
@@ -824,6 +832,7 @@ namespace RapChessGui
 			{
 				Engine.MakeMove(m.emo);
 			}
+			CDrag.index = CEngine.EmoToIndex(CHistory.LastMove());
 			CBoard.Fill();
 			ShowHistory();
 		}
