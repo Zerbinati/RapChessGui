@@ -79,7 +79,7 @@ namespace RapChessGui
 			{
 				SendMessage("xboard");
 				uciok = true;
-				readyok = true;
+				readyok = false;
 				wbok = false;
 				switch (mode)
 				{

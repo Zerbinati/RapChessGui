@@ -54,7 +54,7 @@ namespace RapChessGui
 			string result = "";
 			foreach (CHisMove m in moveList)
 				result += $" {m.emo}";
-			return result;
+			return result.Trim();
 		}
 
 		public static string GetPosition()
@@ -62,7 +62,7 @@ namespace RapChessGui
 			string result = "position ";
 			result += (fen == CEngine.defFen) ? "startpos" : "fen " + fen;
 			if (moveList.Count > 0)
-				return result + " moves" + GetMoves();
+				return result + " moves " + GetMoves();
 			else
 				return result;
 		}

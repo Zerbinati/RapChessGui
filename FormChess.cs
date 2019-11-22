@@ -175,7 +175,7 @@ namespace RapChessGui
 						}
 						break;
 					default:
-						if ((PlayerList.CurPlayer().user.protocol == "Winboard") && (Uci.tokens.Length > 4))
+						if ((PlayerList.CurPlayer().user.protocol == "Winboard") && PlayerList.CurPlayer().wbok && (Uci.tokens.Length > 4))
 						{
 							p.depth = Uci.tokens[0];
 							p.score = Uci.tokens[1];
@@ -191,6 +191,8 @@ namespace RapChessGui
 				}
 				msg = p.GetMessage();
 			}
+			if (PlayerList.CurPlayer().user.protocol == "Winboard")
+				PlayerList.CurPlayer().readyok = true;
 		}
 
 		public void AddBook(string emo)
@@ -797,13 +799,13 @@ namespace RapChessGui
 		private void AddMove(int piece, string emo)
 		{
 			int count = CHistory.moveList.Count;
-			if (( count & 1) == 0)
+			if ((count & 1) == 0)
 			{
 				int moveNumber = (count >> 1) + 1;
 				richTextBox1.AppendText($"{moveNumber} ", Color.Red);
 			}
 			CHistory.AddMove(piece, emo);
-			string[] p = { "", "\u2659", "\u2658", "\u2657", "\u2656", "\u2655", "\u2654", "", "", "\u265F", "\u265E", "\u265D", "\u265C", "\u265B", "\u265A", ""};
+			string[] p = { "", "\u2659", "\u2658", "\u2657", "\u2656", "\u2655", "\u2654", "", "", "\u265F", "\u265E", "\u265D", "\u265C", "\u265B", "\u265A", "" };
 			richTextBox1.AppendText($"{p[piece]} {emo} ");
 			CDrag.index = CEngine.EmoToIndex(emo);
 		}
@@ -812,7 +814,7 @@ namespace RapChessGui
 		{
 			richTextBox1.Clear();
 			foreach (CHisMove m in CHistory.moveList)
-				AddMove(m.piece,m.emo);
+				AddMove(m.piece, m.emo);
 		}
 
 		void RenderHistory()
@@ -1056,7 +1058,7 @@ namespace RapChessGui
 			{
 				int piece = Engine.MakeMove(emo);
 				if (piece > 0)
-					CHistory.AddMove(piece,emo);
+					CHistory.AddMove(piece, emo);
 			}
 			PlayerList.curIndex = Engine.g_moveNumber & 1;
 			CUser u = CommandToUser();
