@@ -47,7 +47,6 @@ namespace RapChessGui
 			cbBookList.Text = user.book;
 			curUserName = user.name;
 			nudElo.Value = Int32.Parse(user.elo);
-			List<RadioButton> list = gbMode.Controls.OfType<RadioButton>().ToList();
 			switch (user.mode)
 			{
 				case "movetime":
@@ -57,6 +56,7 @@ namespace RapChessGui
 					nudDepth.Value = Int32.Parse(user.value);
 					break;
 			}
+			List<RadioButton> list = gbMode.Controls.OfType<RadioButton>().ToList();
 			list[CData.ModeStoi(user.mode)].Select();
 		}
 

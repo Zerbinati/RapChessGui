@@ -256,5 +256,28 @@ namespace RapChessGui
 			}
 			names.Sort();
 		}
+
+		private static int GetIndexElo(int elo)
+		{
+			int result = 0;
+			foreach (CUser u in list)
+				if (Convert.ToInt32(u.elo) < elo)
+					result++;
+			return result;
+		}
+
+		public static void UpdateElo(CUser u, int del)
+		{
+			int eloOrg = Convert.ToInt32(u.elo);
+			int index = GetIndexElo(eloOrg) + del;
+			if (index < 0)
+				index = 0;
+			if (index >= list.Count)
+				index = list.Count - 1;
+			int eloOpt = (3000 * (index + 1)) / list.Count;
+			int eloNew = Convert.ToInt32(eloOrg * 0.9 + eloOpt * 0.1);
+			u.elo = eloNew.ToString();
+		}
+
 	}
 }

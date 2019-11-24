@@ -236,6 +236,8 @@ namespace RapChessGui
 			CPlayer p = player[0];
 			player[0] = player[1];
 			player[1] = p;
+			player[0].white = true;
+			player[1].white = false;
 		}
 
 		public CPlayer SecPlayer()

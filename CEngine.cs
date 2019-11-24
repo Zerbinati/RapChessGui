@@ -66,12 +66,12 @@ namespace RapChessGui
 		public static CEngine This;
 		public const string defFen = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 0";
 		public static Random random = new Random();
-		const int piecePawn = 0x01;
-		const int pieceKnight = 0x02;
-		const int pieceBishop = 0x03;
-		const int pieceRook = 0x04;
-		const int pieceQueen = 0x05;
-		const int pieceKing = 0x06;
+		public const int piecePawn = 0x01;
+		public const int pieceKnight = 0x02;
+		public const int pieceBishop = 0x03;
+		public const int pieceRook = 0x04;
+		public const int pieceQueen = 0x05;
+		public const int pieceKing = 0x06;
 		public const int colorBlack = 0x08;
 		public const int colorWhite = 0x10;
 		public const int colorEmpty = 0x20;

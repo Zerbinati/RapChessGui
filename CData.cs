@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Management;
-using System.Threading;
 using System.Windows.Forms;
 
 namespace RapChessGui
 {
-	enum CMode { game, match, tournament, training }
+	enum CMode { game, match, tournament, training ,edit}
 
 	public static class CDrag
 	{
@@ -16,6 +13,7 @@ namespace RapChessGui
 		public static int last = -1;
 		public static int mouseX = 0;
 		public static int mouseY = 0;
+		public static int mouseIndex = 0;
 	}
 
 	public static class CData
@@ -24,6 +22,7 @@ namespace RapChessGui
 		public static int gameState = 0;
 		public static int gameMode = 0;
 		public static int back = 0;
+		public static string modeName = "Game";
 		public static string[] arrModeNames = new string[] { "depth", "movetime" };
 		public static List<string> bookNames = new List<string>();
 		public static List<string> engineNames = new List<string>();

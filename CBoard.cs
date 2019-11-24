@@ -107,19 +107,24 @@ namespace RapChessGui
 				list[n].color = Color.Empty;
 		}
 
+		public static void UpdateField(int index)
+		{
+			int i = CEngine.arrField[index];
+			int f = CEngine.g_board[i];
+			if ((f & CEngine.colorEmpty) > 0)
+				list[index].piece = null;
+			else
+			{
+				CPiece piece = new CPiece();
+				list[index].piece = piece;
+				piece.SetImage(index);
+			}
+		}
+
 		public static void Fill()
 		{
 			for (int n = 0; n < 64; n++)
-			{
-				list[n].piece = null;
-				int i = CEngine.arrField[n];
-				int f = CEngine.g_board[i];
-				if ((f & CEngine.colorEmpty) > 0)
-					continue;
-				CPiece piece = new CPiece();
-				list[n].piece = piece;
-				piece.SetImage(n);
-			}
+				UpdateField(n);
 			animated = true;
 		}
 
