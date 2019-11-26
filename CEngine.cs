@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace RapChessGui
 {
-	enum CGameState { normal, mate, stalemate, repetition, move50, material, stop }
+	enum CGameState { normal, mate, stalemate, repetition, move50, material, resignation,stop }
 
 	class CUndo
 	{
@@ -111,8 +111,6 @@ namespace RapChessGui
 		public bool whiteTurn = true;
 		int usColor = 0;
 		int enColor = 0;
-		int bsIn = -1;
-		int bsDepth = 0;
 		string bsFm = "";
 		string bsPv = "";
 		public static int[] arrField = new int[64];
@@ -779,10 +777,8 @@ namespace RapChessGui
 							g_scoreFm = "mate " + ((-0xfffe - osScore) >> 1);
 						else
 							g_scoreFm = "cp " + (osScore >> 2);
-						bsIn = n;
 						bsFm = alphaFm;
 						bsPv = alphaPv;
-						bsDepth = alphaDe;
 						double t = (DateTime.Now - g_startTime).TotalMilliseconds;
 						int nps = 0;
 						if (t > 0)
@@ -806,39 +802,6 @@ namespace RapChessGui
 			return alpha;
 		}
 
-		void Search(int depth, int time, int nodes)
-		{
-			List<int> mu = GenerateAllMoves(whiteTurn, false);
-			bool myInsufficient = adjInsufficient;
-			int myMobility = adjMobility;
-			int m1 = mu.Count - 1;
-			int depthL = depth > 0 ? depth : 1;
-			g_stop = false;
-			g_totalNodes = 0;
-			g_timeout = time;
-			g_nodeout = nodes;
-			do
-			{
-				bsIn = m1;
-				adjInsufficient = myInsufficient;
-				adjMobility = myMobility;
-				GetScore(mu, 1, depthL++, -0xffff, 0xffff);
-				if (bsIn != m1)
-				{
-					int m = mu[m1];
-					mu[m1] = mu[bsIn];
-					mu[bsIn] = m;
-				}
-			} while (((depth == 0) || (depth > depthL)) && (g_depth <= bsDepth) && !g_stop && (m1 > 0));
-			double t = (DateTime.Now - g_startTime).TotalMilliseconds;
-			int nps = 0;
-			if (t > 0)
-				nps = Convert.ToInt32((g_totalNodes / t) * 1000);
-			string[] ponder = bsPv.Split(' ');
-			string pm = ponder.Length > 1 ? " ponder " + ponder[1] : "";
-			Console.WriteLine("info nodes " + g_totalNodes + " time " + t + " nps " + nps);
-			Console.WriteLine("bestmove " + bsFm + pm);
-		}
 	}
 }
 

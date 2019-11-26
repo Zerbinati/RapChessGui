@@ -62,9 +62,12 @@
 			this.panel4 = new System.Windows.Forms.Panel();
 			this.tabControl1 = new System.Windows.Forms.TabControl();
 			this.tabPageGame = new System.Windows.Forms.TabPage();
+			this.lvMoves = new System.Windows.Forms.ListView();
+			this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.columnHeader5 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.butStop = new System.Windows.Forms.Button();
 			this.butContinueGame = new System.Windows.Forms.Button();
-			this.rtbHistory = new System.Windows.Forms.RichTextBox();
 			this.butNewGame = new System.Windows.Forms.Button();
 			this.groupBox2 = new System.Windows.Forms.GroupBox();
 			this.labEngine = new System.Windows.Forms.Label();
@@ -161,6 +164,7 @@
 			this.labNodesT = new System.Windows.Forms.Label();
 			this.labDepthT = new System.Windows.Forms.Label();
 			this.labScoreT = new System.Windows.Forms.Label();
+			this.columnHeader6 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.menuStrip1.SuspendLayout();
 			this.panMenu.SuspendLayout();
 			this.panelT1.SuspendLayout();
@@ -487,9 +491,9 @@
 			// 
 			// tabPageGame
 			// 
+			this.tabPageGame.Controls.Add(this.lvMoves);
 			this.tabPageGame.Controls.Add(this.butStop);
 			this.tabPageGame.Controls.Add(this.butContinueGame);
-			this.tabPageGame.Controls.Add(this.rtbHistory);
 			this.tabPageGame.Controls.Add(this.butNewGame);
 			this.tabPageGame.Controls.Add(this.groupBox2);
 			this.tabPageGame.Controls.Add(this.groupBox1);
@@ -500,6 +504,40 @@
 			this.tabPageGame.TabIndex = 0;
 			this.tabPageGame.Text = "Game";
 			this.tabPageGame.UseVisualStyleBackColor = true;
+			// 
+			// lvMoves
+			// 
+			this.lvMoves.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader3,
+            this.columnHeader4,
+            this.columnHeader5});
+			this.lvMoves.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.lvMoves.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+			this.lvMoves.GridLines = true;
+			this.lvMoves.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
+			this.lvMoves.HideSelection = false;
+			this.lvMoves.Location = new System.Drawing.Point(3, 223);
+			this.lvMoves.Name = "lvMoves";
+			this.lvMoves.ShowGroups = false;
+			this.lvMoves.Size = new System.Drawing.Size(314, 321);
+			this.lvMoves.TabIndex = 25;
+			this.lvMoves.UseCompatibleStateImageBehavior = false;
+			this.lvMoves.View = System.Windows.Forms.View.Details;
+			// 
+			// columnHeader3
+			// 
+			this.columnHeader3.Text = "Move";
+			this.columnHeader3.Width = 50;
+			// 
+			// columnHeader4
+			// 
+			this.columnHeader4.Text = "White";
+			this.columnHeader4.Width = 100;
+			// 
+			// columnHeader5
+			// 
+			this.columnHeader5.Text = "Black";
+			this.columnHeader5.Width = 100;
 			// 
 			// butStop
 			// 
@@ -522,18 +560,6 @@
 			this.butContinueGame.Text = "Continue game";
 			this.butContinueGame.UseVisualStyleBackColor = true;
 			this.butContinueGame.Click += new System.EventHandler(this.butContinueGame_Click);
-			// 
-			// rtbHistory
-			// 
-			this.rtbHistory.Dock = System.Windows.Forms.DockStyle.Bottom;
-			this.rtbHistory.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-			this.rtbHistory.Location = new System.Drawing.Point(3, 229);
-			this.rtbHistory.Name = "rtbHistory";
-			this.rtbHistory.ReadOnly = true;
-			this.rtbHistory.Size = new System.Drawing.Size(314, 315);
-			this.rtbHistory.TabIndex = 22;
-			this.rtbHistory.Tag = "";
-			this.rtbHistory.Text = "";
 			// 
 			// butNewGame
 			// 
@@ -931,7 +957,8 @@
 			// 
 			this.listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeader1,
-            this.columnHeader2});
+            this.columnHeader2,
+            this.columnHeader6});
 			this.listView1.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.listView1.FullRowSelect = true;
 			this.listView1.GridLines = true;
@@ -947,11 +974,13 @@
 			// 
 			// columnHeader1
 			// 
+			this.columnHeader1.Tag = "";
 			this.columnHeader1.Text = "Engine";
-			this.columnHeader1.Width = 200;
+			this.columnHeader1.Width = 150;
 			// 
 			// columnHeader2
 			// 
+			this.columnHeader2.Tag = "";
 			this.columnHeader2.Text = "Elo";
 			this.columnHeader2.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
 			this.columnHeader2.Width = 80;
@@ -1427,6 +1456,7 @@
 			this.pictureBox1.Size = new System.Drawing.Size(576, 576);
 			this.pictureBox1.TabIndex = 8;
 			this.pictureBox1.TabStop = false;
+			this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
 			this.pictureBox1.DoubleClick += new System.EventHandler(this.pictureBox1_DoubleClick);
 			this.pictureBox1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseDown);
 			this.pictureBox1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseMove);
@@ -1754,6 +1784,11 @@
 			this.labScoreT.TabIndex = 6;
 			this.labScoreT.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
+			// columnHeader6
+			// 
+			this.columnHeader6.Text = "Changes";
+			this.columnHeader6.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			// 
 			// FormChess
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1828,7 +1863,6 @@
 		private System.Windows.Forms.TabControl tabControl1;
 		private System.Windows.Forms.TabPage tabPageGame;
 		private System.Windows.Forms.TabPage tabPageTraining;
-		private System.Windows.Forms.RichTextBox rtbHistory;
 		private System.Windows.Forms.Button butNewGame;
 		private System.Windows.Forms.GroupBox groupBox2;
 		private System.Windows.Forms.ComboBox cbComputer;
@@ -1940,6 +1974,11 @@
 		private System.Windows.Forms.ToolStripMenuItem forwardToolStripMenuItem;
 		private System.Windows.Forms.Label labEloT;
 		private System.Windows.Forms.Label labEloB;
+		private System.Windows.Forms.ListView lvMoves;
+		private System.Windows.Forms.ColumnHeader columnHeader3;
+		private System.Windows.Forms.ColumnHeader columnHeader4;
+		private System.Windows.Forms.ColumnHeader columnHeader5;
+		private System.Windows.Forms.ColumnHeader columnHeader6;
 	}
 }
 

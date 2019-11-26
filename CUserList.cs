@@ -15,10 +15,16 @@ namespace RapChessGui
 		public string value = "1000";
 		public string book = "None";
 		public string elo = "1000";
+		public int orgElo = 0;
 
 		public CUser(string n)
 		{
 			name = n;
+		}
+
+		public int GetDeltaElo()
+		{
+			return Convert.ToInt32(elo) - orgElo;
 		}
 
 		public bool SetCommand(string command)
@@ -86,6 +92,7 @@ namespace RapChessGui
 			value = CRapIni.This.Read($"player>{name}>value", "1000");
 			book = CRapIni.This.Read($"player>{name}>book", "None");
 			elo = CRapIni.This.Read($"player>{name}>elo", "1000");
+			orgElo = Convert.ToInt32(elo);
 		}
 
 		public void SaveToIni()
@@ -275,7 +282,9 @@ namespace RapChessGui
 			if (index >= list.Count)
 				index = list.Count - 1;
 			int eloOpt = (3000 * (index + 1)) / list.Count;
-			int eloNew = Convert.ToInt32(eloOrg * 0.9 + eloOpt * 0.1);
+			int eloNew = Convert.ToInt32(eloOrg * 0.9 + eloOpt  * 0.1);
+			if ((eloNew == eloOrg)&&(eloNew != eloOpt))
+				eloNew += del;
 			u.elo = eloNew.ToString();
 		}
 
