@@ -5,8 +5,9 @@ using System.Drawing.Drawing2D;
 using System.Drawing.Text;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
-using RapIni;
 using System.Linq;
+using RapIni;
+using RapLog;
 
 
 namespace RapChessGui
@@ -181,16 +182,23 @@ namespace RapChessGui
 					default:
 						if ((PlayerList.CurPlayer().user.protocol == "Winboard") && PlayerList.CurPlayer().wbok && (Uci.tokens.Length > 4))
 						{
-							p.depth = Uci.tokens[0];
-							p.score = Uci.tokens[1];
-							int ms = Convert.ToInt32(Uci.tokens[2]);
-							p.nodes = Convert.ToInt32(Uci.tokens[3]);
-							p.nps = ms > 0 ? (p.nodes * 100) / ms : 0;
-							pv = "";
-							for (int n = 4; n < Uci.tokens.Length; n++)
-								pv += Uci.tokens[n] + " ";
-							labLast.ForeColor = Color.Gainsboro;
-							labLast.Text = pv;
+							try
+							{
+								p.depth = Uci.tokens[0];
+								p.score = Uci.tokens[1];
+								int ms = Convert.ToInt32(Uci.tokens[2]);
+								p.nodes = Convert.ToInt32(Uci.tokens[3]);
+								p.nps = ms > 0 ? (p.nodes * 100) / ms : 0;
+								pv = "";
+								for (int n = 4; n < Uci.tokens.Length; n++)
+									pv += Uci.tokens[n] + " ";
+								labLast.ForeColor = Color.Gainsboro;
+								labLast.Text = pv;
+							}
+							catch
+							{
+								CRapLog.Add($"{p.user.name} {msg}");
+							}
 						}
 						break;
 				}
@@ -252,7 +260,7 @@ namespace RapChessGui
 			listView1.Items.Clear();
 			foreach (CUser u in CUserList.list)
 				if (u.engine != "Human")
-					listView1.Items.Add(new ListViewItem(new[] { u.name, u.elo,u.GetDeltaElo().ToString() }));
+					listView1.Items.Add(new ListViewItem(new[] { u.name, u.elo, u.GetDeltaElo().ToString() }));
 		}
 
 		void ShowTraining()
@@ -311,8 +319,8 @@ namespace RapChessGui
 			FormBook.This.cbBookList.SelectedIndex = 0;
 			FormPlayer.This.cbBookList.SelectedIndex = 0;
 			ShowTournament();
-			if(SortingColumn != null)
-			SortingColumn.Text = SortingColumn.Text.Substring(2);
+			if (SortingColumn != null)
+				SortingColumn.Text = SortingColumn.Text.Substring(2);
 			SortingColumn = listView1.Columns[1];
 			listView1.Columns[1].Text = $"▼ {listView1.Columns[1].Text}";
 			listView1.ListViewItemSorter = new ListViewComparer(1, SortOrder.Descending);
@@ -416,6 +424,7 @@ namespace RapChessGui
 						}
 						labLast.Text += $" new elo {newElo}";
 					}
+					CUserList.SaveToIni();
 				}
 			}
 			if (CData.gameMode == (int)CMode.match)
@@ -440,21 +449,36 @@ namespace RapChessGui
 			}
 			if (CData.gameMode == (int)CMode.tournament)
 			{
+				int indexW = CUserList.GetIndexElo(eloW);
+				int indexL = CUserList.GetIndexElo(eloL);
+				int optW = CUserList.GetOptElo(indexW);
+				int optL = CUserList.GetOptElo(indexL);
+				int OW = optW;
+				int OL = optL;
 				if (CData.gameState == (int)CGameState.mate)
 				{
 					if (eloW <= eloL)
 					{
-						CUserList.UpdateElo(uw, 1);
-						CUserList.UpdateElo(ul, -1);
-						ShowTournament();
+						OW = optL;
+						OL = optW;
 					}
+					if (OW < eloW)
+						OW = eloW;
+					if (OL > eloL)
+						OL = eloL;
 				}
 				else
 				{
-					CUserList.UpdateElo(uw,0);
-					CUserList.UpdateElo(ul,0);
-					ShowTournament();
+					int opt = (OW + OL) >> 1;
+					OW = opt;
+					OL = opt;
 				}
+				int newW = Convert.ToInt32(eloW * 0.9 + OW * 0.1);
+				int newL = Convert.ToInt32(eloL * 0.9 + OL * 0.1);
+				uw.elo = newW.ToString();
+				ul.elo = newL.ToString();
+				ShowTournament();
+				CUserList.SaveToIni();
 			}
 			if (CData.gameMode == (int)CMode.training)
 			{
@@ -505,7 +529,8 @@ namespace RapChessGui
 			labMove.Text = "Move 1 0";
 			labLast.ForeColor = Color.Gainsboro;
 			labLast.Text = "Good luck";
-			CDrag.index = -1;
+			CDrag.lastSou = -1;
+			CDrag.lastDes = -1;
 			Engine.InitializeFromFen();
 			CHistory.NewGame(Engine.GetFen());
 			CBoard.Fill();
@@ -635,7 +660,7 @@ namespace RapChessGui
 			}
 			pictureBox1.Image = new Bitmap(CBoard.bitmap);
 			Graphics g = Graphics.FromImage(pictureBox1.Image);
-			Brush brush3 = new SolidBrush(Color.FromArgb(0x80, 0xff, 0xff, 0x00));
+			Brush brushYellow = new SolidBrush(Color.FromArgb(0x80, 0xff, 0xff, 0x00));
 			Font font = new Font(FontFamily.GenericSansSerif, 16, FontStyle.Bold);
 			Font fontPiece = new Font(pfc.Families[0], CBoard.field);
 			Brush foreBrush = new SolidBrush(Color.White);
@@ -688,8 +713,8 @@ namespace RapChessGui
 					rec.Y = y2;
 					rec.Width = CBoard.field;
 					rec.Height = CBoard.field;
-					if ((i == CDrag.index) || (CBoard.list[i].color != Color.Empty))
-						g.FillRectangle(brush3, rec);
+					if ((i == CDrag.lastSou) || (i == CDrag.lastDes) || (CBoard.list[i].color != Color.Empty))
+						g.FillRectangle(brushYellow, rec);
 					CPiece piece = CBoard.list[i].piece;
 					if (piece == null)
 						continue;
@@ -702,7 +727,7 @@ namespace RapChessGui
 						gp1.AddString("pnbrqk"[image].ToString(), fontPiece.FontFamily, (int)fontPiece.Style, fontPiece.Size, rec, sf);
 					}
 					piece.SetDes(x2, y2);
-					if ((i == CDrag.index) && CDrag.dragged)
+					if ((i == CDrag.lastDes) && CDrag.dragged)
 					{
 						piece.dt = DateTime.Now;
 						piece.curXY.X = CDrag.mouseX - 32;
@@ -739,7 +764,7 @@ namespace RapChessGui
 			outline.Dispose();
 			penW.Dispose();
 			penB.Dispose();
-			brush3.Dispose();
+			brushYellow.Dispose();
 			foreBrush.Dispose();
 			brushW.Dispose();
 			brushB.Dispose();
@@ -849,7 +874,8 @@ namespace RapChessGui
 			PlayerList.player[0].Init(true);
 			PlayerList.player[1].Init(false);
 			cbColor.SelectedIndex = PlayerList.curIndex;
-			CDrag.index = -1;
+			CDrag.lastSou = -1;
+			CDrag.lastDes = -1;
 			CHistory.NewGame(fen);
 			CBoard.Fill();
 			RenderBoard();
@@ -880,14 +906,14 @@ namespace RapChessGui
 				lvMoves.Items.Add(new ListViewItem(new[] { moveNumber.ToString(), m, "" }));
 			}
 			else
-				lvMoves.Items[lvMoves.Items.Count -1 ].SubItems[2].Text = m;
+				lvMoves.Items[lvMoves.Items.Count - 1].SubItems[2].Text = m;
 		}
 
 		private void AddMove(int piece, string emo)
 		{
 			MoveToRtb(CHistory.moveList.Count, piece, emo);
 			CHistory.AddMove(piece, emo);
-			CDrag.index = CEngine.EmoToIndex(emo);
+			CEngine.EmoToSD(emo,out CDrag.lastSou,out CDrag.lastDes);
 		}
 
 		void ShowHistory()
@@ -907,7 +933,7 @@ namespace RapChessGui
 			{
 				Engine.MakeMove(m.emo);
 			}
-			CDrag.index = CEngine.EmoToIndex(CHistory.LastMove());
+			CEngine.EmoToSD(CHistory.LastMove(),out CDrag.lastSou,out CDrag.lastDes);
 			CBoard.Fill();
 			ShowHistory();
 		}
@@ -987,10 +1013,10 @@ namespace RapChessGui
 			}
 			else
 			{
-				if (i == CDrag.index)
+				if (i == CDrag.lastDes)
 					ShowValid(i);
 			}
-			CDrag.index = i;
+			CDrag.lastDes = i;
 		}
 
 		private void FormChess_FormClosed(object sender, FormClosedEventArgs e)
@@ -1117,7 +1143,8 @@ namespace RapChessGui
 			PlayerList.player[0].Init(true);
 			PlayerList.player[1].Init(false);
 			cbColor.SelectedIndex = PlayerList.curIndex;
-			CDrag.index = -1;
+			CDrag.lastSou = -1;
+			CDrag.lastDes = -1;
 			ShowHistory();
 			CBoard.Fill();
 			RenderBoard();
@@ -1235,6 +1262,8 @@ namespace RapChessGui
 		private void tabControl1_Selected(object sender, TabControlEventArgs e)
 		{
 			CData.modeName = tabControl1.SelectedTab.Text;
+			CBoard.Fill();
+			RenderBoard();
 			SetMode(tabControl1.SelectedIndex);
 		}
 
@@ -1294,14 +1323,14 @@ namespace RapChessGui
 					return;
 				if (IsValid(CDrag.mouseIndex))
 				{
-					CDrag.last = CDrag.index;
+					CDrag.last = CDrag.lastDes;
 					CDrag.dragged = true;
 					SetIndex(CDrag.mouseIndex);
 				}
 				else
-					if (!IsValid(CDrag.index))
+					if (!IsValid(CDrag.lastDes))
 					SetIndex(-1);
-				if (!IsValid(CDrag.index, CDrag.mouseIndex))
+				if (!IsValid(CDrag.lastDes, CDrag.mouseIndex))
 					SetIndex(-1);
 			}
 		}
@@ -1310,12 +1339,12 @@ namespace RapChessGui
 		{
 			if (CData.gameMode == (int)CMode.game)
 			{
-				if (CDrag.index == CDrag.mouseIndex)
+				if (CDrag.lastDes == CDrag.mouseIndex)
 				{
 					TryMove(CDrag.last, CDrag.mouseIndex);
 				}
 				else
-					TryMove(CDrag.index, CDrag.mouseIndex);
+					TryMove(CDrag.lastDes, CDrag.mouseIndex);
 				CDrag.dragged = false;
 				CBoard.animated = true;
 			}
@@ -1371,9 +1400,5 @@ namespace RapChessGui
 			PlayerList.Rotate();
 		}
 
-		private void pictureBox1_Click(object sender, EventArgs e)
-		{
-
-		}
 	}
 }

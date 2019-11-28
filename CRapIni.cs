@@ -10,49 +10,58 @@ namespace RapIni
 	class CRapIni
 	{
 		public static CRapIni This;
-		string name = Assembly.GetExecutingAssembly().GetName().Name;
 		string path;
 		List<string> list = new List<string>();
 
 		public CRapIni()
 		{
+			string name = Assembly.GetExecutingAssembly().GetName().Name;
 			This = this;
 			path = new FileInfo(name + ".ini").FullName.ToString();
-			Load();
 		}
 
-		public CRapIni(string p)
+		public CRapIni(string name)
 		{
 			This = this;
-			path = p;
-			Load();
+			path = new FileInfo(name + ".ini").FullName.ToString();
 		}
 
 		public void Write(string key, string value)
 		{
-			DeleteKey(key);
-			list.Add($"{key}>{value}");
+			if (Load())
+			{
+				DeleteKey(key);
+				list.Add($"{key}>{value}");
+				Save();
+			}
 		}
 
 		public void WriteList(string key, List<string> value)
 		{
-			DeleteKey(key);
-			foreach (string e in value)
-				list.Add($"{key}>{e}");
+			if (Load())
+			{
+				DeleteKey(key);
+				foreach (string e in value)
+					list.Add($"{key}>{e}");
+				Save();
+			}
 		}
 
 		public string Read(string key, string def = "")
 		{
-			string[] ak = key.Split(new[] { '>' }, StringSplitOptions.RemoveEmptyEntries);
-			foreach (string e in list)
+			if (Load())
 			{
-				if (e.IndexOf($"{key}>") == 0)
+				string[] ak = key.Split(new[] { '>' }, StringSplitOptions.RemoveEmptyEntries);
+				foreach (string e in list)
 				{
-					string[] ae = e.Split(new[] { '>' }, StringSplitOptions.RemoveEmptyEntries);
-					if (ae.Length > ak.Length)
-						return ae[ak.Length];
-					else
-						return "";
+					if (e.IndexOf($"{key}>") == 0)
+					{
+						string[] ae = e.Split(new[] { '>' }, StringSplitOptions.RemoveEmptyEntries);
+						if (ae.Length > ak.Length)
+							return ae[ak.Length];
+						else
+							return "";
+					}
 				}
 			}
 			return def;
@@ -61,17 +70,20 @@ namespace RapIni
 		public List<string> ReadList(string key)
 		{
 			List<string> result = new List<string>();
-			string[] ak = key.Split(new[] { '>' }, StringSplitOptions.RemoveEmptyEntries);
-			foreach (string e in list)
+			if (Load())
 			{
-				if (e.IndexOf($"{key}>") == 0)
+				string[] ak = key.Split(new[] { '>' }, StringSplitOptions.RemoveEmptyEntries);
+				foreach (string e in list)
 				{
-					string[] ae = e.Split(new[] { '>' }, StringSplitOptions.RemoveEmptyEntries);
-					string s = "";
-					if (ae.Length > ak.Length)
-						s = ae[ak.Length];
-					if (!result.Contains(s))
-					result.Add(s);
+					if (e.IndexOf($"{key}>") == 0)
+					{
+						string[] ae = e.Split(new[] { '>' }, StringSplitOptions.RemoveEmptyEntries);
+						string s = "";
+						if (ae.Length > ak.Length)
+							s = ae[ak.Length];
+						if (!result.Contains(s))
+							result.Add(s);
+					}
 				}
 			}
 			return result;
@@ -79,26 +91,48 @@ namespace RapIni
 
 		public void DeleteKey(string key)
 		{
-			for (int n = list.Count - 1; n >= 0; n--)
+			if (Load())
 			{
+				for (int n = list.Count - 1; n >= 0; n--)
+				{
 
-				if (list[n].IndexOf($"{key}>") == 0)
-					list.RemoveAt(n);
+					if (list[n].IndexOf($"{key}>") == 0)
+						list.RemoveAt(n);
+				}
+				Save();
 			}
 		}
 
-		public void Save()
+		public bool Save()
 		{
 			list.Sort();
-			File.WriteAllLines(path, list);
+			try
+			{
+				File.WriteAllLines(path, list);
+			}
+			catch
+			{
+				return false;
+			}
+			return true;
 		}
 
-		public void Load()
+		public bool Load()
 		{
 			if (File.Exists(path))
-				list = File.ReadAllLines(path).ToList();
+			{
+				try
+				{
+					list = File.ReadAllLines(path).ToList();
+				}
+				catch
+				{
+					return false;
+				}
+			}
 			else
 				list.Clear();
+			return true;
 		}
 
 	}

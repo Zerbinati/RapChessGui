@@ -513,10 +513,12 @@
             this.columnHeader5});
 			this.lvMoves.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.lvMoves.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+			this.lvMoves.FullRowSelect = true;
 			this.lvMoves.GridLines = true;
 			this.lvMoves.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
 			this.lvMoves.HideSelection = false;
 			this.lvMoves.Location = new System.Drawing.Point(3, 223);
+			this.lvMoves.MultiSelect = false;
 			this.lvMoves.Name = "lvMoves";
 			this.lvMoves.ShowGroups = false;
 			this.lvMoves.Size = new System.Drawing.Size(314, 321);
@@ -1456,7 +1458,6 @@
 			this.pictureBox1.Size = new System.Drawing.Size(576, 576);
 			this.pictureBox1.TabIndex = 8;
 			this.pictureBox1.TabStop = false;
-			this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
 			this.pictureBox1.DoubleClick += new System.EventHandler(this.pictureBox1_DoubleClick);
 			this.pictureBox1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseDown);
 			this.pictureBox1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseMove);

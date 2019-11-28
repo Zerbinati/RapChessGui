@@ -209,7 +209,7 @@ namespace RapChessGui
 		{
 			list.Clear();
 			List<string> pn = CRapIni.This.ReadList("player");
-			foreach(string name in pn)
+			foreach (string name in pn)
 			{
 				var u = new CUser(name);
 				u.LoadFromIni();
@@ -264,7 +264,7 @@ namespace RapChessGui
 			names.Sort();
 		}
 
-		private static int GetIndexElo(int elo)
+		public static int GetIndexElo(int elo)
 		{
 			int result = 0;
 			foreach (CUser u in list)
@@ -273,20 +273,15 @@ namespace RapChessGui
 			return result;
 		}
 
-		public static void UpdateElo(CUser u, int del)
+		public static int GetOptElo(double index)
 		{
-			int eloOrg = Convert.ToInt32(u.elo);
-			int index = GetIndexElo(eloOrg) + del;
 			if (index < 0)
 				index = 0;
 			if (index >= list.Count)
 				index = list.Count - 1;
-			int eloOpt = (3000 * (index + 1)) / list.Count;
-			int eloNew = Convert.ToInt32(eloOrg * 0.9 + eloOpt  * 0.1);
-			if ((eloNew == eloOrg)&&(eloNew != eloOpt))
-				eloNew += del;
-			u.elo = eloNew.ToString();
+			return Convert.ToInt32((3000 * (index + 1)) / list.Count);
 		}
+
 
 	}
 }

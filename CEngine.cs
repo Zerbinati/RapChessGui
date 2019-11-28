@@ -204,9 +204,15 @@ namespace RapChessGui
 			if (emo == "")
 				return -1;
 			string fl = "abcdefgh";
-			int x = fl.IndexOf(emo[2]);
-			int y = 8 - Int32.Parse(emo[3].ToString());
+			int x = fl.IndexOf(emo[0]);
+			int y = 8 - Int32.Parse(emo[1].ToString());
 			return y * 8 + x;
+		}
+
+		public static void EmoToSD(string emo, out int s,out int d)
+		{
+			s = EmoToIndex(emo.Substring(0,2));
+			d = EmoToIndex(emo.Substring(2,2));
 		}
 
 		public string FormatMove(int move)

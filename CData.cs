@@ -9,8 +9,9 @@ namespace RapChessGui
 	public static class CDrag
 	{
 		public static bool dragged = false;
-		public static int index = -1;
 		public static int last = -1;
+		public static int lastSou = -1;
+		public static int lastDes = -1;
 		public static int mouseX = 0;
 		public static int mouseY = 0;
 		public static int mouseIndex = 0;
