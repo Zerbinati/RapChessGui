@@ -18,12 +18,19 @@ namespace RapIni
 			string name = Assembly.GetExecutingAssembly().GetName().Name;
 			This = this;
 			path = new FileInfo(name + ".ini").FullName.ToString();
+			Load();
 		}
 
 		public CRapIni(string name)
 		{
 			This = this;
 			path = new FileInfo(name + ".ini").FullName.ToString();
+			Load();
+		}
+
+		~CRapIni()
+		{
+			Save();
 		}
 
 		public void Write(string key, string value)

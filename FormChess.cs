@@ -224,9 +224,9 @@ namespace RapChessGui
 			lock (CData.messages)
 				CData.messages.Clear();
 			moveToolStripMenuItem.Visible = mode == (int)CMode.game;
+			Clear();
 			if (mode == (int)CMode.edit)
 			{
-				Clear();
 				ShowEdit();
 			}
 		}
@@ -523,8 +523,6 @@ namespace RapChessGui
 
 		void Clear()
 		{
-			CBoard.Clear();
-			CData.gameState = (int)CGameState.stop;
 			levelOrg = Convert.ToInt32(CUserList.GetUser("Human").elo);
 			labMove.Text = "Move 1 0";
 			labLast.ForeColor = Color.Gainsboro;
@@ -533,6 +531,7 @@ namespace RapChessGui
 			CDrag.lastDes = -1;
 			Engine.InitializeFromFen();
 			CHistory.NewGame(Engine.GetFen());
+			CBoard.Clear();
 			CBoard.Fill();
 			PlayerList.Init();
 			lvMoves.Items.Clear();
@@ -540,12 +539,14 @@ namespace RapChessGui
 			CPlayer pw = PlayerList.player[0];
 			CPlayer pb = PlayerList.player[1];
 			FormLog.This.richTextBox1.Clear();
+			if(pw.user!=null)
 			FormLog.This.richTextBox1.AppendText($"White {pw.user.name} {pw.user.engine} {pw.user.parameters}\n", Color.Gray);
-			FormLog.This.richTextBox1.AppendText($"Black {pb.user.name} {pb.user.engine} {pb.user.parameters}\n", Color.Gray);
+			if (pb.user != null)
+				FormLog.This.richTextBox1.AppendText($"Black {pb.user.name} {pb.user.engine} {pb.user.parameters}\n", Color.Gray);
 			labBack.Text = $"Back {CData.back}";
 			RenderInfo(pw);
 			RenderInfo(pb);
-			CData.gameState = 0;
+			CData.gameState = (int)CGameState.normal;
 			timer1.Enabled = CData.gameMode != (int)CMode.edit;
 		}
 
@@ -795,8 +796,8 @@ namespace RapChessGui
 			if (boardRotate ^ cp.white)
 			{
 				labTimeB.Text = cp.GetTime();
+				labEloB.Text = cp.GetElo();
 				labProtocolB.Text = cp.GetProtocol();
-				labEloB.Text = $"Elo {cp.user.elo}";
 				labScoreB.Text = $"Score {cp.score}";
 				labNodesB.Text = $"Nodes {cp.nodes.ToString("N0")}";
 				labNpsB.Text = $"Nps {cp.nps.ToString("N0")}";
@@ -810,8 +811,8 @@ namespace RapChessGui
 			else
 			{
 				labTimeT.Text = cp.GetTime();
+				labEloT.Text = cp.GetElo();
 				labProtocolT.Text = cp.GetProtocol();
-				labEloT.Text = $"Elo {cp.user.elo}";
 				labScoreT.Text = $"Score {cp.score}";
 				labNodesT.Text = $"Nodes {cp.nodes.ToString("N0")}";
 				labNpsT.Text = $"Nps {cp.nps.ToString("N0")}";

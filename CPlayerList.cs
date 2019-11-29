@@ -181,6 +181,14 @@ namespace RapChessGui
 			return dt2.ToString("HH:mm:ss");
 		}
 
+		public string GetElo()
+		{
+			if (user == null)
+				return "Elo";
+			else
+				return $"Elo {user.elo}";
+		}
+
 		public void SetUser(CUser u)
 		{
 			user = u;
