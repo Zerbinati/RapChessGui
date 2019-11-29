@@ -21,6 +21,7 @@ namespace RapChessGui
 		bool boardRotate;
 		int levelOrg;
 		int levelDif;
+		int levelMD;
 		int tournament;
 		private ColumnHeader SortingColumn = null;
 		List<int> moves = new List<int>();
@@ -334,10 +335,7 @@ namespace RapChessGui
 			CUser ul = PlayerList.SecPlayer().user;
 			if ((CData.gameMode == (int)CMode.game) && (uw.name == "Human") && (ul.name != "Human") && (cbComputer.Text == "Auto") && ((Engine.g_moveNumber >> 1) == 10))
 			{
-				int level = levelOrg - levelDif;
-				if (level < 0)
-					level = 0;
-				uw.elo = level.ToString();
+				uw.elo = levelMD.ToString();
 			}
 			bool ivm = Engine.IsValidMove(emo) != 0;
 			if (!ivm)
@@ -523,7 +521,6 @@ namespace RapChessGui
 
 		void Clear()
 		{
-			levelOrg = Convert.ToInt32(CUserList.GetUser("Human").elo);
 			labMove.Text = "Move 1 0";
 			labLast.ForeColor = Color.Gainsboro;
 			labLast.Text = "Good luck";
@@ -561,9 +558,13 @@ namespace RapChessGui
 
 		void StartGame()
 		{
+			levelOrg = Convert.ToInt32(CUserList.GetUser("Human").elo);
 			levelDif = 2000 / listView1.Items.Count;
 			if (levelDif < 10)
 				levelDif = 10;
+			levelMD = levelOrg - levelDif;
+			if (levelMD < 0)
+				levelMD = 0;
 			SetMode((int)CMode.game);
 			ShowGame();
 			PlayerList.player[0].SetUser("Human");
@@ -1393,6 +1394,8 @@ namespace RapChessGui
 				labBack.Text = $"Back {++CData.back}";
 				RenderHistory();
 				moves = Engine.GenerateValidMoves();
+				CData.gameState = Engine.GetGameState();
+				PlayerList.CurPlayer().user.elo = levelMD.ToString();
 			}
 		}
 
