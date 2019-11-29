@@ -317,7 +317,7 @@ namespace RapChessGui
 			}
 			cbBookList.SelectedIndex = 0;
 			FormBook.This.cbBookList.SelectedIndex = 0;
-			FormPlayer.This.cbBookList.SelectedIndex = 0;
+			FormPlayer.This.SelectUser();
 			ShowTournament();
 			if (SortingColumn != null)
 				SortingColumn.Text = SortingColumn.Text.Substring(2);

@@ -32,7 +32,11 @@ namespace RapChessGui
 			CUserList.LoadFromIni();
 			UpdateListBox();
 			listBox1.SetSelected(0, true);
-			cbProtocol.SelectedIndex = 0;
+		}
+
+		public void SelectUser()
+		{
+			SelectUser(curUserName);
 		}
 
 		void SelectUser(string name)
