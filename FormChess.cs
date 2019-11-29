@@ -28,8 +28,8 @@ namespace RapChessGui
 		CRapIni RapIni = new CRapIni();
 		CEngine Engine = new CEngine();
 		CPlayerList PlayerList = new CPlayerList();
-		CMatch Match = new CMatch();
-		CTrainer Trainer = new CTrainer();
+		CModeMatch Match = new CModeMatch();
+		CModeTraining Trainer = new CModeTraining();
 		CUci Uci = new CUci();
 		FormOptions FOptions = new FormOptions();
 		FormPlayer FPlayer = new FormPlayer();
@@ -80,6 +80,8 @@ namespace RapChessGui
 			Trainer.time = (int)nudTeacher.Value;
 			FOptions.cbShowPonder.Checked = Convert.ToInt32(CRapIni.This.Read("options>interface>showponder", "1")) == 1;
 			FOptions.cbGameAutoElo.Checked = Convert.ToInt32(CRapIni.This.Read("options>game>autoelo", "1")) == 1;
+			FOptions.cbRotateBoard.Checked = Convert.ToInt32(CRapIni.This.Read("options>interface>rotate", "0")) == 1;
+			FOptions.cbAttack.Checked = Convert.ToInt32(CRapIni.This.Read("options>interface>attack", "0")) == 1;
 			CBoard.LoadFromIni();
 		}
 
@@ -96,6 +98,8 @@ namespace RapChessGui
 			CRapIni.This.Write("training>timeTeacher", nudTeacher.Value.ToString());
 			CRapIni.This.Write("training>timeTrained", nudTrained.Value.ToString());
 			CRapIni.This.Write("options>interface>showponder", FOptions.cbShowPonder.Checked ? "1" : "0");
+			CRapIni.This.Write("options>interface>rotate", FOptions.cbRotateBoard.Checked ? "1" : "0");
+			CRapIni.This.Write("options>interface>attack", FOptions.cbAttack.Checked ? "1" : "0");
 			CRapIni.This.Write("options>game>autoelo", FOptions.cbGameAutoElo.Checked ? "1" : "0");
 			CBoard.SaveToIni();
 			CUserList.SaveToIni();
@@ -405,7 +409,7 @@ namespace RapChessGui
 			{
 				if (CData.gameState == (int)CGameState.mate)
 				{
-					if ((cbComputer.Text == "Auto") && FOptions.cbGameAutoElo.Checked)
+					if (CModeGame.ranked)
 					{
 						int newElo = levelOrg;
 						if (uw.name == "Human")
@@ -558,6 +562,7 @@ namespace RapChessGui
 
 		void StartGame()
 		{
+			CModeGame.ranked = (cbComputer.Text == "Auto") && FOptions.cbGameAutoElo.Checked;
 			levelOrg = Convert.ToInt32(CUserList.GetUser("Human").elo);
 			levelDif = 2000 / listView1.Items.Count;
 			if (levelDif < 10)
@@ -662,6 +667,7 @@ namespace RapChessGui
 			}
 			pictureBox1.Image = new Bitmap(CBoard.bitmap);
 			Graphics g = Graphics.FromImage(pictureBox1.Image);
+			Brush brushRed = new SolidBrush(Color.FromArgb(0x80, 0xff, 0x00, 0x00));
 			Brush brushYellow = new SolidBrush(Color.FromArgb(0x80, 0xff, 0xff, 0x00));
 			Font font = new Font(FontFamily.GenericSansSerif, 16, FontStyle.Bold);
 			Font fontPiece = new Font(pfc.Families[0], CBoard.field);
@@ -717,6 +723,8 @@ namespace RapChessGui
 					rec.Height = CBoard.field;
 					if ((i == CDrag.lastSou) || (i == CDrag.lastDes) || (CBoard.list[i].color != Color.Empty))
 						g.FillRectangle(brushYellow, rec);
+					else if (CBoard.list[i].attacked)
+						g.FillRectangle(brushRed, rec);
 					CPiece piece = CBoard.list[i].piece;
 					if (piece == null)
 						continue;
@@ -766,6 +774,7 @@ namespace RapChessGui
 			outline.Dispose();
 			penW.Dispose();
 			penB.Dispose();
+			brushRed.Dispose();
 			brushYellow.Dispose();
 			foreBrush.Dispose();
 			brushW.Dispose();
@@ -778,6 +787,8 @@ namespace RapChessGui
 			CBoard.Render();
 			if (!CBoard.animated)
 			{
+				if(FOptions.cbAttack.Checked)
+				CBoard.ShowAttack();
 				CBoard.SetImage();
 				RenderTaken();
 			}
@@ -983,9 +994,7 @@ namespace RapChessGui
 			foreach (int c in moves)
 			{
 				int sou = c & 0xff;
-				int x = (sou & 0xf) - 4;
-				int y = (sou >> 4) - 4;
-				int i = y * 8 + x;
+				int i = CEngine.Con256To64(sou);
 				CBoard.list[i].color = Color.Yellow;
 			}
 		}
@@ -1019,6 +1028,7 @@ namespace RapChessGui
 					ShowValid(i);
 			}
 			CDrag.lastDes = i;
+			CDrag.lastSou = -1;
 		}
 
 		private void FormChess_FormClosed(object sender, FormClosedEventArgs e)
@@ -1090,6 +1100,10 @@ namespace RapChessGui
 		private void OptionsToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			FOptions.ShowDialog(this);
+			CBoard.ClearAttack();
+			CBoard.Prepare();
+			CBoard.animated = true;
+			RenderBoard();
 		}
 
 		private void ButTraining_Click(object sender, EventArgs e)

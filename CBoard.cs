@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.Collections.Generic;
 using RapIni;
 
 namespace RapChessGui
@@ -64,6 +65,7 @@ namespace RapChessGui
 
 	class CField
 	{
+		public bool attacked = false;
 		public Color color = Color.Empty;
 		public CPiece piece = null;
 	}
@@ -213,6 +215,33 @@ namespace RapChessGui
 				else
 					list[n].piece.SetImage(n);
 			}
+		}
+
+		public static void ShowAttack(bool w)
+		{
+			List<int> ml = CEngine.This.GenerateAllMoves(w, false);
+			foreach(int m in ml)
+			{
+				int d = (m >> 8) & 0xff;
+				if( (CEngine.g_board[d] & CEngine.colorEmpty) == 0)
+				{
+					int i = CEngine.Con256To64(d);
+					list[i].attacked = true;
+				}
+			}
+		}
+
+		public static void ClearAttack()
+		{
+			for (int n = 0; n < 64; n++)
+				list[n].attacked = false;
+		}
+
+		public static void ShowAttack()
+		{
+			ClearAttack();
+			ShowAttack(true);
+			ShowAttack(false);
 		}
 
 	}

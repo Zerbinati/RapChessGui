@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace RapChessGui
+﻿namespace RapChessGui
 {
-	class CMatch
+	class CModeMatch
 	{
 		public int rotate = 0;
 		public int games = 0;

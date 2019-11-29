@@ -57,13 +57,14 @@
     <Compile Include="CEngine.cs" />
     <Compile Include="CExtensions.cs" />
     <Compile Include="CHistory.cs" />
+    <Compile Include="CModeGame.cs" />
     <Compile Include="CRapLog.cs" />
-    <Compile Include="CMatch.cs" />
+    <Compile Include="CModeMatch.cs" />
     <Compile Include="CBoard.cs" />
     <Compile Include="CPlayerEng.cs" />
     <Compile Include="CPlayerList.cs" />
     <Compile Include="CRapIni.cs" />
-    <Compile Include="CTrainer.cs" />
+    <Compile Include="CModeTraining.cs" />
     <Compile Include="CUserList.cs" />
     <Compile Include="FormBook.cs">
       <SubType>Form</SubType>

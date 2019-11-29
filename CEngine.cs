@@ -140,6 +140,13 @@ namespace RapChessGui
 			Initialize();
 		}
 
+		public static int Con256To64(int i)
+		{
+			int x = (i & 0xf) - 4;
+			int y = (i >> 4) - 4;
+			return y * 8 + x;
+		}
+
 		public int GetGameState()
 		{
 			GenerateAllMoves(whiteTurn, false);
