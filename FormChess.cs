@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
@@ -633,7 +634,8 @@ namespace RapChessGui
 
 		public void RenderBoard()
 		{
-			string abc = "ABCDEFGH";
+			Stopwatch stopwatch = new Stopwatch();
+			stopwatch.Start();
 			boardRotate = (!PlayerList.player[1].computer && PlayerList.player[0].computer) ^ CData.rotateBoard;
 			if (!PlayerList.player[1].computer && !PlayerList.player[0].computer)
 				boardRotate = !Engine.whiteTurn;
@@ -665,19 +667,15 @@ namespace RapChessGui
 				labTimeT.BackColor = Color.Yellow;
 				labTimeB.BackColor = Color.LightGray;
 			}
-			pictureBox1.Image = new Bitmap(CBoard.bitmap);
+			pictureBox1.Image = new Bitmap(CBoard.bitmap[boardRotate ? 1 : 0]);
 			Graphics g = Graphics.FromImage(pictureBox1.Image);
 			Brush brushRed = new SolidBrush(Color.FromArgb(0x80, 0xff, 0x00, 0x00));
 			Brush brushYellow = new SolidBrush(Color.FromArgb(0x80, 0xff, 0xff, 0x00));
-			Font font = new Font(FontFamily.GenericSansSerif, 16, FontStyle.Bold);
 			Font fontPiece = new Font(pfc.Families[0], CBoard.field);
-			Brush foreBrush = new SolidBrush(Color.White);
 			Brush brushW = new SolidBrush(Color.White);
 			Brush brushB = new SolidBrush(Color.Black);
-			Pen outline = new Pen(Color.Black, 4);
 			Pen penW = new Pen(Color.Black, 4);
 			Pen penB = new Pen(Color.White, 4);
-			GraphicsPath gp = new GraphicsPath();
 			GraphicsPath gpW = new GraphicsPath();
 			GraphicsPath gpB = new GraphicsPath();
 			StringFormat sf = new StringFormat();
@@ -685,29 +683,6 @@ namespace RapChessGui
 			sf.LineAlignment = StringAlignment.Center;
 			g.SmoothingMode = SmoothingMode.HighQuality;
 			Rectangle rec = new Rectangle();
-			for (int n = 0; n < 8; n++)
-			{
-				int xr = boardRotate ? 7 - n : n;
-				int yr = boardRotate ? 7 - n : n;
-				int x2 = CBoard.margin + xr * CBoard.field;
-				int y2 = CBoard.margin + yr * CBoard.field;
-				rec.X = 0;
-				rec.Y = y2;
-				rec.Width = CBoard.margin;
-				rec.Height = CBoard.field;
-				string letter = (8 - n).ToString();
-				gp.AddString(letter, font.FontFamily, (int)font.Style, font.Size, rec, sf);
-				rec.X = pictureBox1.Width - CBoard.margin;
-				gp.AddString(letter, font.FontFamily, (int)font.Style, font.Size, rec, sf);
-				rec.X = x2;
-				rec.Y = 0;
-				rec.Width = CBoard.field;
-				rec.Height = CBoard.margin;
-				letter = abc[n].ToString();
-				gp.AddString(letter, font.FontFamily, (int)font.Style, font.Size, rec, sf);
-				rec.Y = pictureBox1.Height - CBoard.margin;
-				gp.AddString(letter, font.FontFamily, (int)font.Style, font.Size, rec, sf);
-			}
 			for (int y = 0; y < 8; y++)
 			{
 				int yr = boardRotate ? 7 - y : y;
@@ -752,8 +727,6 @@ namespace RapChessGui
 					gp1.AddString("pnbrqk"[image].ToString(), fontPiece.FontFamily, (int)fontPiece.Style, fontPiece.Size, rec, sf);
 				}
 			}
-			g.DrawPath(outline, gp);
-			g.FillPath(foreBrush, gp);
 			if (Engine.whiteTurn)
 			{
 				g.DrawPath(penB, gpB);
@@ -771,15 +744,12 @@ namespace RapChessGui
 
 			}
 			sf.Dispose();
-			outline.Dispose();
 			penW.Dispose();
 			penB.Dispose();
 			brushRed.Dispose();
 			brushYellow.Dispose();
-			foreBrush.Dispose();
 			brushW.Dispose();
 			brushB.Dispose();
-			font.Dispose();
 			fontPiece.Dispose();
 			g.Dispose();
 			pictureBox1.Refresh();
@@ -792,6 +762,10 @@ namespace RapChessGui
 				CBoard.SetImage();
 				RenderTaken();
 			}
+			stopwatch.Stop();
+			CData.FPSMs += stopwatch.ElapsedMilliseconds;
+			long fps = (++CData.FPSCount * 1000) / CData.FPSMs;
+			labFPS.Text = $"FPS {fps}";
 		}
 
 		void RenderInfo(CPlayer cp)

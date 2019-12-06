@@ -103,6 +103,7 @@
 			this.listView1 = new System.Windows.Forms.ListView();
 			this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.columnHeader6 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.butStartTournament = new System.Windows.Forms.Button();
 			this.tabPageTraining = new System.Windows.Forms.TabPage();
 			this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
@@ -164,7 +165,7 @@
 			this.labNodesT = new System.Windows.Forms.Label();
 			this.labDepthT = new System.Windows.Forms.Label();
 			this.labScoreT = new System.Windows.Forms.Label();
-			this.columnHeader6 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.labFPS = new System.Windows.Forms.Label();
 			this.menuStrip1.SuspendLayout();
 			this.panMenu.SuspendLayout();
 			this.panelT1.SuspendLayout();
@@ -365,6 +366,7 @@
 			// 
 			this.panMenu.BackColor = System.Drawing.SystemColors.Control;
 			this.panMenu.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+			this.panMenu.Controls.Add(this.labFPS);
 			this.panMenu.Controls.Add(this.menuStrip1);
 			this.panMenu.Dock = System.Windows.Forms.DockStyle.Top;
 			this.panMenu.Location = new System.Drawing.Point(0, 0);
@@ -986,6 +988,11 @@
 			this.columnHeader2.Text = "Elo";
 			this.columnHeader2.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
 			this.columnHeader2.Width = 80;
+			// 
+			// columnHeader6
+			// 
+			this.columnHeader6.Text = "Changes";
+			this.columnHeader6.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
 			// 
 			// butStartTournament
 			// 
@@ -1785,10 +1792,15 @@
 			this.labScoreT.TabIndex = 6;
 			this.labScoreT.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
-			// columnHeader6
+			// labFPS
 			// 
-			this.columnHeader6.Text = "Changes";
-			this.columnHeader6.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			this.labFPS.Dock = System.Windows.Forms.DockStyle.Right;
+			this.labFPS.Location = new System.Drawing.Point(813, 0);
+			this.labFPS.Name = "labFPS";
+			this.labFPS.Size = new System.Drawing.Size(87, 22);
+			this.labFPS.TabIndex = 2;
+			this.labFPS.Text = "FPS";
+			this.labFPS.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
 			// FormChess
 			// 
@@ -1980,6 +1992,7 @@
 		private System.Windows.Forms.ColumnHeader columnHeader4;
 		private System.Windows.Forms.ColumnHeader columnHeader5;
 		private System.Windows.Forms.ColumnHeader columnHeader6;
+		private System.Windows.Forms.Label labFPS;
 	}
 }
 

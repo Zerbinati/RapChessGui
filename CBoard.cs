@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Collections.Generic;
 using RapIni;
 
@@ -78,7 +79,7 @@ namespace RapChessGui
 		public const int field = 64;
 		public const int margin = 32;
 		public const int size = field * 8 + margin * 2;
-		public static Bitmap bitmap = new Bitmap(size, size);
+		public static Bitmap[] bitmap = new Bitmap[2];
 		public static Color color;
 
 		public static void Init()
@@ -130,9 +131,10 @@ namespace RapChessGui
 			animated = true;
 		}
 
-		public static void Prepare()
+		public static void Prepare(int index)
 		{
-			Graphics g = Graphics.FromImage(bitmap);
+			Bitmap bmp = new Bitmap(size,size);
+			Graphics g = Graphics.FromImage(bmp);
 			SolidBrush brush1 = new SolidBrush(color);
 			SolidBrush brush2 = new SolidBrush(Color.FromArgb(0x60, 0x00, 0x00, 0x00));
 			SolidBrush brush3 = new SolidBrush(Color.FromArgb(0x60, 0xff, 0xff, 0xff));
@@ -154,9 +156,58 @@ namespace RapChessGui
 					}
 				}
 			}
+			string abc = "ABCDEFGH";
+			Font font = new Font(FontFamily.GenericSansSerif, 16, FontStyle.Bold);
+			Rectangle rec = new Rectangle();
+			GraphicsPath gp = new GraphicsPath();
+			StringFormat sf = new StringFormat();
+			Brush foreBrush = new SolidBrush(Color.White);
+			Pen outline = new Pen(Color.Black, 4);
+			sf.Alignment = StringAlignment.Center;
+			sf.LineAlignment = StringAlignment.Center;
+			g.SmoothingMode = SmoothingMode.HighQuality;
+			for (int n = 0; n < 8; n++)
+			{
+				int xr = index == 1 ? 7 - n : n;
+				int yr = index == 1 ? 7 - n : n;
+				int x2 = margin + xr * field;
+				int y2 = margin + yr * field;
+				rec.X = 0;
+				rec.Y = y2;
+				rec.Width = margin;
+				rec.Height = field;
+				string letter = (8 - n).ToString();
+				gp.AddString(letter, font.FontFamily, (int)font.Style, font.Size, rec, sf);
+				rec.X = bmp.Width - margin;
+				gp.AddString(letter, font.FontFamily, (int)font.Style, font.Size, rec, sf);
+				rec.X = x2;
+				rec.Y = 0;
+				rec.Width = field;
+				rec.Height = margin;
+				letter = abc[n].ToString();
+				gp.AddString(letter, font.FontFamily, (int)font.Style, font.Size, rec, sf);
+				rec.Y = bmp.Height - margin;
+				gp.AddString(letter, font.FontFamily, (int)font.Style, font.Size, rec, sf);
+			}
+			g.DrawPath(outline, gp);
+			g.FillPath(foreBrush, gp);
+			bitmap[index] = new Bitmap(bmp);
 			brush1.Dispose();
 			brush2.Dispose();
 			brush3.Dispose();
+			bmp.Dispose();
+			sf.Dispose();
+			g.Dispose();
+			gp.Dispose();
+			font.Dispose();
+			foreBrush.Dispose();
+			outline.Dispose();
+		}
+
+		public static void Prepare()
+		{
+			Prepare(0);
+			Prepare(1);
 		}
 
 		static void MakeMove(int sou, int des)

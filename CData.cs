@@ -19,6 +19,8 @@ namespace RapChessGui
 
 	public static class CData
 	{
+		public static long FPSCount = 0;
+		public static long FPSMs = 0;
 		public static bool rotateBoard = false;
 		public static int gameState = 0;
 		public static int gameMode = 0;
