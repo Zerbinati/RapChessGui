@@ -20,14 +20,14 @@ namespace RapChessGui
 
 		public static FormChess This;
 		bool boardRotate;
-		int levelOrg;
 		int levelDif;
 		int levelMD;
 		int tournament;
 		private ColumnHeader SortingColumn = null;
 		List<int> moves = new List<int>();
-		CRapIni RapIni = new CRapIni();
-		CEngine Engine = new CEngine();
+		public CRapIni RapIni = new CRapIni();
+		public CRapLog RapLog = new CRapLog();
+		readonly CEngine Engine = new CEngine();
 		CPlayerList PlayerList = new CPlayerList();
 		CModeMatch Match = new CModeMatch();
 		CModeTraining Trainer = new CModeTraining();
@@ -83,6 +83,7 @@ namespace RapChessGui
 			FOptions.cbGameAutoElo.Checked = Convert.ToInt32(CRapIni.This.Read("options>game>autoelo", "1")) == 1;
 			FOptions.cbRotateBoard.Checked = Convert.ToInt32(CRapIni.This.Read("options>interface>rotate", "0")) == 1;
 			FOptions.cbAttack.Checked = Convert.ToInt32(CRapIni.This.Read("options>interface>attack", "0")) == 1;
+			FOptions.nudSpeed.Value = Convert.ToInt32(CRapIni.This.Read("options>interface>speed", "200"));
 			CBoard.LoadFromIni();
 		}
 
@@ -101,10 +102,9 @@ namespace RapChessGui
 			CRapIni.This.Write("options>interface>showponder", FOptions.cbShowPonder.Checked ? "1" : "0");
 			CRapIni.This.Write("options>interface>rotate", FOptions.cbRotateBoard.Checked ? "1" : "0");
 			CRapIni.This.Write("options>interface>attack", FOptions.cbAttack.Checked ? "1" : "0");
+			CRapIni.This.Write("options>interface>speed", FOptions.nudSpeed.Value.ToString());
 			CRapIni.This.Write("options>game>autoelo", FOptions.cbGameAutoElo.Checked ? "1" : "0");
 			CBoard.SaveToIni();
-			CUserList.SaveToIni();
-			RapIni.Save();
 		}
 
 		public void GetMessage(CPlayer p)
@@ -203,7 +203,7 @@ namespace RapChessGui
 							}
 							catch
 							{
-								CRapLog.Add($"{p.user.name} {msg}");
+								CRapLog.Add($"{p.user.name} ({p.user.engine}) ({msg})");
 							}
 						}
 						break;
@@ -338,7 +338,7 @@ namespace RapChessGui
 			emo = emo.ToLower();
 			CUser uw = PlayerList.CurPlayer().user;
 			CUser ul = PlayerList.SecPlayer().user;
-			if ((CData.gameMode == (int)CMode.game) && (uw.name == "Human") && (ul.name != "Human") && (cbComputer.Text == "Auto") && ((Engine.g_moveNumber >> 1) == 10))
+			if ((CData.gameMode == (int)CMode.game) && (uw.name == "Human") && (ul.name != "Human") && (cbComputer.Text == "Auto") && ((Engine.g_moveNumber >> 1) == 4))
 			{
 				uw.elo = levelMD.ToString();
 			}
@@ -412,22 +412,25 @@ namespace RapChessGui
 				{
 					if (CModeGame.ranked)
 					{
-						int newElo = levelOrg;
 						if (uw.name == "Human")
 						{
-							newElo += levelDif;
+							int newElo = uw.orgElo + levelDif;
 							uw.elo = newElo.ToString();
+							uw.orgElo = newElo;
+							uw.SaveToIni();
+							labLast.Text += $" new elo {newElo}";
 						}
 						else
 						{
-							newElo -= levelDif;
+							int newElo = ul.orgElo - levelDif;
 							if (newElo < 0)
 								newElo = 0;
 							ul.elo = newElo.ToString();
+							ul.orgElo = newElo;
+							ul.SaveToIni();
+							labLast.Text += $" new elo {newElo}";
 						}
-						labLast.Text += $" new elo {newElo}";
 					}
-					CUserList.SaveToIni();
 				}
 			}
 			if (CData.gameMode == (int)CMode.match)
@@ -480,8 +483,9 @@ namespace RapChessGui
 				int newL = Convert.ToInt32(eloL * 0.9 + OL * 0.1);
 				uw.elo = newW.ToString();
 				ul.elo = newL.ToString();
+				uw.SaveToIni();
+				ul.SaveToIni();
 				ShowTournament();
-				CUserList.SaveToIni();
 			}
 			if (CData.gameMode == (int)CMode.training)
 			{
@@ -564,11 +568,11 @@ namespace RapChessGui
 		void StartGame()
 		{
 			CModeGame.ranked = (cbComputer.Text == "Auto") && FOptions.cbGameAutoElo.Checked;
-			levelOrg = Convert.ToInt32(CUserList.GetUser("Human").elo);
+			CUser uh = CUserList.GetUser("Human");
 			levelDif = 2000 / listView1.Items.Count;
 			if (levelDif < 10)
 				levelDif = 10;
-			levelMD = levelOrg - levelDif;
+			levelMD = uh.orgElo - levelDif;
 			if (levelMD < 0)
 				levelMD = 0;
 			SetMode((int)CMode.game);
@@ -763,9 +767,8 @@ namespace RapChessGui
 				RenderTaken();
 			}
 			stopwatch.Stop();
-			CData.FPSMs += stopwatch.ElapsedMilliseconds;
-			long fps = (++CData.FPSCount * 1000) / CData.FPSMs;
-			labFPS.Text = $"FPS {fps}";
+			CData.fps = CData.fps * 0.9 + 100 / stopwatch.ElapsedMilliseconds;
+			labFPS.Text = $"FPS {Convert.ToInt32(CData.fps)}";
 		}
 
 		void RenderInfo(CPlayer cp)
@@ -1172,11 +1175,6 @@ namespace RapChessGui
 				FormBook.This.ShowDialog(this);
 		}
 
-		private void saveToClipboardToolStripMenuItem1_Click(object sender, EventArgs e)
-		{
-			Clipboard.SetText(CHistory.GetMoves());
-		}
-
 		private void cbComputer_TextChanged(object sender, EventArgs e)
 		{
 			CUser uc = CUserList.GetUser(cbComputer.Text);
@@ -1392,5 +1390,9 @@ namespace RapChessGui
 			PlayerList.Rotate();
 		}
 
+		private void SaveToClipboardToolStripMenuItem1_Click(object sender, EventArgs e)
+		{
+			Clipboard.SetText(CHistory.GetMoves());
+		}
 	}
 }

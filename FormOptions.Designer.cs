@@ -31,23 +31,26 @@
 			this.colorDialog1 = new System.Windows.Forms.ColorDialog();
 			this.butDefault = new System.Windows.Forms.Button();
 			this.gbInterface = new System.Windows.Forms.GroupBox();
+			this.cbAttack = new System.Windows.Forms.CheckBox();
 			this.cbShowPonder = new System.Windows.Forms.CheckBox();
 			this.cbRotateBoard = new System.Windows.Forms.CheckBox();
 			this.butColor = new System.Windows.Forms.Button();
 			this.button1 = new System.Windows.Forms.Button();
 			this.gbGame = new System.Windows.Forms.GroupBox();
 			this.cbGameAutoElo = new System.Windows.Forms.CheckBox();
-			this.cbAttack = new System.Windows.Forms.CheckBox();
+			this.nudSpeed = new System.Windows.Forms.NumericUpDown();
+			this.label1 = new System.Windows.Forms.Label();
 			this.gbInterface.SuspendLayout();
 			this.gbGame.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.nudSpeed)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// butDefault
 			// 
 			this.butDefault.Dock = System.Windows.Forms.DockStyle.Top;
-			this.butDefault.Location = new System.Drawing.Point(0, 147);
+			this.butDefault.Location = new System.Drawing.Point(0, 171);
 			this.butDefault.Name = "butDefault";
-			this.butDefault.Size = new System.Drawing.Size(261, 24);
+			this.butDefault.Size = new System.Drawing.Size(286, 24);
 			this.butDefault.TabIndex = 2;
 			this.butDefault.Text = "Default";
 			this.butDefault.UseVisualStyleBackColor = true;
@@ -55,6 +58,8 @@
 			// 
 			// gbInterface
 			// 
+			this.gbInterface.Controls.Add(this.label1);
+			this.gbInterface.Controls.Add(this.nudSpeed);
 			this.gbInterface.Controls.Add(this.cbAttack);
 			this.gbInterface.Controls.Add(this.cbShowPonder);
 			this.gbInterface.Controls.Add(this.cbRotateBoard);
@@ -62,10 +67,21 @@
 			this.gbInterface.Dock = System.Windows.Forms.DockStyle.Top;
 			this.gbInterface.Location = new System.Drawing.Point(0, 39);
 			this.gbInterface.Name = "gbInterface";
-			this.gbInterface.Size = new System.Drawing.Size(261, 108);
+			this.gbInterface.Size = new System.Drawing.Size(286, 132);
 			this.gbInterface.TabIndex = 4;
 			this.gbInterface.TabStop = false;
 			this.gbInterface.Text = "Interface";
+			// 
+			// cbAttack
+			// 
+			this.cbAttack.AutoSize = true;
+			this.cbAttack.Dock = System.Windows.Forms.DockStyle.Top;
+			this.cbAttack.Location = new System.Drawing.Point(3, 50);
+			this.cbAttack.Name = "cbAttack";
+			this.cbAttack.Size = new System.Drawing.Size(280, 17);
+			this.cbAttack.TabIndex = 7;
+			this.cbAttack.Text = "Show attack";
+			this.cbAttack.UseVisualStyleBackColor = true;
 			// 
 			// cbShowPonder
 			// 
@@ -73,7 +89,7 @@
 			this.cbShowPonder.Dock = System.Windows.Forms.DockStyle.Top;
 			this.cbShowPonder.Location = new System.Drawing.Point(3, 33);
 			this.cbShowPonder.Name = "cbShowPonder";
-			this.cbShowPonder.Size = new System.Drawing.Size(255, 17);
+			this.cbShowPonder.Size = new System.Drawing.Size(280, 17);
 			this.cbShowPonder.TabIndex = 6;
 			this.cbShowPonder.Text = "Show ponder";
 			this.cbShowPonder.UseVisualStyleBackColor = true;
@@ -84,7 +100,7 @@
 			this.cbRotateBoard.Dock = System.Windows.Forms.DockStyle.Top;
 			this.cbRotateBoard.Location = new System.Drawing.Point(3, 16);
 			this.cbRotateBoard.Name = "cbRotateBoard";
-			this.cbRotateBoard.Size = new System.Drawing.Size(255, 17);
+			this.cbRotateBoard.Size = new System.Drawing.Size(280, 17);
 			this.cbRotateBoard.TabIndex = 5;
 			this.cbRotateBoard.Text = "Rotate board";
 			this.cbRotateBoard.UseVisualStyleBackColor = true;
@@ -93,9 +109,9 @@
 			// butColor
 			// 
 			this.butColor.Dock = System.Windows.Forms.DockStyle.Bottom;
-			this.butColor.Location = new System.Drawing.Point(3, 81);
+			this.butColor.Location = new System.Drawing.Point(3, 105);
 			this.butColor.Name = "butColor";
-			this.butColor.Size = new System.Drawing.Size(255, 24);
+			this.butColor.Size = new System.Drawing.Size(280, 24);
 			this.butColor.TabIndex = 4;
 			this.butColor.Text = "Board color";
 			this.butColor.UseVisualStyleBackColor = true;
@@ -105,9 +121,9 @@
 			// 
 			this.button1.DialogResult = System.Windows.Forms.DialogResult.OK;
 			this.button1.Dock = System.Windows.Forms.DockStyle.Top;
-			this.button1.Location = new System.Drawing.Point(0, 171);
+			this.button1.Location = new System.Drawing.Point(0, 195);
 			this.button1.Name = "button1";
-			this.button1.Size = new System.Drawing.Size(261, 24);
+			this.button1.Size = new System.Drawing.Size(286, 24);
 			this.button1.TabIndex = 1;
 			this.button1.Text = "Ok";
 			this.button1.UseVisualStyleBackColor = true;
@@ -118,7 +134,7 @@
 			this.gbGame.Dock = System.Windows.Forms.DockStyle.Top;
 			this.gbGame.Location = new System.Drawing.Point(0, 0);
 			this.gbGame.Name = "gbGame";
-			this.gbGame.Size = new System.Drawing.Size(261, 39);
+			this.gbGame.Size = new System.Drawing.Size(286, 39);
 			this.gbGame.TabIndex = 6;
 			this.gbGame.TabStop = false;
 			this.gbGame.Text = "Game";
@@ -129,27 +145,47 @@
 			this.cbGameAutoElo.Dock = System.Windows.Forms.DockStyle.Top;
 			this.cbGameAutoElo.Location = new System.Drawing.Point(3, 16);
 			this.cbGameAutoElo.Name = "cbGameAutoElo";
-			this.cbGameAutoElo.Size = new System.Drawing.Size(255, 17);
+			this.cbGameAutoElo.Size = new System.Drawing.Size(280, 17);
 			this.cbGameAutoElo.TabIndex = 5;
 			this.cbGameAutoElo.Text = "Auto elo";
 			this.cbGameAutoElo.UseVisualStyleBackColor = true;
 			// 
-			// cbAttack
+			// nudSpeed
 			// 
-			this.cbAttack.AutoSize = true;
-			this.cbAttack.Dock = System.Windows.Forms.DockStyle.Top;
-			this.cbAttack.Location = new System.Drawing.Point(3, 50);
-			this.cbAttack.Name = "cbAttack";
-			this.cbAttack.Size = new System.Drawing.Size(255, 17);
-			this.cbAttack.TabIndex = 7;
-			this.cbAttack.Text = "Show attack";
-			this.cbAttack.UseVisualStyleBackColor = true;
+			this.nudSpeed.Location = new System.Drawing.Point(6, 79);
+			this.nudSpeed.Maximum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
+			this.nudSpeed.Minimum = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+			this.nudSpeed.Name = "nudSpeed";
+			this.nudSpeed.Size = new System.Drawing.Size(156, 20);
+			this.nudSpeed.TabIndex = 8;
+			this.nudSpeed.Value = new decimal(new int[] {
+            200,
+            0,
+            0,
+            0});
+			// 
+			// label1
+			// 
+			this.label1.AutoSize = true;
+			this.label1.Location = new System.Drawing.Point(181, 86);
+			this.label1.Name = "label1";
+			this.label1.Size = new System.Drawing.Size(85, 13);
+			this.label1.TabIndex = 9;
+			this.label1.Text = "Animation speed";
 			// 
 			// FormOptions
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(261, 201);
+			this.ClientSize = new System.Drawing.Size(286, 225);
 			this.Controls.Add(this.button1);
 			this.Controls.Add(this.butDefault);
 			this.Controls.Add(this.gbInterface);
@@ -164,6 +200,7 @@
 			this.gbInterface.PerformLayout();
 			this.gbGame.ResumeLayout(false);
 			this.gbGame.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)(this.nudSpeed)).EndInit();
 			this.ResumeLayout(false);
 
 		}
@@ -179,5 +216,7 @@
 		private System.Windows.Forms.GroupBox gbGame;
 		public System.Windows.Forms.CheckBox cbGameAutoElo;
 		public System.Windows.Forms.CheckBox cbAttack;
+		private System.Windows.Forms.Label label1;
+		public System.Windows.Forms.NumericUpDown nudSpeed;
 	}
 }

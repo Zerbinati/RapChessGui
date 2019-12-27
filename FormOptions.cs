@@ -6,9 +6,12 @@ namespace RapChessGui
 {
 	public partial class FormOptions : Form
 	{
+		public static FormOptions This;
+
 		public FormOptions()
 		{
 			InitializeComponent();
+			This = this;
 		}
 
 		private void CbRotateBoard_CheckedChanged(object sender, EventArgs e)

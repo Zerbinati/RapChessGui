@@ -19,12 +19,11 @@ namespace RapChessGui
 
 	public static class CData
 	{
-		public static long FPSCount = 0;
-		public static long FPSMs = 0;
 		public static bool rotateBoard = false;
 		public static int gameState = 0;
 		public static int gameMode = 0;
 		public static int back = 0;
+		public static double fps = 0;
 		public static string modeName = "Game";
 		public static string[] arrModeNames = new string[] { "depth", "movetime" };
 		public static List<string> bookNames = new List<string>();

@@ -116,7 +116,7 @@ namespace RapChessGui
 		{
 			for (int n = 0; n < list.Count; n++)
 			{
-				var user = list[n];
+				CUser user = list[n];
 				if (user.name == name)
 					return n;
 			}
@@ -132,10 +132,10 @@ namespace RapChessGui
 			return uc;
 		}
 
-		static CUser GetUserElo(CUser user, int dir = 0)
+		static CUser GetUserElo(CUser user)
 		{
 			CUser u = null;
-			int del = 10000;
+			int bstDel = 10000;
 			int elo = Convert.ToInt32(user.elo);
 			foreach (CUser cu in list)
 			{
@@ -144,29 +144,40 @@ namespace RapChessGui
 				if (cu.engine == "Human")
 					continue;
 				int curE = Convert.ToInt32(cu.elo);
-				if ((dir == 1) && (curE > elo))
-					continue;
-				if ((dir == 2) && (curE < elo))
-					continue;
 				int curDel = Math.Abs(elo - curE);
-				if (curDel < del)
+				if (bstDel > curDel)
 				{
-					del = curDel;
+					bstDel = curDel;
 					u = cu;
 				}
 			}
 			return u;
 		}
 
+		public static void Sort()
+		{
+			list.Sort(delegate (CUser u1, CUser u2)
+			{
+				return Convert.ToInt32(u1.elo) - Convert.ToInt32(u2.elo);
+			});
+		}
+
 		public static CUser GetUserEloHL(CUser user)
 		{
-			CUser eloH = GetUserElo(user, 2);
-			CUser eloL = GetUserElo(user, 1);
-			if (eloH == null)
-				return eloL;
-			if (eloL == null)
-				return eloH;
-			return CEngine.random.Next(2) == 0 ? eloL : eloH;
+			List<CUser> lu = new List<CUser>();
+			Sort();
+			int i = GetIndex(user.name);
+			for (int n = i - 2; n <= i + 2; n++)
+				if ((n >= 0) && (n < list.Count))
+				{
+					CUser u = list[n];
+					if ((u != user) && (u.engine != "Human"))
+						lu.Add(u);
+				}
+			if (lu.Count == 0)
+				return user;
+			int r = CEngine.random.Next(lu.Count);
+			return lu[r];
 		}
 
 		static CUser GetUserHuman()
@@ -254,6 +265,7 @@ namespace RapChessGui
 
 		public static void SaveToIni()
 		{
+			CRapIni.This.DeleteKey("player");
 			List<string> names = new List<string>();
 			for (int n = 0; n < list.Count; n++)
 			{

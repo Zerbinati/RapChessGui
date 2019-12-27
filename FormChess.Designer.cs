@@ -52,6 +52,7 @@
 			this.terminateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.closeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.panMenu = new System.Windows.Forms.Panel();
+			this.labFPS = new System.Windows.Forms.Label();
 			this.panelT1 = new System.Windows.Forms.Panel();
 			this.labTakenT = new System.Windows.Forms.Label();
 			this.labProtocolT = new System.Windows.Forms.Label();
@@ -165,7 +166,6 @@
 			this.labNodesT = new System.Windows.Forms.Label();
 			this.labDepthT = new System.Windows.Forms.Label();
 			this.labScoreT = new System.Windows.Forms.Label();
-			this.labFPS = new System.Windows.Forms.Label();
 			this.menuStrip1.SuspendLayout();
 			this.panMenu.SuspendLayout();
 			this.panelT1.SuspendLayout();
@@ -215,7 +215,7 @@
             this.engineToolStripMenuItem});
 			this.menuStrip1.Location = new System.Drawing.Point(0, 2);
 			this.menuStrip1.Name = "menuStrip1";
-			this.menuStrip1.Size = new System.Drawing.Size(468, 24);
+			this.menuStrip1.Size = new System.Drawing.Size(588, 24);
 			this.menuStrip1.TabIndex = 1;
 			this.menuStrip1.Text = "menuStrip1";
 			// 
@@ -238,14 +238,14 @@
 			// backToolStripMenuItem
 			// 
 			this.backToolStripMenuItem.Name = "backToolStripMenuItem";
-			this.backToolStripMenuItem.Size = new System.Drawing.Size(117, 22);
+			this.backToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
 			this.backToolStripMenuItem.Text = "Back";
 			this.backToolStripMenuItem.Click += new System.EventHandler(this.backToolStripMenuItem_Click_1);
 			// 
 			// forwardToolStripMenuItem
 			// 
 			this.forwardToolStripMenuItem.Name = "forwardToolStripMenuItem";
-			this.forwardToolStripMenuItem.Size = new System.Drawing.Size(117, 22);
+			this.forwardToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
 			this.forwardToolStripMenuItem.Text = "Forward";
 			this.forwardToolStripMenuItem.Click += new System.EventHandler(this.forwardToolStripMenuItem_Click);
 			// 
@@ -286,7 +286,7 @@
 			this.saveToClipboardToolStripMenuItem1.Name = "saveToClipboardToolStripMenuItem1";
 			this.saveToClipboardToolStripMenuItem1.Size = new System.Drawing.Size(182, 22);
 			this.saveToClipboardToolStripMenuItem1.Text = "Save to clipboard";
-			this.saveToClipboardToolStripMenuItem1.Click += new System.EventHandler(this.saveToClipboardToolStripMenuItem1_Click);
+			this.saveToClipboardToolStripMenuItem1.Click += new System.EventHandler(this.SaveToClipboardToolStripMenuItem1_Click);
 			// 
 			// loadFromClipboardToolStripMenuItem1
 			// 
@@ -373,6 +373,16 @@
 			this.panMenu.Name = "panMenu";
 			this.panMenu.Size = new System.Drawing.Size(904, 26);
 			this.panMenu.TabIndex = 26;
+			// 
+			// labFPS
+			// 
+			this.labFPS.Dock = System.Windows.Forms.DockStyle.Right;
+			this.labFPS.Location = new System.Drawing.Point(813, 0);
+			this.labFPS.Name = "labFPS";
+			this.labFPS.Size = new System.Drawing.Size(87, 22);
+			this.labFPS.TabIndex = 2;
+			this.labFPS.Text = "FPS";
+			this.labFPS.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
 			// panelT1
 			// 
@@ -1791,16 +1801,6 @@
 			this.labScoreT.Size = new System.Drawing.Size(150, 26);
 			this.labScoreT.TabIndex = 6;
 			this.labScoreT.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			// 
-			// labFPS
-			// 
-			this.labFPS.Dock = System.Windows.Forms.DockStyle.Right;
-			this.labFPS.Location = new System.Drawing.Point(813, 0);
-			this.labFPS.Name = "labFPS";
-			this.labFPS.Size = new System.Drawing.Size(87, 22);
-			this.labFPS.TabIndex = 2;
-			this.labFPS.Text = "FPS";
-			this.labFPS.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
 			// FormChess
 			// 

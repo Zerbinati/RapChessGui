@@ -144,7 +144,6 @@ namespace RapChessGui
 			{
 				FormLog.This.richTextBox1.AppendText($"{user.name} < {msg}\n", Color.Brown);
 				PlayerEng.streamWriter.WriteLine(msg);
-				Thread.Sleep(16);
 			}
 		}
 

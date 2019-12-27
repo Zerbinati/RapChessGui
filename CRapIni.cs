@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace RapIni
 {
-	class CRapIni
+	public class CRapIni
 	{
 		public static CRapIni This;
 		string path;
@@ -26,11 +26,6 @@ namespace RapIni
 			This = this;
 			path = new FileInfo(name + ".ini").FullName.ToString();
 			Load();
-		}
-
-		~CRapIni()
-		{
-			Save();
 		}
 
 		public void Write(string key, string value)
@@ -110,7 +105,7 @@ namespace RapIni
 			}
 		}
 
-		public bool Save()
+		private bool Save()
 		{
 			list.Sort();
 			try

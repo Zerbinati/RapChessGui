@@ -6,7 +6,7 @@ using System.Reflection;
 
 namespace RapLog
 {
-	class CRapLog
+	public class CRapLog
 	{
 
 		public static void Add(string m)
@@ -14,11 +14,12 @@ namespace RapLog
 			List<string> list = new List<string>();
 			string name = Assembly.GetExecutingAssembly().GetName().Name;
 			string path = new FileInfo(name + ".log").FullName.ToString();
-			list = File.ReadAllLines(path).ToList();
-			list.Add(m);
+			if (File.Exists(path))
+				list = File.ReadAllLines(path).ToList();
+			list.Add($"{DateTime.Now.ToString()} {m}");
 			int remove = Math.Max(0, list.Count - 100);
 			list.RemoveRange(0, remove);
-			File.WriteAllLines(path,list);
+			File.WriteAllLines(path, list);
 		}
 
 	}

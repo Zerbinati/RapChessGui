@@ -15,13 +15,13 @@ namespace RapChessGui
 		public Point souXY = new Point();
 		public Point desXY = new Point();
 		public DateTime dt;
-		double time = 200;
 
 		public bool Render()
 		{
 			if ((curXY.X == desXY.X) && (curXY.Y == desXY.Y))
 				return false;
-			double dif = (DateTime.Now - dt).TotalMilliseconds / time;
+			int speed = Convert.ToInt32(FormOptions.This.nudSpeed.Value);
+			double dif = (DateTime.Now - dt).TotalMilliseconds / speed;
 			if (dif >= 1)
 			{
 				curXY.X = desXY.X;
@@ -133,11 +133,21 @@ namespace RapChessGui
 
 		public static void Prepare(int index)
 		{
+			string abc = "ABCDEFGH";
+			Rectangle rec = new Rectangle();
 			Bitmap bmp = new Bitmap(size,size);
 			Graphics g = Graphics.FromImage(bmp);
 			SolidBrush brush1 = new SolidBrush(color);
 			SolidBrush brush2 = new SolidBrush(Color.FromArgb(0x60, 0x00, 0x00, 0x00));
 			SolidBrush brush3 = new SolidBrush(Color.FromArgb(0x60, 0xff, 0xff, 0xff));
+			Font font = new Font(FontFamily.GenericSansSerif, 16, FontStyle.Bold);
+			GraphicsPath gp = new GraphicsPath();
+			StringFormat sf = new StringFormat();
+			Brush foreBrush = new SolidBrush(Color.White);
+			Pen outline = new Pen(Color.Black, 4);
+			sf.Alignment = StringAlignment.Center;
+			sf.LineAlignment = StringAlignment.Center;
+			g.SmoothingMode = SmoothingMode.HighQuality;
 			g.FillRectangle(brush1, 0, 0, size, size);
 			for (int y = 0; y < 8; y++)
 			{
@@ -156,16 +166,6 @@ namespace RapChessGui
 					}
 				}
 			}
-			string abc = "ABCDEFGH";
-			Font font = new Font(FontFamily.GenericSansSerif, 16, FontStyle.Bold);
-			Rectangle rec = new Rectangle();
-			GraphicsPath gp = new GraphicsPath();
-			StringFormat sf = new StringFormat();
-			Brush foreBrush = new SolidBrush(Color.White);
-			Pen outline = new Pen(Color.Black, 4);
-			sf.Alignment = StringAlignment.Center;
-			sf.LineAlignment = StringAlignment.Center;
-			g.SmoothingMode = SmoothingMode.HighQuality;
 			for (int n = 0; n < 8; n++)
 			{
 				int xr = index == 1 ? 7 - n : n;
@@ -196,9 +196,9 @@ namespace RapChessGui
 			brush2.Dispose();
 			brush3.Dispose();
 			bmp.Dispose();
-			sf.Dispose();
 			g.Dispose();
 			gp.Dispose();
+			sf.Dispose();
 			font.Dispose();
 			foreBrush.Dispose();
 			outline.Dispose();
