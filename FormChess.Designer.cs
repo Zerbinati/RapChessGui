@@ -166,6 +166,8 @@
 			this.labNodesT = new System.Windows.Forms.Label();
 			this.labDepthT = new System.Windows.Forms.Label();
 			this.labScoreT = new System.Windows.Forms.Label();
+			this.groupBox7 = new System.Windows.Forms.GroupBox();
+			this.clbCastling = new System.Windows.Forms.CheckedListBox();
 			this.menuStrip1.SuspendLayout();
 			this.panMenu.SuspendLayout();
 			this.panelT1.SuspendLayout();
@@ -192,6 +194,7 @@
 			this.panel1.SuspendLayout();
 			this.panelB2.SuspendLayout();
 			this.panelT2.SuspendLayout();
+			this.groupBox7.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// timer1
@@ -215,7 +218,7 @@
             this.engineToolStripMenuItem});
 			this.menuStrip1.Location = new System.Drawing.Point(0, 2);
 			this.menuStrip1.Name = "menuStrip1";
-			this.menuStrip1.Size = new System.Drawing.Size(588, 24);
+			this.menuStrip1.Size = new System.Drawing.Size(468, 24);
 			this.menuStrip1.TabIndex = 1;
 			this.menuStrip1.Text = "menuStrip1";
 			// 
@@ -238,14 +241,14 @@
 			// backToolStripMenuItem
 			// 
 			this.backToolStripMenuItem.Name = "backToolStripMenuItem";
-			this.backToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+			this.backToolStripMenuItem.Size = new System.Drawing.Size(117, 22);
 			this.backToolStripMenuItem.Text = "Back";
 			this.backToolStripMenuItem.Click += new System.EventHandler(this.backToolStripMenuItem_Click_1);
 			// 
 			// forwardToolStripMenuItem
 			// 
 			this.forwardToolStripMenuItem.Name = "forwardToolStripMenuItem";
-			this.forwardToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+			this.forwardToolStripMenuItem.Size = new System.Drawing.Size(117, 22);
 			this.forwardToolStripMenuItem.Text = "Forward";
 			this.forwardToolStripMenuItem.Click += new System.EventHandler(this.forwardToolStripMenuItem_Click);
 			// 
@@ -1408,6 +1411,7 @@
 			// 
 			// tabPageEdit
 			// 
+			this.tabPageEdit.Controls.Add(this.groupBox7);
 			this.tabPageEdit.Controls.Add(this.gbToMove);
 			this.tabPageEdit.Controls.Add(this.butClearBoard);
 			this.tabPageEdit.Location = new System.Drawing.Point(4, 25);
@@ -1475,7 +1479,6 @@
 			this.pictureBox1.Size = new System.Drawing.Size(576, 576);
 			this.pictureBox1.TabIndex = 8;
 			this.pictureBox1.TabStop = false;
-			this.pictureBox1.DoubleClick += new System.EventHandler(this.pictureBox1_DoubleClick);
 			this.pictureBox1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseDown);
 			this.pictureBox1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseMove);
 			this.pictureBox1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseUp);
@@ -1802,6 +1805,32 @@
 			this.labScoreT.TabIndex = 6;
 			this.labScoreT.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
+			// groupBox7
+			// 
+			this.groupBox7.Controls.Add(this.clbCastling);
+			this.groupBox7.Dock = System.Windows.Forms.DockStyle.Top;
+			this.groupBox7.Location = new System.Drawing.Point(0, 78);
+			this.groupBox7.Name = "groupBox7";
+			this.groupBox7.Size = new System.Drawing.Size(320, 84);
+			this.groupBox7.TabIndex = 2;
+			this.groupBox7.TabStop = false;
+			this.groupBox7.Text = "Castling possibilities";
+			// 
+			// clbCastling
+			// 
+			this.clbCastling.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.clbCastling.FormattingEnabled = true;
+			this.clbCastling.Items.AddRange(new object[] {
+            "White Short",
+            "White Long",
+            "Black Short",
+            "Black Long"});
+			this.clbCastling.Location = new System.Drawing.Point(3, 16);
+			this.clbCastling.Name = "clbCastling";
+			this.clbCastling.Size = new System.Drawing.Size(314, 65);
+			this.clbCastling.TabIndex = 0;
+			this.clbCastling.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.clbCastling_ItemCheck);
+			// 
 			// FormChess
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1852,6 +1881,7 @@
 			this.panel1.ResumeLayout(false);
 			this.panelB2.ResumeLayout(false);
 			this.panelT2.ResumeLayout(false);
+			this.groupBox7.ResumeLayout(false);
 			this.ResumeLayout(false);
 
 		}
@@ -1993,6 +2023,8 @@
 		private System.Windows.Forms.ColumnHeader columnHeader5;
 		private System.Windows.Forms.ColumnHeader columnHeader6;
 		private System.Windows.Forms.Label labFPS;
+		private System.Windows.Forms.GroupBox groupBox7;
+		private System.Windows.Forms.CheckedListBox clbCastling;
 	}
 }
 

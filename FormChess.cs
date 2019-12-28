@@ -288,6 +288,12 @@ namespace RapChessGui
 			List<RadioButton> list = gbToMove.Controls.OfType<RadioButton>().ToList();
 			int i = Engine.whiteTurn ? 1 : 0;
 			list[i].Select();
+			int cr = Engine.g_castleRights;
+			clbCastling.SetItemChecked(0, (Engine.g_castleRights & 1) > 0);
+			clbCastling.SetItemChecked(1, (Engine.g_castleRights & 2) > 0);
+			clbCastling.SetItemChecked(2, (Engine.g_castleRights & 4) > 0);
+			clbCastling.SetItemChecked(3, (Engine.g_castleRights & 8) > 0);
+			Engine.g_castleRights = cr;
 		}
 
 		void Reset()
@@ -545,8 +551,8 @@ namespace RapChessGui
 			CPlayer pw = PlayerList.player[0];
 			CPlayer pb = PlayerList.player[1];
 			FormLog.This.richTextBox1.Clear();
-			if(pw.user!=null)
-			FormLog.This.richTextBox1.AppendText($"White {pw.user.name} {pw.user.engine} {pw.user.parameters}\n", Color.Gray);
+			if (pw.user != null)
+				FormLog.This.richTextBox1.AppendText($"White {pw.user.name} {pw.user.engine} {pw.user.parameters}\n", Color.Gray);
 			if (pb.user != null)
 				FormLog.This.richTextBox1.AppendText($"Black {pb.user.name} {pb.user.engine} {pb.user.parameters}\n", Color.Gray);
 			labBack.Text = $"Back {CData.back}";
@@ -761,8 +767,8 @@ namespace RapChessGui
 			CBoard.Render();
 			if (!CBoard.animated)
 			{
-				if(FOptions.cbAttack.Checked)
-				CBoard.ShowAttack();
+				if (FOptions.cbAttack.Checked)
+					CBoard.ShowAttack();
 				CBoard.SetImage();
 				RenderTaken();
 			}
@@ -903,7 +909,7 @@ namespace RapChessGui
 		{
 			MoveToRtb(CHistory.moveList.Count, piece, emo);
 			CHistory.AddMove(piece, emo);
-			CEngine.EmoToSD(emo,out CDrag.lastSou,out CDrag.lastDes);
+			CEngine.EmoToSD(emo, out CDrag.lastSou, out CDrag.lastDes);
 		}
 
 		void ShowHistory()
@@ -923,7 +929,7 @@ namespace RapChessGui
 			{
 				Engine.MakeMove(m.emo);
 			}
-			CEngine.EmoToSD(CHistory.LastMove(),out CDrag.lastSou,out CDrag.lastDes);
+			CEngine.EmoToSD(CHistory.LastMove(), out CDrag.lastSou, out CDrag.lastDes);
 			CBoard.Fill();
 			ShowHistory();
 		}
@@ -1282,9 +1288,10 @@ namespace RapChessGui
 						CEngine.g_board[i] = CEngine.colorWhite | CEngine.piecePawn;
 					else
 					{
-						if (++r > CEngine.pieceKing)
-							r = CEngine.piecePawn;
-						CEngine.g_board[i] = CEngine.colorWhite | r;
+						if (++r == CEngine.pieceKing + 1)
+							CEngine.g_board[i] = CEngine.colorEmpty;
+						else
+							CEngine.g_board[i] = CEngine.colorWhite | r;
 					}
 				}
 				if (e.Button == MouseButtons.Right)
@@ -1293,9 +1300,10 @@ namespace RapChessGui
 						CEngine.g_board[i] = CEngine.colorBlack | CEngine.piecePawn;
 					else
 					{
-						if (++r > CEngine.pieceKing)
-							r = CEngine.piecePawn;
-						CEngine.g_board[i] = CEngine.colorBlack | r;
+						if (++r == CEngine.pieceKing + 1)
+							CEngine.g_board[i] = CEngine.colorEmpty;
+						else
+							CEngine.g_board[i] = CEngine.colorBlack | r;
 					}
 				}
 				if (e.Button == MouseButtons.Middle)
@@ -1335,17 +1343,6 @@ namespace RapChessGui
 					TryMove(CDrag.lastDes, CDrag.mouseIndex);
 				CDrag.dragged = false;
 				CBoard.animated = true;
-			}
-		}
-
-		private void pictureBox1_DoubleClick(object sender, EventArgs e)
-		{
-			if (CData.gameMode == (int)CMode.edit)
-			{
-				int i = CEngine.arrField[CDrag.mouseIndex];
-				CEngine.g_board[i] = CEngine.colorEmpty;
-				CBoard.UpdateField(CDrag.mouseIndex);
-				RenderBoard();
 			}
 		}
 
@@ -1393,6 +1390,24 @@ namespace RapChessGui
 		private void SaveToClipboardToolStripMenuItem1_Click(object sender, EventArgs e)
 		{
 			Clipboard.SetText(CHistory.GetMoves());
+		}
+
+		private void clbCastling_ItemCheck(object sender, ItemCheckEventArgs e)
+		{
+			switch(e.Index){
+				case 0:
+					Engine.g_castleRights ^= 1;
+					break;
+				case 1:
+					Engine.g_castleRights ^= 2;
+					break;
+				case 2:
+					Engine.g_castleRights ^= 4;
+					break;
+				case 3:
+					Engine.g_castleRights ^= 8;
+					break;
+			}
 		}
 	}
 }

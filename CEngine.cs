@@ -86,7 +86,7 @@ namespace RapChessGui
 		const int maskCastle = moveflagCastleKing | moveflagCastleQueen;
 		const int maskColor = colorBlack | colorWhite;
 		int g_captured = 0;
-		int g_castleRights = 0xf;
+		public int g_castleRights = 0xf;
 		int g_depth = 0;
 		int g_hash = 0;
 		int g_passing = 0;
