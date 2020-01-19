@@ -68,17 +68,10 @@ namespace RapChessGui
 
 		void IniLoad()
 		{
-			cbColor.SelectedIndex = cbColor.FindStringExact(CRapIni.This.Read("game>color", "Auto"));
-			cbComputer.SelectedIndex = cbComputer.FindStringExact(CRapIni.This.Read("game>black", "Auto"));
-			cbPlayer1.SelectedIndex = cbPlayer1.FindStringExact(CRapIni.This.Read("match>player1", CUserList.defUser));
-			cbPlayer2.SelectedIndex = cbPlayer2.FindStringExact(CRapIni.This.Read("match>player2", CUserList.defUser));
-			tournament = Convert.ToInt32(CRapIni.This.Read("tournament>tournament", "0"));
-			comboBoxTrained.SelectedIndex = comboBoxTrained.FindStringExact(CRapIni.This.Read("training>trained", CUserList.defUser));
-			comboBoxTeacher.SelectedIndex = comboBoxTeacher.FindStringExact(CRapIni.This.Read("training>teacher", "RapChessCs.exe"));
-			cbBookList.SelectedIndex = cbBookList.FindStringExact(CRapIni.This.Read("training>book", "small.txt"));
-			nudTeacher.Value = Convert.ToInt32(CRapIni.This.Read("training>timeTeacher", "1000"));
-			nudTrained.Value = Convert.ToInt32(CRapIni.This.Read("training>timeTrained", "1000"));
-			Trainer.time = (int)nudTeacher.Value;
+			IniLoadGame();
+			IniLoadMatch();
+			IniLoadTournament();
+			IniLoadTraining();
 			FOptions.cbShowPonder.Checked = Convert.ToInt32(CRapIni.This.Read("options>interface>showponder", "1")) == 1;
 			FOptions.cbGameAutoElo.Checked = Convert.ToInt32(CRapIni.This.Read("options>game>autoelo", "1")) == 1;
 			FOptions.cbRotateBoard.Checked = Convert.ToInt32(CRapIni.This.Read("options>interface>rotate", "0")) == 1;
@@ -87,24 +80,68 @@ namespace RapChessGui
 			CBoard.LoadFromIni();
 		}
 
+		void IniLoadGame()
+		{
+			cbColor.SelectedIndex = cbColor.FindStringExact(CRapIni.This.Read("mode>game>color", "Auto"));
+			cbComputer.SelectedIndex = cbComputer.FindStringExact(CRapIni.This.Read("mode>game>black", "Auto"));
+		}
+
+		void IniLoadMatch()
+		{
+			cbPlayer1.SelectedIndex = cbPlayer1.FindStringExact(CRapIni.This.Read("mode>match>player1", CUserList.defUser));
+			cbPlayer2.SelectedIndex = cbPlayer2.FindStringExact(CRapIni.This.Read("mode>match>player2", CUserList.defUser));
+		}
+
+		void IniLoadTournament()
+		{
+			tournament = Convert.ToInt32(CRapIni.This.Read("mode>tournament>tournament", "0"));
+		}
+
+		void IniLoadTraining()
+		{
+			comboBoxTrained.SelectedIndex = comboBoxTrained.FindStringExact(CRapIni.This.Read("mode>training>trained", CUserList.defUser));
+			comboBoxTeacher.SelectedIndex = comboBoxTeacher.FindStringExact(CRapIni.This.Read("mode>training>teacher", "RapChessCs.exe"));
+			cbBookList.SelectedIndex = cbBookList.FindStringExact(CRapIni.This.Read("mode>training>book", "small.txt"));
+			nudTeacher.Value = Convert.ToInt32(CRapIni.This.Read("mode>training>timeTeacher", "1000"));
+			nudTrained.Value = Convert.ToInt32(CRapIni.This.Read("mode>training>timeTrained", "1000"));
+			Trainer.time = (int)nudTeacher.Value;
+		}
+
 		void IniSave()
 		{
-			CRapIni.This.Write("game>color", cbColor.Text);
-			CRapIni.This.Write("game>black", cbComputer.Text);
-			CRapIni.This.Write("match>player1", cbPlayer1.Text);
-			CRapIni.This.Write("match>player2", cbPlayer2.Text);
-			CRapIni.This.Write("tournament>tournament", tournament.ToString());
-			CRapIni.This.Write("training>trained", comboBoxTrained.Text);
-			CRapIni.This.Write("training>teacher", comboBoxTeacher.Text);
-			CRapIni.This.Write("training>book", cbBookList.Text);
-			CRapIni.This.Write("training>timeTeacher", nudTeacher.Value.ToString());
-			CRapIni.This.Write("training>timeTrained", nudTrained.Value.ToString());
+			CRapIni.This.Write("options>interface>color", ColorTranslator.ToHtml(CBoard.color));
 			CRapIni.This.Write("options>interface>showponder", FOptions.cbShowPonder.Checked ? "1" : "0");
 			CRapIni.This.Write("options>interface>rotate", FOptions.cbRotateBoard.Checked ? "1" : "0");
 			CRapIni.This.Write("options>interface>attack", FOptions.cbAttack.Checked ? "1" : "0");
 			CRapIni.This.Write("options>interface>speed", FOptions.nudSpeed.Value.ToString());
 			CRapIni.This.Write("options>game>autoelo", FOptions.cbGameAutoElo.Checked ? "1" : "0");
 			CBoard.SaveToIni();
+		}
+
+		void IniSaveGame()
+		{
+			CRapIni.This.Write("mode>game>color", cbColor.Text);
+			CRapIni.This.Write("mode>game>black", cbComputer.Text);
+		}
+
+		void IniSaveMatch()
+		{
+			CRapIni.This.Write("mode>match>player1", cbPlayer1.Text);
+			CRapIni.This.Write("mode>match>player2", cbPlayer2.Text);
+		}
+
+		void IniSaveTournament()
+		{
+			CRapIni.This.Write("mode>tournament>tournament", tournament.ToString());
+		}
+
+		void IniSaveTraining()
+		{
+			CRapIni.This.Write("mode>training>trained", comboBoxTrained.Text);
+			CRapIni.This.Write("mode>training>teacher", comboBoxTeacher.Text);
+			CRapIni.This.Write("mode>training>book", cbBookList.Text);
+			CRapIni.This.Write("mode>training>timeTeacher", nudTeacher.Value.ToString());
+			CRapIni.This.Write("mode>training>timeTrained", nudTrained.Value.ToString());
 		}
 
 		public void GetMessage(CPlayer p)
@@ -573,6 +610,7 @@ namespace RapChessGui
 
 		void StartGame()
 		{
+			IniSaveGame();
 			CModeGame.ranked = (cbComputer.Text == "Auto") && FOptions.cbGameAutoElo.Checked;
 			CUser uh = CUserList.GetUser("Human");
 			levelDif = 2000 / listView1.Items.Count;
@@ -598,6 +636,7 @@ namespace RapChessGui
 
 		void StartMatch()
 		{
+			IniSaveMatch();
 			SetMode((int)CMode.match);
 			ShowMatch();
 			PlayerList.player[0].SetUser(cbPlayer1.Text);
@@ -612,6 +651,7 @@ namespace RapChessGui
 
 		void StartTournament()
 		{
+			IniSaveTournament();
 			SetMode((int)CMode.tournament);
 			if (++tournament >= listView1.Items.Count)
 				tournament = 0;
@@ -623,6 +663,7 @@ namespace RapChessGui
 
 		void StartTraing()
 		{
+			IniSaveTraining();
 			SetMode((int)CMode.training);
 			ShowTraining();
 			CUser uw = new CUser("Trained");
@@ -823,15 +864,24 @@ namespace RapChessGui
 		void RenderTaken()
 		{
 			int[] arrPiece = { 0, 0, 0, 0, 0, 0, 0, 0 };
+			int[] arrMaterial = { 0, 1, 3, 3, 5, 8, 0, 0 };
+			int material = 0;
 			for (int y = 0; y < 8; y++)
 			{
 				for (int x = 0; x < 8; x++)
 				{
 					int piece = CEngine.g_board[((y + 4) << 4) + x + 4];
+					int rank = piece & 7;
 					if ((piece & CEngine.colorWhite) > 0)
-						arrPiece[piece & 7]++;
+					{
+						arrPiece[rank]++;
+						material += arrMaterial[rank];
+					}
 					if ((piece & CEngine.colorBlack) > 0)
-						arrPiece[piece & 7]--;
+					{
+						arrPiece[rank]--;
+						material -= arrMaterial[rank];
+					}
 				}
 			}
 			string w = "";
@@ -843,15 +893,27 @@ namespace RapChessGui
 				for (int c = 0; c > arrPiece[n]; c--)
 					b += " pnbrqk"[n];
 			}
+			string mw = material.ToString();
+			if (material > 0)
+				mw = $"+{mw}";
+			mw = $"Material {mw}";
+			string mb = (-material).ToString();
+			if (-material > 0)
+				mb = $"+{mb}";
+			mb = $"Material {mb}";
 			if (boardRotate)
 			{
 				labTakenT.Text = w;
 				labTakenB.Text = b;
+				labMaterialT.Text = mw;
+				labMaterialB.Text = mb;
 			}
 			else
 			{
 				labTakenT.Text = b;
 				labTakenB.Text = w;
+				labMaterialT.Text = mb;
+				labMaterialB.Text = mw;
 			}
 		}
 
@@ -1394,7 +1456,8 @@ namespace RapChessGui
 
 		private void clbCastling_ItemCheck(object sender, ItemCheckEventArgs e)
 		{
-			switch(e.Index){
+			switch (e.Index)
+			{
 				case 0:
 					Engine.g_castleRights ^= 1;
 					break;

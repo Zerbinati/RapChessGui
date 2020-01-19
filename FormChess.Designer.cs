@@ -55,6 +55,7 @@
 			this.labFPS = new System.Windows.Forms.Label();
 			this.panelT1 = new System.Windows.Forms.Panel();
 			this.labTakenT = new System.Windows.Forms.Label();
+			this.labMaterialT = new System.Windows.Forms.Label();
 			this.labProtocolT = new System.Windows.Forms.Label();
 			this.labEloT = new System.Windows.Forms.Label();
 			this.labTimeT = new System.Windows.Forms.Label();
@@ -136,6 +137,8 @@
 			this.label1 = new System.Windows.Forms.Label();
 			this.comboBoxTrained = new System.Windows.Forms.ComboBox();
 			this.tabPageEdit = new System.Windows.Forms.TabPage();
+			this.groupBox7 = new System.Windows.Forms.GroupBox();
+			this.clbCastling = new System.Windows.Forms.CheckedListBox();
 			this.gbToMove = new System.Windows.Forms.GroupBox();
 			this.rbBlack = new System.Windows.Forms.RadioButton();
 			this.rbWhite = new System.Windows.Forms.RadioButton();
@@ -143,6 +146,7 @@
 			this.pictureBox1 = new System.Windows.Forms.PictureBox();
 			this.panelB1 = new System.Windows.Forms.Panel();
 			this.labTakenB = new System.Windows.Forms.Label();
+			this.labMaterialB = new System.Windows.Forms.Label();
 			this.labProtocolB = new System.Windows.Forms.Label();
 			this.labEloB = new System.Windows.Forms.Label();
 			this.labTimeB = new System.Windows.Forms.Label();
@@ -166,8 +170,6 @@
 			this.labNodesT = new System.Windows.Forms.Label();
 			this.labDepthT = new System.Windows.Forms.Label();
 			this.labScoreT = new System.Windows.Forms.Label();
-			this.groupBox7 = new System.Windows.Forms.GroupBox();
-			this.clbCastling = new System.Windows.Forms.CheckedListBox();
 			this.menuStrip1.SuspendLayout();
 			this.panMenu.SuspendLayout();
 			this.panelT1.SuspendLayout();
@@ -188,13 +190,13 @@
 			this.groupBox3.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.nudTrained)).BeginInit();
 			this.tabPageEdit.SuspendLayout();
+			this.groupBox7.SuspendLayout();
 			this.gbToMove.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
 			this.panelB1.SuspendLayout();
 			this.panel1.SuspendLayout();
 			this.panelB2.SuspendLayout();
 			this.panelT2.SuspendLayout();
-			this.groupBox7.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// timer1
@@ -392,6 +394,7 @@
 			this.panelT1.BackColor = System.Drawing.Color.Silver;
 			this.panelT1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
 			this.panelT1.Controls.Add(this.labTakenT);
+			this.panelT1.Controls.Add(this.labMaterialT);
 			this.panelT1.Controls.Add(this.labProtocolT);
 			this.panelT1.Controls.Add(this.labEloT);
 			this.panelT1.Controls.Add(this.labTimeT);
@@ -410,11 +413,24 @@
 			this.labTakenT.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.labTakenT.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
 			this.labTakenT.ForeColor = System.Drawing.Color.Black;
-			this.labTakenT.Location = new System.Drawing.Point(606, 0);
+			this.labTakenT.Location = new System.Drawing.Point(676, 0);
 			this.labTakenT.Name = "labTakenT";
-			this.labTakenT.Size = new System.Drawing.Size(294, 26);
+			this.labTakenT.Size = new System.Drawing.Size(224, 26);
 			this.labTakenT.TabIndex = 11;
 			this.labTakenT.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			// 
+			// labMaterialT
+			// 
+			this.labMaterialT.BackColor = System.Drawing.Color.LightGray;
+			this.labMaterialT.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+			this.labMaterialT.Dock = System.Windows.Forms.DockStyle.Left;
+			this.labMaterialT.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+			this.labMaterialT.ForeColor = System.Drawing.Color.Black;
+			this.labMaterialT.Location = new System.Drawing.Point(546, 0);
+			this.labMaterialT.Name = "labMaterialT";
+			this.labMaterialT.Size = new System.Drawing.Size(130, 26);
+			this.labMaterialT.TabIndex = 13;
+			this.labMaterialT.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
 			// labProtocolT
 			// 
@@ -423,9 +439,9 @@
 			this.labProtocolT.Dock = System.Windows.Forms.DockStyle.Left;
 			this.labProtocolT.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
 			this.labProtocolT.ForeColor = System.Drawing.Color.Black;
-			this.labProtocolT.Location = new System.Drawing.Point(466, 0);
+			this.labProtocolT.Location = new System.Drawing.Point(416, 0);
 			this.labProtocolT.Name = "labProtocolT";
-			this.labProtocolT.Size = new System.Drawing.Size(140, 26);
+			this.labProtocolT.Size = new System.Drawing.Size(130, 26);
 			this.labProtocolT.TabIndex = 10;
 			this.labProtocolT.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
@@ -436,9 +452,9 @@
 			this.labEloT.Dock = System.Windows.Forms.DockStyle.Left;
 			this.labEloT.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
 			this.labEloT.ForeColor = System.Drawing.Color.Black;
-			this.labEloT.Location = new System.Drawing.Point(326, 0);
+			this.labEloT.Location = new System.Drawing.Point(286, 0);
 			this.labEloT.Name = "labEloT";
-			this.labEloT.Size = new System.Drawing.Size(140, 26);
+			this.labEloT.Size = new System.Drawing.Size(130, 26);
 			this.labEloT.TabIndex = 12;
 			this.labEloT.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
@@ -449,9 +465,9 @@
 			this.labTimeT.Dock = System.Windows.Forms.DockStyle.Left;
 			this.labTimeT.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
 			this.labTimeT.ForeColor = System.Drawing.Color.Black;
-			this.labTimeT.Location = new System.Drawing.Point(186, 0);
+			this.labTimeT.Location = new System.Drawing.Point(156, 0);
 			this.labTimeT.Name = "labTimeT";
-			this.labTimeT.Size = new System.Drawing.Size(140, 26);
+			this.labTimeT.Size = new System.Drawing.Size(130, 26);
 			this.labTimeT.TabIndex = 9;
 			this.labTimeT.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
@@ -464,7 +480,7 @@
 			this.labNameT.ForeColor = System.Drawing.Color.Black;
 			this.labNameT.Location = new System.Drawing.Point(26, 0);
 			this.labNameT.Name = "labNameT";
-			this.labNameT.Size = new System.Drawing.Size(160, 26);
+			this.labNameT.Size = new System.Drawing.Size(130, 26);
 			this.labNameT.TabIndex = 2;
 			this.labNameT.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
@@ -1421,6 +1437,32 @@
 			this.tabPageEdit.Text = "Edit";
 			this.tabPageEdit.UseVisualStyleBackColor = true;
 			// 
+			// groupBox7
+			// 
+			this.groupBox7.Controls.Add(this.clbCastling);
+			this.groupBox7.Dock = System.Windows.Forms.DockStyle.Top;
+			this.groupBox7.Location = new System.Drawing.Point(0, 78);
+			this.groupBox7.Name = "groupBox7";
+			this.groupBox7.Size = new System.Drawing.Size(320, 84);
+			this.groupBox7.TabIndex = 2;
+			this.groupBox7.TabStop = false;
+			this.groupBox7.Text = "Castling possibilities";
+			// 
+			// clbCastling
+			// 
+			this.clbCastling.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.clbCastling.FormattingEnabled = true;
+			this.clbCastling.Items.AddRange(new object[] {
+            "White Short",
+            "White Long",
+            "Black Short",
+            "Black Long"});
+			this.clbCastling.Location = new System.Drawing.Point(3, 16);
+			this.clbCastling.Name = "clbCastling";
+			this.clbCastling.Size = new System.Drawing.Size(314, 65);
+			this.clbCastling.TabIndex = 0;
+			this.clbCastling.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.clbCastling_ItemCheck);
+			// 
 			// gbToMove
 			// 
 			this.gbToMove.Controls.Add(this.rbBlack);
@@ -1488,6 +1530,7 @@
 			this.panelB1.BackColor = System.Drawing.Color.Silver;
 			this.panelB1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
 			this.panelB1.Controls.Add(this.labTakenB);
+			this.panelB1.Controls.Add(this.labMaterialB);
 			this.panelB1.Controls.Add(this.labProtocolB);
 			this.panelB1.Controls.Add(this.labEloB);
 			this.panelB1.Controls.Add(this.labTimeB);
@@ -1506,11 +1549,24 @@
 			this.labTakenB.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.labTakenB.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
 			this.labTakenB.ForeColor = System.Drawing.Color.Black;
-			this.labTakenB.Location = new System.Drawing.Point(606, 0);
+			this.labTakenB.Location = new System.Drawing.Point(676, 0);
 			this.labTakenB.Name = "labTakenB";
-			this.labTakenB.Size = new System.Drawing.Size(294, 26);
+			this.labTakenB.Size = new System.Drawing.Size(224, 26);
 			this.labTakenB.TabIndex = 11;
 			this.labTakenB.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			// 
+			// labMaterialB
+			// 
+			this.labMaterialB.BackColor = System.Drawing.Color.LightGray;
+			this.labMaterialB.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+			this.labMaterialB.Dock = System.Windows.Forms.DockStyle.Left;
+			this.labMaterialB.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+			this.labMaterialB.ForeColor = System.Drawing.Color.Black;
+			this.labMaterialB.Location = new System.Drawing.Point(546, 0);
+			this.labMaterialB.Name = "labMaterialB";
+			this.labMaterialB.Size = new System.Drawing.Size(130, 26);
+			this.labMaterialB.TabIndex = 13;
+			this.labMaterialB.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
 			// labProtocolB
 			// 
@@ -1519,9 +1575,9 @@
 			this.labProtocolB.Dock = System.Windows.Forms.DockStyle.Left;
 			this.labProtocolB.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
 			this.labProtocolB.ForeColor = System.Drawing.Color.Black;
-			this.labProtocolB.Location = new System.Drawing.Point(466, 0);
+			this.labProtocolB.Location = new System.Drawing.Point(416, 0);
 			this.labProtocolB.Name = "labProtocolB";
-			this.labProtocolB.Size = new System.Drawing.Size(140, 26);
+			this.labProtocolB.Size = new System.Drawing.Size(130, 26);
 			this.labProtocolB.TabIndex = 10;
 			this.labProtocolB.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
@@ -1532,9 +1588,9 @@
 			this.labEloB.Dock = System.Windows.Forms.DockStyle.Left;
 			this.labEloB.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
 			this.labEloB.ForeColor = System.Drawing.Color.Black;
-			this.labEloB.Location = new System.Drawing.Point(326, 0);
+			this.labEloB.Location = new System.Drawing.Point(286, 0);
 			this.labEloB.Name = "labEloB";
-			this.labEloB.Size = new System.Drawing.Size(140, 26);
+			this.labEloB.Size = new System.Drawing.Size(130, 26);
 			this.labEloB.TabIndex = 12;
 			this.labEloB.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
@@ -1545,9 +1601,9 @@
 			this.labTimeB.Dock = System.Windows.Forms.DockStyle.Left;
 			this.labTimeB.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
 			this.labTimeB.ForeColor = System.Drawing.Color.Black;
-			this.labTimeB.Location = new System.Drawing.Point(186, 0);
+			this.labTimeB.Location = new System.Drawing.Point(156, 0);
 			this.labTimeB.Name = "labTimeB";
-			this.labTimeB.Size = new System.Drawing.Size(140, 26);
+			this.labTimeB.Size = new System.Drawing.Size(130, 26);
 			this.labTimeB.TabIndex = 9;
 			this.labTimeB.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
@@ -1560,7 +1616,7 @@
 			this.labNameB.ForeColor = System.Drawing.Color.Black;
 			this.labNameB.Location = new System.Drawing.Point(26, 0);
 			this.labNameB.Name = "labNameB";
-			this.labNameB.Size = new System.Drawing.Size(160, 26);
+			this.labNameB.Size = new System.Drawing.Size(130, 26);
 			this.labNameB.TabIndex = 3;
 			this.labNameB.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
@@ -1805,32 +1861,6 @@
 			this.labScoreT.TabIndex = 6;
 			this.labScoreT.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
-			// groupBox7
-			// 
-			this.groupBox7.Controls.Add(this.clbCastling);
-			this.groupBox7.Dock = System.Windows.Forms.DockStyle.Top;
-			this.groupBox7.Location = new System.Drawing.Point(0, 78);
-			this.groupBox7.Name = "groupBox7";
-			this.groupBox7.Size = new System.Drawing.Size(320, 84);
-			this.groupBox7.TabIndex = 2;
-			this.groupBox7.TabStop = false;
-			this.groupBox7.Text = "Castling possibilities";
-			// 
-			// clbCastling
-			// 
-			this.clbCastling.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.clbCastling.FormattingEnabled = true;
-			this.clbCastling.Items.AddRange(new object[] {
-            "White Short",
-            "White Long",
-            "Black Short",
-            "Black Long"});
-			this.clbCastling.Location = new System.Drawing.Point(3, 16);
-			this.clbCastling.Name = "clbCastling";
-			this.clbCastling.Size = new System.Drawing.Size(314, 65);
-			this.clbCastling.TabIndex = 0;
-			this.clbCastling.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.clbCastling_ItemCheck);
-			// 
 			// FormChess
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1874,6 +1904,7 @@
 			this.groupBox3.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.nudTrained)).EndInit();
 			this.tabPageEdit.ResumeLayout(false);
+			this.groupBox7.ResumeLayout(false);
 			this.gbToMove.ResumeLayout(false);
 			this.gbToMove.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
@@ -1881,7 +1912,6 @@
 			this.panel1.ResumeLayout(false);
 			this.panelB2.ResumeLayout(false);
 			this.panelT2.ResumeLayout(false);
-			this.groupBox7.ResumeLayout(false);
 			this.ResumeLayout(false);
 
 		}
@@ -2025,6 +2055,8 @@
 		private System.Windows.Forms.Label labFPS;
 		private System.Windows.Forms.GroupBox groupBox7;
 		private System.Windows.Forms.CheckedListBox clbCastling;
+		private System.Windows.Forms.Label labMaterialT;
+		private System.Windows.Forms.Label labMaterialB;
 	}
 }
 

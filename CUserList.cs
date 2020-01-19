@@ -167,13 +167,21 @@ namespace RapChessGui
 			List<CUser> lu = new List<CUser>();
 			Sort();
 			int i = GetIndex(user.name);
-			for (int n = i - 2; n <= i + 2; n++)
-				if ((n >= 0) && (n < list.Count))
+			int na = i - 2;
+			int nb = i + 2;
+			int n = na;
+			while (n <= nb)
+			{
+				if ((n >= 0) && (n < list.Count) && (n != i))
 				{
 					CUser u = list[n];
-					if ((u != user) && (u.engine != "Human"))
+					if (u.engine == "Human")
+						nb++;
+					else
 						lu.Add(u);
 				}
+				n++;
+			}
 			if (lu.Count == 0)
 				return user;
 			int r = CEngine.random.Next(lu.Count);
