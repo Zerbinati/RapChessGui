@@ -413,9 +413,9 @@
 			this.labTakenT.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.labTakenT.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
 			this.labTakenT.ForeColor = System.Drawing.Color.Black;
-			this.labTakenT.Location = new System.Drawing.Point(676, 0);
+			this.labTakenT.Location = new System.Drawing.Point(696, 0);
 			this.labTakenT.Name = "labTakenT";
-			this.labTakenT.Size = new System.Drawing.Size(224, 26);
+			this.labTakenT.Size = new System.Drawing.Size(204, 26);
 			this.labTakenT.TabIndex = 11;
 			this.labTakenT.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
@@ -426,7 +426,7 @@
 			this.labMaterialT.Dock = System.Windows.Forms.DockStyle.Left;
 			this.labMaterialT.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
 			this.labMaterialT.ForeColor = System.Drawing.Color.Black;
-			this.labMaterialT.Location = new System.Drawing.Point(546, 0);
+			this.labMaterialT.Location = new System.Drawing.Point(566, 0);
 			this.labMaterialT.Name = "labMaterialT";
 			this.labMaterialT.Size = new System.Drawing.Size(130, 26);
 			this.labMaterialT.TabIndex = 13;
@@ -439,7 +439,7 @@
 			this.labProtocolT.Dock = System.Windows.Forms.DockStyle.Left;
 			this.labProtocolT.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
 			this.labProtocolT.ForeColor = System.Drawing.Color.Black;
-			this.labProtocolT.Location = new System.Drawing.Point(416, 0);
+			this.labProtocolT.Location = new System.Drawing.Point(436, 0);
 			this.labProtocolT.Name = "labProtocolT";
 			this.labProtocolT.Size = new System.Drawing.Size(130, 26);
 			this.labProtocolT.TabIndex = 10;
@@ -452,7 +452,7 @@
 			this.labEloT.Dock = System.Windows.Forms.DockStyle.Left;
 			this.labEloT.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
 			this.labEloT.ForeColor = System.Drawing.Color.Black;
-			this.labEloT.Location = new System.Drawing.Point(286, 0);
+			this.labEloT.Location = new System.Drawing.Point(306, 0);
 			this.labEloT.Name = "labEloT";
 			this.labEloT.Size = new System.Drawing.Size(130, 26);
 			this.labEloT.TabIndex = 12;
@@ -465,7 +465,7 @@
 			this.labTimeT.Dock = System.Windows.Forms.DockStyle.Left;
 			this.labTimeT.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
 			this.labTimeT.ForeColor = System.Drawing.Color.Black;
-			this.labTimeT.Location = new System.Drawing.Point(156, 0);
+			this.labTimeT.Location = new System.Drawing.Point(176, 0);
 			this.labTimeT.Name = "labTimeT";
 			this.labTimeT.Size = new System.Drawing.Size(130, 26);
 			this.labTimeT.TabIndex = 9;
@@ -480,7 +480,7 @@
 			this.labNameT.ForeColor = System.Drawing.Color.Black;
 			this.labNameT.Location = new System.Drawing.Point(26, 0);
 			this.labNameT.Name = "labNameT";
-			this.labNameT.Size = new System.Drawing.Size(130, 26);
+			this.labNameT.Size = new System.Drawing.Size(150, 26);
 			this.labNameT.TabIndex = 2;
 			this.labNameT.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
@@ -1549,9 +1549,9 @@
 			this.labTakenB.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.labTakenB.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
 			this.labTakenB.ForeColor = System.Drawing.Color.Black;
-			this.labTakenB.Location = new System.Drawing.Point(676, 0);
+			this.labTakenB.Location = new System.Drawing.Point(696, 0);
 			this.labTakenB.Name = "labTakenB";
-			this.labTakenB.Size = new System.Drawing.Size(224, 26);
+			this.labTakenB.Size = new System.Drawing.Size(204, 26);
 			this.labTakenB.TabIndex = 11;
 			this.labTakenB.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
@@ -1562,7 +1562,7 @@
 			this.labMaterialB.Dock = System.Windows.Forms.DockStyle.Left;
 			this.labMaterialB.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
 			this.labMaterialB.ForeColor = System.Drawing.Color.Black;
-			this.labMaterialB.Location = new System.Drawing.Point(546, 0);
+			this.labMaterialB.Location = new System.Drawing.Point(566, 0);
 			this.labMaterialB.Name = "labMaterialB";
 			this.labMaterialB.Size = new System.Drawing.Size(130, 26);
 			this.labMaterialB.TabIndex = 13;
@@ -1575,7 +1575,7 @@
 			this.labProtocolB.Dock = System.Windows.Forms.DockStyle.Left;
 			this.labProtocolB.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
 			this.labProtocolB.ForeColor = System.Drawing.Color.Black;
-			this.labProtocolB.Location = new System.Drawing.Point(416, 0);
+			this.labProtocolB.Location = new System.Drawing.Point(436, 0);
 			this.labProtocolB.Name = "labProtocolB";
 			this.labProtocolB.Size = new System.Drawing.Size(130, 26);
 			this.labProtocolB.TabIndex = 10;
@@ -1588,7 +1588,7 @@
 			this.labEloB.Dock = System.Windows.Forms.DockStyle.Left;
 			this.labEloB.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
 			this.labEloB.ForeColor = System.Drawing.Color.Black;
-			this.labEloB.Location = new System.Drawing.Point(286, 0);
+			this.labEloB.Location = new System.Drawing.Point(306, 0);
 			this.labEloB.Name = "labEloB";
 			this.labEloB.Size = new System.Drawing.Size(130, 26);
 			this.labEloB.TabIndex = 12;
@@ -1601,7 +1601,7 @@
 			this.labTimeB.Dock = System.Windows.Forms.DockStyle.Left;
 			this.labTimeB.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
 			this.labTimeB.ForeColor = System.Drawing.Color.Black;
-			this.labTimeB.Location = new System.Drawing.Point(156, 0);
+			this.labTimeB.Location = new System.Drawing.Point(176, 0);
 			this.labTimeB.Name = "labTimeB";
 			this.labTimeB.Size = new System.Drawing.Size(130, 26);
 			this.labTimeB.TabIndex = 9;
@@ -1616,7 +1616,7 @@
 			this.labNameB.ForeColor = System.Drawing.Color.Black;
 			this.labNameB.Location = new System.Drawing.Point(26, 0);
 			this.labNameB.Name = "labNameB";
-			this.labNameB.Size = new System.Drawing.Size(130, 26);
+			this.labNameB.Size = new System.Drawing.Size(150, 26);
 			this.labNameB.TabIndex = 3;
 			this.labNameB.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 

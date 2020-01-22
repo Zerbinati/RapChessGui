@@ -20,8 +20,6 @@ namespace RapChessGui
 
 		public static FormChess This;
 		bool boardRotate;
-		int levelDif;
-		int levelMD;
 		int tournament;
 		private ColumnHeader SortingColumn = null;
 		List<int> moves = new List<int>();
@@ -260,6 +258,10 @@ namespace RapChessGui
 
 		void SetMode(int mode)
 		{
+			labEloB.Visible = true;
+			labEloT.Visible = true;
+			labProtocolB.Visible = true;
+			labProtocolT.Visible = true;
 			timer1.Enabled = false;
 			timerStart.Enabled = false;
 			PlayerList.Terminate();
@@ -268,9 +270,26 @@ namespace RapChessGui
 				CData.messages.Clear();
 			moveToolStripMenuItem.Visible = mode == (int)CMode.game;
 			Clear();
-			if (mode == (int)CMode.edit)
+			switch(mode)
 			{
-				ShowEdit();
+				case (int)CMode.game:
+					labProtocolB.Visible = false;
+					labProtocolT.Visible = false;
+					ShowGame();
+					break;
+				case (int)CMode.training:
+					labEloB.Visible = false;
+					labEloT.Visible = false;
+					labProtocolB.Visible = false;
+					labProtocolT.Visible = false;
+					break;
+				case (int)CMode.edit:
+					labEloB.Visible = false;
+					labEloT.Visible = false;
+					labProtocolB.Visible = false;
+					labProtocolT.Visible = false;
+					ShowEdit();
+					break;
 			}
 		}
 
@@ -383,7 +402,8 @@ namespace RapChessGui
 			CUser ul = PlayerList.SecPlayer().user;
 			if ((CData.gameMode == (int)CMode.game) && (uw.name == "Human") && (ul.name != "Human") && (cbComputer.Text == "Auto") && ((Engine.g_moveNumber >> 1) == 4))
 			{
-				uw.elo = levelMD.ToString();
+				uw.elo = uw.eloLess.ToString();
+				uw.SaveToIni();
 			}
 			bool ivm = Engine.IsValidMove(emo) != 0;
 			if (!ivm)
@@ -457,21 +477,17 @@ namespace RapChessGui
 					{
 						if (uw.name == "Human")
 						{
-							int newElo = uw.orgElo + levelDif;
-							uw.elo = newElo.ToString();
-							uw.orgElo = newElo;
+							uw.eloOld = ul.elo;
+							uw.elo = uw.eloMore.ToString();
 							uw.SaveToIni();
-							labLast.Text += $" new elo {newElo}";
+							labLast.Text += $" new elo {uw.elo}";
 						}
 						else
 						{
-							int newElo = ul.orgElo - levelDif;
-							if (newElo < 0)
-								newElo = 0;
-							ul.elo = newElo.ToString();
-							ul.orgElo = newElo;
+							ul.eloOld = ul.elo;
+							ul.elo = ul.eloLess.ToString();
 							ul.SaveToIni();
-							labLast.Text += $" new elo {newElo}";
+							labLast.Text += $" new elo {ul.elo}";
 						}
 					}
 				}
@@ -522,6 +538,8 @@ namespace RapChessGui
 					OW = opt;
 					OL = opt;
 				}
+				uw.eloOld = uw.elo;
+				ul.eloOld = ul.elo;
 				int newW = Convert.ToInt32(eloW * 0.9 + OW * 0.1);
 				int newL = Convert.ToInt32(eloL * 0.9 + OL * 0.1);
 				uw.elo = newW.ToString();
@@ -613,15 +631,17 @@ namespace RapChessGui
 			IniSaveGame();
 			CModeGame.ranked = (cbComputer.Text == "Auto") && FOptions.cbGameAutoElo.Checked;
 			CUser uh = CUserList.GetUser("Human");
-			levelDif = 2000 / listView1.Items.Count;
+			int levelDif = 2000 / listView1.Items.Count;
 			if (levelDif < 10)
 				levelDif = 10;
-			levelMD = uh.orgElo - levelDif;
-			if (levelMD < 0)
-				levelMD = 0;
+			uh.eloStart = Convert.ToInt32(uh.elo);
+			uh.eloLess = uh.eloStart - levelDif;
+			uh.eloMore = uh.eloStart + levelDif;
+			if (uh.eloLess < 0)
+				uh.eloLess = 0;
 			SetMode((int)CMode.game);
-			ShowGame();
 			PlayerList.player[0].SetUser("Human");
+			CRapLog.Add($"Human elo {PlayerList.player[0].user.elo}");
 			CUser u = CommandToUser();
 			PlayerList.player[1].SetUser(u);
 			bool r = cbColor.Text != "White";
@@ -1440,7 +1460,7 @@ namespace RapChessGui
 				RenderHistory();
 				moves = Engine.GenerateValidMoves();
 				CData.gameState = Engine.GetGameState();
-				PlayerList.CurPlayer().user.elo = levelMD.ToString();
+				PlayerList.CurPlayer().user.elo = PlayerList.CurPlayer().user.eloLess.ToString();
 			}
 		}
 
