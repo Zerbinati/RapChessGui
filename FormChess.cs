@@ -59,8 +59,6 @@ namespace RapChessGui
 			labTakenB.Font = fontChess;
 			Engine.Initialize();
 			ShowGame();
-			ShowMatch();
-			ShowTraining();
 			StartGame();
 		}
 
@@ -258,6 +256,7 @@ namespace RapChessGui
 
 		void SetMode(int mode)
 		{
+			moveToolStripMenuItem.Visible = false;
 			labEloB.Visible = true;
 			labEloT.Visible = true;
 			labProtocolB.Visible = true;
@@ -270,18 +269,26 @@ namespace RapChessGui
 				CData.messages.Clear();
 			moveToolStripMenuItem.Visible = mode == (int)CMode.game;
 			Clear();
-			switch(mode)
+			switch (mode)
 			{
 				case (int)CMode.game:
+					moveToolStripMenuItem.Visible = true;
 					labProtocolB.Visible = false;
 					labProtocolT.Visible = false;
 					ShowGame();
+					break;
+				case (int)CMode.match:
+					ShowMatch();
+					break;
+				case (int)CMode.tournament:
+					ShowTournament();
 					break;
 				case (int)CMode.training:
 					labEloB.Visible = false;
 					labEloT.Visible = false;
 					labProtocolB.Visible = false;
 					labProtocolT.Visible = false;
+					ShowTraining();
 					break;
 				case (int)CMode.edit:
 					labEloB.Visible = false;
@@ -342,7 +349,7 @@ namespace RapChessGui
 		void ShowEdit()
 		{
 			List<RadioButton> list = gbToMove.Controls.OfType<RadioButton>().ToList();
-			int i = Engine.whiteTurn ? 1 : 0;
+			int i = CEngine.whiteTurn ? 1 : 0;
 			list[i].Select();
 			int cr = Engine.g_castleRights;
 			clbCastling.SetItemChecked(0, (Engine.g_castleRights & 1) > 0);
@@ -658,7 +665,6 @@ namespace RapChessGui
 		{
 			IniSaveMatch();
 			SetMode((int)CMode.match);
-			ShowMatch();
 			PlayerList.player[0].SetUser(cbPlayer1.Text);
 			PlayerList.player[1].SetUser(cbPlayer2.Text);
 			if (Match.rotate == 1)
@@ -685,7 +691,6 @@ namespace RapChessGui
 		{
 			IniSaveTraining();
 			SetMode((int)CMode.training);
-			ShowTraining();
 			CUser uw = new CUser("Trained");
 			uw.SetUser(comboBoxTrained.Text);
 			uw.mode = "movetime";
@@ -709,7 +714,7 @@ namespace RapChessGui
 			stopwatch.Start();
 			boardRotate = (!PlayerList.player[1].computer && PlayerList.player[0].computer) ^ CData.rotateBoard;
 			if (!PlayerList.player[1].computer && !PlayerList.player[0].computer)
-				boardRotate = !Engine.whiteTurn;
+				boardRotate = !CEngine.whiteTurn;
 			if (boardRotate)
 			{
 				labNameT.Text = PlayerList.player[0].user.name;
@@ -728,7 +733,7 @@ namespace RapChessGui
 				labTakenT.ForeColor = Color.Black;
 				labTakenB.ForeColor = Color.White;
 			}
-			if (boardRotate ^ Engine.whiteTurn)
+			if( (boardRotate ^ CEngine.whiteTurn) ^ (CData.gameState != 0))
 			{
 				labTimeT.BackColor = Color.LightGray;
 				labTimeB.BackColor = Color.Yellow;
@@ -798,7 +803,7 @@ namespace RapChessGui
 					gp1.AddString("pnbrqk"[image].ToString(), fontPiece.FontFamily, (int)fontPiece.Style, fontPiece.Size, rec, sf);
 				}
 			}
-			if (Engine.whiteTurn)
+			if (CEngine.whiteTurn)
 			{
 				g.DrawPath(penB, gpB);
 				g.FillPath(brushB, gpB);
@@ -828,8 +833,7 @@ namespace RapChessGui
 			CBoard.Render();
 			if (!CBoard.animated)
 			{
-				if (FOptions.cbAttack.Checked)
-					CBoard.ShowAttack();
+				CBoard.ShowAttack(FOptions.cbAttack.Checked);
 				CBoard.SetImage();
 				RenderTaken();
 			}
@@ -1136,6 +1140,7 @@ namespace RapChessGui
 
 		private void NewGameToolStripMenuItem_Click(object sender, EventArgs e)
 		{
+			tabControl1.SelectedTab = tabPageGame;
 			StartGame();
 		}
 
@@ -1444,7 +1449,7 @@ namespace RapChessGui
 			var checkedButton = gbToMove.Controls.OfType<RadioButton>().FirstOrDefault(r => r.Checked);
 			List<RadioButton> list = gbToMove.Controls.OfType<RadioButton>().ToList();
 			int i = list.IndexOf(checkedButton);
-			Engine.whiteTurn = i == 1;
+			CEngine.whiteTurn = i == 1;
 		}
 
 		private void butContinueGame_Click(object sender, EventArgs e)
@@ -1491,6 +1496,18 @@ namespace RapChessGui
 					Engine.g_castleRights ^= 8;
 					break;
 			}
+		}
+
+		private void butContinueMatch_Click(object sender, EventArgs e)
+		{
+			LoadFen(Engine.GetFen());
+		}
+
+		private void butDefault_Click(object sender, EventArgs e)
+		{
+			Engine.InitializeFromFen();
+			CBoard.Fill();
+			RenderBoard();
 		}
 	}
 }

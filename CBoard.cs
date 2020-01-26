@@ -135,7 +135,7 @@ namespace RapChessGui
 		{
 			string abc = "ABCDEFGH";
 			Rectangle rec = new Rectangle();
-			Bitmap bmp = new Bitmap(size,size);
+			Bitmap bmp = new Bitmap(size, size);
 			Graphics g = Graphics.FromImage(bmp);
 			SolidBrush brush1 = new SolidBrush(color);
 			SolidBrush brush2 = new SolidBrush(Color.FromArgb(0x60, 0x00, 0x00, 0x00));
@@ -268,17 +268,19 @@ namespace RapChessGui
 			}
 		}
 
-		public static void ShowAttack(bool w)
+		public static void ShowAttack(bool show, bool white)
 		{
-			List<int> ml = CEngine.This.GenerateAllMoves(w, false);
-			foreach(int m in ml)
+			List<int> ml = CEngine.This.GenerateAllMoves(white, false);
+			foreach (int m in ml)
 			{
 				int d = (m >> 8) & 0xff;
-				if( (CEngine.g_board[d] & CEngine.colorEmpty) == 0)
-				{
-					int i = CEngine.Con256To64(d);
-					list[i].attacked = true;
-				}
+				int r = CEngine.g_board[d] & 7;
+				if (r > 0)
+					if (show || (r == CEngine.pieceKing))
+					{
+						int i = CEngine.Con256To64(d);
+						list[i].attacked = true;
+					}
 			}
 		}
 
@@ -288,11 +290,12 @@ namespace RapChessGui
 				list[n].attacked = false;
 		}
 
-		public static void ShowAttack()
+		public static void ShowAttack(bool show)
 		{
 			ClearAttack();
-			ShowAttack(true);
-			ShowAttack(false);
+			if (show)
+				ShowAttack(show, CEngine.whiteTurn);
+			ShowAttack(show, !CEngine.whiteTurn);
 		}
 
 	}

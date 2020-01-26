@@ -96,7 +96,8 @@
 			this.label30 = new System.Windows.Forms.Label();
 			this.labMatch10 = new System.Windows.Forms.Label();
 			this.labMatchGames = new System.Windows.Forms.Label();
-			this.bStartMatch = new System.Windows.Forms.Button();
+			this.butContinueMatch = new System.Windows.Forms.Button();
+			this.butNewMatch = new System.Windows.Forms.Button();
 			this.groupBox6 = new System.Windows.Forms.GroupBox();
 			this.cbPlayer2 = new System.Windows.Forms.ComboBox();
 			this.groupBox5 = new System.Windows.Forms.GroupBox();
@@ -142,6 +143,7 @@
 			this.gbToMove = new System.Windows.Forms.GroupBox();
 			this.rbBlack = new System.Windows.Forms.RadioButton();
 			this.rbWhite = new System.Windows.Forms.RadioButton();
+			this.butDefault = new System.Windows.Forms.Button();
 			this.butClearBoard = new System.Windows.Forms.Button();
 			this.pictureBox1 = new System.Windows.Forms.PictureBox();
 			this.panelB1 = new System.Windows.Forms.Panel();
@@ -243,15 +245,15 @@
 			// backToolStripMenuItem
 			// 
 			this.backToolStripMenuItem.Name = "backToolStripMenuItem";
-			this.backToolStripMenuItem.Size = new System.Drawing.Size(117, 22);
+			this.backToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
 			this.backToolStripMenuItem.Text = "Back";
 			this.backToolStripMenuItem.Click += new System.EventHandler(this.backToolStripMenuItem_Click_1);
 			// 
 			// forwardToolStripMenuItem
 			// 
 			this.forwardToolStripMenuItem.Name = "forwardToolStripMenuItem";
-			this.forwardToolStripMenuItem.Size = new System.Drawing.Size(117, 22);
-			this.forwardToolStripMenuItem.Text = "Forward";
+			this.forwardToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
+			this.forwardToolStripMenuItem.Text = "Make";
 			this.forwardToolStripMenuItem.Click += new System.EventHandler(this.forwardToolStripMenuItem_Click);
 			// 
 			// fenToolStripMenuItem
@@ -698,7 +700,8 @@
 			// 
 			this.tabPageMatch.Controls.Add(this.tableLayoutPanel2);
 			this.tabPageMatch.Controls.Add(this.labMatchGames);
-			this.tabPageMatch.Controls.Add(this.bStartMatch);
+			this.tabPageMatch.Controls.Add(this.butContinueMatch);
+			this.tabPageMatch.Controls.Add(this.butNewMatch);
 			this.tabPageMatch.Controls.Add(this.groupBox6);
 			this.tabPageMatch.Controls.Add(this.groupBox5);
 			this.tabPageMatch.Location = new System.Drawing.Point(4, 25);
@@ -733,7 +736,7 @@
 			this.tableLayoutPanel2.Controls.Add(this.label30, 0, 0);
 			this.tableLayoutPanel2.Controls.Add(this.labMatch10, 0, 1);
 			this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Top;
-			this.tableLayoutPanel2.Location = new System.Drawing.Point(0, 141);
+			this.tableLayoutPanel2.Location = new System.Drawing.Point(0, 164);
 			this.tableLayoutPanel2.Name = "tableLayoutPanel2";
 			this.tableLayoutPanel2.RowCount = 3;
 			this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
@@ -915,23 +918,34 @@
 			// labMatchGames
 			// 
 			this.labMatchGames.Dock = System.Windows.Forms.DockStyle.Top;
-			this.labMatchGames.Location = new System.Drawing.Point(0, 117);
+			this.labMatchGames.Location = new System.Drawing.Point(0, 140);
 			this.labMatchGames.Name = "labMatchGames";
 			this.labMatchGames.Size = new System.Drawing.Size(320, 24);
 			this.labMatchGames.TabIndex = 23;
 			this.labMatchGames.Text = "Games 0";
 			this.labMatchGames.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
-			// bStartMatch
+			// butContinueMatch
 			// 
-			this.bStartMatch.Dock = System.Windows.Forms.DockStyle.Top;
-			this.bStartMatch.Location = new System.Drawing.Point(0, 94);
-			this.bStartMatch.Name = "bStartMatch";
-			this.bStartMatch.Size = new System.Drawing.Size(320, 23);
-			this.bStartMatch.TabIndex = 22;
-			this.bStartMatch.Text = "Start";
-			this.bStartMatch.UseVisualStyleBackColor = true;
-			this.bStartMatch.Click += new System.EventHandler(this.bStartMatch_Click);
+			this.butContinueMatch.Dock = System.Windows.Forms.DockStyle.Top;
+			this.butContinueMatch.Location = new System.Drawing.Point(0, 117);
+			this.butContinueMatch.Name = "butContinueMatch";
+			this.butContinueMatch.Size = new System.Drawing.Size(320, 23);
+			this.butContinueMatch.TabIndex = 27;
+			this.butContinueMatch.Text = "Continue match";
+			this.butContinueMatch.UseVisualStyleBackColor = true;
+			this.butContinueMatch.Click += new System.EventHandler(this.butContinueMatch_Click);
+			// 
+			// butNewMatch
+			// 
+			this.butNewMatch.Dock = System.Windows.Forms.DockStyle.Top;
+			this.butNewMatch.Location = new System.Drawing.Point(0, 94);
+			this.butNewMatch.Name = "butNewMatch";
+			this.butNewMatch.Size = new System.Drawing.Size(320, 23);
+			this.butNewMatch.TabIndex = 22;
+			this.butNewMatch.Text = "New match";
+			this.butNewMatch.UseVisualStyleBackColor = true;
+			this.butNewMatch.Click += new System.EventHandler(this.bStartMatch_Click);
 			// 
 			// groupBox6
 			// 
@@ -1429,6 +1443,7 @@
 			// 
 			this.tabPageEdit.Controls.Add(this.groupBox7);
 			this.tabPageEdit.Controls.Add(this.gbToMove);
+			this.tabPageEdit.Controls.Add(this.butDefault);
 			this.tabPageEdit.Controls.Add(this.butClearBoard);
 			this.tabPageEdit.Location = new System.Drawing.Point(4, 25);
 			this.tabPageEdit.Name = "tabPageEdit";
@@ -1441,7 +1456,7 @@
 			// 
 			this.groupBox7.Controls.Add(this.clbCastling);
 			this.groupBox7.Dock = System.Windows.Forms.DockStyle.Top;
-			this.groupBox7.Location = new System.Drawing.Point(0, 78);
+			this.groupBox7.Location = new System.Drawing.Point(0, 103);
 			this.groupBox7.Name = "groupBox7";
 			this.groupBox7.Size = new System.Drawing.Size(320, 84);
 			this.groupBox7.TabIndex = 2;
@@ -1468,7 +1483,7 @@
 			this.gbToMove.Controls.Add(this.rbBlack);
 			this.gbToMove.Controls.Add(this.rbWhite);
 			this.gbToMove.Dock = System.Windows.Forms.DockStyle.Top;
-			this.gbToMove.Location = new System.Drawing.Point(0, 25);
+			this.gbToMove.Location = new System.Drawing.Point(0, 50);
 			this.gbToMove.Name = "gbToMove";
 			this.gbToMove.Size = new System.Drawing.Size(320, 53);
 			this.gbToMove.TabIndex = 1;
@@ -1499,6 +1514,17 @@
 			this.rbWhite.Text = "White";
 			this.rbWhite.UseVisualStyleBackColor = true;
 			this.rbWhite.CheckedChanged += new System.EventHandler(this.rbColorChanged);
+			// 
+			// butDefault
+			// 
+			this.butDefault.Dock = System.Windows.Forms.DockStyle.Top;
+			this.butDefault.Location = new System.Drawing.Point(0, 25);
+			this.butDefault.Name = "butDefault";
+			this.butDefault.Size = new System.Drawing.Size(320, 25);
+			this.butDefault.TabIndex = 3;
+			this.butDefault.Text = "Default position";
+			this.butDefault.UseVisualStyleBackColor = true;
+			this.butDefault.Click += new System.EventHandler(this.butDefault_Click);
 			// 
 			// butClearBoard
 			// 
@@ -1987,7 +2013,7 @@
 		private System.Windows.Forms.Label label30;
 		private System.Windows.Forms.Label labMatch10;
 		private System.Windows.Forms.Label labMatchGames;
-		private System.Windows.Forms.Button bStartMatch;
+		private System.Windows.Forms.Button butNewMatch;
 		private System.Windows.Forms.GroupBox groupBox6;
 		private System.Windows.Forms.ComboBox cbPlayer2;
 		private System.Windows.Forms.GroupBox groupBox5;
@@ -2057,6 +2083,8 @@
 		private System.Windows.Forms.CheckedListBox clbCastling;
 		private System.Windows.Forms.Label labMaterialT;
 		private System.Windows.Forms.Label labMaterialB;
+		private System.Windows.Forms.Button butContinueMatch;
+		private System.Windows.Forms.Button butDefault;
 	}
 }
 

@@ -108,7 +108,7 @@ namespace RapChessGui
 		int[,] g_hashBoard = new int[256, 16];
 		int[] boardCheck = new int[256];
 		int[] boardCastle = new int[256];
-		public bool whiteTurn = true;
+		public static bool whiteTurn = true;
 		int usColor = 0;
 		int enColor = 0;
 		string bsFm = "";
@@ -316,7 +316,7 @@ namespace RapChessGui
 			g_countMove++;
 			if (((g_board[to] & 7) == pieceKing) || (((boardCheck[to] & g_lastCastle) == g_lastCastle) && ((g_lastCastle & maskCastle) > 0)))
 				g_inCheck = true;
-			else if (add)
+			if (add)
 				moves.Add(fr | (to << 8) | flag);
 		}
 
