@@ -745,7 +745,7 @@ namespace RapChessGui
 			return alpha;
 		}
 
-		int GetScore(List<int> mu, int depth, int depthL, int alpha, int beta)
+		int GetScore(List<int> mu, int ply, int depthL, int alpha, int beta)
 		{
 			bool myInsufficient = adjInsufficient;
 			int myMobility = adjMobility;
@@ -759,7 +759,7 @@ namespace RapChessGui
 					g_stop = ((depthL > 1) && (((g_timeout > 0) && ((DateTime.Now - g_startTime).TotalMilliseconds > g_timeout)) || ((g_nodeout > 0) && (g_totalNodes > g_nodeout))));
 				int cm = mu[n];
 				MakeMove(cm);
-				List<int> me = GenerateAllMoves(whiteTurn, depth == depthL);
+				List<int> me = GenerateAllMoves(whiteTurn, ply == depthL);
 				g_depth = 0;
 				g_pv = "";
 				int osScore = myMobility - adjMobility;
@@ -768,10 +768,10 @@ namespace RapChessGui
 					myMoves--;
 					osScore = -0xffff;
 				}
-				else if ((g_move50 > 99) || IsRepetition() || ((myInsufficient || osScore < 0) && adjInsufficient))
+				else if ((g_move50 > 99) || IsRepetition() || ((myInsufficient || osScore < 0) && adjInsufficient && (ply > 1)))
 					osScore = 0;
-				else if (depth < depthL)
-					osScore = -GetScore(me, depth + 1, depthL, -beta, -alpha);
+				else if (ply < depthL)
+					osScore = -GetScore(me, ply + 1, depthL, -beta, -alpha);
 				else
 					osScore = -Quiesce(me, 1, depthL, -beta, -alpha, -osScore);
 				UnmakeMove(cm);
@@ -782,7 +782,7 @@ namespace RapChessGui
 					string alphaFm = FormatMove(cm);
 					alphaPv = alphaFm + ' ' + g_pv;
 					alphaDe = g_depth + 1;
-					if (depth == 1)
+					if (ply == 1)
 					{
 						if (osScore > 0xf000)
 							g_scoreFm = "mate " + ((0xffff - osScore) >> 1);
@@ -808,7 +808,7 @@ namespace RapChessGui
 				{
 					alpha = 0;
 				}
-				else alpha = -0xffff + depth;
+				else alpha = -0xffff + ply;
 			}
 			g_depth = alphaDe;
 			g_pv = alphaPv;

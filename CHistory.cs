@@ -57,6 +57,19 @@ namespace RapChessGui
 			return result.Trim();
 		}
 
+		public static string GetPgn()
+		{
+			string result = "";
+			int c = 0;
+			for (int n = 0; n < moveList.Count; n++)
+			{
+				if((++c & 1)>0)
+					result += $" {(c >> 1) + 1}.";
+				result += $" {moveList[n].emo}";
+			}
+			return result.Trim();
+		}
+
 		public static string GetPosition()
 		{
 			string result = "position ";

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Diagnostics;
 using System.Collections.Generic;
 using System.Drawing;
@@ -436,6 +437,12 @@ namespace RapChessGui
 			Engine.MakeMove(gm);
 			int moveNumber = (Engine.g_moveNumber >> 1) + 1;
 			labMove.Text = "Move " + moveNumber.ToString() + " " + Engine.g_move50.ToString();
+			CPlayer cp = PlayerList.CurPlayer();
+			if (cp.nodes > 0)
+			{
+				cp.totalNpsSum += cp.nodes;
+				cp.totalNps = Convert.ToInt32(cp.totalNpsSum / (cp.timeTotal * 0.001));
+			}
 			CData.gameState = Engine.GetGameState();
 			if (CData.gameState == 0)
 			{
@@ -446,6 +453,27 @@ namespace RapChessGui
 			else
 				GameOver(uw, ul);
 			return true;
+		}
+
+		void CreatePgn()
+		{
+			List<string> list = new List<string>();
+			string result = "1/2-1/2";
+			if (CData.gameState == (int)CGameState.mate)
+				if ((CHistory.moveList.Count & 1)>0)
+					result = "1-0";
+				else
+					result = "0-1";
+			list.Add($"[Date \"{DateTime.Now.ToString("yyyy.MM.dd")}\"]");
+			list.Add($"[White \"{PlayerList.player[0].user.name}\"]");
+			list.Add($"[Black \"{PlayerList.player[1].user.name}\"]");
+			list.Add($"[Result \"{result}\"]");
+			list.Add("");
+			list.Add(CHistory.GetPgn());
+			TextWriter tw = new StreamWriter($"{CData.modeName}.pgn");
+			foreach (String s in list)
+				tw.WriteLine(s);
+			tw.Close();
 		}
 
 		void GameOver(CUser uw, CUser ul)
@@ -581,6 +609,7 @@ namespace RapChessGui
 				ShowTraining();
 			}
 			FormLog.This.richTextBox1.SaveFile($"{CData.modeName}.rtf");
+			CreatePgn();
 			timerStart.Start();
 		}
 
@@ -853,6 +882,7 @@ namespace RapChessGui
 			}
 			if (!FOptions.cbShowPonder.Checked)
 				cp.ponder = "";
+			int nps = cp.totalNps > 0 ? cp.totalNps : cp.nps;
 			if (boardRotate ^ cp.white)
 			{
 				labTimeB.Text = cp.GetTime();
@@ -860,7 +890,7 @@ namespace RapChessGui
 				labProtocolB.Text = cp.GetProtocol();
 				labScoreB.Text = $"Score {cp.score}";
 				labNodesB.Text = $"Nodes {cp.nodes.ToString("N0")}";
-				labNpsB.Text = $"Nps {cp.nps.ToString("N0")}";
+				labNpsB.Text = $"Nps {nps.ToString("N0")}";
 				labPonderB.Text = $"Ponder {cp.ponder}";
 				labBookB.Text = $"Book {cp.usedBook}";
 				if (cp.seldepth != "0")
@@ -875,7 +905,7 @@ namespace RapChessGui
 				labProtocolT.Text = cp.GetProtocol();
 				labScoreT.Text = $"Score {cp.score}";
 				labNodesT.Text = $"Nodes {cp.nodes.ToString("N0")}";
-				labNpsT.Text = $"Nps {cp.nps.ToString("N0")}";
+				labNpsT.Text = $"Nps {nps.ToString("N0")}";
 				labPonderT.Text = $"Ponder {cp.ponder}";
 				labBookT.Text = $"Book {cp.usedBook}";
 				if (cp.seldepth != "0")

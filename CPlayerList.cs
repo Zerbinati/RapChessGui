@@ -17,6 +17,8 @@ namespace RapChessGui
 		public int usedBook;
 		public int nodes;
 		public int nps;
+		public int totalNps;
+		public int totalNpsSum;
 		public double timeTotal;
 		public string score;
 		public string depth;
@@ -52,15 +54,17 @@ namespace RapChessGui
 			white = w;
 			started = false;
 			go = false;
-			timeTotal = 0;
 			usedBook = 0;
 			nodes = 0;
 			nps = 0;
+			totalNps = 0;
+			totalNpsSum = 0;
 			score = "0";
 			depth = "0";
 			seldepth = "0";
 			ponder = "";
 			timeStart = DateTime.Now;
+			timeTotal = 0;
 			book.Reset();
 		}
 
