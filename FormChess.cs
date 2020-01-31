@@ -438,10 +438,10 @@ namespace RapChessGui
 			int moveNumber = (Engine.g_moveNumber >> 1) + 1;
 			labMove.Text = "Move " + moveNumber.ToString() + " " + Engine.g_move50.ToString();
 			CPlayer cp = PlayerList.CurPlayer();
-			if (cp.nodes > 0)
+			if (cp.timeTotal > 100)
 			{
 				cp.totalNpsSum += cp.nodes;
-				cp.totalNps = Convert.ToInt32(cp.totalNpsSum / (cp.timeTotal * 0.001));
+				cp.totalNps = Convert.ToInt32((cp.totalNpsSum * 1000) / cp.timeTotal);
 			}
 			CData.gameState = Engine.GetGameState();
 			if (CData.gameState == 0)
