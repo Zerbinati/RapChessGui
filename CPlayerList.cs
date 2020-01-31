@@ -15,10 +15,10 @@ namespace RapChessGui
 		public bool go = false;
 		public bool white = true;
 		public int usedBook;
-		public int nodes;
-		public int nps;
-		public int totalNps;
-		public int totalNpsSum;
+		public ulong nodes;
+		public ulong nps;
+		public ulong totalNps;
+		public ulong totalNpsSum;
 		public double timeTotal;
 		public string score;
 		public string depth;

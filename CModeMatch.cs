@@ -1,4 +1,6 @@
-﻿namespace RapChessGui
+﻿using RapIni;
+
+namespace RapChessGui
 {
 	class CModeMatch
 	{
@@ -32,5 +34,24 @@
 			else
 				return ((win * 2 + draw) * 100) / (t * 2);
 		}
+
+		public void LoadFromIni()
+		{
+			rotate = CRapIni.This.ReadInt("mode>match>rotate>");
+			games = CRapIni.This.ReadInt("mode>match>games>");
+			win = CRapIni.This.ReadInt("mode>match>win>");
+			draw = CRapIni.This.ReadInt("mode>match>draw>");
+			loose = CRapIni.This.ReadInt("mode>match>loose>");
+		}
+
+		public void SaveToIni()
+		{
+			CRapIni.This.Write("mode>match>rotate>", rotate.ToString());
+			CRapIni.This.Write("mode>match>games>", games.ToString());
+			CRapIni.This.Write("mode>match>win>", win.ToString());
+			CRapIni.This.Write("mode>match>draw>", draw.ToString());
+			CRapIni.This.Write("mode>match>loose>", loose.ToString());
+		}
+
 	}
 }

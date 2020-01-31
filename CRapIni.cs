@@ -69,6 +69,12 @@ namespace RapIni
 			return def;
 		}
 
+		public int ReadInt(string key, int def = 0)
+		{
+			string s = Read(key,Convert.ToString(def));
+			return Convert.ToInt32(s);
+		}
+
 		public List<string> ReadList(string key)
 		{
 			List<string> result = new List<string>();

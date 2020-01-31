@@ -87,6 +87,7 @@ namespace RapChessGui
 		{
 			cbPlayer1.SelectedIndex = cbPlayer1.FindStringExact(CRapIni.This.Read("mode>match>player1", CUserList.defUser));
 			cbPlayer2.SelectedIndex = cbPlayer2.FindStringExact(CRapIni.This.Read("mode>match>player2", CUserList.defUser));
+			Match.LoadFromIni();
 		}
 
 		void IniLoadTournament()
@@ -125,6 +126,7 @@ namespace RapChessGui
 		{
 			CRapIni.This.Write("mode>match>player1", cbPlayer1.Text);
 			CRapIni.This.Write("mode>match>player2", cbPlayer2.Text);
+			Match.SaveToIni();
 		}
 
 		void IniSaveTournament()
@@ -193,7 +195,7 @@ namespace RapChessGui
 						{
 							try
 							{
-								p.nodes = Convert.ToInt32(s);
+								p.nodes = (ulong)Convert.ToInt64(s);
 							}
 							catch
 							{
@@ -204,7 +206,7 @@ namespace RapChessGui
 						{
 							try
 							{
-								p.nps = Convert.ToInt32(s);
+								p.nps = (ulong)Convert.ToInt64(s);
 							}
 							catch
 							{
@@ -226,8 +228,8 @@ namespace RapChessGui
 							{
 								p.depth = Uci.tokens[0];
 								p.score = Uci.tokens[1];
-								int ms = Convert.ToInt32(Uci.tokens[2]);
-								p.nodes = Convert.ToInt32(Uci.tokens[3]);
+								ulong ms = (ulong)Convert.ToInt64(Uci.tokens[2]);
+								p.nodes = (ulong)Convert.ToInt64(Uci.tokens[3]);
 								p.nps = ms > 0 ? (p.nodes * 100) / ms : 0;
 								pv = "";
 								for (int n = 4; n < Uci.tokens.Length; n++)
@@ -441,7 +443,7 @@ namespace RapChessGui
 			if (cp.timeTotal > 100)
 			{
 				cp.totalNpsSum += cp.nodes;
-				cp.totalNps = Convert.ToInt32((cp.totalNpsSum * 1000) / cp.timeTotal);
+				cp.totalNps = (ulong)Convert.ToInt64((cp.totalNpsSum * 1000) / cp.timeTotal);
 			}
 			CData.gameState = Engine.GetGameState();
 			if (CData.gameState == 0)
@@ -545,6 +547,7 @@ namespace RapChessGui
 				{
 					Match.draw++;
 				}
+				IniSaveMatch();
 				ShowMatch();
 			}
 			if (CData.gameMode == (int)CMode.tournament)
@@ -882,7 +885,7 @@ namespace RapChessGui
 			}
 			if (!FOptions.cbShowPonder.Checked)
 				cp.ponder = "";
-			int nps = cp.totalNps > 0 ? cp.totalNps : cp.nps;
+			ulong nps = cp.totalNps > 0 ? cp.totalNps : cp.nps;
 			if (boardRotate ^ cp.white)
 			{
 				labTimeB.Text = cp.GetTime();
@@ -1530,7 +1533,8 @@ namespace RapChessGui
 
 		private void butContinueMatch_Click(object sender, EventArgs e)
 		{
-			LoadFen(Engine.GetFen());
+			IniLoadMatch();
+			StartMatch();
 		}
 
 		private void butDefault_Click(object sender, EventArgs e)
