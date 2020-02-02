@@ -15,7 +15,7 @@ namespace RapChessGui
 		public string value = "1000";
 		public string book = "None";
 		public string elo = "1000";
-		public string eloOld = "1000";
+		public double eloOld = 1000;
 		public int eloStart = 0;
 		public int eloLess = 0;
 		public int eloMore = 0;
@@ -95,7 +95,7 @@ namespace RapChessGui
 			value = CRapIni.This.Read($"player>{name}>value", "1000");
 			book = CRapIni.This.Read($"player>{name}>book", "None");
 			elo = CRapIni.This.Read($"player>{name}>elo", "1000");
-			eloOld = CRapIni.This.Read($"player>{name}>eloOld", "1000");
+			eloOld = CRapIni.This.ReadDouble($"player>{name}>eloOld",1000);
 		}
 
 		public void SaveToIni()
@@ -107,7 +107,7 @@ namespace RapChessGui
 			CRapIni.This.Write($"player>{name}>value", value);
 			CRapIni.This.Write($"player>{name}>book", book);
 			CRapIni.This.Write($"player>{name}>elo", elo);
-			CRapIni.This.Write($"player>{name}>eloOld", eloOld);
+			CRapIni.This.Write($"player>{name}>eloOld", Convert.ToString(eloOld));
 		}
 	}
 
@@ -243,26 +243,33 @@ namespace RapChessGui
 			if (CountComputer() < 3)
 			{
 				CUser uc;
-				uc = new CUser("RapChessCs D1");
+				uc = new CUser("RapChessCs RD1");
 				uc.engine = "RapChessCs.exe";
 				uc.mode = "depth";
 				uc.value = "1";
 				uc.book = "rand2.txt";
 				uc.elo = "200";
 				list.Add(uc);
-				uc = new CUser("RapChessCs D2");
+				uc = new CUser("RapChessCs RD2");
 				uc.engine = "RapChessCs.exe";
 				uc.mode = "depth";
 				uc.value = "2";
 				uc.book = "rand1.txt";
 				uc.elo = "400";
 				list.Add(uc);
-				uc = new CUser("RapChessCs D3");
+				uc = new CUser("RapChessCs XD3");
 				uc.engine = "RapChessCs.exe";
 				uc.mode = "depth";
 				uc.value = "3";
 				uc.book = "small.txt";
 				uc.elo = "600";
+				list.Add(uc);
+				uc = new CUser("RapSimpleCs XT1");
+				uc.engine = "RapSimpleCs.exe";
+				uc.mode = "movetime";
+				uc.value = "1000";
+				uc.book = "small.txt";
+				uc.elo = "800";
 				list.Add(uc);
 				uc = new CUser(defUser);
 				uc.engine = "RapChessCs.exe";

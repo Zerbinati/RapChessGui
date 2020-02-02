@@ -69,6 +69,12 @@ namespace RapIni
 			return def;
 		}
 
+		public double ReadDouble(string key, double def = 0)
+		{
+			string s = Read(key, Convert.ToString(def));
+			return Convert.ToDouble(s);
+		}
+
 		public int ReadInt(string key, int def = 0)
 		{
 			string s = Read(key,Convert.ToString(def));

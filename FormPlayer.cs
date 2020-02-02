@@ -84,7 +84,7 @@ namespace RapChessGui
 			user.book = cbBookList.Text;
 			user.parameters = tbParameters.Text;
 			user.elo = nudElo.Value.ToString();
-			user.eloOld = user.elo;
+			user.eloOld = Convert.ToDouble(user.elo);
 			curUserName = user.name;
 			var checkedButton = gbMode.Controls.OfType<RadioButton>().FirstOrDefault(r => r.Checked);
 			List<RadioButton> list = gbMode.Controls.OfType<RadioButton>().ToList();

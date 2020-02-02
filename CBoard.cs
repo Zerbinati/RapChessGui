@@ -88,22 +88,6 @@ namespace RapChessGui
 				list[n] = new CField();
 		}
 
-		public static void SaveToIni()
-		{
-			CRapIni.This.Write("!>colorR", color.R.ToString());
-			CRapIni.This.Write("!>colorG", color.G.ToString());
-			CRapIni.This.Write("!>colorB", color.B.ToString());
-		}
-
-
-		public static void LoadFromIni()
-		{
-			int r = Convert.ToInt32(CRapIni.This.Read("!>colorR", "64"));
-			int g = Convert.ToInt32(CRapIni.This.Read("!>colorG", "0"));
-			int b = Convert.ToInt32(CRapIni.This.Read("!>colorB", "0"));
-			color = Color.FromArgb(r, g, b);
-		}
-
 		public static void Clear()
 		{
 			for (int n = 0; n < 64; n++)

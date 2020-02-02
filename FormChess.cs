@@ -74,7 +74,7 @@ namespace RapChessGui
 			FOptions.cbRotateBoard.Checked = Convert.ToInt32(CRapIni.This.Read("options>interface>rotate", "0")) == 1;
 			FOptions.cbAttack.Checked = Convert.ToInt32(CRapIni.This.Read("options>interface>attack", "0")) == 1;
 			FOptions.nudSpeed.Value = Convert.ToInt32(CRapIni.This.Read("options>interface>speed", "200"));
-			CBoard.LoadFromIni();
+			CBoard.color = ColorTranslator.FromHtml(CRapIni.This.Read("options>interface>color", "#400000"));
 		}
 
 		void IniLoadGame()
@@ -113,7 +113,6 @@ namespace RapChessGui
 			CRapIni.This.Write("options>interface>attack", FOptions.cbAttack.Checked ? "1" : "0");
 			CRapIni.This.Write("options>interface>speed", FOptions.nudSpeed.Value.ToString());
 			CRapIni.This.Write("options>game>autoelo", FOptions.cbGameAutoElo.Checked ? "1" : "0");
-			CBoard.SaveToIni();
 		}
 
 		void IniSaveGame()
@@ -514,14 +513,14 @@ namespace RapChessGui
 					{
 						if (uw.name == "Human")
 						{
-							uw.eloOld = ul.elo;
+							uw.eloOld = Convert.ToDouble(ul.elo);
 							uw.elo = uw.eloMore.ToString();
 							uw.SaveToIni();
 							labLast.Text += $" new elo {uw.elo}";
 						}
 						else
 						{
-							ul.eloOld = ul.elo;
+							ul.eloOld = Convert.ToDouble(ul.elo);
 							ul.elo = ul.eloLess.ToString();
 							ul.SaveToIni();
 							labLast.Text += $" new elo {ul.elo}";
@@ -576,12 +575,12 @@ namespace RapChessGui
 					OW = opt;
 					OL = opt;
 				}
-				uw.eloOld = uw.elo;
-				ul.eloOld = ul.elo;
 				int newW = Convert.ToInt32(eloW * 0.9 + OW * 0.1);
 				int newL = Convert.ToInt32(eloL * 0.9 + OL * 0.1);
 				uw.elo = newW.ToString();
 				ul.elo = newL.ToString();
+				uw.eloOld = uw.eloOld * .9 + newW * .1;
+				ul.eloOld = ul.eloOld * .9 + newL * .1; ;
 				uw.SaveToIni();
 				ul.SaveToIni();
 				ShowTournament();
