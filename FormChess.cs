@@ -577,8 +577,8 @@ namespace RapChessGui
 					OW = opt;
 					OL = opt;
 				}
-				int newW = Convert.ToInt32(eloW * 0.9 + OW * 0.1);
-				int newL = Convert.ToInt32(eloL * 0.9 + OL * 0.1);
+				int newW = Convert.ToInt32(eloW * 0.9 + Math.Max(OW,eloL) * 0.1);
+				int newL = Convert.ToInt32(eloL * 0.9 + Math.Min(OL,eloW) * 0.1);
 				uw.elo = newW.ToString();
 				ul.elo = newL.ToString();
 				uw.eloOld = uw.eloOld * .9 + newW * .1;
@@ -1493,6 +1493,7 @@ namespace RapChessGui
 				moves = Engine.GenerateValidMoves();
 				CData.gameState = Engine.GetGameState();
 				PlayerList.CurPlayer().user.elo = PlayerList.CurPlayer().user.eloLess.ToString();
+				PlayerList.SecPlayer().Undo();
 			}
 		}
 

@@ -69,6 +69,12 @@ namespace RapChessGui
 			book.Reset();
 		}
 
+		public void Undo()
+		{
+			if (user.protocol == "Winboard")
+				wbok = false;
+		}
+
 		public void Start()
 		{
 			mode = user.mode;
