@@ -406,6 +406,9 @@ namespace RapChessGui
 
 		public bool MakeMove(string emo)
 		{
+			CPlayer cp = PlayerList.CurPlayer();
+			cp.UpdateTime();
+			cp.timer.Stop();
 			emo = emo.ToLower();
 			CUser uw = PlayerList.CurPlayer().user;
 			CUser ul = PlayerList.SecPlayer().user;
@@ -438,7 +441,6 @@ namespace RapChessGui
 			Engine.MakeMove(gm);
 			int moveNumber = (Engine.g_moveNumber >> 1) + 1;
 			labMove.Text = "Move " + moveNumber.ToString() + " " + Engine.g_move50.ToString();
-			CPlayer cp = PlayerList.CurPlayer();
 			if (cp.timeTotal > 100)
 			{
 				cp.totalNpsSum += cp.nodes;
@@ -875,13 +877,6 @@ namespace RapChessGui
 
 		void RenderInfo(CPlayer cp)
 		{
-			if ((CData.gameState == 0) && (cp.go))
-			{
-				DateTime dt = DateTime.Now;
-				double dif = (dt - cp.timeStart).TotalMilliseconds;
-				cp.timeStart = dt;
-				cp.timeTotal += dif;
-			}
 			if (!FOptions.cbShowPonder.Checked)
 				cp.ponder = "";
 			ulong nps = cp.totalNps > 0 ? cp.totalNps : cp.nps;

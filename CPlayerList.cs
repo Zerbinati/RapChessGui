@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.Diagnostics;
 using System.Threading;
 
 namespace RapChessGui
@@ -26,7 +27,7 @@ namespace RapChessGui
 		public string ponder;
 		public string mode;
 		public string value;
-		public DateTime timeStart;
+		public Stopwatch timer = new Stopwatch();
 		public CBook book = new CBook();
 		public CPlayerEng PlayerEng = new CPlayerEng();
 		public CUser user;
@@ -63,8 +64,8 @@ namespace RapChessGui
 			depth = "0";
 			seldepth = "0";
 			ponder = "";
-			timeStart = DateTime.Now;
 			timeTotal = 0;
+			timer.Reset();
 			book.Reset();
 		}
 
@@ -138,7 +139,7 @@ namespace RapChessGui
 					wbok = true;
 				}
 				go = true;
-				timeStart = DateTime.Now;
+				timer.Restart() ;
 			}
 		}
 
@@ -180,7 +181,7 @@ namespace RapChessGui
 		public string GetTime()
 		{
 			DateTime dt1 = new DateTime();
-			DateTime dt2 = dt1.AddMilliseconds(timeTotal);
+			DateTime dt2 = dt1.AddMilliseconds(timeTotal + timer.Elapsed.TotalMilliseconds);
 			return dt2.ToString("HH:mm:ss");
 		}
 
@@ -210,6 +211,13 @@ namespace RapChessGui
 			CUser u = CUserList.GetUser(name);
 			SetUser(u);
 		}
+
+		public void UpdateTime()
+		{
+			timeTotal += timer.Elapsed.TotalMilliseconds;
+			timer.Reset();
+		}
+
 	}
 
 	class CPlayerList
@@ -230,9 +238,11 @@ namespace RapChessGui
 
 		public void Next()
 		{
-			CurPlayer().go = false;
+			CPlayer cp = CurPlayer();
+			cp.UpdateTime();
+			cp.go = false;
 			curIndex ^= 1;
-			CurPlayer().timeStart = DateTime.Now;
+			CurPlayer().timer.Restart();
 		}
 
 		public void Init()
