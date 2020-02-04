@@ -172,6 +172,7 @@
 			this.labNodesT = new System.Windows.Forms.Label();
 			this.labDepthT = new System.Windows.Forms.Label();
 			this.labScoreT = new System.Windows.Forms.Label();
+			this.labAutoElo = new System.Windows.Forms.Label();
 			this.menuStrip1.SuspendLayout();
 			this.panMenu.SuspendLayout();
 			this.panelT1.SuspendLayout();
@@ -245,14 +246,14 @@
 			// backToolStripMenuItem
 			// 
 			this.backToolStripMenuItem.Name = "backToolStripMenuItem";
-			this.backToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
+			this.backToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
 			this.backToolStripMenuItem.Text = "Back";
 			this.backToolStripMenuItem.Click += new System.EventHandler(this.backToolStripMenuItem_Click_1);
 			// 
 			// forwardToolStripMenuItem
 			// 
 			this.forwardToolStripMenuItem.Name = "forwardToolStripMenuItem";
-			this.forwardToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
+			this.forwardToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
 			this.forwardToolStripMenuItem.Text = "Make";
 			this.forwardToolStripMenuItem.Click += new System.EventHandler(this.forwardToolStripMenuItem_Click);
 			// 
@@ -550,11 +551,11 @@
 			this.lvMoves.GridLines = true;
 			this.lvMoves.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
 			this.lvMoves.HideSelection = false;
-			this.lvMoves.Location = new System.Drawing.Point(3, 223);
+			this.lvMoves.Location = new System.Drawing.Point(3, 237);
 			this.lvMoves.MultiSelect = false;
 			this.lvMoves.Name = "lvMoves";
 			this.lvMoves.ShowGroups = false;
-			this.lvMoves.Size = new System.Drawing.Size(314, 321);
+			this.lvMoves.Size = new System.Drawing.Size(314, 307);
 			this.lvMoves.TabIndex = 25;
 			this.lvMoves.UseCompatibleStateImageBehavior = false;
 			this.lvMoves.View = System.Windows.Forms.View.Details;
@@ -577,7 +578,7 @@
 			// butStop
 			// 
 			this.butStop.Dock = System.Windows.Forms.DockStyle.Top;
-			this.butStop.Location = new System.Drawing.Point(3, 200);
+			this.butStop.Location = new System.Drawing.Point(3, 214);
 			this.butStop.Name = "butStop";
 			this.butStop.Size = new System.Drawing.Size(314, 23);
 			this.butStop.TabIndex = 24;
@@ -588,7 +589,7 @@
 			// butContinueGame
 			// 
 			this.butContinueGame.Dock = System.Windows.Forms.DockStyle.Top;
-			this.butContinueGame.Location = new System.Drawing.Point(3, 177);
+			this.butContinueGame.Location = new System.Drawing.Point(3, 191);
 			this.butContinueGame.Name = "butContinueGame";
 			this.butContinueGame.Size = new System.Drawing.Size(314, 23);
 			this.butContinueGame.TabIndex = 23;
@@ -599,7 +600,7 @@
 			// butNewGame
 			// 
 			this.butNewGame.Dock = System.Windows.Forms.DockStyle.Top;
-			this.butNewGame.Location = new System.Drawing.Point(3, 154);
+			this.butNewGame.Location = new System.Drawing.Point(3, 168);
 			this.butNewGame.Name = "butNewGame";
 			this.butNewGame.Size = new System.Drawing.Size(314, 23);
 			this.butNewGame.TabIndex = 20;
@@ -613,7 +614,7 @@
 			this.groupBox2.Controls.Add(this.cbCommand);
 			this.groupBox2.Controls.Add(this.cbComputer);
 			this.groupBox2.Dock = System.Windows.Forms.DockStyle.Top;
-			this.groupBox2.Location = new System.Drawing.Point(3, 70);
+			this.groupBox2.Location = new System.Drawing.Point(3, 84);
 			this.groupBox2.Name = "groupBox2";
 			this.groupBox2.Size = new System.Drawing.Size(314, 84);
 			this.groupBox2.TabIndex = 19;
@@ -656,16 +657,18 @@
 			this.cbComputer.Size = new System.Drawing.Size(308, 21);
 			this.cbComputer.Sorted = true;
 			this.cbComputer.TabIndex = 1;
+			this.cbComputer.SelectedValueChanged += new System.EventHandler(this.cbComputer_SelectedValueChanged);
 			this.cbComputer.TextChanged += new System.EventHandler(this.cbComputer_TextChanged);
 			// 
 			// groupBox1
 			// 
+			this.groupBox1.Controls.Add(this.labAutoElo);
 			this.groupBox1.Controls.Add(this.labBack);
 			this.groupBox1.Controls.Add(this.cbColor);
 			this.groupBox1.Dock = System.Windows.Forms.DockStyle.Top;
 			this.groupBox1.Location = new System.Drawing.Point(3, 3);
 			this.groupBox1.Name = "groupBox1";
-			this.groupBox1.Size = new System.Drawing.Size(314, 67);
+			this.groupBox1.Size = new System.Drawing.Size(314, 81);
 			this.groupBox1.TabIndex = 18;
 			this.groupBox1.TabStop = false;
 			this.groupBox1.Text = "Human";
@@ -695,6 +698,7 @@
 			this.cbColor.Name = "cbColor";
 			this.cbColor.Size = new System.Drawing.Size(308, 21);
 			this.cbColor.TabIndex = 2;
+			this.cbColor.SelectedValueChanged += new System.EventHandler(this.cbColor_SelectedValueChanged);
 			// 
 			// tabPageMatch
 			// 
@@ -1887,6 +1891,17 @@
 			this.labScoreT.TabIndex = 6;
 			this.labScoreT.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
+			// labAutoElo
+			// 
+			this.labAutoElo.Dock = System.Windows.Forms.DockStyle.Top;
+			this.labAutoElo.ForeColor = System.Drawing.Color.White;
+			this.labAutoElo.Location = new System.Drawing.Point(3, 58);
+			this.labAutoElo.Name = "labAutoElo";
+			this.labAutoElo.Size = new System.Drawing.Size(308, 21);
+			this.labAutoElo.TabIndex = 31;
+			this.labAutoElo.Text = "Auto Elo On";
+			this.labAutoElo.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			// 
 			// FormChess
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -2085,6 +2100,7 @@
 		private System.Windows.Forms.Label labMaterialB;
 		private System.Windows.Forms.Button butContinueMatch;
 		private System.Windows.Forms.Button butDefault;
+		private System.Windows.Forms.Label labAutoElo;
 	}
 }
 

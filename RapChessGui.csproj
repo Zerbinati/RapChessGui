@@ -58,6 +58,7 @@
     <Compile Include="CExtensions.cs" />
     <Compile Include="CHistory.cs" />
     <Compile Include="CModeGame.cs" />
+    <Compile Include="CModeTournament.cs" />
     <Compile Include="CRapLog.cs" />
     <Compile Include="CModeMatch.cs" />
     <Compile Include="CBoard.cs" />

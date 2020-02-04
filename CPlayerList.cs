@@ -130,22 +130,24 @@ namespace RapChessGui
 					{
 						SendMessage(CHistory.LastMove());
 					}
-						else {
-								SendMessage("new");
-								SendMessage($"{mode} {value}");
-								SendMessage("post");
-								if (CHistory.fen != CEngine.defFen)
-								{
-									SendMessage($"setboard {CHistory.fen}");
-								}
-								SendMessage("force");
-								foreach (CHisMove m in CHistory.moveList)
-									SendMessage(m.emo);
-								SendMessage("go"); }
+					else
+					{
+						SendMessage("new");
+						SendMessage($"{mode} {value}");
+						SendMessage("post");
+						if (CHistory.fen != CEngine.defFen)
+						{
+							SendMessage($"setboard {CHistory.fen}");
+						}
+						SendMessage("force");
+						foreach (CHisMove m in CHistory.moveList)
+							SendMessage(m.emo);
+						SendMessage("go");
+					}
 					wbok = true;
 				}
 				go = true;
-				timer.Restart() ;
+				timer.Restart();
 			}
 		}
 
@@ -237,18 +239,13 @@ namespace RapChessGui
 			player[1] = new CPlayer();
 		}
 
-		public CPlayer CurPlayer()
-		{
-			return player[curIndex];
-		}
-
 		public void Next()
 		{
-			CPlayer cp = CurPlayer();
+			CPlayer cp = PlayerCur();
 			cp.UpdateTime();
 			cp.go = false;
 			curIndex ^= 1;
-			CurPlayer().timer.Restart();
+			PlayerCur().timer.Restart();
 		}
 
 		public void Init()
@@ -267,7 +264,21 @@ namespace RapChessGui
 			player[1].white = false;
 		}
 
-		public CPlayer SecPlayer()
+		public CPlayer PlayerHum()
+		{
+			if (!player[0].computer)
+				return player[0];
+			if (!player[1].computer)
+				return player[1];
+			return null;
+		}
+
+		public CPlayer PlayerCur()
+		{
+			return player[curIndex];
+		}
+
+		public CPlayer PlayerSec()
 		{
 			return player[curIndex ^ 1];
 		}

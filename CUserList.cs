@@ -162,7 +162,10 @@ namespace RapChessGui
 		{
 			list.Sort(delegate (CUser u1, CUser u2)
 			{
-				return Convert.ToInt32(u1.elo) - Convert.ToInt32(u2.elo);
+				int result = Convert.ToInt32(u1.elo) - Convert.ToInt32(u2.elo);
+				if(result == 0)
+					result = Convert.ToInt32(u1.eloOld) - Convert.ToInt32(u2.eloOld);
+				return result;
 			});
 		}
 
