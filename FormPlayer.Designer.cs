@@ -33,7 +33,8 @@
 			this.bDelete = new System.Windows.Forms.Button();
 			this.bCreate = new System.Windows.Forms.Button();
 			this.bUpdate = new System.Windows.Forms.Button();
-			this.groupBox6 = new System.Windows.Forms.GroupBox();
+			this.gbOptions = new System.Windows.Forms.GroupBox();
+			this.gbElo = new System.Windows.Forms.GroupBox();
 			this.nudElo = new System.Windows.Forms.NumericUpDown();
 			this.groupBox5 = new System.Windows.Forms.GroupBox();
 			this.cbBookList = new System.Windows.Forms.ComboBox();
@@ -52,8 +53,10 @@
 			this.tbUserName = new System.Windows.Forms.TextBox();
 			this.groupBox2 = new System.Windows.Forms.GroupBox();
 			this.listBox1 = new System.Windows.Forms.ListBox();
+			this.rtbOptions = new System.Windows.Forms.RichTextBox();
 			this.panel1.SuspendLayout();
-			this.groupBox6.SuspendLayout();
+			this.gbOptions.SuspendLayout();
+			this.gbElo.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.nudElo)).BeginInit();
 			this.groupBox5.SuspendLayout();
 			this.gbMode.SuspendLayout();
@@ -75,7 +78,8 @@
 			this.panel1.Controls.Add(this.bDelete);
 			this.panel1.Controls.Add(this.bCreate);
 			this.panel1.Controls.Add(this.bUpdate);
-			this.panel1.Controls.Add(this.groupBox6);
+			this.panel1.Controls.Add(this.gbOptions);
+			this.panel1.Controls.Add(this.gbElo);
 			this.panel1.Controls.Add(this.groupBox5);
 			this.panel1.Controls.Add(this.gbMode);
 			this.panel1.Controls.Add(this.groupBox3);
@@ -85,13 +89,13 @@
 			this.panel1.Dock = System.Windows.Forms.DockStyle.Right;
 			this.panel1.Location = new System.Drawing.Point(489, 0);
 			this.panel1.Name = "panel1";
-			this.panel1.Size = new System.Drawing.Size(311, 450);
+			this.panel1.Size = new System.Drawing.Size(311, 591);
 			this.panel1.TabIndex = 0;
 			// 
 			// bDelete
 			// 
 			this.bDelete.Dock = System.Windows.Forms.DockStyle.Top;
-			this.bDelete.Location = new System.Drawing.Point(0, 400);
+			this.bDelete.Location = new System.Drawing.Point(0, 558);
 			this.bDelete.Name = "bDelete";
 			this.bDelete.Size = new System.Drawing.Size(311, 33);
 			this.bDelete.TabIndex = 27;
@@ -102,7 +106,7 @@
 			// bCreate
 			// 
 			this.bCreate.Dock = System.Windows.Forms.DockStyle.Top;
-			this.bCreate.Location = new System.Drawing.Point(0, 367);
+			this.bCreate.Location = new System.Drawing.Point(0, 525);
 			this.bCreate.Name = "bCreate";
 			this.bCreate.Size = new System.Drawing.Size(311, 33);
 			this.bCreate.TabIndex = 26;
@@ -113,7 +117,7 @@
 			// bUpdate
 			// 
 			this.bUpdate.Dock = System.Windows.Forms.DockStyle.Top;
-			this.bUpdate.Location = new System.Drawing.Point(0, 340);
+			this.bUpdate.Location = new System.Drawing.Point(0, 498);
 			this.bUpdate.Name = "bUpdate";
 			this.bUpdate.Size = new System.Drawing.Size(311, 27);
 			this.bUpdate.TabIndex = 25;
@@ -121,16 +125,27 @@
 			this.bUpdate.UseVisualStyleBackColor = true;
 			this.bUpdate.Click += new System.EventHandler(this.ButUpdate_Click);
 			// 
-			// groupBox6
+			// gbOptions
 			// 
-			this.groupBox6.Controls.Add(this.nudElo);
-			this.groupBox6.Dock = System.Windows.Forms.DockStyle.Top;
-			this.groupBox6.Location = new System.Drawing.Point(0, 295);
-			this.groupBox6.Name = "groupBox6";
-			this.groupBox6.Size = new System.Drawing.Size(311, 45);
-			this.groupBox6.TabIndex = 24;
-			this.groupBox6.TabStop = false;
-			this.groupBox6.Text = "Elo";
+			this.gbOptions.Controls.Add(this.rtbOptions);
+			this.gbOptions.Dock = System.Windows.Forms.DockStyle.Top;
+			this.gbOptions.Location = new System.Drawing.Point(0, 340);
+			this.gbOptions.Name = "gbOptions";
+			this.gbOptions.Size = new System.Drawing.Size(311, 158);
+			this.gbOptions.TabIndex = 29;
+			this.gbOptions.TabStop = false;
+			this.gbOptions.Text = "Options";
+			// 
+			// gbElo
+			// 
+			this.gbElo.Controls.Add(this.nudElo);
+			this.gbElo.Dock = System.Windows.Forms.DockStyle.Top;
+			this.gbElo.Location = new System.Drawing.Point(0, 295);
+			this.gbElo.Name = "gbElo";
+			this.gbElo.Size = new System.Drawing.Size(311, 45);
+			this.gbElo.TabIndex = 24;
+			this.gbElo.TabStop = false;
+			this.gbElo.Text = "Elo";
 			// 
 			// nudElo
 			// 
@@ -351,7 +366,7 @@
 			this.groupBox2.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.groupBox2.Location = new System.Drawing.Point(0, 0);
 			this.groupBox2.Name = "groupBox2";
-			this.groupBox2.Size = new System.Drawing.Size(489, 450);
+			this.groupBox2.Size = new System.Drawing.Size(489, 591);
 			this.groupBox2.TabIndex = 5;
 			this.groupBox2.TabStop = false;
 			this.groupBox2.Text = "Players List";
@@ -362,16 +377,25 @@
 			this.listBox1.FormattingEnabled = true;
 			this.listBox1.Location = new System.Drawing.Point(3, 16);
 			this.listBox1.Name = "listBox1";
-			this.listBox1.Size = new System.Drawing.Size(483, 431);
+			this.listBox1.Size = new System.Drawing.Size(483, 572);
 			this.listBox1.Sorted = true;
 			this.listBox1.TabIndex = 1;
 			this.listBox1.SelectedValueChanged += new System.EventHandler(this.ListBox1_SelectedValueChanged);
+			// 
+			// rtbOptions
+			// 
+			this.rtbOptions.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.rtbOptions.Location = new System.Drawing.Point(3, 16);
+			this.rtbOptions.Name = "rtbOptions";
+			this.rtbOptions.Size = new System.Drawing.Size(305, 139);
+			this.rtbOptions.TabIndex = 0;
+			this.rtbOptions.Text = "";
 			// 
 			// FormPlayer
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(800, 450);
+			this.ClientSize = new System.Drawing.Size(800, 591);
 			this.Controls.Add(this.groupBox2);
 			this.Controls.Add(this.panel1);
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
@@ -382,7 +406,8 @@
 			this.Text = "Players";
 			this.TopMost = true;
 			this.panel1.ResumeLayout(false);
-			this.groupBox6.ResumeLayout(false);
+			this.gbOptions.ResumeLayout(false);
+			this.gbElo.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.nudElo)).EndInit();
 			this.groupBox5.ResumeLayout(false);
 			this.gbMode.ResumeLayout(false);
@@ -422,8 +447,10 @@
 		private System.Windows.Forms.Button bDelete;
 		private System.Windows.Forms.Button bCreate;
 		private System.Windows.Forms.Button bUpdate;
-		private System.Windows.Forms.GroupBox groupBox6;
+		private System.Windows.Forms.GroupBox gbElo;
 		private System.Windows.Forms.NumericUpDown nudElo;
 		public System.Windows.Forms.ComboBox cbProtocol;
+		private System.Windows.Forms.GroupBox gbOptions;
+		private System.Windows.Forms.RichTextBox rtbOptions;
 	}
 }

@@ -1,14 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using RapIni;
 
 namespace RapChessGui
 {
-	class CModeTournament
+	static class CModeTournament
 	{
-		public static int playerIndex;
+		private static int playerIndex = 0;
+
+		public static void IniLoad()
+		{
+			playerIndex = Convert.ToInt32(CRapIni.This.Read("mode>tournament>tournament", "0"));
+		}
+
+		private static void IniSave()
+		{
+			CRapIni.This.Write("mode>tournament>tournament", playerIndex.ToString());
+		}
 
 		public static CUser GetUser()
 		{
@@ -20,6 +28,7 @@ namespace RapChessGui
 			if (--playerIndex < 0)
 				playerIndex = list.Count - 1;
 			playerIndex %= list.Count;
+			IniSave();
 			return list[playerIndex];
 		}
 

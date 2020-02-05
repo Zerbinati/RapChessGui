@@ -19,6 +19,7 @@ namespace RapChessGui
 		public int eloStart = 0;
 		public int eloLess = 0;
 		public int eloMore = 0;
+		public List<string> options = new List<string>();
 
 		public CUser(string n)
 		{
@@ -96,6 +97,7 @@ namespace RapChessGui
 			book = CRapIni.This.Read($"player>{name}>book", "None");
 			elo = CRapIni.This.Read($"player>{name}>elo", "1000");
 			eloOld = CRapIni.This.ReadDouble($"player>{name}>eloOld",1000);
+			options = CRapIni.This.ReadList($"player>{name}>options");
 		}
 
 		public void SaveToIni()
@@ -108,6 +110,7 @@ namespace RapChessGui
 			CRapIni.This.Write($"player>{name}>book", book);
 			CRapIni.This.Write($"player>{name}>elo", elo);
 			CRapIni.This.Write($"player>{name}>eloOld", Convert.ToString(eloOld));
+			CRapIni.This.WriteList($"player>{name}>options", options);
 		}
 	}
 

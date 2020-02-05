@@ -26,13 +26,13 @@ namespace RapChessGui
 		public CRapIni RapIni = new CRapIni();
 		public CRapLog RapLog = new CRapLog();
 		readonly CEngine Engine = new CEngine();
-		CPlayerList PlayerList = new CPlayerList();
-		CModeMatch Match = new CModeMatch();
-		CModeTraining Trainer = new CModeTraining();
-		CUci Uci = new CUci();
-		FormOptions FOptions = new FormOptions();
-		FormPlayer FPlayer = new FormPlayer();
-		PrivateFontCollection pfc = new PrivateFontCollection();
+		readonly CPlayerList PlayerList = new CPlayerList();
+		readonly CModeMatch Match = new CModeMatch();
+		readonly CModeTraining Trainer = new CModeTraining();
+		readonly CUci Uci = new CUci();
+		readonly FormOptions FOptions = new FormOptions();
+		readonly FormPlayer FPlayer = new FormPlayer();
+		readonly PrivateFontCollection pfc = new PrivateFontCollection();
 		Font fontChess;
 
 		public FormChess()
@@ -66,8 +66,8 @@ namespace RapChessGui
 		{
 			IniLoadGame();
 			IniLoadMatch();
-			IniLoadTournament();
 			IniLoadTraining();
+			CModeTournament.IniLoad();
 			FOptions.cbShowPonder.Checked = Convert.ToInt32(CRapIni.This.Read("options>interface>showponder", "1")) == 1;
 			FOptions.cbGameAutoElo.Checked = Convert.ToInt32(CRapIni.This.Read("options>game>autoelo", "1")) == 1;
 			FOptions.cbRotateBoard.Checked = Convert.ToInt32(CRapIni.This.Read("options>interface>rotate", "0")) == 1;
@@ -87,11 +87,6 @@ namespace RapChessGui
 			cbPlayer1.SelectedIndex = cbPlayer1.FindStringExact(CRapIni.This.Read("mode>match>player1", CUserList.defUser));
 			cbPlayer2.SelectedIndex = cbPlayer2.FindStringExact(CRapIni.This.Read("mode>match>player2", CUserList.defUser));
 			Match.LoadFromIni();
-		}
-
-		void IniLoadTournament()
-		{
-			CModeTournament.playerIndex = Convert.ToInt32(CRapIni.This.Read("mode>tournament>tournament", "0"));
 		}
 
 		void IniLoadTraining()
@@ -127,11 +122,6 @@ namespace RapChessGui
 			Match.SaveToIni();
 		}
 
-		void IniSaveTournament()
-		{
-			CRapIni.This.Write("mode>tournament>tournament", CModeTournament.playerIndex.ToString());
-		}
-
 		void IniSaveTraining()
 		{
 			CRapIni.This.Write("mode>training>trained", comboBoxTrained.Text);
@@ -143,8 +133,8 @@ namespace RapChessGui
 
 		public void GetMessage(CPlayer p)
 		{
-			string msg = p.GetMessage();
-			while (msg != "")
+			string msg;
+			while ((msg = p.GetMessage()) != "")
 			{
 				Uci.SetMsg(msg);
 				switch (Uci.command)
@@ -155,6 +145,8 @@ namespace RapChessGui
 						break;
 					case "uciok":
 						p.uciok = true;
+						foreach (string op in p.user.options)
+							p.SendMessage($"setoption {op}");
 						p.SendMessage("ucinewgame");
 						p.SendMessage("isready");
 						break;
@@ -242,7 +234,6 @@ namespace RapChessGui
 						}
 						break;
 				}
-				msg = p.GetMessage();
 			}
 			if (PlayerList.PlayerCur().user.protocol == "Winboard")
 				PlayerList.PlayerCur().readyok = true;
@@ -490,7 +481,6 @@ namespace RapChessGui
 
 		void StartTournament()
 		{
-			IniSaveTournament();
 			SetMode((int)CMode.tournament);
 			CUser u = CModeTournament.GetUser();
 			PlayerList.player[0].SetUser(u);
@@ -620,7 +610,7 @@ namespace RapChessGui
 							ul.elo = ul.eloLess.ToString();
 							ul.SaveToIni();
 							labLast.ForeColor = Color.FromArgb(0xff,0,0);
-							labLast.Text = $"You loose yours new elo {ul.elo} ({uw.eloOld})";
+							labLast.Text = $"You loose yours new elo {ul.elo} ({ul.eloOld})";
 						}
 					}
 				}

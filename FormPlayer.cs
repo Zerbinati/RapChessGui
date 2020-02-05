@@ -60,6 +60,7 @@ namespace RapChessGui
 					nudDepth.Value = Int32.Parse(user.value);
 					break;
 			}
+			rtbOptions.Lines = user.options.ToArray();
 			List<RadioButton> list = gbMode.Controls.OfType<RadioButton>().ToList();
 			list[CData.ModeStoi(user.mode)].Select();
 		}
@@ -101,6 +102,7 @@ namespace RapChessGui
 					user.value = nudDepth.Value.ToString();
 					break;
 			}
+			user.options = rtbOptions.Lines.Cast<String>().ToList();
 			CUserList.SaveToIni();
 			UpdateListBox();
 			int index = listBox1.FindString(curUserName);

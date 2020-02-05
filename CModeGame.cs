@@ -1,6 +1,6 @@
 ﻿namespace RapChessGui
 {
-	class CModeGame
+	static class CModeGame
 	{
 		public static bool ranked = false;
 	}
