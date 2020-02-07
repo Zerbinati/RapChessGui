@@ -3,33 +3,40 @@ using System.IO;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Linq;
-
+using System.Collections.Specialized;
+using System.Net;
+using System.Text;
 
 namespace RapIni
 {
 	public class CRapIni
 	{
 		public static CRapIni This;
-		string path;
+		readonly string name = "";
+		readonly string path = "";
+		readonly string script ="";
 		List<string> list = new List<string>();
 
 		public CRapIni()
 		{
-			string name = Assembly.GetExecutingAssembly().GetName().Name;
+			name = Assembly.GetExecutingAssembly().GetName().Name;
 			This = this;
 			path = new FileInfo(name + ".ini").FullName.ToString();
-			Load();
+			script = Read("script", "");
 		}
 
 		public CRapIni(string name)
 		{
 			This = this;
+			this.name = name;
 			path = new FileInfo(name + ".ini").FullName.ToString();
-			Load();
+			script = Read("script", "");
 		}
 
-		public void Write(string key, string value)
+		public void WriteToFile(string key, string value)
 		{
+			if (script != "")
+				WriteToServer(key, value);
 			if (Load())
 			{
 				DeleteKey(key);
@@ -38,18 +45,33 @@ namespace RapIni
 			}
 		}
 
-		public void WriteList(string key, List<string> value)
+		public void WriteToServer(string key, string value)
 		{
-			if (Load())
+			var reqparm = new NameValueCollection();
+			reqparm.Add("action", "write");
+			reqparm.Add("name", name);
+			reqparm.Add("key", key);
+			reqparm.Add("value", value);
+			byte[] data;
+			try
 			{
-				DeleteKey(key);
-				foreach (string e in value)
-					list.Add($"{key}>{e}");
-				Save();
+				data = new WebClient().UploadValues(script, "POST", reqparm);
+			}
+			catch
+			{
 			}
 		}
 
-		public string Read(string key, string def = "")
+		public void Write(string key, string value)
+		{
+			if (script == "")
+				WriteToFile(key, value);
+			else
+				WriteToServer(key, value);
+
+		}
+
+		public string ReadFromFile(string key, string def = "")
 		{
 			if (Load())
 			{
@@ -69,6 +91,36 @@ namespace RapIni
 			return def;
 		}
 
+		public string ReadFromServer(string key, string def = "")
+		{
+			var reqparm = new NameValueCollection();
+			reqparm.Add("action", "read");
+			reqparm.Add("name", name);
+			reqparm.Add("key", key);
+			byte[] data;
+			try
+			{
+				data = new WebClient().UploadValues(script, "POST", reqparm);
+			}
+			catch
+			{
+				return def;
+			}
+			string result = Encoding.ASCII.GetString(data);
+			if (result == "")
+				return def;
+			else
+				return result;
+		}
+
+		public string Read(string key, string def = "")
+		{
+			if (script == "")
+				return ReadFromFile(key, def);
+			else
+				return ReadFromServer(key, def);
+		}
+
 		public double ReadDouble(string key, double def = 0)
 		{
 			string s = Read(key, Convert.ToString(def));
@@ -77,11 +129,27 @@ namespace RapIni
 
 		public int ReadInt(string key, int def = 0)
 		{
-			string s = Read(key,Convert.ToString(def));
+			string s = Read(key, Convert.ToString(def));
 			return Convert.ToInt32(s);
 		}
 
-		public List<string> ReadList(string key)
+		public bool ReadBool(string key, bool def = false)
+		{
+			bool result = def;
+			string s = Read(key, Convert.ToString(def));
+			bool.TryParse(s,out result);
+			return result;
+		}
+
+		public void WriteList(string key, List<string> value)
+		{
+			DeleteKey(key);
+			foreach (string e in value)
+				Write(key,e);
+		}
+
+
+		public List<string> ReadListFromFile(string key)
 		{
 			List<string> result = new List<string>();
 			if (Load())
@@ -103,7 +171,36 @@ namespace RapIni
 			return result;
 		}
 
-		public void DeleteKey(string key)
+		public List<string> ReadListFromServer(string key)
+		{
+			var reqparm = new NameValueCollection();
+			reqparm.Add("action", "readList");
+			reqparm.Add("name", name);
+			reqparm.Add("key", key);
+			byte[] data;
+			try
+			{
+				data = new WebClient().UploadValues(script, "POST", reqparm);
+			}
+			catch
+			{
+				return new List<string>();
+			}
+			string s = Encoding.ASCII.GetString(data);
+			string[] result = s.Split(new[] { '|' }, StringSplitOptions.RemoveEmptyEntries);
+			return result.ToList();
+		}
+
+		public List<string> ReadList(string key)
+		{
+			if (script == "")
+				return ReadListFromFile(key);
+			else
+				return ReadListFromServer(key);
+		}
+
+
+			private void DeleteKeyFromFile(string key)
 		{
 			if (Load())
 			{
@@ -115,6 +212,30 @@ namespace RapIni
 				}
 				Save();
 			}
+		}
+
+		private void DeleteKeyFromServer(string key)
+		{
+			var reqparm = new NameValueCollection();
+			reqparm.Add("action", "delete");
+			reqparm.Add("name", name);
+			reqparm.Add("key", key);
+			byte[] data;
+			try
+			{
+				data = new WebClient().UploadValues(script, "POST", reqparm);
+			}
+			catch
+			{
+			}
+		}
+
+		public void DeleteKey(string key)
+		{
+			if (script == "")
+				DeleteKeyFromFile(key);
+			else
+				DeleteKeyFromServer(key);
 		}
 
 		private bool Save()
@@ -131,7 +252,7 @@ namespace RapIni
 			return true;
 		}
 
-		public bool Load()
+		private bool Load()
 		{
 			if (File.Exists(path))
 			{

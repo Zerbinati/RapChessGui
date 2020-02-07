@@ -16,7 +16,7 @@ namespace RapChessGui
 		public string book = "None";
 		public string elo = "1000";
 		public double eloOld = 1000;
-		public int eloStart = 0;
+		public int eloNew = 1000;
 		public int eloLess = 0;
 		public int eloMore = 0;
 		public List<string> options = new List<string>();
@@ -96,6 +96,7 @@ namespace RapChessGui
 			value = CRapIni.This.Read($"player>{name}>value", "1000");
 			book = CRapIni.This.Read($"player>{name}>book", "None");
 			elo = CRapIni.This.Read($"player>{name}>elo", "1000");
+			eloNew = CRapIni.This.ReadInt($"player>{name}>eloNew", 1000);
 			eloOld = CRapIni.This.ReadDouble($"player>{name}>eloOld",1000);
 			options = CRapIni.This.ReadList($"player>{name}>options");
 		}
@@ -109,12 +110,13 @@ namespace RapChessGui
 			CRapIni.This.Write($"player>{name}>value", value);
 			CRapIni.This.Write($"player>{name}>book", book);
 			CRapIni.This.Write($"player>{name}>elo", elo);
+			CRapIni.This.Write($"player>{name}>eloNew", Convert.ToString(eloNew));
 			CRapIni.This.Write($"player>{name}>eloOld", Convert.ToString(eloOld));
 			CRapIni.This.WriteList($"player>{name}>options", options);
 		}
 	}
 
-	public class CUserList
+	static public class CUserList
 	{
 		public const string defUser = "RapChessCs XT1";
 		public static List<CUser> list = new List<CUser>();
@@ -286,6 +288,14 @@ namespace RapChessGui
 				list.Add(uc);
 			}
 			SaveToIni();
+		}
+
+		public static void DeletePlayer(string name)
+		{
+			CRapIni.This.DeleteKey($"player>{name}");
+			int i = GetIndex(name);
+			if (i >= 0)
+				list.RemoveAt(i);
 		}
 
 		public static void SaveToIni()

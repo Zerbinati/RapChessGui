@@ -133,11 +133,7 @@ namespace RapChessGui
 		private void ButDelete_Click(object sender, EventArgs e)
 		{
 			string userName = tbUserName.Text;
-			int i = CUserList.GetIndex(userName);
-			if (i == -1)
-				return;
-			CUserList.list.RemoveAt(i);
-			CUserList.SaveToIni();
+			CUserList.DeletePlayer(userName);
 			UpdateListBox();
 		}
 	}

@@ -8,12 +8,12 @@ namespace RapChessGui
 	{
 		private static int playerIndex = 0;
 
-		public static void IniLoad()
+		public static void LoadFromIni()
 		{
 			playerIndex = Convert.ToInt32(CRapIni.This.Read("mode>tournament>tournament", "0"));
 		}
 
-		private static void IniSave()
+		private static void SaveToIni()
 		{
 			CRapIni.This.Write("mode>tournament>tournament", playerIndex.ToString());
 		}
@@ -28,7 +28,7 @@ namespace RapChessGui
 			if (--playerIndex < 0)
 				playerIndex = list.Count - 1;
 			playerIndex %= list.Count;
-			IniSave();
+			SaveToIni();
 			return list[playerIndex];
 		}
 

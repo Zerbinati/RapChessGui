@@ -1,29 +1,29 @@
 ﻿namespace RapChessGui
 {
-	class CModeTraining
+	static class CModeTraining
 	{
-		public int rotate = 0;
-		public int games = 0;
-		public int win = 0;
-		public int draw = 0;
-		public int loose = 0;
-		public int time = 1000;
+		public static bool rotate = false;
+		public static int games = 0;
+		public static int win = 0;
+		public static int draw = 0;
+		public static int loose = 0;
+		public static int time = 1000;
 
-		public void Reset()
+		public static void Reset()
 		{
-			rotate = 0;
+			rotate = false;
 			games = 0;
 			win = 0;
 			draw = 0;
 			loose = 0;
 		}
 
-		public int Total()
+		public static int Total()
 		{
 			return win + draw + loose;
 		}
 
-		public int Result(bool rev)
+		public static int Result(bool rev)
 		{
 			int t = Total();
 			if (t == 0)

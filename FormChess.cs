@@ -27,13 +27,11 @@ namespace RapChessGui
 		public CRapLog RapLog = new CRapLog();
 		readonly CEngine Engine = new CEngine();
 		readonly CPlayerList PlayerList = new CPlayerList();
-		readonly CModeMatch Match = new CModeMatch();
-		readonly CModeTraining Trainer = new CModeTraining();
 		readonly CUci Uci = new CUci();
 		readonly FormOptions FOptions = new FormOptions();
 		readonly FormPlayer FPlayer = new FormPlayer();
 		readonly PrivateFontCollection pfc = new PrivateFontCollection();
-		Font fontChess;
+		readonly Font fontChess;
 
 		public FormChess()
 		{
@@ -67,7 +65,8 @@ namespace RapChessGui
 			IniLoadGame();
 			IniLoadMatch();
 			IniLoadTraining();
-			CModeTournament.IniLoad();
+			CModeGame.LoadFromIni();
+			CModeTournament.LoadFromIni();
 			FOptions.cbShowPonder.Checked = Convert.ToInt32(CRapIni.This.Read("options>interface>showponder", "1")) == 1;
 			FOptions.cbGameAutoElo.Checked = Convert.ToInt32(CRapIni.This.Read("options>game>autoelo", "1")) == 1;
 			FOptions.cbRotateBoard.Checked = Convert.ToInt32(CRapIni.This.Read("options>interface>rotate", "0")) == 1;
@@ -86,7 +85,7 @@ namespace RapChessGui
 		{
 			cbPlayer1.SelectedIndex = cbPlayer1.FindStringExact(CRapIni.This.Read("mode>match>player1", CUserList.defUser));
 			cbPlayer2.SelectedIndex = cbPlayer2.FindStringExact(CRapIni.This.Read("mode>match>player2", CUserList.defUser));
-			Match.LoadFromIni();
+			CModeMatch.LoadFromIni();
 		}
 
 		void IniLoadTraining()
@@ -96,7 +95,7 @@ namespace RapChessGui
 			cbBookList.SelectedIndex = cbBookList.FindStringExact(CRapIni.This.Read("mode>training>book", "small.txt"));
 			nudTeacher.Value = Convert.ToInt32(CRapIni.This.Read("mode>training>timeTeacher", "1000"));
 			nudTrained.Value = Convert.ToInt32(CRapIni.This.Read("mode>training>timeTrained", "1000"));
-			Trainer.time = (int)nudTeacher.Value;
+			CModeTraining.time = (int)nudTeacher.Value;
 		}
 
 		void IniSave()
@@ -119,7 +118,7 @@ namespace RapChessGui
 		{
 			CRapIni.This.Write("mode>match>player1", cbPlayer1.Text);
 			CRapIni.This.Write("mode>match>player2", cbPlayer2.Text);
-			Match.SaveToIni();
+			CModeMatch.SaveToIni();
 		}
 
 		void IniSaveTraining()
@@ -315,7 +314,7 @@ namespace RapChessGui
 
 		bool IsAutoElo()
 		{
-			return (cbComputer.Text == "Auto") && (cbColor.Text == "Auto") && FormOptions.This.cbGameAutoElo.Checked && (CData.gameMode == (int)CMode.game);
+			return (cbComputer.Text == "Auto") && FormOptions.This.cbGameAutoElo.Checked && (CData.gameMode == (int)CMode.game);
 		}
 
 		void ShowAutoElo()
@@ -332,6 +331,27 @@ namespace RapChessGui
 			}
 		}
 
+		bool ShowLastGame()
+		{
+			bool result = false;
+			CUser hu = CUserList.GetUser("Human");
+			int eloCur = Convert.ToInt32(hu.elo);
+			if (hu.eloNew > eloCur) {
+				result = true;
+				labLast.ForeColor = Color.FromArgb(0, 0xff, 0);
+				labLast.Text = $"Last game you win new elo is {hu.eloNew} ({eloCur})";
+			}
+			if (hu.eloNew < eloCur)
+			{
+				result = true;
+				labLast.ForeColor = Color.FromArgb(0xff, 0, 0);
+				labLast.Text = $"Last game you loose new elo is {hu.eloNew} ({eloCur})";
+			}
+			hu.elo = hu.eloNew.ToString();
+			hu.SaveToIni();
+			return result;
+		}
+
 		void ShowGame()
 		{
 			CUser uc = CUserList.GetUser(cbComputer.Text);
@@ -340,22 +360,21 @@ namespace RapChessGui
 			else
 				labEngine.Text = uc.name;
 			ShowAutoElo();
-			
 		}
 
 		void ShowMatch()
 		{
-			labMatchGames.Text = $"Games {Match.games}";
+			labMatchGames.Text = $"Games {CModeMatch.games}";
 			labMatch10.Text = cbPlayer1.Text;
-			labMatch11.Text = Match.win.ToString();
-			labMatch12.Text = Match.loose.ToString();
-			labMatch13.Text = Match.draw.ToString();
-			labMatch14.Text = $"{Match.Result(false)}%";
+			labMatch11.Text = CModeMatch.win.ToString();
+			labMatch12.Text = CModeMatch.loose.ToString();
+			labMatch13.Text = CModeMatch.draw.ToString();
+			labMatch14.Text = $"{CModeMatch.Result(false)}%";
 			labMatch20.Text = cbPlayer2.Text;
-			labMatch21.Text = Match.loose.ToString();
-			labMatch22.Text = Match.win.ToString();
-			labMatch23.Text = Match.draw.ToString();
-			labMatch24.Text = $"{Match.Result(true)}%";
+			labMatch21.Text = CModeMatch.loose.ToString();
+			labMatch22.Text = CModeMatch.win.ToString();
+			labMatch23.Text = CModeMatch.draw.ToString();
+			labMatch24.Text = $"{CModeMatch.Result(true)}%";
 		}
 
 		void ShowTournament()
@@ -368,16 +387,16 @@ namespace RapChessGui
 
 		void ShowTraining()
 		{
-			labGames.Text = $"Games {Trainer.games}";
-			nudTeacher.Value = Trainer.time;
-			label12.Text = Trainer.win.ToString();
-			label13.Text = Trainer.loose.ToString();
-			label14.Text = Trainer.draw.ToString();
-			label15.Text = $"{Trainer.Result(false)}%";
-			label7.Text = Trainer.loose.ToString();
-			label8.Text = Trainer.win.ToString();
-			label9.Text = Trainer.draw.ToString();
-			label10.Text = $"{Trainer.Result(true)}%";
+			labGames.Text = $"Games {CModeTraining.games}";
+			nudTeacher.Value = CModeTraining.time;
+			label12.Text = CModeTraining.win.ToString();
+			label13.Text = CModeTraining.loose.ToString();
+			label14.Text = CModeTraining.draw.ToString();
+			label15.Text = $"{CModeTraining.Result(false)}%";
+			label7.Text = CModeTraining.loose.ToString();
+			label8.Text = CModeTraining.win.ToString();
+			label9.Text = CModeTraining.draw.ToString();
+			label10.Text = $"{CModeTraining.Result(true)}%";
 		}
 
 		void ShowEdit()
@@ -445,9 +464,9 @@ namespace RapChessGui
 			int levelDif = 2000 / listView1.Items.Count;
 			if (levelDif < 10)
 				levelDif = 10;
-			uh.eloStart = Convert.ToInt32(uh.elo);
-			uh.eloLess = uh.eloStart - levelDif;
-			uh.eloMore = uh.eloStart + levelDif;
+			int elo = Convert.ToInt32(uh.elo);
+			uh.eloLess = elo - levelDif;
+			uh.eloMore = elo + levelDif;
 			if (uh.eloLess < 0)
 				uh.eloLess = 0;
 			SetMode((int)CMode.game);
@@ -455,12 +474,13 @@ namespace RapChessGui
 			CRapLog.Add($"Human elo {PlayerList.player[0].user.elo}");
 			CUser u = CommandToUser();
 			PlayerList.player[1].SetUser(u);
-			bool r = cbColor.Text != "White";
-			if (cbColor.Text == "Auto")
-				r = CEngine.random.Next(2) > 0;
-			if (r)
-				PlayerList.Rotate();
 			Clear();
+			if ( (!ShowLastGame() && CModeGame.rotate && (cbColor.Text == "Auto")) || (cbColor.Text == "Black"))
+			{
+				CModeGame.rotate = false;
+				PlayerList.Rotate();
+			}else
+				CModeGame.rotate = true;
 			if (PlayerList.PlayerCur().user.engine == "Human")
 				moves = Engine.GenerateValidMoves();
 		}
@@ -471,9 +491,9 @@ namespace RapChessGui
 			SetMode((int)CMode.match);
 			PlayerList.player[0].SetUser(cbPlayer1.Text);
 			PlayerList.player[1].SetUser(cbPlayer2.Text);
-			if (Match.rotate == 1)
+			if (CModeMatch.rotate)
 				PlayerList.Rotate();
-			Match.rotate ^= 1;
+			CModeMatch.rotate = !CModeMatch.rotate;
 			Clear();
 			if (PlayerList.PlayerCur().user.engine == "Human")
 				moves = Engine.GenerateValidMoves();
@@ -503,9 +523,9 @@ namespace RapChessGui
 			ub.value = nudTeacher.Value.ToString();
 			PlayerList.player[0].SetUser(uw);
 			PlayerList.player[1].SetUser(ub);
-			if (Trainer.rotate == 1)
+			if (CModeTraining.rotate)
 				PlayerList.Rotate();
-			Trainer.rotate ^= 1;
+			CModeTraining.rotate = !CModeTraining.rotate;
 			Clear();
 		}
 
@@ -520,7 +540,7 @@ namespace RapChessGui
 			if (IsAutoElo() && CModeGame.ranked && (!cp.computer) && ((Engine.g_moveNumber >> 1) == 4))
 			{
 				cp.user.eloOld = Convert.ToDouble(cp.user.elo);
-				cp.user.elo = cp.user.eloLess.ToString();
+				cp.user.eloNew = cp.user.eloLess;
 				cp.user.SaveToIni();
 			}
 			bool ivm = Engine.IsValidMove(emo) != 0;
@@ -600,38 +620,34 @@ namespace RapChessGui
 					{
 						if (uw.name == "Human")
 						{
-							uw.elo = uw.eloMore.ToString();
-							uw.SaveToIni();
-							labLast.ForeColor = Color.FromArgb(0,0xff,0);
-							labLast.Text = $"You win yours new elo {uw.elo} ({uw.eloOld})";
+							uw.eloNew = uw.eloMore;
+							ShowLastGame();
 						}
 						else
 						{
-							ul.elo = ul.eloLess.ToString();
-							ul.SaveToIni();
-							labLast.ForeColor = Color.FromArgb(0xff,0,0);
-							labLast.Text = $"You loose yours new elo {ul.elo} ({ul.eloOld})";
+							ul.eloNew = ul.eloLess;
+							ShowLastGame();
 						}
 					}
 				}
 			}
 			if (CData.gameMode == (int)CMode.match)
 			{
-				Match.games++;
+				CModeMatch.games++;
 				if (CData.gameState == (int)CGameState.mate)
 				{
 					if (uw.name == labMatch10.Text)
 					{
-						Match.win++;
+						CModeMatch.win++;
 					}
 					else
 					{
-						Match.loose++;
+						CModeMatch.loose++;
 					}
 				}
 				else
 				{
-					Match.draw++;
+					CModeMatch.draw++;
 				}
 				IniSaveMatch();
 				ShowMatch();
@@ -674,26 +690,26 @@ namespace RapChessGui
 			}
 			if (CData.gameMode == (int)CMode.training)
 			{
-				Trainer.games++;
+				CModeTraining.games++;
 				if (CData.gameState == (int)CGameState.mate)
 				{
 					if (uw.name == "Teacher")
 					{
-						Trainer.win++;
-						Trainer.time -= 100;
-						if (Trainer.time < 100)
-							Trainer.time = 100;
+						CModeTraining.win++;
+						CModeTraining.time -= 100;
+						if (CModeTraining.time < 100)
+							CModeTraining.time = 100;
 					}
 					else
 					{
-						Trainer.loose++;
-						Trainer.time += 100;
+						CModeTraining.loose++;
+						CModeTraining.time += 100;
 					}
 				}
 				else
 				{
-					Trainer.draw++;
-					Trainer.time += 100;
+					CModeTraining.draw++;
+					CModeTraining.time += 100;
 				}
 				ShowTraining();
 			}
@@ -1216,7 +1232,7 @@ namespace RapChessGui
 
 		private void ButTraining_Click(object sender, EventArgs e)
 		{
-			Trainer.Reset();
+			CModeTraining.Reset();
 			StartTraing();
 		}
 
@@ -1296,7 +1312,7 @@ namespace RapChessGui
 
 		private void bStartMatch_Click(object sender, EventArgs e)
 		{
-			Match.Reset();
+			CModeMatch.Reset();
 			StartMatch();
 		}
 

@@ -2,29 +2,29 @@
 
 namespace RapChessGui
 {
-	class CModeMatch
+	static class CModeMatch
 	{
-		public int rotate = 0;
-		public int games = 0;
-		public int win = 0;
-		public int draw = 0;
-		public int loose = 0;
+		public static bool rotate = false;
+		public static int games = 0;
+		public static int win = 0;
+		public static int draw = 0;
+		public static int loose = 0;
 
-		public void Reset()
+		public static void Reset()
 		{
-			rotate = 0;
+			rotate = false;
 			games = 0;
 			win = 0;
 			draw = 0;
 			loose = 0;
 		}
 
-		public int Total()
+		public static int Total()
 		{
 			return win + draw + loose;
 		}
 
-		public int Result(bool rev)
+		public static int Result(bool rev)
 		{
 			int t = Total();
 			if (t == 0)
@@ -35,22 +35,22 @@ namespace RapChessGui
 				return ((win * 2 + draw) * 100) / (t * 2);
 		}
 
-		public void LoadFromIni()
+		public static void LoadFromIni()
 		{
-			rotate = CRapIni.This.ReadInt("mode>match>rotate>");
-			games = CRapIni.This.ReadInt("mode>match>games>");
-			win = CRapIni.This.ReadInt("mode>match>win>");
-			draw = CRapIni.This.ReadInt("mode>match>draw>");
-			loose = CRapIni.This.ReadInt("mode>match>loose>");
+			rotate = CRapIni.This.ReadBool("mode>match>rotate");
+			games = CRapIni.This.ReadInt("mode>match>games");
+			win = CRapIni.This.ReadInt("mode>match>win");
+			draw = CRapIni.This.ReadInt("mode>match>draw");
+			loose = CRapIni.This.ReadInt("mode>match>loose");
 		}
 
-		public void SaveToIni()
+		public static void SaveToIni()
 		{
-			CRapIni.This.Write("mode>match>rotate>", rotate.ToString());
-			CRapIni.This.Write("mode>match>games>", games.ToString());
-			CRapIni.This.Write("mode>match>win>", win.ToString());
-			CRapIni.This.Write("mode>match>draw>", draw.ToString());
-			CRapIni.This.Write("mode>match>loose>", loose.ToString());
+			CRapIni.This.Write("mode>match>rotate", rotate.ToString());
+			CRapIni.This.Write("mode>match>games", games.ToString());
+			CRapIni.This.Write("mode>match>win", win.ToString());
+			CRapIni.This.Write("mode>match>draw", draw.ToString());
+			CRapIni.This.Write("mode>match>loose", loose.ToString());
 		}
 
 	}
