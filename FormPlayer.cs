@@ -103,9 +103,9 @@ namespace RapChessGui
 					break;
 			}
 			user.options = rtbOptions.Lines.Cast<String>().ToList();
-			CUserList.SaveToIni();
+			user.SaveToIni();
 			UpdateListBox();
-			int index = listBox1.FindString(curUserName);
+			int index = listBox1.FindString(user.name);
 			if (index == -1) return;
 			listBox1.SetSelected(index, true);
 		}
@@ -115,9 +115,9 @@ namespace RapChessGui
 			CUser user = CUserList.GetUser(curUserName);
 			if (user == null)
 				return;
-			CRapIni.This.DeleteKey($"player>{curUserName}");
+			CRapIni.This.DeleteKey($"player>{user.name}");
 			SaveToIni(user);
-			MessageBox.Show("Player data has been updated successfully");
+			MessageBox.Show($"Player {user.name} has been modified");
 		}
 
 		private void ButCreate_Click(object sender, EventArgs e)
@@ -126,8 +126,8 @@ namespace RapChessGui
 			CUser user = new CUser(name);
 			user.engine = cbEngList.Text;
 			CUserList.list.Add(user);
-			CUserList.SaveToIni();
 			SaveToIni(user);
+			MessageBox.Show($"Player {user.name} has been created");
 		}
 
 		private void ButDelete_Click(object sender, EventArgs e)
@@ -135,6 +135,7 @@ namespace RapChessGui
 			string userName = tbUserName.Text;
 			CUserList.DeletePlayer(userName);
 			UpdateListBox();
+			MessageBox.Show($"Player {userName} has been removed");
 		}
 	}
 }

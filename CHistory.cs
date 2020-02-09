@@ -65,7 +65,10 @@ namespace RapChessGui
 			{
 				if((++c & 1)>0)
 					result += $" {(c >> 1) + 1}.";
-				result += $" {moveList[n].emo}";
+				string m = moveList[n].emo;
+				if (m.Length == 5)
+					m.Insert(4,"=");
+				result += $" {m}";
 			}
 			return result.Trim();
 		}

@@ -322,12 +322,12 @@ namespace RapChessGui
 			if (IsAutoElo() && CModeGame.ranked)
 			{
 				labAutoElo.Text = $"Auto Elo On";
-				labAutoElo.BackColor = Color.FromArgb(0,0x80,0);
+				labAutoElo.BackColor = Color.FromArgb(0, 0x80, 0);
 			}
 			else
 			{
 				labAutoElo.Text = "Auto Elo Off";
-				labAutoElo.BackColor = Color.FromArgb(0x80,0,0);
+				labAutoElo.BackColor = Color.FromArgb(0x80, 0, 0);
 			}
 		}
 
@@ -336,7 +336,8 @@ namespace RapChessGui
 			bool result = false;
 			CUser hu = CUserList.GetUser("Human");
 			int eloCur = Convert.ToInt32(hu.elo);
-			if (hu.eloNew > eloCur) {
+			if (hu.eloNew > eloCur)
+			{
 				result = true;
 				labLast.ForeColor = Color.FromArgb(0, 0xff, 0);
 				labLast.Text = $"Last game you win new elo is {hu.eloNew} ({eloCur})";
@@ -460,29 +461,33 @@ namespace RapChessGui
 			CModeGame.ranked = IsAutoElo();
 			ShowAutoElo();
 			IniSaveGame();
+			SetMode((int)CMode.game);
+			Clear();
+			bool lg = ShowLastGame();
+			PlayerList.player[0].SetUser("Human");
+			CRapLog.Add($"Human elo {PlayerList.player[0].user.elo}");
+			CUser u = CommandToUser();
+			PlayerList.player[1].SetUser(u);
+			if ((!lg && CModeGame.rotate && (cbColor.Text == "Auto")) || (cbColor.Text == "Black"))
+			{
+				CModeGame.rotate = false;
+				PlayerList.Rotate();
+			}
+			else
+				CModeGame.rotate = true;
+			if (PlayerList.PlayerCur().user.engine == "Human")
+				moves = Engine.GenerateValidMoves();
 			CUser uh = CUserList.GetUser("Human");
 			int levelDif = 2000 / listView1.Items.Count;
 			if (levelDif < 10)
 				levelDif = 10;
 			int elo = Convert.ToInt32(uh.elo);
+			uh.eloNew = elo;
+			uh.eloOld = elo;
 			uh.eloLess = elo - levelDif;
 			uh.eloMore = elo + levelDif;
 			if (uh.eloLess < 0)
 				uh.eloLess = 0;
-			SetMode((int)CMode.game);
-			PlayerList.player[0].SetUser("Human");
-			CRapLog.Add($"Human elo {PlayerList.player[0].user.elo}");
-			CUser u = CommandToUser();
-			PlayerList.player[1].SetUser(u);
-			Clear();
-			if ( (!ShowLastGame() && CModeGame.rotate && (cbColor.Text == "Auto")) || (cbColor.Text == "Black"))
-			{
-				CModeGame.rotate = false;
-				PlayerList.Rotate();
-			}else
-				CModeGame.rotate = true;
-			if (PlayerList.PlayerCur().user.engine == "Human")
-				moves = Engine.GenerateValidMoves();
 		}
 
 		void StartMatch()
@@ -614,22 +619,22 @@ namespace RapChessGui
 			FormLog.This.richTextBox1.AppendText($"Finish {labLast.Text}\n", Color.Gray);
 			if (CData.gameMode == (int)CMode.game)
 			{
-				if (CData.gameState == (int)CGameState.mate)
-				{
-					if (IsAutoElo())
+				if (IsAutoElo())
+					if (uw.name == "Human")
 					{
-						if (uw.name == "Human")
-						{
+						if (CData.gameState == (int)CGameState.mate)
 							uw.eloNew = uw.eloMore;
-							ShowLastGame();
-						}
 						else
-						{
-							ul.eloNew = ul.eloLess;
-							ShowLastGame();
-						}
+							uw.eloNew = Convert.ToInt32(uw.eloOld);
 					}
-				}
+					else
+					{
+						if (CData.gameState == (int)CGameState.mate)
+							ul.eloNew = ul.eloLess;
+						else
+							ul.eloNew = Convert.ToInt32(ul.eloOld);
+					}
+				ShowLastGame();
 			}
 			if (CData.gameMode == (int)CMode.match)
 			{
@@ -1519,6 +1524,7 @@ namespace RapChessGui
 				RenderHistory();
 				moves = Engine.GenerateValidMoves();
 				CData.gameState = Engine.GetGameState();
+				ShowLastGame();
 				CModeGame.ranked = false;
 				ShowAutoElo();
 				PlayerList.PlayerCur().user.elo = PlayerList.PlayerCur().user.eloLess.ToString();
