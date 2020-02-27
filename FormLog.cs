@@ -28,5 +28,18 @@ namespace RapChessGui
 				e.Cancel = true; 
 			}
 		}
+
+		private void FormLog_Shown(object sender, EventArgs e)
+		{
+		}
+
+		private void butSend_Click(object sender, EventArgs e)
+		{
+			CPlayer p = CPlayerList.This.GetPlayer(cbPlayerList.Text);
+			if (p != null)
+	//p.SendMessage(tbMessage.Text);
+			foreach(string c in rtbCommand.Lines)
+				p.SendMessage(c);
+		}
 	}
 }

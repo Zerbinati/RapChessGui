@@ -28,8 +28,7 @@ namespace RapChessGui
 		public string mode;
 		public string value;
 		public Stopwatch timer = new Stopwatch();
-		public CBook book = new CBook();
-		public CPlayerEng PlayerEng = new CPlayerEng();
+		public CEnginePro PlayerEng = new CEnginePro();
 		public CUser user;
 
 		public CPlayer()
@@ -66,7 +65,6 @@ namespace RapChessGui
 			ponder = "";
 			timeTotal = 0;
 			timer.Reset();
-			book.Reset();
 		}
 
 		public void Undo()
@@ -111,17 +109,10 @@ namespace RapChessGui
 
 		public void CompMakeMove()
 		{
-			string emo = book.GetMove(CHistory.GetMoves());
-			if (emo != "")
-			{
-				FormChess.This.AddBook(emo);
-				FormChess.This.MakeMove(emo);
-			}
-			else
-			{
 				if (user.protocol == "Uci")
 				{
 					SendMessage(CHistory.GetPosition());
+					Thread.Sleep(1<<5);
 					SendMessage($"go {mode} {value}");
 				}
 				else
@@ -148,7 +139,6 @@ namespace RapChessGui
 				}
 				go = true;
 				timer.Restart();
-			}
 		}
 
 		public void SendMessage(string msg)
@@ -158,24 +148,6 @@ namespace RapChessGui
 				FormLog.This.richTextBox1.AppendText($"{user.name} < {msg}\n", Color.Brown);
 				PlayerEng.streamWriter.WriteLine(msg);
 			}
-		}
-
-		public string GetMessage()
-		{
-			string msg = "";
-			if (computer)
-			{
-				lock (CData.messages)
-				{
-					if (CData.messages.Count > 0)
-					{
-						msg = CData.messages[0];
-						CData.messages.RemoveAt(0);
-						FormLog.This.richTextBox1.AppendText($"{user.name} > {msg}\n");
-					}
-				}
-			}
-			return msg;
 		}
 
 		public string GetProtocol()
@@ -206,7 +178,6 @@ namespace RapChessGui
 			user = u;
 			computer = user.engine != "Human";
 			PlayerEng.SetPlayer(this);
-			book.Load(user.book);
 		}
 
 		public void SetUser()
@@ -232,9 +203,11 @@ namespace RapChessGui
 	{
 		public int curIndex = 0;
 		public CPlayer[] player = new CPlayer[2];
+		public static CPlayerList This;
 
 		public CPlayerList()
 		{
+			This = this;
 			player[0] = new CPlayer();
 			player[1] = new CPlayer();
 		}
@@ -253,6 +226,13 @@ namespace RapChessGui
 			player[0].Init(true);
 			player[1].Init(false);
 			curIndex = 0;
+			FormLog.This.cbPlayerList.Items.Clear();
+			if (player[0].computer)
+				FormLog.This.cbPlayerList.Items.Add(player[0].user.name);
+			if (player[1].computer)
+				FormLog.This.cbPlayerList.Items.Add(player[1].user.name);
+			if (FormLog.This.cbPlayerList.Items.Count > 0)
+				FormLog.This.cbPlayerList.SelectedIndex = 0;
 		}
 
 		public void Rotate()
@@ -262,6 +242,14 @@ namespace RapChessGui
 			player[1] = p;
 			player[0].white = true;
 			player[1].white = false;
+		}
+
+		public CPlayer GetPlayer(string name)
+		{
+			foreach(CPlayer p in player)
+			if (p.user.name == name)
+				return p;
+			return null;
 		}
 
 		public CPlayer PlayerHum()
@@ -281,6 +269,14 @@ namespace RapChessGui
 		public CPlayer PlayerSec()
 		{
 			return player[curIndex ^ 1];
+		}
+
+		public CPlayer PlayerPid(int pid)
+		{
+			foreach(CPlayer p in player)
+			if (p.PlayerEng.GetPid() == pid)
+				return p;
+			return null;
 		}
 
 		public void Terminate()

@@ -43,14 +43,9 @@
 			this.saveToClipboardToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
 			this.loadFromClipboardToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
 			this.playersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.bookToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.logToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.engineToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.stopToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.restartToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.terminateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.closeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.booksToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.panMenu = new System.Windows.Forms.Panel();
 			this.labFPS = new System.Windows.Forms.Label();
 			this.panelT1 = new System.Windows.Forms.Panel();
@@ -76,6 +71,7 @@
 			this.cbCommand = new System.Windows.Forms.ComboBox();
 			this.cbComputer = new System.Windows.Forms.ComboBox();
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
+			this.labAutoElo = new System.Windows.Forms.Label();
 			this.labBack = new System.Windows.Forms.Label();
 			this.cbColor = new System.Windows.Forms.ComboBox();
 			this.tabPageMatch = new System.Windows.Forms.TabPage();
@@ -172,7 +168,6 @@
 			this.labNodesT = new System.Windows.Forms.Label();
 			this.labDepthT = new System.Windows.Forms.Label();
 			this.labScoreT = new System.Windows.Forms.Label();
-			this.labAutoElo = new System.Windows.Forms.Label();
 			this.menuStrip1.SuspendLayout();
 			this.panMenu.SuspendLayout();
 			this.panelT1.SuspendLayout();
@@ -217,13 +212,12 @@
             this.fenToolStripMenuItem,
             this.pgnToolStripMenuItem,
             this.playersToolStripMenuItem,
-            this.bookToolStripMenuItem,
+            this.booksToolStripMenuItem,
             this.optionsToolStripMenuItem,
-            this.logToolStripMenuItem,
-            this.engineToolStripMenuItem});
+            this.logToolStripMenuItem});
 			this.menuStrip1.Location = new System.Drawing.Point(0, 2);
 			this.menuStrip1.Name = "menuStrip1";
-			this.menuStrip1.Size = new System.Drawing.Size(468, 24);
+			this.menuStrip1.Size = new System.Drawing.Size(538, 24);
 			this.menuStrip1.TabIndex = 1;
 			this.menuStrip1.Text = "menuStrip1";
 			// 
@@ -246,14 +240,14 @@
 			// backToolStripMenuItem
 			// 
 			this.backToolStripMenuItem.Name = "backToolStripMenuItem";
-			this.backToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+			this.backToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
 			this.backToolStripMenuItem.Text = "Back";
 			this.backToolStripMenuItem.Click += new System.EventHandler(this.backToolStripMenuItem_Click_1);
 			// 
 			// forwardToolStripMenuItem
 			// 
 			this.forwardToolStripMenuItem.Name = "forwardToolStripMenuItem";
-			this.forwardToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+			this.forwardToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
 			this.forwardToolStripMenuItem.Text = "Make";
 			this.forwardToolStripMenuItem.Click += new System.EventHandler(this.forwardToolStripMenuItem_Click);
 			// 
@@ -310,13 +304,6 @@
 			this.playersToolStripMenuItem.Text = "Players";
 			this.playersToolStripMenuItem.Click += new System.EventHandler(this.PlayersToolStripMenuItem_Click);
 			// 
-			// bookToolStripMenuItem
-			// 
-			this.bookToolStripMenuItem.Name = "bookToolStripMenuItem";
-			this.bookToolStripMenuItem.Size = new System.Drawing.Size(46, 20);
-			this.bookToolStripMenuItem.Text = "Book";
-			this.bookToolStripMenuItem.Click += new System.EventHandler(this.bookToolStripMenuItem_Click);
-			// 
 			// optionsToolStripMenuItem
 			// 
 			this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
@@ -331,44 +318,12 @@
 			this.logToolStripMenuItem.Text = "Log";
 			this.logToolStripMenuItem.Click += new System.EventHandler(this.logToolStripMenuItem_Click);
 			// 
-			// engineToolStripMenuItem
+			// booksToolStripMenuItem
 			// 
-			this.engineToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.stopToolStripMenuItem,
-            this.restartToolStripMenuItem,
-            this.terminateToolStripMenuItem,
-            this.closeToolStripMenuItem});
-			this.engineToolStripMenuItem.Name = "engineToolStripMenuItem";
-			this.engineToolStripMenuItem.Size = new System.Drawing.Size(55, 20);
-			this.engineToolStripMenuItem.Text = "Engine";
-			// 
-			// stopToolStripMenuItem
-			// 
-			this.stopToolStripMenuItem.Name = "stopToolStripMenuItem";
-			this.stopToolStripMenuItem.Size = new System.Drawing.Size(159, 22);
-			this.stopToolStripMenuItem.Text = "Stop calculating";
-			this.stopToolStripMenuItem.Click += new System.EventHandler(this.stopToolStripMenuItem_Click);
-			// 
-			// restartToolStripMenuItem
-			// 
-			this.restartToolStripMenuItem.Name = "restartToolStripMenuItem";
-			this.restartToolStripMenuItem.Size = new System.Drawing.Size(159, 22);
-			this.restartToolStripMenuItem.Text = "Restart";
-			this.restartToolStripMenuItem.Click += new System.EventHandler(this.restartToolStripMenuItem_Click);
-			// 
-			// terminateToolStripMenuItem
-			// 
-			this.terminateToolStripMenuItem.Name = "terminateToolStripMenuItem";
-			this.terminateToolStripMenuItem.Size = new System.Drawing.Size(159, 22);
-			this.terminateToolStripMenuItem.Text = "Terminate";
-			this.terminateToolStripMenuItem.Click += new System.EventHandler(this.terminateToolStripMenuItem_Click);
-			// 
-			// closeToolStripMenuItem
-			// 
-			this.closeToolStripMenuItem.Name = "closeToolStripMenuItem";
-			this.closeToolStripMenuItem.Size = new System.Drawing.Size(159, 22);
-			this.closeToolStripMenuItem.Text = "Close";
-			this.closeToolStripMenuItem.Click += new System.EventHandler(this.closeToolStripMenuItem_Click);
+			this.booksToolStripMenuItem.Name = "booksToolStripMenuItem";
+			this.booksToolStripMenuItem.Size = new System.Drawing.Size(51, 20);
+			this.booksToolStripMenuItem.Text = "Books";
+			this.booksToolStripMenuItem.Click += new System.EventHandler(this.booksToolStripMenuItem_Click);
 			// 
 			// panMenu
 			// 
@@ -672,6 +627,17 @@
 			this.groupBox1.TabIndex = 18;
 			this.groupBox1.TabStop = false;
 			this.groupBox1.Text = "Human";
+			// 
+			// labAutoElo
+			// 
+			this.labAutoElo.Dock = System.Windows.Forms.DockStyle.Top;
+			this.labAutoElo.ForeColor = System.Drawing.Color.White;
+			this.labAutoElo.Location = new System.Drawing.Point(3, 58);
+			this.labAutoElo.Name = "labAutoElo";
+			this.labAutoElo.Size = new System.Drawing.Size(308, 21);
+			this.labAutoElo.TabIndex = 31;
+			this.labAutoElo.Text = "Auto Elo On";
+			this.labAutoElo.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
 			// labBack
 			// 
@@ -1891,17 +1857,6 @@
 			this.labScoreT.TabIndex = 6;
 			this.labScoreT.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
-			// labAutoElo
-			// 
-			this.labAutoElo.Dock = System.Windows.Forms.DockStyle.Top;
-			this.labAutoElo.ForeColor = System.Drawing.Color.White;
-			this.labAutoElo.Location = new System.Drawing.Point(3, 58);
-			this.labAutoElo.Name = "labAutoElo";
-			this.labAutoElo.Size = new System.Drawing.Size(308, 21);
-			this.labAutoElo.TabIndex = 31;
-			this.labAutoElo.Text = "Auto Elo On";
-			this.labAutoElo.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			// 
 			// FormChess
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -2035,7 +1990,6 @@
 		private System.Windows.Forms.ComboBox cbPlayer1;
 		private System.Windows.Forms.NumericUpDown nudTrained;
 		private System.Windows.Forms.Label label1;
-		private System.Windows.Forms.ToolStripMenuItem bookToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem pgnToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem saveToClipboardToolStripMenuItem1;
 		private System.Windows.Forms.ToolStripMenuItem loadFromClipboardToolStripMenuItem1;
@@ -2050,11 +2004,6 @@
 		private System.Windows.Forms.ListView listView1;
 		private System.Windows.Forms.ColumnHeader columnHeader1;
 		private System.Windows.Forms.ColumnHeader columnHeader2;
-		private System.Windows.Forms.ToolStripMenuItem engineToolStripMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem stopToolStripMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem restartToolStripMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem terminateToolStripMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem closeToolStripMenuItem;
 		private System.Windows.Forms.Panel panelB2;
 		private System.Windows.Forms.Panel panelT2;
 		private System.Windows.Forms.Label labPonderB;
@@ -2101,6 +2050,7 @@
 		private System.Windows.Forms.Button butContinueMatch;
 		private System.Windows.Forms.Button butDefault;
 		private System.Windows.Forms.Label labAutoElo;
+		private System.Windows.Forms.ToolStripMenuItem booksToolStripMenuItem;
 	}
 }
 

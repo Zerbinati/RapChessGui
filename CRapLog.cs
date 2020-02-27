@@ -6,7 +6,7 @@ using System.Reflection;
 
 namespace RapLog
 {
-	public class CRapLog
+	public static class CRapLog
 	{
 
 		public static void Add(string m)

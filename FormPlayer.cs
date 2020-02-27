@@ -31,7 +31,8 @@ namespace RapChessGui
 			}
 			CUserList.LoadFromIni();
 			UpdateListBox();
-			listBox1.SetSelected(0, true);
+			if (listBox1.Items.Count > 0)
+				listBox1.SetSelected(0, true);
 		}
 
 		public void SelectUser()
@@ -48,7 +49,10 @@ namespace RapChessGui
 			tbParameters.Text = user.parameters;
 			cbEngList.Text = user.engine;
 			cbProtocol.Text = user.protocol;
-			cbBookList.Text = user.book;
+			if (cbBookList.Items.IndexOf(user.book) >= 0)
+				cbBookList.Text = user.book;
+			else
+				cbBookList.Text = "None";
 			curUserName = user.name;
 			nudElo.Value = Int32.Parse(user.elo);
 			switch (user.mode)
@@ -68,8 +72,8 @@ namespace RapChessGui
 		void UpdateListBox()
 		{
 			listBox1.Items.Clear();
-			for (int n = 0; n < CUserList.list.Count; n++)
-				listBox1.Items.Add(CUserList.list[n].name);
+			foreach(CUser u in CUserList.list)
+				listBox1.Items.Add(u.name);
 		}
 
 		private void ListBox1_SelectedValueChanged(object sender, EventArgs e)

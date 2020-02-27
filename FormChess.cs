@@ -21,15 +21,16 @@ namespace RapChessGui
 
 		public static FormChess This;
 		bool boardRotate;
+		bool isBook = false;
 		private ColumnHeader SortingColumn = null;
 		List<int> moves = new List<int>();
 		public CRapIni RapIni = new CRapIni();
-		public CRapLog RapLog = new CRapLog();
 		readonly CEngine Engine = new CEngine();
 		readonly CPlayerList PlayerList = new CPlayerList();
 		readonly CUci Uci = new CUci();
 		readonly FormOptions FOptions = new FormOptions();
 		readonly FormPlayer FPlayer = new FormPlayer();
+		readonly FormLib FLib = new FormLib();
 		readonly PrivateFontCollection pfc = new PrivateFontCollection();
 		readonly Font fontChess;
 
@@ -37,7 +38,6 @@ namespace RapChessGui
 		{
 			InitializeComponent();
 			This = this;
-			FormBook.This = new FormBook();
 			FormLog.This = new FormLog();
 			Reset();
 			IniLoad();
@@ -130,17 +130,17 @@ namespace RapChessGui
 			CRapIni.This.Write("mode>training>timeTrained", nudTrained.Value.ToString());
 		}
 
-		public void GetMessage(CPlayer p)
+		public void GetMessage()
 		{
-			string msg;
-			while ((msg = p.GetMessage()) != "")
+				while (CMessageList.GetMessage(out CPlayer p,out string msg))
 			{
 				Uci.SetMsg(msg);
 				switch (Uci.command)
 				{
 					case "0-1":
 					case "1-0":
-						Resignation();
+					case "1/2-1/2":
+						XBGameOver(msg);
 						break;
 					case "uciok":
 						p.uciok = true;
@@ -156,7 +156,7 @@ namespace RapChessGui
 					case "bestmove":
 						p.ponder = Uci.GetValue("ponder");
 						string em = Uci.tokens[1];
-						if (Uci.GetIndex("book", 0) > 0)
+						if (isBook)
 							AddBook(em);
 						MakeMove(em);
 						break;
@@ -209,6 +209,7 @@ namespace RapChessGui
 								pv += Uci.tokens[n] + " ";
 							labLast.Text = pv;
 						}
+						isBook = Uci.GetIndex("book", 0) > 0;
 						break;
 					default:
 						if ((PlayerList.PlayerCur().user.protocol == "Winboard") && PlayerList.PlayerCur().wbok && (Uci.tokens.Length > 4))
@@ -261,6 +262,7 @@ namespace RapChessGui
 
 		public void AddBook(string emo)
 		{
+			isBook = false;
 			PlayerList.PlayerCur().usedBook++;
 			labLast.ForeColor = Color.Aquamarine;
 			labLast.Text = $"book {emo}";
@@ -277,8 +279,7 @@ namespace RapChessGui
 			timerStart.Enabled = false;
 			PlayerList.Terminate();
 			CData.gameMode = (int)mode;
-			lock (CData.messages)
-				CData.messages.Clear();
+			CMessageList.list.Clear();
 			moveToolStripMenuItem.Visible = mode == (int)CMode.game;
 			Clear();
 			switch (mode)
@@ -341,12 +342,14 @@ namespace RapChessGui
 				result = true;
 				labLast.ForeColor = Color.FromArgb(0, 0xff, 0);
 				labLast.Text = $"Last game you win new elo is {hu.eloNew} ({eloCur})";
+				CRapLog.Add(labLast.Text);
 			}
 			if (hu.eloNew < eloCur)
 			{
 				result = true;
 				labLast.ForeColor = Color.FromArgb(0xff, 0, 0);
 				labLast.Text = $"Last game you loose new elo is {hu.eloNew} ({eloCur})";
+				CRapLog.Add(labLast.Text);
 			}
 			hu.elo = hu.eloNew.ToString();
 			hu.SaveToIni();
@@ -434,18 +437,14 @@ namespace RapChessGui
 				comboBoxTeacher.Items.Add(en);
 			}
 			cbBookList.Items.Clear();
-			FormBook.This.cbBookList.Items.Clear();
 			FormPlayer.This.cbBookList.Items.Clear();
 			cbBookList.Items.Add("None");
 			FormPlayer.This.cbBookList.Items.Add("None");
-			foreach (string b in CData.bookNames)
-			{
-				cbBookList.Items.Add(b);
-				FormBook.This.cbBookList.Items.Add(b);
-				FormPlayer.This.cbBookList.Items.Add(b);
+			foreach(CBookReader br in CBookReaderList.list) { 
+				cbBookList.Items.Add(br.name);
+				FormPlayer.This.cbBookList.Items.Add(br.name);
 			}
 			cbBookList.SelectedIndex = 0;
-			FormBook.This.cbBookList.SelectedIndex = 0;
 			FormPlayer.This.SelectUser();
 			ShowTournament();
 			if (SortingColumn != null)
@@ -465,7 +464,6 @@ namespace RapChessGui
 			Clear();
 			bool lg = ShowLastGame();
 			PlayerList.player[0].SetUser("Human");
-			CRapLog.Add($"Human elo {PlayerList.player[0].user.elo}");
 			CUser u = CommandToUser();
 			PlayerList.player[1].SetUser(u);
 			if ((!lg && CModeGame.rotate && (cbColor.Text == "Auto")) || (cbColor.Text == "Black"))
@@ -723,20 +721,21 @@ namespace RapChessGui
 			timerStart.Start();
 		}
 
-		void Resignation()
+		void XBGameOver(string msg)
 		{
 			if (CData.gameState == (int)CGameState.normal)
 			{
 				CUser ul = PlayerList.PlayerCur().user;
 				CUser uw = PlayerList.PlayerSec().user;
 				CData.gameState = (int)CGameState.mate;
-				FormLog.This.richTextBox1.AppendText($"Resignation {ul.name}\n", Color.Gray);
+				FormLog.This.richTextBox1.AppendText($"Game over {ul.name} {msg}\n", Color.Gray);
 				GameOver(uw, ul);
 			}
 		}
 
 		void Clear()
 		{
+			isBook = false;
 			labMove.Text = "Move 1 0";
 			labLast.ForeColor = Color.Gainsboro;
 			labLast.Text = "Good luck";
@@ -838,7 +837,7 @@ namespace RapChessGui
 					rec.Height = CBoard.field;
 					if ((i == CDrag.lastSou) || (i == CDrag.lastDes) || (CBoard.list[i].color != Color.Empty))
 						g.FillRectangle(brushYellow, rec);
-					else if (CBoard.list[i].attacked)
+					else if (CBoard.list[i].attacked && (CData.gameMode != (int)CMode.edit))
 						g.FillRectangle(brushRed, rec);
 					CPiece piece = CBoard.list[i].piece;
 					if (piece == null)
@@ -1168,6 +1167,10 @@ namespace RapChessGui
 
 		private void Timer1_Tick_1(object sender, EventArgs e)
 		{
+			lock (CMessageList.list)
+			{
+				GetMessage();
+			}
 			if (CBoard.animated || CBoard.finished || CDrag.dragged)
 			{
 				RenderBoard();
@@ -1183,13 +1186,7 @@ namespace RapChessGui
 					if (!cp.started)
 						cp.Start();
 					else if (cp.readyok && !cp.go)
-					{
 						cp.CompMakeMove();
-					}
-					else
-					{
-						GetMessage(cp);
-					}
 				}
 				else
 					cp.go = true;
@@ -1323,8 +1320,6 @@ namespace RapChessGui
 
 		private void bookToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			if (!FormBook.This.Visible)
-				FormBook.This.ShowDialog(this);
 		}
 
 		private void cbComputer_TextChanged(object sender, EventArgs e)
@@ -1582,6 +1577,14 @@ namespace RapChessGui
 		private void cbComputer_SelectedValueChanged(object sender, EventArgs e)
 		{
 			ShowAutoElo();
+		}
+
+		private void booksToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			IniSave();
+			FLib.ShowDialog(this);
+			Reset();
+			IniLoad();
 		}
 	}
 }

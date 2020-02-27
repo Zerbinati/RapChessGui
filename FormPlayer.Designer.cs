@@ -28,12 +28,12 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
 			this.panel1 = new System.Windows.Forms.Panel();
 			this.bDelete = new System.Windows.Forms.Button();
 			this.bCreate = new System.Windows.Forms.Button();
 			this.bUpdate = new System.Windows.Forms.Button();
 			this.gbOptions = new System.Windows.Forms.GroupBox();
+			this.rtbOptions = new System.Windows.Forms.RichTextBox();
 			this.gbElo = new System.Windows.Forms.GroupBox();
 			this.nudElo = new System.Windows.Forms.NumericUpDown();
 			this.groupBox5 = new System.Windows.Forms.GroupBox();
@@ -53,7 +53,6 @@
 			this.tbUserName = new System.Windows.Forms.TextBox();
 			this.groupBox2 = new System.Windows.Forms.GroupBox();
 			this.listBox1 = new System.Windows.Forms.ListBox();
-			this.rtbOptions = new System.Windows.Forms.RichTextBox();
 			this.panel1.SuspendLayout();
 			this.gbOptions.SuspendLayout();
 			this.gbElo.SuspendLayout();
@@ -68,10 +67,6 @@
 			this.groupBox1.SuspendLayout();
 			this.groupBox2.SuspendLayout();
 			this.SuspendLayout();
-			// 
-			// openFileDialog1
-			// 
-			this.openFileDialog1.FileName = "openFileDialog1";
 			// 
 			// panel1
 			// 
@@ -135,6 +130,15 @@
 			this.gbOptions.TabIndex = 29;
 			this.gbOptions.TabStop = false;
 			this.gbOptions.Text = "Options";
+			// 
+			// rtbOptions
+			// 
+			this.rtbOptions.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.rtbOptions.Location = new System.Drawing.Point(3, 16);
+			this.rtbOptions.Name = "rtbOptions";
+			this.rtbOptions.Size = new System.Drawing.Size(305, 139);
+			this.rtbOptions.TabIndex = 0;
+			this.rtbOptions.Text = "";
 			// 
 			// gbElo
 			// 
@@ -382,15 +386,6 @@
 			this.listBox1.TabIndex = 1;
 			this.listBox1.SelectedValueChanged += new System.EventHandler(this.ListBox1_SelectedValueChanged);
 			// 
-			// rtbOptions
-			// 
-			this.rtbOptions.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.rtbOptions.Location = new System.Drawing.Point(3, 16);
-			this.rtbOptions.Name = "rtbOptions";
-			this.rtbOptions.Size = new System.Drawing.Size(305, 139);
-			this.rtbOptions.TabIndex = 0;
-			this.rtbOptions.Text = "";
-			// 
 			// FormPlayer
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -426,7 +421,6 @@
 		}
 
 		#endregion
-		private System.Windows.Forms.OpenFileDialog openFileDialog1;
 		private System.Windows.Forms.Panel panel1;
 		private System.Windows.Forms.GroupBox groupBox1;
 		private System.Windows.Forms.TextBox tbUserName;

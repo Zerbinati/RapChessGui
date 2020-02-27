@@ -85,6 +85,9 @@ namespace RapChessGui
 			value = u.value;
 			book = u.book;
 			elo = u.elo;
+			options.Clear();
+			foreach (string op in u.options)
+				options.Add(op);
 		}
 
 		public void LoadFromIni()
@@ -120,6 +123,12 @@ namespace RapChessGui
 	{
 		public const string defUser = "RapChessCs XT1";
 		public static List<CUser> list = new List<CUser>();
+
+		public static void Add(CUser u)
+		{
+			if (GetIndex(u.name) < 0)
+				list.Add(u);
+		}
 
 		public static int GetIndex(string name)
 		{
@@ -208,12 +217,9 @@ namespace RapChessGui
 
 		public static CUser GetUser(string name)
 		{
-			for (int n = 0; n < list.Count; n++)
-			{
-				CUser user = list[n];
-				if (user.name == name)
-					return user;
-			}
+			foreach (CUser u in  list)
+			if (u.name == name)
+					return u;
 			if (name == "Auto")
 				return GetUserAuto();
 			return GetUserHuman();
@@ -250,42 +256,63 @@ namespace RapChessGui
 				list.Add(GetUserHuman());
 			if (CountComputer() < 3)
 			{
+				CBookReader br;
+				br = new CBookReader("small");
+				br.file = "BookReaderRap.exe";
+				br.parameters = "small.rap";
+				CBookReaderList.Add(br);
+				br = new CBookReader("rand1");
+				br.file = "BookReaderRap.exe";
+				br.parameters = "rand1.rap";
+				CBookReaderList.Add(br);
+				br = new CBookReader("rand2");
+				br.file = "BookReaderRap.exe";
+				br.parameters = "rand2.rap";
+				CBookReaderList.Add(br);
+				CBookReaderList.SaveToIni();
 				CUser uc;
 				uc = new CUser("RapChessCs RD1");
 				uc.engine = "RapChessCs.exe";
 				uc.mode = "depth";
 				uc.value = "1";
-				uc.book = "rand2.txt";
+				uc.book = "rand2";
 				uc.elo = "200";
-				list.Add(uc);
+				Add(uc);
 				uc = new CUser("RapChessCs RD2");
 				uc.engine = "RapChessCs.exe";
 				uc.mode = "depth";
 				uc.value = "2";
-				uc.book = "rand1.txt";
+				uc.book = "rand1";
 				uc.elo = "400";
-				list.Add(uc);
+				Add(uc);
 				uc = new CUser("RapChessCs XD3");
 				uc.engine = "RapChessCs.exe";
 				uc.mode = "depth";
 				uc.value = "3";
-				uc.book = "small.txt";
+				uc.book = "small";
 				uc.elo = "600";
-				list.Add(uc);
+				Add(uc);
+				uc = new CUser("RapShortCs XT1");
+				uc.engine = "RapShortCs.exe";
+				uc.mode = "movetime";
+				uc.value = "1000";
+				uc.book = "small";
+				uc.elo = "800";
+				Add(uc);
 				uc = new CUser("RapSimpleCs XT1");
 				uc.engine = "RapSimpleCs.exe";
 				uc.mode = "movetime";
 				uc.value = "1000";
-				uc.book = "small.txt";
-				uc.elo = "800";
-				list.Add(uc);
+				uc.book = "small";
+				uc.elo = "1000";
+				Add(uc);
 				uc = new CUser(defUser);
 				uc.engine = "RapChessCs.exe";
 				uc.mode = "movetime";
 				uc.value = "1000";
-				uc.book = "small.txt";
-				uc.elo = "1000";
-				list.Add(uc);
+				uc.book = "small";
+				uc.elo = "1200";
+				Add(uc);
 			}
 			SaveToIni();
 		}
