@@ -85,6 +85,8 @@ namespace RapChessGui
 		{
 			cbPlayer1.SelectedIndex = cbPlayer1.FindStringExact(CRapIni.This.Read("mode>match>player1", CUserList.defUser));
 			cbPlayer2.SelectedIndex = cbPlayer2.FindStringExact(CRapIni.This.Read("mode>match>player2", CUserList.defUser));
+			cbBook1.SelectedIndex = cbBook1.FindStringExact(CRapIni.This.Read("mode>match>book1", "small"));
+			cbBook2.SelectedIndex = cbBook2.FindStringExact(CRapIni.This.Read("mode>match>book2", "small"));
 			CModeMatch.LoadFromIni();
 		}
 
@@ -92,7 +94,7 @@ namespace RapChessGui
 		{
 			comboBoxTrained.SelectedIndex = comboBoxTrained.FindStringExact(CRapIni.This.Read("mode>training>trained", CUserList.defUser));
 			comboBoxTeacher.SelectedIndex = comboBoxTeacher.FindStringExact(CRapIni.This.Read("mode>training>teacher", "RapChessCs.exe"));
-			cbBookList.SelectedIndex = cbBookList.FindStringExact(CRapIni.This.Read("mode>training>book", "small.txt"));
+			cbBookList.SelectedIndex = cbBookList.FindStringExact(CRapIni.This.Read("mode>training>book", "small"));
 			nudTeacher.Value = Convert.ToInt32(CRapIni.This.Read("mode>training>timeTeacher", "1000"));
 			nudTrained.Value = Convert.ToInt32(CRapIni.This.Read("mode>training>timeTrained", "1000"));
 			CModeTraining.time = (int)nudTeacher.Value;
@@ -118,6 +120,8 @@ namespace RapChessGui
 		{
 			CRapIni.This.Write("mode>match>player1", cbPlayer1.Text);
 			CRapIni.This.Write("mode>match>player2", cbPlayer2.Text);
+			CRapIni.This.Write("mode>match>book1", cbBook1.Text);
+			CRapIni.This.Write("mode>match>book2", cbBook2.Text);
 			CModeMatch.SaveToIni();
 		}
 
@@ -132,7 +136,7 @@ namespace RapChessGui
 
 		public void GetMessage()
 		{
-				while (CMessageList.GetMessage(out CPlayer p,out string msg))
+			while (CMessageList.GetMessage(out CPlayer p, out string msg))
 			{
 				Uci.SetMsg(msg);
 				switch (Uci.command)
@@ -437,14 +441,23 @@ namespace RapChessGui
 				comboBoxTeacher.Items.Add(en);
 			}
 			cbBookList.Items.Clear();
+			cbBook1.Items.Clear();
+			cbBook2.Items.Clear();
 			FormPlayer.This.cbBookList.Items.Clear();
 			cbBookList.Items.Add("None");
+			cbBook1.Items.Add("None");
+			cbBook2.Items.Add("None");
 			FormPlayer.This.cbBookList.Items.Add("None");
-			foreach(CBookReader br in CBookReaderList.list) { 
+			foreach (CBookReader br in CBookReaderList.list)
+			{
 				cbBookList.Items.Add(br.name);
+				cbBook1.Items.Add(br.name);
+				cbBook2.Items.Add(br.name);
 				FormPlayer.This.cbBookList.Items.Add(br.name);
 			}
 			cbBookList.SelectedIndex = 0;
+			cbBook1.SelectedIndex = 0;
+			cbBook2.SelectedIndex = 0;
 			FormPlayer.This.SelectUser();
 			ShowTournament();
 			if (SortingColumn != null)
@@ -492,8 +505,14 @@ namespace RapChessGui
 		{
 			IniSaveMatch();
 			SetMode((int)CMode.match);
-			PlayerList.player[0].SetUser(cbPlayer1.Text);
-			PlayerList.player[1].SetUser(cbPlayer2.Text);
+			CUser u1 = new CUser("Player1");
+			u1.SetUser(cbPlayer1.Text);
+			u1.book = cbBook1.Text;
+			PlayerList.player[0].SetUser(u1);
+			CUser u2 = new CUser("Player2");
+			u2.SetUser(cbPlayer2.Text);
+			u2.book = cbBook2.Text;
+			PlayerList.player[1].SetUser(u2);
 			if (CModeMatch.rotate)
 				PlayerList.Rotate();
 			CModeMatch.rotate = !CModeMatch.rotate;
@@ -916,8 +935,10 @@ namespace RapChessGui
 				labEloB.Text = cp.GetElo();
 				labProtocolB.Text = cp.GetProtocol();
 				labScoreB.Text = $"Score {cp.score}";
-				labNodesB.Text = $"Nodes {cp.nodes.ToString("N0")}";
-				labNpsB.Text = $"Nps {nps.ToString("N0")}";
+				if (cp.nodes > 0)
+					labNodesB.Text = $"Nodes {cp.nodes.ToString("N0")}";
+				if (nps > 0)
+					labNpsB.Text = $"Nps {nps.ToString("N0")}";
 				labPonderB.Text = $"Ponder {cp.ponder}";
 				labBookB.Text = $"Book {cp.usedBook}";
 				if (cp.seldepth != "0")
@@ -931,8 +952,10 @@ namespace RapChessGui
 				labEloT.Text = cp.GetElo();
 				labProtocolT.Text = cp.GetProtocol();
 				labScoreT.Text = $"Score {cp.score}";
-				labNodesT.Text = $"Nodes {cp.nodes.ToString("N0")}";
-				labNpsT.Text = $"Nps {nps.ToString("N0")}";
+				if (cp.nodes > 0)
+					labNodesT.Text = $"Nodes {cp.nodes.ToString("N0")}";
+				if (nps > 0)
+					labNpsT.Text = $"Nps {nps.ToString("N0")}";
 				labPonderT.Text = $"Ponder {cp.ponder}";
 				labBookT.Text = $"Book {cp.usedBook}";
 				if (cp.seldepth != "0")

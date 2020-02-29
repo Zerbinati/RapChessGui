@@ -43,9 +43,9 @@
 			this.saveToClipboardToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
 			this.loadFromClipboardToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
 			this.playersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.booksToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.logToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.booksToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.panMenu = new System.Windows.Forms.Panel();
 			this.labFPS = new System.Windows.Forms.Label();
 			this.panelT1 = new System.Windows.Forms.Panel();
@@ -168,6 +168,10 @@
 			this.labNodesT = new System.Windows.Forms.Label();
 			this.labDepthT = new System.Windows.Forms.Label();
 			this.labScoreT = new System.Windows.Forms.Label();
+			this.label17 = new System.Windows.Forms.Label();
+			this.label19 = new System.Windows.Forms.Label();
+			this.cbBook1 = new System.Windows.Forms.ComboBox();
+			this.cbBook2 = new System.Windows.Forms.ComboBox();
 			this.menuStrip1.SuspendLayout();
 			this.panMenu.SuspendLayout();
 			this.panelT1.SuspendLayout();
@@ -217,7 +221,7 @@
             this.logToolStripMenuItem});
 			this.menuStrip1.Location = new System.Drawing.Point(0, 2);
 			this.menuStrip1.Name = "menuStrip1";
-			this.menuStrip1.Size = new System.Drawing.Size(538, 24);
+			this.menuStrip1.Size = new System.Drawing.Size(418, 24);
 			this.menuStrip1.TabIndex = 1;
 			this.menuStrip1.Text = "menuStrip1";
 			// 
@@ -304,6 +308,13 @@
 			this.playersToolStripMenuItem.Text = "Players";
 			this.playersToolStripMenuItem.Click += new System.EventHandler(this.PlayersToolStripMenuItem_Click);
 			// 
+			// booksToolStripMenuItem
+			// 
+			this.booksToolStripMenuItem.Name = "booksToolStripMenuItem";
+			this.booksToolStripMenuItem.Size = new System.Drawing.Size(51, 20);
+			this.booksToolStripMenuItem.Text = "Books";
+			this.booksToolStripMenuItem.Click += new System.EventHandler(this.booksToolStripMenuItem_Click);
+			// 
 			// optionsToolStripMenuItem
 			// 
 			this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
@@ -317,13 +328,6 @@
 			this.logToolStripMenuItem.Size = new System.Drawing.Size(39, 20);
 			this.logToolStripMenuItem.Text = "Log";
 			this.logToolStripMenuItem.Click += new System.EventHandler(this.logToolStripMenuItem_Click);
-			// 
-			// booksToolStripMenuItem
-			// 
-			this.booksToolStripMenuItem.Name = "booksToolStripMenuItem";
-			this.booksToolStripMenuItem.Size = new System.Drawing.Size(51, 20);
-			this.booksToolStripMenuItem.Text = "Books";
-			this.booksToolStripMenuItem.Click += new System.EventHandler(this.booksToolStripMenuItem_Click);
 			// 
 			// panMenu
 			// 
@@ -706,7 +710,7 @@
 			this.tableLayoutPanel2.Controls.Add(this.label30, 0, 0);
 			this.tableLayoutPanel2.Controls.Add(this.labMatch10, 0, 1);
 			this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Top;
-			this.tableLayoutPanel2.Location = new System.Drawing.Point(0, 164);
+			this.tableLayoutPanel2.Location = new System.Drawing.Point(0, 246);
 			this.tableLayoutPanel2.Name = "tableLayoutPanel2";
 			this.tableLayoutPanel2.RowCount = 3;
 			this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
@@ -888,7 +892,7 @@
 			// labMatchGames
 			// 
 			this.labMatchGames.Dock = System.Windows.Forms.DockStyle.Top;
-			this.labMatchGames.Location = new System.Drawing.Point(0, 140);
+			this.labMatchGames.Location = new System.Drawing.Point(0, 222);
 			this.labMatchGames.Name = "labMatchGames";
 			this.labMatchGames.Size = new System.Drawing.Size(320, 24);
 			this.labMatchGames.TabIndex = 23;
@@ -898,7 +902,7 @@
 			// butContinueMatch
 			// 
 			this.butContinueMatch.Dock = System.Windows.Forms.DockStyle.Top;
-			this.butContinueMatch.Location = new System.Drawing.Point(0, 117);
+			this.butContinueMatch.Location = new System.Drawing.Point(0, 199);
 			this.butContinueMatch.Name = "butContinueMatch";
 			this.butContinueMatch.Size = new System.Drawing.Size(320, 23);
 			this.butContinueMatch.TabIndex = 27;
@@ -909,7 +913,7 @@
 			// butNewMatch
 			// 
 			this.butNewMatch.Dock = System.Windows.Forms.DockStyle.Top;
-			this.butNewMatch.Location = new System.Drawing.Point(0, 94);
+			this.butNewMatch.Location = new System.Drawing.Point(0, 176);
 			this.butNewMatch.Name = "butNewMatch";
 			this.butNewMatch.Size = new System.Drawing.Size(320, 23);
 			this.butNewMatch.TabIndex = 22;
@@ -919,11 +923,13 @@
 			// 
 			// groupBox6
 			// 
+			this.groupBox6.Controls.Add(this.cbBook2);
+			this.groupBox6.Controls.Add(this.label19);
 			this.groupBox6.Controls.Add(this.cbPlayer2);
 			this.groupBox6.Dock = System.Windows.Forms.DockStyle.Top;
-			this.groupBox6.Location = new System.Drawing.Point(0, 47);
+			this.groupBox6.Location = new System.Drawing.Point(0, 88);
 			this.groupBox6.Name = "groupBox6";
-			this.groupBox6.Size = new System.Drawing.Size(320, 47);
+			this.groupBox6.Size = new System.Drawing.Size(320, 88);
 			this.groupBox6.TabIndex = 20;
 			this.groupBox6.TabStop = false;
 			this.groupBox6.Text = "Player 2";
@@ -940,11 +946,13 @@
 			// 
 			// groupBox5
 			// 
+			this.groupBox5.Controls.Add(this.cbBook1);
+			this.groupBox5.Controls.Add(this.label17);
 			this.groupBox5.Controls.Add(this.cbPlayer1);
 			this.groupBox5.Dock = System.Windows.Forms.DockStyle.Top;
 			this.groupBox5.Location = new System.Drawing.Point(0, 0);
 			this.groupBox5.Name = "groupBox5";
-			this.groupBox5.Size = new System.Drawing.Size(320, 47);
+			this.groupBox5.Size = new System.Drawing.Size(320, 88);
 			this.groupBox5.TabIndex = 19;
 			this.groupBox5.TabStop = false;
 			this.groupBox5.Text = "Player 1";
@@ -1857,6 +1865,48 @@
 			this.labScoreT.TabIndex = 6;
 			this.labScoreT.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
+			// label17
+			// 
+			this.label17.Dock = System.Windows.Forms.DockStyle.Top;
+			this.label17.Location = new System.Drawing.Point(3, 37);
+			this.label17.Name = "label17";
+			this.label17.Size = new System.Drawing.Size(314, 21);
+			this.label17.TabIndex = 25;
+			this.label17.Text = "Book";
+			this.label17.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			// 
+			// label19
+			// 
+			this.label19.Dock = System.Windows.Forms.DockStyle.Top;
+			this.label19.Location = new System.Drawing.Point(3, 37);
+			this.label19.Name = "label19";
+			this.label19.Size = new System.Drawing.Size(314, 21);
+			this.label19.TabIndex = 25;
+			this.label19.Text = "Book";
+			this.label19.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			// 
+			// cbBook1
+			// 
+			this.cbBook1.Dock = System.Windows.Forms.DockStyle.Top;
+			this.cbBook1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.cbBook1.FormattingEnabled = true;
+			this.cbBook1.Location = new System.Drawing.Point(3, 58);
+			this.cbBook1.Name = "cbBook1";
+			this.cbBook1.Size = new System.Drawing.Size(314, 21);
+			this.cbBook1.Sorted = true;
+			this.cbBook1.TabIndex = 27;
+			// 
+			// cbBook2
+			// 
+			this.cbBook2.Dock = System.Windows.Forms.DockStyle.Top;
+			this.cbBook2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.cbBook2.FormattingEnabled = true;
+			this.cbBook2.Location = new System.Drawing.Point(3, 58);
+			this.cbBook2.Name = "cbBook2";
+			this.cbBook2.Size = new System.Drawing.Size(314, 21);
+			this.cbBook2.Sorted = true;
+			this.cbBook2.TabIndex = 27;
+			// 
 			// FormChess
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -2051,6 +2101,10 @@
 		private System.Windows.Forms.Button butDefault;
 		private System.Windows.Forms.Label labAutoElo;
 		private System.Windows.Forms.ToolStripMenuItem booksToolStripMenuItem;
+		private System.Windows.Forms.ComboBox cbBook2;
+		private System.Windows.Forms.Label label19;
+		private System.Windows.Forms.ComboBox cbBook1;
+		private System.Windows.Forms.Label label17;
 	}
 }
 
