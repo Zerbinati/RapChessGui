@@ -16,23 +16,6 @@ namespace RapChessGui
 		{
 			This = this;
 			InitializeComponent();
-			string[] filePaths = Directory.GetFiles("Engines", "*.exe");
-			for (int n = 0; n < filePaths.Length; n++)
-			{
-				string fn = Path.GetFileName(filePaths[n]);
-				cbEngList.Items.Add(fn);
-				CData.engineNames.Add(fn);
-			}
-			string[] arrBooks = Directory.GetFiles("Books", "*.txt");
-			for (int n = 0; n < arrBooks.Length; n++)
-			{
-				string fn = Path.GetFileName(arrBooks[n]);
-				CData.bookNames.Add(fn);
-			}
-			CUserList.LoadFromIni();
-			UpdateListBox();
-			if (listBox1.Items.Count > 0)
-				listBox1.SetSelected(0, true);
 		}
 
 		public void SelectUser()
@@ -42,13 +25,14 @@ namespace RapChessGui
 
 		void SelectUser(string name)
 		{
-			var user = CUserList.GetUser(name);
+			var user = CPlayerList.GetUser(name);
 			if (user == null)
 				return;
 			tbUserName.Text = user.name;
-			tbParameters.Text = user.parameters;
-			cbEngList.Text = user.engine;
-			cbProtocol.Text = user.protocol;
+			if (CEngineList.GetIndex(user.engine) >= 0)
+				cbEngineList.Text = user.engine;
+			else
+				cbEngineList.Text = "Human";
 			if (cbBookList.Items.IndexOf(user.book) >= 0)
 				cbBookList.Text = user.book;
 			else
@@ -64,7 +48,6 @@ namespace RapChessGui
 					nudDepth.Value = Int32.Parse(user.value);
 					break;
 			}
-			rtbOptions.Lines = user.options.ToArray();
 			List<RadioButton> list = gbMode.Controls.OfType<RadioButton>().ToList();
 			list[CData.ModeStoi(user.mode)].Select();
 		}
@@ -72,7 +55,7 @@ namespace RapChessGui
 		void UpdateListBox()
 		{
 			listBox1.Items.Clear();
-			foreach(CUser u in CUserList.list)
+			foreach (CPlayer u in CPlayerList.list)
 				listBox1.Items.Add(u.name);
 		}
 
@@ -81,13 +64,11 @@ namespace RapChessGui
 			SelectUser(listBox1.SelectedItem.ToString());
 		}
 
-		void SaveToIni(CUser user)
+		void SaveToIni(CPlayer user)
 		{
 			user.name = tbUserName.Text;
-			user.engine = cbEngList.Text;
-			user.protocol = cbProtocol.Text;
+			user.engine = cbEngineList.Text;
 			user.book = cbBookList.Text;
-			user.parameters = tbParameters.Text;
 			user.elo = nudElo.Value.ToString();
 			user.eloOld = Convert.ToDouble(user.elo);
 			curUserName = user.name;
@@ -106,7 +87,6 @@ namespace RapChessGui
 					user.value = nudDepth.Value.ToString();
 					break;
 			}
-			user.options = rtbOptions.Lines.Cast<String>().ToList();
 			user.SaveToIni();
 			UpdateListBox();
 			int index = listBox1.FindString(user.name);
@@ -116,10 +96,10 @@ namespace RapChessGui
 
 		private void ButUpdate_Click(object sender, EventArgs e)
 		{
-			CUser user = CUserList.GetUser(curUserName);
+			CPlayer user = CPlayerList.GetUser(curUserName);
 			if (user == null)
 				return;
-			CRapIni.This.DeleteKey($"player>{user.name}");
+			CRapIni.This.DeleteKey($"gamer>{user.name}");
 			SaveToIni(user);
 			MessageBox.Show($"Player {user.name} has been modified");
 		}
@@ -127,9 +107,9 @@ namespace RapChessGui
 		private void ButCreate_Click(object sender, EventArgs e)
 		{
 			string name = tbUserName.Text;
-			CUser user = new CUser(name);
-			user.engine = cbEngList.Text;
-			CUserList.list.Add(user);
+			CPlayer user = new CPlayer(name);
+			user.engine = cbEngineList.Text;
+			CPlayerList.list.Add(user);
 			SaveToIni(user);
 			MessageBox.Show($"Player {user.name} has been created");
 		}
@@ -137,9 +117,21 @@ namespace RapChessGui
 		private void ButDelete_Click(object sender, EventArgs e)
 		{
 			string userName = tbUserName.Text;
-			CUserList.DeletePlayer(userName);
+			CPlayerList.DeletePlayer(userName);
 			UpdateListBox();
 			MessageBox.Show($"Player {userName} has been removed");
+		}
+
+		private void FormPlayer_Shown(object sender, EventArgs e)
+		{
+			foreach (CEngine engine in CEngineList.list)
+				cbEngineList.Items.Add(engine.name);
+			cbBookList.Items.Add("None");
+			foreach (CBook book in CBookList.list)
+				cbBookList.Items.Add(book.name);
+			UpdateListBox();
+			if (listBox1.Items.Count > 0)
+				listBox1.SetSelected(0, true);
 		}
 	}
 }

@@ -9,7 +9,7 @@ namespace RapChessGui
 	{
 		public StreamWriter streamWriter;
 		private Process process = null;
-		private CPlayer player;
+		private CGamer gamer;
 
 		public int GetPid()
 		{
@@ -52,28 +52,27 @@ namespace RapChessGui
 			}
 		}
 
-		public void SetPlayer(CPlayer p)
+		public void SetPlayer(CGamer p)
 		{
-			player = p;
+			gamer = p;
 			SetEngine();
 		}
 
 		void SetEngine()
 		{
 			Terminate();
-			if (!player.computer)
+			if (gamer.engine == null)
 				return;
-			CBookReader br = CBookReaderList.GetReader(player.user.book);
-			string pathE = AppDomain.CurrentDomain.BaseDirectory + "Engines\\" + player.user.engine;
-			string argsE = player.user.parameters;
+			string pathE = AppDomain.CurrentDomain.BaseDirectory + "Engines\\" + gamer.engine.file;
+			string argsE = gamer.engine.parameters;
 			string pathB = "";
 			string argsB = "";
 			string pathPro = "";
 			string argsPro = "";
-			if (br != null)
+			if (gamer.book != null)
 			{
-				pathB = AppDomain.CurrentDomain.BaseDirectory + "Books\\" + br.file;
-				argsB = br.parameters;
+				pathB = AppDomain.CurrentDomain.BaseDirectory + "Books\\" + gamer.book.file;
+				argsB = gamer.book.parameters;
 				pathPro = pathB;
 				argsPro = $"\"{pathE}\" \"{argsE}\" \"{argsB}\"";
 			}

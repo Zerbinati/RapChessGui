@@ -14,6 +14,7 @@ namespace RapChessGui
 	public partial class FormLog : Form
 	{
 		public static FormLog This;
+
 		public FormLog()
 		{
 			This = this;
@@ -35,7 +36,7 @@ namespace RapChessGui
 
 		private void butSend_Click(object sender, EventArgs e)
 		{
-			CPlayer p = CPlayerList.This.GetPlayer(cbPlayerList.Text);
+			CGamer p = CGamerList.This.GetPlayer(cbPlayerList.Text);
 			if (p != null)
 	//p.SendMessage(tbMessage.Text);
 			foreach(string c in rtbCommand.Lines)

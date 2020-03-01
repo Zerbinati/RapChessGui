@@ -19,8 +19,8 @@ namespace RapIni
 
 		public CRapIni()
 		{
-			name = Assembly.GetExecutingAssembly().GetName().Name;
 			This = this;
+			name = Assembly.GetExecutingAssembly().GetName().Name;
 			path = new FileInfo(name + ".ini").FullName.ToString();
 			script = Read("script", "");
 		}
@@ -270,6 +270,10 @@ namespace RapIni
 			return true;
 		}
 
-	}
+		public bool Exists()
+		{
+			return File.Exists(path);
+		}
 
+	}
 }

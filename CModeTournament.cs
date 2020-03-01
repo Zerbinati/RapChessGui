@@ -18,11 +18,11 @@ namespace RapChessGui
 			CRapIni.This.Write("mode>tournament>tournament", playerIndex.ToString());
 		}
 
-		public static CUser GetUser()
+		public static CPlayer GetUser()
 		{
-			CUserList.Sort();
-			List<CUser> list = new List<CUser>();
-			foreach (CUser u in CUserList.list)
+			CPlayerList.Sort();
+			List<CPlayer> list = new List<CPlayer>();
+			foreach (CPlayer u in CPlayerList.list)
 				if (u.engine != "Human")
 					list.Add(u);
 			if (--playerIndex < 0)

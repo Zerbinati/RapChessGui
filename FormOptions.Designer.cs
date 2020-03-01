@@ -31,6 +31,8 @@
 			this.colorDialog1 = new System.Windows.Forms.ColorDialog();
 			this.butDefault = new System.Windows.Forms.Button();
 			this.gbInterface = new System.Windows.Forms.GroupBox();
+			this.label1 = new System.Windows.Forms.Label();
+			this.nudSpeed = new System.Windows.Forms.NumericUpDown();
 			this.cbAttack = new System.Windows.Forms.CheckBox();
 			this.cbShowPonder = new System.Windows.Forms.CheckBox();
 			this.cbRotateBoard = new System.Windows.Forms.CheckBox();
@@ -38,11 +40,9 @@
 			this.button1 = new System.Windows.Forms.Button();
 			this.gbGame = new System.Windows.Forms.GroupBox();
 			this.cbGameAutoElo = new System.Windows.Forms.CheckBox();
-			this.nudSpeed = new System.Windows.Forms.NumericUpDown();
-			this.label1 = new System.Windows.Forms.Label();
 			this.gbInterface.SuspendLayout();
-			this.gbGame.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.nudSpeed)).BeginInit();
+			this.gbGame.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// butDefault
@@ -71,6 +71,37 @@
 			this.gbInterface.TabIndex = 4;
 			this.gbInterface.TabStop = false;
 			this.gbInterface.Text = "Interface";
+			// 
+			// label1
+			// 
+			this.label1.AutoSize = true;
+			this.label1.Location = new System.Drawing.Point(181, 86);
+			this.label1.Name = "label1";
+			this.label1.Size = new System.Drawing.Size(85, 13);
+			this.label1.TabIndex = 9;
+			this.label1.Text = "Animation speed";
+			// 
+			// nudSpeed
+			// 
+			this.nudSpeed.Location = new System.Drawing.Point(6, 79);
+			this.nudSpeed.Maximum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
+			this.nudSpeed.Minimum = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+			this.nudSpeed.Name = "nudSpeed";
+			this.nudSpeed.Size = new System.Drawing.Size(156, 20);
+			this.nudSpeed.TabIndex = 8;
+			this.nudSpeed.Value = new decimal(new int[] {
+            200,
+            0,
+            0,
+            0});
 			// 
 			// cbAttack
 			// 
@@ -127,6 +158,7 @@
 			this.button1.TabIndex = 1;
 			this.button1.Text = "Ok";
 			this.button1.UseVisualStyleBackColor = true;
+			this.button1.Click += new System.EventHandler(this.button1_Click);
 			// 
 			// gbGame
 			// 
@@ -150,37 +182,6 @@
 			this.cbGameAutoElo.Text = "Auto elo";
 			this.cbGameAutoElo.UseVisualStyleBackColor = true;
 			// 
-			// nudSpeed
-			// 
-			this.nudSpeed.Location = new System.Drawing.Point(6, 79);
-			this.nudSpeed.Maximum = new decimal(new int[] {
-            1000,
-            0,
-            0,
-            0});
-			this.nudSpeed.Minimum = new decimal(new int[] {
-            10,
-            0,
-            0,
-            0});
-			this.nudSpeed.Name = "nudSpeed";
-			this.nudSpeed.Size = new System.Drawing.Size(156, 20);
-			this.nudSpeed.TabIndex = 8;
-			this.nudSpeed.Value = new decimal(new int[] {
-            200,
-            0,
-            0,
-            0});
-			// 
-			// label1
-			// 
-			this.label1.AutoSize = true;
-			this.label1.Location = new System.Drawing.Point(181, 86);
-			this.label1.Name = "label1";
-			this.label1.Size = new System.Drawing.Size(85, 13);
-			this.label1.TabIndex = 9;
-			this.label1.Text = "Animation speed";
-			// 
 			// FormOptions
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -198,9 +199,9 @@
 			this.Text = "Options";
 			this.gbInterface.ResumeLayout(false);
 			this.gbInterface.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)(this.nudSpeed)).EndInit();
 			this.gbGame.ResumeLayout(false);
 			this.gbGame.PerformLayout();
-			((System.ComponentModel.ISupportInitialize)(this.nudSpeed)).EndInit();
 			this.ResumeLayout(false);
 
 		}

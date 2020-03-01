@@ -9,6 +9,10 @@ namespace RapChessGui
 		public static int win = 0;
 		public static int draw = 0;
 		public static int loose = 0;
+		public static string player1;
+		public static string player2;
+		public static string book1;
+		public static string book2;
 
 		public static void Reset()
 		{
@@ -42,6 +46,10 @@ namespace RapChessGui
 			win = CRapIni.This.ReadInt("mode>match>win");
 			draw = CRapIni.This.ReadInt("mode>match>draw");
 			loose = CRapIni.This.ReadInt("mode>match>loose");
+			player1 = CRapIni.This.Read("mode>match>player1", CPlayerList.defUser);
+			player2 = CRapIni.This.Read("mode>match>player2", CPlayerList.defUser);
+			book1 = CRapIni.This.Read("mode>match>book1", "small");
+			book2 = CRapIni.This.Read("mode>match>book2", "small");
 		}
 
 		public static void SaveToIni()
@@ -51,6 +59,10 @@ namespace RapChessGui
 			CRapIni.This.Write("mode>match>win", win.ToString());
 			CRapIni.This.Write("mode>match>draw", draw.ToString());
 			CRapIni.This.Write("mode>match>loose", loose.ToString());
+			CRapIni.This.Write("mode>match>player1", player1);
+			CRapIni.This.Write("mode>match>player2", player2);
+			CRapIni.This.Write("mode>match>book1", book1);
+			CRapIni.This.Write("mode>match>book2", book2);
 		}
 
 	}

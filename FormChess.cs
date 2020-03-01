@@ -22,25 +22,30 @@ namespace RapChessGui
 		public static FormChess This;
 		bool boardRotate;
 		bool isBook = false;
-		private ColumnHeader SortingColumn = null;
+		ColumnHeader SortingColumn = null;
 		List<int> moves = new List<int>();
 		public CRapIni RapIni = new CRapIni();
-		readonly CEngine Engine = new CEngine();
-		readonly CPlayerList PlayerList = new CPlayerList();
+		readonly CChess Chess = new CChess();
+		readonly CGamerList GamerList = new CGamerList();
 		readonly CUci Uci = new CUci();
-		readonly FormOptions FOptions = new FormOptions();
-		readonly FormPlayer FPlayer = new FormPlayer();
-		readonly FormLib FLib = new FormLib();
 		readonly PrivateFontCollection pfc = new PrivateFontCollection();
 		readonly Font fontChess;
 
 		public FormChess()
 		{
-			InitializeComponent();
 			This = this;
-			FormLog.This = new FormLog();
-			Reset();
+			InitializeComponent();
+			if (!CRapIni.This.Exists())
+				CreateIni();
 			IniLoad();
+			FormLog.This = new FormLog();
+			FormOptions.This = new FormOptions();
+			FormEngine.This = new FormEngine();
+			FormBook.This = new FormBook();
+			FormPlayer.This = new FormPlayer();
+			Reset();
+			cbColor.SelectedIndex = cbColor.FindStringExact(CModeGame.color);
+			cbComputer.SelectedIndex = cbComputer.FindStringExact(CModeGame.computer);
 			CBoard.Init();
 			CBoard.Prepare();
 			pictureBox1.Size = new Size(CBoard.size, CBoard.size);
@@ -55,88 +60,105 @@ namespace RapChessGui
 			fontChess = new Font(pfc.Families[0], 16);
 			labTakenT.Font = fontChess;
 			labTakenB.Font = fontChess;
-			Engine.Initialize();
+			Chess.Initialize();
 			ShowGame();
 			StartGame();
 		}
 
+		void CreateIni()
+		{
+			CEngineList.LoadFromIni();
+			CEngine e;
+			e = new CEngine("RapChessCs");
+			e.file = "RapChessCs.exe";
+			CEngineList.Add(e);
+			e = new CEngine("RapSimpleCs");
+			e.file = "RapSimpleCs.exe";
+			CEngineList.Add(e);
+			e = new CEngine("RapShortCs");
+			e.file = "RapShortCs.exe";
+			CEngineList.Add(e);
+			CEngineList.SaveToIni();
+			CBookList.LoadFromIni();
+			CBook b;
+			b = new CBook("Small");
+			b.file = "BookReaderRap.exe";
+			b.parameters = "small.rap";
+			CBookList.Add(b);
+			b = new CBook("Rand3");
+			b.file = "BookReaderRnd.exe";
+			b.parameters = "30";
+			CBookList.Add(b);
+			b = new CBook("Rand6");
+			b.file = "BookReaderRap.exe";
+			b.parameters = "60";
+			b = new CBook("Rand9");
+			b.file = "BookReaderRap.exe";
+			b.parameters = "90";
+			CBookList.Add(b);
+			CBookList.SaveToIni();
+			CPlayer p;
+			p = new CPlayer("Human");
+			CPlayerList.Add(p);
+			p = new CPlayer("RapShortCs R9");
+			p.engine = "RapChessCs";
+			p.book = "Rand9";
+			p.mode = "movetime";
+			p.value = "1";
+			p.elo = "200";
+			CPlayerList.Add(p);
+			p = new CPlayer("RapSimpleCs R6");
+			p.engine = "RapChessCs";
+			p.book = "Rand6";
+			p.mode = "movetime";
+			p.value = "1";
+			p.elo = "400";
+			CPlayerList.Add(p);
+			p = new CPlayer("RapChessCs R3");
+			p.engine = "RapChessCs";
+			p.book = "Rand3";
+			p.mode = "movetime";
+			p.value = "1";
+			p.elo = "600";
+			CPlayerList.Add(p);
+			p = new CPlayer("RapShortCs XT1");
+			p.engine = "RapShortCs";
+			p.book = "Small";
+			p.mode = "movetime";
+			p.value = "1000";
+			p.elo = "800";
+			CPlayerList.Add(p);
+			p = new CPlayer("RapSimpleCs XT1");
+			p.engine = "RapSimpleCs";
+			p.book = "Small";
+			p.mode = "movetime";
+			p.value = "1000";
+			p.elo = "1000";
+			CPlayerList.Add(p);
+			p = new CPlayer(CPlayerList.defUser);
+			p.engine = "RapChessCs";
+			p.book = "Small";
+			p.mode = "movetime";
+			p.value = "1000";
+			p.elo = "1200";
+			CPlayerList.Add(p);
+			CPlayerList.SaveToIni();
+		}
+
 		void IniLoad()
 		{
-			IniLoadGame();
-			IniLoadMatch();
-			IniLoadTraining();
+			CEngineList.LoadFromIni();
+			CBookList.LoadFromIni();
+			CPlayerList.LoadFromIni();
 			CModeGame.LoadFromIni();
-			CModeTournament.LoadFromIni();
-			FOptions.cbShowPonder.Checked = Convert.ToInt32(CRapIni.This.Read("options>interface>showponder", "1")) == 1;
-			FOptions.cbGameAutoElo.Checked = Convert.ToInt32(CRapIni.This.Read("options>game>autoelo", "1")) == 1;
-			FOptions.cbRotateBoard.Checked = Convert.ToInt32(CRapIni.This.Read("options>interface>rotate", "0")) == 1;
-			FOptions.cbAttack.Checked = Convert.ToInt32(CRapIni.This.Read("options>interface>attack", "0")) == 1;
-			FOptions.nudSpeed.Value = Convert.ToInt32(CRapIni.This.Read("options>interface>speed", "200"));
-			CBoard.color = ColorTranslator.FromHtml(CRapIni.This.Read("options>interface>color", "#400000"));
-		}
-
-		void IniLoadGame()
-		{
-			cbColor.SelectedIndex = cbColor.FindStringExact(CRapIni.This.Read("mode>game>color", "Auto"));
-			cbComputer.SelectedIndex = cbComputer.FindStringExact(CRapIni.This.Read("mode>game>black", "Auto"));
-		}
-
-		void IniLoadMatch()
-		{
-			cbPlayer1.SelectedIndex = cbPlayer1.FindStringExact(CRapIni.This.Read("mode>match>player1", CUserList.defUser));
-			cbPlayer2.SelectedIndex = cbPlayer2.FindStringExact(CRapIni.This.Read("mode>match>player2", CUserList.defUser));
-			cbBook1.SelectedIndex = cbBook1.FindStringExact(CRapIni.This.Read("mode>match>book1", "small"));
-			cbBook2.SelectedIndex = cbBook2.FindStringExact(CRapIni.This.Read("mode>match>book2", "small"));
 			CModeMatch.LoadFromIni();
-		}
-
-		void IniLoadTraining()
-		{
-			comboBoxTrained.SelectedIndex = comboBoxTrained.FindStringExact(CRapIni.This.Read("mode>training>trained", CUserList.defUser));
-			comboBoxTeacher.SelectedIndex = comboBoxTeacher.FindStringExact(CRapIni.This.Read("mode>training>teacher", "RapChessCs.exe"));
-			cbBookList.SelectedIndex = cbBookList.FindStringExact(CRapIni.This.Read("mode>training>book", "small"));
-			nudTeacher.Value = Convert.ToInt32(CRapIni.This.Read("mode>training>timeTeacher", "1000"));
-			nudTrained.Value = Convert.ToInt32(CRapIni.This.Read("mode>training>timeTrained", "1000"));
-			CModeTraining.time = (int)nudTeacher.Value;
-		}
-
-		void IniSave()
-		{
-			CRapIni.This.Write("options>interface>color", ColorTranslator.ToHtml(CBoard.color));
-			CRapIni.This.Write("options>interface>showponder", FOptions.cbShowPonder.Checked ? "1" : "0");
-			CRapIni.This.Write("options>interface>rotate", FOptions.cbRotateBoard.Checked ? "1" : "0");
-			CRapIni.This.Write("options>interface>attack", FOptions.cbAttack.Checked ? "1" : "0");
-			CRapIni.This.Write("options>interface>speed", FOptions.nudSpeed.Value.ToString());
-			CRapIni.This.Write("options>game>autoelo", FOptions.cbGameAutoElo.Checked ? "1" : "0");
-		}
-
-		void IniSaveGame()
-		{
-			CRapIni.This.Write("mode>game>color", cbColor.Text);
-			CRapIni.This.Write("mode>game>black", cbComputer.Text);
-		}
-
-		void IniSaveMatch()
-		{
-			CRapIni.This.Write("mode>match>player1", cbPlayer1.Text);
-			CRapIni.This.Write("mode>match>player2", cbPlayer2.Text);
-			CRapIni.This.Write("mode>match>book1", cbBook1.Text);
-			CRapIni.This.Write("mode>match>book2", cbBook2.Text);
-			CModeMatch.SaveToIni();
-		}
-
-		void IniSaveTraining()
-		{
-			CRapIni.This.Write("mode>training>trained", comboBoxTrained.Text);
-			CRapIni.This.Write("mode>training>teacher", comboBoxTeacher.Text);
-			CRapIni.This.Write("mode>training>book", cbBookList.Text);
-			CRapIni.This.Write("mode>training>timeTeacher", nudTeacher.Value.ToString());
-			CRapIni.This.Write("mode>training>timeTrained", nudTrained.Value.ToString());
+			CModeTournament.LoadFromIni();
+			CModeTraining.LoadFromIni();
 		}
 
 		public void GetMessage()
 		{
-			while (CMessageList.GetMessage(out CPlayer p, out string msg))
+			while (CMessageList.GetMessage(out CGamer p, out string msg))
 			{
 				Uci.SetMsg(msg);
 				switch (Uci.command)
@@ -148,7 +170,7 @@ namespace RapChessGui
 						break;
 					case "uciok":
 						p.uciok = true;
-						foreach (string op in p.user.options)
+						foreach (string op in p.engine.options)
 							p.SendMessage($"setoption {op}");
 						p.SendMessage("ucinewgame");
 						p.SendMessage("isready");
@@ -216,7 +238,7 @@ namespace RapChessGui
 						isBook = Uci.GetIndex("book", 0) > 0;
 						break;
 					default:
-						if ((PlayerList.PlayerCur().user.protocol == "Winboard") && PlayerList.PlayerCur().wbok && (Uci.tokens.Length > 4))
+						if ((GamerList.PlayerCur().engine.protocol == "Winboard") && GamerList.PlayerCur().wbok && (Uci.tokens.Length > 4))
 						{
 							try
 							{
@@ -239,8 +261,10 @@ namespace RapChessGui
 						break;
 				}
 			}
-			if (PlayerList.PlayerCur().user.protocol == "Winboard")
-				PlayerList.PlayerCur().readyok = true;
+			CGamer gamer = GamerList.PlayerCur();
+			if (gamer.engine != null)
+				if (gamer.engine.protocol == "Winboard")
+					gamer.readyok = true;
 		}
 
 		void CreatePgn()
@@ -253,8 +277,8 @@ namespace RapChessGui
 				else
 					result = "0-1";
 			list.Add($"[Date \"{DateTime.Now.ToString("yyyy.MM.dd")}\"]");
-			list.Add($"[White \"{PlayerList.player[0].user.name}\"]");
-			list.Add($"[Black \"{PlayerList.player[1].user.name}\"]");
+			list.Add($"[White \"{GamerList.gamer[0].user.name}\"]");
+			list.Add($"[Black \"{GamerList.gamer[1].user.name}\"]");
 			list.Add($"[Result \"{result}\"]");
 			list.Add("");
 			list.Add(CHistory.GetPgn());
@@ -267,7 +291,7 @@ namespace RapChessGui
 		public void AddBook(string emo)
 		{
 			isBook = false;
-			PlayerList.PlayerCur().usedBook++;
+			GamerList.PlayerCur().usedBook++;
 			labLast.ForeColor = Color.Aquamarine;
 			labLast.Text = $"book {emo}";
 		}
@@ -281,7 +305,7 @@ namespace RapChessGui
 			labProtocolT.Visible = true;
 			timer1.Enabled = false;
 			timerStart.Enabled = false;
-			PlayerList.Terminate();
+			GamerList.Terminate();
 			CData.gameMode = (int)mode;
 			CMessageList.list.Clear();
 			moveToolStripMenuItem.Visible = mode == (int)CMode.game;
@@ -339,7 +363,7 @@ namespace RapChessGui
 		bool ShowLastGame()
 		{
 			bool result = false;
-			CUser hu = CUserList.GetUser("Human");
+			CPlayer hu = CPlayerList.GetUser("Human");
 			int eloCur = Convert.ToInt32(hu.elo);
 			if (hu.eloNew > eloCur)
 			{
@@ -362,16 +386,20 @@ namespace RapChessGui
 
 		void ShowGame()
 		{
-			CUser uc = CUserList.GetUser(cbComputer.Text);
-			if (uc.name == cbComputer.Text)
-				labEngine.Text = uc.engine;
+			CPlayer player = CPlayerList.GetUser(cbComputer.Text);
+			if (player.name == cbComputer.Text)
+				labEngine.Text = player.engine;
 			else
-				labEngine.Text = uc.name;
+				labEngine.Text = player.name;
 			ShowAutoElo();
 		}
 
 		void ShowMatch()
 		{
+			cbPlayer1.SelectedIndex = cbPlayer1.FindStringExact(CModeMatch.player1);
+			cbPlayer2.SelectedIndex = cbPlayer2.FindStringExact(CModeMatch.player2);
+			cbBook1.SelectedIndex = cbBook1.FindStringExact(CModeMatch.book1);
+			cbBook2.SelectedIndex = cbBook2.FindStringExact(CModeMatch.book2);
 			labMatchGames.Text = $"Games {CModeMatch.games}";
 			labMatch10.Text = cbPlayer1.Text;
 			labMatch11.Text = CModeMatch.win.ToString();
@@ -388,7 +416,7 @@ namespace RapChessGui
 		void ShowTournament()
 		{
 			listView1.Items.Clear();
-			foreach (CUser u in CUserList.list)
+			foreach (CPlayer u in CPlayerList.list)
 				if (u.engine != "Human")
 					listView1.Items.Add(new ListViewItem(new[] { u.name, u.elo, u.GetDeltaElo().ToString() }));
 		}
@@ -396,7 +424,11 @@ namespace RapChessGui
 		void ShowTraining()
 		{
 			labGames.Text = $"Games {CModeTraining.games}";
-			nudTeacher.Value = CModeTraining.time;
+			comboBoxTeacher.SelectedIndex = comboBoxTeacher.FindStringExact(CModeTraining.teacher);
+			comboBoxTrained.SelectedIndex = comboBoxTrained.FindStringExact(CModeTraining.trained);
+			cbBookList.SelectedIndex = cbBookList.FindStringExact(CModeTraining.bookTeacher);
+			nudTeacher.Value = CModeTraining.timeTeacher;
+			nudTrained.Value = CModeTraining.timeTrained;
 			label12.Text = CModeTraining.win.ToString();
 			label13.Text = CModeTraining.loose.ToString();
 			label14.Text = CModeTraining.draw.ToString();
@@ -410,14 +442,14 @@ namespace RapChessGui
 		void ShowEdit()
 		{
 			List<RadioButton> list = gbToMove.Controls.OfType<RadioButton>().ToList();
-			int i = CEngine.whiteTurn ? 1 : 0;
+			int i = CChess.whiteTurn ? 1 : 0;
 			list[i].Select();
-			int cr = Engine.g_castleRights;
-			clbCastling.SetItemChecked(0, (Engine.g_castleRights & 1) > 0);
-			clbCastling.SetItemChecked(1, (Engine.g_castleRights & 2) > 0);
-			clbCastling.SetItemChecked(2, (Engine.g_castleRights & 4) > 0);
-			clbCastling.SetItemChecked(3, (Engine.g_castleRights & 8) > 0);
-			Engine.g_castleRights = cr;
+			int cr = Chess.g_castleRights;
+			clbCastling.SetItemChecked(0, (Chess.g_castleRights & 1) > 0);
+			clbCastling.SetItemChecked(1, (Chess.g_castleRights & 2) > 0);
+			clbCastling.SetItemChecked(2, (Chess.g_castleRights & 4) > 0);
+			clbCastling.SetItemChecked(3, (Chess.g_castleRights & 8) > 0);
+			Chess.g_castleRights = cr;
 		}
 
 		void Reset()
@@ -428,37 +460,30 @@ namespace RapChessGui
 			comboBoxTrained.Items.Clear();
 			comboBoxTeacher.Items.Clear();
 			cbComputer.Items.Add("Auto");
-			for (int n = 0; n < CUserList.list.Count; n++)
+			foreach (CPlayer p in CPlayerList.list)
 			{
-				CUser u = CUserList.list[n];
-				cbComputer.Items.Add(u.name);
-				cbPlayer1.Items.Add(u.name);
-				cbPlayer2.Items.Add(u.name);
-				comboBoxTrained.Items.Add(u.name);
+				cbComputer.Items.Add(p.name);
+				cbPlayer1.Items.Add(p.name);
+				cbPlayer2.Items.Add(p.name);
+				comboBoxTrained.Items.Add(p.name);
 			}
-			foreach (string en in CData.engineNames)
-			{
+			foreach (string en in CData.fileEngine)
 				comboBoxTeacher.Items.Add(en);
-			}
 			cbBookList.Items.Clear();
 			cbBook1.Items.Clear();
 			cbBook2.Items.Clear();
-			FormPlayer.This.cbBookList.Items.Clear();
 			cbBookList.Items.Add("None");
 			cbBook1.Items.Add("None");
 			cbBook2.Items.Add("None");
-			FormPlayer.This.cbBookList.Items.Add("None");
-			foreach (CBookReader br in CBookReaderList.list)
+			foreach (CBook b in CBookList.list)
 			{
-				cbBookList.Items.Add(br.name);
-				cbBook1.Items.Add(br.name);
-				cbBook2.Items.Add(br.name);
-				FormPlayer.This.cbBookList.Items.Add(br.name);
+				cbBookList.Items.Add(b.name);
+				cbBook1.Items.Add(b.name);
+				cbBook2.Items.Add(b.name);
 			}
 			cbBookList.SelectedIndex = 0;
 			cbBook1.SelectedIndex = 0;
 			cbBook2.SelectedIndex = 0;
-			FormPlayer.This.SelectUser();
 			ShowTournament();
 			if (SortingColumn != null)
 				SortingColumn.Text = SortingColumn.Text.Substring(2);
@@ -470,25 +495,26 @@ namespace RapChessGui
 
 		void StartGame()
 		{
+			CModeGame.color = cbColor.Text;
+			CModeGame.computer = cbComputer.Text;
 			CModeGame.ranked = IsAutoElo();
 			ShowAutoElo();
-			IniSaveGame();
 			SetMode((int)CMode.game);
 			Clear();
 			bool lg = ShowLastGame();
-			PlayerList.player[0].SetUser("Human");
-			CUser u = CommandToUser();
-			PlayerList.player[1].SetUser(u);
+			GamerList.gamer[0].SetUser("Human");
+			CPlayer u = CommandToUser();
+			GamerList.gamer[1].SetUser(u);
 			if ((!lg && CModeGame.rotate && (cbColor.Text == "Auto")) || (cbColor.Text == "Black"))
 			{
 				CModeGame.rotate = false;
-				PlayerList.Rotate();
+				GamerList.Rotate();
 			}
 			else
 				CModeGame.rotate = true;
-			if (PlayerList.PlayerCur().user.engine == "Human")
-				moves = Engine.GenerateValidMoves();
-			CUser uh = CUserList.GetUser("Human");
+			if (GamerList.PlayerCur().user.engine == "Human")
+				moves = Chess.GenerateValidMoves();
+			CPlayer uh = CPlayerList.GetUser("Human");
 			int levelDif = 2000 / listView1.Items.Count;
 			if (levelDif < 10)
 				levelDif = 10;
@@ -499,77 +525,82 @@ namespace RapChessGui
 			uh.eloMore = elo + levelDif;
 			if (uh.eloLess < 0)
 				uh.eloLess = 0;
+			CModeGame.SaveToIni();
 		}
 
 		void StartMatch()
 		{
-			IniSaveMatch();
+			CModeMatch.player1 = cbPlayer1.Text;
+			CModeMatch.player2 = cbPlayer2.Text;
+			CModeMatch.book1 = cbBook1.Text;
+			CModeMatch.book2 = cbBook2.Text;
 			SetMode((int)CMode.match);
-			CUser u1 = new CUser("Player1");
+			CPlayer u1 = new CPlayer("Player 1");
 			u1.SetUser(cbPlayer1.Text);
 			u1.book = cbBook1.Text;
-			PlayerList.player[0].SetUser(u1);
-			CUser u2 = new CUser("Player2");
+			GamerList.gamer[0].SetUser(u1);
+			CPlayer u2 = new CPlayer("Player 2");
 			u2.SetUser(cbPlayer2.Text);
 			u2.book = cbBook2.Text;
-			PlayerList.player[1].SetUser(u2);
+			GamerList.gamer[1].SetUser(u2);
 			if (CModeMatch.rotate)
-				PlayerList.Rotate();
+				GamerList.Rotate();
 			CModeMatch.rotate = !CModeMatch.rotate;
 			Clear();
-			if (PlayerList.PlayerCur().user.engine == "Human")
-				moves = Engine.GenerateValidMoves();
+			if (GamerList.PlayerCur().user.engine == "Human")
+				moves = Chess.GenerateValidMoves();
+			CModeMatch.SaveToIni();
 		}
 
 		void StartTournament()
 		{
 			SetMode((int)CMode.tournament);
-			CUser u = CModeTournament.GetUser();
-			PlayerList.player[0].SetUser(u);
-			PlayerList.player[1].SetUser(CUserList.GetUserEloHL(u));
+			CPlayer u = CModeTournament.GetUser();
+			GamerList.gamer[0].SetUser(u);
+			GamerList.gamer[1].SetUser(CPlayerList.GetUserEloHL(u));
 			Clear();
 		}
 
 		void StartTraing()
 		{
-			IniSaveTraining();
 			SetMode((int)CMode.training);
-			CUser uw = new CUser("Trained");
+			CPlayer uw = new CPlayer("Trained");
 			uw.SetUser(comboBoxTrained.Text);
 			uw.mode = "movetime";
 			uw.value = nudTrained.Value.ToString();
-			CUser ub = new CUser("Teacher");
+			CPlayer ub = new CPlayer("Teacher");
 			ub.engine = comboBoxTeacher.Text;
 			ub.book = cbBookList.Text;
 			ub.mode = "movetime";
 			ub.value = nudTeacher.Value.ToString();
-			PlayerList.player[0].SetUser(uw);
-			PlayerList.player[1].SetUser(ub);
+			GamerList.gamer[0].SetUser(uw);
+			GamerList.gamer[1].SetUser(ub);
 			if (CModeTraining.rotate)
-				PlayerList.Rotate();
+				GamerList.Rotate();
 			CModeTraining.rotate = !CModeTraining.rotate;
 			Clear();
+			CModeTraining.SaveToIni();
 		}
 
 		public bool MakeMove(string emo)
 		{
-			CPlayer cp = PlayerList.PlayerCur();
+			CGamer cp = GamerList.PlayerCur();
 			cp.UpdateTime();
 			cp.timer.Stop();
 			emo = emo.ToLower();
-			CUser uw = PlayerList.PlayerCur().user;
-			CUser ul = PlayerList.PlayerSec().user;
-			if (IsAutoElo() && CModeGame.ranked && (!cp.computer) && ((Engine.g_moveNumber >> 1) == 4))
+			CPlayer uw = GamerList.PlayerCur().user;
+			CPlayer ul = GamerList.PlayerSec().user;
+			if (IsAutoElo() && CModeGame.ranked && (cp.engine == null) && ((Chess.g_moveNumber >> 1) == 4))
 			{
 				cp.user.eloOld = Convert.ToDouble(cp.user.elo);
 				cp.user.eloNew = cp.user.eloLess;
 				cp.user.SaveToIni();
 			}
-			bool ivm = Engine.IsValidMove(emo) != 0;
+			bool ivm = Chess.IsValidMove(emo) != 0;
 			if (!ivm)
 			{
 				string emo2 = $"{emo}q";
-				ivm = Engine.IsValidMove(emo2) != 0;
+				ivm = Chess.IsValidMove(emo2) != 0;
 				if (ivm)
 					emo = emo2;
 			}
@@ -581,32 +612,32 @@ namespace RapChessGui
 				FormLog.This.richTextBox1.SaveFile("Error.rtf");
 				return false;
 			}
-			int gm = Engine.GetMoveFromString(emo);
+			int gm = Chess.GetMoveFromString(emo);
 			int fr = gm & 0xff;
-			int piece = CEngine.g_board[fr] & 0xf;
+			int piece = CChess.g_board[fr] & 0xf;
 			AddMove(piece, emo);
 			CBoard.MakeMove(gm);
-			Engine.MakeMove(gm);
-			int moveNumber = (Engine.g_moveNumber >> 1) + 1;
-			labMove.Text = "Move " + moveNumber.ToString() + " " + Engine.g_move50.ToString();
+			Chess.MakeMove(gm);
+			int moveNumber = (Chess.g_moveNumber >> 1) + 1;
+			labMove.Text = "Move " + moveNumber.ToString() + " " + Chess.g_move50.ToString();
 			if (cp.timeTotal > 100)
 			{
 				cp.totalNpsSum += cp.nodes;
 				cp.totalNps = (ulong)Convert.ToInt64((cp.totalNpsSum * 1000) / cp.timeTotal);
 			}
-			CData.gameState = Engine.GetGameState();
+			CData.gameState = Chess.GetGameState();
 			if (CData.gameState == 0)
 			{
-				PlayerList.Next();
-				if (PlayerList.PlayerCur().user.engine == "Human")
-					moves = Engine.GenerateValidMoves();
+				GamerList.Next();
+				if (GamerList.PlayerCur().user.engine == "Human")
+					moves = Chess.GenerateValidMoves();
 			}
 			else
 				GameOver(uw, ul);
 			return true;
 		}
 
-		void GameOver(CUser uw, CUser ul)
+		void GameOver(CPlayer uw, CPlayer ul)
 		{
 			int eloW = Convert.ToInt32(uw.elo);
 			int eloL = Convert.ToInt32(ul.elo);
@@ -671,15 +702,15 @@ namespace RapChessGui
 				{
 					CModeMatch.draw++;
 				}
-				IniSaveMatch();
+				CModeMatch.SaveToIni();
 				ShowMatch();
 			}
 			if (CData.gameMode == (int)CMode.tournament)
 			{
-				int indexW = CUserList.GetIndexElo(eloW);
-				int indexL = CUserList.GetIndexElo(eloL);
-				int optW = CUserList.GetOptElo(indexW);
-				int optL = CUserList.GetOptElo(indexL);
+				int indexW = CPlayerList.GetIndexElo(eloW);
+				int indexL = CPlayerList.GetIndexElo(eloL);
+				int optW = CPlayerList.GetOptElo(indexW);
+				int optL = CPlayerList.GetOptElo(indexL);
 				int OW = optW;
 				int OL = optL;
 				if (CData.gameState == (int)CGameState.mate)
@@ -718,20 +749,20 @@ namespace RapChessGui
 					if (uw.name == "Teacher")
 					{
 						CModeTraining.win++;
-						CModeTraining.time -= 100;
-						if (CModeTraining.time < 100)
-							CModeTraining.time = 100;
+						CModeTraining.timeTeacher -= 100;
+						if (CModeTraining.timeTeacher < 100)
+							CModeTraining.timeTeacher = 100;
 					}
 					else
 					{
 						CModeTraining.loose++;
-						CModeTraining.time += 100;
+						CModeTraining.timeTeacher += 100;
 					}
 				}
 				else
 				{
 					CModeTraining.draw++;
-					CModeTraining.time += 100;
+					CModeTraining.timeTeacher += 100;
 				}
 				ShowTraining();
 			}
@@ -744,8 +775,8 @@ namespace RapChessGui
 		{
 			if (CData.gameState == (int)CGameState.normal)
 			{
-				CUser ul = PlayerList.PlayerCur().user;
-				CUser uw = PlayerList.PlayerSec().user;
+				CPlayer ul = GamerList.PlayerCur().user;
+				CPlayer uw = GamerList.PlayerSec().user;
 				CData.gameState = (int)CGameState.mate;
 				FormLog.This.richTextBox1.AppendText($"Game over {ul.name} {msg}\n", Color.Gray);
 				GameOver(uw, ul);
@@ -760,20 +791,20 @@ namespace RapChessGui
 			labLast.Text = "Good luck";
 			CDrag.lastSou = -1;
 			CDrag.lastDes = -1;
-			Engine.InitializeFromFen();
-			CHistory.NewGame(Engine.GetFen());
+			Chess.InitializeFromFen();
+			CHistory.NewGame(Chess.GetFen());
 			CBoard.Clear();
 			CBoard.Fill();
-			PlayerList.Init();
+			GamerList.Init();
 			lvMoves.Items.Clear();
 			CData.back = 0;
-			CPlayer pw = PlayerList.player[0];
-			CPlayer pb = PlayerList.player[1];
+			CGamer pw = GamerList.gamer[0];
+			CGamer pb = GamerList.gamer[1];
 			FormLog.This.richTextBox1.Clear();
-			if (pw.user != null)
-				FormLog.This.richTextBox1.AppendText($"White {pw.user.name} {pw.user.engine} {pw.user.parameters}\n", Color.Gray);
-			if (pb.user != null)
-				FormLog.This.richTextBox1.AppendText($"Black {pb.user.name} {pb.user.engine} {pb.user.parameters}\n", Color.Gray);
+			if (pw.engine != null)
+				FormLog.This.richTextBox1.AppendText($"White {pw.user.name} {pw.user.engine} {pw.engine.parameters}\n", Color.Gray);
+			if (pb.engine != null)
+				FormLog.This.richTextBox1.AppendText($"Black {pb.user.name} {pb.user.engine} {pb.engine.parameters}\n", Color.Gray);
 			labBack.Text = $"Back {CData.back}";
 			RenderInfo(pw);
 			RenderInfo(pb);
@@ -781,9 +812,9 @@ namespace RapChessGui
 			timer1.Enabled = CData.gameMode != (int)CMode.edit;
 		}
 
-		CUser CommandToUser()
+		CPlayer CommandToUser()
 		{
-			CUser u = new CUser(cbComputer.Text);
+			CPlayer u = new CPlayer(cbComputer.Text);
 			u.SetUser(cbComputer.Text);
 			u.SetCommand(cbCommand.Text);
 			cbCommand.Text = u.GetCommand();
@@ -794,13 +825,13 @@ namespace RapChessGui
 		{
 			Stopwatch stopwatch = new Stopwatch();
 			stopwatch.Start();
-			boardRotate = (!PlayerList.player[1].computer && PlayerList.player[0].computer) ^ CData.rotateBoard;
-			if (!PlayerList.player[1].computer && !PlayerList.player[0].computer)
-				boardRotate = !CEngine.whiteTurn;
+			boardRotate = ((GamerList.gamer[1].engine== null) && (GamerList.gamer[0].engine != null)) ^ CData.rotateBoard;
+			if ((GamerList.gamer[1].engine == null) && (GamerList.gamer[0].engine == null))
+				boardRotate = !CChess.whiteTurn;
 			if (boardRotate)
 			{
-				labNameT.Text = PlayerList.player[0].user.name;
-				labNameB.Text = PlayerList.player[1].user.name;
+				labNameT.Text = GamerList.gamer[0].user.name;
+				labNameB.Text = GamerList.gamer[1].user.name;
 				panTop.BackColor = Color.White;
 				panBottom.BackColor = Color.Black;
 				labTakenT.ForeColor = Color.White;
@@ -808,14 +839,14 @@ namespace RapChessGui
 			}
 			else
 			{
-				labNameT.Text = PlayerList.player[1].user.name;
-				labNameB.Text = PlayerList.player[0].user.name;
+				labNameT.Text = GamerList.gamer[1].user.name;
+				labNameB.Text = GamerList.gamer[0].user.name;
 				panTop.BackColor = Color.Black;
 				panBottom.BackColor = Color.White;
 				labTakenT.ForeColor = Color.Black;
 				labTakenB.ForeColor = Color.White;
 			}
-			if ((boardRotate ^ CEngine.whiteTurn) ^ (CData.gameState != 0))
+			if ((boardRotate ^ CChess.whiteTurn) ^ (CData.gameState != 0))
 			{
 				labTimeT.BackColor = Color.LightGray;
 				labTimeB.BackColor = Color.Yellow;
@@ -885,7 +916,7 @@ namespace RapChessGui
 					gp1.AddString("pnbrqk"[image].ToString(), fontPiece.FontFamily, (int)fontPiece.Style, fontPiece.Size, rec, sf);
 				}
 			}
-			if (CEngine.whiteTurn)
+			if (CChess.whiteTurn)
 			{
 				g.DrawPath(penB, gpB);
 				g.FillPath(brushB, gpB);
@@ -915,7 +946,7 @@ namespace RapChessGui
 			CBoard.Render();
 			if (!CBoard.animated)
 			{
-				CBoard.ShowAttack(FOptions.cbAttack.Checked);
+				CBoard.ShowAttack(FormOptions.This.cbAttack.Checked);
 				CBoard.SetImage();
 				RenderTaken();
 			}
@@ -924,9 +955,9 @@ namespace RapChessGui
 			labFPS.Text = $"FPS {Convert.ToInt32(CData.fps)}";
 		}
 
-		void RenderInfo(CPlayer cp)
+		void RenderInfo(CGamer cp)
 		{
-			if (!FOptions.cbShowPonder.Checked)
+			if (!FormOptions.This.cbShowPonder.Checked)
 				cp.ponder = "";
 			ulong nps = cp.totalNps > 0 ? cp.totalNps : cp.nps;
 			if (boardRotate ^ cp.white)
@@ -974,14 +1005,14 @@ namespace RapChessGui
 			{
 				for (int x = 0; x < 8; x++)
 				{
-					int piece = CEngine.g_board[((y + 4) << 4) + x + 4];
+					int piece = CChess.g_board[((y + 4) << 4) + x + 4];
 					int rank = piece & 7;
-					if ((piece & CEngine.colorWhite) > 0)
+					if ((piece & CChess.colorWhite) > 0)
 					{
 						arrPiece[rank]++;
 						material += arrMaterial[rank];
 					}
-					if ((piece & CEngine.colorBlack) > 0)
+					if ((piece & CChess.colorBlack) > 0)
 					{
 						arrPiece[rank]--;
 						material -= arrMaterial[rank];
@@ -1024,37 +1055,37 @@ namespace RapChessGui
 		void LoadFen(string fen)
 		{
 			SetMode((int)CMode.game);
-			if (!Engine.InitializeFromFen(fen))
+			if (!Chess.InitializeFromFen(fen))
 			{
 				MessageBox.Show("Wrong fen");
 				return;
 			}
-			PlayerList.curIndex = Engine.g_moveNumber & 1;
-			CUser u = CommandToUser();
-			PlayerList.PlayerCur().SetUser("Human");
-			PlayerList.PlayerSec().SetUser(u);
-			PlayerList.player[0].Init(true);
-			PlayerList.player[1].Init(false);
-			cbColor.SelectedIndex = PlayerList.curIndex;
+			GamerList.curIndex = Chess.g_moveNumber & 1;
+			CPlayer u = CommandToUser();
+			GamerList.PlayerCur().SetUser("Human");
+			GamerList.PlayerSec().SetUser(u);
+			GamerList.gamer[0].Init(true);
+			GamerList.gamer[1].Init(false);
+			cbColor.SelectedIndex = GamerList.curIndex;
 			CDrag.lastSou = -1;
 			CDrag.lastDes = -1;
 			CHistory.NewGame(fen);
 			CBoard.Fill();
 			RenderBoard();
-			CPlayer pw = PlayerList.player[0];
-			CPlayer pb = PlayerList.player[1];
+			CGamer pw = GamerList.gamer[0];
+			CGamer pb = GamerList.gamer[1];
 			FormLog.This.richTextBox1.Clear();
-			FormLog.This.richTextBox1.AppendText($"Fen {Engine.GetFen()}\n", Color.Gray);
-			FormLog.This.richTextBox1.AppendText($"White {pw.user.name} {pw.user.engine} {pw.user.parameters}\n", Color.Gray);
-			FormLog.This.richTextBox1.AppendText($"Black {pb.user.name} {pb.user.engine} {pb.user.parameters}\n", Color.Gray);
+			FormLog.This.richTextBox1.AppendText($"Fen {Chess.GetFen()}\n", Color.Gray);
+			FormLog.This.richTextBox1.AppendText($"White {pw.user.name} {pw.user.engine} {pw.engine.parameters}\n", Color.Gray);
+			FormLog.This.richTextBox1.AppendText($"Black {pb.user.name} {pb.user.engine} {pb.engine.parameters}\n", Color.Gray);
 			labLast.ForeColor = Color.Lime;
-			labLast.Text = $"Load fen {Engine.GetFen()}";
+			labLast.Text = $"Load fen {Chess.GetFen()}";
 			labBack.Text = $"Back {CData.back}";
 			lvMoves.Items.Clear();
 			RenderInfo(pw);
 			RenderInfo(pb);
 			CData.gameState = 0;
-			moves = Engine.GenerateValidMoves();
+			moves = Chess.GenerateValidMoves();
 			timer1.Enabled = true;
 		}
 
@@ -1075,7 +1106,7 @@ namespace RapChessGui
 		{
 			MoveToRtb(CHistory.moveList.Count, piece, emo);
 			CHistory.AddMove(piece, emo);
-			CEngine.EmoToSD(emo, out CDrag.lastSou, out CDrag.lastDes);
+			CChess.EmoToSD(emo, out CDrag.lastSou, out CDrag.lastDes);
 		}
 
 		void ShowHistory()
@@ -1090,22 +1121,22 @@ namespace RapChessGui
 
 		void RenderHistory()
 		{
-			Engine.InitializeFromFen(CHistory.fen);
+			Chess.InitializeFromFen(CHistory.fen);
 			foreach (CHisMove m in CHistory.moveList)
 			{
-				Engine.MakeMove(m.emo);
+				Chess.MakeMove(m.emo);
 			}
-			CEngine.EmoToSD(CHistory.LastMove(), out CDrag.lastSou, out CDrag.lastDes);
+			CChess.EmoToSD(CHistory.LastMove(), out CDrag.lastSou, out CDrag.lastDes);
 			CBoard.Fill();
 			ShowHistory();
 		}
 
 		bool TryMove(int s, int d)
 		{
-			int m = Engine.IsValidMove(s, d, "q");
+			int m = Chess.IsValidMove(s, d, "q");
 			if (m == 0)
 				return false;
-			string em = Engine.FormatMove(m);
+			string em = Chess.FormatMove(m);
 			return MakeMove(em);
 		}
 
@@ -1115,7 +1146,7 @@ namespace RapChessGui
 			{
 				int x = i & 7;
 				int y = i >> 3;
-				int s = Engine.MakeSquare(y, x);
+				int s = Chess.MakeSquare(y, x);
 				if ((c & 0xff) == s) return true;
 			}
 			return false;
@@ -1127,10 +1158,10 @@ namespace RapChessGui
 				return true;
 			int sx = sou & 7;
 			int sy = sou >> 3;
-			int sa = Engine.MakeSquare(sy, sx);
+			int sa = Chess.MakeSquare(sy, sx);
 			int dx = des & 7;
 			int dy = des >> 3;
-			int da = Engine.MakeSquare(dy, dx);
+			int da = Chess.MakeSquare(dy, dx);
 			int a = (da << 8) | sa;
 			foreach (int c in moves)
 				if ((c & 0xffff) == a)
@@ -1143,7 +1174,7 @@ namespace RapChessGui
 			foreach (int c in moves)
 			{
 				int sou = c & 0xff;
-				int i = CEngine.Con256To64(sou);
+				int i = CChess.Con256To64(sou);
 				CBoard.list[i].color = Color.Yellow;
 			}
 		}
@@ -1152,7 +1183,7 @@ namespace RapChessGui
 		{
 			int max = index & 7;
 			int may = index >> 3;
-			int sa = Engine.MakeSquare(may, max);
+			int sa = Chess.MakeSquare(may, max);
 			foreach (int c in moves)
 				if ((c & 0xff) == sa)
 				{
@@ -1182,8 +1213,7 @@ namespace RapChessGui
 
 		private void FormChess_FormClosed(object sender, FormClosedEventArgs e)
 		{
-			IniSave();
-			PlayerList.Terminate();
+			GamerList.Terminate();
 			SortingColumn.Dispose();
 
 		}
@@ -1200,11 +1230,11 @@ namespace RapChessGui
 			}
 			else
 			{
-				CPlayer cp = PlayerList.PlayerCur();
-				CPlayer sp = PlayerList.PlayerSec();
+				CGamer cp = GamerList.PlayerCur();
+				CGamer sp = GamerList.PlayerSec();
 				RenderInfo(cp);
 				RenderInfo(sp);
-				if (cp.computer)
+				if (cp.engine != null)
 				{
 					if (!cp.started)
 						cp.Start();
@@ -1229,15 +1259,12 @@ namespace RapChessGui
 
 		private void PlayersToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			IniSave();
-			FPlayer.ShowDialog(this);
-			Reset();
-			IniLoad();
+
 		}
 
 		private void ButStop_Click(object sender, EventArgs e)
 		{
-			PlayerList.PlayerCur().EngineStop();
+			GamerList.PlayerCur().EngineStop();
 		}
 
 		private void BackToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1247,7 +1274,7 @@ namespace RapChessGui
 
 		private void OptionsToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			FOptions.ShowDialog(this);
+			FormOptions.This.ShowDialog(this);
 			CBoard.ClearAttack();
 			CBoard.Prepare();
 			CBoard.animated = true;
@@ -1280,7 +1307,7 @@ namespace RapChessGui
 
 		private void saveToClipboardToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			Clipboard.SetText(Engine.GetFen());
+			Clipboard.SetText(Chess.GetFen());
 		}
 
 		private void loadFromClipboardToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1293,39 +1320,39 @@ namespace RapChessGui
 			SetMode((int)CMode.game);
 			string pgn = Clipboard.GetText().Trim();
 			string[] ml = pgn.Split(new[] { ' ', '\t' }, StringSplitOptions.RemoveEmptyEntries);
-			Engine.InitializeFromFen();
+			Chess.InitializeFromFen();
 			CHistory.NewGame();
 			foreach (string emo in ml)
 			{
-				int piece = Engine.MakeMove(emo);
+				int piece = Chess.MakeMove(emo);
 				if (piece > 0)
 					CHistory.AddMove(piece, emo);
 			}
-			PlayerList.curIndex = Engine.g_moveNumber & 1;
-			CUser u = CommandToUser();
-			PlayerList.PlayerCur().SetUser("Human");
-			PlayerList.PlayerSec().SetUser(u);
-			PlayerList.player[0].Init(true);
-			PlayerList.player[1].Init(false);
-			cbColor.SelectedIndex = PlayerList.curIndex;
+			GamerList.curIndex = Chess.g_moveNumber & 1;
+			CPlayer u = CommandToUser();
+			GamerList.PlayerCur().SetUser("Human");
+			GamerList.PlayerSec().SetUser(u);
+			GamerList.gamer[0].Init(true);
+			GamerList.gamer[1].Init(false);
+			cbColor.SelectedIndex = GamerList.curIndex;
 			CDrag.lastSou = -1;
 			CDrag.lastDes = -1;
 			ShowHistory();
 			CBoard.Fill();
 			RenderBoard();
-			CPlayer pw = PlayerList.player[0];
-			CPlayer pb = PlayerList.player[1];
+			CGamer pw = GamerList.gamer[0];
+			CGamer pb = GamerList.gamer[1];
 			FormLog.This.richTextBox1.Clear();
 			FormLog.This.richTextBox1.AppendText($"Pgn {CHistory.GetMoves()}\n", Color.Gray);
-			FormLog.This.richTextBox1.AppendText($"White {pw.user.name} {pw.user.engine} {pw.user.parameters}\n", Color.Gray);
-			FormLog.This.richTextBox1.AppendText($"Black {pb.user.name} {pb.user.engine} {pb.user.parameters}\n", Color.Gray);
+			FormLog.This.richTextBox1.AppendText($"White {pw.user.name} {pw.user.engine} {pw.engine.parameters}\n", Color.Gray);
+			FormLog.This.richTextBox1.AppendText($"Black {pb.user.name} {pb.user.engine} {pb.engine.parameters}\n", Color.Gray);
 			labLast.ForeColor = Color.Gainsboro;
 			labLast.Text = $"Pgn {CHistory.GetMoves()}";
 			labBack.Text = $"Back {CData.back}";
 			RenderInfo(pw);
 			RenderInfo(pb);
 			CData.gameState = 0;
-			moves = Engine.GenerateValidMoves();
+			moves = Chess.GenerateValidMoves();
 			timer1.Enabled = true;
 		}
 
@@ -1347,7 +1374,7 @@ namespace RapChessGui
 
 		private void cbComputer_TextChanged(object sender, EventArgs e)
 		{
-			CUser uc = CUserList.GetUser(cbComputer.Text);
+			CPlayer uc = CPlayerList.GetUser(cbComputer.Text);
 			labEngine.Text = uc.engine;
 			cbCommand.Text = uc.GetCommand();
 		}
@@ -1399,22 +1426,22 @@ namespace RapChessGui
 
 		private void stopToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			PlayerList.PlayerCur().EngineStop();
+			GamerList.PlayerCur().EngineStop();
 		}
 
 		private void restartToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			PlayerList.PlayerCur().SetUser();
+			GamerList.PlayerCur().SetUser();
 		}
 
 		private void terminateToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			PlayerList.PlayerCur().PlayerEng.Terminate();
+			GamerList.PlayerCur().PlayerEng.Terminate();
 		}
 
 		private void closeToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			PlayerList.PlayerCur().EngineClose();
+			GamerList.PlayerCur().EngineClose();
 		}
 
 		private void tabControl1_Selected(object sender, TabControlEventArgs e)
@@ -1443,43 +1470,43 @@ namespace RapChessGui
 		{
 			if (CData.gameMode == (int)CMode.edit)
 			{
-				int i = CEngine.arrField[CDrag.mouseIndex];
-				int f = CEngine.g_board[i];
+				int i = CChess.arrField[CDrag.mouseIndex];
+				int f = CChess.g_board[i];
 				int r = f & 7;
 				if (e.Button == MouseButtons.Left)
 				{
-					if ((CEngine.g_board[i] & CEngine.colorWhite) == 0)
-						CEngine.g_board[i] = CEngine.colorWhite | CEngine.piecePawn;
+					if ((CChess.g_board[i] & CChess.colorWhite) == 0)
+						CChess.g_board[i] = CChess.colorWhite | CChess.piecePawn;
 					else
 					{
-						if (++r == CEngine.pieceKing + 1)
-							CEngine.g_board[i] = CEngine.colorEmpty;
+						if (++r == CChess.pieceKing + 1)
+							CChess.g_board[i] = CChess.colorEmpty;
 						else
-							CEngine.g_board[i] = CEngine.colorWhite | r;
+							CChess.g_board[i] = CChess.colorWhite | r;
 					}
 				}
 				if (e.Button == MouseButtons.Right)
 				{
-					if ((CEngine.g_board[i] & CEngine.colorBlack) == 0)
-						CEngine.g_board[i] = CEngine.colorBlack | CEngine.piecePawn;
+					if ((CChess.g_board[i] & CChess.colorBlack) == 0)
+						CChess.g_board[i] = CChess.colorBlack | CChess.piecePawn;
 					else
 					{
-						if (++r == CEngine.pieceKing + 1)
-							CEngine.g_board[i] = CEngine.colorEmpty;
+						if (++r == CChess.pieceKing + 1)
+							CChess.g_board[i] = CChess.colorEmpty;
 						else
-							CEngine.g_board[i] = CEngine.colorBlack | r;
+							CChess.g_board[i] = CChess.colorBlack | r;
 					}
 				}
 				if (e.Button == MouseButtons.Middle)
 				{
-					CEngine.g_board[i] = CEngine.colorEmpty;
+					CChess.g_board[i] = CChess.colorEmpty;
 				}
 				CBoard.UpdateField(CDrag.mouseIndex);
 				RenderBoard();
 			}
 			if (CData.gameMode == (int)CMode.game)
 			{
-				if (PlayerList.PlayerCur().computer)
+				if (GamerList.PlayerCur().engine != null)
 					return;
 				if (IsValid(CDrag.mouseIndex))
 				{
@@ -1514,8 +1541,8 @@ namespace RapChessGui
 		{
 			for (int n = 0; n < 64; n++)
 			{
-				int i = CEngine.arrField[n];
-				CEngine.g_board[i] = CEngine.colorEmpty;
+				int i = CChess.arrField[n];
+				CChess.g_board[i] = CChess.colorEmpty;
 				CBoard.UpdateField(n);
 			}
 			RenderBoard();
@@ -1526,12 +1553,12 @@ namespace RapChessGui
 			var checkedButton = gbToMove.Controls.OfType<RadioButton>().FirstOrDefault(r => r.Checked);
 			List<RadioButton> list = gbToMove.Controls.OfType<RadioButton>().ToList();
 			int i = list.IndexOf(checkedButton);
-			CEngine.whiteTurn = i == 1;
+			CChess.whiteTurn = i == 1;
 		}
 
 		private void butContinueGame_Click(object sender, EventArgs e)
 		{
-			LoadFen(Engine.GetFen());
+			LoadFen(Chess.GetFen());
 		}
 
 		private void backToolStripMenuItem_Click_1(object sender, EventArgs e)
@@ -1540,19 +1567,19 @@ namespace RapChessGui
 			{
 				labBack.Text = $"Back {++CData.back}";
 				RenderHistory();
-				moves = Engine.GenerateValidMoves();
-				CData.gameState = Engine.GetGameState();
+				moves = Chess.GenerateValidMoves();
+				CData.gameState = Chess.GetGameState();
 				ShowLastGame();
 				CModeGame.ranked = false;
 				ShowAutoElo();
-				PlayerList.PlayerCur().user.elo = PlayerList.PlayerCur().user.eloLess.ToString();
-				PlayerList.PlayerSec().Undo();
+				GamerList.PlayerCur().user.elo = GamerList.PlayerCur().user.eloLess.ToString();
+				GamerList.PlayerSec().Undo();
 			}
 		}
 
 		private void forwardToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			PlayerList.Rotate();
+			GamerList.Rotate();
 		}
 
 		private void SaveToClipboardToolStripMenuItem1_Click(object sender, EventArgs e)
@@ -1565,29 +1592,29 @@ namespace RapChessGui
 			switch (e.Index)
 			{
 				case 0:
-					Engine.g_castleRights ^= 1;
+					Chess.g_castleRights ^= 1;
 					break;
 				case 1:
-					Engine.g_castleRights ^= 2;
+					Chess.g_castleRights ^= 2;
 					break;
 				case 2:
-					Engine.g_castleRights ^= 4;
+					Chess.g_castleRights ^= 4;
 					break;
 				case 3:
-					Engine.g_castleRights ^= 8;
+					Chess.g_castleRights ^= 8;
 					break;
 			}
 		}
 
 		private void butContinueMatch_Click(object sender, EventArgs e)
 		{
-			IniLoadMatch();
+			CModeMatch.SaveToIni();
 			StartMatch();
 		}
 
 		private void butDefault_Click(object sender, EventArgs e)
 		{
-			Engine.InitializeFromFen();
+			Chess.InitializeFromFen();
 			CBoard.Fill();
 			RenderBoard();
 		}
@@ -1604,8 +1631,26 @@ namespace RapChessGui
 
 		private void booksToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			IniSave();
-			FLib.ShowDialog(this);
+
+		}
+
+		private void booksToolStripMenuItem1_Click(object sender, EventArgs e)
+		{
+			FormBook.This.ShowDialog(this);
+			Reset();
+			IniLoad();
+		}
+
+		private void playersToolStripMenuItem1_Click(object sender, EventArgs e)
+		{
+			FormPlayer.This.ShowDialog(this);
+			Reset();
+			IniLoad();
+		}
+
+		private void enginesToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			FormEngine.This.ShowDialog(this);
 			Reset();
 			IniLoad();
 		}

@@ -18,7 +18,7 @@ namespace RapChessGui
 
 	public static class CHistory
 	{
-		public static string fen = CEngine.defFen;
+		public static string fen = CChess.defFen;
 		public static List<CHisMove> moveList = new List<CHisMove>();
 
 		public static void AddMove(int piece,string emo)
@@ -43,7 +43,7 @@ namespace RapChessGui
 			return moveList[moveList.Count - 1].emo;
 		}
 
-		public static void NewGame(string f = CEngine.defFen)
+		public static void NewGame(string f = CChess.defFen)
 		{
 			fen = f;
 			moveList.Clear();
@@ -76,7 +76,7 @@ namespace RapChessGui
 		public static string GetPosition()
 		{
 			string result = "position ";
-			result += (fen == CEngine.defFen) ? "startpos" : "fen " + fen;
+			result += (fen == CChess.defFen) ? "startpos" : "fen " + fen;
 			if (moveList.Count > 0)
 				return result + " moves " + GetMoves();
 			else

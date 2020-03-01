@@ -7,48 +7,37 @@ using RapIni;
 
 namespace RapChessGui
 {
-	public partial class FormLib : Form
+	public partial class FormBook : Form
 	{
-		public static FormLib This;
-		string curReaderName;
+		public static FormBook This;
+		string curBookName;
 
-		public FormLib()
+		public FormBook()
 		{
 			This = this;
 			InitializeComponent();
-			string[] filePaths = Directory.GetFiles("Books", "*.exe");
-			for (int n = 0; n < filePaths.Length; n++)
-			{
-				string fn = Path.GetFileName(filePaths[n]);
-				cbBookReaderList.Items.Add(fn);
-				CData.bookReaderNames.Add(fn);
-			}
-			CBookReaderList.LoadFromIni();
-			UpdateListBox();
-			if(listBox1.Items.Count > 0)
-			listBox1.SetSelected(0, true);
 		}
 
 		public void SelectReader()
 		{
-			SelectReader(curReaderName);
+			SelectReader(curBookName);
 		}
 
 		void SelectReader(string name)
 		{
-			CBookReader reader = CBookReaderList.GetReader(name);
+			CBook reader = CBookList.GetBook(name);
 			if (reader == null)
 				return;
 			tbReaderName.Text = reader.name;
 			cbBookReaderList.Text = reader.file;
 			tbParameters.Text = reader.parameters;
-			curReaderName = reader.name;
+			curBookName = reader.name;
 		}
 
 		void UpdateListBox()
 		{
 			listBox1.Items.Clear();
-			foreach(CBookReader br in CBookReaderList.list)
+			foreach (CBook br in CBookList.list)
 				listBox1.Items.Add(br.name);
 		}
 
@@ -57,13 +46,13 @@ namespace RapChessGui
 			SelectReader(listBox1.SelectedItem.ToString());
 		}
 
-		void SaveToIni(CBookReader reader)
+		void SaveToIni(CBook reader)
 		{
 			reader.name = tbReaderName.Text;
 			reader.file = cbBookReaderList.Text;
 			reader.parameters = tbParameters.Text;
 			reader.SaveToIni();
-			curReaderName = reader.name;
+			curBookName = reader.name;
 			UpdateListBox();
 			int index = listBox1.FindString(reader.name);
 			if (index == -1) return;
@@ -72,7 +61,7 @@ namespace RapChessGui
 
 		private void ButUpdate_Click(object sender, EventArgs e)
 		{
-			CBookReader reader = CBookReaderList.GetReader(curReaderName);
+			CBook reader = CBookList.GetBook(curBookName);
 			if (reader == null)
 				return;
 			CRapIni.This.DeleteKey($"reader>{reader.name}");
@@ -83,9 +72,9 @@ namespace RapChessGui
 		private void ButCreate_Click(object sender, EventArgs e)
 		{
 			string name = tbReaderName.Text;
-			CBookReader reader = new CBookReader(name);
+			CBook reader = new CBook(name);
 			reader.file = cbBookReaderList.Text;
-			CBookReaderList.list.Add(reader);
+			CBookList.list.Add(reader);
 			SaveToIni(reader);
 			MessageBox.Show($"Book reader {reader.name} has been created");
 		}
@@ -93,9 +82,18 @@ namespace RapChessGui
 		private void ButDelete_Click(object sender, EventArgs e)
 		{
 			string userName = tbReaderName.Text;
-			CUserList.DeletePlayer(userName);
+			CPlayerList.DeletePlayer(userName);
 			UpdateListBox();
 			MessageBox.Show($"Player {userName} has been removed");
+		}
+
+		private void FormBook_Shown(object sender, EventArgs e)
+		{
+			foreach (string book in CData.fileBook)
+				cbBookReaderList.Items.Add(book);
+			UpdateListBox();
+			if (listBox1.Items.Count > 0)
+				listBox1.SetSelected(0, true);
 		}
 	}
 }

@@ -52,9 +52,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CBookReaderList.cs" />
+    <Compile Include="CBookList.cs" />
     <Compile Include="CData.cs" />
-    <Compile Include="CEngine.cs" />
+    <Compile Include="CChess.cs" />
+    <Compile Include="CEngineList.cs" />
     <Compile Include="CExtensions.cs" />
     <Compile Include="CHistory.cs" />
     <Compile Include="CMessageList.cs" />
@@ -64,21 +65,21 @@
     <Compile Include="CModeMatch.cs" />
     <Compile Include="CBoard.cs" />
     <Compile Include="CEnginePro.cs" />
-    <Compile Include="CPlayerList.cs" />
+    <Compile Include="CGamerList.cs" />
     <Compile Include="CRapIni.cs" />
     <Compile Include="CModeTraining.cs" />
-    <Compile Include="CUserList.cs" />
+    <Compile Include="CPlayerList.cs" />
     <Compile Include="FormChess.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="FormChess.designer.cs">
       <DependentUpon>FormChess.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormLib.cs">
+    <Compile Include="FormBook.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormLib.Designer.cs">
-      <DependentUpon>FormLib.cs</DependentUpon>
+    <Compile Include="FormBook.Designer.cs">
+      <DependentUpon>FormBook.cs</DependentUpon>
     </Compile>
     <Compile Include="FormLog.cs">
       <SubType>Form</SubType>
@@ -92,10 +93,16 @@
     <Compile Include="FormOptions.Designer.cs">
       <DependentUpon>FormOptions.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormEngine.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormEngine.Designer.cs">
+      <DependentUpon>FormEngine.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormPlayer.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormPlayer.Designer.cs">
+    <Compile Include="FormPlayer.designer.cs">
       <DependentUpon>FormPlayer.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
@@ -103,8 +110,8 @@
     <EmbeddedResource Include="FormChess.resx">
       <DependentUpon>FormChess.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormLib.resx">
-      <DependentUpon>FormLib.cs</DependentUpon>
+    <EmbeddedResource Include="FormBook.resx">
+      <DependentUpon>FormBook.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="FormLog.resx">
@@ -112,6 +119,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormOptions.resx">
       <DependentUpon>FormOptions.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormEngine.resx">
+      <DependentUpon>FormEngine.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormPlayer.resx">
       <DependentUpon>FormPlayer.cs</DependentUpon>

@@ -39,10 +39,10 @@ namespace RapChessGui
 		public void SetImage(int index)
 		{
 			desImage = -1;
-			int i = CEngine.arrField[index];
-			int f = CEngine.g_board[i];
+			int i = CChess.arrField[index];
+			int f = CChess.g_board[i];
 			image = (f & 7) - 1;
-			if ((f & CEngine.colorBlack) > 0)
+			if ((f & CChess.colorBlack) > 0)
 				image += 6;
 		}
 
@@ -96,9 +96,9 @@ namespace RapChessGui
 
 		public static void UpdateField(int index)
 		{
-			int i = CEngine.arrField[index];
-			int f = CEngine.g_board[i];
-			if ((f & CEngine.colorEmpty) > 0)
+			int i = CChess.arrField[index];
+			int f = CChess.g_board[i];
+			if ((f & CChess.colorEmpty) > 0)
 				list[index].piece = null;
 			else
 			{
@@ -216,11 +216,11 @@ namespace RapChessGui
 			if (pd != null)
 				list[sou].piece.desImage = pd.image;
 			MakeMove(sou, des);
-			if ((flags & CEngine.moveflagCastleKing) > 0)
+			if ((flags & CChess.moveflagCastleKing) > 0)
 			{
 				MakeMove(sou + 3, sou + 1);
 			}
-			if ((flags & CEngine.moveflagCastleQueen) > 0)
+			if ((flags & CChess.moveflagCastleQueen) > 0)
 			{
 				MakeMove(sou - 4, sou - 1);
 			}
@@ -243,9 +243,9 @@ namespace RapChessGui
 		{
 			for (int n = 0; n < 64; n++)
 			{
-				int i = CEngine.arrField[n];
-				int f = CEngine.g_board[i];
-				if ((f & CEngine.colorEmpty) > 0)
+				int i = CChess.arrField[n];
+				int f = CChess.g_board[i];
+				if ((f & CChess.colorEmpty) > 0)
 					list[n].piece = null;
 				else
 					list[n].piece.SetImage(n);
@@ -254,15 +254,15 @@ namespace RapChessGui
 
 		public static void ShowAttack(bool show, bool white)
 		{
-			List<int> ml = CEngine.This.GenerateAllMoves(white, false);
+			List<int> ml = CChess.This.GenerateAllMoves(white, false);
 			foreach (int m in ml)
 			{
 				int d = (m >> 8) & 0xff;
-				int r = CEngine.g_board[d] & 7;
+				int r = CChess.g_board[d] & 7;
 				if (r > 0)
-					if (show || (r == CEngine.pieceKing))
+					if (show || (r == CChess.pieceKing))
 					{
-						int i = CEngine.Con256To64(d);
+						int i = CChess.Con256To64(d);
 						list[i].attacked = true;
 					}
 			}
@@ -278,8 +278,8 @@ namespace RapChessGui
 		{
 			ClearAttack();
 			if (show)
-				ShowAttack(show, CEngine.whiteTurn);
-			ShowAttack(show, !CEngine.whiteTurn);
+				ShowAttack(show, CChess.whiteTurn);
+			ShowAttack(show, !CChess.whiteTurn);
 		}
 
 	}

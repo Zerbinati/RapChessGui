@@ -32,38 +32,29 @@
 			this.bDelete = new System.Windows.Forms.Button();
 			this.bCreate = new System.Windows.Forms.Button();
 			this.bUpdate = new System.Windows.Forms.Button();
-			this.gbOptions = new System.Windows.Forms.GroupBox();
-			this.rtbOptions = new System.Windows.Forms.RichTextBox();
 			this.gbElo = new System.Windows.Forms.GroupBox();
 			this.nudElo = new System.Windows.Forms.NumericUpDown();
-			this.groupBox5 = new System.Windows.Forms.GroupBox();
-			this.cbBookList = new System.Windows.Forms.ComboBox();
 			this.gbMode = new System.Windows.Forms.GroupBox();
 			this.nudDepth = new System.Windows.Forms.NumericUpDown();
 			this.nudTime = new System.Windows.Forms.NumericUpDown();
 			this.radioButton2 = new System.Windows.Forms.RadioButton();
 			this.radioButton1 = new System.Windows.Forms.RadioButton();
-			this.groupBox3 = new System.Windows.Forms.GroupBox();
-			this.tbParameters = new System.Windows.Forms.TextBox();
-			this.groupBox7 = new System.Windows.Forms.GroupBox();
-			this.cbProtocol = new System.Windows.Forms.ComboBox();
-			this.groupBox4 = new System.Windows.Forms.GroupBox();
-			this.cbEngList = new System.Windows.Forms.ComboBox();
+			this.gbBook = new System.Windows.Forms.GroupBox();
+			this.cbBookList = new System.Windows.Forms.ComboBox();
+			this.gbEngine = new System.Windows.Forms.GroupBox();
+			this.cbEngineList = new System.Windows.Forms.ComboBox();
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
 			this.tbUserName = new System.Windows.Forms.TextBox();
 			this.groupBox2 = new System.Windows.Forms.GroupBox();
 			this.listBox1 = new System.Windows.Forms.ListBox();
 			this.panel1.SuspendLayout();
-			this.gbOptions.SuspendLayout();
 			this.gbElo.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.nudElo)).BeginInit();
-			this.groupBox5.SuspendLayout();
 			this.gbMode.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.nudDepth)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.nudTime)).BeginInit();
-			this.groupBox3.SuspendLayout();
-			this.groupBox7.SuspendLayout();
-			this.groupBox4.SuspendLayout();
+			this.gbBook.SuspendLayout();
+			this.gbEngine.SuspendLayout();
 			this.groupBox1.SuspendLayout();
 			this.groupBox2.SuspendLayout();
 			this.SuspendLayout();
@@ -73,13 +64,10 @@
 			this.panel1.Controls.Add(this.bDelete);
 			this.panel1.Controls.Add(this.bCreate);
 			this.panel1.Controls.Add(this.bUpdate);
-			this.panel1.Controls.Add(this.gbOptions);
 			this.panel1.Controls.Add(this.gbElo);
-			this.panel1.Controls.Add(this.groupBox5);
 			this.panel1.Controls.Add(this.gbMode);
-			this.panel1.Controls.Add(this.groupBox3);
-			this.panel1.Controls.Add(this.groupBox7);
-			this.panel1.Controls.Add(this.groupBox4);
+			this.panel1.Controls.Add(this.gbBook);
+			this.panel1.Controls.Add(this.gbEngine);
 			this.panel1.Controls.Add(this.groupBox1);
 			this.panel1.Dock = System.Windows.Forms.DockStyle.Right;
 			this.panel1.Location = new System.Drawing.Point(489, 0);
@@ -90,7 +78,7 @@
 			// bDelete
 			// 
 			this.bDelete.Dock = System.Windows.Forms.DockStyle.Top;
-			this.bDelete.Location = new System.Drawing.Point(0, 558);
+			this.bDelete.Location = new System.Drawing.Point(0, 310);
 			this.bDelete.Name = "bDelete";
 			this.bDelete.Size = new System.Drawing.Size(311, 33);
 			this.bDelete.TabIndex = 27;
@@ -101,7 +89,7 @@
 			// bCreate
 			// 
 			this.bCreate.Dock = System.Windows.Forms.DockStyle.Top;
-			this.bCreate.Location = new System.Drawing.Point(0, 525);
+			this.bCreate.Location = new System.Drawing.Point(0, 277);
 			this.bCreate.Name = "bCreate";
 			this.bCreate.Size = new System.Drawing.Size(311, 33);
 			this.bCreate.TabIndex = 26;
@@ -112,7 +100,7 @@
 			// bUpdate
 			// 
 			this.bUpdate.Dock = System.Windows.Forms.DockStyle.Top;
-			this.bUpdate.Location = new System.Drawing.Point(0, 498);
+			this.bUpdate.Location = new System.Drawing.Point(0, 250);
 			this.bUpdate.Name = "bUpdate";
 			this.bUpdate.Size = new System.Drawing.Size(311, 27);
 			this.bUpdate.TabIndex = 25;
@@ -120,31 +108,11 @@
 			this.bUpdate.UseVisualStyleBackColor = true;
 			this.bUpdate.Click += new System.EventHandler(this.ButUpdate_Click);
 			// 
-			// gbOptions
-			// 
-			this.gbOptions.Controls.Add(this.rtbOptions);
-			this.gbOptions.Dock = System.Windows.Forms.DockStyle.Top;
-			this.gbOptions.Location = new System.Drawing.Point(0, 340);
-			this.gbOptions.Name = "gbOptions";
-			this.gbOptions.Size = new System.Drawing.Size(311, 158);
-			this.gbOptions.TabIndex = 29;
-			this.gbOptions.TabStop = false;
-			this.gbOptions.Text = "Options";
-			// 
-			// rtbOptions
-			// 
-			this.rtbOptions.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.rtbOptions.Location = new System.Drawing.Point(3, 16);
-			this.rtbOptions.Name = "rtbOptions";
-			this.rtbOptions.Size = new System.Drawing.Size(305, 139);
-			this.rtbOptions.TabIndex = 0;
-			this.rtbOptions.Text = "";
-			// 
 			// gbElo
 			// 
 			this.gbElo.Controls.Add(this.nudElo);
 			this.gbElo.Dock = System.Windows.Forms.DockStyle.Top;
-			this.gbElo.Location = new System.Drawing.Point(0, 295);
+			this.gbElo.Location = new System.Drawing.Point(0, 205);
 			this.gbElo.Name = "gbElo";
 			this.gbElo.Size = new System.Drawing.Size(311, 45);
 			this.gbElo.TabIndex = 24;
@@ -171,28 +139,6 @@
             0,
             0});
 			// 
-			// groupBox5
-			// 
-			this.groupBox5.Controls.Add(this.cbBookList);
-			this.groupBox5.Dock = System.Windows.Forms.DockStyle.Top;
-			this.groupBox5.Location = new System.Drawing.Point(0, 250);
-			this.groupBox5.Name = "groupBox5";
-			this.groupBox5.Size = new System.Drawing.Size(311, 45);
-			this.groupBox5.TabIndex = 20;
-			this.groupBox5.TabStop = false;
-			this.groupBox5.Text = "Book";
-			// 
-			// cbBookList
-			// 
-			this.cbBookList.Dock = System.Windows.Forms.DockStyle.Top;
-			this.cbBookList.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.cbBookList.FormattingEnabled = true;
-			this.cbBookList.Location = new System.Drawing.Point(3, 16);
-			this.cbBookList.Name = "cbBookList";
-			this.cbBookList.Size = new System.Drawing.Size(305, 21);
-			this.cbBookList.Sorted = true;
-			this.cbBookList.TabIndex = 2;
-			// 
 			// gbMode
 			// 
 			this.gbMode.Controls.Add(this.nudDepth);
@@ -200,7 +146,7 @@
 			this.gbMode.Controls.Add(this.radioButton2);
 			this.gbMode.Controls.Add(this.radioButton1);
 			this.gbMode.Dock = System.Windows.Forms.DockStyle.Top;
-			this.gbMode.Location = new System.Drawing.Point(0, 180);
+			this.gbMode.Location = new System.Drawing.Point(0, 135);
 			this.gbMode.Name = "gbMode";
 			this.gbMode.Size = new System.Drawing.Size(311, 70);
 			this.gbMode.TabIndex = 16;
@@ -277,73 +223,51 @@
 			this.radioButton1.Text = "Time";
 			this.radioButton1.UseVisualStyleBackColor = true;
 			// 
-			// groupBox3
+			// gbBook
 			// 
-			this.groupBox3.Controls.Add(this.tbParameters);
-			this.groupBox3.Dock = System.Windows.Forms.DockStyle.Top;
-			this.groupBox3.Location = new System.Drawing.Point(0, 135);
-			this.groupBox3.Name = "groupBox3";
-			this.groupBox3.Size = new System.Drawing.Size(311, 45);
-			this.groupBox3.TabIndex = 15;
-			this.groupBox3.TabStop = false;
-			this.groupBox3.Text = "Parameters";
+			this.gbBook.Controls.Add(this.cbBookList);
+			this.gbBook.Dock = System.Windows.Forms.DockStyle.Top;
+			this.gbBook.Location = new System.Drawing.Point(0, 90);
+			this.gbBook.Name = "gbBook";
+			this.gbBook.Size = new System.Drawing.Size(311, 45);
+			this.gbBook.TabIndex = 20;
+			this.gbBook.TabStop = false;
+			this.gbBook.Text = "Book";
 			// 
-			// tbParameters
+			// cbBookList
 			// 
-			this.tbParameters.Dock = System.Windows.Forms.DockStyle.Top;
-			this.tbParameters.Location = new System.Drawing.Point(3, 16);
-			this.tbParameters.Name = "tbParameters";
-			this.tbParameters.Size = new System.Drawing.Size(305, 20);
-			this.tbParameters.TabIndex = 0;
+			this.cbBookList.Dock = System.Windows.Forms.DockStyle.Top;
+			this.cbBookList.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.cbBookList.FormattingEnabled = true;
+			this.cbBookList.Location = new System.Drawing.Point(3, 16);
+			this.cbBookList.Name = "cbBookList";
+			this.cbBookList.Size = new System.Drawing.Size(305, 21);
+			this.cbBookList.Sorted = true;
+			this.cbBookList.TabIndex = 2;
 			// 
-			// groupBox7
+			// gbEngine
 			// 
-			this.groupBox7.Controls.Add(this.cbProtocol);
-			this.groupBox7.Dock = System.Windows.Forms.DockStyle.Top;
-			this.groupBox7.Location = new System.Drawing.Point(0, 90);
-			this.groupBox7.Name = "groupBox7";
-			this.groupBox7.Size = new System.Drawing.Size(311, 45);
-			this.groupBox7.TabIndex = 28;
-			this.groupBox7.TabStop = false;
-			this.groupBox7.Text = "Protocol";
+			this.gbEngine.Controls.Add(this.cbEngineList);
+			this.gbEngine.Dock = System.Windows.Forms.DockStyle.Top;
+			this.gbEngine.Location = new System.Drawing.Point(0, 45);
+			this.gbEngine.Name = "gbEngine";
+			this.gbEngine.Size = new System.Drawing.Size(311, 45);
+			this.gbEngine.TabIndex = 11;
+			this.gbEngine.TabStop = false;
+			this.gbEngine.Text = "Engine";
 			// 
-			// cbProtocol
+			// cbEngineList
 			// 
-			this.cbProtocol.Dock = System.Windows.Forms.DockStyle.Top;
-			this.cbProtocol.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.cbProtocol.FormattingEnabled = true;
-			this.cbProtocol.Items.AddRange(new object[] {
-            "Uci",
-            "Winboard"});
-			this.cbProtocol.Location = new System.Drawing.Point(3, 16);
-			this.cbProtocol.Name = "cbProtocol";
-			this.cbProtocol.Size = new System.Drawing.Size(305, 21);
-			this.cbProtocol.Sorted = true;
-			this.cbProtocol.TabIndex = 2;
-			// 
-			// groupBox4
-			// 
-			this.groupBox4.Controls.Add(this.cbEngList);
-			this.groupBox4.Dock = System.Windows.Forms.DockStyle.Top;
-			this.groupBox4.Location = new System.Drawing.Point(0, 45);
-			this.groupBox4.Name = "groupBox4";
-			this.groupBox4.Size = new System.Drawing.Size(311, 45);
-			this.groupBox4.TabIndex = 11;
-			this.groupBox4.TabStop = false;
-			this.groupBox4.Text = "Engin";
-			// 
-			// cbEngList
-			// 
-			this.cbEngList.Dock = System.Windows.Forms.DockStyle.Top;
-			this.cbEngList.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.cbEngList.FormattingEnabled = true;
-			this.cbEngList.Items.AddRange(new object[] {
+			this.cbEngineList.Dock = System.Windows.Forms.DockStyle.Top;
+			this.cbEngineList.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.cbEngineList.FormattingEnabled = true;
+			this.cbEngineList.Items.AddRange(new object[] {
             "Human"});
-			this.cbEngList.Location = new System.Drawing.Point(3, 16);
-			this.cbEngList.Name = "cbEngList";
-			this.cbEngList.Size = new System.Drawing.Size(305, 21);
-			this.cbEngList.Sorted = true;
-			this.cbEngList.TabIndex = 2;
+			this.cbEngineList.Location = new System.Drawing.Point(3, 16);
+			this.cbEngineList.Name = "cbEngineList";
+			this.cbEngineList.Size = new System.Drawing.Size(305, 21);
+			this.cbEngineList.Sorted = true;
+			this.cbEngineList.TabIndex = 2;
 			// 
 			// groupBox1
 			// 
@@ -400,19 +324,16 @@
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
 			this.Text = "Players";
 			this.TopMost = true;
+			this.Shown += new System.EventHandler(this.FormPlayer_Shown);
 			this.panel1.ResumeLayout(false);
-			this.gbOptions.ResumeLayout(false);
 			this.gbElo.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.nudElo)).EndInit();
-			this.groupBox5.ResumeLayout(false);
 			this.gbMode.ResumeLayout(false);
 			this.gbMode.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.nudDepth)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.nudTime)).EndInit();
-			this.groupBox3.ResumeLayout(false);
-			this.groupBox3.PerformLayout();
-			this.groupBox7.ResumeLayout(false);
-			this.groupBox4.ResumeLayout(false);
+			this.gbBook.ResumeLayout(false);
+			this.gbEngine.ResumeLayout(false);
 			this.groupBox1.ResumeLayout(false);
 			this.groupBox1.PerformLayout();
 			this.groupBox2.ResumeLayout(false);
@@ -426,25 +347,19 @@
 		private System.Windows.Forms.TextBox tbUserName;
 		private System.Windows.Forms.GroupBox groupBox2;
 		public System.Windows.Forms.ListBox listBox1;
-		private System.Windows.Forms.GroupBox groupBox4;
-		private System.Windows.Forms.ComboBox cbEngList;
+		private System.Windows.Forms.GroupBox gbEngine;
+		private System.Windows.Forms.ComboBox cbEngineList;
 		private System.Windows.Forms.GroupBox gbMode;
 		private System.Windows.Forms.NumericUpDown nudDepth;
 		private System.Windows.Forms.NumericUpDown nudTime;
 		private System.Windows.Forms.RadioButton radioButton2;
 		private System.Windows.Forms.RadioButton radioButton1;
-		private System.Windows.Forms.GroupBox groupBox7;
-		private System.Windows.Forms.GroupBox groupBox3;
-		private System.Windows.Forms.TextBox tbParameters;
-		private System.Windows.Forms.GroupBox groupBox5;
+		private System.Windows.Forms.GroupBox gbBook;
 		public System.Windows.Forms.ComboBox cbBookList;
 		private System.Windows.Forms.Button bDelete;
 		private System.Windows.Forms.Button bCreate;
 		private System.Windows.Forms.Button bUpdate;
 		private System.Windows.Forms.GroupBox gbElo;
 		private System.Windows.Forms.NumericUpDown nudElo;
-		public System.Windows.Forms.ComboBox cbProtocol;
-		private System.Windows.Forms.GroupBox gbOptions;
-		private System.Windows.Forms.RichTextBox rtbOptions;
 	}
 }

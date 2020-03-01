@@ -1,289 +1,278 @@
 ﻿using System;
-using System.Drawing;
-using System.Diagnostics;
-using System.Threading;
+using System.Collections.Generic;
+using RapIni;
 
 namespace RapChessGui
 {
 
 	public class CPlayer
 	{
-		public bool computer = false;
-		public bool started = false;
-		public bool uciok = false;
-		public bool wbok = false;
-		public bool readyok = false;
-		public bool go = false;
-		public bool white = true;
-		public int usedBook;
-		public ulong nodes;
-		public ulong nps;
-		public ulong totalNps;
-		public ulong totalNpsSum;
-		public double timeTotal;
-		public string score;
-		public string depth;
-		public string seldepth;
-		public string ponder;
-		public string mode;
-		public string value;
-		public Stopwatch timer = new Stopwatch();
-		public CEnginePro PlayerEng = new CEnginePro();
-		public CUser user;
+		public string name = "Human";
+		public string engine = "Human";
+		public string book = "None";
+		public string mode = "movetime";
+		public string value = "1000";
+		public string elo = "1000";
+		public double eloOld = 1000;
+		public int eloNew = 1000;
+		public int eloLess = 0;
+		public int eloMore = 0;
 
-		public CPlayer()
+		public CPlayer(string n)
 		{
-			Init(true);
+			name = n;
 		}
 
-		public void EngineStop()
+		public int GetDeltaElo()
 		{
-			if (user.protocol == "Uci")
-				SendMessage("stop");
-			else
-				SendMessage("?");
+			return Convert.ToInt32(elo) - Convert.ToInt32(eloOld);
 		}
 
-		public void EngineClose()
+		public bool SetCommand(string command)
 		{
-			SendMessage("quit");
-		}
-
-		public void Init(bool w)
-		{
-			white = w;
-			started = false;
-			go = false;
-			usedBook = 0;
-			nodes = 0;
-			nps = 0;
-			totalNps = 0;
-			totalNpsSum = 0;
-			score = "0";
-			depth = "0";
-			seldepth = "0";
-			ponder = "";
-			timeTotal = 0;
-			timer.Reset();
-		}
-
-		public void Undo()
-		{
-			if (user.protocol == "Winboard")
-				wbok = false;
-		}
-
-		public void Start()
-		{
-			mode = user.mode;
-			value = user.value;
-			if (user.protocol == "Uci")
+			string[] t = command.Split(new[] { ' ', '\t' }, StringSplitOptions.RemoveEmptyEntries);
+			string c1 = "";
+			string c2 = "";
+			if (t.Length > 0)
+				c1 = t[0].ToLower();
+			if (t.Length > 1)
+				if (int.TryParse(t[1], out int v))
+					c2 = v.ToString();
+			switch (c1)
 			{
-				SendMessage("uci");
-				uciok = false;
-				readyok = false;
-				wbok = true;
+				case "movetime":
+					if (c2 == "")
+						return false;
+					break;
+				case "depth":
+					if (c2 == "")
+						return false;
+					break;
+				case "nodes":
+					if (c2 == "")
+						return false;
+					break;
+				case "infinite":
+					break;
+				default:
+					return false;
 			}
+			mode = c1;
+			value = c2;
+			return true;
+		}
+
+		public string GetCommand()
+		{
+			if (engine == "Human")
+				return "";
+			else if (value == "")
+				return mode;
 			else
-			{
-				SendMessage("xboard");
-				uciok = true;
-				readyok = false;
-				wbok = false;
-				switch (mode)
-				{
-					case "depth":
-						mode = "sd";
-						break;
-					case "movetime":
-						mode = "st";
-						int v = Convert.ToInt32(user.value) / 1000;
-						if (v < 1)
-							v = 1;
-						value = v.ToString();
-						break;
-				}
-			}
-			started = true;
-		}
-
-		public void CompMakeMove()
-		{
-				if (user.protocol == "Uci")
-				{
-					SendMessage(CHistory.GetPosition());
-					Thread.Sleep(1<<5);
-					SendMessage($"go {mode} {value}");
-				}
-				else
-				{
-					if (wbok)
-					{
-						SendMessage(CHistory.LastMove());
-					}
-					else
-					{
-						SendMessage("new");
-						SendMessage($"{mode} {value}");
-						SendMessage("post");
-						if (CHistory.fen != CEngine.defFen)
-						{
-							SendMessage($"setboard {CHistory.fen}");
-						}
-						SendMessage("force");
-						foreach (CHisMove m in CHistory.moveList)
-							SendMessage(m.emo);
-						SendMessage("go");
-					}
-					wbok = true;
-				}
-				go = true;
-				timer.Restart();
-		}
-
-		public void SendMessage(string msg)
-		{
-			if (computer)
-			{
-				FormLog.This.richTextBox1.AppendText($"{user.name} < {msg}\n", Color.Brown);
-				PlayerEng.streamWriter.WriteLine(msg);
-			}
-		}
-
-		public string GetProtocol()
-		{
-			if (computer)
-				return user.protocol;
-			else
-				return "Protocol";
-		}
-
-		public string GetTime()
-		{
-			DateTime dt1 = new DateTime();
-			DateTime dt2 = dt1.AddMilliseconds(timeTotal + timer.Elapsed.TotalMilliseconds);
-			return dt2.ToString("HH:mm:ss");
-		}
-
-		public string GetElo()
-		{
-			if (user == null)
-				return "Elo";
-			else
-				return $"Elo {user.elo}";
-		}
-
-		public void SetUser(CUser u)
-		{
-			user = u;
-			computer = user.engine != "Human";
-			PlayerEng.SetPlayer(this);
-		}
-
-		public void SetUser()
-		{
-			SetUser(user);
+				return $"{mode} {value}";
 		}
 
 		public void SetUser(string name)
 		{
-			CUser u = CUserList.GetUser(name);
-			SetUser(u);
+			CPlayer u = CPlayerList.GetUser(name);
+			engine = u.engine;
+			mode = u.mode;
+			value = u.value;
+			book = u.book;
+			elo = u.elo;
 		}
 
-		public void UpdateTime()
+		public void LoadFromIni()
 		{
-			timeTotal += timer.Elapsed.TotalMilliseconds;
-			timer.Reset();
+			engine = CRapIni.This.Read($"player>{name}>engine", "Human");
+			mode = CRapIni.This.Read($"player>{name}>mode", "movetime");
+			value = CRapIni.This.Read($"player>{name}>value", "1000");
+			book = CRapIni.This.Read($"player>{name}>book", "None");
+			elo = CRapIni.This.Read($"player>{name}>elo", "1000");
+			eloNew = CRapIni.This.ReadInt($"player>{name}>eloNew", 1000);
+			eloOld = CRapIni.This.ReadDouble($"player>{name}>eloOld",1000);
 		}
 
+		public void SaveToIni()
+		{
+			CRapIni.This.Write($"player>{name}>engine", engine);
+			CRapIni.This.Write($"player>{name}>mode", mode);
+			CRapIni.This.Write($"player>{name}>value", value);
+			CRapIni.This.Write($"player>{name}>book", book);
+			CRapIni.This.Write($"player>{name}>elo", elo);
+			CRapIni.This.Write($"player>{name}>eloNew", Convert.ToString(eloNew));
+			CRapIni.This.Write($"player>{name}>eloOld", Convert.ToString(eloOld));
+		}
 	}
 
-	class CPlayerList
+	static class CPlayerList
 	{
-		public int curIndex = 0;
-		public CPlayer[] player = new CPlayer[2];
-		public static CPlayerList This;
+		public const string defUser = "RapChessCs XT1";
+		public static List<CPlayer> list = new List<CPlayer>();
 
-		public CPlayerList()
+		public static void Add(CPlayer u)
 		{
-			This = this;
-			player[0] = new CPlayer();
-			player[1] = new CPlayer();
+			if (GetIndex(u.name) < 0)
+				list.Add(u);
 		}
 
-		public void Next()
+		public static int GetIndex(string name)
 		{
-			CPlayer cp = PlayerCur();
-			cp.UpdateTime();
-			cp.go = false;
-			curIndex ^= 1;
-			PlayerCur().timer.Restart();
+			for (int n = 0; n < list.Count; n++)
+			{
+				CPlayer user = list[n];
+				if (user.name == name)
+					return n;
+			}
+			return -1;
 		}
 
-		public void Init()
+		static CPlayer GetUserAuto()
 		{
-			player[0].Init(true);
-			player[1].Init(false);
-			curIndex = 0;
-			FormLog.This.cbPlayerList.Items.Clear();
-			if (player[0].computer)
-				FormLog.This.cbPlayerList.Items.Add(player[0].user.name);
-			if (player[1].computer)
-				FormLog.This.cbPlayerList.Items.Add(player[1].user.name);
-			if (FormLog.This.cbPlayerList.Items.Count > 0)
-				FormLog.This.cbPlayerList.SelectedIndex = 0;
+			CPlayer uh = GetUser("Human");
+			CPlayer ue = GetUserElo(uh);
+			CPlayer uc = new CPlayer(ue.name);
+			uc.SetUser(ue.name);
+			return uc;
 		}
 
-		public void Rotate()
+		static CPlayer GetUserElo(CPlayer user)
 		{
-			CPlayer p = player[0];
-			player[0] = player[1];
-			player[1] = p;
-			player[0].white = true;
-			player[1].white = false;
+			CPlayer u = null;
+			int bstDel = 10000;
+			int elo = Convert.ToInt32(user.elo);
+			foreach (CPlayer cu in list)
+			{
+				if (cu == user)
+					continue;
+				if (cu.engine == "Human")
+					continue;
+				int curE = Convert.ToInt32(cu.elo);
+				int curDel = Math.Abs(elo - curE);
+				if (bstDel > curDel)
+				{
+					bstDel = curDel;
+					u = cu;
+				}
+			}
+			return u;
 		}
 
-		public CPlayer GetPlayer(string name)
+		public static void Sort()
 		{
-			foreach(CPlayer p in player)
-			if (p.user.name == name)
-				return p;
-			return null;
+			list.Sort(delegate (CPlayer u1, CPlayer u2)
+			{
+				int result = Convert.ToInt32(u1.elo) - Convert.ToInt32(u2.elo);
+				if(result == 0)
+					result = Convert.ToInt32(u1.eloOld) - Convert.ToInt32(u2.eloOld);
+				return result;
+			});
 		}
 
-		public CPlayer PlayerHum()
+		public static CPlayer GetUserEloHL(CPlayer user)
 		{
-			if (!player[0].computer)
-				return player[0];
-			if (!player[1].computer)
-				return player[1];
-			return null;
+			List<CPlayer> lu = new List<CPlayer>();
+			Sort();
+			int i = GetIndex(user.name);
+			int na = i - 2;
+			int nb = i + 2;
+			int n = na;
+			while (n <= nb)
+			{
+				if ((n >= 0) && (n < list.Count) && (n != i))
+				{
+					CPlayer u = list[n];
+					if (u.engine == "Human")
+						nb++;
+					else
+						lu.Add(u);
+				}
+				n++;
+			}
+			if (lu.Count == 0)
+				return user;
+			int r = CChess.random.Next(lu.Count);
+			return lu[r];
 		}
 
-		public CPlayer PlayerCur()
+		static CPlayer GetUserHuman()
 		{
-			return player[curIndex];
+			CPlayer uh = new CPlayer("Human");
+			return uh;
 		}
 
-		public CPlayer PlayerSec()
+		public static CPlayer GetUser(string name)
 		{
-			return player[curIndex ^ 1];
+			foreach (CPlayer u in  list)
+			if (u.name == name)
+					return u;
+			if (name == "Auto")
+				return GetUserAuto();
+			return GetUserHuman();
 		}
 
-		public CPlayer PlayerPid(int pid)
+		static int CountComputer()
 		{
-			foreach(CPlayer p in player)
-			if (p.PlayerEng.GetPid() == pid)
-				return p;
-			return null;
+			int result = 0;
+			foreach (CPlayer cu in list)
+				if (cu.engine != "Human")
+					result++;
+			return result;
 		}
 
-		public void Terminate()
+		static bool IsHuman()
 		{
-			player[0].PlayerEng.Terminate();
-			player[1].PlayerEng.Terminate();
+			foreach (CPlayer cu in list)
+				if (cu.engine == "Human")
+					return true;
+			return false;
 		}
+
+		public static void LoadFromIni()
+		{
+			list.Clear();
+			List<string> pn = CRapIni.This.ReadList("player");
+			foreach (string name in pn)
+			{
+				var p = new CPlayer(name);
+				p.LoadFromIni();
+				list.Add(p);
+			}
+		}
+
+		public static void DeletePlayer(string name)
+		{
+			CRapIni.This.DeleteKey($"player>{name}");
+			int i = GetIndex(name);
+			if (i >= 0)
+				list.RemoveAt(i);
+		}
+
+		public static void SaveToIni()
+		{
+			CRapIni.This.DeleteKey("player");
+			foreach (CPlayer u in list)
+				u.SaveToIni();
+		}
+
+		public static int GetIndexElo(int elo)
+		{
+			int result = 0;
+			foreach (CPlayer u in list)
+				if (Convert.ToInt32(u.elo) < elo)
+					result++;
+			return result;
+		}
+
+		public static int GetOptElo(double index)
+		{
+			if (index < 0)
+				index = 0;
+			if (index >= list.Count)
+				index = list.Count - 1;
+			return Convert.ToInt32((3000 * (index + 1)) / list.Count);
+		}
+
 
 	}
 }

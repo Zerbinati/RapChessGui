@@ -42,8 +42,10 @@
 			this.pgnToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.saveToClipboardToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
 			this.loadFromClipboardToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-			this.playersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.booksToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.manageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.booksToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+			this.enginesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.playersToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
 			this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.logToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.panMenu = new System.Windows.Forms.Panel();
@@ -95,8 +97,12 @@
 			this.butContinueMatch = new System.Windows.Forms.Button();
 			this.butNewMatch = new System.Windows.Forms.Button();
 			this.groupBox6 = new System.Windows.Forms.GroupBox();
+			this.cbBook2 = new System.Windows.Forms.ComboBox();
+			this.label19 = new System.Windows.Forms.Label();
 			this.cbPlayer2 = new System.Windows.Forms.ComboBox();
 			this.groupBox5 = new System.Windows.Forms.GroupBox();
+			this.cbBook1 = new System.Windows.Forms.ComboBox();
+			this.label17 = new System.Windows.Forms.Label();
 			this.cbPlayer1 = new System.Windows.Forms.ComboBox();
 			this.tabPageTournament = new System.Windows.Forms.TabPage();
 			this.listView1 = new System.Windows.Forms.ListView();
@@ -168,10 +174,6 @@
 			this.labNodesT = new System.Windows.Forms.Label();
 			this.labDepthT = new System.Windows.Forms.Label();
 			this.labScoreT = new System.Windows.Forms.Label();
-			this.label17 = new System.Windows.Forms.Label();
-			this.label19 = new System.Windows.Forms.Label();
-			this.cbBook1 = new System.Windows.Forms.ComboBox();
-			this.cbBook2 = new System.Windows.Forms.ComboBox();
 			this.menuStrip1.SuspendLayout();
 			this.panMenu.SuspendLayout();
 			this.panelT1.SuspendLayout();
@@ -215,13 +217,12 @@
             this.moveToolStripMenuItem,
             this.fenToolStripMenuItem,
             this.pgnToolStripMenuItem,
-            this.playersToolStripMenuItem,
-            this.booksToolStripMenuItem,
+            this.manageToolStripMenuItem,
             this.optionsToolStripMenuItem,
             this.logToolStripMenuItem});
 			this.menuStrip1.Location = new System.Drawing.Point(0, 2);
 			this.menuStrip1.Name = "menuStrip1";
-			this.menuStrip1.Size = new System.Drawing.Size(418, 24);
+			this.menuStrip1.Size = new System.Drawing.Size(497, 24);
 			this.menuStrip1.TabIndex = 1;
 			this.menuStrip1.Text = "menuStrip1";
 			// 
@@ -301,19 +302,36 @@
 			this.loadFromClipboardToolStripMenuItem1.Text = "Load from clipboard";
 			this.loadFromClipboardToolStripMenuItem1.Click += new System.EventHandler(this.loadFromClipboardToolStripMenuItem1_Click);
 			// 
-			// playersToolStripMenuItem
+			// manageToolStripMenuItem
 			// 
-			this.playersToolStripMenuItem.Name = "playersToolStripMenuItem";
-			this.playersToolStripMenuItem.Size = new System.Drawing.Size(56, 20);
-			this.playersToolStripMenuItem.Text = "Players";
-			this.playersToolStripMenuItem.Click += new System.EventHandler(this.PlayersToolStripMenuItem_Click);
+			this.manageToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.booksToolStripMenuItem1,
+            this.enginesToolStripMenuItem,
+            this.playersToolStripMenuItem1});
+			this.manageToolStripMenuItem.Name = "manageToolStripMenuItem";
+			this.manageToolStripMenuItem.Size = new System.Drawing.Size(66, 20);
+			this.manageToolStripMenuItem.Text = "Manager";
 			// 
-			// booksToolStripMenuItem
+			// booksToolStripMenuItem1
 			// 
-			this.booksToolStripMenuItem.Name = "booksToolStripMenuItem";
-			this.booksToolStripMenuItem.Size = new System.Drawing.Size(51, 20);
-			this.booksToolStripMenuItem.Text = "Books";
-			this.booksToolStripMenuItem.Click += new System.EventHandler(this.booksToolStripMenuItem_Click);
+			this.booksToolStripMenuItem1.Name = "booksToolStripMenuItem1";
+			this.booksToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
+			this.booksToolStripMenuItem1.Text = "Books";
+			this.booksToolStripMenuItem1.Click += new System.EventHandler(this.booksToolStripMenuItem1_Click);
+			// 
+			// enginesToolStripMenuItem
+			// 
+			this.enginesToolStripMenuItem.Name = "enginesToolStripMenuItem";
+			this.enginesToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+			this.enginesToolStripMenuItem.Text = "Engines";
+			this.enginesToolStripMenuItem.Click += new System.EventHandler(this.enginesToolStripMenuItem_Click);
+			// 
+			// playersToolStripMenuItem1
+			// 
+			this.playersToolStripMenuItem1.Name = "playersToolStripMenuItem1";
+			this.playersToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
+			this.playersToolStripMenuItem1.Text = "Players";
+			this.playersToolStripMenuItem1.Click += new System.EventHandler(this.playersToolStripMenuItem1_Click);
 			// 
 			// optionsToolStripMenuItem
 			// 
@@ -934,6 +952,27 @@
 			this.groupBox6.TabStop = false;
 			this.groupBox6.Text = "Player 2";
 			// 
+			// cbBook2
+			// 
+			this.cbBook2.Dock = System.Windows.Forms.DockStyle.Top;
+			this.cbBook2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.cbBook2.FormattingEnabled = true;
+			this.cbBook2.Location = new System.Drawing.Point(3, 58);
+			this.cbBook2.Name = "cbBook2";
+			this.cbBook2.Size = new System.Drawing.Size(314, 21);
+			this.cbBook2.Sorted = true;
+			this.cbBook2.TabIndex = 27;
+			// 
+			// label19
+			// 
+			this.label19.Dock = System.Windows.Forms.DockStyle.Top;
+			this.label19.Location = new System.Drawing.Point(3, 37);
+			this.label19.Name = "label19";
+			this.label19.Size = new System.Drawing.Size(314, 21);
+			this.label19.TabIndex = 25;
+			this.label19.Text = "Book";
+			this.label19.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			// 
 			// cbPlayer2
 			// 
 			this.cbPlayer2.Dock = System.Windows.Forms.DockStyle.Top;
@@ -956,6 +995,27 @@
 			this.groupBox5.TabIndex = 19;
 			this.groupBox5.TabStop = false;
 			this.groupBox5.Text = "Player 1";
+			// 
+			// cbBook1
+			// 
+			this.cbBook1.Dock = System.Windows.Forms.DockStyle.Top;
+			this.cbBook1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.cbBook1.FormattingEnabled = true;
+			this.cbBook1.Location = new System.Drawing.Point(3, 58);
+			this.cbBook1.Name = "cbBook1";
+			this.cbBook1.Size = new System.Drawing.Size(314, 21);
+			this.cbBook1.Sorted = true;
+			this.cbBook1.TabIndex = 27;
+			// 
+			// label17
+			// 
+			this.label17.Dock = System.Windows.Forms.DockStyle.Top;
+			this.label17.Location = new System.Drawing.Point(3, 37);
+			this.label17.Name = "label17";
+			this.label17.Size = new System.Drawing.Size(314, 21);
+			this.label17.TabIndex = 25;
+			this.label17.Text = "Book";
+			this.label17.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
 			// cbPlayer1
 			// 
@@ -1000,7 +1060,7 @@
 			// columnHeader1
 			// 
 			this.columnHeader1.Tag = "";
-			this.columnHeader1.Text = "Engine";
+			this.columnHeader1.Text = "Chess";
 			this.columnHeader1.Width = 150;
 			// 
 			// columnHeader2
@@ -1865,48 +1925,6 @@
 			this.labScoreT.TabIndex = 6;
 			this.labScoreT.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
-			// label17
-			// 
-			this.label17.Dock = System.Windows.Forms.DockStyle.Top;
-			this.label17.Location = new System.Drawing.Point(3, 37);
-			this.label17.Name = "label17";
-			this.label17.Size = new System.Drawing.Size(314, 21);
-			this.label17.TabIndex = 25;
-			this.label17.Text = "Book";
-			this.label17.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			// 
-			// label19
-			// 
-			this.label19.Dock = System.Windows.Forms.DockStyle.Top;
-			this.label19.Location = new System.Drawing.Point(3, 37);
-			this.label19.Name = "label19";
-			this.label19.Size = new System.Drawing.Size(314, 21);
-			this.label19.TabIndex = 25;
-			this.label19.Text = "Book";
-			this.label19.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			// 
-			// cbBook1
-			// 
-			this.cbBook1.Dock = System.Windows.Forms.DockStyle.Top;
-			this.cbBook1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.cbBook1.FormattingEnabled = true;
-			this.cbBook1.Location = new System.Drawing.Point(3, 58);
-			this.cbBook1.Name = "cbBook1";
-			this.cbBook1.Size = new System.Drawing.Size(314, 21);
-			this.cbBook1.Sorted = true;
-			this.cbBook1.TabIndex = 27;
-			// 
-			// cbBook2
-			// 
-			this.cbBook2.Dock = System.Windows.Forms.DockStyle.Top;
-			this.cbBook2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.cbBook2.FormattingEnabled = true;
-			this.cbBook2.Location = new System.Drawing.Point(3, 58);
-			this.cbBook2.Name = "cbBook2";
-			this.cbBook2.Size = new System.Drawing.Size(314, 21);
-			this.cbBook2.Sorted = true;
-			this.cbBook2.TabIndex = 27;
-			// 
 			// FormChess
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1966,7 +1984,6 @@
 		private System.Windows.Forms.Timer timer1;
 		private System.Windows.Forms.MenuStrip menuStrip1;
 		private System.Windows.Forms.ToolStripMenuItem newGameToolStripMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem playersToolStripMenuItem;
 		private System.Windows.Forms.Panel panMenu;
   		private System.Windows.Forms.Panel panelT1;
 		private System.Windows.Forms.Panel panel4;
@@ -2100,11 +2117,14 @@
 		private System.Windows.Forms.Button butContinueMatch;
 		private System.Windows.Forms.Button butDefault;
 		private System.Windows.Forms.Label labAutoElo;
-		private System.Windows.Forms.ToolStripMenuItem booksToolStripMenuItem;
 		private System.Windows.Forms.ComboBox cbBook2;
 		private System.Windows.Forms.Label label19;
 		private System.Windows.Forms.ComboBox cbBook1;
 		private System.Windows.Forms.Label label17;
+		private System.Windows.Forms.ToolStripMenuItem manageToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem booksToolStripMenuItem1;
+		private System.Windows.Forms.ToolStripMenuItem enginesToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem playersToolStripMenuItem1;
 	}
 }
 
