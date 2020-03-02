@@ -12,9 +12,10 @@ namespace RapChessGui
 		public static int loose = 0;
 		public static string teacher = "";
 		public static string trained = "";
-		public static int timeTeacher = 1000;
-		public static int timeTrained = 1000;
-		public static string bookTeacher = "";
+		public static int teacherTime = 1000;
+		public static int trainedTime = 1000;
+		public static string teacherBook = "";
+		public static string trainedBook = "";
 
 		public static void Reset()
 		{
@@ -45,18 +46,20 @@ namespace RapChessGui
 		{
 			CRapIni.This.Write("mode>training>teacher", teacher);
 			CRapIni.This.Write("mode>training>trained", trained);
-			CRapIni.This.Write("mode>training>book", bookTeacher);
-			CRapIni.This.Write("mode>training>timeTeacher", timeTeacher.ToString());
-			CRapIni.This.Write("mode>training>timeTrained", timeTrained.ToString());
+			CRapIni.This.Write("mode>training>teacherBook", teacherBook);
+			CRapIni.This.Write("mode>training>trainedBook", trainedBook);
+			CRapIni.This.Write("mode>training>teacherTime", teacherTime.ToString());
+			CRapIni.This.Write("mode>training>trainedTime", trainedTime.ToString());
 		}
 
 		public static void LoadFromIni()
 		{
-			teacher = CRapIni.This.Read("mode>training>teacher", "RapChessCs.exe");
-			trained = CRapIni.This.Read("mode>training>trained", CPlayerList.def);
-			bookTeacher = CRapIni.This.Read("mode>training>book", "small");
-			timeTeacher = Convert.ToInt32(CRapIni.This.Read("mode>training>timeTeacher", "1000"));
-			timeTrained = Convert.ToInt32(CRapIni.This.Read("mode>training>timeTrained", "1000"));
+			teacher = CRapIni.This.Read("mode>training>teacher", CEngineList.def);
+			trained = CRapIni.This.Read("mode>training>trained", CEngineList.def);
+			teacherBook = CRapIni.This.Read("mode>training>teacherBook", "Small");
+			trainedBook = CRapIni.This.Read("mode>training>trainedBook", "Small");
+			teacherTime = Convert.ToInt32(CRapIni.This.Read("mode>training>teacherTime", "1000"));
+			trainedTime = Convert.ToInt32(CRapIni.This.Read("mode>training>trainedTime", "1000"));
 		}
 
 	}

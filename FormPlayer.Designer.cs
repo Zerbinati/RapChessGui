@@ -44,7 +44,7 @@
 			this.gbEngine = new System.Windows.Forms.GroupBox();
 			this.cbEngineList = new System.Windows.Forms.ComboBox();
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
-			this.tbUserName = new System.Windows.Forms.TextBox();
+			this.tbPlayerName = new System.Windows.Forms.TextBox();
 			this.groupBox2 = new System.Windows.Forms.GroupBox();
 			this.listBox1 = new System.Windows.Forms.ListBox();
 			this.panel1.SuspendLayout();
@@ -271,7 +271,7 @@
 			// 
 			// groupBox1
 			// 
-			this.groupBox1.Controls.Add(this.tbUserName);
+			this.groupBox1.Controls.Add(this.tbPlayerName);
 			this.groupBox1.Dock = System.Windows.Forms.DockStyle.Top;
 			this.groupBox1.Location = new System.Drawing.Point(0, 0);
 			this.groupBox1.Name = "groupBox1";
@@ -280,13 +280,13 @@
 			this.groupBox1.TabStop = false;
 			this.groupBox1.Text = "Name";
 			// 
-			// tbUserName
+			// tbPlayerName
 			// 
-			this.tbUserName.Dock = System.Windows.Forms.DockStyle.Top;
-			this.tbUserName.Location = new System.Drawing.Point(3, 16);
-			this.tbUserName.Name = "tbUserName";
-			this.tbUserName.Size = new System.Drawing.Size(305, 20);
-			this.tbUserName.TabIndex = 0;
+			this.tbPlayerName.Dock = System.Windows.Forms.DockStyle.Top;
+			this.tbPlayerName.Location = new System.Drawing.Point(3, 16);
+			this.tbPlayerName.Name = "tbPlayerName";
+			this.tbPlayerName.Size = new System.Drawing.Size(305, 20);
+			this.tbPlayerName.TabIndex = 0;
 			// 
 			// groupBox2
 			// 
@@ -344,7 +344,7 @@
 		#endregion
 		private System.Windows.Forms.Panel panel1;
 		private System.Windows.Forms.GroupBox groupBox1;
-		private System.Windows.Forms.TextBox tbUserName;
+		private System.Windows.Forms.TextBox tbPlayerName;
 		private System.Windows.Forms.GroupBox groupBox2;
 		public System.Windows.Forms.ListBox listBox1;
 		private System.Windows.Forms.GroupBox gbEngine;

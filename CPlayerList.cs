@@ -72,14 +72,14 @@ namespace RapChessGui
 				return $"{mode} {value}";
 		}
 
-		public void SetUser(string name)
+		public void SetPlayer(string name)
 		{
-			CPlayer u = CPlayerList.GetUser(name);
-			engine = u.engine;
-			mode = u.mode;
-			value = u.value;
-			book = u.book;
-			elo = u.elo;
+			CPlayer p = CPlayerList.GetPlayer(name);
+			engine = p.engine;
+			mode = p.mode;
+			value = p.value;
+			book = p.book;
+			elo = p.elo;
 		}
 
 		public void LoadFromIni()
@@ -127,35 +127,35 @@ namespace RapChessGui
 			return -1;
 		}
 
-		static CPlayer GetUserAuto()
+		static CPlayer GetPlayerAuto()
 		{
-			CPlayer uh = GetUser("Human");
-			CPlayer ue = GetUserElo(uh);
-			CPlayer uc = new CPlayer(ue.name);
-			uc.SetUser(ue.name);
-			return uc;
+			CPlayer ph = GetPlayer("Human");
+			CPlayer pe = GetPlayerElo(ph);
+			CPlayer pc = new CPlayer(pe.name);
+			pc.SetPlayer(pe.name);
+			return pc;
 		}
 
-		static CPlayer GetUserElo(CPlayer user)
+		static CPlayer GetPlayerElo(CPlayer player)
 		{
-			CPlayer u = null;
+			CPlayer p = null;
 			int bstDel = 10000;
-			int elo = Convert.ToInt32(user.elo);
-			foreach (CPlayer cu in list)
+			int elo = Convert.ToInt32(player.elo);
+			foreach (CPlayer cp in list)
 			{
-				if (cu == user)
+				if (cp == player)
 					continue;
-				if (cu.engine == "Human")
+				if (cp.engine == "Human")
 					continue;
-				int curE = Convert.ToInt32(cu.elo);
+				int curE = Convert.ToInt32(cp.elo);
 				int curDel = Math.Abs(elo - curE);
 				if (bstDel > curDel)
 				{
 					bstDel = curDel;
-					u = cu;
+					p = cp;
 				}
 			}
-			return u;
+			return p;
 		}
 
 		public static void Sort()
@@ -169,7 +169,7 @@ namespace RapChessGui
 			});
 		}
 
-		public static CPlayer GetUserEloHL(CPlayer user)
+		public static CPlayer GetPlayerEloHL(CPlayer user)
 		{
 			List<CPlayer> lu = new List<CPlayer>();
 			Sort();
@@ -201,13 +201,13 @@ namespace RapChessGui
 			return uh;
 		}
 
-		public static CPlayer GetUser(string name)
+		public static CPlayer GetPlayer(string name)
 		{
-			foreach (CPlayer u in  list)
-			if (u.name == name)
-					return u;
+			foreach (CPlayer p in  list)
+			if (p.name == name)
+					return p;
 			if (name == "Auto")
-				return GetUserAuto();
+				return GetPlayerAuto();
 			return GetUserHuman();
 		}
 

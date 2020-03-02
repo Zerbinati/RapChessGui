@@ -29,7 +29,7 @@ namespace RapChessGui
 		public string value;
 		public Stopwatch timer = new Stopwatch();
 		public CEnginePro PlayerEng = new CEnginePro();
-		public CPlayer user;
+		public CPlayer player;
 		public CBook book;
 		public CEngine engine = null;
 
@@ -77,8 +77,8 @@ namespace RapChessGui
 
 		public void Start()
 		{
-			mode = user.mode;
-			value = user.value;
+			mode = player.mode;
+			value = player.value;
 			if (engine.protocol == "Uci")
 			{
 				SendMessage("uci");
@@ -99,7 +99,7 @@ namespace RapChessGui
 						break;
 					case "movetime":
 						mode = "st";
-						int v = Convert.ToInt32(user.value) / 1000;
+						int v = Convert.ToInt32(player.value) / 1000;
 						if (v < 1)
 							v = 1;
 						value = v.ToString();
@@ -147,7 +147,7 @@ namespace RapChessGui
 		{
 			if (engine != null)
 			{
-				FormLog.This.richTextBox1.AppendText($"{user.name} < {msg}\n", Color.Brown);
+				FormLog.This.richTextBox1.AppendText($"{player.name} < {msg}\n", Color.Brown);
 				PlayerEng.streamWriter.WriteLine(msg);
 			}
 		}
@@ -169,29 +169,29 @@ namespace RapChessGui
 
 		public string GetElo()
 		{
-			if (user == null)
+			if (player == null)
 				return "Elo";
 			else
-				return $"Elo {user.elo}";
+				return $"Elo {player.elo}";
 		}
 
-		public void SetUser(CPlayer u)
+		public void SetPlayer(CPlayer p)
 		{
-			user = u;
-			book = CBookList.GetBook(user.book);
-			engine = CEngineList.GetEngine(user.engine);
+			player = p;
+			book = CBookList.GetBook(p.book);
+			engine = CEngineList.GetEngine(p.engine);
 			PlayerEng.SetPlayer(this);
 		}
 
-		public void SetUser()
+		public void SetPlayer()
 		{
-			SetUser(user);
+			SetPlayer(player);
 		}
 
-		public void SetUser(string name)
+		public void SetPlayer(string name)
 		{
-			CPlayer u = CPlayerList.GetUser(name);
-			SetUser(u);
+			CPlayer p = CPlayerList.GetPlayer(name);
+			SetPlayer(p);
 		}
 
 		public void UpdateTime()
@@ -243,9 +243,9 @@ namespace RapChessGui
 			curIndex = 0;
 			FormLog.This.cbPlayerList.Items.Clear();
 			if (gamer[0].engine != null)
-				FormLog.This.cbPlayerList.Items.Add(gamer[0].user.name);
+				FormLog.This.cbPlayerList.Items.Add(gamer[0].player.name);
 			if (gamer[1].engine != null)
-				FormLog.This.cbPlayerList.Items.Add(gamer[1].user.name);
+				FormLog.This.cbPlayerList.Items.Add(gamer[1].player.name);
 			if (FormLog.This.cbPlayerList.Items.Count > 0)
 				FormLog.This.cbPlayerList.SelectedIndex = 0;
 		}
@@ -262,7 +262,7 @@ namespace RapChessGui
 		public CGamer GetPlayer(string name)
 		{
 			foreach (CGamer p in gamer)
-				if (p.user.name == name)
+				if (p.player.name == name)
 					return p;
 			return null;
 		}
