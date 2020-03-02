@@ -53,7 +53,7 @@ namespace RapChessGui
 		public static void LoadFromIni()
 		{
 			teacher = CRapIni.This.Read("mode>training>teacher", "RapChessCs.exe");
-			trained = CRapIni.This.Read("mode>training>trained", CPlayerList.defUser);
+			trained = CRapIni.This.Read("mode>training>trained", CPlayerList.def);
 			bookTeacher = CRapIni.This.Read("mode>training>book", "small");
 			timeTeacher = Convert.ToInt32(CRapIni.This.Read("mode>training>timeTeacher", "1000"));
 			timeTrained = Convert.ToInt32(CRapIni.This.Read("mode>training>timeTrained", "1000"));

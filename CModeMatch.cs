@@ -9,8 +9,12 @@ namespace RapChessGui
 		public static int win = 0;
 		public static int draw = 0;
 		public static int loose = 0;
-		public static string player1;
-		public static string player2;
+		public static string engine1;
+		public static string engine2;
+		public static string mode1;
+		public static string mode2;
+		public static int value1;
+		public static int value2;
 		public static string book1;
 		public static string book2;
 
@@ -46,10 +50,14 @@ namespace RapChessGui
 			win = CRapIni.This.ReadInt("mode>match>win");
 			draw = CRapIni.This.ReadInt("mode>match>draw");
 			loose = CRapIni.This.ReadInt("mode>match>loose");
-			player1 = CRapIni.This.Read("mode>match>player1", CPlayerList.defUser);
-			player2 = CRapIni.This.Read("mode>match>player2", CPlayerList.defUser);
-			book1 = CRapIni.This.Read("mode>match>book1", "small");
-			book2 = CRapIni.This.Read("mode>match>book2", "small");
+			book1 = CRapIni.This.Read("mode>match>book1", "Small");
+			book2 = CRapIni.This.Read("mode>match>book2", "Small");
+			engine1 = CRapIni.This.Read("mode>match>engine1", CEngineList.def);
+			engine2 = CRapIni.This.Read("mode>match>engine2", CEngineList.def);
+			mode1 = CRapIni.This.Read("mode>match>mode1", "Time");
+			mode2 = CRapIni.This.Read("mode>match>mode2", "Time");
+			value1 = CRapIni.This.ReadInt("mode>match>value1",1);
+			value2 = CRapIni.This.ReadInt("mode>match>value2", 1);
 		}
 
 		public static void SaveToIni()
@@ -59,10 +67,14 @@ namespace RapChessGui
 			CRapIni.This.Write("mode>match>win", win.ToString());
 			CRapIni.This.Write("mode>match>draw", draw.ToString());
 			CRapIni.This.Write("mode>match>loose", loose.ToString());
-			CRapIni.This.Write("mode>match>player1", player1);
-			CRapIni.This.Write("mode>match>player2", player2);
 			CRapIni.This.Write("mode>match>book1", book1);
 			CRapIni.This.Write("mode>match>book2", book2);
+			CRapIni.This.Write("mode>match>engine1", engine1);
+			CRapIni.This.Write("mode>match>engine2", engine2);
+			CRapIni.This.Write("mode>match>mode1", mode1);
+			CRapIni.This.Write("mode>match>mode2", mode2);
+			CRapIni.This.Write("mode>match>value1", value1.ToString());
+			CRapIni.This.Write("mode>match>value2", value2.ToString());
 		}
 
 	}

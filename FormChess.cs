@@ -69,7 +69,7 @@ namespace RapChessGui
 		{
 			CEngineList.LoadFromIni();
 			CEngine e;
-			e = new CEngine("RapChessCs");
+			e = new CEngine(CEngineList.def);
 			e.file = "RapChessCs.exe";
 			CEngineList.Add(e);
 			e = new CEngine("RapSimpleCs");
@@ -135,7 +135,7 @@ namespace RapChessGui
 			p.value = "1000";
 			p.elo = "1000";
 			CPlayerList.Add(p);
-			p = new CPlayer(CPlayerList.defUser);
+			p = new CPlayer(CPlayerList.def);
 			p.engine = "RapChessCs";
 			p.book = "Small";
 			p.mode = "movetime";
@@ -396,17 +396,19 @@ namespace RapChessGui
 
 		void ShowMatch()
 		{
-			cbPlayer1.SelectedIndex = cbPlayer1.FindStringExact(CModeMatch.player1);
-			cbPlayer2.SelectedIndex = cbPlayer2.FindStringExact(CModeMatch.player2);
+			cbEngine1.SelectedIndex = cbEngine1.FindStringExact(CModeMatch.engine1);
+			cbEngine2.SelectedIndex = cbEngine2.FindStringExact(CModeMatch.engine2);
+			cbMode1.SelectedIndex = cbMode1.FindStringExact(CModeMatch.mode1);
+			cbMode2.SelectedIndex = cbMode2.FindStringExact(CModeMatch.mode2);
 			cbBook1.SelectedIndex = cbBook1.FindStringExact(CModeMatch.book1);
 			cbBook2.SelectedIndex = cbBook2.FindStringExact(CModeMatch.book2);
+			cbValue1.SelectedIndex = CModeMatch.value1 - 1;
+			cbValue2.SelectedIndex = CModeMatch.value2 - 1;
 			labMatchGames.Text = $"Games {CModeMatch.games}";
-			labMatch10.Text = cbPlayer1.Text;
 			labMatch11.Text = CModeMatch.win.ToString();
 			labMatch12.Text = CModeMatch.loose.ToString();
 			labMatch13.Text = CModeMatch.draw.ToString();
 			labMatch14.Text = $"{CModeMatch.Result(false)}%";
-			labMatch20.Text = cbPlayer2.Text;
 			labMatch21.Text = CModeMatch.loose.ToString();
 			labMatch22.Text = CModeMatch.win.ToString();
 			labMatch23.Text = CModeMatch.draw.ToString();
@@ -455,20 +457,25 @@ namespace RapChessGui
 		void Reset()
 		{
 			cbComputer.Items.Clear();
-			cbPlayer1.Items.Clear();
-			cbPlayer2.Items.Clear();
 			comboBoxTrained.Items.Clear();
 			comboBoxTeacher.Items.Clear();
 			cbComputer.Items.Add("Auto");
+			cbEngine1.Items.Clear();
+			cbEngine2.Items.Clear();
 			foreach (CPlayer p in CPlayerList.list)
 			{
 				cbComputer.Items.Add(p.name);
-				cbPlayer1.Items.Add(p.name);
-				cbPlayer2.Items.Add(p.name);
 				comboBoxTrained.Items.Add(p.name);
 			}
-			foreach (string en in CData.fileEngine)
-				comboBoxTeacher.Items.Add(en);
+			foreach (CEngine e in CEngineList.list)
+			{
+				cbEngine1.Items.Add(e.name);
+				cbEngine2.Items.Add(e.name);
+			}
+				foreach (string fe in CData.fileEngine)
+			{
+				comboBoxTeacher.Items.Add(fe);
+			}
 			cbBookList.Items.Clear();
 			cbBook1.Items.Clear();
 			cbBook2.Items.Clear();
@@ -530,25 +537,58 @@ namespace RapChessGui
 
 		void StartMatch()
 		{
-			CModeMatch.player1 = cbPlayer1.Text;
-			CModeMatch.player2 = cbPlayer2.Text;
+			CModeMatch.engine1 = cbEngine1.Text;
+			CModeMatch.engine2 = cbEngine2.Text;
+			CModeMatch.mode1 = cbMode1.Text;
+			CModeMatch.mode2 = cbMode2.Text;
+			CModeMatch.value1 = cbValue1.SelectedIndex + 1;
+			CModeMatch.value2 = cbValue2.SelectedIndex + 1;
 			CModeMatch.book1 = cbBook1.Text;
 			CModeMatch.book2 = cbBook2.Text;
 			SetMode((int)CMode.match);
-			CPlayer u1 = new CPlayer("Player 1");
-			u1.SetUser(cbPlayer1.Text);
-			u1.book = cbBook1.Text;
-			GamerList.gamer[0].SetUser(u1);
-			CPlayer u2 = new CPlayer("Player 2");
-			u2.SetUser(cbPlayer2.Text);
-			u2.book = cbBook2.Text;
-			GamerList.gamer[1].SetUser(u2);
+			CPlayer p1 = new CPlayer("Player 1");
+			p1.engine = CModeMatch.engine1;
+			p1.book = CModeMatch.book1;
+			switch (CModeMatch.mode1)
+			{
+				case "Depth":
+					p1.mode = "depth";
+					p1.value = Convert.ToString(CModeMatch.value1);
+					break;
+				case "Nodes":
+					p1.mode = "nodes";
+					p1.value = Convert.ToString(CModeMatch.value1 * 100000);
+					break;
+				default:
+					p1.mode = "movetime";
+					p1.value = Convert.ToString(CModeMatch.value1 * 1000);
+					break;
+			}
+			CPlayer p2 = new CPlayer("Player 2");
+			p2.engine = CModeMatch.engine2;
+			p2.book = CModeMatch.book2;
+			switch (CModeMatch.mode2)
+			{
+				case "Depth":
+					p2.mode = "depth";
+					p2.value = Convert.ToString(CModeMatch.value2);
+					break;
+				case "Nodes":
+					p2.mode = "nodes";
+					p2.value = Convert.ToString(CModeMatch.value2 * 100000);
+					break;
+				default:
+					p2.mode = "movetime";
+					p2.value = Convert.ToString(CModeMatch.value2 * 1000);
+					break;
+			}
+			GamerList.gamer[0].SetUser(p1);
+			GamerList.gamer[1].SetUser(p2);
 			if (CModeMatch.rotate)
 				GamerList.Rotate();
 			CModeMatch.rotate = !CModeMatch.rotate;
 			Clear();
-			if (GamerList.PlayerCur().user.engine == "Human")
-				moves = Chess.GenerateValidMoves();
+			moves = Chess.GenerateValidMoves();
 			CModeMatch.SaveToIni();
 		}
 

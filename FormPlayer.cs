@@ -124,8 +124,10 @@ namespace RapChessGui
 
 		private void FormPlayer_Shown(object sender, EventArgs e)
 		{
+			cbEngineList.Items.Clear();
 			foreach (CEngine engine in CEngineList.list)
 				cbEngineList.Items.Add(engine.name);
+			cbBookList.Items.Clear();
 			cbBookList.Items.Add("None");
 			foreach (CBook book in CBookList.list)
 				cbBookList.Items.Add(book.name);

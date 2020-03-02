@@ -81,18 +81,21 @@ namespace RapChessGui
 				pathPro = pathE;
 				argsPro = argsE;
 			}
-			process = new Process();
-			process.StartInfo.FileName = pathPro;
-			process.StartInfo.Arguments = argsPro;
-			process.StartInfo.WorkingDirectory = Path.GetDirectoryName(pathPro);
-			process.StartInfo.UseShellExecute = false;
-			process.StartInfo.CreateNoWindow = true;
-			process.StartInfo.RedirectStandardInput = true;
-			process.StartInfo.RedirectStandardOutput = true;
-			process.OutputDataReceived += ProEvent;
-			process.Start();
-			streamWriter = process.StandardInput;
-			process.BeginOutputReadLine();
+			if (File.Exists(pathPro))
+			{
+				process = new Process();
+				process.StartInfo.FileName = pathPro;
+				process.StartInfo.Arguments = argsPro;
+				process.StartInfo.WorkingDirectory = Path.GetDirectoryName(pathPro);
+				process.StartInfo.UseShellExecute = false;
+				process.StartInfo.CreateNoWindow = true;
+				process.StartInfo.RedirectStandardInput = true;
+				process.StartInfo.RedirectStandardOutput = true;
+				process.OutputDataReceived += ProEvent;
+				process.Start();
+				streamWriter = process.StandardInput;
+				process.BeginOutputReadLine();
+			}
 		}
 
 		public void Terminate()

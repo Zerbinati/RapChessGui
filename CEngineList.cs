@@ -36,6 +36,7 @@ namespace RapChessGui
 
 	static class CEngineList
 	{
+		public const string def = "RapChess CS";
 		public static List<CEngine> list = new List<CEngine>();
 
 		public static void Add(CEngine e)
