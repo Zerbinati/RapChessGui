@@ -582,6 +582,8 @@ namespace RapChessGui
 					p2.value = Convert.ToString(CModeMatch.value2 * 1000);
 					break;
 			}
+			tbCommand1.Text = p1.GetCommand();
+			tbCommand2.Text = p2.GetCommand();
 			GamerList.gamer[0].SetUser(p1);
 			GamerList.gamer[1].SetUser(p2);
 			if (CModeMatch.rotate)

@@ -177,7 +177,7 @@
 			this.cbMode2 = new System.Windows.Forms.ComboBox();
 			this.cbValue2 = new System.Windows.Forms.ComboBox();
 			this.cbBook2 = new System.Windows.Forms.ComboBox();
-			this.textBox1 = new System.Windows.Forms.TextBox();
+			this.tbCommand2 = new System.Windows.Forms.TextBox();
 			this.menuStrip1.SuspendLayout();
 			this.panMenu.SuspendLayout();
 			this.panelT1.SuspendLayout();
@@ -947,7 +947,7 @@
 			// 
 			// groupBox6
 			// 
-			this.groupBox6.Controls.Add(this.textBox1);
+			this.groupBox6.Controls.Add(this.tbCommand2);
 			this.groupBox6.Controls.Add(this.cbBook2);
 			this.groupBox6.Controls.Add(this.cbValue2);
 			this.groupBox6.Controls.Add(this.cbMode2);
@@ -1997,13 +1997,13 @@
 			this.cbBook2.Sorted = true;
 			this.cbBook2.TabIndex = 32;
 			// 
-			// textBox1
+			// tbCommand2
 			// 
-			this.textBox1.Dock = System.Windows.Forms.DockStyle.Top;
-			this.textBox1.Location = new System.Drawing.Point(3, 100);
-			this.textBox1.Name = "textBox1";
-			this.textBox1.Size = new System.Drawing.Size(314, 20);
-			this.textBox1.TabIndex = 33;
+			this.tbCommand2.Dock = System.Windows.Forms.DockStyle.Top;
+			this.tbCommand2.Location = new System.Drawing.Point(3, 100);
+			this.tbCommand2.Name = "tbCommand2";
+			this.tbCommand2.Size = new System.Drawing.Size(314, 20);
+			this.tbCommand2.TabIndex = 33;
 			// 
 			// FormChess
 			// 
@@ -2209,7 +2209,7 @@
 		private System.Windows.Forms.ComboBox cbEngine2;
 		private System.Windows.Forms.ComboBox cbMode2;
 		private System.Windows.Forms.ComboBox cbValue2;
-		private System.Windows.Forms.TextBox textBox1;
+		private System.Windows.Forms.TextBox tbCommand2;
 		private System.Windows.Forms.ComboBox cbBook2;
 	}
 }
