@@ -1049,10 +1049,8 @@ namespace RapChessGui
 				labEloB.Text = cp.GetElo();
 				labProtocolB.Text = cp.GetProtocol();
 				labScoreB.Text = $"Score {cp.score}";
-				if (cp.nodes > 0)
-					labNodesB.Text = $"Nodes {cp.nodes.ToString("N0")}";
-				if (nps > 0)
-					labNpsB.Text = $"Nps {nps.ToString("N0")}";
+				labNodesB.Text = $"Nodes {cp.nodes.ToString("N0")}";
+				labNpsB.Text = $"Nps {nps.ToString("N0")}";
 				labPonderB.Text = $"Ponder {cp.ponder}";
 				labBookB.Text = $"Book {cp.usedBook}";
 				if (cp.seldepth != "0")
@@ -1066,10 +1064,8 @@ namespace RapChessGui
 				labEloT.Text = cp.GetElo();
 				labProtocolT.Text = cp.GetProtocol();
 				labScoreT.Text = $"Score {cp.score}";
-				if (cp.nodes > 0)
-					labNodesT.Text = $"Nodes {cp.nodes.ToString("N0")}";
-				if (nps > 0)
-					labNpsT.Text = $"Nps {nps.ToString("N0")}";
+				labNodesT.Text = $"Nodes {cp.nodes.ToString("N0")}";
+				labNpsT.Text = $"Nps {nps.ToString("N0")}";
 				labPonderT.Text = $"Ponder {cp.ponder}";
 				labBookT.Text = $"Book {cp.usedBook}";
 				if (cp.seldepth != "0")
