@@ -90,7 +90,7 @@ namespace RapChessGui
 			book = CRapIni.This.Read($"player>{name}>book", "None");
 			elo = CRapIni.This.Read($"player>{name}>elo", "1000");
 			eloNew = CRapIni.This.ReadInt($"player>{name}>eloNew", 1000);
-			eloOld = CRapIni.This.ReadDouble($"player>{name}>eloOld",1000);
+			eloOld = CRapIni.This.ReadDouble($"player>{name}>eloOld", 1000);
 		}
 
 		public void SaveToIni()
@@ -163,36 +163,19 @@ namespace RapChessGui
 			list.Sort(delegate (CPlayer u1, CPlayer u2)
 			{
 				int result = Convert.ToInt32(u1.elo) - Convert.ToInt32(u2.elo);
-				if(result == 0)
+				if (result == 0)
 					result = Convert.ToInt32(u1.eloOld) - Convert.ToInt32(u2.eloOld);
 				return result;
 			});
 		}
 
-		public static CPlayer GetPlayerEloHL(CPlayer user)
+		public static void SortElo(int e)
 		{
-			List<CPlayer> lu = new List<CPlayer>();
-			Sort();
-			int i = GetIndex(user.name);
-			int na = i - 2;
-			int nb = i + 2;
-			int n = na;
-			while (n <= nb)
+			list.Sort(delegate (CPlayer u1, CPlayer u2)
 			{
-				if ((n >= 0) && (n < list.Count) && (n != i))
-				{
-					CPlayer u = list[n];
-					if (u.engine == "Human")
-						nb++;
-					else
-						lu.Add(u);
-				}
-				n++;
-			}
-			if (lu.Count == 0)
-				return user;
-			int r = CChess.random.Next(lu.Count);
-			return lu[r];
+				int result = Math.Abs(Convert.ToInt32(u1.elo) - e) - Math.Abs(Convert.ToInt32(u2.elo) - e);
+				return result;
+			});
 		}
 
 		static CPlayer GetUserHuman()
@@ -203,29 +186,12 @@ namespace RapChessGui
 
 		public static CPlayer GetPlayer(string name)
 		{
-			foreach (CPlayer p in  list)
-			if (p.name == name)
+			foreach (CPlayer p in list)
+				if (p.name == name)
 					return p;
 			if (name == "Auto")
 				return GetPlayerAuto();
 			return GetUserHuman();
-		}
-
-		static int CountComputer()
-		{
-			int result = 0;
-			foreach (CPlayer cu in list)
-				if (cu.engine != "Human")
-					result++;
-			return result;
-		}
-
-		static bool IsHuman()
-		{
-			foreach (CPlayer cu in list)
-				if (cu.engine == "Human")
-					return true;
-			return false;
 		}
 
 		public static void LoadFromIni()

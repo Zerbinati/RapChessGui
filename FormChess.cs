@@ -153,7 +153,6 @@ namespace RapChessGui
 			CPlayerList.LoadFromIni();
 			CModeGame.LoadFromIni();
 			CModeMatch.LoadFromIni();
-			CModeTournament.LoadFromIni();
 			CModeTraining.LoadFromIni();
 		}
 
@@ -429,10 +428,12 @@ namespace RapChessGui
 			labGames.Text = $"Games {CModeTraining.games}";
 			cbTeacherEngine.SelectedIndex = cbTeacherEngine.FindStringExact(CModeTraining.teacher);
 			cbTrainedEngine.SelectedIndex = cbTrainedEngine.FindStringExact(CModeTraining.trained);
+			cbTeacherMode.SelectedIndex = cbTeacherMode.FindStringExact(CModeTraining.teacherMode);
+			cbTrainedMode.SelectedIndex = cbTrainedMode.FindStringExact(CModeTraining.trainedMode);
 			cbTeacherBook.SelectedIndex = cbTeacherBook.FindStringExact(CModeTraining.teacherBook);
 			cbTrainedBook.SelectedIndex = cbTrainedBook.FindStringExact(CModeTraining.trainedBook);
-			nudTeacher.Value = CModeTraining.teacherTime;
-			nudTrained.Value = CModeTraining.trainedTime;
+			nudTeacher.Value = CModeTraining.teacherValue;
+			nudTrained.Value = CModeTraining.trainedValue;
 			label12.Text = CModeTraining.win.ToString();
 			label13.Text = CModeTraining.loose.ToString();
 			label14.Text = CModeTraining.draw.ToString();
@@ -598,9 +599,11 @@ namespace RapChessGui
 		void StartTournament()
 		{
 			SetMode((int)CMode.tournament);
-			CPlayer u = CModeTournament.GetUser();
-			GamerList.gamer[0].SetPlayer(u);
-			GamerList.gamer[1].SetPlayer(CPlayerList.GetPlayerEloHL(u));
+			CPlayer p1 = CModeTournament.SelectPlayer();
+			CPlayer p2 = CModeTournament.SelectOpponent(p1);
+			GamerList.gamer[0].SetPlayer(p1);
+			GamerList.gamer[1].SetPlayer(p2);
+			//GamerList.gamer[1].SetPlayer(CPlayerList.GetPlayerEloHL(p));
 			Clear();
 		}
 
@@ -608,19 +611,49 @@ namespace RapChessGui
 		{
 			CModeTraining.teacher = cbTeacherEngine.Text;
 			CModeTraining.trained = cbTrainedEngine.Text;
+			CModeTraining.teacherMode = cbTeacherMode.Text;
+			CModeTraining.trainedMode = cbTrainedMode.Text;
 			CModeTraining.teacherBook = cbTeacherBook.Text;
 			CModeTraining.trainedBook = cbTrainedBook.Text;
+			CModeTraining.teacherValue = (int)nudTeacher.Value;
+			CModeTraining.trainedValue = (int)nudTrained.Value;
 			SetMode((int)CMode.training);
 			CPlayer uw = new CPlayer("Trained");
 			uw.engine = CModeTraining.trained;
-			uw.book = cbTrainedBook.Text;
-			uw.mode = "movetime";
-			uw.value = nudTrained.Value.ToString();
+			uw.book = CModeTraining.trainedBook;
+			switch (CModeTraining.trainedMode)
+			{
+				case "Depth":
+					uw.mode = "depth";
+					uw.value = Convert.ToString(CModeTraining.trainedValue);
+					break;
+				case "Nodes":
+					uw.mode = "nodes";
+					uw.value = Convert.ToString(CModeTraining.trainedValue * 100000);
+					break;
+				default:
+					uw.mode = "movetime";
+					uw.value = Convert.ToString(CModeTraining.trainedValue * 100);
+					break;
+			}
 			CPlayer ub = new CPlayer("Teacher");
 			ub.engine = CModeTraining.teacher;
-			ub.book = cbTeacherBook.Text;
-			ub.mode = "movetime";
-			ub.value = nudTeacher.Value.ToString();
+			ub.book = CModeTraining.teacherBook;
+			switch (CModeTraining.trainedMode)
+			{
+				case "Depth":
+					ub.mode = "depth";
+					ub.value = Convert.ToString(CModeTraining.teacherValue);
+					break;
+				case "Nodes":
+					ub.mode = "nodes";
+					ub.value = Convert.ToString(CModeTraining.teacherValue * 100000);
+					break;
+				default:
+					ub.mode = "movetime";
+					ub.value = Convert.ToString(CModeTraining.teacherValue * 100);
+					break;
+			}
 			GamerList.gamer[0].SetPlayer(uw);
 			GamerList.gamer[1].SetPlayer(ub);
 			if (CModeTraining.rotate)
@@ -772,12 +805,15 @@ namespace RapChessGui
 						OW = eloW;
 					if (OL > eloL)
 						OL = eloL;
+					string r = uw == GamerList.gamer[0].player ? "w" : "b";
+					CModeTournament.tourList.Write(GamerList.gamer[0].player.name, GamerList.gamer[1].player.name,r);
 				}
 				else
 				{
 					int opt = (OW + OL) >> 1;
 					OW = opt;
 					OL = opt;
+					CModeTournament.tourList.Write(GamerList.gamer[0].player.name,GamerList.gamer[1].player.name, "d");
 				}
 				int newW = Convert.ToInt32(eloW * 0.9 + Math.Max(OW, eloL) * 0.1);
 				int newL = Convert.ToInt32(eloL * 0.9 + Math.Min(OL, eloW) * 0.1);
@@ -797,20 +833,19 @@ namespace RapChessGui
 					if (uw.name == "Teacher")
 					{
 						CModeTraining.win++;
-						CModeTraining.teacherTime -= 100;
-						if (CModeTraining.teacherTime < 100)
-							CModeTraining.teacherTime = 100;
+						if (--CModeTraining.teacherValue < 1)
+							CModeTraining.teacherValue = 1;
 					}
 					else
 					{
 						CModeTraining.loose++;
-						CModeTraining.teacherTime += 100;
+						CModeTraining.teacherValue++;
 					}
 				}
 				else
 				{
 					CModeTraining.draw++;
-					CModeTraining.teacherTime += 100;
+					CModeTraining.teacherValue++;
 				}
 				ShowTraining();
 			}

@@ -99,7 +99,7 @@ namespace RapChessGui
 			CPlayer player = CPlayerList.GetPlayer(curPlayerName);
 			if (player == null)
 				return;
-			CRapIni.This.DeleteKey($"gamer>{player.name}");
+			CRapIni.This.DeleteKey($"player>{player.name}");
 			SaveToIni(player);
 			MessageBox.Show($"Player {player.name} has been modified");
 		}

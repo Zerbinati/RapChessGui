@@ -64,7 +64,7 @@ namespace RapChessGui
 			CBook reader = CBookList.GetBook(curBookName);
 			if (reader == null)
 				return;
-			CRapIni.This.DeleteKey($"reader>{reader.name}");
+			CRapIni.This.DeleteKey($"book>{reader.name}");
 			SaveToIni(reader);
 			MessageBox.Show($"Reader {reader.name} has been modified");
 		}

@@ -135,13 +135,11 @@
 			this.butTraining = new System.Windows.Forms.Button();
 			this.groupBox4 = new System.Windows.Forms.GroupBox();
 			this.nudTeacher = new System.Windows.Forms.NumericUpDown();
-			this.label18 = new System.Windows.Forms.Label();
 			this.cbTeacherBook = new System.Windows.Forms.ComboBox();
-			this.labTrainTime = new System.Windows.Forms.Label();
 			this.cbTeacherEngine = new System.Windows.Forms.ComboBox();
 			this.groupBox3 = new System.Windows.Forms.GroupBox();
 			this.nudTrained = new System.Windows.Forms.NumericUpDown();
-			this.label1 = new System.Windows.Forms.Label();
+			this.cbTrainedBook = new System.Windows.Forms.ComboBox();
 			this.cbTrainedEngine = new System.Windows.Forms.ComboBox();
 			this.tabPageEdit = new System.Windows.Forms.TabPage();
 			this.groupBox7 = new System.Windows.Forms.GroupBox();
@@ -178,8 +176,8 @@
 			this.labNodesT = new System.Windows.Forms.Label();
 			this.labDepthT = new System.Windows.Forms.Label();
 			this.labScoreT = new System.Windows.Forms.Label();
-			this.label17 = new System.Windows.Forms.Label();
-			this.cbTrainedBook = new System.Windows.Forms.ComboBox();
+			this.cbTrainedMode = new System.Windows.Forms.ComboBox();
+			this.cbTeacherMode = new System.Windows.Forms.ComboBox();
 			this.menuStrip1.SuspendLayout();
 			this.panMenu.SuspendLayout();
 			this.panelT1.SuspendLayout();
@@ -1208,7 +1206,7 @@
 			this.tableLayoutPanel1.Controls.Add(this.label6, 0, 0);
 			this.tableLayoutPanel1.Controls.Add(this.label16, 0, 1);
 			this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Top;
-			this.tableLayoutPanel1.Location = new System.Drawing.Point(3, 299);
+			this.tableLayoutPanel1.Location = new System.Drawing.Point(3, 260);
 			this.tableLayoutPanel1.Name = "tableLayoutPanel1";
 			this.tableLayoutPanel1.RowCount = 3;
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
@@ -1392,7 +1390,7 @@
 			// labGames
 			// 
 			this.labGames.Dock = System.Windows.Forms.DockStyle.Top;
-			this.labGames.Location = new System.Drawing.Point(3, 275);
+			this.labGames.Location = new System.Drawing.Point(3, 236);
 			this.labGames.Name = "labGames";
 			this.labGames.Size = new System.Drawing.Size(314, 24);
 			this.labGames.TabIndex = 22;
@@ -1402,7 +1400,7 @@
 			// butTraining
 			// 
 			this.butTraining.Dock = System.Windows.Forms.DockStyle.Top;
-			this.butTraining.Location = new System.Drawing.Point(3, 252);
+			this.butTraining.Location = new System.Drawing.Point(3, 213);
 			this.butTraining.Name = "butTraining";
 			this.butTraining.Size = new System.Drawing.Size(314, 23);
 			this.butTraining.TabIndex = 21;
@@ -1413,14 +1411,13 @@
 			// groupBox4
 			// 
 			this.groupBox4.Controls.Add(this.nudTeacher);
-			this.groupBox4.Controls.Add(this.label18);
 			this.groupBox4.Controls.Add(this.cbTeacherBook);
-			this.groupBox4.Controls.Add(this.labTrainTime);
+this.groupBox4.Controls.Add(this.cbTeacherMode);
 			this.groupBox4.Controls.Add(this.cbTeacherEngine);
 			this.groupBox4.Dock = System.Windows.Forms.DockStyle.Top;
-			this.groupBox4.Location = new System.Drawing.Point(3, 125);
+			this.groupBox4.Location = new System.Drawing.Point(3, 108);
 			this.groupBox4.Name = "groupBox4";
-			this.groupBox4.Size = new System.Drawing.Size(314, 127);
+			this.groupBox4.Size = new System.Drawing.Size(314, 105);
 			this.groupBox4.TabIndex = 20;
 			this.groupBox4.TabStop = false;
 			this.groupBox4.Text = "Teacher";
@@ -1428,14 +1425,9 @@
 			// nudTeacher
 			// 
 			this.nudTeacher.Dock = System.Windows.Forms.DockStyle.Top;
-			this.nudTeacher.Increment = new decimal(new int[] {
-            100,
-            0,
-            0,
-            0});
-			this.nudTeacher.Location = new System.Drawing.Point(3, 100);
+			this.nudTeacher.Location = new System.Drawing.Point(3, 58);
 			this.nudTeacher.Maximum = new decimal(new int[] {
-            1000000,
+            1000,
             0,
             0,
             0});
@@ -1450,41 +1442,21 @@
 			this.nudTeacher.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
 			this.nudTeacher.ThousandsSeparator = true;
 			this.nudTeacher.Value = new decimal(new int[] {
-            1000,
+            1,
             0,
             0,
             0});
-			// 
-			// label18
-			// 
-			this.label18.Dock = System.Windows.Forms.DockStyle.Top;
-			this.label18.Location = new System.Drawing.Point(3, 79);
-			this.label18.Name = "label18";
-			this.label18.Size = new System.Drawing.Size(308, 21);
-			this.label18.TabIndex = 27;
-			this.label18.Text = "Time";
-			this.label18.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
 			// cbTeacherBook
 			// 
 			this.cbTeacherBook.Dock = System.Windows.Forms.DockStyle.Top;
 			this.cbTeacherBook.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.cbTeacherBook.FormattingEnabled = true;
-			this.cbTeacherBook.Location = new System.Drawing.Point(3, 58);
+			this.cbTeacherBook.Location = new System.Drawing.Point(3, 37);
 			this.cbTeacherBook.Name = "cbTeacherBook";
 			this.cbTeacherBook.Size = new System.Drawing.Size(308, 21);
 			this.cbTeacherBook.Sorted = true;
 			this.cbTeacherBook.TabIndex = 26;
-			// 
-			// labTrainTime
-			// 
-			this.labTrainTime.Dock = System.Windows.Forms.DockStyle.Top;
-			this.labTrainTime.Location = new System.Drawing.Point(3, 37);
-			this.labTrainTime.Name = "labTrainTime";
-			this.labTrainTime.Size = new System.Drawing.Size(308, 21);
-			this.labTrainTime.TabIndex = 24;
-			this.labTrainTime.Text = "Book";
-			this.labTrainTime.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
 			// cbTeacherEngine
 			// 
@@ -1498,16 +1470,15 @@
 			// 
 			// groupBox3
 			// 
-		
+			
 			this.groupBox3.Controls.Add(this.nudTrained);
-			this.groupBox3.Controls.Add(this.label1);
-	this.groupBox3.Controls.Add(this.cbTrainedBook);
-			this.groupBox3.Controls.Add(this.label17);
+			this.groupBox3.Controls.Add(this.cbTrainedBook);
+this.groupBox3.Controls.Add(this.cbTrainedMode);
 			this.groupBox3.Controls.Add(this.cbTrainedEngine);
 			this.groupBox3.Dock = System.Windows.Forms.DockStyle.Top;
 			this.groupBox3.Location = new System.Drawing.Point(3, 3);
 			this.groupBox3.Name = "groupBox3";
-			this.groupBox3.Size = new System.Drawing.Size(314, 122);
+			this.groupBox3.Size = new System.Drawing.Size(314, 105);
 			this.groupBox3.TabIndex = 19;
 			this.groupBox3.TabStop = false;
 			this.groupBox3.Text = "Trained";
@@ -1515,14 +1486,9 @@
 			// nudTrained
 			// 
 			this.nudTrained.Dock = System.Windows.Forms.DockStyle.Top;
-			this.nudTrained.Increment = new decimal(new int[] {
-            100,
-            0,
-            0,
-            0});
 			this.nudTrained.Location = new System.Drawing.Point(3, 58);
 			this.nudTrained.Maximum = new decimal(new int[] {
-            1000000,
+            1000,
             0,
             0,
             0});
@@ -1537,20 +1503,21 @@
 			this.nudTrained.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
 			this.nudTrained.ThousandsSeparator = true;
 			this.nudTrained.Value = new decimal(new int[] {
-            1000,
+            1,
             0,
             0,
             0});
 			// 
-			// label1
+			// cbTrainedBook
 			// 
-			this.label1.Dock = System.Windows.Forms.DockStyle.Top;
-			this.label1.Location = new System.Drawing.Point(3, 37);
-			this.label1.Name = "label1";
-			this.label1.Size = new System.Drawing.Size(308, 21);
-			this.label1.TabIndex = 26;
-			this.label1.Text = "Time";
-			this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.cbTrainedBook.Dock = System.Windows.Forms.DockStyle.Top;
+			this.cbTrainedBook.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.cbTrainedBook.FormattingEnabled = true;
+			this.cbTrainedBook.Location = new System.Drawing.Point(3, 37);
+			this.cbTrainedBook.Name = "cbTrainedBook";
+			this.cbTrainedBook.Size = new System.Drawing.Size(308, 21);
+			this.cbTrainedBook.Sorted = true;
+			this.cbTrainedBook.TabIndex = 29;
 			// 
 			// cbTrainedEngine
 			// 
@@ -2010,26 +1977,35 @@
 			this.labScoreT.TabIndex = 6;
 			this.labScoreT.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
-			// label17
+			// cbTrainedMode
 			// 
-			this.label17.Dock = System.Windows.Forms.DockStyle.Top;
-			this.label17.Location = new System.Drawing.Point(3, 78);
-			this.label17.Name = "label17";
-			this.label17.Size = new System.Drawing.Size(308, 21);
-			this.label17.TabIndex = 28;
-			this.label17.Text = "Book";
-			this.label17.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.cbTrainedMode.Dock = System.Windows.Forms.DockStyle.Top;
+			this.cbTrainedMode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.cbTrainedMode.FormattingEnabled = true;
+			this.cbTrainedMode.Items.AddRange(new object[] {
+            "Depth",
+            "Nodes",
+            "Time"});
+			this.cbTrainedMode.Location = new System.Drawing.Point(3, 78);
+			this.cbTrainedMode.Name = "cbTrainedMode";
+			this.cbTrainedMode.Size = new System.Drawing.Size(308, 21);
+			this.cbTrainedMode.Sorted = true;
+			this.cbTrainedMode.TabIndex = 30;
 			// 
-			// cbTrainedBook
+			// cbTeacherMode
 			// 
-			this.cbTrainedBook.Dock = System.Windows.Forms.DockStyle.Top;
-			this.cbTrainedBook.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.cbTrainedBook.FormattingEnabled = true;
-			this.cbTrainedBook.Location = new System.Drawing.Point(3, 99);
-			this.cbTrainedBook.Name = "cbTrainedBook";
-			this.cbTrainedBook.Size = new System.Drawing.Size(308, 21);
-			this.cbTrainedBook.Sorted = true;
-			this.cbTrainedBook.TabIndex = 29;
+			this.cbTeacherMode.Dock = System.Windows.Forms.DockStyle.Top;
+			this.cbTeacherMode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.cbTeacherMode.FormattingEnabled = true;
+			this.cbTeacherMode.Items.AddRange(new object[] {
+            "Depth",
+            "Nodes",
+            "Time"});
+			this.cbTeacherMode.Location = new System.Drawing.Point(3, 78);
+			this.cbTeacherMode.Name = "cbTeacherMode";
+			this.cbTeacherMode.Size = new System.Drawing.Size(308, 21);
+			this.cbTeacherMode.Sorted = true;
+			this.cbTeacherMode.TabIndex = 30;
 			// 
 			// FormChess
 			// 
@@ -2162,14 +2138,11 @@
 		private System.Windows.Forms.GroupBox groupBox6;
 		private System.Windows.Forms.GroupBox groupBox5;
 		private System.Windows.Forms.NumericUpDown nudTrained;
-		private System.Windows.Forms.Label label1;
 		private System.Windows.Forms.ToolStripMenuItem pgnToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem saveToClipboardToolStripMenuItem1;
 		private System.Windows.Forms.ToolStripMenuItem loadFromClipboardToolStripMenuItem1;
 		private System.Windows.Forms.NumericUpDown nudTeacher;
-		private System.Windows.Forms.Label label18;
 		private System.Windows.Forms.ComboBox cbTeacherBook;
-		private System.Windows.Forms.Label labTrainTime;
 		private System.Windows.Forms.ComboBox cbCommand;
 		private System.Windows.Forms.Label labEngine;
 		private System.Windows.Forms.TabPage tabPageTournament;
@@ -2238,7 +2211,8 @@
 		private System.Windows.Forms.TextBox tbCommand2;
 		private System.Windows.Forms.ComboBox cbBook2;
 		private System.Windows.Forms.ComboBox cbTrainedBook;
-		private System.Windows.Forms.Label label17;
+		private System.Windows.Forms.ComboBox cbTeacherMode;
+		private System.Windows.Forms.ComboBox cbTrainedMode;
 	}
 }
 
