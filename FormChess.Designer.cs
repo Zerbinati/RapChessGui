@@ -136,10 +136,12 @@
 			this.groupBox4 = new System.Windows.Forms.GroupBox();
 			this.nudTeacher = new System.Windows.Forms.NumericUpDown();
 			this.cbTeacherBook = new System.Windows.Forms.ComboBox();
+			this.cbTeacherMode = new System.Windows.Forms.ComboBox();
 			this.cbTeacherEngine = new System.Windows.Forms.ComboBox();
 			this.groupBox3 = new System.Windows.Forms.GroupBox();
 			this.nudTrained = new System.Windows.Forms.NumericUpDown();
 			this.cbTrainedBook = new System.Windows.Forms.ComboBox();
+			this.cbTrainedMode = new System.Windows.Forms.ComboBox();
 			this.cbTrainedEngine = new System.Windows.Forms.ComboBox();
 			this.tabPageEdit = new System.Windows.Forms.TabPage();
 			this.groupBox7 = new System.Windows.Forms.GroupBox();
@@ -176,8 +178,11 @@
 			this.labNodesT = new System.Windows.Forms.Label();
 			this.labDepthT = new System.Windows.Forms.Label();
 			this.labScoreT = new System.Windows.Forms.Label();
-			this.cbTrainedMode = new System.Windows.Forms.ComboBox();
-			this.cbTeacherMode = new System.Windows.Forms.ComboBox();
+			this.lPlayer = new System.Windows.Forms.Label();
+			this.listView2 = new System.Windows.Forms.ListView();
+			this.columnHeader7 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.columnHeader9 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.columnHeader10 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.menuStrip1.SuspendLayout();
 			this.panMenu.SuspendLayout();
 			this.panelT1.SuspendLayout();
@@ -1109,6 +1114,8 @@
 			// 
 			// tabPageTournament
 			// 
+			this.tabPageTournament.Controls.Add(this.listView2);
+			this.tabPageTournament.Controls.Add(this.lPlayer);
 			this.tabPageTournament.Controls.Add(this.listView1);
 			this.tabPageTournament.Controls.Add(this.butStartTournament);
 			this.tabPageTournament.Location = new System.Drawing.Point(4, 25);
@@ -1124,23 +1131,24 @@
             this.columnHeader1,
             this.columnHeader2,
             this.columnHeader6});
-			this.listView1.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.listView1.Dock = System.Windows.Forms.DockStyle.Top;
 			this.listView1.FullRowSelect = true;
 			this.listView1.GridLines = true;
 			this.listView1.HideSelection = false;
 			this.listView1.Location = new System.Drawing.Point(0, 23);
 			this.listView1.Name = "listView1";
-			this.listView1.Size = new System.Drawing.Size(320, 524);
+			this.listView1.Size = new System.Drawing.Size(320, 295);
 			this.listView1.Sorting = System.Windows.Forms.SortOrder.Ascending;
 			this.listView1.TabIndex = 23;
 			this.listView1.UseCompatibleStateImageBehavior = false;
 			this.listView1.View = System.Windows.Forms.View.Details;
 			this.listView1.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.listView1_ColumnClick);
+			this.listView1.SelectedIndexChanged += new System.EventHandler(this.listView1_SelectedIndexChanged);
 			// 
 			// columnHeader1
 			// 
 			this.columnHeader1.Tag = "";
-			this.columnHeader1.Text = "Chess";
+			this.columnHeader1.Text = "Player";
 			this.columnHeader1.Width = 150;
 			// 
 			// columnHeader2
@@ -1412,7 +1420,7 @@
 			// 
 			this.groupBox4.Controls.Add(this.nudTeacher);
 			this.groupBox4.Controls.Add(this.cbTeacherBook);
-this.groupBox4.Controls.Add(this.cbTeacherMode);
+			this.groupBox4.Controls.Add(this.cbTeacherMode);
 			this.groupBox4.Controls.Add(this.cbTeacherEngine);
 			this.groupBox4.Dock = System.Windows.Forms.DockStyle.Top;
 			this.groupBox4.Location = new System.Drawing.Point(3, 108);
@@ -1425,7 +1433,7 @@ this.groupBox4.Controls.Add(this.cbTeacherMode);
 			// nudTeacher
 			// 
 			this.nudTeacher.Dock = System.Windows.Forms.DockStyle.Top;
-			this.nudTeacher.Location = new System.Drawing.Point(3, 58);
+			this.nudTeacher.Location = new System.Drawing.Point(3, 79);
 			this.nudTeacher.Maximum = new decimal(new int[] {
             1000,
             0,
@@ -1452,11 +1460,26 @@ this.groupBox4.Controls.Add(this.cbTeacherMode);
 			this.cbTeacherBook.Dock = System.Windows.Forms.DockStyle.Top;
 			this.cbTeacherBook.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.cbTeacherBook.FormattingEnabled = true;
-			this.cbTeacherBook.Location = new System.Drawing.Point(3, 37);
+			this.cbTeacherBook.Location = new System.Drawing.Point(3, 58);
 			this.cbTeacherBook.Name = "cbTeacherBook";
 			this.cbTeacherBook.Size = new System.Drawing.Size(308, 21);
 			this.cbTeacherBook.Sorted = true;
 			this.cbTeacherBook.TabIndex = 26;
+			// 
+			// cbTeacherMode
+			// 
+			this.cbTeacherMode.Dock = System.Windows.Forms.DockStyle.Top;
+			this.cbTeacherMode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.cbTeacherMode.FormattingEnabled = true;
+			this.cbTeacherMode.Items.AddRange(new object[] {
+            "Depth",
+            "Nodes",
+            "Time"});
+			this.cbTeacherMode.Location = new System.Drawing.Point(3, 37);
+			this.cbTeacherMode.Name = "cbTeacherMode";
+			this.cbTeacherMode.Size = new System.Drawing.Size(308, 21);
+			this.cbTeacherMode.Sorted = true;
+			this.cbTeacherMode.TabIndex = 30;
 			// 
 			// cbTeacherEngine
 			// 
@@ -1470,10 +1493,9 @@ this.groupBox4.Controls.Add(this.cbTeacherMode);
 			// 
 			// groupBox3
 			// 
-			
 			this.groupBox3.Controls.Add(this.nudTrained);
 			this.groupBox3.Controls.Add(this.cbTrainedBook);
-this.groupBox3.Controls.Add(this.cbTrainedMode);
+			this.groupBox3.Controls.Add(this.cbTrainedMode);
 			this.groupBox3.Controls.Add(this.cbTrainedEngine);
 			this.groupBox3.Dock = System.Windows.Forms.DockStyle.Top;
 			this.groupBox3.Location = new System.Drawing.Point(3, 3);
@@ -1486,7 +1508,7 @@ this.groupBox3.Controls.Add(this.cbTrainedMode);
 			// nudTrained
 			// 
 			this.nudTrained.Dock = System.Windows.Forms.DockStyle.Top;
-			this.nudTrained.Location = new System.Drawing.Point(3, 58);
+			this.nudTrained.Location = new System.Drawing.Point(3, 79);
 			this.nudTrained.Maximum = new decimal(new int[] {
             1000,
             0,
@@ -1513,11 +1535,26 @@ this.groupBox3.Controls.Add(this.cbTrainedMode);
 			this.cbTrainedBook.Dock = System.Windows.Forms.DockStyle.Top;
 			this.cbTrainedBook.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.cbTrainedBook.FormattingEnabled = true;
-			this.cbTrainedBook.Location = new System.Drawing.Point(3, 37);
+			this.cbTrainedBook.Location = new System.Drawing.Point(3, 58);
 			this.cbTrainedBook.Name = "cbTrainedBook";
 			this.cbTrainedBook.Size = new System.Drawing.Size(308, 21);
 			this.cbTrainedBook.Sorted = true;
 			this.cbTrainedBook.TabIndex = 29;
+			// 
+			// cbTrainedMode
+			// 
+			this.cbTrainedMode.Dock = System.Windows.Forms.DockStyle.Top;
+			this.cbTrainedMode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.cbTrainedMode.FormattingEnabled = true;
+			this.cbTrainedMode.Items.AddRange(new object[] {
+            "Depth",
+            "Nodes",
+            "Time"});
+			this.cbTrainedMode.Location = new System.Drawing.Point(3, 37);
+			this.cbTrainedMode.Name = "cbTrainedMode";
+			this.cbTrainedMode.Size = new System.Drawing.Size(308, 21);
+			this.cbTrainedMode.Sorted = true;
+			this.cbTrainedMode.TabIndex = 30;
 			// 
 			// cbTrainedEngine
 			// 
@@ -1977,35 +2014,49 @@ this.groupBox3.Controls.Add(this.cbTrainedMode);
 			this.labScoreT.TabIndex = 6;
 			this.labScoreT.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
-			// cbTrainedMode
+			// lPlayer
 			// 
-			this.cbTrainedMode.Dock = System.Windows.Forms.DockStyle.Top;
-			this.cbTrainedMode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.cbTrainedMode.FormattingEnabled = true;
-			this.cbTrainedMode.Items.AddRange(new object[] {
-            "Depth",
-            "Nodes",
-            "Time"});
-			this.cbTrainedMode.Location = new System.Drawing.Point(3, 78);
-			this.cbTrainedMode.Name = "cbTrainedMode";
-			this.cbTrainedMode.Size = new System.Drawing.Size(308, 21);
-			this.cbTrainedMode.Sorted = true;
-			this.cbTrainedMode.TabIndex = 30;
+			this.lPlayer.Dock = System.Windows.Forms.DockStyle.Top;
+			this.lPlayer.Location = new System.Drawing.Point(0, 318);
+			this.lPlayer.Name = "lPlayer";
+			this.lPlayer.Size = new System.Drawing.Size(320, 13);
+			this.lPlayer.TabIndex = 24;
+			this.lPlayer.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
-			// cbTeacherMode
+			// listView2
 			// 
-			this.cbTeacherMode.Dock = System.Windows.Forms.DockStyle.Top;
-			this.cbTeacherMode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.cbTeacherMode.FormattingEnabled = true;
-			this.cbTeacherMode.Items.AddRange(new object[] {
-            "Depth",
-            "Nodes",
-            "Time"});
-			this.cbTeacherMode.Location = new System.Drawing.Point(3, 78);
-			this.cbTeacherMode.Name = "cbTeacherMode";
-			this.cbTeacherMode.Size = new System.Drawing.Size(308, 21);
-			this.cbTeacherMode.Sorted = true;
-			this.cbTeacherMode.TabIndex = 30;
+			this.listView2.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader7,
+            this.columnHeader9,
+            this.columnHeader10});
+			this.listView2.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.listView2.FullRowSelect = true;
+			this.listView2.GridLines = true;
+			this.listView2.HideSelection = false;
+			this.listView2.Location = new System.Drawing.Point(0, 331);
+			this.listView2.Name = "listView2";
+			this.listView2.Size = new System.Drawing.Size(320, 216);
+			this.listView2.Sorting = System.Windows.Forms.SortOrder.Ascending;
+			this.listView2.TabIndex = 25;
+			this.listView2.UseCompatibleStateImageBehavior = false;
+			this.listView2.View = System.Windows.Forms.View.Details;
+			// 
+			// columnHeader7
+			// 
+			this.columnHeader7.Tag = "";
+			this.columnHeader7.Text = "Player";
+			this.columnHeader7.Width = 150;
+			// 
+			// columnHeader9
+			// 
+			this.columnHeader9.Text = "Elo";
+			this.columnHeader9.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			// 
+			// columnHeader10
+			// 
+			this.columnHeader10.Text = "Results";
+			this.columnHeader10.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			this.columnHeader10.Width = 80;
 			// 
 			// FormChess
 			// 
@@ -2213,6 +2264,11 @@ this.groupBox3.Controls.Add(this.cbTrainedMode);
 		private System.Windows.Forms.ComboBox cbTrainedBook;
 		private System.Windows.Forms.ComboBox cbTeacherMode;
 		private System.Windows.Forms.ComboBox cbTrainedMode;
+		private System.Windows.Forms.ListView listView2;
+		private System.Windows.Forms.ColumnHeader columnHeader7;
+		private System.Windows.Forms.Label lPlayer;
+		private System.Windows.Forms.ColumnHeader columnHeader9;
+		private System.Windows.Forms.ColumnHeader columnHeader10;
 	}
 }
 

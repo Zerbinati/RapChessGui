@@ -238,26 +238,28 @@ namespace RapChessGui
 						isBook = Uci.GetIndex("book", 0) > 0;
 						break;
 					default:
-						if ((GamerList.PlayerCur().engine.protocol == "Winboard") && GamerList.PlayerCur().wbok && (Uci.tokens.Length > 4))
-						{
-							try
+						CGamer cg = GamerList.PlayerCur();
+						if (cg.engine != null)
+							if ((cg.engine.protocol == "Winboard") && cg.wbok && (Uci.tokens.Length > 4))
 							{
-								p.depth = Uci.tokens[0];
-								p.score = Uci.tokens[1];
-								ulong ms = (ulong)Convert.ToInt64(Uci.tokens[2]);
-								p.nodes = (ulong)Convert.ToInt64(Uci.tokens[3]);
-								p.nps = ms > 0 ? (p.nodes * 100) / ms : 0;
-								pv = "";
-								for (int n = 4; n < Uci.tokens.Length; n++)
-									pv += Uci.tokens[n] + " ";
-								labLast.ForeColor = Color.Gainsboro;
-								labLast.Text = pv;
+								try
+								{
+									p.depth = Uci.tokens[0];
+									p.score = Uci.tokens[1];
+									ulong ms = (ulong)Convert.ToInt64(Uci.tokens[2]);
+									p.nodes = (ulong)Convert.ToInt64(Uci.tokens[3]);
+									p.nps = ms > 0 ? (p.nodes * 100) / ms : 0;
+									pv = "";
+									for (int n = 4; n < Uci.tokens.Length; n++)
+										pv += Uci.tokens[n] + " ";
+									labLast.ForeColor = Color.Gainsboro;
+									labLast.Text = pv;
+								}
+								catch
+								{
+									CRapLog.Add($"{p.player.name} ({p.player.engine}) ({msg})");
+								}
 							}
-							catch
-							{
-								CRapLog.Add($"{p.player.name} ({p.player.engine}) ({msg})");
-							}
-						}
 						break;
 				}
 			}
@@ -806,14 +808,14 @@ namespace RapChessGui
 					if (OL > eloL)
 						OL = eloL;
 					string r = uw == GamerList.gamer[0].player ? "w" : "b";
-					CModeTournament.tourList.Write(GamerList.gamer[0].player.name, GamerList.gamer[1].player.name,r);
+					CModeTournament.tourList.Write(GamerList.gamer[0].player.name, GamerList.gamer[1].player.name, r);
 				}
 				else
 				{
 					int opt = (OW + OL) >> 1;
 					OW = opt;
 					OL = opt;
-					CModeTournament.tourList.Write(GamerList.gamer[0].player.name,GamerList.gamer[1].player.name, "d");
+					CModeTournament.tourList.Write(GamerList.gamer[0].player.name, GamerList.gamer[1].player.name, "d");
 				}
 				int newW = Convert.ToInt32(eloW * 0.9 + Math.Max(OW, eloL) * 0.1);
 				int newL = Convert.ToInt32(eloL * 0.9 + Math.Min(OL, eloW) * 0.1);
@@ -908,7 +910,7 @@ namespace RapChessGui
 		{
 			Stopwatch stopwatch = new Stopwatch();
 			stopwatch.Start();
-			boardRotate = ((GamerList.gamer[1].engine== null) && (GamerList.gamer[0].engine != null)) ^ CData.rotateBoard;
+			boardRotate = ((GamerList.gamer[1].engine == null) && (GamerList.gamer[0].engine != null)) ^ CData.rotateBoard;
 			if ((GamerList.gamer[1].engine == null) && (GamerList.gamer[0].engine == null))
 				boardRotate = !CChess.whiteTurn;
 			if (boardRotate)
@@ -1698,11 +1700,6 @@ namespace RapChessGui
 			ShowAutoElo();
 		}
 
-		private void booksToolStripMenuItem_Click(object sender, EventArgs e)
-		{
-
-		}
-
 		private void booksToolStripMenuItem1_Click(object sender, EventArgs e)
 		{
 			FormBook.This.ShowDialog(this);
@@ -1722,6 +1719,31 @@ namespace RapChessGui
 			FormEngine.This.ShowDialog(this);
 			Reset();
 			IniLoad();
+		}
+
+		private void listView1_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			if (listView1.SelectedItems.Count > 0)
+			{
+				ListViewItem item = listView1.SelectedItems[0];
+				string name = item.SubItems[0].Text;
+				lPlayer.Text = name;
+				listView2.Items.Clear();
+				foreach (CPlayer p in CPlayerList.list)
+					if (p.engine != "Human")
+					{
+						int rw = 0;
+						int rl = 0;
+						int rd = 0;
+						CModeTournament.tourList.CountGames(name, p.name, ref rw, ref rl, ref rd);
+						int count = rw + rl + rd;
+						if (count > 0)
+						{
+							int pro = (rw * 200 + rd * 100) / (count * 2);
+							listView2.Items.Add(new ListViewItem(new[] { p.name, p.elo, $"{rw}-{rl}-{rd} {pro}%" }));
+						}
+					}
+			}
 		}
 	}
 }

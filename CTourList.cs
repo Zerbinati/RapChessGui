@@ -52,7 +52,7 @@ namespace RapChessGui
 			LoadFromFile();
 		}
 
-		public int CountGames(string p1,string p2,ref double r)
+		/*public int CountGames(string p1,string p2,ref double r)
 		{
 			int result = 0;
 			int rw = 0;
@@ -80,6 +80,34 @@ namespace RapChessGui
 			if(result >0)
 			r = (rw + rd * 0.5)/ result;
 			return result;
+		}*/
+
+		public void CountGames(string p1, string p2, ref int rw,ref int rl,ref int rd)
+		{
+			rw = 0;
+			rl = 0;
+			rd = 0;
+			foreach (CTour t in list)
+			{
+				if ((t.w == p1) && (t.b == p2))
+				{
+					if (t.r == "d")
+						rd++;
+					if (t.r == "w")
+						rw++;
+					if (t.r == "b")
+						rl++;
+				}
+				if ((t.w == p2) && (t.b == p1))
+				{
+					if (t.r == "d")
+						rd++;
+					if (t.r == "b")
+						rw++;
+					if (t.r == "w")
+						rl++;
+				}
+			}
 		}
 
 		public void LoadFromFile()

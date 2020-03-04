@@ -15,23 +15,35 @@ namespace RapChessGui
 			int elo = Convert.ToInt32(player.elo);
 			int elo1 = Convert.ToInt32(player1.elo);
 			int elo2 = Convert.ToInt32(player2.elo);
-			double r1 = 0;
-			double r2 = 0;
-			int count1 = tourList.CountGames(player.name, player1.name, ref r1);
-			int count2 = tourList.CountGames(player.name, player2.name, ref r2);
+			int rw1 = 0;
+			int rl1 = 0;
+			int rd1 = 0;
+			int rw2 = 0;
+			int rl2 = 0;
+			int rd2 = 0;
+			int r1 = 50;
+			int r2 = 50;
+			tourList.CountGames(player.name, player1.name, ref rw1, ref rl1, ref rd1);
+			tourList.CountGames(player.name, player2.name, ref rw2, ref rl2, ref rd2);
+			int count1 = rw1 + rl1 + rd1;
+			int count2 = rw2 + rl2 + rd2;
+			if (count1 > 0)
+				r1 = (rw1 * 200 + rd1 * 100) / count1;
+			if (count2 > 0)
+				r2 = (rw2 * 200 + rd2 * 100) / count2;
 			count1 <<= (Math.Abs(p - p1) - 1);
+			count2 <<= (Math.Abs(p - p2) - 1);
 			if (count1 == 0)
 				return player1;
-			count2 <<= (Math.Abs(p - p2) - 1);
 			if (count2 == 0)
 				return player2;
-			if ((elo > elo1) && (r1 < 0.5))
+			if ((elo > elo1) && (r1 < 50))
 				count1 >>= 1;
-			if ((elo < elo1) && (r1 > 0.5))
+			if ((elo < elo1) && (r1 > 50))
 				count1 >>= 1;
-			if ((elo > elo2) && (r2 < 0.5))
+			if ((elo > elo2) && (r2 < 50))
 				count2 >>= 1;
-			if ((elo < elo2) && (r2 > 0.5))
+			if ((elo < elo2) && (r2 > 50))
 				count2 >>= 1;
 			if (count1 > count2)
 				return player2;
