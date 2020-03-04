@@ -323,9 +323,6 @@ namespace RapChessGui
 				case (int)CMode.match:
 					ShowMatch();
 					break;
-				case (int)CMode.tournament:
-					ShowTournament();
-					break;
 				case (int)CMode.training:
 					labEloB.Visible = false;
 					labEloT.Visible = false;
@@ -417,12 +414,22 @@ namespace RapChessGui
 			labMatch24.Text = $"{CModeMatch.Result(true)}%";
 		}
 
-		void ShowTournament()
+		void TournamentReset()
 		{
 			listView1.Items.Clear();
-			foreach (CPlayer u in CPlayerList.list)
-				if (u.engine != "Human")
-					listView1.Items.Add(new ListViewItem(new[] { u.name, u.elo, u.GetDeltaElo().ToString() }));
+			foreach (CPlayer p in CPlayerList.list)
+				if (p.engine != "Human")
+					listView1.Items.Add(new ListViewItem(new[] { p.name, p.elo, p.GetDeltaElo().ToString() }));
+		}
+
+		void TournamentUpdate(CPlayer p)
+		{
+			foreach (ListViewItem lvi in listView1.Items)
+				if (lvi.Text == p.name)
+				{
+					lvi.SubItems[1].Text = p.elo;
+					lvi.SubItems[2].Text = p.GetDeltaElo().ToString();
+				}
 		}
 
 		void ShowTraining()
@@ -495,7 +502,7 @@ namespace RapChessGui
 			cbTrainedBook.SelectedIndex = 0;
 			cbBook1.SelectedIndex = 0;
 			cbBook2.SelectedIndex = 0;
-			ShowTournament();
+			TournamentReset();
 			if (SortingColumn != null)
 				SortingColumn.Text = SortingColumn.Text.Substring(2);
 			SortingColumn = listView1.Columns[1];
@@ -825,7 +832,8 @@ namespace RapChessGui
 				ul.eloOld = ul.eloOld * .9 + newL * .1; ;
 				uw.SaveToIni();
 				ul.SaveToIni();
-				ShowTournament();
+				TournamentUpdate(uw);
+				TournamentUpdate(ul);
 			}
 			if (CData.gameMode == (int)CMode.training)
 			{

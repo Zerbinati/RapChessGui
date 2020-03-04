@@ -109,6 +109,11 @@
 			this.cbMode1 = new System.Windows.Forms.ComboBox();
 			this.cbEngine1 = new System.Windows.Forms.ComboBox();
 			this.tabPageTournament = new System.Windows.Forms.TabPage();
+			this.listView2 = new System.Windows.Forms.ListView();
+			this.columnHeader7 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.columnHeader9 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.columnHeader10 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.lPlayer = new System.Windows.Forms.Label();
 			this.listView1 = new System.Windows.Forms.ListView();
 			this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -178,11 +183,6 @@
 			this.labNodesT = new System.Windows.Forms.Label();
 			this.labDepthT = new System.Windows.Forms.Label();
 			this.labScoreT = new System.Windows.Forms.Label();
-			this.lPlayer = new System.Windows.Forms.Label();
-			this.listView2 = new System.Windows.Forms.ListView();
-			this.columnHeader7 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.columnHeader9 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.columnHeader10 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.menuStrip1.SuspendLayout();
 			this.panMenu.SuspendLayout();
 			this.panelT1.SuspendLayout();
@@ -1125,6 +1125,51 @@
 			this.tabPageTournament.Text = "Tournament";
 			this.tabPageTournament.UseVisualStyleBackColor = true;
 			// 
+			// listView2
+			// 
+			this.listView2.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader7,
+            this.columnHeader9,
+            this.columnHeader10});
+			this.listView2.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.listView2.FullRowSelect = true;
+			this.listView2.GridLines = true;
+			this.listView2.HideSelection = false;
+			this.listView2.Location = new System.Drawing.Point(0, 373);
+			this.listView2.MultiSelect = false;
+			this.listView2.Name = "listView2";
+			this.listView2.ShowGroups = false;
+			this.listView2.Size = new System.Drawing.Size(320, 174);
+			this.listView2.TabIndex = 25;
+			this.listView2.UseCompatibleStateImageBehavior = false;
+			this.listView2.View = System.Windows.Forms.View.Details;
+			// 
+			// columnHeader7
+			// 
+			this.columnHeader7.Tag = "";
+			this.columnHeader7.Text = "Player";
+			this.columnHeader7.Width = 150;
+			// 
+			// columnHeader9
+			// 
+			this.columnHeader9.Text = "Elo";
+			this.columnHeader9.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			// 
+			// columnHeader10
+			// 
+			this.columnHeader10.Text = "Results";
+			this.columnHeader10.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			this.columnHeader10.Width = 80;
+			// 
+			// lPlayer
+			// 
+			this.lPlayer.Dock = System.Windows.Forms.DockStyle.Top;
+			this.lPlayer.Location = new System.Drawing.Point(0, 360);
+			this.lPlayer.Name = "lPlayer";
+			this.lPlayer.Size = new System.Drawing.Size(320, 13);
+			this.lPlayer.TabIndex = 24;
+			this.lPlayer.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			// 
 			// listView1
 			// 
 			this.listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
@@ -1137,7 +1182,7 @@
 			this.listView1.HideSelection = false;
 			this.listView1.Location = new System.Drawing.Point(0, 23);
 			this.listView1.Name = "listView1";
-			this.listView1.Size = new System.Drawing.Size(320, 295);
+			this.listView1.Size = new System.Drawing.Size(320, 337);
 			this.listView1.Sorting = System.Windows.Forms.SortOrder.Ascending;
 			this.listView1.TabIndex = 23;
 			this.listView1.UseCompatibleStateImageBehavior = false;
@@ -1844,7 +1889,7 @@
 			// 
 			// labPonderB
 			// 
-			this.labPonderB.BackColor = System.Drawing.Color.LightGray;
+			this.labPonderB.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(160)))));
 			this.labPonderB.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
 			this.labPonderB.Dock = System.Windows.Forms.DockStyle.Left;
 			this.labPonderB.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
@@ -1857,7 +1902,7 @@
 			// 
 			// labBookB
 			// 
-			this.labBookB.BackColor = System.Drawing.Color.LightGray;
+			this.labBookB.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(160)))));
 			this.labBookB.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
 			this.labBookB.Dock = System.Windows.Forms.DockStyle.Left;
 			this.labBookB.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
@@ -1870,7 +1915,7 @@
 			// 
 			// labNpsB
 			// 
-			this.labNpsB.BackColor = System.Drawing.Color.LightGray;
+			this.labNpsB.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(160)))));
 			this.labNpsB.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
 			this.labNpsB.Dock = System.Windows.Forms.DockStyle.Left;
 			this.labNpsB.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
@@ -1883,7 +1928,7 @@
 			// 
 			// labNodesB
 			// 
-			this.labNodesB.BackColor = System.Drawing.Color.LightGray;
+			this.labNodesB.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(160)))));
 			this.labNodesB.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
 			this.labNodesB.Dock = System.Windows.Forms.DockStyle.Left;
 			this.labNodesB.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
@@ -1896,7 +1941,7 @@
 			// 
 			// labDepthB
 			// 
-			this.labDepthB.BackColor = System.Drawing.Color.LightGray;
+			this.labDepthB.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(160)))));
 			this.labDepthB.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
 			this.labDepthB.Dock = System.Windows.Forms.DockStyle.Left;
 			this.labDepthB.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
@@ -1909,7 +1954,7 @@
 			// 
 			// labScoreB
 			// 
-			this.labScoreB.BackColor = System.Drawing.Color.LightGray;
+			this.labScoreB.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(160)))));
 			this.labScoreB.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
 			this.labScoreB.Dock = System.Windows.Forms.DockStyle.Left;
 			this.labScoreB.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
@@ -1938,7 +1983,7 @@
 			// 
 			// labPonderT
 			// 
-			this.labPonderT.BackColor = System.Drawing.Color.LightGray;
+			this.labPonderT.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(160)))));
 			this.labPonderT.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
 			this.labPonderT.Dock = System.Windows.Forms.DockStyle.Left;
 			this.labPonderT.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
@@ -1951,7 +1996,7 @@
 			// 
 			// labBookT
 			// 
-			this.labBookT.BackColor = System.Drawing.Color.LightGray;
+			this.labBookT.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(160)))));
 			this.labBookT.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
 			this.labBookT.Dock = System.Windows.Forms.DockStyle.Left;
 			this.labBookT.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
@@ -1964,7 +2009,7 @@
 			// 
 			// labNpsT
 			// 
-			this.labNpsT.BackColor = System.Drawing.Color.LightGray;
+			this.labNpsT.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(160)))));
 			this.labNpsT.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
 			this.labNpsT.Dock = System.Windows.Forms.DockStyle.Left;
 			this.labNpsT.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
@@ -1977,7 +2022,7 @@
 			// 
 			// labNodesT
 			// 
-			this.labNodesT.BackColor = System.Drawing.Color.LightGray;
+			this.labNodesT.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(160)))));
 			this.labNodesT.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
 			this.labNodesT.Dock = System.Windows.Forms.DockStyle.Left;
 			this.labNodesT.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
@@ -1990,7 +2035,7 @@
 			// 
 			// labDepthT
 			// 
-			this.labDepthT.BackColor = System.Drawing.Color.LightGray;
+			this.labDepthT.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(160)))));
 			this.labDepthT.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
 			this.labDepthT.Dock = System.Windows.Forms.DockStyle.Left;
 			this.labDepthT.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
@@ -2003,7 +2048,7 @@
 			// 
 			// labScoreT
 			// 
-			this.labScoreT.BackColor = System.Drawing.Color.LightGray;
+			this.labScoreT.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(160)))));
 			this.labScoreT.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
 			this.labScoreT.Dock = System.Windows.Forms.DockStyle.Left;
 			this.labScoreT.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
@@ -2013,50 +2058,6 @@
 			this.labScoreT.Size = new System.Drawing.Size(150, 26);
 			this.labScoreT.TabIndex = 6;
 			this.labScoreT.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			// 
-			// lPlayer
-			// 
-			this.lPlayer.Dock = System.Windows.Forms.DockStyle.Top;
-			this.lPlayer.Location = new System.Drawing.Point(0, 318);
-			this.lPlayer.Name = "lPlayer";
-			this.lPlayer.Size = new System.Drawing.Size(320, 13);
-			this.lPlayer.TabIndex = 24;
-			this.lPlayer.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			// 
-			// listView2
-			// 
-			this.listView2.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader7,
-            this.columnHeader9,
-            this.columnHeader10});
-			this.listView2.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.listView2.FullRowSelect = true;
-			this.listView2.GridLines = true;
-			this.listView2.HideSelection = false;
-			this.listView2.Location = new System.Drawing.Point(0, 331);
-			this.listView2.Name = "listView2";
-			this.listView2.Size = new System.Drawing.Size(320, 216);
-			this.listView2.Sorting = System.Windows.Forms.SortOrder.Ascending;
-			this.listView2.TabIndex = 25;
-			this.listView2.UseCompatibleStateImageBehavior = false;
-			this.listView2.View = System.Windows.Forms.View.Details;
-			// 
-			// columnHeader7
-			// 
-			this.columnHeader7.Tag = "";
-			this.columnHeader7.Text = "Player";
-			this.columnHeader7.Width = 150;
-			// 
-			// columnHeader9
-			// 
-			this.columnHeader9.Text = "Elo";
-			this.columnHeader9.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-			// 
-			// columnHeader10
-			// 
-			this.columnHeader10.Text = "Results";
-			this.columnHeader10.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-			this.columnHeader10.Width = 80;
 			// 
 			// FormChess
 			// 
