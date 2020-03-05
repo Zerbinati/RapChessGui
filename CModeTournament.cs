@@ -25,11 +25,11 @@ namespace RapChessGui
 			int count1 = rw1 + rl1 + rd1;
 			int count2 = rw2 + rl2 + rd2;
 			if (count1 > 0)
-				r1 = (rw1 * 200 + rd1 * 100) / count1;
+				r1 = (rw1 * 100 + rd1 * 50) / count1;
 			if (count2 > 0)
-				r2 = (rw2 * 200 + rd2 * 100) / count2;
-			count1 <<= (player1.distance - 1);
-			count2 <<= (player2.distance - 1);
+				r2 = (rw2 * 100 + rd2 * 50) / count2;
+			count1 <<= player1.distance;
+			count2 <<= player2.distance;
 			if (count1 == 0)
 				return player1;
 			if (count2 == 0)

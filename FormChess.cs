@@ -1760,7 +1760,7 @@ namespace RapChessGui
 						int count = rw + rl + rd;
 						if (count > 0)
 						{
-							int pro = (rw * 200 + rd * 100) / (count * 2);
+							int pro = (rw * 100 + rd * 50) / count;
 							listView2.Items.Add(new ListViewItem(new[] { p.name, p.elo, $"{rw}-{rl}-{rd} {pro}%" }));
 						}
 					}
