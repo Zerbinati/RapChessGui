@@ -612,7 +612,19 @@ namespace RapChessGui
 			CPlayer p2 = CModeTournament.SelectOpponent(p1);
 			GamerList.gamer[0].SetPlayer(p1);
 			GamerList.gamer[1].SetPlayer(p2);
-			//GamerList.gamer[1].SetPlayer(CPlayerList.GetPlayerEloHL(p));
+			foreach (ListViewItem lvi in listView1.Items)
+				if (lvi.Text == p1.name)
+				{
+					int top = lvi.Index;
+					top -= 4;
+					if (top < 0)
+						top = 0;
+					lvi.Selected = true;
+					listView1.TopItem = listView1.Items[top];
+					listView1.Sort();
+					listView1.Focus();
+					break;
+				}
 			Clear();
 		}
 
@@ -1735,7 +1747,8 @@ namespace RapChessGui
 			{
 				ListViewItem item = listView1.SelectedItems[0];
 				string name = item.SubItems[0].Text;
-				lPlayer.Text = name;
+				CPlayer player = CPlayerList.GetPlayer(name);
+				lPlayer.Text = $"{player.name} - {player.elo}";
 				listView2.Items.Clear();
 				foreach (CPlayer p in CPlayerList.list)
 					if (p.engine != "Human")

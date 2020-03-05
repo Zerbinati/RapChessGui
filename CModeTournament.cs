@@ -9,9 +9,6 @@ namespace RapChessGui
 
 		public static CPlayer ChooseOpponent(CPlayer player, CPlayer player1, CPlayer player2)
 		{
-			int p = CPlayerList.GetIndex(player.name);
-			int p1 = CPlayerList.GetIndex(player1.name);
-			int p2 = CPlayerList.GetIndex(player2.name);
 			int elo = Convert.ToInt32(player.elo);
 			int elo1 = Convert.ToInt32(player1.elo);
 			int elo2 = Convert.ToInt32(player2.elo);
@@ -31,8 +28,8 @@ namespace RapChessGui
 				r1 = (rw1 * 200 + rd1 * 100) / count1;
 			if (count2 > 0)
 				r2 = (rw2 * 200 + rd2 * 100) / count2;
-			count1 <<= (Math.Abs(p - p1) - 1);
-			count2 <<= (Math.Abs(p - p2) - 1);
+			count1 <<= (player1.distance - 1);
+			count2 <<= (player2.distance - 1);
 			if (count1 == 0)
 				return player1;
 			if (count2 == 0)
@@ -54,29 +51,17 @@ namespace RapChessGui
 
 		public static CPlayer SelectPlayer()
 		{
-			List<string> pl = new List<string>();
-			foreach (CPlayer p in CPlayerList.list)
-				if (p.engine != "Human")
-					pl.Add(p.name);
-			if (pl.Count == 0)
-				return null;
-			for(int n = tourList.list.Count - 1; n >= 0; n--)
-			{
-				CTour t = tourList.list[n];
-				if (pl.Count == 1)
-					break;
-				int i;
-				i = pl.IndexOf(t.w);
-				if(i >= 0)
-				pl.RemoveAt(i);
-
-			}
-			return CPlayerList.GetPlayer(pl[0]);
+			CPlayer p = tourList.LastPlayer();
+			return CPlayerList.NextPlayer(p);
 		}
 
 		public static CPlayer SelectOpponent(CPlayer player)
 		{
-			CPlayerList.SortElo(Convert.ToInt32(player.elo));
+			CPlayerList.Sort();
+			int i = CPlayerList.GetIndex(player.name);
+			for(int n =0;n<CPlayerList.list.Count;n++)
+				CPlayerList.list[n].distance = Math.Abs(i - n);
+			CPlayerList.SortDistance();
 			List<CPlayer> pl = new List<CPlayer>();
 			foreach (CPlayer p in CPlayerList.list)
 				if ((p != player) && (p.engine != "Human"))

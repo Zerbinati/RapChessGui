@@ -1181,7 +1181,9 @@
 			this.listView1.GridLines = true;
 			this.listView1.HideSelection = false;
 			this.listView1.Location = new System.Drawing.Point(0, 23);
+			this.listView1.MultiSelect = false;
 			this.listView1.Name = "listView1";
+			this.listView1.ShowGroups = false;
 			this.listView1.Size = new System.Drawing.Size(320, 337);
 			this.listView1.Sorting = System.Windows.Forms.SortOrder.Ascending;
 			this.listView1.TabIndex = 23;

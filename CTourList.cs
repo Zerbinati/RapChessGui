@@ -10,12 +10,7 @@ namespace RapChessGui
 		public string b;
 		public string r;
 
-		public CTour()
-		{
-
-		}
-
-		public CTour(string tw,string tb,string tr)
+		public CTour(string tw, string tb, string tr)
 		{
 			w = tw;
 			b = tb;
@@ -52,37 +47,7 @@ namespace RapChessGui
 			LoadFromFile();
 		}
 
-		/*public int CountGames(string p1,string p2,ref double r)
-		{
-			int result = 0;
-			int rw = 0;
-			int rd = 0;
-			foreach (CTour t in list)
-			{
-				if ((t.w == p1) && (t.b == p2))
-				{
-					if (t.r == "d")
-						rd++;
-					if (t.r == "w")
-						rw++;
-					result++;
-				}
-				if ((t.w == p2) && (t.b == p1))
-				{
-					if (t.r == "d")
-						rd++;
-					if (t.r == "b")
-						rw++;
-					result++;
-				}
-			}
-			r = 0;
-			if(result >0)
-			r = (rw + rd * 0.5)/ result;
-			return result;
-		}*/
-
-		public void CountGames(string p1, string p2, ref int rw,ref int rl,ref int rd)
+		public void CountGames(string p1, string p2, ref int rw, ref int rl, ref int rd)
 		{
 			rw = 0;
 			rl = 0;
@@ -113,17 +78,17 @@ namespace RapChessGui
 		public void LoadFromFile()
 		{
 			list.Clear();
-			if(File.Exists(path))
-			using (StreamReader file = new StreamReader(path))
-			{
-				string line;
-				while ((line = file.ReadLine()) != null)
+			if (File.Exists(path))
+				using (StreamReader file = new StreamReader(path))
 				{
-					CTour t = new CTour(line);
-					list.Add(t);
+					string line;
+					while ((line = file.ReadLine()) != null)
+					{
+						CTour t = new CTour(line);
+						list.Add(t);
+					}
 				}
-			}
-			if(list.Count > 10000)
+			if (list.Count > 10000)
 			{
 				int remove = Math.Max(0, list.Count - 10000);
 				list.RemoveRange(0, remove);
@@ -133,19 +98,27 @@ namespace RapChessGui
 
 		public void SaveToFile()
 		{
-			using (StreamWriter file =new StreamWriter(path))
+			using (StreamWriter file = new StreamWriter(path))
 			{
 				foreach (CTour t in list)
-				file.WriteLine(t.SaveToString());
+					file.WriteLine(t.SaveToString());
 			}
 		}
 
-		public void Write(string w,string b,string r)
+		public CPlayer LastPlayer()
 		{
-			CTour t = new CTour(w,b,r);
+			string n = "";
+			if (list.Count > 0)
+				n = list[list.Count - 1].w;
+			return CPlayerList.GetPlayer(n);
+		}
+
+		public void Write(string w, string b, string r)
+		{
+			CTour t = new CTour(w, b, r);
 			list.Add(t);
-			using (StreamWriter file = new StreamWriter(path,true))
-				file.WriteLine($"{w}#{b}#{r}");
+			using (StreamWriter file = new StreamWriter(path, true))
+				file.WriteLine(t.SaveToString());
 		}
 
 	}

@@ -17,6 +17,7 @@ namespace RapChessGui
 		public int eloNew = 1000;
 		public int eloLess = 0;
 		public int eloMore = 0;
+		public int distance = 0;
 
 		public CPlayer(string n)
 		{
@@ -162,26 +163,19 @@ namespace RapChessGui
 		{
 			list.Sort(delegate (CPlayer u1, CPlayer u2)
 			{
-				int result = Convert.ToInt32(u1.elo) - Convert.ToInt32(u2.elo);
+				int result = Convert.ToInt32(u2.elo) - Convert.ToInt32(u1.elo);
 				if (result == 0)
-					result = Convert.ToInt32(u1.eloOld) - Convert.ToInt32(u2.eloOld);
+					result = Convert.ToInt32(u2.eloOld) - Convert.ToInt32(u1.eloOld);
 				return result;
 			});
 		}
 
-		public static void SortElo(int e)
+		public static void SortDistance()
 		{
 			list.Sort(delegate (CPlayer u1, CPlayer u2)
 			{
-				int result = Math.Abs(Convert.ToInt32(u1.elo) - e) - Math.Abs(Convert.ToInt32(u2.elo) - e);
-				return result;
+				return u1.distance - u2.distance;
 			});
-		}
-
-		static CPlayer GetUserHuman()
-		{
-			CPlayer uh = new CPlayer("Human");
-			return uh;
 		}
 
 		public static CPlayer GetPlayer(string name)
@@ -189,9 +183,7 @@ namespace RapChessGui
 			foreach (CPlayer p in list)
 				if (p.name == name)
 					return p;
-			if (name == "Auto")
-				return GetPlayerAuto();
-			return GetUserHuman();
+			return GetPlayerAuto();
 		}
 
 		public static void LoadFromIni()
@@ -237,6 +229,20 @@ namespace RapChessGui
 			if (index >= list.Count)
 				index = list.Count - 1;
 			return Convert.ToInt32((3000 * (index + 1)) / list.Count);
+		}
+
+		public static CPlayer NextPlayer(CPlayer p)
+		{
+			Sort();
+			int i = GetIndex(p.name);
+			for (int n = 0; n < list.Count; n++)
+			{
+				i = ++i % list.Count;
+				CPlayer cp = list[i];
+				if (cp.name != "Human")
+					return cp;
+			}
+			return GetPlayer("Human");
 		}
 
 
