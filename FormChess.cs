@@ -1750,6 +1750,7 @@ namespace RapChessGui
 				CPlayer player = CPlayerList.GetPlayer(name);
 				lPlayer.Text = $"{player.name} - {player.elo}";
 				listView2.Items.Clear();
+				CPlayerList.Sort();
 				foreach (CPlayer p in CPlayerList.list)
 					if (p.engine != "Human")
 					{
@@ -1761,7 +1762,8 @@ namespace RapChessGui
 						if (count > 0)
 						{
 							int pro = (rw * 100 + rd * 50) / count;
-							listView2.Items.Add(new ListViewItem(new[] { p.name, p.elo, $"{rw}-{rl}-{rd} {pro}%" }));
+							int elo = Convert.ToInt32(p.elo) - Convert.ToInt32(player.elo);
+							listView2.Items.Add(new ListViewItem(new[] { p.name, elo.ToString(), count.ToString(), pro.ToString() }));
 						}
 					}
 			}

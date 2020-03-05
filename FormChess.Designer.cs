@@ -183,6 +183,7 @@
 			this.labNodesT = new System.Windows.Forms.Label();
 			this.labDepthT = new System.Windows.Forms.Label();
 			this.labScoreT = new System.Windows.Forms.Label();
+			this.columnHeader8 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.menuStrip1.SuspendLayout();
 			this.panMenu.SuspendLayout();
 			this.panelT1.SuspendLayout();
@@ -1130,6 +1131,7 @@
 			this.listView2.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeader7,
             this.columnHeader9,
+            this.columnHeader8,
             this.columnHeader10});
 			this.listView2.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.listView2.FullRowSelect = true;
@@ -1148,18 +1150,19 @@
 			// 
 			this.columnHeader7.Tag = "";
 			this.columnHeader7.Text = "Player";
-			this.columnHeader7.Width = 150;
+			this.columnHeader7.Width = 140;
 			// 
 			// columnHeader9
 			// 
 			this.columnHeader9.Text = "Elo";
 			this.columnHeader9.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			this.columnHeader9.Width = 50;
 			// 
 			// columnHeader10
 			// 
-			this.columnHeader10.Text = "Results";
+			this.columnHeader10.Text = "Score";
 			this.columnHeader10.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-			this.columnHeader10.Width = 80;
+			this.columnHeader10.Width = 50;
 			// 
 			// lPlayer
 			// 
@@ -2061,6 +2064,12 @@
 			this.labScoreT.TabIndex = 6;
 			this.labScoreT.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
+			// columnHeader8
+			// 
+			this.columnHeader8.Text = "Games";
+			this.columnHeader8.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			this.columnHeader8.Width = 50;
+			// 
 			// FormChess
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -2272,6 +2281,7 @@
 		private System.Windows.Forms.Label lPlayer;
 		private System.Windows.Forms.ColumnHeader columnHeader9;
 		private System.Windows.Forms.ColumnHeader columnHeader10;
+		private System.Windows.Forms.ColumnHeader columnHeader8;
 	}
 }
 

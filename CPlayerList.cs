@@ -18,6 +18,7 @@ namespace RapChessGui
 		public int eloLess = 0;
 		public int eloMore = 0;
 		public int distance = 0;
+		public int position = 0;
 
 		public CPlayer(string n)
 		{

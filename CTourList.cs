@@ -39,7 +39,7 @@ namespace RapChessGui
 
 	class CTourList
 	{
-		string path = $"{AppDomain.CurrentDomain.BaseDirectory}tournament.txt";
+		string path = $"{AppDomain.CurrentDomain.BaseDirectory}Tournament.his";
 		public List<CTour> list = new List<CTour>();
 
 		public CTourList()

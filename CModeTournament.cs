@@ -58,9 +58,16 @@ namespace RapChessGui
 		public static CPlayer SelectOpponent(CPlayer player)
 		{
 			CPlayerList.Sort();
-			int i = CPlayerList.GetIndex(player.name);
-			for(int n =0;n<CPlayerList.list.Count;n++)
-				CPlayerList.list[n].distance = Math.Abs(i - n);
+			int position = 1;
+			for (int n = 0; n < CPlayerList.list.Count; n++) {
+				CPlayer p = CPlayerList.list[n];
+				p.position = p.engine == "Human" ? 0 : position++;
+			}
+			for (int n = 0; n < CPlayerList.list.Count; n++)
+			{
+				CPlayer p = CPlayerList.list[n];
+				p.distance = Math.Abs(player.position - p.position);
+			}
 			CPlayerList.SortDistance();
 			List<CPlayer> pl = new List<CPlayer>();
 			foreach (CPlayer p in CPlayerList.list)
