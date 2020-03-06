@@ -85,18 +85,14 @@ namespace RapChessGui
 			b.file = "BookReaderRap.exe";
 			b.parameters = "small.rap";
 			CBookList.Add(b);
-			b = new CBook("Rand30");
-			b.file = "BookReaderRnd.exe";
-			b.parameters = "30";
-			CBookList.Add(b);
-			b = new CBook("Rand60");
-			b.file = "BookReaderRap.exe";
-			b.parameters = "60";
-			CBookList.Add(b);
-			b = new CBook("Rand90");
-			b.file = "BookReaderRap.exe";
-			b.parameters = "90";
-			CBookList.Add(b);
+			for (int n = 1; n < 10; n++)
+			{
+				int v = n * 10;
+				b = new CBook($"Rand{v}");
+				b.file = "BookReaderRnd.exe";
+				b.parameters = v.ToString();
+				CBookList.Add(b);
+			}
 			CBookList.SaveToIni();
 			CPlayer p;
 			p = new CPlayer("Human");
@@ -1177,8 +1173,14 @@ namespace RapChessGui
 			CGamer pb = GamerList.gamer[1];
 			FormLog.This.richTextBox1.Clear();
 			FormLog.This.richTextBox1.AppendText($"Fen {Chess.GetFen()}\n", Color.Gray);
-			FormLog.This.richTextBox1.AppendText($"White {pw.player.name} {pw.player.engine} {pw.engine.parameters}\n", Color.Gray);
-			FormLog.This.richTextBox1.AppendText($"Black {pb.player.name} {pb.player.engine} {pb.engine.parameters}\n", Color.Gray);
+			if (pw.engine == null)
+				FormLog.This.richTextBox1.AppendText($"White {pw.player.name}\n", Color.Gray);
+			else
+				FormLog.This.richTextBox1.AppendText($"White {pw.player.name} {pw.player.engine} {pw.engine.parameters}\n", Color.Gray);
+			if (pb.engine == null)
+				FormLog.This.richTextBox1.AppendText($"White {pb.player.name}\n", Color.Gray);
+			else
+				FormLog.This.richTextBox1.AppendText($"Black {pb.player.name} {pb.player.engine} {pb.engine.parameters}\n", Color.Gray);
 			labLast.ForeColor = Color.Lime;
 			labLast.Text = $"Load fen {Chess.GetFen()}";
 			labBack.Text = $"Back {CData.back}";
@@ -1745,12 +1747,14 @@ namespace RapChessGui
 		{
 			if (listView1.SelectedItems.Count > 0)
 			{
+				ListViewItem top2 = null;
 				ListViewItem item = listView1.SelectedItems[0];
 				string name = item.SubItems[0].Text;
 				CPlayer player = CPlayerList.GetPlayer(name);
 				lPlayer.Text = $"{player.name} - {player.elo}";
 				listView2.Items.Clear();
 				CPlayerList.Sort();
+				CPlayerList.FillPosition();
 				foreach (CPlayer p in CPlayerList.list)
 					if (p.engine != "Human")
 					{
@@ -1761,11 +1765,16 @@ namespace RapChessGui
 						int count = rw + rl + rd;
 						if (count > 0)
 						{
-							int pro = (rw * 100 + rd * 50) / count;
-							int elo = Convert.ToInt32(p.elo) - Convert.ToInt32(player.elo);
-							listView2.Items.Add(new ListViewItem(new[] { p.name, elo.ToString(), count.ToString(), pro.ToString() }));
+							int pro = (rw * 200 + rd * 100) / count - 100;
+							int elo = Convert.ToInt32(player.elo) - Convert.ToInt32(p.elo);
+							ListViewItem lvi = new ListViewItem(new[] { p.name, elo.ToString(), count.ToString(), pro.ToString() });
+							listView2.Items.Add(lvi);
+							if ((player.position - p.position) == 4)
+								top2 = lvi;
 						}
 					}
+				if (top2 != null)
+					listView2.TopItem = top2;
 			}
 		}
 	}

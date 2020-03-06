@@ -246,6 +246,16 @@ namespace RapChessGui
 			return GetPlayer("Human");
 		}
 
+		public static void FillPosition()
+		{
+			int position = 1;
+			for (int n = 0; n < CPlayerList.list.Count; n++)
+			{
+				CPlayer p = CPlayerList.list[n];
+				p.position = p.engine == "Human" ? 0 : position++;
+			}
+		}
+
 
 	}
 }

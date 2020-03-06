@@ -28,8 +28,8 @@ namespace RapChessGui
 				r1 = (rw1 * 100 + rd1 * 50) / count1;
 			if (count2 > 0)
 				r2 = (rw2 * 100 + rd2 * 50) / count2;
-			count1 <<= player1.distance;
-			count2 <<= player2.distance;
+			count1 <<= Math.Abs(player1.distance);
+			count2 <<= Math.Abs(player2.distance);
 			if (count1 == 0)
 				return player1;
 			if (count2 == 0)
@@ -58,11 +58,7 @@ namespace RapChessGui
 		public static CPlayer SelectOpponent(CPlayer player)
 		{
 			CPlayerList.Sort();
-			int position = 1;
-			for (int n = 0; n < CPlayerList.list.Count; n++) {
-				CPlayer p = CPlayerList.list[n];
-				p.position = p.engine == "Human" ? 0 : position++;
-			}
+			CPlayerList.FillPosition();
 			for (int n = 0; n < CPlayerList.list.Count; n++)
 			{
 				CPlayer p = CPlayerList.list[n];
