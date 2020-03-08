@@ -415,7 +415,17 @@ namespace RapChessGui
 			listView1.Items.Clear();
 			foreach (CPlayer p in CPlayerList.list)
 				if (p.engine != "Human")
-					listView1.Items.Add(new ListViewItem(new[] { p.name, p.elo, p.GetDeltaElo().ToString() }));
+				{
+					int del = p.GetDeltaElo();
+					ListViewItem lvi = new ListViewItem(new[] { p.name, p.elo, del.ToString().ToString() });
+					if (del > 0)
+						lvi.BackColor = Color.FromArgb(0xe0, 0xff, 0xe0);
+					if (del < 0)
+						lvi.BackColor = Color.FromArgb(0xff, 0xe0, 0xe0);
+					if (del == 0)
+						lvi.BackColor = Color.FromArgb(0xff, 0xff, 0xff);
+					listView1.Items.Add(lvi);
+				}
 		}
 
 		void TournamentUpdate(CPlayer p)
@@ -423,8 +433,15 @@ namespace RapChessGui
 			foreach (ListViewItem lvi in listView1.Items)
 				if (lvi.Text == p.name)
 				{
+					int del = p.GetDeltaElo();
 					lvi.SubItems[1].Text = p.elo;
-					lvi.SubItems[2].Text = p.GetDeltaElo().ToString();
+					lvi.SubItems[2].Text = del.ToString();
+					if (del > 0)
+						lvi.BackColor = Color.FromArgb(0xe0, 0xff, 0xe0);
+					if (del < 0)
+						lvi.BackColor = Color.FromArgb(0xff, 0xe0, 0xe0);
+					if (del == 0)
+						lvi.BackColor = Color.FromArgb(0xff, 0xff, 0xff);
 				}
 		}
 
@@ -464,6 +481,9 @@ namespace RapChessGui
 
 		void Reset()
 		{
+			if (!CData.reset)
+				return;
+			CData.reset = false;
 			cbComputer.Items.Clear();
 			cbTeacherEngine.Items.Clear();
 			cbTrainedEngine.Items.Clear();
@@ -1726,21 +1746,18 @@ namespace RapChessGui
 		{
 			FormBook.This.ShowDialog(this);
 			Reset();
-			IniLoad();
 		}
 
 		private void playersToolStripMenuItem1_Click(object sender, EventArgs e)
 		{
 			FormPlayer.This.ShowDialog(this);
 			Reset();
-			IniLoad();
 		}
 
 		private void enginesToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			FormEngine.This.ShowDialog(this);
 			Reset();
-			IniLoad();
 		}
 
 		private void listView1_SelectedIndexChanged(object sender, EventArgs e)
@@ -1768,6 +1785,12 @@ namespace RapChessGui
 							int pro = (rw * 200 + rd * 100) / count - 100;
 							int elo = Convert.ToInt32(player.elo) - Convert.ToInt32(p.elo);
 							ListViewItem lvi = new ListViewItem(new[] { p.name, elo.ToString(), count.ToString(), pro.ToString() });
+							if (elo > 0)
+								lvi.BackColor = Color.FromArgb(0xe0, 0xff, 0xe0);
+							if (elo < 0)
+								lvi.BackColor = Color.FromArgb(0xff, 0xe0, 0xe0);
+							if (elo == 0)
+								lvi.BackColor = Color.FromArgb(0xff, 0xff, 0xff);
 							listView2.Items.Add(lvi);
 							if ((player.position - p.position) == 4)
 								top2 = lvi;

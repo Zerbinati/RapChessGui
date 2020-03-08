@@ -65,6 +65,7 @@ namespace RapChessGui
 			CEngineList.list.Add(engine);
 			SaveToIni(engine);
 			MessageBox.Show($"Chess {engine.name} has been created");
+			CData.reset = true;
 		}
 
 		private void ButUpdate_Click(object sender, EventArgs e)
@@ -75,6 +76,7 @@ namespace RapChessGui
 			CRapIni.This.DeleteKey($"engine>{engine.name}");
 			SaveToIni(engine);
 			MessageBox.Show($"Chess {engine.name} has been modified");
+			CData.reset = true;
 		}
 
 		private void ButDelete_Click(object sender, EventArgs e)
@@ -83,6 +85,7 @@ namespace RapChessGui
 			CEngineList.DeleteEngine(engineName);
 			UpdateListBox();
 			MessageBox.Show($"Chess {engineName} has been removed");
+			CData.reset = true;
 		}
 
 		private void FormEngine_Shown(object sender, EventArgs e)

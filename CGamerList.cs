@@ -29,9 +29,9 @@ namespace RapChessGui
 		public string value;
 		public Stopwatch timer = new Stopwatch();
 		public CEnginePro PlayerEng = new CEnginePro();
-		public CPlayer player;
-		public CBook book;
+		public CBook book = null;
 		public CEngine engine = null;
+		public CPlayer player = null;
 
 		public CGamer()
 		{

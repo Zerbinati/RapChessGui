@@ -99,15 +99,10 @@ namespace RapChessGui
 			CPlayer player = CPlayerList.GetPlayer(curPlayerName);
 			if (player == null)
 				return;
-			CRapIni.This.DeleteKey($"player" +
-				$"" +
-	
-				
-				
-				
-				$">{player.name}");
+			CRapIni.This.DeleteKey($"player>{player.name}");
 			SaveToIni(player);
 			MessageBox.Show($"Player {player.name} has been modified");
+			CData.reset = true;
 		}
 
 		private void ButCreate_Click(object sender, EventArgs e)
@@ -118,6 +113,7 @@ namespace RapChessGui
 			CPlayerList.list.Add(player);
 			SaveToIni(player);
 			MessageBox.Show($"Player {player.name} has been created");
+			CData.reset = true;
 		}
 
 		private void ButDelete_Click(object sender, EventArgs e)
@@ -126,6 +122,7 @@ namespace RapChessGui
 			CPlayerList.DeletePlayer(userName);
 			UpdateListBox();
 			MessageBox.Show($"Player {userName} has been removed");
+			CData.reset = true;
 		}
 
 		private void FormPlayer_Shown(object sender, EventArgs e)

@@ -19,6 +19,7 @@ namespace RapChessGui
 
 	public static class CData
 	{
+		public static bool reset = true;
 		public static bool rotateBoard = false;
 		public static int gameState = 0;
 		public static int gameMode = 0;
