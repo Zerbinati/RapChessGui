@@ -165,6 +165,36 @@ namespace RapChessGui
 			return check ? (int)CGameState.mate : (int)CGameState.stalemate;
 		}
 
+		public string EmoToSan(string emo)
+		{
+			string[] arrPiece = {"","","N","B","R","Q","K"};
+			int gmo = EmoToGmo(emo);
+			int fr = gmo & 0xFF;
+			int to = (gmo >> 8) & 0xff;
+			int flags = gmo & 0xFF0000;
+			int pieceFr = g_board[fr] & 7;
+			int pieceTo = g_board[to] & 7;
+			if ((flags & moveflagCastleKing) > 0)
+				return "O-O";
+			if ((flags & moveflagCastleQueen) > 0)
+				return "O-O-O";
+			string fa = emo.Substring(0,2);
+			string fb = emo.Substring(2, 2);
+			string attack = "";
+			if (pieceTo > 0)
+				attack = "x";
+			string promo = "";
+			if ((flags & moveflagPromoteKnight) > 0)
+				promo = "=N";
+			if ((flags & moveflagPromoteBishop) > 0)
+				promo = "=B";
+			if ((flags & moveflagPromoteRook) > 0)
+				promo = "=R";
+			if ((flags & moveflagPromoteQueen) > 0)
+				promo = "=Q";
+			return $"{arrPiece[pieceFr]}{fa}{attack}{fb}{promo}";
+		}
+
 		public int MakeSquare(int row, int column)
 		{
 			return ((row + 4) << 4) | (column + 4);
@@ -198,12 +228,24 @@ namespace RapChessGui
 
 		public int IsValidMove(string m)
 		{
-			return IsValidMove(GetMoveFromString(m));
+			return IsValidMove(EmoToGmo(m));
 		}
 
 		int RAND_32()
 		{
 			return random.Next();
+		}
+
+		public int EmoToGmo(string emo)
+		{
+			List<int> moves = GenerateAllMoves(whiteTurn, false);
+			for (int i = 0; i < moves.Count; i++)
+			{
+				string m = FormatMove(moves[i]);
+				if (m == emo)
+					return moves[i];
+			}
+			return 0;
 		}
 
 		public static int EmoToIndex(string emo)
@@ -457,18 +499,6 @@ namespace RapChessGui
 			}
 		}
 
-		public int GetMoveFromString(string moveString)
-		{
-			List<int> moves = GenerateAllMoves(whiteTurn, false);
-			for (int i = 0; i < moves.Count; i++)
-			{
-				string m = FormatMove(moves[i]);
-				if (m == moveString)
-					return moves[i];
-			}
-			return 0;
-		}
-
 		public void Initialize()
 		{
 			g_hash = RAND_32();
@@ -581,7 +611,7 @@ namespace RapChessGui
 
 		public int MakeMove(string emo)
 		{
-			int m = GetMoveFromString(emo);
+			int m = EmoToGmo(emo);
 			if (m > 0)
 			{
 				int fr = m & 0xff;
@@ -594,8 +624,8 @@ namespace RapChessGui
 
 		public void MakeMove(int move)
 		{
-			int fr = move & 0xFF;
-			int to = (move >> 8) & 0xFF;
+			int fr = move & 0xff;
+			int to = (move >> 8) & 0xff;
 			int flags = move & 0xFF0000;
 			int piecefr = g_board[fr];
 			int piece = piecefr & 0xf;

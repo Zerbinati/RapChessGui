@@ -132,7 +132,7 @@ namespace RapChessGui
 					{
 						SendMessage($"setboard {CHistory.fen}");
 					}
-					SendMessage("force");
+					SendMessage("easy");
 					foreach (CHisMove m in CHistory.moveList)
 						SendMessage(m.emo);
 					SendMessage("go");

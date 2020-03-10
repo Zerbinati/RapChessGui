@@ -758,12 +758,12 @@ namespace RapChessGui
 				FormLog.This.richTextBox1.SaveFile("Error.rtf");
 				return false;
 			}
-			int gm = Chess.GetMoveFromString(emo);
-			int fr = gm & 0xff;
+			int gmo = Chess.EmoToGmo(emo);
+			int fr = gmo & 0xff;
 			int piece = CChess.g_board[fr] & 0xf;
 			AddMove(piece, emo);
-			CBoard.MakeMove(gm);
-			Chess.MakeMove(gm);
+			CBoard.MakeMove(gmo);
+			Chess.MakeMove(gmo);
 			int moveNumber = (Chess.g_moveNumber >> 1) + 1;
 			labMove.Text = "Move " + moveNumber.ToString() + " " + Chess.g_move50.ToString();
 			if (cp.timeTotal > 100)
@@ -1254,10 +1254,11 @@ namespace RapChessGui
 				lvMoves.Items[lvMoves.Items.Count - 1].SubItems[2].Text = m;
 		}
 
-		private void AddMove(int piece, string emo)
+		private void AddMove(int gmo, string emo)
 		{
-			MoveToRtb(CHistory.moveList.Count, piece, emo);
-			CHistory.AddMove(piece, emo);
+			MoveToRtb(CHistory.moveList.Count,gmo, emo);
+			string san = Chess.EmoToSan(emo);
+			CHistory.AddMove(gmo, emo,san);
 			CChess.EmoToSD(emo, out CDrag.lastSou, out CDrag.lastDes);
 		}
 
@@ -1267,7 +1268,7 @@ namespace RapChessGui
 			for (int n = 0; n < CHistory.moveList.Count; n++)
 			{
 				CHisMove m = CHistory.moveList[n];
-				MoveToRtb(n, m.piece, m.emo);
+				MoveToRtb(n, m.gmo, m.emo);
 			}
 		}
 
@@ -1466,9 +1467,10 @@ namespace RapChessGui
 			CHistory.NewGame();
 			foreach (string emo in ml)
 			{
-				int piece = Chess.MakeMove(emo);
-				if (piece > 0)
-					CHistory.AddMove(piece, emo);
+				string san = Chess.EmoToSan(emo);
+				int gmo = Chess.MakeMove(emo);
+				if (gmo > 0)
+					CHistory.AddMove(gmo, emo,san);
 			}
 			GamerList.curIndex = Chess.g_moveNumber & 1;
 			CPlayer u = CommandToUser();

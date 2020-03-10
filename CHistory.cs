@@ -5,13 +5,15 @@ namespace RapChessGui
 {
 	public class CHisMove
 	{
-		public int piece;
+		public int gmo;
 		public string emo;
+		public string san;
 
-		public CHisMove(int piece,string emo)
+		public CHisMove(int gmo,string emo,string san)
 		{
-			this.piece = piece;
+			this.gmo = gmo;
 			this.emo = emo;
+			this.san = san;
 		}
 
 	}
@@ -21,9 +23,9 @@ namespace RapChessGui
 		public static string fen = CChess.defFen;
 		public static List<CHisMove> moveList = new List<CHisMove>();
 
-		public static void AddMove(int piece,string emo)
+		public static void AddMove(int gmo,string emo,string san)
 		{
-			moveList.Add(new CHisMove(piece,emo));
+			moveList.Add(new CHisMove(gmo,emo,san));
 		}
 
 		public static bool Back()
@@ -65,10 +67,8 @@ namespace RapChessGui
 			{
 				if((++c & 1)>0)
 					result += $" {(c >> 1) + 1}.";
-				string m = moveList[n].emo;
-				if (m.Length == 5)
-					m.Insert(4,"=");
-				result += $" {m}";
+				CHisMove hm = moveList[n];
+				result += $" {hm.san}";
 			}
 			return result.Trim();
 		}
