@@ -36,7 +36,7 @@ namespace RapChessGui
 
 		private void butSend_Click(object sender, EventArgs e)
 		{
-			CGamer p = CGamerList.This.GetPlayer(cbPlayerList.Text);
+			CGamer p = CGamerList.This.GetGamer(cbPlayerList.Text);
 			if (p != null)
 	//p.SendMessage(tbMessage.Text);
 			foreach(string c in rtbCommand.Lines)

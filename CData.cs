@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Windows.Forms;
 
@@ -36,6 +37,28 @@ namespace RapChessGui
 				if (s == arrModeNames[i])
 					return i;
 			return 0;
+		}
+
+		public static void UpdateFileBook()
+		{
+			fileBook.Clear();
+			string[] arrBooks = Directory.GetFiles("Books", "*.exe");
+			for (int n = 0; n < arrBooks.Length; n++)
+			{
+				string fn = Path.GetFileName(arrBooks[n]);
+				fileBook.Add(fn);
+			}
+		}
+
+		public static void UpdateFileEngine()
+		{
+			fileEngine.Clear();
+			string[] filePaths = Directory.GetFiles("Engines", "*.exe");
+			for (int n = 0; n < filePaths.Length; n++)
+			{
+				string fn = Path.GetFileName(filePaths[n]);
+				fileEngine.Add(fn);
+			}
 		}
 
 	}

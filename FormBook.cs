@@ -89,6 +89,8 @@ namespace RapChessGui
 
 		private void FormBook_Shown(object sender, EventArgs e)
 		{
+			CData.UpdateFileBook();
+			cbBookReaderList.Items.Clear();
 			foreach (string book in CData.fileBook)
 				cbBookReaderList.Items.Add(book);
 			UpdateListBox();

@@ -37,7 +37,7 @@ namespace RapChessGui
 				int pid = list[0].pid;
 				msg = list[0].msg;
 				list.RemoveAt(0);
-				gamer = CGamerList.This.PlayerPid(pid);
+				gamer = CGamerList.This.GetGamerPid(pid);
 				string name = gamer == null ? "" : gamer.player.name;
 				FormLog.This.richTextBox1.AppendText($"{name} > {msg}\n");
 				return true;

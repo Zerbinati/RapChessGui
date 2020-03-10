@@ -5,6 +5,7 @@ namespace RapChessGui
 {
 	static class CModeTournament
 	{
+		public static bool rotate = false;
 		public static CTourList tourList = new CTourList();
 
 		public static CPlayer ChooseOpponent(CPlayer player, CPlayer player1, CPlayer player2)

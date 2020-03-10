@@ -112,6 +112,7 @@
 			this.listView2 = new System.Windows.Forms.ListView();
 			this.columnHeader7 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeader9 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.columnHeader8 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeader10 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.lPlayer = new System.Windows.Forms.Label();
 			this.listView1 = new System.Windows.Forms.ListView();
@@ -183,7 +184,6 @@
 			this.labNodesT = new System.Windows.Forms.Label();
 			this.labDepthT = new System.Windows.Forms.Label();
 			this.labScoreT = new System.Windows.Forms.Label();
-			this.columnHeader8 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.menuStrip1.SuspendLayout();
 			this.panMenu.SuspendLayout();
 			this.panelT1.SuspendLayout();
@@ -232,7 +232,7 @@
             this.logToolStripMenuItem});
 			this.menuStrip1.Location = new System.Drawing.Point(0, 2);
 			this.menuStrip1.Name = "menuStrip1";
-			this.menuStrip1.Size = new System.Drawing.Size(377, 24);
+			this.menuStrip1.Size = new System.Drawing.Size(497, 24);
 			this.menuStrip1.TabIndex = 1;
 			this.menuStrip1.Text = "menuStrip1";
 			// 
@@ -255,14 +255,14 @@
 			// backToolStripMenuItem
 			// 
 			this.backToolStripMenuItem.Name = "backToolStripMenuItem";
-			this.backToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
+			this.backToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
 			this.backToolStripMenuItem.Text = "Back";
 			this.backToolStripMenuItem.Click += new System.EventHandler(this.backToolStripMenuItem_Click_1);
 			// 
 			// forwardToolStripMenuItem
 			// 
 			this.forwardToolStripMenuItem.Name = "forwardToolStripMenuItem";
-			this.forwardToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
+			this.forwardToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
 			this.forwardToolStripMenuItem.Text = "Make";
 			this.forwardToolStripMenuItem.Click += new System.EventHandler(this.forwardToolStripMenuItem_Click);
 			// 
@@ -1157,6 +1157,12 @@
 			this.columnHeader9.Text = "Elo";
 			this.columnHeader9.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
 			this.columnHeader9.Width = 50;
+			// 
+			// columnHeader8
+			// 
+			this.columnHeader8.Text = "Games";
+			this.columnHeader8.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			this.columnHeader8.Width = 50;
 			// 
 			// columnHeader10
 			// 
@@ -2063,12 +2069,6 @@
 			this.labScoreT.Size = new System.Drawing.Size(150, 26);
 			this.labScoreT.TabIndex = 6;
 			this.labScoreT.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			// 
-			// columnHeader8
-			// 
-			this.columnHeader8.Text = "Games";
-			this.columnHeader8.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-			this.columnHeader8.Width = 50;
 			// 
 			// FormChess
 			// 

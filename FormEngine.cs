@@ -90,6 +90,8 @@ namespace RapChessGui
 
 		private void FormEngine_Shown(object sender, EventArgs e)
 		{
+			CData.UpdateFileEngine();
+			cbFileList.Items.Clear();
 			foreach (string engine in CData.fileEngine)
 				cbFileList.Items.Add(engine);
 			UpdateListBox();

@@ -152,117 +152,135 @@ namespace RapChessGui
 			CModeTraining.LoadFromIni();
 		}
 
-		public void GetMessage()
+		public void GetMessageUci(CGamer g, string msg)
 		{
-			while (CMessageList.GetMessage(out CGamer p, out string msg))
+			Uci.SetMsg(msg);
+			switch (Uci.command)
 			{
-				Uci.SetMsg(msg);
-				switch (Uci.command)
-				{
-					case "0-1":
-					case "1-0":
-					case "1/2-1/2":
-						XBGameOver(msg);
-						break;
-					case "uciok":
-						p.uciok = true;
-						foreach (string op in p.engine.options)
-							p.SendMessage($"setoption {op}");
-						p.SendMessage("ucinewgame");
-						p.SendMessage("isready");
-						break;
-					case "readyok":
-						p.readyok = true;
-						break;
-					case "move":
-					case "bestmove":
-						p.ponder = Uci.GetValue("ponder");
-						string em = Uci.tokens[1];
-						if (isBook)
-							AddBook(em);
-						MakeMove(em);
-						break;
-					case "info":
-						labLast.ForeColor = Color.Gainsboro;
-						string s = Uci.GetValue("cp");
-						if (s != "")
-							p.score = s;
-						s = Uci.GetValue("mate");
-						if (s != "")
+				case "uciok":
+					g.uciok = true;
+					foreach (string op in g.engine.options)
+						g.SendMessage($"setoption {op}");
+					g.SendMessage("ucinewgame");
+					g.SendMessage("isready");
+					break;
+				case "readyok":
+					g.readyok = true;
+					break;
+				case "bestmove":
+					g.ponder = Uci.GetValue("ponder");
+					string em = Uci.tokens[1];
+					if (isBook)
+						AddBook(em);
+					MakeMove(em);
+					break;
+				case "info":
+					labLast.ForeColor = Color.Gainsboro;
+					string s = Uci.GetValue("cp");
+					if (s != "")
+						g.score = s;
+					s = Uci.GetValue("mate");
+					if (s != "")
+					{
+						if (Int32.Parse(s) > 0)
+							g.score = $"+{s}M";
+						else
+							g.score = $"{s}M";
+					}
+					s = Uci.GetValue("depth");
+					if (s != "")
+						g.depth = s;
+					s = Uci.GetValue("seldepth");
+					if (s != "")
+						g.seldepth = s;
+					s = Uci.GetValue("nodes");
+					if (s != "")
+					{
+						try
 						{
-							if (Int32.Parse(s) > 0)
-								p.score = $"+{s}M";
-							else
-								p.score = $"{s}M";
+							g.nodes = (ulong)Convert.ToInt64(s);
 						}
-						s = Uci.GetValue("depth");
-						if (s != "")
-							p.depth = s;
-						s = Uci.GetValue("seldepth");
-						if (s != "")
-							p.seldepth = s;
-						s = Uci.GetValue("nodes");
-						if (s != "")
+						catch
 						{
-							try
-							{
-								p.nodes = (ulong)Convert.ToInt64(s);
-							}
-							catch
-							{
-							}
+							g.nodes = 0;
 						}
-						s = Uci.GetValue("nps");
-						if (s != "")
+					}
+					s = Uci.GetValue("nps");
+					if (s != "")
+					{
+						try
 						{
-							try
-							{
-								p.nps = (ulong)Convert.ToInt64(s);
-							}
-							catch
-							{
-							}
+							g.nps = (ulong)Convert.ToInt64(s);
 						}
-						string pv = "";
-						int i = Uci.GetIndex("pv", 0);
-						if (i > 0)
+						catch
 						{
-							for (int n = i; n < Uci.tokens.Length; n++)
+							g.nps = 0;
+						}
+					}
+					string pv = "";
+					int i = Uci.GetIndex("pv", 0);
+					if (i > 0)
+					{
+						for (int n = i; n < Uci.tokens.Length; n++)
+							pv += Uci.tokens[n] + " ";
+						labLast.Text = pv;
+					}
+					isBook = Uci.GetIndex("book", 0) > 0;
+					break;
+			}
+		}
+
+		public void GetMessageXb(CGamer g, string msg)
+		{
+			Uci.SetMsg(msg);
+			switch (Uci.command)
+			{
+				case "0-1":
+				case "1-0":
+				case "1/2-1/2":
+					XBGameOver(msg);
+					break;
+				case "move":
+					g.ponder = Uci.GetValue("ponder");
+					string em = Uci.tokens[1];
+					if (isBook)
+						AddBook(em);
+					MakeMove(em);
+					break;
+				default:
+					if (g.wbok && (Uci.tokens.Length > 4))
+					{
+						try
+						{
+							g.depth = Convert.ToInt32(Uci.tokens[0]).ToString();
+							g.score = Convert.ToInt32(Uci.tokens[1]).ToString();
+							ulong ms = (ulong)Convert.ToInt64(Uci.tokens[2]);
+							g.nodes = (ulong)Convert.ToInt64(Uci.tokens[3]);
+							g.nps = ms > 0 ? (g.nodes * 100) / ms : 0;
+							string pv = "";
+							for (int n = 4; n < Uci.tokens.Length; n++)
 								pv += Uci.tokens[n] + " ";
+							labLast.ForeColor = Color.Gainsboro;
 							labLast.Text = pv;
 						}
-						isBook = Uci.GetIndex("book", 0) > 0;
-						break;
-					default:
-						CGamer cg = GamerList.PlayerCur();
-						if (cg.engine != null)
-							if ((cg.engine.protocol == "Winboard") && cg.wbok && (Uci.tokens.Length > 4))
-							{
-								try
-								{
-									p.depth = Uci.tokens[0];
-									p.score = Uci.tokens[1];
-									ulong ms = (ulong)Convert.ToInt64(Uci.tokens[2]);
-									p.nodes = (ulong)Convert.ToInt64(Uci.tokens[3]);
-									p.nps = ms > 0 ? (p.nodes * 100) / ms : 0;
-									pv = "";
-									for (int n = 4; n < Uci.tokens.Length; n++)
-										pv += Uci.tokens[n] + " ";
-									labLast.ForeColor = Color.Gainsboro;
-									labLast.Text = pv;
-								}
-								catch
-								{
-									CRapLog.Add($"{p.player.name} ({p.player.engine}) ({msg})");
-								}
-							}
-						break;
-				}
+						catch
+						{
+							CRapLog.Add($"{g.player.name} ({g.player.engine}) ({msg})");
+						}
+					}
+					break;
 			}
-			CGamer gamer = GamerList.PlayerCur();
-			if (gamer.engine != null)
-				if (gamer.engine.protocol == "Winboard")
-					gamer.readyok = true;
+		}
+
+		public void GetMessage()
+		{
+			while (CMessageList.GetMessage(out CGamer g, out string msg))
+			{
+				if (g.engine.protocol == "Uci")
+					GetMessageUci(g, msg);
+				if (g.engine.protocol == "Winboard")
+					GetMessageXb(g, msg);
+			}
 		}
 
 		void CreatePgn()
@@ -289,7 +307,7 @@ namespace RapChessGui
 		public void AddBook(string emo)
 		{
 			isBook = false;
-			GamerList.PlayerCur().usedBook++;
+			GamerList.GamerCur().usedBook++;
 			labLast.ForeColor = Color.Aquamarine;
 			labLast.Text = $"book {emo}";
 		}
@@ -546,7 +564,7 @@ namespace RapChessGui
 			}
 			else
 				CModeGame.rotate = true;
-			if (GamerList.PlayerCur().player.engine == "Human")
+			if (GamerList.GamerCur().player.engine == "Human")
 				moves = Chess.GenerateValidMoves();
 			CPlayer uh = CPlayerList.GetPlayer("Human");
 			int levelDif = 2000 / listView1.Items.Count;
@@ -624,8 +642,18 @@ namespace RapChessGui
 		void StartTournament()
 		{
 			SetMode((int)CMode.tournament);
-			CPlayer p1 = CModeTournament.SelectPlayer();
-			CPlayer p2 = CModeTournament.SelectOpponent(p1);
+			CPlayer p1 = null;
+			CPlayer p2 = null;
+			if (CModeTournament.rotate)
+			{
+				p1 = GamerList.gamer[1].player;
+				p2 = GamerList.gamer[0].player;
+			}
+			else
+			{
+				p1 = CModeTournament.SelectPlayer();
+				p2 = CModeTournament.SelectOpponent(p1);
+			}
 			GamerList.gamer[0].SetPlayer(p1);
 			GamerList.gamer[1].SetPlayer(p2);
 			foreach (ListViewItem lvi in listView1.Items)
@@ -702,12 +730,12 @@ namespace RapChessGui
 
 		public bool MakeMove(string emo)
 		{
-			CGamer cp = GamerList.PlayerCur();
+			CGamer cp = GamerList.GamerCur();
 			cp.UpdateTime();
 			cp.timer.Stop();
 			emo = emo.ToLower();
-			CPlayer uw = GamerList.PlayerCur().player;
-			CPlayer ul = GamerList.PlayerSec().player;
+			CPlayer uw = GamerList.GamerCur().player;
+			CPlayer ul = GamerList.GamerSec().player;
 			if (IsAutoElo() && CModeGame.ranked && (cp.engine == null) && ((Chess.g_moveNumber >> 1) == 4))
 			{
 				cp.player.eloOld = Convert.ToDouble(cp.player.elo);
@@ -747,7 +775,7 @@ namespace RapChessGui
 			if (CData.gameState == 0)
 			{
 				GamerList.Next();
-				if (GamerList.PlayerCur().player.engine == "Human")
+				if (GamerList.GamerCur().player.engine == "Human")
 					moves = Chess.GenerateValidMoves();
 			}
 			else
@@ -862,6 +890,7 @@ namespace RapChessGui
 				ul.SaveToIni();
 				TournamentUpdate(uw);
 				TournamentUpdate(ul);
+				CModeTournament.rotate = (OW != OL) && (newW < newL);
 			}
 			if (CData.gameMode == (int)CMode.training)
 			{
@@ -896,8 +925,8 @@ namespace RapChessGui
 		{
 			if (CData.gameState == (int)CGameState.normal)
 			{
-				CPlayer ul = GamerList.PlayerCur().player;
-				CPlayer uw = GamerList.PlayerSec().player;
+				CPlayer ul = GamerList.GamerCur().player;
+				CPlayer uw = GamerList.GamerSec().player;
 				CData.gameState = (int)CGameState.mate;
 				FormLog.This.richTextBox1.AppendText($"Game over {ul.name} {msg}\n", Color.Gray);
 				GameOver(uw, ul);
@@ -1179,8 +1208,8 @@ namespace RapChessGui
 			}
 			GamerList.curIndex = Chess.g_moveNumber & 1;
 			CPlayer u = CommandToUser();
-			GamerList.PlayerCur().SetPlayer("Human");
-			GamerList.PlayerSec().SetPlayer(u);
+			GamerList.GamerCur().SetPlayer("Human");
+			GamerList.GamerSec().SetPlayer(u);
 			GamerList.gamer[0].Init(true);
 			GamerList.gamer[1].Init(false);
 			cbColor.SelectedIndex = GamerList.curIndex;
@@ -1353,8 +1382,8 @@ namespace RapChessGui
 			}
 			else
 			{
-				CGamer cp = GamerList.PlayerCur();
-				CGamer sp = GamerList.PlayerSec();
+				CGamer cp = GamerList.GamerCur();
+				CGamer sp = GamerList.GamerSec();
 				RenderInfo(cp);
 				RenderInfo(sp);
 				if (cp.engine != null)
@@ -1382,7 +1411,7 @@ namespace RapChessGui
 
 		private void ButStop_Click(object sender, EventArgs e)
 		{
-			GamerList.PlayerCur().EngineStop();
+			GamerList.GamerCur().EngineStop();
 		}
 
 		private void OptionsToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1443,8 +1472,8 @@ namespace RapChessGui
 			}
 			GamerList.curIndex = Chess.g_moveNumber & 1;
 			CPlayer u = CommandToUser();
-			GamerList.PlayerCur().SetPlayer("Human");
-			GamerList.PlayerSec().SetPlayer(u);
+			GamerList.GamerCur().SetPlayer("Human");
+			GamerList.GamerSec().SetPlayer(u);
 			GamerList.gamer[0].Init(true);
 			GamerList.gamer[1].Init(false);
 			cbColor.SelectedIndex = GamerList.curIndex;
@@ -1539,22 +1568,22 @@ namespace RapChessGui
 
 		private void stopToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			GamerList.PlayerCur().EngineStop();
+			GamerList.GamerCur().EngineStop();
 		}
 
 		private void restartToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			GamerList.PlayerCur().SetPlayer();
+			GamerList.GamerCur().SetPlayer();
 		}
 
 		private void terminateToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			GamerList.PlayerCur().PlayerEng.Terminate();
+			GamerList.GamerCur().enginePro.Terminate();
 		}
 
 		private void closeToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			GamerList.PlayerCur().EngineClose();
+			GamerList.GamerCur().EngineClose();
 		}
 
 		private void tabControl1_Selected(object sender, TabControlEventArgs e)
@@ -1619,7 +1648,7 @@ namespace RapChessGui
 			}
 			if (CData.gameMode == (int)CMode.game)
 			{
-				if (GamerList.PlayerCur().engine != null)
+				if (GamerList.GamerCur().engine != null)
 					return;
 				if (IsValid(CDrag.mouseIndex))
 				{
@@ -1685,8 +1714,8 @@ namespace RapChessGui
 				ShowLastGame();
 				CModeGame.ranked = false;
 				ShowAutoElo();
-				GamerList.PlayerCur().player.elo = GamerList.PlayerCur().player.eloLess.ToString();
-				GamerList.PlayerSec().Undo();
+				GamerList.GamerCur().player.elo = GamerList.GamerCur().player.eloLess.ToString();
+				GamerList.GamerSec().Undo();
 			}
 		}
 

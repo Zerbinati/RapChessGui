@@ -28,7 +28,7 @@ namespace RapChessGui
 		public string mode;
 		public string value;
 		public Stopwatch timer = new Stopwatch();
-		public CEnginePro PlayerEng = new CEnginePro();
+		public CEnginePro enginePro = new CEnginePro();
 		public CBook book = null;
 		public CEngine engine = null;
 		public CPlayer player = null;
@@ -90,7 +90,7 @@ namespace RapChessGui
 			{
 				SendMessage("xboard");
 				uciok = true;
-				readyok = false;
+				readyok = true;
 				wbok = false;
 				switch (mode)
 				{
@@ -136,8 +136,8 @@ namespace RapChessGui
 					foreach (CHisMove m in CHistory.moveList)
 						SendMessage(m.emo);
 					SendMessage("go");
+					wbok = true;
 				}
-				wbok = true;
 			}
 			go = true;
 			timer.Restart();
@@ -148,7 +148,7 @@ namespace RapChessGui
 			if (engine != null)
 			{
 				FormLog.This.richTextBox1.AppendText($"{player.name} < {msg}\n", Color.Brown);
-				PlayerEng.streamWriter.WriteLine(msg);
+				enginePro.streamWriter.WriteLine(msg);
 			}
 		}
 
@@ -180,7 +180,7 @@ namespace RapChessGui
 			player = p;
 			book = CBookList.GetBook(p.book);
 			engine = CEngineList.GetEngine(p.engine);
-			PlayerEng.SetPlayer(this);
+			enginePro.SetPlayer(this);
 		}
 
 		public void SetPlayer()
@@ -213,27 +213,15 @@ namespace RapChessGui
 			This = this;
 			gamer[0] = new CGamer();
 			gamer[1] = new CGamer();
-			string[] filePaths = Directory.GetFiles("Engines", "*.exe");
-			for (int n = 0; n < filePaths.Length; n++)
-			{
-				string fn = Path.GetFileName(filePaths[n]);
-				CData.fileEngine.Add(fn);
-			}
-			string[] arrBooks = Directory.GetFiles("Books", "*.exe");
-			for (int n = 0; n < arrBooks.Length; n++)
-			{
-				string fn = Path.GetFileName(arrBooks[n]);
-				CData.fileBook.Add(fn);
-			}
 		}
 
 		public void Next()
 		{
-			CGamer cp = PlayerCur();
+			CGamer cp = GamerCur();
 			cp.UpdateTime();
 			cp.go = false;
 			curIndex ^= 1;
-			PlayerCur().timer.Restart();
+			GamerCur().timer.Restart();
 		}
 
 		public void Init()
@@ -259,7 +247,7 @@ namespace RapChessGui
 			gamer[1].white = false;
 		}
 
-		public CGamer GetPlayer(string name)
+		public CGamer GetGamer(string name)
 		{
 			foreach (CGamer p in gamer)
 				if (p.player.name == name)
@@ -276,28 +264,28 @@ namespace RapChessGui
 			return null;
 		}
 
-		public CGamer PlayerCur()
+		public CGamer GamerCur()
 		{
 			return gamer[curIndex];
 		}
 
-		public CGamer PlayerSec()
+		public CGamer GamerSec()
 		{
 			return gamer[curIndex ^ 1];
 		}
 
-		public CGamer PlayerPid(int pid)
+		public CGamer GetGamerPid(int pid)
 		{
 			foreach (CGamer p in gamer)
-				if (p.PlayerEng.GetPid() == pid)
+				if (p.enginePro.GetPid() == pid)
 					return p;
 			return null;
 		}
 
 		public void Terminate()
 		{
-			gamer[0].PlayerEng.Terminate();
-			gamer[1].PlayerEng.Terminate();
+			gamer[0].enginePro.Terminate();
+			gamer[1].enginePro.Terminate();
 		}
 
 	}
