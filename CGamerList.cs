@@ -135,6 +135,7 @@ namespace RapChessGui
 					SendMessage("easy");
 					foreach (CHisMove m in CHistory.moveList)
 						SendMessage(m.emo);
+					if(CHistory.moveList.Count == 0)
 					SendMessage("go");
 					wbok = true;
 				}
