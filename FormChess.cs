@@ -758,10 +758,9 @@ namespace RapChessGui
 				FormLog.This.richTextBox1.SaveFile("Error.rtf");
 				return false;
 			}
+
 			int gmo = Chess.EmoToGmo(emo);
-			int fr = gmo & 0xff;
-			int piece = CChess.g_board[fr] & 0xf;
-			AddMove(piece, emo);
+			AddMove(gmo,emo);
 			CBoard.MakeMove(gmo);
 			Chess.MakeMove(gmo);
 			int moveNumber = (Chess.g_moveNumber >> 1) + 1;
@@ -1241,8 +1240,9 @@ namespace RapChessGui
 			timer1.Enabled = true;
 		}
 
-		private void MoveToRtb(int count, int piece, string emo)
+		private void MoveToRtb(int count, int gmo, string emo)
 		{
+			int piece = CChess.g_board[gmo & 0xff] & 7;
 			string[] p = { "", "\u2659", "\u2658", "\u2657", "\u2656", "\u2655", "\u2654", "", "", "\u265F", "\u265E", "\u265D", "\u265C", "\u265B", "\u265A", "" };
 			string m = $"{p[piece]} {emo}";
 			if ((count & 1) == 0)

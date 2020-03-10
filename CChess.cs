@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace RapChessGui
 {
-	enum CGameState { normal, mate, stalemate, repetition, move50, material, resignation,stop }
+	enum CGameState { normal, mate, stalemate, repetition, move50, material, resignation, stop }
 
 	class CUndo
 	{
@@ -167,22 +167,41 @@ namespace RapChessGui
 
 		public string EmoToSan(string emo)
 		{
-			string[] arrPiece = {"","","N","B","R","Q","K"};
+			string[] arrPiece = { "", "", "N", "B", "R", "Q", "K" };
 			int gmo = EmoToGmo(emo);
-			int fr = gmo & 0xFF;
+			int fr = gmo & 0xff;
 			int to = (gmo >> 8) & 0xff;
-			int flags = gmo & 0xFF0000;
+			int flags = gmo & 0xff0000;
 			int pieceFr = g_board[fr] & 7;
 			int pieceTo = g_board[to] & 7;
 			if ((flags & moveflagCastleKing) > 0)
 				return "O-O";
 			if ((flags & moveflagCastleQueen) > 0)
 				return "O-O-O";
-			string fa = emo.Substring(0,2);
+			List<int> moves = GenerateValidMoves();
+			bool uniRank = true;
+			bool uniFile = true;
+			foreach (int m in moves)
+			{
+				int f = m & 0xff;
+				if (f != fr)
+				{
+					int piece = g_board[f] & 7;
+					if (piece == pieceFr)
+					{
+						if ((m & 0xf0ff) == (gmo & 0xf0ff))
+							uniRank = false;
+						if ((m & 0xfff) == (gmo & 0xfff))
+							uniFile = false;
+					}
+				}
+			}
+			if ((pieceTo > 0) && (pieceFr == piecePawn))
+				uniFile = false;
+			string faf = uniFile ? "" :emo.Substring(0, 1);
+			string far = uniRank ? "" :emo.Substring(1, 1);
 			string fb = emo.Substring(2, 2);
-			string attack = "";
-			if (pieceTo > 0)
-				attack = "x";
+			string attack = pieceTo > 0 ? "x" : "";
 			string promo = "";
 			if ((flags & moveflagPromoteKnight) > 0)
 				promo = "=N";
@@ -192,7 +211,7 @@ namespace RapChessGui
 				promo = "=R";
 			if ((flags & moveflagPromoteQueen) > 0)
 				promo = "=Q";
-			return $"{arrPiece[pieceFr]}{fa}{attack}{fb}{promo}";
+			return $"{arrPiece[pieceFr]}{faf}{far}{attack}{fb}{promo}";
 		}
 
 		public int MakeSquare(int row, int column)
@@ -258,10 +277,10 @@ namespace RapChessGui
 			return y * 8 + x;
 		}
 
-		public static void EmoToSD(string emo, out int s,out int d)
+		public static void EmoToSD(string emo, out int s, out int d)
 		{
-			s = EmoToIndex(emo.Substring(0,2));
-			d = EmoToIndex(emo.Substring(2,2));
+			s = EmoToIndex(emo.Substring(0, 2));
+			d = EmoToIndex(emo.Substring(2, 2));
 		}
 
 		public string FormatMove(int move)

@@ -40,7 +40,8 @@ namespace RapChessGui
 	class CTourList
 	{
 		string path = $"{AppDomain.CurrentDomain.BaseDirectory}Tournament.his";
-		public List<CTour> list = new List<CTour>();
+		public static List<CTour> list = new List<CTour>();
+		public static int maxRecords = 10000;
 
 		public CTourList()
 		{
@@ -88,9 +89,9 @@ namespace RapChessGui
 						list.Add(t);
 					}
 				}
-			if (list.Count > 10000)
+			if (list.Count > maxRecords)
 			{
-				int remove = Math.Max(0, list.Count - 10000);
+				int remove = Math.Max(0, list.Count - maxRecords);
 				list.RemoveRange(0, remove);
 				SaveToFile();
 			}

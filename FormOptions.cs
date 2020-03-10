@@ -24,6 +24,8 @@ namespace RapChessGui
 			nudSpeed.Value = Convert.ToInt32(CRapIni.This.Read("options>interface>speed", "200"));
 			CBoard.color = ColorTranslator.FromHtml(CRapIni.This.Read("options>interface>color", "#400000"));
 			cbGameAutoElo.Checked = Convert.ToInt32(CRapIni.This.Read("options>game>autoelo", "1")) == 1;
+			nudTournament.Value = Convert.ToInt32(CRapIni.This.Read("options>tournament>records", "10000"));
+			CTourList.maxRecords = (int)nudTournament.Value;
 		}
 
 		public void SaveToIni()
@@ -34,6 +36,7 @@ namespace RapChessGui
 			CRapIni.This.Write("options>interface>speed", nudSpeed.Value.ToString());
 			CRapIni.This.Write("options>interface>color", ColorTranslator.ToHtml(CBoard.color));
 			CRapIni.This.Write("options>game>autoelo", cbGameAutoElo.Checked ? "1" : "0");
+			CRapIni.This.Write("options>tournament>records", nudTournament.ToString());
 		}
 
 		private void CbRotateBoard_CheckedChanged(object sender, EventArgs e)
@@ -66,6 +69,12 @@ namespace RapChessGui
 		private void button1_Click(object sender, EventArgs e)
 		{
 			SaveToIni();
+		}
+
+		private void FormOptions_Shown(object sender, EventArgs e)
+		{
+			CModeTournament.SelectPlayer();
+			labFill.Text = $"Fill {(CTourList.list.Count * 100)/CTourList.maxRecords}%";
 		}
 	}
 }
