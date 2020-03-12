@@ -55,6 +55,7 @@
     <Compile Include="CBookList.cs" />
     <Compile Include="CData.cs" />
     <Compile Include="CChess.cs" />
+    <Compile Include="CEcoList.cs" />
     <Compile Include="CEngineList.cs" />
     <Compile Include="CExtensions.cs" />
     <Compile Include="CHistory.cs" />

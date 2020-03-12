@@ -198,8 +198,8 @@ namespace RapChessGui
 			}
 			if ((pieceTo > 0) && (pieceFr == piecePawn))
 				uniFile = false;
-			string faf = uniFile ? "" :emo.Substring(0, 1);
-			string far = uniRank ? "" :emo.Substring(1, 1);
+			string faf = uniFile ? "" : emo.Substring(0, 1);
+			string far = uniRank ? "" : emo.Substring(1, 1);
 			string fb = emo.Substring(2, 2);
 			string attack = pieceTo > 0 ? "x" : "";
 			string promo = "";
@@ -302,7 +302,7 @@ namespace RapChessGui
 			return arr[(square & 0xf) - 4] + (12 - (square >> 4)).ToString();
 		}
 
-		public string GetFen()
+		public string GetFenBase()
 		{
 			string result = "";
 			string[] arr = { " ", "p", "n", "b", "r", "q", "k", " " };
@@ -330,6 +330,12 @@ namespace RapChessGui
 					result += empty;
 				}
 			}
+			return result;
+		}
+
+		public string GetEpd()
+		{
+			string result = GetFenBase();
 			result += whiteTurn ? " w " : " b ";
 			if (g_castleRights == 0)
 				result += "-";
@@ -348,8 +354,28 @@ namespace RapChessGui
 			if (g_passing == 0)
 				result += '-';
 			else
-				result += FormatSquare(g_passing);
-			return result + ' ' + g_move50 + ' ' + g_moveNumber;
+			{
+				if (whiteTurn)
+				{
+					if ((g_board[g_passing + 15] == (piecePawn | colorWhite)) || (g_board[g_passing + 17] == (piecePawn | colorWhite)))
+						result += FormatSquare(g_passing);
+					else
+						result += '-';
+				}
+				else
+				{
+					if ((g_board[g_passing - 15] == (piecePawn | colorBlack)) || (g_board[g_passing - 17] == (piecePawn | colorBlack)))
+						result += FormatSquare(g_passing);
+					else
+						result += '-';
+				}
+			}
+			return result;
+		}
+
+		public string GetFen()
+		{
+			return GetEpd() + ' ' + g_move50 + ' ' + g_moveNumber;
 		}
 
 		int StrToSquare(string s)

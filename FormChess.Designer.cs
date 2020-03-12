@@ -31,25 +31,6 @@
 			this.components = new System.ComponentModel.Container();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormChess));
 			this.timer1 = new System.Windows.Forms.Timer(this.components);
-			this.menuStrip1 = new System.Windows.Forms.MenuStrip();
-			this.newGameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.moveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.backToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.forwardToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.fenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.saveToClipboardToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.loadFromClipboardToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.pgnToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.saveToClipboardToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-			this.loadFromClipboardToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-			this.manageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.booksToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-			this.enginesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.playersToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-			this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.logToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.panMenu = new System.Windows.Forms.Panel();
-			this.labFPS = new System.Windows.Forms.Label();
 			this.panelT1 = new System.Windows.Forms.Panel();
 			this.labTakenT = new System.Windows.Forms.Label();
 			this.labMaterialT = new System.Windows.Forms.Label();
@@ -184,8 +165,26 @@
 			this.labNodesT = new System.Windows.Forms.Label();
 			this.labDepthT = new System.Windows.Forms.Label();
 			this.labScoreT = new System.Windows.Forms.Label();
-			this.menuStrip1.SuspendLayout();
-			this.panMenu.SuspendLayout();
+			this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+			this.newGameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.moveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.backToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.forwardToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.fenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.saveToClipboardToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.loadFromClipboardToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.pgnToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.saveToClipboardToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+			this.loadFromClipboardToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+			this.manageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.booksToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+			this.enginesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.playersToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+			this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.logToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.labFPS = new System.Windows.Forms.Label();
+			this.panMenu = new System.Windows.Forms.Panel();
+			this.labEco = new System.Windows.Forms.Label();
 			this.panelT1.SuspendLayout();
 			this.panel4.SuspendLayout();
 			this.tabControl1.SuspendLayout();
@@ -211,173 +210,14 @@
 			this.panel1.SuspendLayout();
 			this.panelB2.SuspendLayout();
 			this.panelT2.SuspendLayout();
+			this.menuStrip1.SuspendLayout();
+			this.panMenu.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// timer1
 			// 
 			this.timer1.Interval = 10;
 			this.timer1.Tick += new System.EventHandler(this.Timer1_Tick_1);
-			// 
-			// menuStrip1
-			// 
-			this.menuStrip1.BackColor = System.Drawing.SystemColors.Control;
-			this.menuStrip1.Dock = System.Windows.Forms.DockStyle.None;
-			this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.newGameToolStripMenuItem,
-            this.moveToolStripMenuItem,
-            this.fenToolStripMenuItem,
-            this.pgnToolStripMenuItem,
-            this.manageToolStripMenuItem,
-            this.optionsToolStripMenuItem,
-            this.logToolStripMenuItem});
-			this.menuStrip1.Location = new System.Drawing.Point(0, 2);
-			this.menuStrip1.Name = "menuStrip1";
-			this.menuStrip1.Size = new System.Drawing.Size(497, 24);
-			this.menuStrip1.TabIndex = 1;
-			this.menuStrip1.Text = "menuStrip1";
-			// 
-			// newGameToolStripMenuItem
-			// 
-			this.newGameToolStripMenuItem.Name = "newGameToolStripMenuItem";
-			this.newGameToolStripMenuItem.Size = new System.Drawing.Size(76, 20);
-			this.newGameToolStripMenuItem.Text = "New game";
-			this.newGameToolStripMenuItem.Click += new System.EventHandler(this.NewGameToolStripMenuItem_Click);
-			// 
-			// moveToolStripMenuItem
-			// 
-			this.moveToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.backToolStripMenuItem,
-            this.forwardToolStripMenuItem});
-			this.moveToolStripMenuItem.Name = "moveToolStripMenuItem";
-			this.moveToolStripMenuItem.Size = new System.Drawing.Size(49, 20);
-			this.moveToolStripMenuItem.Text = "Move";
-			// 
-			// backToolStripMenuItem
-			// 
-			this.backToolStripMenuItem.Name = "backToolStripMenuItem";
-			this.backToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-			this.backToolStripMenuItem.Text = "Back";
-			this.backToolStripMenuItem.Click += new System.EventHandler(this.backToolStripMenuItem_Click_1);
-			// 
-			// forwardToolStripMenuItem
-			// 
-			this.forwardToolStripMenuItem.Name = "forwardToolStripMenuItem";
-			this.forwardToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-			this.forwardToolStripMenuItem.Text = "Make";
-			this.forwardToolStripMenuItem.Click += new System.EventHandler(this.forwardToolStripMenuItem_Click);
-			// 
-			// fenToolStripMenuItem
-			// 
-			this.fenToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.saveToClipboardToolStripMenuItem,
-            this.loadFromClipboardToolStripMenuItem});
-			this.fenToolStripMenuItem.Name = "fenToolStripMenuItem";
-			this.fenToolStripMenuItem.Size = new System.Drawing.Size(38, 20);
-			this.fenToolStripMenuItem.Text = "Fen";
-			// 
-			// saveToClipboardToolStripMenuItem
-			// 
-			this.saveToClipboardToolStripMenuItem.Name = "saveToClipboardToolStripMenuItem";
-			this.saveToClipboardToolStripMenuItem.Size = new System.Drawing.Size(182, 22);
-			this.saveToClipboardToolStripMenuItem.Text = "Save to clipboard";
-			this.saveToClipboardToolStripMenuItem.Click += new System.EventHandler(this.saveToClipboardToolStripMenuItem_Click);
-			// 
-			// loadFromClipboardToolStripMenuItem
-			// 
-			this.loadFromClipboardToolStripMenuItem.Name = "loadFromClipboardToolStripMenuItem";
-			this.loadFromClipboardToolStripMenuItem.Size = new System.Drawing.Size(182, 22);
-			this.loadFromClipboardToolStripMenuItem.Text = "Load from clipboard";
-			this.loadFromClipboardToolStripMenuItem.Click += new System.EventHandler(this.loadFromClipboardToolStripMenuItem_Click);
-			// 
-			// pgnToolStripMenuItem
-			// 
-			this.pgnToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.saveToClipboardToolStripMenuItem1,
-            this.loadFromClipboardToolStripMenuItem1});
-			this.pgnToolStripMenuItem.Name = "pgnToolStripMenuItem";
-			this.pgnToolStripMenuItem.Size = new System.Drawing.Size(40, 20);
-			this.pgnToolStripMenuItem.Text = "Pgn";
-			// 
-			// saveToClipboardToolStripMenuItem1
-			// 
-			this.saveToClipboardToolStripMenuItem1.Name = "saveToClipboardToolStripMenuItem1";
-			this.saveToClipboardToolStripMenuItem1.Size = new System.Drawing.Size(182, 22);
-			this.saveToClipboardToolStripMenuItem1.Text = "Save to clipboard";
-			this.saveToClipboardToolStripMenuItem1.Click += new System.EventHandler(this.SaveToClipboardToolStripMenuItem1_Click);
-			// 
-			// loadFromClipboardToolStripMenuItem1
-			// 
-			this.loadFromClipboardToolStripMenuItem1.Name = "loadFromClipboardToolStripMenuItem1";
-			this.loadFromClipboardToolStripMenuItem1.Size = new System.Drawing.Size(182, 22);
-			this.loadFromClipboardToolStripMenuItem1.Text = "Load from clipboard";
-			this.loadFromClipboardToolStripMenuItem1.Click += new System.EventHandler(this.loadFromClipboardToolStripMenuItem1_Click);
-			// 
-			// manageToolStripMenuItem
-			// 
-			this.manageToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.booksToolStripMenuItem1,
-            this.enginesToolStripMenuItem,
-            this.playersToolStripMenuItem1});
-			this.manageToolStripMenuItem.Name = "manageToolStripMenuItem";
-			this.manageToolStripMenuItem.Size = new System.Drawing.Size(66, 20);
-			this.manageToolStripMenuItem.Text = "Manager";
-			// 
-			// booksToolStripMenuItem1
-			// 
-			this.booksToolStripMenuItem1.Name = "booksToolStripMenuItem1";
-			this.booksToolStripMenuItem1.Size = new System.Drawing.Size(115, 22);
-			this.booksToolStripMenuItem1.Text = "Books";
-			this.booksToolStripMenuItem1.Click += new System.EventHandler(this.booksToolStripMenuItem1_Click);
-			// 
-			// enginesToolStripMenuItem
-			// 
-			this.enginesToolStripMenuItem.Name = "enginesToolStripMenuItem";
-			this.enginesToolStripMenuItem.Size = new System.Drawing.Size(115, 22);
-			this.enginesToolStripMenuItem.Text = "Engines";
-			this.enginesToolStripMenuItem.Click += new System.EventHandler(this.enginesToolStripMenuItem_Click);
-			// 
-			// playersToolStripMenuItem1
-			// 
-			this.playersToolStripMenuItem1.Name = "playersToolStripMenuItem1";
-			this.playersToolStripMenuItem1.Size = new System.Drawing.Size(115, 22);
-			this.playersToolStripMenuItem1.Text = "Players";
-			this.playersToolStripMenuItem1.Click += new System.EventHandler(this.playersToolStripMenuItem1_Click);
-			// 
-			// optionsToolStripMenuItem
-			// 
-			this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
-			this.optionsToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
-			this.optionsToolStripMenuItem.Text = "Options";
-			this.optionsToolStripMenuItem.Click += new System.EventHandler(this.OptionsToolStripMenuItem_Click);
-			// 
-			// logToolStripMenuItem
-			// 
-			this.logToolStripMenuItem.Name = "logToolStripMenuItem";
-			this.logToolStripMenuItem.Size = new System.Drawing.Size(39, 20);
-			this.logToolStripMenuItem.Text = "Log";
-			this.logToolStripMenuItem.Click += new System.EventHandler(this.logToolStripMenuItem_Click);
-			// 
-			// panMenu
-			// 
-			this.panMenu.BackColor = System.Drawing.SystemColors.Control;
-			this.panMenu.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-			this.panMenu.Controls.Add(this.labFPS);
-			this.panMenu.Controls.Add(this.menuStrip1);
-			this.panMenu.Dock = System.Windows.Forms.DockStyle.Top;
-			this.panMenu.Location = new System.Drawing.Point(0, 0);
-			this.panMenu.Name = "panMenu";
-			this.panMenu.Size = new System.Drawing.Size(904, 26);
-			this.panMenu.TabIndex = 26;
-			// 
-			// labFPS
-			// 
-			this.labFPS.Dock = System.Windows.Forms.DockStyle.Right;
-			this.labFPS.Location = new System.Drawing.Point(813, 0);
-			this.labFPS.Name = "labFPS";
-			this.labFPS.Size = new System.Drawing.Size(87, 22);
-			this.labFPS.TabIndex = 2;
-			this.labFPS.Text = "FPS";
-			this.labFPS.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
 			// panelT1
 			// 
@@ -2070,6 +1910,177 @@
 			this.labScoreT.TabIndex = 6;
 			this.labScoreT.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
+			// menuStrip1
+			// 
+			this.menuStrip1.BackColor = System.Drawing.SystemColors.Control;
+			this.menuStrip1.Dock = System.Windows.Forms.DockStyle.None;
+			this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.newGameToolStripMenuItem,
+            this.moveToolStripMenuItem,
+            this.fenToolStripMenuItem,
+            this.pgnToolStripMenuItem,
+            this.manageToolStripMenuItem,
+            this.optionsToolStripMenuItem,
+            this.logToolStripMenuItem});
+			this.menuStrip1.Location = new System.Drawing.Point(0, 2);
+			this.menuStrip1.Name = "menuStrip1";
+			this.menuStrip1.Size = new System.Drawing.Size(377, 24);
+			this.menuStrip1.TabIndex = 1;
+			this.menuStrip1.Text = "menuStrip1";
+			// 
+			// newGameToolStripMenuItem
+			// 
+			this.newGameToolStripMenuItem.Name = "newGameToolStripMenuItem";
+			this.newGameToolStripMenuItem.Size = new System.Drawing.Size(76, 20);
+			this.newGameToolStripMenuItem.Text = "New game";
+			this.newGameToolStripMenuItem.Click += new System.EventHandler(this.NewGameToolStripMenuItem_Click);
+			// 
+			// moveToolStripMenuItem
+			// 
+			this.moveToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.backToolStripMenuItem,
+            this.forwardToolStripMenuItem});
+			this.moveToolStripMenuItem.Name = "moveToolStripMenuItem";
+			this.moveToolStripMenuItem.Size = new System.Drawing.Size(49, 20);
+			this.moveToolStripMenuItem.Text = "Move";
+			// 
+			// backToolStripMenuItem
+			// 
+			this.backToolStripMenuItem.Name = "backToolStripMenuItem";
+			this.backToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
+			this.backToolStripMenuItem.Text = "Back";
+			this.backToolStripMenuItem.Click += new System.EventHandler(this.backToolStripMenuItem_Click_1);
+			// 
+			// forwardToolStripMenuItem
+			// 
+			this.forwardToolStripMenuItem.Name = "forwardToolStripMenuItem";
+			this.forwardToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
+			this.forwardToolStripMenuItem.Text = "Make";
+			this.forwardToolStripMenuItem.Click += new System.EventHandler(this.forwardToolStripMenuItem_Click);
+			// 
+			// fenToolStripMenuItem
+			// 
+			this.fenToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.saveToClipboardToolStripMenuItem,
+            this.loadFromClipboardToolStripMenuItem});
+			this.fenToolStripMenuItem.Name = "fenToolStripMenuItem";
+			this.fenToolStripMenuItem.Size = new System.Drawing.Size(38, 20);
+			this.fenToolStripMenuItem.Text = "Fen";
+			// 
+			// saveToClipboardToolStripMenuItem
+			// 
+			this.saveToClipboardToolStripMenuItem.Name = "saveToClipboardToolStripMenuItem";
+			this.saveToClipboardToolStripMenuItem.Size = new System.Drawing.Size(182, 22);
+			this.saveToClipboardToolStripMenuItem.Text = "Save to clipboard";
+			this.saveToClipboardToolStripMenuItem.Click += new System.EventHandler(this.saveToClipboardToolStripMenuItem_Click);
+			// 
+			// loadFromClipboardToolStripMenuItem
+			// 
+			this.loadFromClipboardToolStripMenuItem.Name = "loadFromClipboardToolStripMenuItem";
+			this.loadFromClipboardToolStripMenuItem.Size = new System.Drawing.Size(182, 22);
+			this.loadFromClipboardToolStripMenuItem.Text = "Load from clipboard";
+			this.loadFromClipboardToolStripMenuItem.Click += new System.EventHandler(this.loadFromClipboardToolStripMenuItem_Click);
+			// 
+			// pgnToolStripMenuItem
+			// 
+			this.pgnToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.saveToClipboardToolStripMenuItem1,
+            this.loadFromClipboardToolStripMenuItem1});
+			this.pgnToolStripMenuItem.Name = "pgnToolStripMenuItem";
+			this.pgnToolStripMenuItem.Size = new System.Drawing.Size(40, 20);
+			this.pgnToolStripMenuItem.Text = "Pgn";
+			// 
+			// saveToClipboardToolStripMenuItem1
+			// 
+			this.saveToClipboardToolStripMenuItem1.Name = "saveToClipboardToolStripMenuItem1";
+			this.saveToClipboardToolStripMenuItem1.Size = new System.Drawing.Size(182, 22);
+			this.saveToClipboardToolStripMenuItem1.Text = "Save to clipboard";
+			this.saveToClipboardToolStripMenuItem1.Click += new System.EventHandler(this.SaveToClipboardToolStripMenuItem1_Click);
+			// 
+			// loadFromClipboardToolStripMenuItem1
+			// 
+			this.loadFromClipboardToolStripMenuItem1.Name = "loadFromClipboardToolStripMenuItem1";
+			this.loadFromClipboardToolStripMenuItem1.Size = new System.Drawing.Size(182, 22);
+			this.loadFromClipboardToolStripMenuItem1.Text = "Load from clipboard";
+			this.loadFromClipboardToolStripMenuItem1.Click += new System.EventHandler(this.loadFromClipboardToolStripMenuItem1_Click);
+			// 
+			// manageToolStripMenuItem
+			// 
+			this.manageToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.booksToolStripMenuItem1,
+            this.enginesToolStripMenuItem,
+            this.playersToolStripMenuItem1});
+			this.manageToolStripMenuItem.Name = "manageToolStripMenuItem";
+			this.manageToolStripMenuItem.Size = new System.Drawing.Size(66, 20);
+			this.manageToolStripMenuItem.Text = "Manager";
+			// 
+			// booksToolStripMenuItem1
+			// 
+			this.booksToolStripMenuItem1.Name = "booksToolStripMenuItem1";
+			this.booksToolStripMenuItem1.Size = new System.Drawing.Size(115, 22);
+			this.booksToolStripMenuItem1.Text = "Books";
+			this.booksToolStripMenuItem1.Click += new System.EventHandler(this.booksToolStripMenuItem1_Click);
+			// 
+			// enginesToolStripMenuItem
+			// 
+			this.enginesToolStripMenuItem.Name = "enginesToolStripMenuItem";
+			this.enginesToolStripMenuItem.Size = new System.Drawing.Size(115, 22);
+			this.enginesToolStripMenuItem.Text = "Engines";
+			this.enginesToolStripMenuItem.Click += new System.EventHandler(this.enginesToolStripMenuItem_Click);
+			// 
+			// playersToolStripMenuItem1
+			// 
+			this.playersToolStripMenuItem1.Name = "playersToolStripMenuItem1";
+			this.playersToolStripMenuItem1.Size = new System.Drawing.Size(115, 22);
+			this.playersToolStripMenuItem1.Text = "Players";
+			this.playersToolStripMenuItem1.Click += new System.EventHandler(this.playersToolStripMenuItem1_Click);
+			// 
+			// optionsToolStripMenuItem
+			// 
+			this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
+			this.optionsToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
+			this.optionsToolStripMenuItem.Text = "Options";
+			this.optionsToolStripMenuItem.Click += new System.EventHandler(this.OptionsToolStripMenuItem_Click);
+			// 
+			// logToolStripMenuItem
+			// 
+			this.logToolStripMenuItem.Name = "logToolStripMenuItem";
+			this.logToolStripMenuItem.Size = new System.Drawing.Size(39, 20);
+			this.logToolStripMenuItem.Text = "Log";
+			this.logToolStripMenuItem.Click += new System.EventHandler(this.logToolStripMenuItem_Click);
+			// 
+			// labFPS
+			// 
+			this.labFPS.Dock = System.Windows.Forms.DockStyle.Right;
+			this.labFPS.Location = new System.Drawing.Point(813, 0);
+			this.labFPS.Name = "labFPS";
+			this.labFPS.Size = new System.Drawing.Size(87, 22);
+			this.labFPS.TabIndex = 2;
+			this.labFPS.Text = "FPS";
+			this.labFPS.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			// 
+			// panMenu
+			// 
+			this.panMenu.BackColor = System.Drawing.SystemColors.Control;
+			this.panMenu.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+			this.panMenu.Controls.Add(this.labEco);
+			this.panMenu.Controls.Add(this.labFPS);
+			this.panMenu.Controls.Add(this.menuStrip1);
+			this.panMenu.Dock = System.Windows.Forms.DockStyle.Top;
+			this.panMenu.Location = new System.Drawing.Point(0, 0);
+			this.panMenu.Name = "panMenu";
+			this.panMenu.Size = new System.Drawing.Size(904, 26);
+			this.panMenu.TabIndex = 26;
+			// 
+			// labEco
+			// 
+			this.labEco.Dock = System.Windows.Forms.DockStyle.Right;
+			this.labEco.Location = new System.Drawing.Point(380, 0);
+			this.labEco.Name = "labEco";
+			this.labEco.Size = new System.Drawing.Size(433, 22);
+			this.labEco.TabIndex = 3;
+			this.labEco.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			// 
 			// FormChess
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -2091,10 +2102,6 @@
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
 			this.Text = "RapChessGui";
 			this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FormChess_FormClosed);
-			this.menuStrip1.ResumeLayout(false);
-			this.menuStrip1.PerformLayout();
-			this.panMenu.ResumeLayout(false);
-			this.panMenu.PerformLayout();
 			this.panelT1.ResumeLayout(false);
 			this.panel4.ResumeLayout(false);
 			this.tabControl1.ResumeLayout(false);
@@ -2123,15 +2130,16 @@
 			this.panel1.ResumeLayout(false);
 			this.panelB2.ResumeLayout(false);
 			this.panelT2.ResumeLayout(false);
+			this.menuStrip1.ResumeLayout(false);
+			this.menuStrip1.PerformLayout();
+			this.panMenu.ResumeLayout(false);
+			this.panMenu.PerformLayout();
 			this.ResumeLayout(false);
 
 		}
 
 		#endregion
 		private System.Windows.Forms.Timer timer1;
-		private System.Windows.Forms.MenuStrip menuStrip1;
-		private System.Windows.Forms.ToolStripMenuItem newGameToolStripMenuItem;
-		private System.Windows.Forms.Panel panMenu;
   		private System.Windows.Forms.Panel panelT1;
 		private System.Windows.Forms.Panel panel4;
 		private System.Windows.Forms.PictureBox pictureBox1;
@@ -2156,7 +2164,6 @@
 		private System.Windows.Forms.ComboBox cbTeacherEngine;
 		private System.Windows.Forms.GroupBox groupBox3;
 		private System.Windows.Forms.ComboBox cbTrainedEngine;
-		private System.Windows.Forms.ToolStripMenuItem optionsToolStripMenuItem;
 		private System.Windows.Forms.Timer timerStart;
 		private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
 		private System.Windows.Forms.Label label15;
@@ -2175,10 +2182,6 @@
 		private System.Windows.Forms.Label label6;
 		private System.Windows.Forms.Label label16;
 		private System.Windows.Forms.Label labGames;
-		private System.Windows.Forms.ToolStripMenuItem fenToolStripMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem saveToClipboardToolStripMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem loadFromClipboardToolStripMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem logToolStripMenuItem;
 		private System.Windows.Forms.TabPage tabPageMatch;
 		private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
 		private System.Windows.Forms.Label labMatch24;
@@ -2201,9 +2204,6 @@
 		private System.Windows.Forms.GroupBox groupBox6;
 		private System.Windows.Forms.GroupBox groupBox5;
 		private System.Windows.Forms.NumericUpDown nudTrained;
-		private System.Windows.Forms.ToolStripMenuItem pgnToolStripMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem saveToClipboardToolStripMenuItem1;
-		private System.Windows.Forms.ToolStripMenuItem loadFromClipboardToolStripMenuItem1;
 		private System.Windows.Forms.NumericUpDown nudTeacher;
 		private System.Windows.Forms.ComboBox cbTeacherBook;
 		private System.Windows.Forms.ComboBox cbCommand;
@@ -2241,9 +2241,6 @@
 		private System.Windows.Forms.Button butStop;
 		private System.Windows.Forms.Button butContinueGame;
 		private System.Windows.Forms.Label labBack;
-		private System.Windows.Forms.ToolStripMenuItem moveToolStripMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem backToolStripMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem forwardToolStripMenuItem;
 		private System.Windows.Forms.Label labEloT;
 		private System.Windows.Forms.Label labEloB;
 		private System.Windows.Forms.ListView lvMoves;
@@ -2251,7 +2248,6 @@
 		private System.Windows.Forms.ColumnHeader columnHeader4;
 		private System.Windows.Forms.ColumnHeader columnHeader5;
 		private System.Windows.Forms.ColumnHeader columnHeader6;
-		private System.Windows.Forms.Label labFPS;
 		private System.Windows.Forms.GroupBox groupBox7;
 		private System.Windows.Forms.CheckedListBox clbCastling;
 		private System.Windows.Forms.Label labMaterialT;
@@ -2259,10 +2255,6 @@
 		private System.Windows.Forms.Button butContinueMatch;
 		private System.Windows.Forms.Button butDefault;
 		private System.Windows.Forms.Label labAutoElo;
-		private System.Windows.Forms.ToolStripMenuItem manageToolStripMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem booksToolStripMenuItem1;
-		private System.Windows.Forms.ToolStripMenuItem enginesToolStripMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem playersToolStripMenuItem1;
 		private System.Windows.Forms.TextBox tbCommand1;
 		private System.Windows.Forms.ComboBox cbBook1;
 		private System.Windows.Forms.ComboBox cbValue1;
@@ -2282,6 +2274,26 @@
 		private System.Windows.Forms.ColumnHeader columnHeader9;
 		private System.Windows.Forms.ColumnHeader columnHeader10;
 		private System.Windows.Forms.ColumnHeader columnHeader8;
+		private System.Windows.Forms.MenuStrip menuStrip1;
+		private System.Windows.Forms.ToolStripMenuItem newGameToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem moveToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem backToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem forwardToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem fenToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem saveToClipboardToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem loadFromClipboardToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem pgnToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem saveToClipboardToolStripMenuItem1;
+		private System.Windows.Forms.ToolStripMenuItem loadFromClipboardToolStripMenuItem1;
+		private System.Windows.Forms.ToolStripMenuItem manageToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem booksToolStripMenuItem1;
+		private System.Windows.Forms.ToolStripMenuItem enginesToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem playersToolStripMenuItem1;
+		private System.Windows.Forms.ToolStripMenuItem optionsToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem logToolStripMenuItem;
+		private System.Windows.Forms.Label labFPS;
+		private System.Windows.Forms.Panel panMenu;
+		private System.Windows.Forms.Label labEco;
 	}
 }
 

@@ -25,6 +25,7 @@ namespace RapChessGui
 		ColumnHeader SortingColumn = null;
 		List<int> moves = new List<int>();
 		public CRapIni RapIni = new CRapIni();
+		CEcoList EcoList = new CEcoList();
 		readonly CChess Chess = new CChess();
 		readonly CGamerList GamerList = new CGamerList();
 		readonly CUci Uci = new CUci();
@@ -763,6 +764,9 @@ namespace RapChessGui
 			AddMove(gmo,emo);
 			CBoard.MakeMove(gmo);
 			Chess.MakeMove(gmo);
+			CEco eco = EcoList.GetEco(Chess.GetEpd());
+			if (eco != null)
+				labEco.Text = eco.name;
 			int moveNumber = (Chess.g_moveNumber >> 1) + 1;
 			labMove.Text = "Move " + moveNumber.ToString() + " " + Chess.g_move50.ToString();
 			if (cp.timeTotal > 100)
@@ -935,6 +939,7 @@ namespace RapChessGui
 		void Clear()
 		{
 			isBook = false;
+			labEco.Text = "";
 			labMove.Text = "Move 1 0";
 			labLast.ForeColor = Color.Gainsboro;
 			labLast.Text = "Good luck";
