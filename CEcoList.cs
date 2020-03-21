@@ -30,7 +30,8 @@ namespace RapChessGui
 
 		void LoadFromFile(string fn)
 		{
-			String[] content = File.ReadAllLines(AppDomain.CurrentDomain.BaseDirectory + "Eco\\" + fn);
+			string path = AppDomain.CurrentDomain.BaseDirectory + "Eco\\" + fn;
+			String[] content = File.ReadAllLines(path);
 			for (int n = 1; n < content.Length; n++)
 			{
 				List<string> r = content[n].Split('\t').ToList();
@@ -49,6 +50,15 @@ namespace RapChessGui
 				if (e.fen == fen)
 					return e;
 			return null;
+		}
+
+		public void SaveToFile()
+		{
+			string path = AppDomain.CurrentDomain.BaseDirectory + "Books\\eco.rap";
+			List<string> moves = new List<string>();
+			foreach (CEco eco in list)
+				moves.Add(eco.moves);
+			File.WriteAllLines(path, moves);
 		}
 
 	}

@@ -117,11 +117,22 @@ namespace RapChessGui
 
 		private void ButDelete_Click(object sender, EventArgs e)
 		{
-			string userName = tbPlayerName.Text;
-			CPlayerList.DeletePlayer(userName);
-			UpdateListBox();
-			MessageBox.Show($"Player {userName} has been removed");
-			CData.reset = true;
+			string playerName = tbPlayerName.Text;
+			DialogResult dr = MessageBox.Show($"Are you sure to delete player {playerName}?","Confirm Delete",MessageBoxButtons.YesNo);
+			if (dr == DialogResult.Yes)
+			{
+				CPlayerList.DeletePlayer(playerName);
+				UpdateListBox();
+				MessageBox.Show($"Player {playerName} has been removed");
+				CData.reset = true;
+			}
+		}
+
+		private void butClearHistory_Click(object sender, EventArgs e)
+		{
+			string playerName = tbPlayerName.Text;
+			int count=CTourList.DeletePlayer(playerName);
+			MessageBox.Show($"{count} records have been deleted");
 		}
 
 		private void FormPlayer_Shown(object sender, EventArgs e)
@@ -138,5 +149,6 @@ namespace RapChessGui
 			if (listBox1.Items.Count > 0)
 				listBox1.SetSelected(0, true);
 		}
+
 	}
 }

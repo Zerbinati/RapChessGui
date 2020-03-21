@@ -39,7 +39,7 @@ namespace RapChessGui
 
 	class CTourList
 	{
-		string path = $"{AppDomain.CurrentDomain.BaseDirectory}Tournament.his";
+		static string path = $"{AppDomain.CurrentDomain.BaseDirectory}Tournament.his";
 		public static List<CTour> list = new List<CTour>();
 		public static int maxRecords = 10000;
 
@@ -76,6 +76,19 @@ namespace RapChessGui
 			}
 		}
 
+		public static int DeletePlayer(string p)
+		{
+			int c = list.Count;
+			for(int n= list.Count - 1; n >= 0; n--)
+			{
+				CTour t = list[n];
+				if ((t.w == p) || (t.b == p))
+					list.RemoveAt(n);
+			}
+			SaveToFile();
+			return c - list.Count;
+		}
+
 		public void LoadFromFile()
 		{
 			list.Clear();
@@ -97,7 +110,7 @@ namespace RapChessGui
 			}
 		}
 
-		public void SaveToFile()
+		public static void SaveToFile()
 		{
 			using (StreamWriter file = new StreamWriter(path))
 			{

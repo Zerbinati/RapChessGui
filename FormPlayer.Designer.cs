@@ -47,6 +47,7 @@
 			this.tbPlayerName = new System.Windows.Forms.TextBox();
 			this.groupBox2 = new System.Windows.Forms.GroupBox();
 			this.listBox1 = new System.Windows.Forms.ListBox();
+			this.butClearHistory = new System.Windows.Forms.Button();
 			this.panel1.SuspendLayout();
 			this.gbElo.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.nudElo)).BeginInit();
@@ -61,6 +62,7 @@
 			// 
 			// panel1
 			// 
+			this.panel1.Controls.Add(this.butClearHistory);
 			this.panel1.Controls.Add(this.bDelete);
 			this.panel1.Controls.Add(this.bCreate);
 			this.panel1.Controls.Add(this.bUpdate);
@@ -310,6 +312,17 @@
 			this.listBox1.TabIndex = 1;
 			this.listBox1.SelectedValueChanged += new System.EventHandler(this.ListBox1_SelectedValueChanged);
 			// 
+			// butClearHistory
+			// 
+			this.butClearHistory.Dock = System.Windows.Forms.DockStyle.Top;
+			this.butClearHistory.Location = new System.Drawing.Point(0, 343);
+			this.butClearHistory.Name = "butClearHistory";
+			this.butClearHistory.Size = new System.Drawing.Size(311, 33);
+			this.butClearHistory.TabIndex = 28;
+			this.butClearHistory.Text = "Clear tournament history";
+			this.butClearHistory.UseVisualStyleBackColor = true;
+			this.butClearHistory.Click += new System.EventHandler(this.butClearHistory_Click);
+			// 
 			// FormPlayer
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -361,5 +374,6 @@
 		private System.Windows.Forms.Button bUpdate;
 		private System.Windows.Forms.GroupBox gbElo;
 		private System.Windows.Forms.NumericUpDown nudElo;
+		private System.Windows.Forms.Button butClearHistory;
 	}
 }

@@ -14,7 +14,6 @@ B00	Goldsmith Defense	rnbqkbnr/ppppppp1/8/7p/4P3/8/PPPP1PPP/RNBQKBNR w KQkq -	e2
 B00	Guatemala Defense	rn1qkbnr/p1pppppp/bp6/8/3PP3/8/PPP2PPP/RNBQKBNR w KQkq -	e2e4 b7b6 d2d4 c8a6
 B00	Hippopotamus Defense	rnbqkb1r/ppppp2p/5ppn/8/2PPP3/8/PP3PPP/RNBQKBNR w KQkq -	e2e4 g8h6 d2d4 g7g6 c2c4 f7f6
 B00	Hippopotamus Defense	rnbqkb1r/pppppppp/7n/8/4P3/8/PPPP1PPP/RNBQKBNR w KQkq -	e2e4 g8h6
-B00	King's Pawn Game	rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq -	e2e4
 B00	King's Pawn Game: Nimzowitsch Defense	r1bqkbnr/pppppppp/2n5/8/3PP3/8/PPP2PPP/RNBQKBNR b KQkq -	e2e4 b8c6 d2d4
 B00	King's Pawn Game: Nimzowitsch Defense: Wheeler Gambit	r1bqkbnr/pppppppp/2n5/8/3PP3/2P5/P4PPP/RNBQKBNR b KQkq -	e2e4 b8c6 b2b4 c6b4 c2c3 b4c6 d2d4
 B00	King's Pawn	rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq -	e2e4
