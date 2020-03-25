@@ -86,6 +86,10 @@ namespace RapChessGui
 			b.file = "BookReaderUci.exe";
 			b.parameters = "eco.uci";
 			CBookList.Add(b);
+			b = new CBook("Small");
+			b.file = "BookReaderUci.exe";
+			b.parameters = "small.uci";
+			CBookList.Add(b);
 			b = new CBook("Random1");
 			b.file = "BookReaderUci.exe";
 			b.parameters = "random1.uci";
