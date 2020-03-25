@@ -86,6 +86,14 @@ namespace RapChessGui
 			b.file = "BookReaderUci.exe";
 			b.parameters = "eco.uci";
 			CBookList.Add(b);
+			b = new CBook("Random1");
+			b.file = "BookReaderUci.exe";
+			b.parameters = "random1.uci";
+			CBookList.Add(b);
+			b = new CBook("Random2");
+			b.file = "BookReaderUci.exe";
+			b.parameters = "random2.uci";
+			CBookList.Add(b);
 			for (int n = 1; n < 10; n++)
 			{
 				int v = n * 10;
@@ -98,49 +106,49 @@ namespace RapChessGui
 			CPlayer p;
 			p = new CPlayer("Human");
 			CPlayerList.Add(p);
-			p = new CPlayer("RapChess CS R9");
+			p = new CPlayer("RapChess CS R90");
 			p.engine = "RapChess CS";
 			p.book = "Rand90";
 			p.mode = "movetime";
 			p.value = "1";
 			p.elo = "200";
 			CPlayerList.Add(p);
-			p = new CPlayer("RapChess CS R7");
+			p = new CPlayer("RapChess CS R70");
 			p.engine = "RapChess CS";
 			p.book = "Rand70";
 			p.mode = "movetime";
 			p.value = "1";
 			p.elo = "400";
 			CPlayerList.Add(p);
-			p = new CPlayer("RapChess CS R5");
+			p = new CPlayer("RapChess CS R50");
 			p.engine = "RapChess CS";
 			p.book = "Rand50";
 			p.mode = "movetime";
 			p.value = "1";
 			p.elo = "600";
 			CPlayerList.Add(p);
-			p = new CPlayer("RapChess CS R3");
+			p = new CPlayer("RapChess CS R30");
 			p.engine = "RapChess CS";
 			p.book = "Rand30";
 			p.mode = "movetime";
 			p.value = "1";
 			p.elo = "800";
 			CPlayerList.Add(p);
-			p = new CPlayer("RapChess CS R1");
+			p = new CPlayer("RapChess CS R10");
 			p.engine = "RapChess CS";
 			p.book = "Rand10";
 			p.mode = "movetime";
 			p.value = "1";
 			p.elo = "1000";
 			CPlayerList.Add(p);
-			p = new CPlayer("RapShort CS T1");
+			p = new CPlayer("RapShort CS");
 			p.engine = "RapShort CS";
 			p.book = "Eco";
 			p.mode = "movetime";
 			p.value = "1000";
 			p.elo = "500";
 			CPlayerList.Add(p);
-			p = new CPlayer("RapSimple CS T1");
+			p = new CPlayer("RapSimple CS");
 			p.engine = "RapSimple CS";
 			p.book = "Eco";
 			p.mode = "movetime";
@@ -359,7 +367,7 @@ namespace RapChessGui
 					labEloT.Visible = false;
 					labProtocolB.Visible = false;
 					labProtocolT.Visible = false;
-					ShowTraining();
+					TrainingShow();
 					break;
 				case (int)CMode.edit:
 					labEloB.Visible = false;
@@ -513,7 +521,7 @@ namespace RapChessGui
 			Clear();
 		}
 
-		void ShowTraining()
+		void TrainingShow()
 		{
 			labGames.Text = $"Games {CModeTraining.games}";
 			cbTeacherEngine.SelectedIndex = cbTeacherEngine.FindStringExact(CModeTraining.teacher);
@@ -941,7 +949,7 @@ namespace RapChessGui
 					CModeTraining.draw++;
 					CModeTraining.teacherValue++;
 				}
-				ShowTraining();
+				TrainingShow();
 			}
 			FormLog.This.richTextBox1.SaveFile($"{CData.modeName}.rtf");
 			CreatePgn();

@@ -15,8 +15,8 @@ namespace RapChessGui
 		public static string mode2;
 		public static int value1;
 		public static int value2;
-		public static string book1;
-		public static string book2;
+		public static string book1 = "Eco";
+		public static string book2 = "Eco";
 
 		public static void Reset()
 		{
@@ -50,13 +50,13 @@ namespace RapChessGui
 			win = CRapIni.This.ReadInt("mode>match>win");
 			draw = CRapIni.This.ReadInt("mode>match>draw");
 			loose = CRapIni.This.ReadInt("mode>match>loose");
-			book1 = CRapIni.This.Read("mode>match>book1", "Small");
-			book2 = CRapIni.This.Read("mode>match>book2", "Small");
+			book1 = CRapIni.This.Read("mode>match>book1", book1);
+			book2 = CRapIni.This.Read("mode>match>book2", book2);
 			engine1 = CRapIni.This.Read("mode>match>engine1", CEngineList.def);
 			engine2 = CRapIni.This.Read("mode>match>engine2", CEngineList.def);
 			mode1 = CRapIni.This.Read("mode>match>mode1", "Time");
 			mode2 = CRapIni.This.Read("mode>match>mode2", "Time");
-			value1 = CRapIni.This.ReadInt("mode>match>value1",1);
+			value1 = CRapIni.This.ReadInt("mode>match>value1", 1);
 			value2 = CRapIni.This.ReadInt("mode>match>value2", 1);
 		}
 

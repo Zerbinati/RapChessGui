@@ -1,8 +1,3 @@
-RapSimple CS XT1#RapChess CS R1#w
-RapChess CS R1#RapChess CS R3#w
-RapChess CS R3#RapChess CS R5#w
-RapChess CS R5#RapShort CS XT1#b
-RapShort CS XT1#RapChess CS R5#d
-RapChess CS R7#RapShort CS XT1#b
-RapChess CS R9#RapChess CS R7#w
-RapChess CS R7#RapChess CS R9#w
+RapSimple CS#RapChess CS R10#w
+RapChess CS R10#RapChess CS R30#b
+RapChess CS R30#RapChess CS R10#b

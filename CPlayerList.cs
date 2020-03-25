@@ -114,7 +114,7 @@ namespace RapChessGui
 
 	static class CPlayerList
 	{
-		public const string def = "RapChess CS T1";
+		public const string def = "RapChess CS";
 		public static List<CPlayer> list = new List<CPlayer>();
 
 		public static void Add(CPlayer u)

@@ -11,8 +11,8 @@ namespace RapChessGui
 		public static int loose = 0;
 		public static string teacher = "";
 		public static string trained = "";
-		public static string teacherBook = "Small";
-		public static string trainedBook = "Small";
+		public static string teacherBook = "Eco";
+		public static string trainedBook = "Eco";
 		public static string teacherMode = "Time";
 		public static string trainedMode = "Time";
 		public static int teacherValue = 10;
