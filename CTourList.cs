@@ -124,7 +124,7 @@ namespace RapChessGui
 			string n = "";
 			if (list.Count > 0)
 				n = list[list.Count - 1].w;
-			return CPlayerList.GetPlayer(n);
+			return CPlayerList.GetPlayerAuto(n);
 		}
 
 		public void Write(string w, string b, string r)

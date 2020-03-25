@@ -164,6 +164,7 @@ namespace RapChessGui
 			CPlayerList.LoadFromIni();
 			CModeGame.LoadFromIni();
 			CModeMatch.LoadFromIni();
+			CModeTournament.LoadFromIni();
 			CModeTraining.LoadFromIni();
 		}
 
@@ -253,6 +254,7 @@ namespace RapChessGui
 				case "0-1":
 				case "1-0":
 				case "1/2-1/2":
+				case "resign":
 					XBGameOver(msg);
 					break;
 				case "move":
@@ -391,7 +393,7 @@ namespace RapChessGui
 		bool ShowLastGame()
 		{
 			bool result = false;
-			CPlayer hu = CPlayerList.GetPlayer("Human");
+			CPlayer hu = CPlayerList.GetPlayerAuto("Human");
 			int eloCur = Convert.ToInt32(hu.elo);
 			if (hu.eloNew > eloCur)
 			{
@@ -414,7 +416,7 @@ namespace RapChessGui
 
 		void ShowGame()
 		{
-			CPlayer player = CPlayerList.GetPlayer(cbComputer.Text);
+			CPlayer player = CPlayerList.GetPlayerAuto(cbComputer.Text);
 			if (player.name == cbComputer.Text)
 				labEngine.Text = player.engine;
 			else
@@ -476,6 +478,39 @@ namespace RapChessGui
 					if (del == 0)
 						lvi.BackColor = Color.FromArgb(0xff, 0xff, 0xff);
 				}
+		}
+
+		void TournamentStart()
+		{
+			SetMode((int)CMode.tournament);
+			CPlayer p1 = null;
+			CPlayer p2 = null;
+			if (CModeTournament.rotate)
+			{
+				p1 = GamerList.gamer[1].player;
+				p2 = GamerList.gamer[0].player;
+			}
+			else
+			{
+				p1 = CModeTournament.SelectPlayer();
+				p2 = CModeTournament.SelectOpponent(p1);
+			}
+			GamerList.gamer[0].SetPlayer(p1);
+			GamerList.gamer[1].SetPlayer(p2);
+			foreach (ListViewItem lvi in listView1.Items)
+				if (lvi.Text == CModeTournament.player)
+				{
+					int top = lvi.Index;
+					top -= 4;
+					if (top < 0)
+						top = 0;
+					lvi.Selected = true;
+					listView1.TopItem = listView1.Items[top];
+					listView1.Sort();
+					listView1.Focus();
+					break;
+				}
+			Clear();
 		}
 
 		void ShowTraining()
@@ -581,7 +616,7 @@ namespace RapChessGui
 				CModeGame.rotate = true;
 			if (GamerList.GamerCur().player.engine == "Human")
 				moves = Chess.GenerateValidMoves();
-			CPlayer uh = CPlayerList.GetPlayer("Human");
+			CPlayer uh = CPlayerList.GetPlayerAuto("Human");
 			int levelDif = 2000 / listView1.Items.Count;
 			if (levelDif < 10)
 				levelDif = 10;
@@ -611,6 +646,10 @@ namespace RapChessGui
 			p1.book = CModeMatch.book1;
 			switch (CModeMatch.mode1)
 			{
+				case "Blitz":
+					p1.mode = "blitz";
+					p1.value = Convert.ToString(CModeMatch.value1 * 60000);
+					break;
 				case "Depth":
 					p1.mode = "depth";
 					p1.value = Convert.ToString(CModeMatch.value1);
@@ -629,6 +668,10 @@ namespace RapChessGui
 			p2.book = CModeMatch.book2;
 			switch (CModeMatch.mode2)
 			{
+				case "Blitz":
+					p2.mode = "blitz";
+					p2.value = Convert.ToString(CModeMatch.value2 * 60000);
+					break;
 				case "Depth":
 					p2.mode = "depth";
 					p2.value = Convert.ToString(CModeMatch.value2);
@@ -652,39 +695,6 @@ namespace RapChessGui
 			Clear();
 			moves = Chess.GenerateValidMoves();
 			CModeMatch.SaveToIni();
-		}
-
-		void StartTournament()
-		{
-			SetMode((int)CMode.tournament);
-			CPlayer p1 = null;
-			CPlayer p2 = null;
-			if (CModeTournament.rotate)
-			{
-				p1 = GamerList.gamer[1].player;
-				p2 = GamerList.gamer[0].player;
-			}
-			else
-			{
-				p1 = CModeTournament.SelectPlayer();
-				p2 = CModeTournament.SelectOpponent(p1);
-			}
-			GamerList.gamer[0].SetPlayer(p1);
-			GamerList.gamer[1].SetPlayer(p2);
-			foreach (ListViewItem lvi in listView1.Items)
-				if (lvi.Text == p1.name)
-				{
-					int top = lvi.Index;
-					top -= 4;
-					if (top < 0)
-						top = 0;
-					lvi.Selected = true;
-					listView1.TopItem = listView1.Items[top];
-					listView1.Sort();
-					listView1.Focus();
-					break;
-				}
-			Clear();
 		}
 
 		void StartTraing()
@@ -1459,7 +1469,7 @@ namespace RapChessGui
 			}
 			if (CData.gameMode == (int)CMode.tournament)
 			{
-				StartTournament();
+				TournamentStart();
 			}
 			if (CData.gameMode == (int)CMode.training)
 			{
@@ -1537,14 +1547,14 @@ namespace RapChessGui
 
 		private void cbComputer_TextChanged(object sender, EventArgs e)
 		{
-			CPlayer uc = CPlayerList.GetPlayer(cbComputer.Text);
-			labEngine.Text = uc.engine;
-			cbCommand.Text = uc.GetCommand();
+			CPlayer p = CPlayerList.GetPlayerAuto(cbComputer.Text);
+			labEngine.Text = p.engine;
+			cbCommand.Text = p.GetCommand();
 		}
 
 		private void butStartTournament_Click(object sender, EventArgs e)
 		{
-			StartTournament();
+			TournamentStart();
 		}
 
 		private void listView1_ColumnClick(object sender, ColumnClickEventArgs e)
@@ -1817,7 +1827,7 @@ namespace RapChessGui
 				ListViewItem top2 = null;
 				ListViewItem item = listView1.SelectedItems[0];
 				string name = item.SubItems[0].Text;
-				CPlayer player = CPlayerList.GetPlayer(name);
+				CPlayer player = CPlayerList.GetPlayerAuto(name);
 				lPlayer.Text = $"{player.name} - {player.elo}";
 				listView2.Items.Clear();
 				CPlayerList.Sort();

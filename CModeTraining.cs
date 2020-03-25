@@ -1,5 +1,4 @@
-﻿using System;
-using RapIni;
+﻿using RapIni;
 
 namespace RapChessGui
 {

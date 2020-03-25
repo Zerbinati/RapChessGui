@@ -68,6 +68,11 @@ namespace RapChessGui
 		{
 			if (engine == "Human")
 				return "";
+			else if (value == "blitz")
+			{
+
+				return $" wtime 121000 btime 120000 winc 0 binc 0";
+			}
 			else if (value == "")
 				return mode;
 			else
@@ -76,7 +81,7 @@ namespace RapChessGui
 
 		public void SetPlayer(string name)
 		{
-			CPlayer p = CPlayerList.GetPlayer(name);
+			CPlayer p = CPlayerList.GetPlayerAuto(name);
 			engine = p.engine;
 			mode = p.mode;
 			value = p.value;
@@ -129,13 +134,29 @@ namespace RapChessGui
 			return -1;
 		}
 
+		public static CPlayer GetPlayer(string name)
+		{
+			foreach (CPlayer p in list)
+				if (p.name == name)
+					return p;
+			return null;
+		}
+
 		static CPlayer GetPlayerAuto()
 		{
-			CPlayer ph = GetPlayer("Human");
+			CPlayer ph = GetPlayerAuto("Human");
 			CPlayer pe = GetPlayerElo(ph);
 			CPlayer pc = new CPlayer(pe.name);
 			pc.SetPlayer(pe.name);
 			return pc;
+		}
+
+		public static CPlayer GetPlayerAuto(string name)
+		{
+			foreach (CPlayer p in list)
+				if (p.name == name)
+					return p;
+			return GetPlayerAuto();
 		}
 
 		static CPlayer GetPlayerElo(CPlayer player)
@@ -177,14 +198,6 @@ namespace RapChessGui
 			{
 				return u1.distance - u2.distance;
 			});
-		}
-
-		public static CPlayer GetPlayer(string name)
-		{
-			foreach (CPlayer p in list)
-				if (p.name == name)
-					return p;
-			return GetPlayerAuto();
 		}
 
 		public static void LoadFromIni()
@@ -243,7 +256,7 @@ namespace RapChessGui
 				if (cp.name != "Human")
 					return cp;
 			}
-			return GetPlayer("Human");
+			return GetPlayerAuto("Human");
 		}
 
 		public static void FillPosition()

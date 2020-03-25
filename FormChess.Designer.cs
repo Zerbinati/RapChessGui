@@ -852,6 +852,7 @@
 			this.cbMode2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.cbMode2.FormattingEnabled = true;
 			this.cbMode2.Items.AddRange(new object[] {
+            "Blitz",
             "Depth",
             "Nodes",
             "Time"});
@@ -933,6 +934,7 @@
 			this.cbMode1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.cbMode1.FormattingEnabled = true;
 			this.cbMode1.Items.AddRange(new object[] {
+            "Blitz",
             "Depth",
             "Nodes",
             "Time"});

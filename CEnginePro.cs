@@ -64,6 +64,8 @@ namespace RapChessGui
 			if (gamer.engine == null)
 				return;
 			string pathE = AppDomain.CurrentDomain.BaseDirectory + "Engines\\" + gamer.engine.file;
+			if (!File.Exists(pathE))
+				throw new ArgumentException("Missing engine", gamer.engine.file);
 			string argsE = gamer.engine.parameters;
 			string pathB = "";
 			string argsB = "";
@@ -72,6 +74,8 @@ namespace RapChessGui
 			if (gamer.book != null)
 			{
 				pathB = AppDomain.CurrentDomain.BaseDirectory + "Books\\" + gamer.book.file;
+				if (!File.Exists(pathB))
+					throw new ArgumentException("Missing book", gamer.book.file);
 				argsB = gamer.book.parameters;
 				pathPro = pathB;
 				argsPro = $"\"{pathE}\" \"{argsE}\" \"{argsB}\"";

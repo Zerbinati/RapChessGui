@@ -29,6 +29,7 @@
 		private void InitializeComponent()
 		{
 			this.panel1 = new System.Windows.Forms.Panel();
+			this.butClearHistory = new System.Windows.Forms.Button();
 			this.bDelete = new System.Windows.Forms.Button();
 			this.bCreate = new System.Windows.Forms.Button();
 			this.bUpdate = new System.Windows.Forms.Button();
@@ -47,7 +48,8 @@
 			this.tbPlayerName = new System.Windows.Forms.TextBox();
 			this.groupBox2 = new System.Windows.Forms.GroupBox();
 			this.listBox1 = new System.Windows.Forms.ListBox();
-			this.butClearHistory = new System.Windows.Forms.Button();
+			this.radioButton3 = new System.Windows.Forms.RadioButton();
+			this.nudNodes = new System.Windows.Forms.NumericUpDown();
 			this.panel1.SuspendLayout();
 			this.gbElo.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.nudElo)).BeginInit();
@@ -58,6 +60,7 @@
 			this.gbEngine.SuspendLayout();
 			this.groupBox1.SuspendLayout();
 			this.groupBox2.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.nudNodes)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// panel1
@@ -77,10 +80,21 @@
 			this.panel1.Size = new System.Drawing.Size(311, 591);
 			this.panel1.TabIndex = 0;
 			// 
+			// butClearHistory
+			// 
+			this.butClearHistory.Dock = System.Windows.Forms.DockStyle.Top;
+			this.butClearHistory.Location = new System.Drawing.Point(0, 362);
+			this.butClearHistory.Name = "butClearHistory";
+			this.butClearHistory.Size = new System.Drawing.Size(311, 33);
+			this.butClearHistory.TabIndex = 28;
+			this.butClearHistory.Text = "Clear tournament history";
+			this.butClearHistory.UseVisualStyleBackColor = true;
+			this.butClearHistory.Click += new System.EventHandler(this.butClearHistory_Click);
+			// 
 			// bDelete
 			// 
 			this.bDelete.Dock = System.Windows.Forms.DockStyle.Top;
-			this.bDelete.Location = new System.Drawing.Point(0, 310);
+			this.bDelete.Location = new System.Drawing.Point(0, 329);
 			this.bDelete.Name = "bDelete";
 			this.bDelete.Size = new System.Drawing.Size(311, 33);
 			this.bDelete.TabIndex = 27;
@@ -91,7 +105,7 @@
 			// bCreate
 			// 
 			this.bCreate.Dock = System.Windows.Forms.DockStyle.Top;
-			this.bCreate.Location = new System.Drawing.Point(0, 277);
+			this.bCreate.Location = new System.Drawing.Point(0, 296);
 			this.bCreate.Name = "bCreate";
 			this.bCreate.Size = new System.Drawing.Size(311, 33);
 			this.bCreate.TabIndex = 26;
@@ -102,7 +116,7 @@
 			// bUpdate
 			// 
 			this.bUpdate.Dock = System.Windows.Forms.DockStyle.Top;
-			this.bUpdate.Location = new System.Drawing.Point(0, 250);
+			this.bUpdate.Location = new System.Drawing.Point(0, 269);
 			this.bUpdate.Name = "bUpdate";
 			this.bUpdate.Size = new System.Drawing.Size(311, 27);
 			this.bUpdate.TabIndex = 25;
@@ -114,7 +128,7 @@
 			// 
 			this.gbElo.Controls.Add(this.nudElo);
 			this.gbElo.Dock = System.Windows.Forms.DockStyle.Top;
-			this.gbElo.Location = new System.Drawing.Point(0, 205);
+			this.gbElo.Location = new System.Drawing.Point(0, 224);
 			this.gbElo.Name = "gbElo";
 			this.gbElo.Size = new System.Drawing.Size(311, 45);
 			this.gbElo.TabIndex = 24;
@@ -143,6 +157,8 @@
 			// 
 			// gbMode
 			// 
+			this.gbMode.Controls.Add(this.nudNodes);
+			this.gbMode.Controls.Add(this.radioButton3);
 			this.gbMode.Controls.Add(this.nudDepth);
 			this.gbMode.Controls.Add(this.nudTime);
 			this.gbMode.Controls.Add(this.radioButton2);
@@ -150,7 +166,7 @@
 			this.gbMode.Dock = System.Windows.Forms.DockStyle.Top;
 			this.gbMode.Location = new System.Drawing.Point(0, 135);
 			this.gbMode.Name = "gbMode";
-			this.gbMode.Size = new System.Drawing.Size(311, 70);
+			this.gbMode.Size = new System.Drawing.Size(311, 89);
 			this.gbMode.TabIndex = 16;
 			this.gbMode.TabStop = false;
 			this.gbMode.Text = "Mode";
@@ -312,16 +328,44 @@
 			this.listBox1.TabIndex = 1;
 			this.listBox1.SelectedValueChanged += new System.EventHandler(this.ListBox1_SelectedValueChanged);
 			// 
-			// butClearHistory
+			// radioButton3
 			// 
-			this.butClearHistory.Dock = System.Windows.Forms.DockStyle.Top;
-			this.butClearHistory.Location = new System.Drawing.Point(0, 343);
-			this.butClearHistory.Name = "butClearHistory";
-			this.butClearHistory.Size = new System.Drawing.Size(311, 33);
-			this.butClearHistory.TabIndex = 28;
-			this.butClearHistory.Text = "Clear tournament history";
-			this.butClearHistory.UseVisualStyleBackColor = true;
-			this.butClearHistory.Click += new System.EventHandler(this.butClearHistory_Click);
+			this.radioButton3.AutoSize = true;
+			this.radioButton3.Location = new System.Drawing.Point(6, 65);
+			this.radioButton3.Name = "radioButton3";
+			this.radioButton3.Size = new System.Drawing.Size(56, 17);
+			this.radioButton3.TabIndex = 2;
+			this.radioButton3.Text = "Nodes";
+			this.radioButton3.UseVisualStyleBackColor = true;
+			// 
+			// nudNodes
+			// 
+			this.nudNodes.Increment = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
+			this.nudNodes.Location = new System.Drawing.Point(83, 65);
+			this.nudNodes.Maximum = new decimal(new int[] {
+            1000000000,
+            0,
+            0,
+            0});
+			this.nudNodes.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+			this.nudNodes.Name = "nudNodes";
+			this.nudNodes.Size = new System.Drawing.Size(222, 20);
+			this.nudNodes.TabIndex = 5;
+			this.nudNodes.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			this.nudNodes.ThousandsSeparator = true;
+			this.nudNodes.Value = new decimal(new int[] {
+            1000000,
+            0,
+            0,
+            0});
 			// 
 			// FormPlayer
 			// 
@@ -350,6 +394,7 @@
 			this.groupBox1.ResumeLayout(false);
 			this.groupBox1.PerformLayout();
 			this.groupBox2.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this.nudNodes)).EndInit();
 			this.ResumeLayout(false);
 
 		}
@@ -375,5 +420,7 @@
 		private System.Windows.Forms.GroupBox gbElo;
 		private System.Windows.Forms.NumericUpDown nudElo;
 		private System.Windows.Forms.Button butClearHistory;
+		private System.Windows.Forms.NumericUpDown nudNodes;
+		private System.Windows.Forms.RadioButton radioButton3;
 	}
 }

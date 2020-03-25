@@ -24,7 +24,7 @@ namespace RapChessGui
 
 		void SelectUser(string name)
 		{
-			var user = CPlayerList.GetPlayer(name);
+			var user = CPlayerList.GetPlayerAuto(name);
 			if (user == null)
 				return;
 			tbPlayerName.Text = user.name;
@@ -45,6 +45,9 @@ namespace RapChessGui
 					break;
 				case "depth":
 					nudDepth.Value = Int32.Parse(user.value);
+					break;
+				case "nodes":
+					nudNodes.Value = Int32.Parse(user.value);
 					break;
 			}
 			List<RadioButton> list = gbMode.Controls.OfType<RadioButton>().ToList();
@@ -77,13 +80,17 @@ namespace RapChessGui
 			user.mode = list[mode].Text;
 			switch (mode)
 			{
-				case 1:
+				case 2:
 					user.mode = "movetime";
 					user.value = nudTime.Value.ToString();
 					break;
-				case 0:
+				case 1:
 					user.mode = "depth";
 					user.value = nudDepth.Value.ToString();
+					break;
+				case 0:
+					user.mode = "nodes";
+					user.value = nudNodes.Value.ToString();
 					break;
 			}
 			user.SaveToIni();

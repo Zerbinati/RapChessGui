@@ -1,12 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
+using RapIni;
 
 namespace RapChessGui
 {
 	static class CModeTournament
 	{
+		public static string player;
 		public static bool rotate = false;
 		public static CTourList tourList = new CTourList();
+
+		public static void SaveToIni()
+		{
+			CRapIni.This.Write("mode>tournament>player", player);
+		}
+
+		public static void LoadFromIni()
+		{
+			player = CRapIni.This.Read("mode>tournament>player","");
+		}
 
 		public static CPlayer ChooseOpponent(CPlayer player, CPlayer player1, CPlayer player2)
 		{
@@ -52,8 +64,18 @@ namespace RapChessGui
 
 		public static CPlayer SelectPlayer()
 		{
-			CPlayer p = tourList.LastPlayer();
-			return CPlayerList.NextPlayer(p);
+			CPlayer p = CPlayerList.GetPlayer(player);
+			if(p == null)
+				p = tourList.LastPlayer();
+			CPlayer n = CPlayerList.NextPlayer(p);
+			int rw = 0;
+			int rl = 0;
+			int rd = 0;
+			CModeTournament.tourList.CountGames(p.name, n.name, ref rw, ref rl, ref rd);
+			CPlayer result = rw >= rl ? n : p;
+			player = result.name;
+			SaveToIni();
+			return result;
 		}
 
 		public static CPlayer SelectOpponent(CPlayer player)

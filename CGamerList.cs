@@ -109,20 +109,39 @@ namespace RapChessGui
 			started = true;
 		}
 
+		void UciGo()
+		{
+			SendMessage(CHistory.GetPosition());
+			if (player.mode == "blitz")
+			{
+				int v = Convert.ToInt32(player.value);
+				int t = Convert.ToInt32(v - timeTotal);
+				SendMessage($"go wtime {t} btime {t} winc 0 binc 0");
+			}
+			else
+				SendMessage($"go {player.mode} {player.value}");
+		}
+
+		void XbGo()
+		{
+			if (player.mode == "blitz")
+			{
+				int v = Convert.ToInt32(player.value);
+				int t = Convert.ToInt32(v - timeTotal);
+				SendMessage($"time {t}");
+				SendMessage($"otim {t}");
+			}
+			SendMessage(CHistory.LastMove());
+		}
+
 		public void CompMakeMove()
 		{
 			if (engine.protocol == "Uci")
-			{
-				SendMessage(CHistory.GetPosition());
-				Thread.Sleep(1 << 5);
-				SendMessage($"go {mode} {value}");
-			}
+				UciGo();
 			else
 			{
 				if (wbok)
-				{
-					SendMessage(CHistory.LastMove());
-				}
+					XbGo();
 				else
 				{
 					SendMessage("new");
@@ -194,7 +213,7 @@ namespace RapChessGui
 
 		public void SetPlayer(string name)
 		{
-			CPlayer p = CPlayerList.GetPlayer(name);
+			CPlayer p = CPlayerList.GetPlayerAuto(name);
 			SetPlayer(p);
 		}
 
