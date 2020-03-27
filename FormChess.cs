@@ -25,7 +25,7 @@ namespace RapChessGui
 		ColumnHeader SortingColumn = null;
 		List<int> moves = new List<int>();
 		public CRapIni RapIni = new CRapIni();
-		CEcoList EcoList = new CEcoList();
+		readonly CEcoList EcoList = new CEcoList();
 		readonly CChess Chess = new CChess();
 		readonly CGamerList GamerList = new CGamerList();
 		readonly CUci Uci = new CUci();
@@ -364,7 +364,7 @@ namespace RapChessGui
 					ShowGame();
 					break;
 				case (int)CMode.match:
-					ShowMatch();
+					MatchShow();
 					break;
 				case (int)CMode.training:
 					labEloB.Visible = false;
@@ -436,7 +436,7 @@ namespace RapChessGui
 			ShowAutoElo();
 		}
 
-		void ShowMatch()
+		void MatchShow()
 		{
 			cbEngine1.SelectedIndex = cbEngine1.FindStringExact(CModeMatch.engine1);
 			cbEngine2.SelectedIndex = cbEngine2.FindStringExact(CModeMatch.engine2);
@@ -455,6 +455,73 @@ namespace RapChessGui
 			labMatch22.Text = CModeMatch.win.ToString();
 			labMatch23.Text = CModeMatch.draw.ToString();
 			labMatch24.Text = $"{CModeMatch.Result(true)}%";
+		}
+
+		void MatchStart()
+		{
+			CModeMatch.engine1 = cbEngine1.Text;
+			CModeMatch.engine2 = cbEngine2.Text;
+			CModeMatch.mode1 = cbMode1.Text;
+			CModeMatch.mode2 = cbMode2.Text;
+			CModeMatch.value1 = cbValue1.SelectedIndex + 1;
+			CModeMatch.value2 = cbValue2.SelectedIndex + 1;
+			CModeMatch.book1 = cbBook1.Text;
+			CModeMatch.book2 = cbBook2.Text;
+			SetMode((int)CMode.match);
+			CPlayer p1 = new CPlayer("Player 1");
+			p1.engine = CModeMatch.engine1;
+			p1.book = CModeMatch.book1;
+			switch (CModeMatch.mode1)
+			{
+				case "Blitz":
+					p1.mode = "blitz";
+					p1.value = Convert.ToString(CModeMatch.value1 * 60000);
+					break;
+				case "Depth":
+					p1.mode = "depth";
+					p1.value = Convert.ToString(CModeMatch.value1);
+					break;
+				case "Nodes":
+					p1.mode = "nodes";
+					p1.value = Convert.ToString(CModeMatch.value1 * 1000000);
+					break;
+				default:
+					p1.mode = "movetime";
+					p1.value = Convert.ToString(CModeMatch.value1 * 1000);
+					break;
+			}
+			CPlayer p2 = new CPlayer("Player 2");
+			p2.engine = CModeMatch.engine2;
+			p2.book = CModeMatch.book2;
+			switch (CModeMatch.mode2)
+			{
+				case "Blitz":
+					p2.mode = "blitz";
+					p2.value = Convert.ToString(CModeMatch.value2 * 60000);
+					break;
+				case "Depth":
+					p2.mode = "depth";
+					p2.value = Convert.ToString(CModeMatch.value2);
+					break;
+				case "Nodes":
+					p2.mode = "nodes";
+					p2.value = Convert.ToString(CModeMatch.value2 * 1000000);
+					break;
+				default:
+					p2.mode = "movetime";
+					p2.value = Convert.ToString(CModeMatch.value2 * 1000);
+					break;
+			}
+			tbCommand1.Text = p1.GetCommand();
+			tbCommand2.Text = p2.GetCommand();
+			GamerList.gamer[0].SetPlayer(p1);
+			GamerList.gamer[1].SetPlayer(p2);
+			if (CModeMatch.rotate)
+				GamerList.Rotate();
+			CModeMatch.rotate = !CModeMatch.rotate;
+			Clear();
+			moves = Chess.GenerateValidMoves();
+			CModeMatch.SaveToIni();
 		}
 
 		void TournamentReset()
@@ -520,6 +587,7 @@ namespace RapChessGui
 					listView1.TopItem = listView1.Items[top];
 					listView1.Sort();
 					listView1.Focus();
+					ShowHistoryList();
 					break;
 				}
 			Clear();
@@ -546,6 +614,70 @@ namespace RapChessGui
 			label10.Text = $"{CModeTraining.Result(true)}%";
 		}
 
+		void TraingStart()
+		{
+			CModeTraining.teacher = cbTeacherEngine.Text;
+			CModeTraining.trained = cbTrainedEngine.Text;
+			CModeTraining.teacherMode = cbTeacherMode.Text;
+			CModeTraining.trainedMode = cbTrainedMode.Text;
+			CModeTraining.teacherBook = cbTeacherBook.Text;
+			CModeTraining.trainedBook = cbTrainedBook.Text;
+			CModeTraining.teacherValue = (int)nudTeacher.Value;
+			CModeTraining.trainedValue = (int)nudTrained.Value;
+			SetMode((int)CMode.training);
+			CPlayer uw = new CPlayer("Trained");
+			uw.engine = CModeTraining.trained;
+			uw.book = CModeTraining.trainedBook;
+			switch (CModeTraining.trainedMode)
+			{
+				case "Blitz":
+					uw.mode = "blitz";
+					uw.value = Convert.ToString(CModeTraining.trainedValue * 10000);
+					break;
+				case "Depth":
+					uw.mode = "depth";
+					uw.value = Convert.ToString(CModeTraining.trainedValue);
+					break;
+				case "Nodes":
+					uw.mode = "nodes";
+					uw.value = Convert.ToString(CModeTraining.trainedValue * 100000);
+					break;
+				default:
+					uw.mode = "movetime";
+					uw.value = Convert.ToString(CModeTraining.trainedValue * 100);
+					break;
+			}
+			CPlayer ub = new CPlayer("Teacher");
+			ub.engine = CModeTraining.teacher;
+			ub.book = CModeTraining.teacherBook;
+			switch (CModeTraining.teacherMode)
+			{
+				case "Blitz":
+					ub.mode = "blitz";
+					ub.value = Convert.ToString(CModeTraining.teacherValue * 10000);
+					break;
+				case "Depth":
+					ub.mode = "depth";
+					ub.value = Convert.ToString(CModeTraining.teacherValue);
+					break;
+				case "Nodes":
+					ub.mode = "nodes";
+					ub.value = Convert.ToString(CModeTraining.teacherValue * 100000);
+					break;
+				default:
+					ub.mode = "movetime";
+					ub.value = Convert.ToString(CModeTraining.teacherValue * 100);
+					break;
+			}
+			GamerList.gamer[0].SetPlayer(uw);
+			GamerList.gamer[1].SetPlayer(ub);
+			if (CModeTraining.rotate)
+				GamerList.Rotate();
+			CModeTraining.rotate = !CModeTraining.rotate;
+			Clear();
+			CModeTraining.SaveToIni();
+		}
+
 		void ShowEdit()
 		{
 			List<RadioButton> list = gbToMove.Controls.OfType<RadioButton>().ToList();
@@ -557,6 +689,47 @@ namespace RapChessGui
 			clbCastling.SetItemChecked(2, (Chess.g_castleRights & 4) > 0);
 			clbCastling.SetItemChecked(3, (Chess.g_castleRights & 8) > 0);
 			Chess.g_castleRights = cr;
+		}
+
+		void ShowHistoryList()
+		{
+			if (listView1.SelectedItems.Count > 0)
+			{
+				ListViewItem top2 = null;
+				ListViewItem item = listView1.SelectedItems[0];
+				string name = item.SubItems[0].Text;
+				CPlayer player = CPlayerList.GetPlayerAuto(name);
+				lPlayer.Text = $"{player.name} - {player.elo}";
+				listView2.Items.Clear();
+				CPlayerList.Sort();
+				CPlayerList.FillPosition();
+				foreach (CPlayer p in CPlayerList.list)
+					if (p.engine != "Human")
+					{
+						int rw = 0;
+						int rl = 0;
+						int rd = 0;
+						CModeTournament.tourList.CountGames(name, p.name, ref rw, ref rl, ref rd);
+						int count = rw + rl + rd;
+						if (count > 0)
+						{
+							int pro = (rw * 200 + rd * 100) / count - 100;
+							int elo = Convert.ToInt32(player.elo) - Convert.ToInt32(p.elo);
+							ListViewItem lvi = new ListViewItem(new[] { p.name, elo.ToString(), count.ToString(), pro.ToString() });
+							if (elo > 0)
+								lvi.BackColor = Color.FromArgb(0xe0, 0xff, 0xe0);
+							if (elo < 0)
+								lvi.BackColor = Color.FromArgb(0xff, 0xe0, 0xe0);
+							if (elo == 0)
+								lvi.BackColor = Color.FromArgb(0xff, 0xff, 0xff);
+							listView2.Items.Add(lvi);
+							if ((player.position - p.position) == 4)
+								top2 = lvi;
+						}
+					}
+				if (top2 != null)
+					listView2.TopItem = top2;
+			}
 		}
 
 		void Reset()
@@ -640,129 +813,6 @@ namespace RapChessGui
 			if (uh.eloLess < 0)
 				uh.eloLess = 0;
 			CModeGame.SaveToIni();
-		}
-
-		void StartMatch()
-		{
-			CModeMatch.engine1 = cbEngine1.Text;
-			CModeMatch.engine2 = cbEngine2.Text;
-			CModeMatch.mode1 = cbMode1.Text;
-			CModeMatch.mode2 = cbMode2.Text;
-			CModeMatch.value1 = cbValue1.SelectedIndex + 1;
-			CModeMatch.value2 = cbValue2.SelectedIndex + 1;
-			CModeMatch.book1 = cbBook1.Text;
-			CModeMatch.book2 = cbBook2.Text;
-			SetMode((int)CMode.match);
-			CPlayer p1 = new CPlayer("Player 1");
-			p1.engine = CModeMatch.engine1;
-			p1.book = CModeMatch.book1;
-			switch (CModeMatch.mode1)
-			{
-				case "Blitz":
-					p1.mode = "blitz";
-					p1.value = Convert.ToString(CModeMatch.value1 * 60000);
-					break;
-				case "Depth":
-					p1.mode = "depth";
-					p1.value = Convert.ToString(CModeMatch.value1);
-					break;
-				case "Nodes":
-					p1.mode = "nodes";
-					p1.value = Convert.ToString(CModeMatch.value1 * 1000000);
-					break;
-				default:
-					p1.mode = "movetime";
-					p1.value = Convert.ToString(CModeMatch.value1 * 1000);
-					break;
-			}
-			CPlayer p2 = new CPlayer("Player 2");
-			p2.engine = CModeMatch.engine2;
-			p2.book = CModeMatch.book2;
-			switch (CModeMatch.mode2)
-			{
-				case "Blitz":
-					p2.mode = "blitz";
-					p2.value = Convert.ToString(CModeMatch.value2 * 60000);
-					break;
-				case "Depth":
-					p2.mode = "depth";
-					p2.value = Convert.ToString(CModeMatch.value2);
-					break;
-				case "Nodes":
-					p2.mode = "nodes";
-					p2.value = Convert.ToString(CModeMatch.value2 * 1000000);
-					break;
-				default:
-					p2.mode = "movetime";
-					p2.value = Convert.ToString(CModeMatch.value2 * 1000);
-					break;
-			}
-			tbCommand1.Text = p1.GetCommand();
-			tbCommand2.Text = p2.GetCommand();
-			GamerList.gamer[0].SetPlayer(p1);
-			GamerList.gamer[1].SetPlayer(p2);
-			if (CModeMatch.rotate)
-				GamerList.Rotate();
-			CModeMatch.rotate = !CModeMatch.rotate;
-			Clear();
-			moves = Chess.GenerateValidMoves();
-			CModeMatch.SaveToIni();
-		}
-
-		void StartTraing()
-		{
-			CModeTraining.teacher = cbTeacherEngine.Text;
-			CModeTraining.trained = cbTrainedEngine.Text;
-			CModeTraining.teacherMode = cbTeacherMode.Text;
-			CModeTraining.trainedMode = cbTrainedMode.Text;
-			CModeTraining.teacherBook = cbTeacherBook.Text;
-			CModeTraining.trainedBook = cbTrainedBook.Text;
-			CModeTraining.teacherValue = (int)nudTeacher.Value;
-			CModeTraining.trainedValue = (int)nudTrained.Value;
-			SetMode((int)CMode.training);
-			CPlayer uw = new CPlayer("Trained");
-			uw.engine = CModeTraining.trained;
-			uw.book = CModeTraining.trainedBook;
-			switch (CModeTraining.trainedMode)
-			{
-				case "Depth":
-					uw.mode = "depth";
-					uw.value = Convert.ToString(CModeTraining.trainedValue);
-					break;
-				case "Nodes":
-					uw.mode = "nodes";
-					uw.value = Convert.ToString(CModeTraining.trainedValue * 100000);
-					break;
-				default:
-					uw.mode = "movetime";
-					uw.value = Convert.ToString(CModeTraining.trainedValue * 100);
-					break;
-			}
-			CPlayer ub = new CPlayer("Teacher");
-			ub.engine = CModeTraining.teacher;
-			ub.book = CModeTraining.teacherBook;
-			switch (CModeTraining.trainedMode)
-			{
-				case "Depth":
-					ub.mode = "depth";
-					ub.value = Convert.ToString(CModeTraining.teacherValue);
-					break;
-				case "Nodes":
-					ub.mode = "nodes";
-					ub.value = Convert.ToString(CModeTraining.teacherValue * 100000);
-					break;
-				default:
-					ub.mode = "movetime";
-					ub.value = Convert.ToString(CModeTraining.teacherValue * 100);
-					break;
-			}
-			GamerList.gamer[0].SetPlayer(uw);
-			GamerList.gamer[1].SetPlayer(ub);
-			if (CModeTraining.rotate)
-				GamerList.Rotate();
-			CModeTraining.rotate = !CModeTraining.rotate;
-			Clear();
-			CModeTraining.SaveToIni();
 		}
 
 		public bool MakeMove(string emo)
@@ -888,7 +938,7 @@ namespace RapChessGui
 					CModeMatch.draw++;
 				}
 				CModeMatch.SaveToIni();
-				ShowMatch();
+				MatchShow();
 			}
 			if (CData.gameMode == (int)CMode.tournament)
 			{
@@ -1469,7 +1519,7 @@ namespace RapChessGui
 		private void ButTraining_Click(object sender, EventArgs e)
 		{
 			CModeTraining.Reset();
-			StartTraing();
+			TraingStart();
 		}
 
 		private void TimerStart_Tick(object sender, EventArgs e)
@@ -1477,7 +1527,7 @@ namespace RapChessGui
 			timerStart.Stop();
 			if (CData.gameMode == (int)CMode.match)
 			{
-				StartMatch();
+				MatchStart();
 			}
 			if (CData.gameMode == (int)CMode.tournament)
 			{
@@ -1485,7 +1535,7 @@ namespace RapChessGui
 			}
 			if (CData.gameMode == (int)CMode.training)
 			{
-				StartTraing();
+				TraingStart();
 			}
 		}
 
@@ -1550,7 +1600,7 @@ namespace RapChessGui
 		private void bStartMatch_Click(object sender, EventArgs e)
 		{
 			CModeMatch.Reset();
-			StartMatch();
+			MatchStart();
 		}
 
 		private void bookToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1794,7 +1844,7 @@ namespace RapChessGui
 		private void butContinueMatch_Click(object sender, EventArgs e)
 		{
 			CModeMatch.SaveToIni();
-			StartMatch();
+			MatchStart();
 		}
 
 		private void butDefault_Click(object sender, EventArgs e)
@@ -1834,43 +1884,8 @@ namespace RapChessGui
 
 		private void listView1_SelectedIndexChanged(object sender, EventArgs e)
 		{
-			if (listView1.SelectedItems.Count > 0)
-			{
-				ListViewItem top2 = null;
-				ListViewItem item = listView1.SelectedItems[0];
-				string name = item.SubItems[0].Text;
-				CPlayer player = CPlayerList.GetPlayerAuto(name);
-				lPlayer.Text = $"{player.name} - {player.elo}";
-				listView2.Items.Clear();
-				CPlayerList.Sort();
-				CPlayerList.FillPosition();
-				foreach (CPlayer p in CPlayerList.list)
-					if (p.engine != "Human")
-					{
-						int rw = 0;
-						int rl = 0;
-						int rd = 0;
-						CModeTournament.tourList.CountGames(name, p.name, ref rw, ref rl, ref rd);
-						int count = rw + rl + rd;
-						if (count > 0)
-						{
-							int pro = (rw * 200 + rd * 100) / count - 100;
-							int elo = Convert.ToInt32(player.elo) - Convert.ToInt32(p.elo);
-							ListViewItem lvi = new ListViewItem(new[] { p.name, elo.ToString(), count.ToString(), pro.ToString() });
-							if (elo > 0)
-								lvi.BackColor = Color.FromArgb(0xe0, 0xff, 0xe0);
-							if (elo < 0)
-								lvi.BackColor = Color.FromArgb(0xff, 0xe0, 0xe0);
-							if (elo == 0)
-								lvi.BackColor = Color.FromArgb(0xff, 0xff, 0xff);
-							listView2.Items.Add(lvi);
-							if ((player.position - p.position) == 4)
-								top2 = lvi;
-						}
-					}
-				if (top2 != null)
-					listView2.TopItem = top2;
-			}
+			ShowHistoryList();
 		}
+
 	}
 }
