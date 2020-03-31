@@ -245,9 +245,9 @@ namespace RapChessGui
 			return 0;
 		}
 
-		public int IsValidMove(string m)
+		public int IsValidMove(string emo)
 		{
-			return IsValidMove(EmoToGmo(m));
+			return IsValidMove(EmoToGmo(emo));
 		}
 
 		int RAND_32()

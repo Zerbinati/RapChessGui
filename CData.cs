@@ -27,7 +27,7 @@ namespace RapChessGui
 		public static int back = 0;
 		public static double fps = 0;
 		public static string modeName = "Game";
-		public static string[] arrModeNames = new string[] {"nodes","depth", "movetime"};
+		public static string[] arrModeNames = new string[] {"blitz","nodes","depth", "movetime"};
 		public static List<string> fileBook = new List<string>();
 		public static List<string> fileEngine = new List<string>();
 

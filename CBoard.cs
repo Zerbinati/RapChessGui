@@ -71,10 +71,47 @@ namespace RapChessGui
 		public CPiece piece = null;
 	}
 
+	static class CArrow
+	{
+		public static bool visible = false;
+		public static Point a;
+		public static Point b;
+
+		public static void Hide()
+		{
+			visible = false;
+		}
+
+		public static void SetAB(int ax,int ay,int bx,int by)
+		{
+			visible = true;
+			a.X = ax;
+			a.Y = ay;
+			b.X = bx;
+			b.Y = by;
+		}
+
+		public static void SetAB(int a,int b)
+		{
+			int ax = a & 7;
+			int ay = a >> 3;
+			int bx = b & 7;
+			int by = b >> 3;
+			SetAB(ax,ay,bx,by);
+		}
+
+		public static bool Visible()
+		{
+			return visible && ((a.X != b.X) || (a.Y != b.Y));
+		}
+
+	}
+
 	static class CBoard
 	{
 		public static bool animated = true;
 		public static bool finished = true;
+		public static bool showArrow = false;
 		public static CField[] list = new CField[64];
 		public const int field = 64;
 		public const int margin = 32;
@@ -92,6 +129,18 @@ namespace RapChessGui
 		{
 			for (int n = 0; n < 64; n++)
 				list[n].color = Color.Empty;
+		}
+
+		public static Point GetMiddle(int x,int y)
+		{
+			x = margin + x * field + (field >> 1);
+			y = margin + y * field + (field >> 1);
+			return new Point(x,y);
+		}
+
+		public static Point GetMiddle(Point p)
+		{
+			return GetMiddle(p.X,p.Y);
 		}
 
 		public static void UpdateField(int index)

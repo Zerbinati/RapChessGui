@@ -49,6 +49,9 @@ namespace RapChessGui
 				case "nodes":
 					nudNodes.Value = Int32.Parse(user.value);
 					break;
+				case "blitz":
+					nudBlitz.Value = Int32.Parse(user.value);
+					break;
 			}
 			List<RadioButton> list = gbMode.Controls.OfType<RadioButton>().ToList();
 			list[CData.ModeStoi(user.mode)].Select();
@@ -80,17 +83,21 @@ namespace RapChessGui
 			user.mode = list[mode].Text;
 			switch (mode)
 			{
-				case 2:
+				case 3:
 					user.mode = "movetime";
 					user.value = nudTime.Value.ToString();
 					break;
-				case 1:
+				case 2:
 					user.mode = "depth";
 					user.value = nudDepth.Value.ToString();
 					break;
-				case 0:
+				case 1:
 					user.mode = "nodes";
 					user.value = nudNodes.Value.ToString();
+					break;
+				case 0:
+					user.mode = "blitz";
+					user.value = nudBlitz.Value.ToString();
 					break;
 			}
 			user.SaveToIni();
@@ -114,12 +121,17 @@ namespace RapChessGui
 		private void ButCreate_Click(object sender, EventArgs e)
 		{
 			string name = tbPlayerName.Text;
-			CPlayer player = new CPlayer(name);
-			player.engine = cbEngineList.Text;
-			CPlayerList.list.Add(player);
-			SaveToIni(player);
-			MessageBox.Show($"Player {player.name} has been created");
-			CData.reset = true;
+			if (CPlayerList.GetPlayer(name) == null)
+			{
+				CPlayer player = new CPlayer(name);
+				player.engine = cbEngineList.Text;
+				CPlayerList.list.Add(player);
+				SaveToIni(player);
+				MessageBox.Show($"Player {player.name} has been created");
+				CData.reset = true;
+			}
+			else
+				MessageBox.Show($"Player {name} already exists");
 		}
 
 		private void ButDelete_Click(object sender, EventArgs e)
