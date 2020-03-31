@@ -249,25 +249,30 @@ namespace RapChessGui
 					int i = Uci.GetIndex("pv", 0);
 					if (i > 0)
 					{
-						int ci = 0;
+						List<int> moves = new List<int>();
 						for (int n = i; n < Uci.tokens.Length; n++)
 						{
-							string cm = Uci.tokens[n];
-							if (Chess.IsValidMove(cm) > 0)
+							string emo = Uci.tokens[n];
+							int gmo = Chess.IsValidMove(emo);
+							if (gmo > 0)
 							{
-								if (ci++ == 0)
+								if (moves.Count == 0)
 								{
-									CChess.EmoToSD(cm, out int sou, out int des);
+									CChess.EmoToSD(emo, out int sou, out int des);
 									if (boardRotate)
 										CArrow.SetAB(64 - sou, 64 - des);
 									else
 										CArrow.SetAB(sou, des);
 									RenderBoard();
 								}
-								pv = $"{pv} {cm}";
+								Chess.MakeMove(gmo);
+								moves.Add(gmo);
+								pv = $"{pv} {emo}";
 							}
 							else break;
 						}
+						for (int n = moves.Count -1; n >=0; n--)
+							Chess.UnmakeMove(moves[n]);
 						labLast.Text = pv;
 					}
 					isBook = Uci.GetIndex("book", 0) > 0;
@@ -1199,7 +1204,7 @@ namespace RapChessGui
 
 			if ((CBoard.showArrow) && (CArrow.visible))
 			{
-				Pen pen = new Pen(Color.FromArgb(0x80, 0x10, 0xff, 0x10), 8);
+				Pen pen = new Pen(Color.FromArgb(0x90, 0x10, 0xff, 0x10), 8);
 				pen.StartCap = LineCap.RoundAnchor;
 				pen.EndCap = LineCap.ArrowAnchor;
 				g.DrawLine(pen, CBoard.GetMiddle(CArrow.a), CBoard.GetMiddle(CArrow.b));
