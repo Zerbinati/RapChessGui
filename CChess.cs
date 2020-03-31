@@ -85,7 +85,6 @@ namespace RapChessGui
 		const int moveflagPromoteKnight = 0x80 << 16;
 		const int maskCastle = moveflagCastleKing | moveflagCastleQueen;
 		const int maskColor = colorBlack | colorWhite;
-		int g_captured = 0;
 		public int g_castleRights = 0xf;
 		int g_depth = 0;
 		int g_hash = 0;
@@ -236,18 +235,22 @@ namespace RapChessGui
 			return IsValidMove(move);
 		}
 
-		public int IsValidMove(int m)
+		public int IsValidMove(int gmo)
 		{
 			List<int> moves = GenerateValidMoves();
-			for (int i = 0; i < moves.Count; i++)
-				if (moves[i] == m)
+			foreach (int m in moves)
+				if (m == gmo)
 					return m;
 			return 0;
 		}
 
 		public int IsValidMove(string emo)
 		{
-			return IsValidMove(EmoToGmo(emo));
+			List<int> moves = GenerateValidMoves();
+			foreach (int m in moves)
+				if (FormatMove(m) == emo)
+					return m;
+			return 0;
 		}
 
 		int RAND_32()
@@ -258,12 +261,9 @@ namespace RapChessGui
 		public int EmoToGmo(string emo)
 		{
 			List<int> moves = GenerateAllMoves(whiteTurn, false);
-			for (int i = 0; i < moves.Count; i++)
-			{
-				string m = FormatMove(moves[i]);
-				if (m == emo)
-					return moves[i];
-			}
+			foreach(int m in moves)
+				if (FormatMove(m) == emo)
+					return m;
 			return 0;
 		}
 
@@ -412,9 +412,8 @@ namespace RapChessGui
 			List<int> moves = new List<int>();
 			List<int> am = GenerateAllMoves(whiteTurn, false);
 			if (!g_inCheck)
-				for (int i = am.Count - 1; i >= 0; i--)
+				foreach(int m in am)
 				{
-					int m = am[i];
 					MakeMove(m);
 					GenerateAllMoves(whiteTurn, false);
 					if (!g_inCheck)
@@ -669,12 +668,18 @@ namespace RapChessGui
 
 		public void MakeMove(int move)
 		{
+			CUndo undo = undoStack[undoIndex++];
+			undo.hash = g_hash;
+			undo.passing = g_passing;
+			undo.castle = g_castleRights;
+			undo.move50 = g_move50;
+			undo.lastCastle = g_lastCastle;
 			int fr = move & 0xff;
 			int to = (move >> 8) & 0xff;
 			int flags = move & 0xFF0000;
 			int piecefr = g_board[fr];
 			int piece = piecefr & 0xf;
-			g_captured = g_board[to];
+			int captured = g_board[to];
 			g_lastCastle = (move & maskCastle) | (piecefr & maskColor);
 			if ((flags & moveflagCastleKing) > 0)
 			{
@@ -689,19 +694,13 @@ namespace RapChessGui
 			else if ((flags & moveflagPassing) > 0)
 			{
 				int capi = whiteTurn ? to + 16 : to - 16;
-				g_captured = g_board[capi];
+				captured = g_board[capi];
 				g_board[capi] = colorEmpty;
 			}
-			CUndo undo = undoStack[undoIndex++];
-			undo.captured = g_captured;
-			undo.hash = g_hash;
-			undo.passing = g_passing;
-			undo.castle = g_castleRights;
-			undo.move50 = g_move50;
-			undo.lastCastle = g_lastCastle;
+			undo.captured = captured;
 			g_hash ^= g_hashBoard[fr, piece];
 			g_passing = 0;
-			if ((g_captured & 0xF) > 0)
+			if ((captured & 0xF) > 0)
 			{
 				g_move50 = 0;
 				g_phase--;

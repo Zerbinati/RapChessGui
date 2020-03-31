@@ -182,6 +182,7 @@ namespace RapChessGui
 
 		public void GetMessageUci(CGamer g, string msg)
 		{
+			string emo;
 			Uci.SetMsg(msg);
 			switch (Uci.command)
 			{
@@ -197,10 +198,10 @@ namespace RapChessGui
 					break;
 				case "bestmove":
 					g.ponder = Uci.GetValue("ponder");
-					string em = Uci.tokens[1];
+					emo = Uci.tokens[1];
 					if (isBook)
-						AddBook(em);
-					MakeMove(em);
+						AddBook(emo);
+					MakeMove(emo);
 					break;
 				case "info":
 					labLast.ForeColor = Color.Gainsboro;
@@ -252,7 +253,7 @@ namespace RapChessGui
 						List<int> moves = new List<int>();
 						for (int n = i; n < Uci.tokens.Length; n++)
 						{
-							string emo = Uci.tokens[n];
+							emo = Uci.tokens[n];
 							int gmo = Chess.IsValidMove(emo);
 							if (gmo > 0)
 							{
@@ -870,6 +871,12 @@ namespace RapChessGui
 				labLast.ForeColor = Color.Red;
 				labLast.Text = "Move error " + emo;
 				FormLog.This.richTextBox1.AppendText($" error {emo}\n", Color.Red);
+				FormLog.This.richTextBox1.AppendText($"{Chess.GetFen()}\n");
+				List<int> gMoves = Chess.GenerateValidMoves();
+				List<string> eMoves = new List<string>();
+				foreach (int gm in gMoves)
+					eMoves.Add(Chess.FormatMove(gm));
+				FormLog.This.richTextBox1.AppendText($"{string.Join(" ",eMoves)}\n");
 				FormLog.This.richTextBox1.SaveFile("Error.rtf");
 				return false;
 			}
