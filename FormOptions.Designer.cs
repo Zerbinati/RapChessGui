@@ -115,6 +115,8 @@
 			// cbAttack
 			// 
 			this.cbAttack.AutoSize = true;
+			this.cbAttack.Checked = true;
+			this.cbAttack.CheckState = System.Windows.Forms.CheckState.Checked;
 			this.cbAttack.Dock = System.Windows.Forms.DockStyle.Top;
 			this.cbAttack.Location = new System.Drawing.Point(3, 50);
 			this.cbAttack.Name = "cbAttack";
@@ -126,6 +128,8 @@
 			// cbShowPonder
 			// 
 			this.cbShowPonder.AutoSize = true;
+			this.cbShowPonder.Checked = true;
+			this.cbShowPonder.CheckState = System.Windows.Forms.CheckState.Checked;
 			this.cbShowPonder.Dock = System.Windows.Forms.DockStyle.Top;
 			this.cbShowPonder.Location = new System.Drawing.Point(3, 33);
 			this.cbShowPonder.Name = "cbShowPonder";
@@ -249,6 +253,8 @@
 			// cbArrow
 			// 
 			this.cbArrow.AutoSize = true;
+			this.cbArrow.Checked = true;
+			this.cbArrow.CheckState = System.Windows.Forms.CheckState.Checked;
 			this.cbArrow.Dock = System.Windows.Forms.DockStyle.Top;
 			this.cbArrow.Location = new System.Drawing.Point(3, 67);
 			this.cbArrow.Name = "cbArrow";

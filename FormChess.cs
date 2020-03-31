@@ -1197,9 +1197,9 @@ namespace RapChessGui
 
 			}
 
-			if (CArrow.visible)
+			if ((CBoard.showArrow) && (CArrow.visible))
 			{
-				Pen pen = new Pen(Color.FromArgb(255, 0x10, 0xff, 0x10), 8);
+				Pen pen = new Pen(Color.FromArgb(0x80, 0x10, 0xff, 0x10), 8);
 				pen.StartCap = LineCap.RoundAnchor;
 				pen.EndCap = LineCap.ArrowAnchor;
 				g.DrawLine(pen, CBoard.GetMiddle(CArrow.a), CBoard.GetMiddle(CArrow.b));

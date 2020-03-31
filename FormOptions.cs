@@ -18,10 +18,10 @@ namespace RapChessGui
 
 		public void LoadFromIni()
 		{
-			cbShowPonder.Checked = Convert.ToInt32(CRapIni.This.Read("options>interface>showponder", "1")) == 1;
+			cbShowPonder.Checked = Convert.ToInt32(CRapIni.This.Read("options>interface>showponder", cbShowPonder.Checked ? "1" : "0")) == 1;
 			cbRotateBoard.Checked = Convert.ToInt32(CRapIni.This.Read("options>interface>rotate", "0")) == 1;
-			cbAttack.Checked = Convert.ToInt32(CRapIni.This.Read("options>interface>attack", "0")) == 1;
-			cbArrow.Checked = Convert.ToInt32(CRapIni.This.Read("options>interface>arrow", "0")) == 1;
+			cbAttack.Checked = Convert.ToInt32(CRapIni.This.Read("options>interface>attack", cbAttack.Checked ? "1" : "0")) == 1;
+			cbArrow.Checked = Convert.ToInt32(CRapIni.This.Read("options>interface>arrow", cbArrow.Checked ? "1" : "0")) == 1;
 			nudSpeed.Value = Convert.ToInt32(CRapIni.This.Read("options>interface>speed", "200"));
 			CBoard.color = ColorTranslator.FromHtml(CRapIni.This.Read("options>interface>color", "#400000"));
 			cbGameAutoElo.Checked = Convert.ToInt32(CRapIni.This.Read("options>game>autoelo", "1")) == 1;
