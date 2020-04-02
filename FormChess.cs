@@ -260,10 +260,7 @@ namespace RapChessGui
 								if (moves.Count == 0)
 								{
 									CChess.EmoToSD(emo, out int sou, out int des);
-									/*if (boardRotate)
-										CArrow.SetAB(64 - sou, 64 - des);
-									else*/
-										CArrow.SetAB(sou, des);
+									CArrow.SetAB(sou, des);
 									RenderBoard();
 								}
 								Chess.MakeMove(gmo);
