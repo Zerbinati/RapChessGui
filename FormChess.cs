@@ -272,7 +272,7 @@ namespace RapChessGui
 							}
 							else break;
 						}
-						for (int n = moves.Count -1; n >=0; n--)
+						for (int n = moves.Count - 1; n >= 0; n--)
 							Chess.UnmakeMove(moves[n]);
 						labLast.Text = pv;
 					}
@@ -457,11 +457,46 @@ namespace RapChessGui
 		void GameShow()
 		{
 			CPlayer player = CPlayerList.GetPlayerAuto(cbComputer.Text);
-			if (player.name == cbComputer.Text)
-				labEngine.Text = player.engine;
-			else
-				labEngine.Text = player.name;
 			ShowAutoElo();
+		}
+
+		void GamePrepare()
+		{
+			GamerList.gamer[0].SetPlayer("Human");
+			CPlayer pc = new CPlayer(cbComputer.Text);
+			if (cbComputer.Text == "Custom")
+			{
+				pc.engine = cbEngine.Text;
+				pc.book = cbBook.Text;
+				switch (cbMode.Text)
+				{
+					case "Blitz":
+						pc.mode = "blitz";
+						pc.value = Convert.ToString(CModeMatch.value1 * 60000);
+						break;
+					case "Depth":
+						pc.mode = "depth";
+						pc.value = Convert.ToString(CModeMatch.value1);
+						break;
+					case "Nodes":
+						pc.mode = "nodes";
+						pc.value = Convert.ToString(CModeMatch.value1 * 1000000);
+						break;
+					case "Infinite":
+						pc.mode = "infinite";
+						pc.value = "";
+						break;
+					default:
+						pc.mode = "movetime";
+						pc.value = Convert.ToString(CModeMatch.value1 * 1000);
+						break;
+				}
+			}
+			else
+				pc = CPlayerList.GetPlayer(cbComputer.Text);
+			if (pc == null)
+				pc = CPlayerList.GetPlayerAuto();
+			GamerList.gamer[1].SetPlayer(pc);
 		}
 
 		void GameStart()
@@ -473,9 +508,7 @@ namespace RapChessGui
 			SetMode((int)CMode.game);
 			Clear();
 			bool lg = ShowLastGame();
-			GamerList.gamer[0].SetPlayer("Human");
-			CPlayer u = CommandToUser();
-			GamerList.gamer[1].SetPlayer(u);
+			GamePrepare();
 			if ((!lg && CModeGame.rotate && (cbColor.Text == "Auto")) || (cbColor.Text == "Black"))
 			{
 				CModeGame.rotate = false;
@@ -800,16 +833,14 @@ namespace RapChessGui
 			if (!CData.reset)
 				return;
 			CData.reset = false;
-			cbComputer.Items.Clear();
+			cbEngine.Items.Clear();
 			cbTeacherEngine.Items.Clear();
 			cbTrainedEngine.Items.Clear();
-			cbComputer.Items.Add("Auto");
 			cbEngine1.Items.Clear();
 			cbEngine2.Items.Clear();
-			foreach (CPlayer p in CPlayerList.list)
-				cbComputer.Items.Add(p.name);
 			foreach (CEngine e in CEngineList.list)
 			{
+				cbEngine.Items.Add(e.name);
 				cbEngine1.Items.Add(e.name);
 				cbEngine2.Items.Add(e.name);
 				cbTeacherEngine.Items.Add(e.name);
@@ -817,23 +848,29 @@ namespace RapChessGui
 			}
 			cbTeacherBook.Items.Clear();
 			cbTrainedBook.Items.Clear();
+			cbBook.Items.Clear();
 			cbBook1.Items.Clear();
 			cbBook2.Items.Clear();
 			cbTeacherBook.Items.Add("None");
 			cbTrainedBook.Items.Add("None");
+			cbBook.Items.Add("None");
 			cbBook1.Items.Add("None");
 			cbBook2.Items.Add("None");
 			foreach (CBook b in CBookList.list)
 			{
 				cbTeacherBook.Items.Add(b.name);
 				cbTrainedBook.Items.Add(b.name);
+				cbBook.Items.Add(b.name);
 				cbBook1.Items.Add(b.name);
 				cbBook2.Items.Add(b.name);
 			}
+			cbMode.SelectedIndex = 0;
 			cbTeacherBook.SelectedIndex = 0;
 			cbTrainedBook.SelectedIndex = 0;
+			cbBook.SelectedIndex = 0;
 			cbBook1.SelectedIndex = 0;
 			cbBook2.SelectedIndex = 0;
+			cbEngine.SelectedIndex = 0;
 			TournamentReset();
 			if (SortingColumn != null)
 				SortingColumn.Text = SortingColumn.Text.Substring(2);
@@ -876,7 +913,7 @@ namespace RapChessGui
 				List<string> eMoves = new List<string>();
 				foreach (int gm in gMoves)
 					eMoves.Add(Chess.FormatMove(gm));
-				FormLog.This.richTextBox1.AppendText($"{string.Join(" ",eMoves)}\n");
+				FormLog.This.richTextBox1.AppendText($"{string.Join(" ", eMoves)}\n");
 				FormLog.This.richTextBox1.SaveFile("Error.rtf");
 				return false;
 			}
@@ -1086,15 +1123,6 @@ namespace RapChessGui
 			CData.gameState = (int)CGameState.normal;
 			CArrow.Hide();
 			timer1.Enabled = CData.gameMode != (int)CMode.edit;
-		}
-
-		CPlayer CommandToUser()
-		{
-			CPlayer u = new CPlayer(cbComputer.Text);
-			u.SetPlayer(cbComputer.Text);
-			u.SetCommand(cbCommand.Text);
-			cbCommand.Text = u.GetCommand();
-			return u;
 		}
 
 		public void RenderBoard()
@@ -1342,9 +1370,7 @@ namespace RapChessGui
 				return;
 			}
 			GamerList.curIndex = Chess.g_moveNumber & 1;
-			CPlayer u = CommandToUser();
-			GamerList.GamerCur().SetPlayer("Human");
-			GamerList.GamerSec().SetPlayer(u);
+			GamePrepare();
 			GamerList.gamer[0].Init(true);
 			GamerList.gamer[1].Init(false);
 			cbColor.SelectedIndex = GamerList.curIndex;
@@ -1610,9 +1636,7 @@ namespace RapChessGui
 					CHistory.AddMove(gmo, emo, san);
 			}
 			GamerList.curIndex = Chess.g_moveNumber & 1;
-			CPlayer u = CommandToUser();
-			GamerList.GamerCur().SetPlayer("Human");
-			GamerList.GamerSec().SetPlayer(u);
+			GamePrepare();
 			GamerList.gamer[0].Init(true);
 			GamerList.gamer[1].Init(false);
 			cbColor.SelectedIndex = GamerList.curIndex;
@@ -1655,9 +1679,7 @@ namespace RapChessGui
 
 		private void cbComputer_TextChanged(object sender, EventArgs e)
 		{
-			CPlayer p = CPlayerList.GetPlayerAuto(cbComputer.Text);
-			labEngine.Text = p.engine;
-			cbCommand.Text = p.GetCommand();
+
 		}
 
 		private void butStartTournament_Click(object sender, EventArgs e)
@@ -1907,7 +1929,16 @@ namespace RapChessGui
 
 		private void cbComputer_SelectedValueChanged(object sender, EventArgs e)
 		{
+			CModeGame.ranked = cbComputer.Text == "Auto";
 			ShowAutoElo();
+			if (CModeGame.ranked)
+			{
+				CPlayer p = CPlayerList.GetPlayerAuto();
+				cbEngine.SelectedIndex = cbEngine.FindStringExact(p.engine);
+				cbMode.SelectedIndex = cbMode.FindStringExact(p.GetMode());
+				cbBook.SelectedIndex = cbBook.FindStringExact(p.book);
+				nudValue.Value = Convert.ToInt32(p.value);
+			}
 		}
 
 		private void booksToolStripMenuItem1_Click(object sender, EventArgs e)
@@ -1933,5 +1964,20 @@ namespace RapChessGui
 			ShowHistoryList();
 		}
 
+		private void cbMode_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			if (cbComputer.Text != "Auto")
+			{
+				CModeGame.mode = cbMode.Text;
+				nudValue.Value = CModeGame.GetValue(out int increment);
+				nudValue.Increment = increment;
+			}
+		}
+
+		private void nudValue_ValueChanged(object sender, EventArgs e)
+		{
+			if (cbComputer.Text != "Auto")
+				CModeGame.SetValue((int)nudValue.Value);
+		}
 	}
 }

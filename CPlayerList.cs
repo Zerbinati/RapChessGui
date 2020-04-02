@@ -79,6 +79,21 @@ namespace RapChessGui
 				return $"{mode} {value}";
 		}
 
+		public string GetMode()
+		{
+			switch (mode)
+			{
+				case "depth":
+					return "Depth";
+				case "nodes":
+					return "Nodes";
+				case "blitz":
+					return "Blitz";
+				default:
+					return "Time";
+			}
+		}
+
 		public void SetPlayer(string name)
 		{
 			CPlayer p = CPlayerList.GetPlayerAuto(name);
@@ -142,7 +157,7 @@ namespace RapChessGui
 			return null;
 		}
 
-		static CPlayer GetPlayerAuto()
+		public static CPlayer GetPlayerAuto()
 		{
 			CPlayer ph = GetPlayerAuto("Human");
 			CPlayer pe = GetPlayerElo(ph);
