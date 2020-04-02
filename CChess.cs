@@ -279,8 +279,16 @@ namespace RapChessGui
 
 		public static void EmoToSD(string emo, out int s, out int d)
 		{
-			s = EmoToIndex(emo.Substring(0, 2));
-			d = EmoToIndex(emo.Substring(2, 2));
+			if (emo == "")
+			{
+				s = -1;
+				d = -1;
+			}
+			else
+			{
+				s = EmoToIndex(emo.Substring(0, 2));
+				d = EmoToIndex(emo.Substring(2, 2));
+			}
 		}
 
 		public string FormatMove(int move)

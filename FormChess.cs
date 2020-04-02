@@ -924,7 +924,12 @@ namespace RapChessGui
 			Chess.MakeMove(gmo);
 			CEco eco = EcoList.GetEco(Chess.GetEpd());
 			if (eco != null)
+			{
 				labEco.Text = eco.name;
+				labEco.ForeColor = Color.Brown;
+			}
+			else
+				labEco.ForeColor = Color.Black;
 			int moveNumber = (Chess.g_moveNumber >> 1) + 1;
 			labMove.Text = "Move " + moveNumber.ToString() + " " + Chess.g_move50.ToString();
 			if (cp.timeTotal > 100)
