@@ -301,7 +301,7 @@ namespace RapChessGui
 				default:
 					if (msg.Contains("resign"))
 						XBGameOver(msg);
-					else if (g.wbok && (Uci.tokens.Length > 4))
+					else if (g.wbok && (Uci.tokens.Length > 4) && Char.IsDigit(Uci.tokens[0][0]))
 					{
 						try
 						{
@@ -656,15 +656,20 @@ namespace RapChessGui
 		{
 			CData.fen = CChess.defFen;
 			SetMode((int)CMode.tournament);
+			CPlayer p1;
+			CPlayer p2;
 			if (CModeTournament.rotate)
-				GamerList.Rotate();
+			{
+				p1 = GamerList.gamer[1].player;
+				p2 = GamerList.gamer[0].player;
+			}
 			else
 			{
-				CPlayer p1 = CModeTournament.SelectPlayer();
-				CPlayer p2 = CModeTournament.SelectOpponent(p1);
-				GamerList.gamer[0].SetPlayer(p1);
-				GamerList.gamer[1].SetPlayer(p2);
+				p1 = CModeTournament.SelectPlayer();
+				p2 = CModeTournament.SelectOpponent(p1);
 			}
+			GamerList.gamer[0].SetPlayer(p1);
+			GamerList.gamer[1].SetPlayer(p2);
 			foreach (ListViewItem lvi in listView1.Items)
 				if (lvi.Text == CModeTournament.player)
 				{
@@ -1929,14 +1934,11 @@ namespace RapChessGui
 		{
 			CModeGame.ranked = cbComputer.Text == "Auto";
 			ShowAutoElo();
-			if (CModeGame.ranked)
-			{
-				CPlayer p = CPlayerList.GetPlayerAuto();
-				cbEngine.SelectedIndex = cbEngine.FindStringExact(p.engine);
-				cbMode.SelectedIndex = cbMode.FindStringExact(p.GetMode());
-				cbBook.SelectedIndex = cbBook.FindStringExact(p.book);
-				nudValue.Value = Convert.ToInt32(p.value);
-			}
+			CPlayer p = CPlayerList.GetPlayerAuto();
+			cbEngine.SelectedIndex = cbEngine.FindStringExact(p.engine);
+			cbMode.SelectedIndex = cbMode.FindStringExact(p.GetMode());
+			cbBook.SelectedIndex = cbBook.FindStringExact(p.book);
+			nudValue.Value = Convert.ToInt32(p.value);
 		}
 
 		private void booksToolStripMenuItem1_Click(object sender, EventArgs e)

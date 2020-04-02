@@ -26,7 +26,7 @@ namespace RapChessGui
 			if (e.CloseReason != CloseReason.FormOwnerClosing)
 			{
 				Hide();
-				e.Cancel = true; 
+				e.Cancel = true;
 			}
 		}
 
@@ -38,9 +38,8 @@ namespace RapChessGui
 		{
 			CGamer p = CGamerList.This.GetGamer(cbPlayerList.Text);
 			if (p != null)
-	//p.SendMessage(tbMessage.Text);
-			foreach(string c in rtbCommand.Lines)
-				p.SendMessage(c);
+				foreach (string c in rtbCommand.Lines)
+					p.SendMessage(c);
 		}
 	}
 }
