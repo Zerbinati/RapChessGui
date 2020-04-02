@@ -654,21 +654,17 @@ namespace RapChessGui
 
 		void TournamentStart()
 		{
+			CData.fen = CChess.defFen;
 			SetMode((int)CMode.tournament);
-			CPlayer p1;
-			CPlayer p2;
 			if (CModeTournament.rotate)
-			{
-				p1 = GamerList.gamer[1].player;
-				p2 = GamerList.gamer[0].player;
-			}
+				GamerList.Rotate();
 			else
 			{
-				p1 = CModeTournament.SelectPlayer();
-				p2 = CModeTournament.SelectOpponent(p1);
+				CPlayer p1 = CModeTournament.SelectPlayer();
+				CPlayer p2 = CModeTournament.SelectOpponent(p1);
+				GamerList.gamer[0].SetPlayer(p1);
+				GamerList.gamer[1].SetPlayer(p2);
 			}
-			GamerList.gamer[0].SetPlayer(p1);
-			GamerList.gamer[1].SetPlayer(p2);
 			foreach (ListViewItem lvi in listView1.Items)
 				if (lvi.Text == CModeTournament.player)
 				{
@@ -709,6 +705,7 @@ namespace RapChessGui
 
 		void TraingStart()
 		{
+			CData.fen = CChess.defFen;
 			CModeTraining.teacher = cbTeacherEngine.Text;
 			CModeTraining.trained = cbTrainedEngine.Text;
 			CModeTraining.teacherMode = cbTeacherMode.Text;

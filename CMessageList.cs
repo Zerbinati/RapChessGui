@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using RapLog;
 
 namespace RapChessGui
 {
@@ -38,8 +36,11 @@ namespace RapChessGui
 				msg = list[0].msg;
 				list.RemoveAt(0);
 				gamer = CGamerList.This.GetGamerPid(pid);
-				if(gamer == null)
+				if (gamer == null)
+				{
+					CRapLog.Add($"CMessageList ({msg})");
 					return false;
+				}
 				FormLog.This.richTextBox1.AppendText($"{gamer.player.name} > {msg}\n");
 				return true;
 			}
