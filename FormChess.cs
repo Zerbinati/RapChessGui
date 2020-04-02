@@ -62,7 +62,6 @@ namespace RapChessGui
 			labTakenT.Font = fontChess;
 			labTakenB.Font = fontChess;
 			Chess.Initialize();
-			GamePrepare();
 			GameStart();
 		}
 
@@ -386,7 +385,7 @@ namespace RapChessGui
 					moveToolStripMenuItem.Visible = true;
 					labProtocolB.Visible = false;
 					labProtocolT.Visible = false;
-					GamePrepare();
+					GameShow();
 					break;
 				case (int)CMode.match:
 					MatchShow();
@@ -451,9 +450,13 @@ namespace RapChessGui
 			return result;
 		}
 
-		void GamePrepare()
+		void GameShow()
 		{
 			ShowAutoElo();
+		}
+
+		void GamePrepare()
+		{
 			GamerList.gamer[0].SetPlayer("Human");
 			CPlayer pc = new CPlayer(cbComputer.Text);
 			if (cbComputer.Text == "Custom")
@@ -548,6 +551,7 @@ namespace RapChessGui
 
 		void MatchStart()
 		{
+			CData.fen = CChess.defFen;
 			CModeMatch.engine1 = cbEngine1.Text;
 			CModeMatch.engine2 = cbEngine2.Text;
 			CModeMatch.mode1 = cbMode1.Text;
@@ -1400,7 +1404,6 @@ namespace RapChessGui
 			RenderInfo(pw);
 			RenderInfo(pb);
 			CData.gameState = 0;
-			//CData.rotateBoard = GamerList.gamer[0].IsHuman();
 			moves = Chess.GenerateValidMoves();
 			timer1.Enabled = true;
 		}

@@ -271,8 +271,8 @@ namespace RapChessGui
 			CGamer p = gamer[0];
 			gamer[0] = gamer[1];
 			gamer[1] = p;
-			gamer[0].white = true;
-			gamer[1].white = false;
+			gamer[0].Init(true);
+			gamer[1].Init(false);
 		}
 
 		public CGamer GetGamer(string name)
