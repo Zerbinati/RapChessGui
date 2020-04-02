@@ -20,7 +20,7 @@ namespace RapChessGui
 		private static extern IntPtr AddFontMemResourceEx(IntPtr pbFont, uint cbFont, IntPtr pdv, [In] ref uint pcFonts);
 
 		public static FormChess This;
-		bool boardRotate;
+		public static bool boardRotate;
 		bool isBook = false;
 		ColumnHeader SortingColumn = null;
 		List<int> moves = new List<int>();
@@ -62,7 +62,7 @@ namespace RapChessGui
 			labTakenT.Font = fontChess;
 			labTakenB.Font = fontChess;
 			Chess.Initialize();
-			GameShow();
+			GamePrepare();
 			GameStart();
 		}
 
@@ -260,9 +260,9 @@ namespace RapChessGui
 								if (moves.Count == 0)
 								{
 									CChess.EmoToSD(emo, out int sou, out int des);
-									if (boardRotate)
+									/*if (boardRotate)
 										CArrow.SetAB(64 - sou, 64 - des);
-									else
+									else*/
 										CArrow.SetAB(sou, des);
 									RenderBoard();
 								}
@@ -389,7 +389,7 @@ namespace RapChessGui
 					moveToolStripMenuItem.Visible = true;
 					labProtocolB.Visible = false;
 					labProtocolT.Visible = false;
-					GameShow();
+					GamePrepare();
 					break;
 				case (int)CMode.match:
 					MatchShow();
@@ -454,14 +454,9 @@ namespace RapChessGui
 			return result;
 		}
 
-		void GameShow()
-		{
-			CPlayer player = CPlayerList.GetPlayerAuto(cbComputer.Text);
-			ShowAutoElo();
-		}
-
 		void GamePrepare()
 		{
+			ShowAutoElo();
 			GamerList.gamer[0].SetPlayer("Human");
 			CPlayer pc = new CPlayer(cbComputer.Text);
 			if (cbComputer.Text == "Custom")
@@ -501,6 +496,7 @@ namespace RapChessGui
 
 		void GameStart()
 		{
+			CData.fen = CChess.defFen;
 			CModeGame.color = cbColor.Text;
 			CModeGame.computer = cbComputer.Text;
 			CModeGame.ranked = IsAutoElo();
@@ -1108,7 +1104,7 @@ namespace RapChessGui
 			labLast.Text = "Good luck";
 			CDrag.lastSou = -1;
 			CDrag.lastDes = -1;
-			Chess.InitializeFromFen();
+			Chess.InitializeFromFen(CData.fen);
 			CHistory.NewGame(Chess.GetFen());
 			CBoard.Clear();
 			CBoard.Fill();
@@ -1368,6 +1364,7 @@ namespace RapChessGui
 
 		void LoadFen(string fen)
 		{
+			CModeGame.ranked = false;
 			SetMode((int)CMode.game);
 			if (!Chess.InitializeFromFen(fen))
 			{
@@ -1376,6 +1373,9 @@ namespace RapChessGui
 			}
 			GamerList.curIndex = Chess.g_moveNumber & 1;
 			GamePrepare();
+			int w = CChess.whiteTurn ? 0 : 1;
+			if (!GamerList.gamer[w].IsHuman())
+				GamerList.Rotate();
 			GamerList.gamer[0].Init(true);
 			GamerList.gamer[1].Init(false);
 			cbColor.SelectedIndex = GamerList.curIndex;
@@ -1403,6 +1403,7 @@ namespace RapChessGui
 			RenderInfo(pw);
 			RenderInfo(pb);
 			CData.gameState = 0;
+			//CData.rotateBoard = GamerList.gamer[0].IsHuman();
 			moves = Chess.GenerateValidMoves();
 			timer1.Enabled = true;
 		}
@@ -1635,10 +1636,13 @@ namespace RapChessGui
 			CHistory.NewGame();
 			foreach (string emo in ml)
 			{
-				string san = Chess.EmoToSan(emo);
 				int gmo = Chess.MakeMove(emo);
 				if (gmo > 0)
+				{
+					string san = Chess.EmoToSan(emo);
 					CHistory.AddMove(gmo, emo, san);
+				}
+				else break;
 			}
 			GamerList.curIndex = Chess.g_moveNumber & 1;
 			GamePrepare();
@@ -1654,8 +1658,8 @@ namespace RapChessGui
 			CGamer pb = GamerList.gamer[1];
 			FormLog.This.richTextBox1.Clear();
 			FormLog.This.richTextBox1.AppendText($"Pgn {CHistory.GetMoves()}\n", Color.Gray);
-			FormLog.This.richTextBox1.AppendText($"White {pw.player.name} {pw.player.engine} {pw.engine.parameters}\n", Color.Gray);
-			FormLog.This.richTextBox1.AppendText($"Black {pb.player.name} {pb.player.engine} {pb.engine.parameters}\n", Color.Gray);
+			FormLog.This.richTextBox1.AppendText($"White {pw.player.name} {pw.player.engine}\n", Color.Gray);
+			FormLog.This.richTextBox1.AppendText($"Black {pb.player.name} {pb.player.engine}\n", Color.Gray);
 			labLast.ForeColor = Color.Gainsboro;
 			labLast.Text = $"Pgn {CHistory.GetMoves()}";
 			labBack.Text = $"Back {CData.back}";
@@ -1676,15 +1680,6 @@ namespace RapChessGui
 		{
 			CModeMatch.Reset();
 			MatchStart();
-		}
-
-		private void bookToolStripMenuItem_Click(object sender, EventArgs e)
-		{
-		}
-
-		private void cbComputer_TextChanged(object sender, EventArgs e)
-		{
-
 		}
 
 		private void butStartTournament_Click(object sender, EventArgs e)
@@ -1754,6 +1749,7 @@ namespace RapChessGui
 
 		private void tabControl1_Selected(object sender, TabControlEventArgs e)
 		{
+			CData.fen = Chess.GetFen();
 			CData.modeName = tabControl1.SelectedTab.Text;
 			CBoard.Fill();
 			RenderBoard();

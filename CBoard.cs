@@ -133,8 +133,10 @@ namespace RapChessGui
 
 		public static Point GetMiddle(int x,int y)
 		{
-			x = margin + x * field + (field >> 1);
-			y = margin + y * field + (field >> 1);
+			int xr = FormChess.boardRotate ? 7 - x : x;
+			int yr = FormChess.boardRotate ? 7 - y : y;
+			x = margin + xr * field + (field >> 1);
+			y = margin + yr * field + (field >> 1);
 			return new Point(x,y);
 		}
 

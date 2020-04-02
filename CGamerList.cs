@@ -69,6 +69,11 @@ namespace RapChessGui
 			timer.Reset();
 		}
 
+		public bool IsHuman()
+		{
+			return engine == null;
+		}
+
 		public void Undo()
 		{
 			if (engine.protocol == "Winboard")
@@ -280,9 +285,9 @@ namespace RapChessGui
 
 		public CGamer PlayerHum()
 		{
-			if (gamer[0].engine == null)
+			if (gamer[0].IsHuman())
 				return gamer[0];
-			if (gamer[1].engine == null)
+			if (gamer[1].IsHuman())
 				return gamer[1];
 			return null;
 		}

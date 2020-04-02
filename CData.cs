@@ -26,6 +26,7 @@ namespace RapChessGui
 		public static int gameMode = 0;
 		public static int back = 0;
 		public static double fps = 0;
+		public static string fen = CChess.defFen;
 		public static string modeName = "Game";
 		public static string[] arrModeNames = new string[] {"blitz","nodes","depth", "movetime"};
 		public static List<string> fileBook = new List<string>();
