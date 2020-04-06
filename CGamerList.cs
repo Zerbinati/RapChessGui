@@ -209,7 +209,7 @@ namespace RapChessGui
 		{
 			DateTime dt1 = new DateTime();
 			DateTime dt2 = dt1.AddMilliseconds(timer.Elapsed.TotalMilliseconds);
-			return dt2.ToString("HH:mm:ss");
+			return dt2.ToString("HH:mm:ss.ff");
 		}
 
 		public string GetElo()
