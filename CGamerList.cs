@@ -27,6 +27,7 @@ namespace RapChessGui
 		public string ponder;
 		public string mode;
 		public string value;
+		public string pv;
 		public Stopwatch timer = new Stopwatch();
 		public CEnginePro enginePro = new CEnginePro();
 		public CBook book = null;
@@ -65,6 +66,7 @@ namespace RapChessGui
 			depth = "0";
 			seldepth = "0";
 			ponder = "";
+			pv = "";
 			timeTotal = 0;
 			timer.Reset();
 		}
@@ -119,8 +121,8 @@ namespace RapChessGui
 			SendMessage(CHistory.GetPosition());
 			if (player.mode == "blitz")
 			{
-				int v = Convert.ToInt32(player.value);
-				int t = Convert.ToInt32(v - timeTotal);
+				Int64 v = Convert.ToInt64(player.value);
+				Int64 t = Convert.ToInt64(v - timeTotal);
 				SendMessage($"go wtime {t} btime {t} winc 0 binc 0");
 			}
 			else
@@ -188,10 +190,25 @@ namespace RapChessGui
 				return engine.protocol;
 		}
 
+		public string GetDepth()
+		{
+			if (seldepth != "0")
+				return $"{depth} / {seldepth}";
+			else
+				return depth;
+		}
+
 		public string GetTime()
 		{
 			DateTime dt1 = new DateTime();
-			DateTime dt2 = dt1.AddMilliseconds(timeTotal + timer.Elapsed.TotalMilliseconds);
+			dt1 = dt1.AddMilliseconds(timeTotal + timer.Elapsed.TotalMilliseconds);
+			return dt1.ToString("HH:mm:ss");
+		}
+
+		public string GetTimeElapsed()
+		{
+			DateTime dt1 = new DateTime();
+			DateTime dt2 = dt1.AddMilliseconds(timer.Elapsed.TotalMilliseconds);
 			return dt2.ToString("HH:mm:ss");
 		}
 

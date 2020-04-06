@@ -30,10 +30,6 @@ namespace RapChessGui
 			}
 		}
 
-		private void FormLog_Shown(object sender, EventArgs e)
-		{
-		}
-
 		private void butSend_Click(object sender, EventArgs e)
 		{
 			CGamer p = CGamerList.This.GetGamer(cbPlayerList.Text);
@@ -41,5 +37,13 @@ namespace RapChessGui
 				foreach (string c in rtbCommand.Lines)
 					p.SendMessage(c);
 		}
+
+		private void saveToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			string fn = $"{CData.modeName} {DateTime.Now.ToString("yyyy-MM-dd hh-mm-ss")}.rtf";
+			richTextBox1.SaveFile(fn);
+			MessageBox.Show($"File {fn} has been saved");
+		}
+
 	}
 }

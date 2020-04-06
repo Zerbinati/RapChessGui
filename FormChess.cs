@@ -179,6 +179,11 @@ namespace RapChessGui
 			CModeTraining.LoadFromIni();
 		}
 
+		void AddLines(CGamer g)
+		{
+			lvLines.Items.Insert(0,new ListViewItem(new[] { g.GetDepth(), g.GetTimeElapsed(),g.nodes.ToString("N0"), g.nps.ToString("N0"),g.score,g.pv}));
+		}
+
 		public void GetMessageUci(CGamer g, string msg)
 		{
 			string emo;
@@ -270,7 +275,9 @@ namespace RapChessGui
 						}
 						for (int n = moves.Count - 1; n >= 0; n--)
 							Chess.UnmakeMove(moves[n]);
+						g.pv = pv;
 						labLast.Text = pv;
+						AddLines(g);
 					}
 					isBook = Uci.GetIndex("book", 0) > 0;
 					break;
@@ -299,9 +306,10 @@ namespace RapChessGui
 					MakeMove(em);
 					break;
 				default:
-					if (msg.Contains("resign"))
+					string s = msg.ToLower();
+					if (s.Contains("resign") || s.Contains("illegal"))
 						XBGameOver(msg);
-					else if (g.wbok && (Uci.tokens.Length > 4) && Char.IsDigit(Uci.tokens[0][0]))
+					else if (g.wbok && Char.IsDigit(Uci.tokens[0][0]) && (Uci.tokens.Length > 4))
 					{
 						try
 						{
@@ -412,6 +420,19 @@ namespace RapChessGui
 			return (cbComputer.Text == "Auto") && FormOptions.This.cbGameAutoElo.Checked && (CData.gameMode == (int)CMode.game);
 		}
 
+
+		void ShowAuto()
+		{
+			if (CModeGame.ranked)
+			{
+				CPlayer p = CPlayerList.GetPlayerAuto();
+				cbEngine.SelectedIndex = cbEngine.FindStringExact(p.engine);
+				cbMode.SelectedIndex = cbMode.FindStringExact(p.GetMode());
+				cbBook.SelectedIndex = cbBook.FindStringExact(p.book);
+				nudValue.Value = Convert.ToInt32(p.value);
+			}
+		}
+
 		void ShowAutoElo()
 		{
 			if (IsAutoElo() && CModeGame.ranked)
@@ -457,6 +478,8 @@ namespace RapChessGui
 
 		void GamePrepare()
 		{
+			lvMoves.Items.Clear();
+			lvLines.Items.Clear();
 			GamerList.gamer[0].SetPlayer("Human");
 			CPlayer pc = new CPlayer(cbComputer.Text);
 			if (cbComputer.Text == "Custom")
@@ -467,15 +490,15 @@ namespace RapChessGui
 				{
 					case "Blitz":
 						pc.mode = "blitz";
-						pc.value = Convert.ToString(CModeMatch.value1 * 60000);
+						pc.value = Convert.ToString(nudValue.Value * 1000);
 						break;
 					case "Depth":
 						pc.mode = "depth";
-						pc.value = Convert.ToString(CModeMatch.value1);
+						pc.value = Convert.ToString(nudValue.Value);
 						break;
 					case "Nodes":
 						pc.mode = "nodes";
-						pc.value = Convert.ToString(CModeMatch.value1 * 1000000);
+						pc.value = Convert.ToString(nudValue.Value);
 						break;
 					case "Infinite":
 						pc.mode = "infinite";
@@ -483,7 +506,7 @@ namespace RapChessGui
 						break;
 					default:
 						pc.mode = "movetime";
-						pc.value = Convert.ToString(CModeMatch.value1 * 1000);
+						pc.value = Convert.ToString(nudValue.Value);
 						break;
 				}
 			}
@@ -501,6 +524,7 @@ namespace RapChessGui
 			CModeGame.computer = cbComputer.Text;
 			CModeGame.ranked = IsAutoElo();
 			ShowAutoElo();
+			ShowAuto();
 			SetMode((int)CMode.game);
 			Clear();
 			bool lg = ShowLastGame();
@@ -942,6 +966,8 @@ namespace RapChessGui
 				GamerList.Next();
 				if (GamerList.GamerCur().player.engine == "Human")
 					moves = Chess.GenerateValidMoves();
+				else
+					lvLines.Items.Clear();
 			}
 			else
 				GameOver(uw, ul);
@@ -1113,6 +1139,7 @@ namespace RapChessGui
 			CBoard.Fill();
 			GamerList.Init();
 			lvMoves.Items.Clear();
+			lvLines.Items.Clear();
 			CData.back = 0;
 			CGamer pw = GamerList.gamer[0];
 			CGamer pb = GamerList.gamer[1];
@@ -1287,10 +1314,7 @@ namespace RapChessGui
 				labNpsB.Text = $"Nps {nps.ToString("N0")}";
 				labPonderB.Text = $"Ponder {cp.ponder}";
 				labBookB.Text = $"Book {cp.usedBook}";
-				if (cp.seldepth != "0")
-					labDepthB.Text = $"Depth {cp.depth} / {cp.seldepth}";
-				else
-					labDepthB.Text = $"Depth {cp.depth}";
+				labDepthB.Text = $"Depth {cp.GetDepth()}";
 			}
 			else
 			{
@@ -1302,10 +1326,7 @@ namespace RapChessGui
 				labNpsT.Text = $"Nps {nps.ToString("N0")}";
 				labPonderT.Text = $"Ponder {cp.ponder}";
 				labBookT.Text = $"Book {cp.usedBook}";
-				if (cp.seldepth != "0")
-					labDepthT.Text = $"Depth {cp.depth} / {cp.seldepth}";
-				else
-					labDepthT.Text = $"Depth {cp.depth}";
+				labDepthT.Text = $"Depth {cp.GetDepth()}";
 			}
 		}
 
@@ -1402,7 +1423,6 @@ namespace RapChessGui
 			labLast.ForeColor = Color.Lime;
 			labLast.Text = $"Load fen {Chess.GetFen()}";
 			labBack.Text = $"Back {CData.back}";
-			lvMoves.Items.Clear();
 			RenderInfo(pw);
 			RenderInfo(pb);
 			CData.gameState = 0;
@@ -1435,6 +1455,7 @@ namespace RapChessGui
 		void ShowHistory()
 		{
 			lvMoves.Items.Clear();
+			lvLines.Items.Clear();
 			for (int n = 0; n < CHistory.moveList.Count; n++)
 			{
 				CHisMove m = CHistory.moveList[n];
@@ -1532,6 +1553,11 @@ namespace RapChessGui
 			}
 			CDrag.lastDes = i;
 			CDrag.lastSou = -1;
+		}
+
+		void SizeLastColumn(ListView lv)
+		{
+			lv.Columns[lv.Columns.Count - 1].Width = -2;
 		}
 
 		private void FormChess_FormClosed(object sender, FormClosedEventArgs e)
@@ -1934,11 +1960,7 @@ namespace RapChessGui
 		{
 			CModeGame.ranked = cbComputer.Text == "Auto";
 			ShowAutoElo();
-			CPlayer p = CPlayerList.GetPlayerAuto();
-			cbEngine.SelectedIndex = cbEngine.FindStringExact(p.engine);
-			cbMode.SelectedIndex = cbMode.FindStringExact(p.GetMode());
-			cbBook.SelectedIndex = cbBook.FindStringExact(p.book);
-			nudValue.Value = Convert.ToInt32(p.value);
+			ShowAuto();
 		}
 
 		private void booksToolStripMenuItem1_Click(object sender, EventArgs e)
@@ -1978,6 +2000,11 @@ namespace RapChessGui
 		{
 			if (cbComputer.Text != "Auto")
 				CModeGame.SetValue((int)nudValue.Value);
+		}
+
+		private void lvLines_Resize(object sender, EventArgs e)
+		{
+			SizeLastColumn((ListView)sender);
 		}
 	}
 }

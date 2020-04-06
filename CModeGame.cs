@@ -53,7 +53,7 @@ namespace RapChessGui
 			{
 				case "Blitz":
 					increment = 1000;
-					return value * 60000;
+					return value * 60;
 				case "Depth":
 					return value;
 				case "Nodes":

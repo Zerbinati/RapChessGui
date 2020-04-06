@@ -149,9 +149,6 @@
 			this.labTimeB = new System.Windows.Forms.Label();
 			this.labNameB = new System.Windows.Forms.Label();
 			this.panBottom = new System.Windows.Forms.Panel();
-			this.panel1 = new System.Windows.Forms.Panel();
-			this.labLast = new System.Windows.Forms.Label();
-			this.labMove = new System.Windows.Forms.Label();
 			this.timerStart = new System.Windows.Forms.Timer(this.components);
 			this.panelB2 = new System.Windows.Forms.Panel();
 			this.labPonderB = new System.Windows.Forms.Label();
@@ -187,6 +184,17 @@
 			this.labFPS = new System.Windows.Forms.Label();
 			this.panMenu = new System.Windows.Forms.Panel();
 			this.labEco = new System.Windows.Forms.Label();
+			this.panel1 = new System.Windows.Forms.Panel();
+			this.labLast = new System.Windows.Forms.Label();
+			this.labMove = new System.Windows.Forms.Label();
+			this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+			this.lvLines = new System.Windows.Forms.ListView();
+			this.columnHeader11 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.columnHeader12 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.columnHeader13 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.columnHeader14 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.columnHeader15 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.columnHeader16 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.panelT1.SuspendLayout();
 			this.panel4.SuspendLayout();
 			this.tabControl1.SuspendLayout();
@@ -210,11 +218,11 @@
 			this.gbToMove.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
 			this.panelB1.SuspendLayout();
-			this.panel1.SuspendLayout();
 			this.panelB2.SuspendLayout();
 			this.panelT2.SuspendLayout();
 			this.menuStrip1.SuspendLayout();
 			this.panMenu.SuspendLayout();
+			this.panel1.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// timer1
@@ -413,6 +421,7 @@
 			this.butStop.Size = new System.Drawing.Size(314, 23);
 			this.butStop.TabIndex = 24;
 			this.butStop.Text = "Stop calculating";
+			this.toolTip1.SetToolTip(this.butStop, "Engine stop calculating and makes a move immediately");
 			this.butStop.UseVisualStyleBackColor = true;
 			this.butStop.Click += new System.EventHandler(this.ButStop_Click);
 			// 
@@ -424,6 +433,7 @@
 			this.butContinueGame.Size = new System.Drawing.Size(314, 23);
 			this.butContinueGame.TabIndex = 23;
 			this.butContinueGame.Text = "Continue game";
+			this.toolTip1.SetToolTip(this.butContinueGame, "Continue game with current position");
 			this.butContinueGame.UseVisualStyleBackColor = true;
 			this.butContinueGame.Click += new System.EventHandler(this.butContinueGame_Click);
 			// 
@@ -435,6 +445,7 @@
 			this.butNewGame.Size = new System.Drawing.Size(314, 23);
 			this.butNewGame.TabIndex = 20;
 			this.butNewGame.Text = "New game";
+			this.toolTip1.SetToolTip(this.butNewGame, "Start new game");
 			this.butNewGame.UseVisualStyleBackColor = true;
 			this.butNewGame.Click += new System.EventHandler(this.ButStart_Click);
 			// 
@@ -484,6 +495,7 @@
 			this.cbBook.Size = new System.Drawing.Size(308, 21);
 			this.cbBook.Sorted = true;
 			this.cbBook.TabIndex = 49;
+			this.toolTip1.SetToolTip(this.cbBook, "Select engine book");
 			// 
 			// cbMode
 			// 
@@ -501,6 +513,7 @@
 			this.cbMode.Size = new System.Drawing.Size(308, 21);
 			this.cbMode.Sorted = true;
 			this.cbMode.TabIndex = 47;
+			this.toolTip1.SetToolTip(this.cbMode, "Select engine mode");
 			this.cbMode.SelectedIndexChanged += new System.EventHandler(this.cbMode_SelectedIndexChanged);
 			// 
 			// cbEngine
@@ -513,9 +526,11 @@
 			this.cbEngine.Size = new System.Drawing.Size(308, 21);
 			this.cbEngine.Sorted = true;
 			this.cbEngine.TabIndex = 46;
+			this.toolTip1.SetToolTip(this.cbEngine, "Select engine");
 			// 
 			// cbComputer
 			// 
+			this.cbComputer.AccessibleDescription = "";
 			this.cbComputer.Dock = System.Windows.Forms.DockStyle.Top;
 			this.cbComputer.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.cbComputer.FormattingEnabled = true;
@@ -528,6 +543,7 @@
 			this.cbComputer.Size = new System.Drawing.Size(308, 21);
 			this.cbComputer.Sorted = true;
 			this.cbComputer.TabIndex = 1;
+			this.toolTip1.SetToolTip(this.cbComputer, "Select human opponent");
 			this.cbComputer.SelectedValueChanged += new System.EventHandler(this.cbComputer_SelectedValueChanged);
 			// 
 			// groupBox1
@@ -579,6 +595,7 @@
 			this.cbColor.Name = "cbColor";
 			this.cbColor.Size = new System.Drawing.Size(308, 21);
 			this.cbColor.TabIndex = 2;
+			this.toolTip1.SetToolTip(this.cbColor, "Select human color");
 			this.cbColor.SelectedValueChanged += new System.EventHandler(this.cbColor_SelectedValueChanged);
 			// 
 			// tabPageMatch
@@ -1726,44 +1743,6 @@
 			this.panBottom.Size = new System.Drawing.Size(26, 26);
 			this.panBottom.TabIndex = 0;
 			// 
-			// panel1
-			// 
-			this.panel1.BackColor = System.Drawing.Color.Black;
-			this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-			this.panel1.Controls.Add(this.labLast);
-			this.panel1.Controls.Add(this.labMove);
-			this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-			this.panel1.ForeColor = System.Drawing.Color.Gainsboro;
-			this.panel1.Location = new System.Drawing.Point(0, 723);
-			this.panel1.Name = "panel1";
-			this.panel1.Size = new System.Drawing.Size(904, 40);
-			this.panel1.TabIndex = 11;
-			// 
-			// labLast
-			// 
-			this.labLast.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-			this.labLast.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.labLast.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-			this.labLast.ForeColor = System.Drawing.Color.Gainsboro;
-			this.labLast.Location = new System.Drawing.Point(137, 0);
-			this.labLast.Name = "labLast";
-			this.labLast.Size = new System.Drawing.Size(763, 36);
-			this.labLast.TabIndex = 2;
-			this.labLast.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-			// 
-			// labMove
-			// 
-			this.labMove.BackColor = System.Drawing.Color.Black;
-			this.labMove.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-			this.labMove.Dock = System.Windows.Forms.DockStyle.Left;
-			this.labMove.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-			this.labMove.ForeColor = System.Drawing.Color.Gainsboro;
-			this.labMove.Location = new System.Drawing.Point(0, 0);
-			this.labMove.Name = "labMove";
-			this.labMove.Size = new System.Drawing.Size(137, 36);
-			this.labMove.TabIndex = 1;
-			this.labMove.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			// 
 			// timerStart
 			// 
 			this.timerStart.Interval = 6000;
@@ -2128,23 +2107,117 @@
 			this.labEco.TabIndex = 3;
 			this.labEco.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
+			// panel1
+			// 
+			this.panel1.BackColor = System.Drawing.Color.Black;
+			this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+			this.panel1.Controls.Add(this.labLast);
+			this.panel1.Controls.Add(this.labMove);
+			this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
+			this.panel1.ForeColor = System.Drawing.Color.Gainsboro;
+			this.panel1.Location = new System.Drawing.Point(0, 922);
+			this.panel1.Name = "panel1";
+			this.panel1.Size = new System.Drawing.Size(904, 40);
+			this.panel1.TabIndex = 30;
+			// 
+			// labLast
+			// 
+			this.labLast.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+			this.labLast.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.labLast.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+			this.labLast.ForeColor = System.Drawing.Color.Gainsboro;
+			this.labLast.Location = new System.Drawing.Point(137, 0);
+			this.labLast.Name = "labLast";
+			this.labLast.Size = new System.Drawing.Size(763, 36);
+			this.labLast.TabIndex = 2;
+			this.labLast.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			// 
+			// labMove
+			// 
+			this.labMove.BackColor = System.Drawing.Color.Black;
+			this.labMove.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+			this.labMove.Dock = System.Windows.Forms.DockStyle.Left;
+			this.labMove.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+			this.labMove.ForeColor = System.Drawing.Color.Gainsboro;
+			this.labMove.Location = new System.Drawing.Point(0, 0);
+			this.labMove.Name = "labMove";
+			this.labMove.Size = new System.Drawing.Size(137, 36);
+			this.labMove.TabIndex = 1;
+			this.labMove.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			// 
+			// lvLines
+			// 
+			this.lvLines.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader11,
+            this.columnHeader12,
+            this.columnHeader13,
+            this.columnHeader14,
+            this.columnHeader15,
+            this.columnHeader16});
+			this.lvLines.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.lvLines.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+			this.lvLines.FullRowSelect = true;
+			this.lvLines.GridLines = true;
+			this.lvLines.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
+			this.lvLines.HideSelection = false;
+			this.lvLines.Location = new System.Drawing.Point(0, 722);
+			this.lvLines.MultiSelect = false;
+			this.lvLines.Name = "lvLines";
+			this.lvLines.ShowGroups = false;
+			this.lvLines.Size = new System.Drawing.Size(904, 200);
+			this.lvLines.TabIndex = 31;
+			this.lvLines.UseCompatibleStateImageBehavior = false;
+			this.lvLines.View = System.Windows.Forms.View.Details;
+			this.lvLines.Resize += new System.EventHandler(this.lvLines_Resize);
+			// 
+			// columnHeader11
+			// 
+			this.columnHeader11.Text = "Depth";
+			this.columnHeader11.Width = 70;
+			// 
+			// columnHeader12
+			// 
+			this.columnHeader12.Text = "Time";
+			this.columnHeader12.Width = 100;
+			// 
+			// columnHeader13
+			// 
+			this.columnHeader13.Text = "Nodes";
+			this.columnHeader13.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			this.columnHeader13.Width = 100;
+			// 
+			// columnHeader14
+			// 
+			this.columnHeader14.Text = "NPS";
+			this.columnHeader14.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			this.columnHeader14.Width = 92;
+			// 
+			// columnHeader15
+			// 
+			this.columnHeader15.Text = "Score";
+			this.columnHeader15.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			// 
+			// columnHeader16
+			// 
+			this.columnHeader16.Text = "Moves";
+			this.columnHeader16.Width = 1000;
+			// 
 			// FormChess
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.BackColor = System.Drawing.SystemColors.Control;
-			this.ClientSize = new System.Drawing.Size(904, 763);
-			this.Controls.Add(this.panelB2);
+			this.ClientSize = new System.Drawing.Size(904, 962);
+			this.Controls.Add(this.lvLines);
 			this.Controls.Add(this.panel1);
+			this.Controls.Add(this.panelB2);
 			this.Controls.Add(this.panelB1);
 			this.Controls.Add(this.panel4);
 			this.Controls.Add(this.panelT2);
 			this.Controls.Add(this.panelT1);
 			this.Controls.Add(this.panMenu);
-			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
 			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.MainMenuStrip = this.menuStrip1;
-			this.MaximizeBox = false;
 			this.Name = "FormChess";
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
 			this.Text = "RapChessGui";
@@ -2175,13 +2248,13 @@
 			this.gbToMove.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
 			this.panelB1.ResumeLayout(false);
-			this.panel1.ResumeLayout(false);
 			this.panelB2.ResumeLayout(false);
 			this.panelT2.ResumeLayout(false);
 			this.menuStrip1.ResumeLayout(false);
 			this.menuStrip1.PerformLayout();
 			this.panMenu.ResumeLayout(false);
 			this.panMenu.PerformLayout();
+			this.panel1.ResumeLayout(false);
 			this.ResumeLayout(false);
 
 		}
@@ -2192,9 +2265,6 @@
 		private System.Windows.Forms.Panel panel4;
 		private System.Windows.Forms.PictureBox pictureBox1;
 		private System.Windows.Forms.Panel panelB1;
-		private System.Windows.Forms.Panel panel1;
-		public System.Windows.Forms.Label labLast;
-		private System.Windows.Forms.Label labMove;
 		private System.Windows.Forms.Panel panTop;
 		private System.Windows.Forms.Panel panBottom;
 		private System.Windows.Forms.Label labNameT;
@@ -2344,6 +2414,17 @@
 		private System.Windows.Forms.ComboBox cbMode;
 		private System.Windows.Forms.ComboBox cbBook;
 		private System.Windows.Forms.NumericUpDown nudValue;
+		private System.Windows.Forms.Panel panel1;
+		public System.Windows.Forms.Label labLast;
+		private System.Windows.Forms.Label labMove;
+		private System.Windows.Forms.ToolTip toolTip1;
+		private System.Windows.Forms.ListView lvLines;
+		private System.Windows.Forms.ColumnHeader columnHeader11;
+		private System.Windows.Forms.ColumnHeader columnHeader12;
+		private System.Windows.Forms.ColumnHeader columnHeader13;
+		private System.Windows.Forms.ColumnHeader columnHeader14;
+		private System.Windows.Forms.ColumnHeader columnHeader15;
+		private System.Windows.Forms.ColumnHeader columnHeader16;
 	}
 }
 
