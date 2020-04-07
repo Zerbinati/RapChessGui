@@ -325,7 +325,9 @@ namespace RapChessGui
 							for (int n = 4; n < Uci.tokens.Length; n++)
 								pv += Uci.tokens[n] + " ";
 							tssMoves.ForeColor = Color.Gainsboro;
+							g.pv = pv;
 							tssMoves.Text = pv;
+							AddLines(g);
 						}
 						catch
 						{
