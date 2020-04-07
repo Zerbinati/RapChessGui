@@ -184,13 +184,8 @@
 			this.labFPS = new System.Windows.Forms.Label();
 			this.panMenu = new System.Windows.Forms.Panel();
 			this.labEco = new System.Windows.Forms.Label();
-			this.panel1 = new System.Windows.Forms.Panel();
-			this.labLast = new System.Windows.Forms.Label();
-			this.labMove = new System.Windows.Forms.Label();
 			this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
 			this.splitContainerMoves = new System.Windows.Forms.SplitContainer();
-			this.labMovesW = new System.Windows.Forms.Label();
-			this.labMovesB = new System.Windows.Forms.Label();
 			this.lvMovesW = new System.Windows.Forms.ListView();
 			this.columnHeader11 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeader12 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -198,6 +193,7 @@
 			this.columnHeader14 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeader15 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeader16 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.labMovesW = new System.Windows.Forms.Label();
 			this.lvMovesB = new System.Windows.Forms.ListView();
 			this.columnHeader17 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeader18 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -205,6 +201,10 @@
 			this.columnHeader20 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeader21 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeader22 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.labMovesB = new System.Windows.Forms.Label();
+			this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+			this.tssMove = new System.Windows.Forms.ToolStripStatusLabel();
+			this.tssMoves = new System.Windows.Forms.ToolStripStatusLabel();
 			this.panelT1.SuspendLayout();
 			this.panel4.SuspendLayout();
 			this.tabControl1.SuspendLayout();
@@ -232,11 +232,11 @@
 			this.panelT2.SuspendLayout();
 			this.menuStrip1.SuspendLayout();
 			this.panMenu.SuspendLayout();
-			this.panel1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainerMoves)).BeginInit();
 			this.splitContainerMoves.Panel1.SuspendLayout();
 			this.splitContainerMoves.Panel2.SuspendLayout();
 			this.splitContainerMoves.SuspendLayout();
+			this.statusStrip1.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// timer1
@@ -2121,44 +2121,6 @@
 			this.labEco.TabIndex = 3;
 			this.labEco.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
-			// panel1
-			// 
-			this.panel1.BackColor = System.Drawing.Color.Black;
-			this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-			this.panel1.Controls.Add(this.labLast);
-			this.panel1.Controls.Add(this.labMove);
-			this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-			this.panel1.ForeColor = System.Drawing.Color.Gainsboro;
-			this.panel1.Location = new System.Drawing.Point(0, 922);
-			this.panel1.Name = "panel1";
-			this.panel1.Size = new System.Drawing.Size(904, 40);
-			this.panel1.TabIndex = 30;
-			// 
-			// labLast
-			// 
-			this.labLast.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-			this.labLast.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.labLast.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-			this.labLast.ForeColor = System.Drawing.Color.Gainsboro;
-			this.labLast.Location = new System.Drawing.Point(137, 0);
-			this.labLast.Name = "labLast";
-			this.labLast.Size = new System.Drawing.Size(763, 36);
-			this.labLast.TabIndex = 2;
-			this.labLast.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-			// 
-			// labMove
-			// 
-			this.labMove.BackColor = System.Drawing.Color.Black;
-			this.labMove.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-			this.labMove.Dock = System.Windows.Forms.DockStyle.Left;
-			this.labMove.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-			this.labMove.ForeColor = System.Drawing.Color.Gainsboro;
-			this.labMove.Location = new System.Drawing.Point(0, 0);
-			this.labMove.Name = "labMove";
-			this.labMove.Size = new System.Drawing.Size(137, 36);
-			this.labMove.TabIndex = 1;
-			this.labMove.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			// 
 			// splitContainerMoves
 			// 
 			this.splitContainerMoves.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -2175,25 +2137,9 @@
 			// 
 			this.splitContainerMoves.Panel2.Controls.Add(this.lvMovesB);
 			this.splitContainerMoves.Panel2.Controls.Add(this.labMovesB);
-			this.splitContainerMoves.Size = new System.Drawing.Size(904, 200);
-			this.splitContainerMoves.SplitterDistance = 98;
+			this.splitContainerMoves.Size = new System.Drawing.Size(904, 240);
+			this.splitContainerMoves.SplitterDistance = 117;
 			this.splitContainerMoves.TabIndex = 32;
-			// 
-			// labMovesW
-			// 
-			this.labMovesW.Dock = System.Windows.Forms.DockStyle.Top;
-			this.labMovesW.Location = new System.Drawing.Point(0, 0);
-			this.labMovesW.Name = "labMovesW";
-			this.labMovesW.Size = new System.Drawing.Size(904, 13);
-			this.labMovesW.TabIndex = 0;
-			// 
-			// labMovesB
-			// 
-			this.labMovesB.Dock = System.Windows.Forms.DockStyle.Top;
-			this.labMovesB.Location = new System.Drawing.Point(0, 0);
-			this.labMovesB.Name = "labMovesB";
-			this.labMovesB.Size = new System.Drawing.Size(904, 13);
-			this.labMovesB.TabIndex = 1;
 			// 
 			// lvMovesW
 			// 
@@ -2214,7 +2160,7 @@
 			this.lvMovesW.MultiSelect = false;
 			this.lvMovesW.Name = "lvMovesW";
 			this.lvMovesW.ShowGroups = false;
-			this.lvMovesW.Size = new System.Drawing.Size(904, 85);
+			this.lvMovesW.Size = new System.Drawing.Size(904, 104);
 			this.lvMovesW.TabIndex = 32;
 			this.lvMovesW.UseCompatibleStateImageBehavior = false;
 			this.lvMovesW.View = System.Windows.Forms.View.Details;
@@ -2252,6 +2198,14 @@
 			this.columnHeader16.Text = "Moves";
 			this.columnHeader16.Width = 1000;
 			// 
+			// labMovesW
+			// 
+			this.labMovesW.Dock = System.Windows.Forms.DockStyle.Top;
+			this.labMovesW.Location = new System.Drawing.Point(0, 0);
+			this.labMovesW.Name = "labMovesW";
+			this.labMovesW.Size = new System.Drawing.Size(904, 13);
+			this.labMovesW.TabIndex = 0;
+			// 
 			// lvMovesB
 			// 
 			this.lvMovesB.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
@@ -2271,7 +2225,7 @@
 			this.lvMovesB.MultiSelect = false;
 			this.lvMovesB.Name = "lvMovesB";
 			this.lvMovesB.ShowGroups = false;
-			this.lvMovesB.Size = new System.Drawing.Size(904, 85);
+			this.lvMovesB.Size = new System.Drawing.Size(904, 106);
 			this.lvMovesB.TabIndex = 32;
 			this.lvMovesB.UseCompatibleStateImageBehavior = false;
 			this.lvMovesB.View = System.Windows.Forms.View.Details;
@@ -2309,14 +2263,47 @@
 			this.columnHeader22.Text = "Moves";
 			this.columnHeader22.Width = 1000;
 			// 
+			// labMovesB
+			// 
+			this.labMovesB.Dock = System.Windows.Forms.DockStyle.Top;
+			this.labMovesB.Location = new System.Drawing.Point(0, 0);
+			this.labMovesB.Name = "labMovesB";
+			this.labMovesB.Size = new System.Drawing.Size(904, 13);
+			this.labMovesB.TabIndex = 1;
+			// 
+			// statusStrip1
+			// 
+			this.statusStrip1.BackColor = System.Drawing.Color.Black;
+			this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tssMove,
+            this.tssMoves});
+			this.statusStrip1.Location = new System.Drawing.Point(0, 940);
+			this.statusStrip1.Name = "statusStrip1";
+			this.statusStrip1.Size = new System.Drawing.Size(904, 22);
+			this.statusStrip1.TabIndex = 33;
+			this.statusStrip1.Text = "statusStrip1";
+			// 
+			// tssMove
+			// 
+			this.tssMove.AutoSize = false;
+			this.tssMove.ForeColor = System.Drawing.Color.Gainsboro;
+			this.tssMove.Name = "tssMove";
+			this.tssMove.Size = new System.Drawing.Size(100, 17);
+			// 
+			// tssMoves
+			// 
+			this.tssMoves.ForeColor = System.Drawing.Color.Gainsboro;
+			this.tssMoves.Name = "tssMoves";
+			this.tssMoves.Size = new System.Drawing.Size(0, 17);
+			// 
 			// FormChess
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.BackColor = System.Drawing.SystemColors.Control;
 			this.ClientSize = new System.Drawing.Size(904, 962);
+			this.Controls.Add(this.statusStrip1);
 			this.Controls.Add(this.splitContainerMoves);
-			this.Controls.Add(this.panel1);
 			this.Controls.Add(this.panelB2);
 			this.Controls.Add(this.panelB1);
 			this.Controls.Add(this.panel4);
@@ -2361,12 +2348,14 @@
 			this.menuStrip1.PerformLayout();
 			this.panMenu.ResumeLayout(false);
 			this.panMenu.PerformLayout();
-			this.panel1.ResumeLayout(false);
 			this.splitContainerMoves.Panel1.ResumeLayout(false);
 			this.splitContainerMoves.Panel2.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.splitContainerMoves)).EndInit();
 			this.splitContainerMoves.ResumeLayout(false);
+			this.statusStrip1.ResumeLayout(false);
+			this.statusStrip1.PerformLayout();
 			this.ResumeLayout(false);
+			this.PerformLayout();
 
 		}
 
@@ -2525,9 +2514,6 @@
 		private System.Windows.Forms.ComboBox cbMode;
 		private System.Windows.Forms.ComboBox cbBook;
 		private System.Windows.Forms.NumericUpDown nudValue;
-		private System.Windows.Forms.Panel panel1;
-		public System.Windows.Forms.Label labLast;
-		private System.Windows.Forms.Label labMove;
 		private System.Windows.Forms.ToolTip toolTip1;
 		private System.Windows.Forms.SplitContainer splitContainerMoves;
 		private System.Windows.Forms.ListView lvMovesW;
@@ -2546,6 +2532,9 @@
 		private System.Windows.Forms.ColumnHeader columnHeader21;
 		private System.Windows.Forms.ColumnHeader columnHeader22;
 		private System.Windows.Forms.Label labMovesB;
+		private System.Windows.Forms.StatusStrip statusStrip1;
+		private System.Windows.Forms.ToolStripStatusLabel tssMove;
+		private System.Windows.Forms.ToolStripStatusLabel tssMoves;
 	}
 }
 

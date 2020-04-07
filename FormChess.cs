@@ -211,7 +211,7 @@ namespace RapChessGui
 					MakeMove(emo);
 					break;
 				case "info":
-					labLast.ForeColor = Color.Gainsboro;
+					tssMoves.ForeColor = Color.Gainsboro;
 					string s = Uci.GetValue("cp");
 					if (s != "")
 						g.score = s;
@@ -279,7 +279,7 @@ namespace RapChessGui
 						for (int n = moves.Count - 1; n >= 0; n--)
 							Chess.UnmakeMove(moves[n]);
 						g.pv = pv;
-						labLast.Text = pv;
+						tssMoves.Text = pv;
 						AddLines(g);
 					}
 					isBook = Uci.GetIndex("book", 0) > 0;
@@ -324,8 +324,8 @@ namespace RapChessGui
 							string pv = "";
 							for (int n = 4; n < Uci.tokens.Length; n++)
 								pv += Uci.tokens[n] + " ";
-							labLast.ForeColor = Color.Gainsboro;
-							labLast.Text = pv;
+							tssMoves.ForeColor = Color.Gainsboro;
+							tssMoves.Text = pv;
 						}
 						catch
 						{
@@ -372,8 +372,8 @@ namespace RapChessGui
 		{
 			isBook = false;
 			GamerList.GamerCur().usedBook++;
-			labLast.ForeColor = Color.Aquamarine;
-			labLast.Text = $"book {emo}";
+			tssMoves.ForeColor = Color.Aquamarine;
+			tssMoves.Text = $"book {emo}";
 		}
 
 		void SetMode(int mode)
@@ -458,16 +458,16 @@ namespace RapChessGui
 			if (hu.eloNew > eloCur)
 			{
 				result = true;
-				labLast.ForeColor = Color.FromArgb(0, 0xff, 0);
-				labLast.Text = $"Last game you win new elo is {hu.eloNew} ({eloCur})";
-				CRapLog.Add(labLast.Text);
+				tssMoves.ForeColor = Color.FromArgb(0, 0xff, 0);
+				tssMoves.Text = $"Last game you win new elo is {hu.eloNew} ({eloCur})";
+				CRapLog.Add(tssMoves.Text);
 			}
 			if (hu.eloNew < eloCur)
 			{
 				result = true;
-				labLast.ForeColor = Color.FromArgb(0xff, 0, 0);
-				labLast.Text = $"Last game you loose new elo is {hu.eloNew} ({eloCur})";
-				CRapLog.Add(labLast.Text);
+				tssMoves.ForeColor = Color.FromArgb(0xff, 0, 0);
+				tssMoves.Text = $"Last game you loose new elo is {hu.eloNew} ({eloCur})";
+				CRapLog.Add(tssMoves.Text);
 			}
 			hu.elo = hu.eloNew.ToString();
 			hu.SaveToIni();
@@ -932,8 +932,8 @@ namespace RapChessGui
 			}
 			if (!ivm)
 			{
-				labLast.ForeColor = Color.Red;
-				labLast.Text = "Move error " + emo;
+				tssMoves.ForeColor = Color.Red;
+				tssMoves.Text = "Move error " + emo;
 				FormLog.This.richTextBox1.AppendText($" error {emo}\n", Color.Red);
 				FormLog.This.richTextBox1.AppendText($"{Chess.GetFen()}\n");
 				List<int> gMoves = Chess.GenerateValidMoves();
@@ -958,7 +958,7 @@ namespace RapChessGui
 			else
 				labEco.ForeColor = Color.Black;
 			int moveNumber = (Chess.g_moveNumber >> 1) + 1;
-			labMove.Text = "Move " + moveNumber.ToString() + " " + Chess.g_move50.ToString();
+			tssMove.Text = "Move " + moveNumber.ToString() + " " + Chess.g_move50.ToString();
 			if (cp.timeTotal > 100)
 			{
 				cp.totalNpsSum += cp.nodes;
@@ -988,27 +988,27 @@ namespace RapChessGui
 			switch (CData.gameState)
 			{
 				case (int)CGameState.mate:
-					labLast.ForeColor = Color.Lime;
-					labLast.Text = uw.name + " win";
+					tssMoves.ForeColor = Color.Lime;
+					tssMoves.Text = uw.name + " win";
 					break;
 				case (int)CGameState.stalemate:
-					labLast.ForeColor = Color.Yellow;
-					labLast.Text = "Stalemate";
+					tssMoves.ForeColor = Color.Yellow;
+					tssMoves.Text = "Stalemate";
 					break;
 				case (int)CGameState.repetition:
-					labLast.ForeColor = Color.Yellow;
-					labLast.Text = "Threefold repetition";
+					tssMoves.ForeColor = Color.Yellow;
+					tssMoves.Text = "Threefold repetition";
 					break;
 				case (int)CGameState.move50:
-					labLast.ForeColor = Color.Yellow;
-					labLast.Text = "Fifty-move rule";
+					tssMoves.ForeColor = Color.Yellow;
+					tssMoves.Text = "Fifty-move rule";
 					break;
 				case (int)CGameState.material:
-					labLast.ForeColor = Color.Yellow;
-					labLast.Text = "Insufficient material";
+					tssMoves.ForeColor = Color.Yellow;
+					tssMoves.Text = "Insufficient material";
 					break;
 			}
-			FormLog.This.richTextBox1.AppendText($"Finish {labLast.Text}\n", Color.Gray);
+			FormLog.This.richTextBox1.AppendText($"Finish {tssMoves.Text}\n", Color.Gray);
 			if (CData.gameMode == (int)CMode.game)
 			{
 				if (IsAutoElo())
@@ -1135,9 +1135,9 @@ namespace RapChessGui
 		{
 			isBook = false;
 			labEco.Text = "";
-			labMove.Text = "Move 1 0";
-			labLast.ForeColor = Color.Gainsboro;
-			labLast.Text = "Good luck";
+			tssMove.Text = "Move 1 0";
+			tssMoves.ForeColor = Color.Gainsboro;
+			tssMoves.Text = "Good luck";
 			CDrag.lastSou = -1;
 			CDrag.lastDes = -1;
 			Chess.InitializeFromFen(CData.fen);
@@ -1429,8 +1429,8 @@ namespace RapChessGui
 				FormLog.This.richTextBox1.AppendText($"White {pb.player.name}\n", Color.Gray);
 			else
 				FormLog.This.richTextBox1.AppendText($"Black {pb.player.name} {pb.player.engine} {pb.engine.parameters}\n", Color.Gray);
-			labLast.ForeColor = Color.Lime;
-			labLast.Text = $"Load fen {Chess.GetFen()}";
+			tssMoves.ForeColor = Color.Lime;
+			tssMoves.Text = $"Load fen {Chess.GetFen()}";
 			labBack.Text = $"Back {CData.back}";
 			RenderInfo(pw);
 			RenderInfo(pb);
@@ -1708,8 +1708,8 @@ namespace RapChessGui
 			FormLog.This.richTextBox1.AppendText($"Pgn {CHistory.GetMoves()}\n", Color.Gray);
 			FormLog.This.richTextBox1.AppendText($"White {pw.player.name} {pw.player.engine}\n", Color.Gray);
 			FormLog.This.richTextBox1.AppendText($"Black {pb.player.name} {pb.player.engine}\n", Color.Gray);
-			labLast.ForeColor = Color.Gainsboro;
-			labLast.Text = $"Pgn {CHistory.GetMoves()}";
+			tssMoves.ForeColor = Color.Gainsboro;
+			tssMoves.Text = $"Pgn {CHistory.GetMoves()}";
 			labBack.Text = $"Back {CData.back}";
 			RenderInfo(pw);
 			RenderInfo(pb);
