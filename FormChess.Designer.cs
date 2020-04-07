@@ -2330,8 +2330,8 @@
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.BackColor = System.Drawing.SystemColors.Control;
 			this.ClientSize = new System.Drawing.Size(904, 962);
-this.Controls.Add(this.statusStrip1);
 this.Controls.Add(this.splitContainerMoves);
+this.Controls.Add(this.statusStrip1);
 this.Controls.Add(this.tlpEngineB);
 this.Controls.Add(this.panelB1);
 			this.Controls.Add(this.panel4);
