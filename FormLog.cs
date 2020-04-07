@@ -45,5 +45,9 @@ namespace RapChessGui
 			MessageBox.Show($"File {fn} has been saved");
 		}
 
+		private void richTextBox1_LinkClicked(object sender, LinkClickedEventArgs e)
+		{
+			System.Diagnostics.Process.Start(e.LinkText);
+		}
 	}
 }

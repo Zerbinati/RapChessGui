@@ -181,7 +181,10 @@ namespace RapChessGui
 
 		void AddLines(CGamer g)
 		{
-			lvLines.Items.Insert(0,new ListViewItem(new[] { g.GetDepth(), g.GetTimeElapsed(),g.nodes.ToString("N0"), g.nps.ToString("N0"),g.score,g.pv}));
+			if(GamerList.GamerCur().white)
+			lvMovesW.Items.Insert(0,new ListViewItem(new[] { g.GetDepth(), g.GetTimeElapsed(),g.nodes.ToString("N0"), g.nps.ToString("N0"),g.score,g.pv}));
+			else
+				lvMovesB.Items.Insert(0, new ListViewItem(new[] { g.GetDepth(), g.GetTimeElapsed(), g.nodes.ToString("N0"), g.nps.ToString("N0"), g.score, g.pv }));
 		}
 
 		public void GetMessageUci(CGamer g, string msg)
@@ -479,7 +482,8 @@ namespace RapChessGui
 		void GamePrepare()
 		{
 			lvMoves.Items.Clear();
-			lvLines.Items.Clear();
+			lvMovesW.Items.Clear();
+			lvMovesB.Items.Clear();
 			GamerList.gamer[0].SetPlayer("Human");
 			CPlayer pc = new CPlayer(cbComputer.Text);
 			if (cbComputer.Text == "Custom")
@@ -526,9 +530,8 @@ namespace RapChessGui
 			ShowAutoElo();
 			ShowAuto();
 			SetMode((int)CMode.game);
-			Clear();
-			bool lg = ShowLastGame();
 			GamePrepare();
+			bool lg = ShowLastGame();
 			if ((!lg && CModeGame.rotate && (cbColor.Text == "Auto")) || (cbColor.Text == "Black"))
 			{
 				CModeGame.rotate = false;
@@ -536,6 +539,7 @@ namespace RapChessGui
 			}
 			else
 				CModeGame.rotate = true;
+			Clear();
 			if (GamerList.GamerCur().player.engine == "Human")
 				moves = Chess.GenerateValidMoves();
 			CPlayer uh = CPlayerList.GetPlayerAuto("Human");
@@ -967,7 +971,10 @@ namespace RapChessGui
 				if (GamerList.GamerCur().player.engine == "Human")
 					moves = Chess.GenerateValidMoves();
 				else
-					lvLines.Items.Clear();
+					if(GamerList.GamerCur().white)
+					lvMovesW.Items.Clear();
+				else
+					lvMovesB.Items.Clear();
 			}
 			else
 				GameOver(uw, ul);
@@ -1139,7 +1146,8 @@ namespace RapChessGui
 			CBoard.Fill();
 			GamerList.Init();
 			lvMoves.Items.Clear();
-			lvLines.Items.Clear();
+			lvMovesW.Items.Clear();
+			lvMovesB.Items.Clear();
 			CData.back = 0;
 			CGamer pw = GamerList.gamer[0];
 			CGamer pb = GamerList.gamer[1];
@@ -1154,6 +1162,7 @@ namespace RapChessGui
 			CData.gameState = (int)CGameState.normal;
 			CArrow.Hide();
 			timer1.Enabled = CData.gameMode != (int)CMode.edit;
+			ShowGamers();
 		}
 
 		public void RenderBoard()
@@ -1455,7 +1464,8 @@ namespace RapChessGui
 		void ShowHistory()
 		{
 			lvMoves.Items.Clear();
-			lvLines.Items.Clear();
+			lvMovesW.Items.Clear();
+			lvMovesB.Items.Clear();
 			for (int n = 0; n < CHistory.moveList.Count; n++)
 			{
 				CHisMove m = CHistory.moveList[n];
@@ -1511,6 +1521,16 @@ namespace RapChessGui
 				if ((c & 0xffff) == a)
 					return true;
 			return false;
+		}
+
+		void ShowGamers()
+		{
+			CPlayer pw = GamerList.gamer[0].player;
+			CPlayer pb = GamerList.gamer[1].player;
+			labMovesW.Text = pw == null ? "" : pw.name;
+			labMovesB.Text = pb == null ? "" : pb.name;
+			splitContainerMoves.Panel1Collapsed = GamerList.gamer[0].IsHuman();
+			splitContainerMoves.Panel2Collapsed = GamerList.gamer[1].IsHuman();
 		}
 
 		void ShowValid()

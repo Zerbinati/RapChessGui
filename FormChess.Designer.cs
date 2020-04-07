@@ -188,13 +188,23 @@
 			this.labLast = new System.Windows.Forms.Label();
 			this.labMove = new System.Windows.Forms.Label();
 			this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-			this.lvLines = new System.Windows.Forms.ListView();
+			this.splitContainerMoves = new System.Windows.Forms.SplitContainer();
+			this.labMovesW = new System.Windows.Forms.Label();
+			this.labMovesB = new System.Windows.Forms.Label();
+			this.lvMovesW = new System.Windows.Forms.ListView();
 			this.columnHeader11 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeader12 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeader13 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeader14 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeader15 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeader16 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.lvMovesB = new System.Windows.Forms.ListView();
+			this.columnHeader17 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.columnHeader18 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.columnHeader19 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.columnHeader20 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.columnHeader21 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.columnHeader22 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.panelT1.SuspendLayout();
 			this.panel4.SuspendLayout();
 			this.tabControl1.SuspendLayout();
@@ -223,6 +233,10 @@
 			this.menuStrip1.SuspendLayout();
 			this.panMenu.SuspendLayout();
 			this.panel1.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.splitContainerMoves)).BeginInit();
+			this.splitContainerMoves.Panel1.SuspendLayout();
+			this.splitContainerMoves.Panel2.SuspendLayout();
+			this.splitContainerMoves.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// timer1
@@ -2145,30 +2159,66 @@
 			this.labMove.TabIndex = 1;
 			this.labMove.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
-			// lvLines
+			// splitContainerMoves
 			// 
-			this.lvLines.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+			this.splitContainerMoves.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.splitContainerMoves.Location = new System.Drawing.Point(0, 722);
+			this.splitContainerMoves.Name = "splitContainerMoves";
+			this.splitContainerMoves.Orientation = System.Windows.Forms.Orientation.Horizontal;
+			// 
+			// splitContainerMoves.Panel1
+			// 
+			this.splitContainerMoves.Panel1.Controls.Add(this.lvMovesW);
+			this.splitContainerMoves.Panel1.Controls.Add(this.labMovesW);
+			// 
+			// splitContainerMoves.Panel2
+			// 
+			this.splitContainerMoves.Panel2.Controls.Add(this.lvMovesB);
+			this.splitContainerMoves.Panel2.Controls.Add(this.labMovesB);
+			this.splitContainerMoves.Size = new System.Drawing.Size(904, 200);
+			this.splitContainerMoves.SplitterDistance = 98;
+			this.splitContainerMoves.TabIndex = 32;
+			// 
+			// labMovesW
+			// 
+			this.labMovesW.Dock = System.Windows.Forms.DockStyle.Top;
+			this.labMovesW.Location = new System.Drawing.Point(0, 0);
+			this.labMovesW.Name = "labMovesW";
+			this.labMovesW.Size = new System.Drawing.Size(904, 13);
+			this.labMovesW.TabIndex = 0;
+			// 
+			// labMovesB
+			// 
+			this.labMovesB.Dock = System.Windows.Forms.DockStyle.Top;
+			this.labMovesB.Location = new System.Drawing.Point(0, 0);
+			this.labMovesB.Name = "labMovesB";
+			this.labMovesB.Size = new System.Drawing.Size(904, 13);
+			this.labMovesB.TabIndex = 1;
+			// 
+			// lvMovesW
+			// 
+			this.lvMovesW.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeader11,
             this.columnHeader12,
             this.columnHeader13,
             this.columnHeader14,
             this.columnHeader15,
             this.columnHeader16});
-			this.lvLines.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.lvLines.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-			this.lvLines.FullRowSelect = true;
-			this.lvLines.GridLines = true;
-			this.lvLines.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
-			this.lvLines.HideSelection = false;
-			this.lvLines.Location = new System.Drawing.Point(0, 722);
-			this.lvLines.MultiSelect = false;
-			this.lvLines.Name = "lvLines";
-			this.lvLines.ShowGroups = false;
-			this.lvLines.Size = new System.Drawing.Size(904, 200);
-			this.lvLines.TabIndex = 31;
-			this.lvLines.UseCompatibleStateImageBehavior = false;
-			this.lvLines.View = System.Windows.Forms.View.Details;
-			this.lvLines.Resize += new System.EventHandler(this.lvLines_Resize);
+			this.lvMovesW.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.lvMovesW.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+			this.lvMovesW.FullRowSelect = true;
+			this.lvMovesW.GridLines = true;
+			this.lvMovesW.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
+			this.lvMovesW.HideSelection = false;
+			this.lvMovesW.Location = new System.Drawing.Point(0, 13);
+			this.lvMovesW.MultiSelect = false;
+			this.lvMovesW.Name = "lvMovesW";
+			this.lvMovesW.ShowGroups = false;
+			this.lvMovesW.Size = new System.Drawing.Size(904, 85);
+			this.lvMovesW.TabIndex = 32;
+			this.lvMovesW.UseCompatibleStateImageBehavior = false;
+			this.lvMovesW.View = System.Windows.Forms.View.Details;
+			this.lvMovesW.Resize += new System.EventHandler(this.lvLines_Resize);
 			// 
 			// columnHeader11
 			// 
@@ -2202,13 +2252,70 @@
 			this.columnHeader16.Text = "Moves";
 			this.columnHeader16.Width = 1000;
 			// 
+			// lvMovesB
+			// 
+			this.lvMovesB.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader17,
+            this.columnHeader18,
+            this.columnHeader19,
+            this.columnHeader20,
+            this.columnHeader21,
+            this.columnHeader22});
+			this.lvMovesB.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.lvMovesB.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+			this.lvMovesB.FullRowSelect = true;
+			this.lvMovesB.GridLines = true;
+			this.lvMovesB.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
+			this.lvMovesB.HideSelection = false;
+			this.lvMovesB.Location = new System.Drawing.Point(0, 13);
+			this.lvMovesB.MultiSelect = false;
+			this.lvMovesB.Name = "lvMovesB";
+			this.lvMovesB.ShowGroups = false;
+			this.lvMovesB.Size = new System.Drawing.Size(904, 85);
+			this.lvMovesB.TabIndex = 32;
+			this.lvMovesB.UseCompatibleStateImageBehavior = false;
+			this.lvMovesB.View = System.Windows.Forms.View.Details;
+			this.lvMovesB.Resize += new System.EventHandler(this.lvLines_Resize);
+			// 
+			// columnHeader17
+			// 
+			this.columnHeader17.Text = "Depth";
+			this.columnHeader17.Width = 70;
+			// 
+			// columnHeader18
+			// 
+			this.columnHeader18.Text = "Time";
+			this.columnHeader18.Width = 100;
+			// 
+			// columnHeader19
+			// 
+			this.columnHeader19.Text = "Nodes";
+			this.columnHeader19.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			this.columnHeader19.Width = 100;
+			// 
+			// columnHeader20
+			// 
+			this.columnHeader20.Text = "NPS";
+			this.columnHeader20.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			this.columnHeader20.Width = 92;
+			// 
+			// columnHeader21
+			// 
+			this.columnHeader21.Text = "Score";
+			this.columnHeader21.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			// 
+			// columnHeader22
+			// 
+			this.columnHeader22.Text = "Moves";
+			this.columnHeader22.Width = 1000;
+			// 
 			// FormChess
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.BackColor = System.Drawing.SystemColors.Control;
 			this.ClientSize = new System.Drawing.Size(904, 962);
-			this.Controls.Add(this.lvLines);
+			this.Controls.Add(this.splitContainerMoves);
 			this.Controls.Add(this.panel1);
 			this.Controls.Add(this.panelB2);
 			this.Controls.Add(this.panelB1);
@@ -2255,6 +2362,10 @@
 			this.panMenu.ResumeLayout(false);
 			this.panMenu.PerformLayout();
 			this.panel1.ResumeLayout(false);
+			this.splitContainerMoves.Panel1.ResumeLayout(false);
+			this.splitContainerMoves.Panel2.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this.splitContainerMoves)).EndInit();
+			this.splitContainerMoves.ResumeLayout(false);
 			this.ResumeLayout(false);
 
 		}
@@ -2418,13 +2529,23 @@
 		public System.Windows.Forms.Label labLast;
 		private System.Windows.Forms.Label labMove;
 		private System.Windows.Forms.ToolTip toolTip1;
-		private System.Windows.Forms.ListView lvLines;
+		private System.Windows.Forms.SplitContainer splitContainerMoves;
+		private System.Windows.Forms.ListView lvMovesW;
 		private System.Windows.Forms.ColumnHeader columnHeader11;
 		private System.Windows.Forms.ColumnHeader columnHeader12;
 		private System.Windows.Forms.ColumnHeader columnHeader13;
 		private System.Windows.Forms.ColumnHeader columnHeader14;
 		private System.Windows.Forms.ColumnHeader columnHeader15;
 		private System.Windows.Forms.ColumnHeader columnHeader16;
+		private System.Windows.Forms.Label labMovesW;
+		private System.Windows.Forms.ListView lvMovesB;
+		private System.Windows.Forms.ColumnHeader columnHeader17;
+		private System.Windows.Forms.ColumnHeader columnHeader18;
+		private System.Windows.Forms.ColumnHeader columnHeader19;
+		private System.Windows.Forms.ColumnHeader columnHeader20;
+		private System.Windows.Forms.ColumnHeader columnHeader21;
+		private System.Windows.Forms.ColumnHeader columnHeader22;
+		private System.Windows.Forms.Label labMovesB;
 	}
 }
 
