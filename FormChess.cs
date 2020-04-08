@@ -48,8 +48,6 @@ namespace RapChessGui
 			cbColor.SelectedIndex = cbColor.FindStringExact(CModeGame.color);
 			cbComputer.SelectedIndex = cbComputer.FindStringExact(CModeGame.computer);
 			CBoard.Init();
-			CBoard.Prepare();
-			pictureBox1.Size = new Size(CBoard.size, CBoard.size);
 			int fontLength = Properties.Resources.ChessPiece.Length;
 			byte[] fontData = Properties.Resources.ChessPiece;
 			IntPtr data = Marshal.AllocCoTaskMem(fontLength);
@@ -60,8 +58,9 @@ namespace RapChessGui
 			Marshal.FreeCoTaskMem(data);
 			fontChess = new Font(pfc.Families[0], 16);
 			labTakenT.Font = fontChess;
-			labTakenB.Font = fontChess;
+			labTakenD.Font = fontChess;
 			Chess.Initialize();
+			BoardPrepare();
 			GameStart();
 		}
 
@@ -177,6 +176,12 @@ namespace RapChessGui
 			CModeMatch.LoadFromIni();
 			CModeTournament.LoadFromIni();
 			CModeTraining.LoadFromIni();
+		}
+
+		public void BoardPrepare()
+		{
+			CBoard.Prepare(panBoard.Width, panBoard.Height);
+			RenderBoard();
 		}
 
 		void AddLines(CGamer g)
@@ -381,10 +386,6 @@ namespace RapChessGui
 		void SetMode(int mode)
 		{
 			moveToolStripMenuItem.Visible = false;
-			labEloB.Visible = true;
-			labEloT.Visible = true;
-			labProtocolB.Visible = true;
-			labProtocolT.Visible = true;
 			timer1.Enabled = false;
 			timerStart.Enabled = false;
 			GamerList.Terminate();
@@ -396,25 +397,15 @@ namespace RapChessGui
 			{
 				case (int)CMode.game:
 					moveToolStripMenuItem.Visible = true;
-					labProtocolB.Visible = false;
-					labProtocolT.Visible = false;
 					GameShow();
 					break;
 				case (int)CMode.match:
 					MatchShow();
 					break;
 				case (int)CMode.training:
-					labEloB.Visible = false;
-					labEloT.Visible = false;
-					labProtocolB.Visible = false;
-					labProtocolT.Visible = false;
 					TrainingShow();
 					break;
 				case (int)CMode.edit:
-					labEloB.Visible = false;
-					labEloT.Visible = false;
-					labProtocolB.Visible = false;
-					labProtocolT.Visible = false;
 					EditShow();
 					break;
 			}
@@ -1169,6 +1160,8 @@ namespace RapChessGui
 
 		public void RenderBoard()
 		{
+			if ((GamerList.gamer[0].player == null) || (GamerList.gamer[1].player == null))
+				return;
 			Stopwatch stopwatch = new Stopwatch();
 			stopwatch.Start();
 			boardRotate = ((GamerList.gamer[1].engine == null) && (GamerList.gamer[0].engine != null)) ^ CData.rotateBoard;
@@ -1177,33 +1170,33 @@ namespace RapChessGui
 			if (boardRotate)
 			{
 				labNameT.Text = GamerList.gamer[0].player.name;
-				labNameB.Text = GamerList.gamer[1].player.name;
-				panTop.BackColor = Color.White;
-				panBottom.BackColor = Color.Black;
+				labNameD.Text = GamerList.gamer[1].player.name;
+				labColorT.BackColor = Color.White;
+				labColorD.BackColor = Color.Black;
 				labTakenT.ForeColor = Color.White;
-				labTakenB.ForeColor = Color.Black;
+				labTakenD.ForeColor = Color.Black;
 			}
 			else
 			{
 				labNameT.Text = GamerList.gamer[1].player.name;
-				labNameB.Text = GamerList.gamer[0].player.name;
-				panTop.BackColor = Color.Black;
-				panBottom.BackColor = Color.White;
+				labNameD.Text = GamerList.gamer[0].player.name;
+				labColorT.BackColor = Color.Black;
+				labColorD.BackColor = Color.White;
 				labTakenT.ForeColor = Color.Black;
-				labTakenB.ForeColor = Color.White;
+				labTakenD.ForeColor = Color.White;
 			}
 			if ((boardRotate ^ CChess.whiteTurn) ^ (CData.gameState != 0))
 			{
 				labTimeT.BackColor = Color.LightGray;
-				labTimeB.BackColor = Color.Yellow;
+				labTimeD.BackColor = Color.Yellow;
 			}
 			else
 			{
 				labTimeT.BackColor = Color.Yellow;
-				labTimeB.BackColor = Color.LightGray;
+				labTimeD.BackColor = Color.LightGray;
 			}
-			pictureBox1.Image = new Bitmap(CBoard.bitmap[boardRotate ? 1 : 0]);
-			Graphics g = Graphics.FromImage(pictureBox1.Image);
+			Bitmap bmp = new Bitmap(CBoard.bitmap[boardRotate ? 1 : 0]);
+			Graphics g = Graphics.FromImage(bmp);
 			Brush brushRed = new SolidBrush(Color.FromArgb(0x80, 0xff, 0x00, 0x00));
 			Brush brushYellow = new SolidBrush(Color.FromArgb(0x80, 0xff, 0xff, 0x00));
 			Font fontPiece = new Font(pfc.Families[0], CBoard.field);
@@ -1221,12 +1214,12 @@ namespace RapChessGui
 			for (int y = 0; y < 8; y++)
 			{
 				int yr = boardRotate ? 7 - y : y;
-				int y2 = CBoard.margin + yr * CBoard.field;
+				int y2 = CBoard.marginH + yr * CBoard.field;
 				for (int x = 0; x < 8; x++)
 				{
 					int i = y * 8 + x;
 					int xr = boardRotate ? 7 - x : x;
-					int x2 = CBoard.margin + xr * CBoard.field;
+					int x2 = CBoard.marginW + xr * CBoard.field;
 					rec.X = x2;
 					rec.Y = y2;
 					rec.Width = CBoard.field;
@@ -1286,7 +1279,9 @@ namespace RapChessGui
 				pen.EndCap = LineCap.ArrowAnchor;
 				g.DrawLine(pen, CBoard.GetMiddle(CArrow.a), CBoard.GetMiddle(CArrow.b));
 			}
-
+			Graphics pg = panBoard.CreateGraphics();
+			pg.DrawImage(bmp, 0, 0);
+			pg.Dispose();
 			sf.Dispose();
 			penW.Dispose();
 			penB.Dispose();
@@ -1296,7 +1291,6 @@ namespace RapChessGui
 			brushB.Dispose();
 			fontPiece.Dispose();
 			g.Dispose();
-			pictureBox1.Refresh();
 			CBoard.finished = CBoard.animated;
 			CBoard.Render();
 			if (!CBoard.animated)
@@ -1317,9 +1311,8 @@ namespace RapChessGui
 			ulong nps = cp.totalNps > 0 ? cp.totalNps : cp.nps;
 			if (boardRotate ^ cp.white)
 			{
-				labTimeB.Text = cp.GetTime();
-				labEloB.Text = cp.GetElo();
-				labProtocolB.Text = cp.GetProtocol();
+				labTimeD.Text = cp.GetTime();
+				labEloD.Text = cp.GetElo();
 				labScoreB.Text = $"Score {cp.score}";
 				labNodesB.Text = $"Nodes {cp.nodes.ToString("N0")}";
 				labNpsB.Text = $"Nps {nps.ToString("N0")}";
@@ -1331,7 +1324,6 @@ namespace RapChessGui
 			{
 				labTimeT.Text = cp.GetTime();
 				labEloT.Text = cp.GetElo();
-				labProtocolT.Text = cp.GetProtocol();
 				labScoreT.Text = $"Score {cp.score}";
 				labNodesT.Text = $"Nodes {cp.nodes.ToString("N0")}";
 				labNpsT.Text = $"Nps {nps.ToString("N0")}";
@@ -1384,16 +1376,16 @@ namespace RapChessGui
 			if (boardRotate)
 			{
 				labTakenT.Text = w;
-				labTakenB.Text = b;
+				labTakenD.Text = b;
 				labMaterialT.Text = mw;
-				labMaterialB.Text = mb;
+				labMaterialD.Text = mb;
 			}
 			else
 			{
 				labTakenT.Text = b;
-				labTakenB.Text = w;
+				labTakenD.Text = w;
 				labMaterialT.Text = mb;
-				labMaterialB.Text = mw;
+				labMaterialD.Text = mw;
 			}
 		}
 
@@ -1527,12 +1519,14 @@ namespace RapChessGui
 
 		void ShowGamers()
 		{
-			CPlayer pw = GamerList.gamer[0].player;
-			CPlayer pb = GamerList.gamer[1].player;
-			labMovesW.Text = pw == null ? "" : pw.name;
-			labMovesB.Text = pb == null ? "" : pb.name;
-			splitContainerMoves.Panel1Collapsed = GamerList.gamer[0].IsHuman();
-			splitContainerMoves.Panel2Collapsed = GamerList.gamer[1].IsHuman();
+			CGamer gw = GamerList.gamer[0];
+			CGamer gb = GamerList.gamer[1];
+			labMovesW.Text = gw.GetName();
+			labMovesB.Text = gb.GetName();
+			labProtocolW.Text = gw.GetProtocol();
+			labProtocolB.Text = gb.GetProtocol();
+			splitContainerMoves.Panel1Collapsed = gw.IsHuman();
+			splitContainerMoves.Panel2Collapsed = gb.IsHuman();
 		}
 
 		void ShowValid()
@@ -1579,6 +1573,9 @@ namespace RapChessGui
 
 		void SizeLastColumn(ListView lv)
 		{
+			int w = Convert.ToInt32(lv.Width / 9);
+			for (int n = 0; n < lv.Columns.Count - 1; n++)
+				lv.Columns[n].Width = w;
 			lv.Columns[lv.Columns.Count - 1].Width = -2;
 		}
 
@@ -1637,10 +1634,9 @@ namespace RapChessGui
 		{
 			FormOptions.This.ShowDialog(this);
 			CBoard.ClearAttack();
-			CBoard.Prepare();
 			CBoard.animated = true;
 			CArrow.Hide();
-			RenderBoard();
+			BoardPrepare();
 			ShowAutoElo();
 		}
 
@@ -1810,8 +1806,8 @@ namespace RapChessGui
 		{
 			CDrag.mouseX = e.X;
 			CDrag.mouseY = e.Y;
-			int x = (e.X - CBoard.margin) / CBoard.field;
-			int y = (e.Y - CBoard.margin) / CBoard.field;
+			int x = (e.X - CBoard.marginW) / CBoard.field;
+			int y = (e.Y - CBoard.marginH) / CBoard.field;
 			if (boardRotate)
 			{
 				x = 7 - x;
@@ -2027,6 +2023,11 @@ namespace RapChessGui
 		private void lvLines_Resize(object sender, EventArgs e)
 		{
 			SizeLastColumn((ListView)sender);
+		}
+
+		private void panBoard_Resize(object sender, EventArgs e)
+		{
+			BoardPrepare();
 		}
 	}
 }

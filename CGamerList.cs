@@ -220,6 +220,13 @@ namespace RapChessGui
 				return $"Elo {player.elo}";
 		}
 
+		public string GetName()
+		{
+			if (engine != null)
+				return engine.name;
+			return "Human";
+		}
+
 		public void SetPlayer(CPlayer p)
 		{
 			player = p;

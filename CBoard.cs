@@ -82,7 +82,7 @@ namespace RapChessGui
 			visible = false;
 		}
 
-		public static void SetAB(int ax,int ay,int bx,int by)
+		public static void SetAB(int ax, int ay, int bx, int by)
 		{
 			visible = true;
 			a.X = ax;
@@ -91,13 +91,13 @@ namespace RapChessGui
 			b.Y = by;
 		}
 
-		public static void SetAB(int a,int b)
+		public static void SetAB(int a, int b)
 		{
 			int ax = a & 7;
 			int ay = a >> 3;
 			int bx = b & 7;
 			int by = b >> 3;
-			SetAB(ax,ay,bx,by);
+			SetAB(ax, ay, bx, by);
 		}
 
 		public static bool Visible()
@@ -113,9 +113,11 @@ namespace RapChessGui
 		public static bool finished = true;
 		public static bool showArrow = false;
 		public static CField[] list = new CField[64];
-		public const int field = 64;
-		public const int margin = 32;
-		public const int size = field * 8 + margin * 2;
+		public static int field = 64;
+		public static int marginW = 32;
+		public static int marginH = 32;
+		public static int sizeW = field * 8 + marginW * 2;
+		public static int sizeH = field * 8 + marginH * 2;
 		public static Bitmap[] bitmap = new Bitmap[2];
 		public static Color color;
 
@@ -131,18 +133,18 @@ namespace RapChessGui
 				list[n].color = Color.Empty;
 		}
 
-		public static Point GetMiddle(int x,int y)
+		public static Point GetMiddle(int x, int y)
 		{
 			int xr = FormChess.boardRotate ? 7 - x : x;
 			int yr = FormChess.boardRotate ? 7 - y : y;
-			x = margin + xr * field + (field >> 1);
-			y = margin + yr * field + (field >> 1);
-			return new Point(x,y);
+			x = marginW + xr * field + (field >> 1);
+			y = marginH + yr * field + (field >> 1);
+			return new Point(x, y);
 		}
 
 		public static Point GetMiddle(Point p)
 		{
-			return GetMiddle(p.X,p.Y);
+			return GetMiddle(p.X, p.Y);
 		}
 
 		public static void UpdateField(int index)
@@ -170,7 +172,7 @@ namespace RapChessGui
 		{
 			string abc = "ABCDEFGH";
 			Rectangle rec = new Rectangle();
-			Bitmap bmp = new Bitmap(size, size);
+			Bitmap bmp = new Bitmap(sizeW, sizeH);
 			Graphics g = Graphics.FromImage(bmp);
 			SolidBrush brush1 = new SolidBrush(color);
 			SolidBrush brush2 = new SolidBrush(Color.FromArgb(0x60, 0x00, 0x00, 0x00));
@@ -183,13 +185,13 @@ namespace RapChessGui
 			sf.Alignment = StringAlignment.Center;
 			sf.LineAlignment = StringAlignment.Center;
 			g.SmoothingMode = SmoothingMode.HighQuality;
-			g.FillRectangle(brush1, 0, 0, size, size);
+			g.FillRectangle(brush1, 0, 0, sizeW, sizeH);
 			for (int y = 0; y < 8; y++)
 			{
-				int y2 = margin + y * field;
+				int y2 = marginH + y * field;
 				for (int x = 0; x < 8; x++)
 				{
-					int x2 = margin + x * field;
+					int x2 = marginW + x * field;
 					bool bgColor = ((y ^ x) & 1) == 1;
 					if (bgColor)
 					{
@@ -205,23 +207,23 @@ namespace RapChessGui
 			{
 				int xr = index == 1 ? 7 - n : n;
 				int yr = index == 1 ? 7 - n : n;
-				int x2 = margin + xr * field;
-				int y2 = margin + yr * field;
+				int x2 = marginW + xr * field;
+				int y2 = marginH + yr * field;
 				rec.X = 0;
 				rec.Y = y2;
-				rec.Width = margin;
+				rec.Width = marginW;
 				rec.Height = field;
 				string letter = (8 - n).ToString();
 				gp.AddString(letter, font.FontFamily, (int)font.Style, font.Size, rec, sf);
-				rec.X = bmp.Width - margin;
+				rec.X = bmp.Width - marginW;
 				gp.AddString(letter, font.FontFamily, (int)font.Style, font.Size, rec, sf);
 				rec.X = x2;
 				rec.Y = 0;
 				rec.Width = field;
-				rec.Height = margin;
+				rec.Height = marginH;
 				letter = abc[n].ToString();
 				gp.AddString(letter, font.FontFamily, (int)font.Style, font.Size, rec, sf);
-				rec.Y = bmp.Height - margin;
+				rec.Y = bmp.Height - marginH;
 				gp.AddString(letter, font.FontFamily, (int)font.Style, font.Size, rec, sf);
 			}
 			g.DrawPath(outline, gp);
@@ -239,8 +241,14 @@ namespace RapChessGui
 			outline.Dispose();
 		}
 
-		public static void Prepare()
+		public static void Prepare(int w, int h)
 		{
+			int min = Math.Min(w, h);
+			field = min / 9;
+			marginW = (w - (field * 8)) >> 1;
+			marginH = (h - (field * 8)) >> 1;
+			sizeW = w;
+			sizeH = h;
 			Prepare(0);
 			Prepare(1);
 		}

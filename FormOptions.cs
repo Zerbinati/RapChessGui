@@ -56,7 +56,6 @@ namespace RapChessGui
 			cbArrow.Checked = false;
 			CData.rotateBoard = cbRotateBoard.Checked = false;
 			CBoard.color = colorDialog1.Color;
-			CBoard.Prepare();
 			FormChess.This.RenderBoard();
 		}
 
@@ -66,8 +65,7 @@ namespace RapChessGui
 			if (colorDialog1.ShowDialog() != DialogResult.Cancel)
 			{
 				CBoard.color = colorDialog1.Color;
-				CBoard.Prepare();
-				FormChess.This.RenderBoard();
+				FormChess.This.BoardPrepare();
 			}
 		}
 
