@@ -60,6 +60,8 @@ namespace RapChessGui
 			labTakenT.Font = fontChess;
 			labTakenD.Font = fontChess;
 			Chess.Initialize();
+			listView1_Resize(listView1, null);
+			listView2_Resize(listView2, null);
 			BoardPrepare();
 			GameStart();
 		}
@@ -1195,8 +1197,8 @@ namespace RapChessGui
 				labTimeT.BackColor = Color.Yellow;
 				labTimeD.BackColor = Color.LightGray;
 			}
-			Bitmap bmp = new Bitmap(CBoard.bitmap[boardRotate ? 1 : 0]);
-			Graphics g = Graphics.FromImage(bmp);
+			CBoard.board = new Bitmap(CBoard.bitmap[boardRotate ? 1 : 0]);
+			Graphics g = Graphics.FromImage(CBoard.board);
 			Brush brushRed = new SolidBrush(Color.FromArgb(0x80, 0xff, 0x00, 0x00));
 			Brush brushYellow = new SolidBrush(Color.FromArgb(0x80, 0xff, 0xff, 0x00));
 			Font fontPiece = new Font(pfc.Families[0], CBoard.field);
@@ -1280,7 +1282,7 @@ namespace RapChessGui
 				g.DrawLine(pen, CBoard.GetMiddle(CArrow.a), CBoard.GetMiddle(CArrow.b));
 			}
 			Graphics pg = panBoard.CreateGraphics();
-			pg.DrawImage(bmp, 0, 0);
+			pg.DrawImage(CBoard.board, 0, 0);
 			pg.Dispose();
 			sf.Dispose();
 			penW.Dispose();
@@ -1569,14 +1571,6 @@ namespace RapChessGui
 			}
 			CDrag.lastDes = i;
 			CDrag.lastSou = -1;
-		}
-
-		void SizeLastColumn(ListView lv)
-		{
-			int w = Convert.ToInt32(lv.Width / 9);
-			for (int n = 0; n < lv.Columns.Count - 1; n++)
-				lv.Columns[n].Width = w;
-			lv.Columns[lv.Columns.Count - 1].Width = -2;
 		}
 
 		private void FormChess_FormClosed(object sender, FormClosedEventArgs e)
@@ -2022,12 +2016,38 @@ namespace RapChessGui
 
 		private void lvLines_Resize(object sender, EventArgs e)
 		{
-			SizeLastColumn((ListView)sender);
+			ListView lv = (ListView)sender;
+			int w = lv.Width;
+			w = Convert.ToInt32(w / 9);
+			for (int n = 0; n < lv.Columns.Count - 1; n++)
+				lv.Columns[n].Width = w;
+			lv.Columns[lv.Columns.Count - 1].Width = lv.Width - 32 - w * (lv.Columns.Count - 1);
 		}
 
 		private void panBoard_Resize(object sender, EventArgs e)
 		{
 			BoardPrepare();
+		}
+
+		private void listView2_Resize(object sender, EventArgs e)
+		{
+			ListView lv = (ListView)sender;
+			int w = lv.Width - 8;
+			w = Convert.ToInt32(w / 6);
+			lv.Columns[0].Width = w * 3;
+			lv.Columns[1].Width = w;
+			lv.Columns[2].Width = w;
+			lv.Columns[3].Width = w;
+		}
+
+		private void listView1_Resize(object sender, EventArgs e)
+		{
+			ListView lv = (ListView)sender;
+			int w = lv.Width - 8;
+			w = Convert.ToInt32(w / 4);
+			lv.Columns[0].Width = w * 2;
+			lv.Columns[1].Width = w;
+			lv.Columns[2].Width = w;
 		}
 	}
 }

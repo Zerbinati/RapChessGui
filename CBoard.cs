@@ -119,6 +119,7 @@ namespace RapChessGui
 		public static int sizeW = field * 8 + marginW * 2;
 		public static int sizeH = field * 8 + marginH * 2;
 		public static Bitmap[] bitmap = new Bitmap[2];
+		public static Bitmap board;
 		public static Color color;
 
 		public static void Init()
