@@ -2032,7 +2032,7 @@ namespace RapChessGui
 		private void listView2_Resize(object sender, EventArgs e)
 		{
 			ListView lv = (ListView)sender;
-			int w = lv.Width - 8;
+			int w = lv.Width - 32;
 			w = Convert.ToInt32(w / 6);
 			lv.Columns[0].Width = w * 3;
 			lv.Columns[1].Width = w;
@@ -2043,7 +2043,7 @@ namespace RapChessGui
 		private void listView1_Resize(object sender, EventArgs e)
 		{
 			ListView lv = (ListView)sender;
-			int w = lv.Width - 8;
+			int w = lv.Width - 32;
 			w = Convert.ToInt32(w / 4);
 			lv.Columns[0].Width = w * 2;
 			lv.Columns[1].Width = w;
