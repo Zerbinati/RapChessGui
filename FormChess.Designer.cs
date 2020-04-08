@@ -88,6 +88,12 @@
 			this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeader6 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.listView2 = new System.Windows.Forms.ListView();
+			this.columnHeader7 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.columnHeader9 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.columnHeader8 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.columnHeader10 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.lPlayer = new System.Windows.Forms.Label();
 			this.butStartTournament = new System.Windows.Forms.Button();
 			this.tabPageTraining = new System.Windows.Forms.TabPage();
 			this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
@@ -203,12 +209,6 @@
 			this.panelB = new System.Windows.Forms.Panel();
 			this.labProtocolB = new System.Windows.Forms.Label();
 			this.labMovesB = new System.Windows.Forms.Label();
-			this.lPlayer = new System.Windows.Forms.Label();
-			this.listView2 = new System.Windows.Forms.ListView();
-			this.columnHeader7 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.columnHeader9 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.columnHeader8 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.columnHeader10 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.tabControl1.SuspendLayout();
 			this.tabPageGame.SuspendLayout();
 			this.groupBox2.SuspendLayout();
@@ -287,7 +287,7 @@
 			this.tabPageGame.Location = new System.Drawing.Point(4, 25);
 			this.tabPageGame.Name = "tabPageGame";
 			this.tabPageGame.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPageGame.Size = new System.Drawing.Size(330, 496);
+			this.tabPageGame.Size = new System.Drawing.Size(326, 492);
 			this.tabPageGame.TabIndex = 0;
 			this.tabPageGame.Text = "Game";
 			this.tabPageGame.UseVisualStyleBackColor = true;
@@ -308,7 +308,7 @@
 			this.lvMoves.MultiSelect = false;
 			this.lvMoves.Name = "lvMoves";
 			this.lvMoves.ShowGroups = false;
-			this.lvMoves.Size = new System.Drawing.Size(324, 209);
+			this.lvMoves.Size = new System.Drawing.Size(320, 205);
 			this.lvMoves.TabIndex = 25;
 			this.lvMoves.UseCompatibleStateImageBehavior = false;
 			this.lvMoves.View = System.Windows.Forms.View.Details;
@@ -333,7 +333,7 @@
 			this.butStop.Dock = System.Windows.Forms.DockStyle.Top;
 			this.butStop.Location = new System.Drawing.Point(3, 261);
 			this.butStop.Name = "butStop";
-			this.butStop.Size = new System.Drawing.Size(324, 23);
+			this.butStop.Size = new System.Drawing.Size(320, 23);
 			this.butStop.TabIndex = 24;
 			this.butStop.Text = "Stop calculating";
 			this.toolTip1.SetToolTip(this.butStop, "Engine stop calculating and makes a move immediately");
@@ -345,7 +345,7 @@
 			this.butContinueGame.Dock = System.Windows.Forms.DockStyle.Top;
 			this.butContinueGame.Location = new System.Drawing.Point(3, 238);
 			this.butContinueGame.Name = "butContinueGame";
-			this.butContinueGame.Size = new System.Drawing.Size(324, 23);
+			this.butContinueGame.Size = new System.Drawing.Size(320, 23);
 			this.butContinueGame.TabIndex = 23;
 			this.butContinueGame.Text = "Continue game";
 			this.toolTip1.SetToolTip(this.butContinueGame, "Continue game with current position");
@@ -357,7 +357,7 @@
 			this.butNewGame.Dock = System.Windows.Forms.DockStyle.Top;
 			this.butNewGame.Location = new System.Drawing.Point(3, 215);
 			this.butNewGame.Name = "butNewGame";
-			this.butNewGame.Size = new System.Drawing.Size(324, 23);
+			this.butNewGame.Size = new System.Drawing.Size(320, 23);
 			this.butNewGame.TabIndex = 20;
 			this.butNewGame.Text = "New game";
 			this.toolTip1.SetToolTip(this.butNewGame, "Start new game");
@@ -374,7 +374,7 @@
 			this.groupBox2.Dock = System.Windows.Forms.DockStyle.Top;
 			this.groupBox2.Location = new System.Drawing.Point(3, 84);
 			this.groupBox2.Name = "groupBox2";
-			this.groupBox2.Size = new System.Drawing.Size(324, 131);
+			this.groupBox2.Size = new System.Drawing.Size(320, 131);
 			this.groupBox2.TabIndex = 19;
 			this.groupBox2.TabStop = false;
 			this.groupBox2.Text = "Computer";
@@ -389,7 +389,7 @@
             0,
             0});
 			this.nudValue.Name = "nudValue";
-			this.nudValue.Size = new System.Drawing.Size(318, 20);
+			this.nudValue.Size = new System.Drawing.Size(314, 20);
 			this.nudValue.TabIndex = 50;
 			this.nudValue.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
 			this.nudValue.ThousandsSeparator = true;
@@ -407,7 +407,7 @@
 			this.cbBook.FormattingEnabled = true;
 			this.cbBook.Location = new System.Drawing.Point(3, 79);
 			this.cbBook.Name = "cbBook";
-			this.cbBook.Size = new System.Drawing.Size(318, 21);
+			this.cbBook.Size = new System.Drawing.Size(314, 21);
 			this.cbBook.Sorted = true;
 			this.cbBook.TabIndex = 49;
 			this.toolTip1.SetToolTip(this.cbBook, "Select engine book");
@@ -425,7 +425,7 @@
             "Time"});
 			this.cbMode.Location = new System.Drawing.Point(3, 58);
 			this.cbMode.Name = "cbMode";
-			this.cbMode.Size = new System.Drawing.Size(318, 21);
+			this.cbMode.Size = new System.Drawing.Size(314, 21);
 			this.cbMode.Sorted = true;
 			this.cbMode.TabIndex = 47;
 			this.toolTip1.SetToolTip(this.cbMode, "Select engine mode");
@@ -438,7 +438,7 @@
 			this.cbEngine.FormattingEnabled = true;
 			this.cbEngine.Location = new System.Drawing.Point(3, 37);
 			this.cbEngine.Name = "cbEngine";
-			this.cbEngine.Size = new System.Drawing.Size(318, 21);
+			this.cbEngine.Size = new System.Drawing.Size(314, 21);
 			this.cbEngine.Sorted = true;
 			this.cbEngine.TabIndex = 46;
 			this.toolTip1.SetToolTip(this.cbEngine, "Select engine");
@@ -455,7 +455,7 @@
             "Human"});
 			this.cbComputer.Location = new System.Drawing.Point(3, 16);
 			this.cbComputer.Name = "cbComputer";
-			this.cbComputer.Size = new System.Drawing.Size(318, 21);
+			this.cbComputer.Size = new System.Drawing.Size(314, 21);
 			this.cbComputer.Sorted = true;
 			this.cbComputer.TabIndex = 1;
 			this.toolTip1.SetToolTip(this.cbComputer, "Select human opponent");
@@ -469,7 +469,7 @@
 			this.groupBox1.Dock = System.Windows.Forms.DockStyle.Top;
 			this.groupBox1.Location = new System.Drawing.Point(3, 3);
 			this.groupBox1.Name = "groupBox1";
-			this.groupBox1.Size = new System.Drawing.Size(324, 81);
+			this.groupBox1.Size = new System.Drawing.Size(320, 81);
 			this.groupBox1.TabIndex = 18;
 			this.groupBox1.TabStop = false;
 			this.groupBox1.Text = "Human";
@@ -480,7 +480,7 @@
 			this.labAutoElo.ForeColor = System.Drawing.Color.White;
 			this.labAutoElo.Location = new System.Drawing.Point(3, 58);
 			this.labAutoElo.Name = "labAutoElo";
-			this.labAutoElo.Size = new System.Drawing.Size(318, 21);
+			this.labAutoElo.Size = new System.Drawing.Size(314, 21);
 			this.labAutoElo.TabIndex = 31;
 			this.labAutoElo.Text = "Auto Elo On";
 			this.labAutoElo.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -490,7 +490,7 @@
 			this.labBack.Dock = System.Windows.Forms.DockStyle.Top;
 			this.labBack.Location = new System.Drawing.Point(3, 37);
 			this.labBack.Name = "labBack";
-			this.labBack.Size = new System.Drawing.Size(318, 21);
+			this.labBack.Size = new System.Drawing.Size(314, 21);
 			this.labBack.TabIndex = 30;
 			this.labBack.Text = "Back 0";
 			this.labBack.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -508,7 +508,7 @@
             "Black"});
 			this.cbColor.Location = new System.Drawing.Point(3, 16);
 			this.cbColor.Name = "cbColor";
-			this.cbColor.Size = new System.Drawing.Size(318, 21);
+			this.cbColor.Size = new System.Drawing.Size(314, 21);
 			this.cbColor.TabIndex = 2;
 			this.toolTip1.SetToolTip(this.cbColor, "Select human color");
 			this.cbColor.SelectedValueChanged += new System.EventHandler(this.cbColor_SelectedValueChanged);
@@ -523,7 +523,7 @@
 			this.tabPageMatch.Controls.Add(this.groupBox5);
 			this.tabPageMatch.Location = new System.Drawing.Point(4, 25);
 			this.tabPageMatch.Name = "tabPageMatch";
-			this.tabPageMatch.Size = new System.Drawing.Size(330, 496);
+			this.tabPageMatch.Size = new System.Drawing.Size(326, 492);
 			this.tabPageMatch.TabIndex = 2;
 			this.tabPageMatch.Text = "Match";
 			this.tabPageMatch.UseVisualStyleBackColor = true;
@@ -559,7 +559,7 @@
 			this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
 			this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
 			this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-			this.tableLayoutPanel2.Size = new System.Drawing.Size(330, 100);
+			this.tableLayoutPanel2.Size = new System.Drawing.Size(326, 100);
 			this.tableLayoutPanel2.TabIndex = 26;
 			// 
 			// labMatch24
@@ -567,7 +567,7 @@
 			this.labMatch24.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.labMatch24.Location = new System.Drawing.Point(277, 67);
+			this.labMatch24.Location = new System.Drawing.Point(273, 67);
 			this.labMatch24.Name = "labMatch24";
 			this.labMatch24.Size = new System.Drawing.Size(49, 32);
 			this.labMatch24.TabIndex = 14;
@@ -578,9 +578,9 @@
 			this.labMatch23.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.labMatch23.Location = new System.Drawing.Point(222, 67);
+			this.labMatch23.Location = new System.Drawing.Point(219, 67);
 			this.labMatch23.Name = "labMatch23";
-			this.labMatch23.Size = new System.Drawing.Size(48, 32);
+			this.labMatch23.Size = new System.Drawing.Size(47, 32);
 			this.labMatch23.TabIndex = 13;
 			this.labMatch23.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
@@ -589,9 +589,9 @@
 			this.labMatch22.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.labMatch22.Location = new System.Drawing.Point(167, 67);
+			this.labMatch22.Location = new System.Drawing.Point(165, 67);
 			this.labMatch22.Name = "labMatch22";
-			this.labMatch22.Size = new System.Drawing.Size(48, 32);
+			this.labMatch22.Size = new System.Drawing.Size(47, 32);
 			this.labMatch22.TabIndex = 12;
 			this.labMatch22.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
@@ -600,9 +600,9 @@
 			this.labMatch21.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.labMatch21.Location = new System.Drawing.Point(112, 67);
+			this.labMatch21.Location = new System.Drawing.Point(111, 67);
 			this.labMatch21.Name = "labMatch21";
-			this.labMatch21.Size = new System.Drawing.Size(48, 32);
+			this.labMatch21.Size = new System.Drawing.Size(47, 32);
 			this.labMatch21.TabIndex = 11;
 			this.labMatch21.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
@@ -613,7 +613,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.labMatch20.Location = new System.Drawing.Point(4, 67);
 			this.labMatch20.Name = "labMatch20";
-			this.labMatch20.Size = new System.Drawing.Size(101, 32);
+			this.labMatch20.Size = new System.Drawing.Size(100, 32);
 			this.labMatch20.TabIndex = 10;
 			this.labMatch20.Text = "Player 2";
 			this.labMatch20.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -623,7 +623,7 @@
 			this.labMatch14.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.labMatch14.Location = new System.Drawing.Point(277, 34);
+			this.labMatch14.Location = new System.Drawing.Point(273, 34);
 			this.labMatch14.Name = "labMatch14";
 			this.labMatch14.Size = new System.Drawing.Size(49, 32);
 			this.labMatch14.TabIndex = 9;
@@ -634,9 +634,9 @@
 			this.labMatch13.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.labMatch13.Location = new System.Drawing.Point(222, 34);
+			this.labMatch13.Location = new System.Drawing.Point(219, 34);
 			this.labMatch13.Name = "labMatch13";
-			this.labMatch13.Size = new System.Drawing.Size(48, 32);
+			this.labMatch13.Size = new System.Drawing.Size(47, 32);
 			this.labMatch13.TabIndex = 8;
 			this.labMatch13.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
@@ -645,9 +645,9 @@
 			this.labMatch12.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.labMatch12.Location = new System.Drawing.Point(167, 34);
+			this.labMatch12.Location = new System.Drawing.Point(165, 34);
 			this.labMatch12.Name = "labMatch12";
-			this.labMatch12.Size = new System.Drawing.Size(48, 32);
+			this.labMatch12.Size = new System.Drawing.Size(47, 32);
 			this.labMatch12.TabIndex = 7;
 			this.labMatch12.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
@@ -656,9 +656,9 @@
 			this.labMatch11.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.labMatch11.Location = new System.Drawing.Point(112, 34);
+			this.labMatch11.Location = new System.Drawing.Point(111, 34);
 			this.labMatch11.Name = "labMatch11";
-			this.labMatch11.Size = new System.Drawing.Size(48, 32);
+			this.labMatch11.Size = new System.Drawing.Size(47, 32);
 			this.labMatch11.TabIndex = 6;
 			this.labMatch11.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
@@ -667,7 +667,7 @@
 			this.label26.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.label26.Location = new System.Drawing.Point(277, 1);
+			this.label26.Location = new System.Drawing.Point(273, 1);
 			this.label26.Name = "label26";
 			this.label26.Size = new System.Drawing.Size(49, 32);
 			this.label26.TabIndex = 4;
@@ -679,9 +679,9 @@
 			this.label27.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.label27.Location = new System.Drawing.Point(222, 1);
+			this.label27.Location = new System.Drawing.Point(219, 1);
 			this.label27.Name = "label27";
-			this.label27.Size = new System.Drawing.Size(48, 32);
+			this.label27.Size = new System.Drawing.Size(47, 32);
 			this.label27.TabIndex = 3;
 			this.label27.Text = "Draw";
 			this.label27.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -691,9 +691,9 @@
 			this.label28.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.label28.Location = new System.Drawing.Point(167, 1);
+			this.label28.Location = new System.Drawing.Point(165, 1);
 			this.label28.Name = "label28";
-			this.label28.Size = new System.Drawing.Size(48, 32);
+			this.label28.Size = new System.Drawing.Size(47, 32);
 			this.label28.TabIndex = 2;
 			this.label28.Text = "Loose";
 			this.label28.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -703,9 +703,9 @@
 			this.label29.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.label29.Location = new System.Drawing.Point(112, 1);
+			this.label29.Location = new System.Drawing.Point(111, 1);
 			this.label29.Name = "label29";
-			this.label29.Size = new System.Drawing.Size(48, 32);
+			this.label29.Size = new System.Drawing.Size(47, 32);
 			this.label29.TabIndex = 1;
 			this.label29.Text = "Win";
 			this.label29.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -717,7 +717,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.label30.Location = new System.Drawing.Point(4, 1);
 			this.label30.Name = "label30";
-			this.label30.Size = new System.Drawing.Size(101, 32);
+			this.label30.Size = new System.Drawing.Size(100, 32);
 			this.label30.TabIndex = 0;
 			this.label30.Text = "Player";
 			this.label30.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -729,7 +729,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.labMatch10.Location = new System.Drawing.Point(4, 34);
 			this.labMatch10.Name = "labMatch10";
-			this.labMatch10.Size = new System.Drawing.Size(101, 32);
+			this.labMatch10.Size = new System.Drawing.Size(100, 32);
 			this.labMatch10.TabIndex = 5;
 			this.labMatch10.Text = "Player 1";
 			this.labMatch10.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -739,7 +739,7 @@
 			this.labMatchGames.Dock = System.Windows.Forms.DockStyle.Top;
 			this.labMatchGames.Location = new System.Drawing.Point(0, 302);
 			this.labMatchGames.Name = "labMatchGames";
-			this.labMatchGames.Size = new System.Drawing.Size(330, 24);
+			this.labMatchGames.Size = new System.Drawing.Size(326, 24);
 			this.labMatchGames.TabIndex = 23;
 			this.labMatchGames.Text = "Games 0";
 			this.labMatchGames.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -749,7 +749,7 @@
 			this.butContinueMatch.Dock = System.Windows.Forms.DockStyle.Top;
 			this.butContinueMatch.Location = new System.Drawing.Point(0, 279);
 			this.butContinueMatch.Name = "butContinueMatch";
-			this.butContinueMatch.Size = new System.Drawing.Size(330, 23);
+			this.butContinueMatch.Size = new System.Drawing.Size(326, 23);
 			this.butContinueMatch.TabIndex = 27;
 			this.butContinueMatch.Text = "Continue match";
 			this.butContinueMatch.UseVisualStyleBackColor = true;
@@ -760,7 +760,7 @@
 			this.butNewMatch.Dock = System.Windows.Forms.DockStyle.Top;
 			this.butNewMatch.Location = new System.Drawing.Point(0, 256);
 			this.butNewMatch.Name = "butNewMatch";
-			this.butNewMatch.Size = new System.Drawing.Size(330, 23);
+			this.butNewMatch.Size = new System.Drawing.Size(326, 23);
 			this.butNewMatch.TabIndex = 22;
 			this.butNewMatch.Text = "New match";
 			this.butNewMatch.UseVisualStyleBackColor = true;
@@ -776,7 +776,7 @@
 			this.groupBox6.Dock = System.Windows.Forms.DockStyle.Top;
 			this.groupBox6.Location = new System.Drawing.Point(0, 128);
 			this.groupBox6.Name = "groupBox6";
-			this.groupBox6.Size = new System.Drawing.Size(330, 128);
+			this.groupBox6.Size = new System.Drawing.Size(326, 128);
 			this.groupBox6.TabIndex = 20;
 			this.groupBox6.TabStop = false;
 			this.groupBox6.Text = "Player 2";
@@ -786,7 +786,7 @@
 			this.tbCommand2.Dock = System.Windows.Forms.DockStyle.Top;
 			this.tbCommand2.Location = new System.Drawing.Point(3, 100);
 			this.tbCommand2.Name = "tbCommand2";
-			this.tbCommand2.Size = new System.Drawing.Size(324, 20);
+			this.tbCommand2.Size = new System.Drawing.Size(320, 20);
 			this.tbCommand2.TabIndex = 33;
 			// 
 			// cbBook2
@@ -796,7 +796,7 @@
 			this.cbBook2.FormattingEnabled = true;
 			this.cbBook2.Location = new System.Drawing.Point(3, 79);
 			this.cbBook2.Name = "cbBook2";
-			this.cbBook2.Size = new System.Drawing.Size(324, 21);
+			this.cbBook2.Size = new System.Drawing.Size(320, 21);
 			this.cbBook2.Sorted = true;
 			this.cbBook2.TabIndex = 32;
 			// 
@@ -817,7 +817,7 @@
             "9"});
 			this.cbValue2.Location = new System.Drawing.Point(3, 58);
 			this.cbValue2.Name = "cbValue2";
-			this.cbValue2.Size = new System.Drawing.Size(324, 21);
+			this.cbValue2.Size = new System.Drawing.Size(320, 21);
 			this.cbValue2.Sorted = true;
 			this.cbValue2.TabIndex = 31;
 			// 
@@ -833,7 +833,7 @@
             "Time"});
 			this.cbMode2.Location = new System.Drawing.Point(3, 37);
 			this.cbMode2.Name = "cbMode2";
-			this.cbMode2.Size = new System.Drawing.Size(324, 21);
+			this.cbMode2.Size = new System.Drawing.Size(320, 21);
 			this.cbMode2.Sorted = true;
 			this.cbMode2.TabIndex = 30;
 			// 
@@ -844,7 +844,7 @@
 			this.cbEngine2.FormattingEnabled = true;
 			this.cbEngine2.Location = new System.Drawing.Point(3, 16);
 			this.cbEngine2.Name = "cbEngine2";
-			this.cbEngine2.Size = new System.Drawing.Size(324, 21);
+			this.cbEngine2.Size = new System.Drawing.Size(320, 21);
 			this.cbEngine2.Sorted = true;
 			this.cbEngine2.TabIndex = 29;
 			// 
@@ -858,7 +858,7 @@
 			this.groupBox5.Dock = System.Windows.Forms.DockStyle.Top;
 			this.groupBox5.Location = new System.Drawing.Point(0, 0);
 			this.groupBox5.Name = "groupBox5";
-			this.groupBox5.Size = new System.Drawing.Size(330, 128);
+			this.groupBox5.Size = new System.Drawing.Size(326, 128);
 			this.groupBox5.TabIndex = 19;
 			this.groupBox5.TabStop = false;
 			this.groupBox5.Text = "Player 1";
@@ -868,7 +868,7 @@
 			this.tbCommand1.Dock = System.Windows.Forms.DockStyle.Top;
 			this.tbCommand1.Location = new System.Drawing.Point(3, 100);
 			this.tbCommand1.Name = "tbCommand1";
-			this.tbCommand1.Size = new System.Drawing.Size(324, 20);
+			this.tbCommand1.Size = new System.Drawing.Size(320, 20);
 			this.tbCommand1.TabIndex = 32;
 			// 
 			// cbBook1
@@ -878,7 +878,7 @@
 			this.cbBook1.FormattingEnabled = true;
 			this.cbBook1.Location = new System.Drawing.Point(3, 79);
 			this.cbBook1.Name = "cbBook1";
-			this.cbBook1.Size = new System.Drawing.Size(324, 21);
+			this.cbBook1.Size = new System.Drawing.Size(320, 21);
 			this.cbBook1.Sorted = true;
 			this.cbBook1.TabIndex = 31;
 			// 
@@ -899,7 +899,7 @@
             "9"});
 			this.cbValue1.Location = new System.Drawing.Point(3, 58);
 			this.cbValue1.Name = "cbValue1";
-			this.cbValue1.Size = new System.Drawing.Size(324, 21);
+			this.cbValue1.Size = new System.Drawing.Size(320, 21);
 			this.cbValue1.Sorted = true;
 			this.cbValue1.TabIndex = 30;
 			// 
@@ -915,7 +915,7 @@
             "Time"});
 			this.cbMode1.Location = new System.Drawing.Point(3, 37);
 			this.cbMode1.Name = "cbMode1";
-			this.cbMode1.Size = new System.Drawing.Size(324, 21);
+			this.cbMode1.Size = new System.Drawing.Size(320, 21);
 			this.cbMode1.Sorted = true;
 			this.cbMode1.TabIndex = 29;
 			// 
@@ -926,7 +926,7 @@
 			this.cbEngine1.FormattingEnabled = true;
 			this.cbEngine1.Location = new System.Drawing.Point(3, 16);
 			this.cbEngine1.Name = "cbEngine1";
-			this.cbEngine1.Size = new System.Drawing.Size(324, 21);
+			this.cbEngine1.Size = new System.Drawing.Size(320, 21);
 			this.cbEngine1.Sorted = true;
 			this.cbEngine1.TabIndex = 28;
 			// 
@@ -1002,6 +1002,60 @@
 			this.columnHeader6.Text = "Changes";
 			this.columnHeader6.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
 			// 
+			// listView2
+			// 
+			this.listView2.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader7,
+            this.columnHeader9,
+            this.columnHeader8,
+            this.columnHeader10});
+			this.listView2.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.listView2.FullRowSelect = true;
+			this.listView2.GridLines = true;
+			this.listView2.HideSelection = false;
+			this.listView2.Location = new System.Drawing.Point(0, 13);
+			this.listView2.MultiSelect = false;
+			this.listView2.Name = "listView2";
+			this.listView2.ShowGroups = false;
+			this.listView2.Size = new System.Drawing.Size(322, 135);
+			this.listView2.TabIndex = 27;
+			this.listView2.UseCompatibleStateImageBehavior = false;
+			this.listView2.View = System.Windows.Forms.View.Details;
+			this.listView2.Resize += new System.EventHandler(this.listView2_Resize);
+			// 
+			// columnHeader7
+			// 
+			this.columnHeader7.Tag = "";
+			this.columnHeader7.Text = "Player";
+			this.columnHeader7.Width = 140;
+			// 
+			// columnHeader9
+			// 
+			this.columnHeader9.Text = "Elo";
+			this.columnHeader9.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			this.columnHeader9.Width = 50;
+			// 
+			// columnHeader8
+			// 
+			this.columnHeader8.Text = "Games";
+			this.columnHeader8.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			this.columnHeader8.Width = 50;
+			// 
+			// columnHeader10
+			// 
+			this.columnHeader10.Text = "Score";
+			this.columnHeader10.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			this.columnHeader10.Width = 50;
+			// 
+			// lPlayer
+			// 
+			this.lPlayer.Dock = System.Windows.Forms.DockStyle.Top;
+			this.lPlayer.Location = new System.Drawing.Point(0, 0);
+			this.lPlayer.Name = "lPlayer";
+			this.lPlayer.Size = new System.Drawing.Size(322, 13);
+			this.lPlayer.TabIndex = 26;
+			this.lPlayer.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			// 
 			// butStartTournament
 			// 
 			this.butStartTournament.Dock = System.Windows.Forms.DockStyle.Top;
@@ -1023,7 +1077,7 @@
 			this.tabPageTraining.Location = new System.Drawing.Point(4, 25);
 			this.tabPageTraining.Name = "tabPageTraining";
 			this.tabPageTraining.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPageTraining.Size = new System.Drawing.Size(330, 496);
+			this.tabPageTraining.Size = new System.Drawing.Size(326, 492);
 			this.tabPageTraining.TabIndex = 1;
 			this.tabPageTraining.Text = "Training";
 			this.tabPageTraining.UseVisualStyleBackColor = true;
@@ -1059,7 +1113,7 @@
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-			this.tableLayoutPanel1.Size = new System.Drawing.Size(324, 100);
+			this.tableLayoutPanel1.Size = new System.Drawing.Size(320, 100);
 			this.tableLayoutPanel1.TabIndex = 25;
 			// 
 			// label15
@@ -1067,7 +1121,7 @@
 			this.label15.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.label15.Location = new System.Drawing.Point(272, 67);
+			this.label15.Location = new System.Drawing.Point(268, 67);
 			this.label15.Name = "label15";
 			this.label15.Size = new System.Drawing.Size(48, 32);
 			this.label15.TabIndex = 14;
@@ -1078,9 +1132,9 @@
 			this.label14.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.label14.Location = new System.Drawing.Point(218, 67);
+			this.label14.Location = new System.Drawing.Point(215, 67);
 			this.label14.Name = "label14";
-			this.label14.Size = new System.Drawing.Size(47, 32);
+			this.label14.Size = new System.Drawing.Size(46, 32);
 			this.label14.TabIndex = 13;
 			this.label14.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
@@ -1089,9 +1143,9 @@
 			this.label13.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.label13.Location = new System.Drawing.Point(164, 67);
+			this.label13.Location = new System.Drawing.Point(162, 67);
 			this.label13.Name = "label13";
-			this.label13.Size = new System.Drawing.Size(47, 32);
+			this.label13.Size = new System.Drawing.Size(46, 32);
 			this.label13.TabIndex = 12;
 			this.label13.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
@@ -1100,9 +1154,9 @@
 			this.label12.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.label12.Location = new System.Drawing.Point(110, 67);
+			this.label12.Location = new System.Drawing.Point(109, 67);
 			this.label12.Name = "label12";
-			this.label12.Size = new System.Drawing.Size(47, 32);
+			this.label12.Size = new System.Drawing.Size(46, 32);
 			this.label12.TabIndex = 11;
 			this.label12.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
@@ -1113,7 +1167,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.label11.Location = new System.Drawing.Point(4, 67);
 			this.label11.Name = "label11";
-			this.label11.Size = new System.Drawing.Size(99, 32);
+			this.label11.Size = new System.Drawing.Size(98, 32);
 			this.label11.TabIndex = 10;
 			this.label11.Text = "Teacher";
 			this.label11.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -1123,7 +1177,7 @@
 			this.label10.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.label10.Location = new System.Drawing.Point(272, 34);
+			this.label10.Location = new System.Drawing.Point(268, 34);
 			this.label10.Name = "label10";
 			this.label10.Size = new System.Drawing.Size(48, 32);
 			this.label10.TabIndex = 9;
@@ -1134,9 +1188,9 @@
 			this.label9.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.label9.Location = new System.Drawing.Point(218, 34);
+			this.label9.Location = new System.Drawing.Point(215, 34);
 			this.label9.Name = "label9";
-			this.label9.Size = new System.Drawing.Size(47, 32);
+			this.label9.Size = new System.Drawing.Size(46, 32);
 			this.label9.TabIndex = 8;
 			this.label9.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
@@ -1145,9 +1199,9 @@
 			this.label8.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.label8.Location = new System.Drawing.Point(164, 34);
+			this.label8.Location = new System.Drawing.Point(162, 34);
 			this.label8.Name = "label8";
-			this.label8.Size = new System.Drawing.Size(47, 32);
+			this.label8.Size = new System.Drawing.Size(46, 32);
 			this.label8.TabIndex = 7;
 			this.label8.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
@@ -1156,9 +1210,9 @@
 			this.label7.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.label7.Location = new System.Drawing.Point(110, 34);
+			this.label7.Location = new System.Drawing.Point(109, 34);
 			this.label7.Name = "label7";
-			this.label7.Size = new System.Drawing.Size(47, 32);
+			this.label7.Size = new System.Drawing.Size(46, 32);
 			this.label7.TabIndex = 6;
 			this.label7.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
@@ -1167,7 +1221,7 @@
 			this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.label5.Location = new System.Drawing.Point(272, 1);
+			this.label5.Location = new System.Drawing.Point(268, 1);
 			this.label5.Name = "label5";
 			this.label5.Size = new System.Drawing.Size(48, 32);
 			this.label5.TabIndex = 4;
@@ -1179,9 +1233,9 @@
 			this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.label4.Location = new System.Drawing.Point(218, 1);
+			this.label4.Location = new System.Drawing.Point(215, 1);
 			this.label4.Name = "label4";
-			this.label4.Size = new System.Drawing.Size(47, 32);
+			this.label4.Size = new System.Drawing.Size(46, 32);
 			this.label4.TabIndex = 3;
 			this.label4.Text = "Draw";
 			this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -1191,9 +1245,9 @@
 			this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.label3.Location = new System.Drawing.Point(164, 1);
+			this.label3.Location = new System.Drawing.Point(162, 1);
 			this.label3.Name = "label3";
-			this.label3.Size = new System.Drawing.Size(47, 32);
+			this.label3.Size = new System.Drawing.Size(46, 32);
 			this.label3.TabIndex = 2;
 			this.label3.Text = "Loose";
 			this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -1203,9 +1257,9 @@
 			this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.label2.Location = new System.Drawing.Point(110, 1);
+			this.label2.Location = new System.Drawing.Point(109, 1);
 			this.label2.Name = "label2";
-			this.label2.Size = new System.Drawing.Size(47, 32);
+			this.label2.Size = new System.Drawing.Size(46, 32);
 			this.label2.TabIndex = 1;
 			this.label2.Text = "Win";
 			this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -1217,7 +1271,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.label6.Location = new System.Drawing.Point(4, 1);
 			this.label6.Name = "label6";
-			this.label6.Size = new System.Drawing.Size(99, 32);
+			this.label6.Size = new System.Drawing.Size(98, 32);
 			this.label6.TabIndex = 0;
 			this.label6.Text = "Player";
 			this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -1229,7 +1283,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.label16.Location = new System.Drawing.Point(4, 34);
 			this.label16.Name = "label16";
-			this.label16.Size = new System.Drawing.Size(99, 32);
+			this.label16.Size = new System.Drawing.Size(98, 32);
 			this.label16.TabIndex = 5;
 			this.label16.Text = "Trained";
 			this.label16.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -1239,7 +1293,7 @@
 			this.labGames.Dock = System.Windows.Forms.DockStyle.Top;
 			this.labGames.Location = new System.Drawing.Point(3, 236);
 			this.labGames.Name = "labGames";
-			this.labGames.Size = new System.Drawing.Size(324, 24);
+			this.labGames.Size = new System.Drawing.Size(320, 24);
 			this.labGames.TabIndex = 22;
 			this.labGames.Text = "Games 0";
 			this.labGames.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -1249,7 +1303,7 @@
 			this.butTraining.Dock = System.Windows.Forms.DockStyle.Top;
 			this.butTraining.Location = new System.Drawing.Point(3, 213);
 			this.butTraining.Name = "butTraining";
-			this.butTraining.Size = new System.Drawing.Size(324, 23);
+			this.butTraining.Size = new System.Drawing.Size(320, 23);
 			this.butTraining.TabIndex = 21;
 			this.butTraining.Text = "Start";
 			this.butTraining.UseVisualStyleBackColor = true;
@@ -1264,7 +1318,7 @@
 			this.groupBox4.Dock = System.Windows.Forms.DockStyle.Top;
 			this.groupBox4.Location = new System.Drawing.Point(3, 108);
 			this.groupBox4.Name = "groupBox4";
-			this.groupBox4.Size = new System.Drawing.Size(324, 105);
+			this.groupBox4.Size = new System.Drawing.Size(320, 105);
 			this.groupBox4.TabIndex = 20;
 			this.groupBox4.TabStop = false;
 			this.groupBox4.Text = "Teacher";
@@ -1284,7 +1338,7 @@
             0,
             0});
 			this.nudTeacher.Name = "nudTeacher";
-			this.nudTeacher.Size = new System.Drawing.Size(318, 20);
+			this.nudTeacher.Size = new System.Drawing.Size(314, 20);
 			this.nudTeacher.TabIndex = 28;
 			this.nudTeacher.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
 			this.nudTeacher.ThousandsSeparator = true;
@@ -1301,7 +1355,7 @@
 			this.cbTeacherBook.FormattingEnabled = true;
 			this.cbTeacherBook.Location = new System.Drawing.Point(3, 58);
 			this.cbTeacherBook.Name = "cbTeacherBook";
-			this.cbTeacherBook.Size = new System.Drawing.Size(318, 21);
+			this.cbTeacherBook.Size = new System.Drawing.Size(314, 21);
 			this.cbTeacherBook.Sorted = true;
 			this.cbTeacherBook.TabIndex = 26;
 			// 
@@ -1317,7 +1371,7 @@
             "Time"});
 			this.cbTeacherMode.Location = new System.Drawing.Point(3, 37);
 			this.cbTeacherMode.Name = "cbTeacherMode";
-			this.cbTeacherMode.Size = new System.Drawing.Size(318, 21);
+			this.cbTeacherMode.Size = new System.Drawing.Size(314, 21);
 			this.cbTeacherMode.Sorted = true;
 			this.cbTeacherMode.TabIndex = 30;
 			// 
@@ -1327,7 +1381,7 @@
 			this.cbTeacherEngine.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.cbTeacherEngine.Location = new System.Drawing.Point(3, 16);
 			this.cbTeacherEngine.Name = "cbTeacherEngine";
-			this.cbTeacherEngine.Size = new System.Drawing.Size(318, 21);
+			this.cbTeacherEngine.Size = new System.Drawing.Size(314, 21);
 			this.cbTeacherEngine.Sorted = true;
 			this.cbTeacherEngine.TabIndex = 2;
 			// 
@@ -1340,7 +1394,7 @@
 			this.groupBox3.Dock = System.Windows.Forms.DockStyle.Top;
 			this.groupBox3.Location = new System.Drawing.Point(3, 3);
 			this.groupBox3.Name = "groupBox3";
-			this.groupBox3.Size = new System.Drawing.Size(324, 105);
+			this.groupBox3.Size = new System.Drawing.Size(320, 105);
 			this.groupBox3.TabIndex = 19;
 			this.groupBox3.TabStop = false;
 			this.groupBox3.Text = "Trained";
@@ -1360,7 +1414,7 @@
             0,
             0});
 			this.nudTrained.Name = "nudTrained";
-			this.nudTrained.Size = new System.Drawing.Size(318, 20);
+			this.nudTrained.Size = new System.Drawing.Size(314, 20);
 			this.nudTrained.TabIndex = 27;
 			this.nudTrained.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
 			this.nudTrained.ThousandsSeparator = true;
@@ -1377,7 +1431,7 @@
 			this.cbTrainedBook.FormattingEnabled = true;
 			this.cbTrainedBook.Location = new System.Drawing.Point(3, 58);
 			this.cbTrainedBook.Name = "cbTrainedBook";
-			this.cbTrainedBook.Size = new System.Drawing.Size(318, 21);
+			this.cbTrainedBook.Size = new System.Drawing.Size(314, 21);
 			this.cbTrainedBook.Sorted = true;
 			this.cbTrainedBook.TabIndex = 29;
 			// 
@@ -1393,7 +1447,7 @@
             "Time"});
 			this.cbTrainedMode.Location = new System.Drawing.Point(3, 37);
 			this.cbTrainedMode.Name = "cbTrainedMode";
-			this.cbTrainedMode.Size = new System.Drawing.Size(318, 21);
+			this.cbTrainedMode.Size = new System.Drawing.Size(314, 21);
 			this.cbTrainedMode.Sorted = true;
 			this.cbTrainedMode.TabIndex = 30;
 			// 
@@ -1403,7 +1457,7 @@
 			this.cbTrainedEngine.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.cbTrainedEngine.Location = new System.Drawing.Point(3, 16);
 			this.cbTrainedEngine.Name = "cbTrainedEngine";
-			this.cbTrainedEngine.Size = new System.Drawing.Size(318, 21);
+			this.cbTrainedEngine.Size = new System.Drawing.Size(314, 21);
 			this.cbTrainedEngine.Sorted = true;
 			this.cbTrainedEngine.TabIndex = 2;
 			// 
@@ -1415,7 +1469,7 @@
 			this.tabPageEdit.Controls.Add(this.butClearBoard);
 			this.tabPageEdit.Location = new System.Drawing.Point(4, 25);
 			this.tabPageEdit.Name = "tabPageEdit";
-			this.tabPageEdit.Size = new System.Drawing.Size(330, 496);
+			this.tabPageEdit.Size = new System.Drawing.Size(326, 492);
 			this.tabPageEdit.TabIndex = 4;
 			this.tabPageEdit.Text = "Edit";
 			this.tabPageEdit.UseVisualStyleBackColor = true;
@@ -1426,7 +1480,7 @@
 			this.groupBox7.Dock = System.Windows.Forms.DockStyle.Top;
 			this.groupBox7.Location = new System.Drawing.Point(0, 103);
 			this.groupBox7.Name = "groupBox7";
-			this.groupBox7.Size = new System.Drawing.Size(330, 84);
+			this.groupBox7.Size = new System.Drawing.Size(326, 84);
 			this.groupBox7.TabIndex = 2;
 			this.groupBox7.TabStop = false;
 			this.groupBox7.Text = "Castling possibilities";
@@ -1442,7 +1496,7 @@
             "Black Long"});
 			this.clbCastling.Location = new System.Drawing.Point(3, 16);
 			this.clbCastling.Name = "clbCastling";
-			this.clbCastling.Size = new System.Drawing.Size(324, 65);
+			this.clbCastling.Size = new System.Drawing.Size(320, 65);
 			this.clbCastling.TabIndex = 0;
 			this.clbCastling.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.clbCastling_ItemCheck);
 			// 
@@ -1453,7 +1507,7 @@
 			this.gbToMove.Dock = System.Windows.Forms.DockStyle.Top;
 			this.gbToMove.Location = new System.Drawing.Point(0, 50);
 			this.gbToMove.Name = "gbToMove";
-			this.gbToMove.Size = new System.Drawing.Size(330, 53);
+			this.gbToMove.Size = new System.Drawing.Size(326, 53);
 			this.gbToMove.TabIndex = 1;
 			this.gbToMove.TabStop = false;
 			this.gbToMove.Text = "To move";
@@ -1464,7 +1518,7 @@
 			this.rbBlack.Dock = System.Windows.Forms.DockStyle.Top;
 			this.rbBlack.Location = new System.Drawing.Point(3, 33);
 			this.rbBlack.Name = "rbBlack";
-			this.rbBlack.Size = new System.Drawing.Size(324, 17);
+			this.rbBlack.Size = new System.Drawing.Size(320, 17);
 			this.rbBlack.TabIndex = 1;
 			this.rbBlack.Text = "Black";
 			this.rbBlack.UseVisualStyleBackColor = true;
@@ -1476,7 +1530,7 @@
 			this.rbWhite.Dock = System.Windows.Forms.DockStyle.Top;
 			this.rbWhite.Location = new System.Drawing.Point(3, 16);
 			this.rbWhite.Name = "rbWhite";
-			this.rbWhite.Size = new System.Drawing.Size(324, 17);
+			this.rbWhite.Size = new System.Drawing.Size(320, 17);
 			this.rbWhite.TabIndex = 0;
 			this.rbWhite.TabStop = true;
 			this.rbWhite.Text = "White";
@@ -1488,7 +1542,7 @@
 			this.butDefault.Dock = System.Windows.Forms.DockStyle.Top;
 			this.butDefault.Location = new System.Drawing.Point(0, 25);
 			this.butDefault.Name = "butDefault";
-			this.butDefault.Size = new System.Drawing.Size(330, 25);
+			this.butDefault.Size = new System.Drawing.Size(326, 25);
 			this.butDefault.TabIndex = 3;
 			this.butDefault.Text = "Default position";
 			this.butDefault.UseVisualStyleBackColor = true;
@@ -1499,7 +1553,7 @@
 			this.butClearBoard.Dock = System.Windows.Forms.DockStyle.Top;
 			this.butClearBoard.Location = new System.Drawing.Point(0, 0);
 			this.butClearBoard.Name = "butClearBoard";
-			this.butClearBoard.Size = new System.Drawing.Size(330, 25);
+			this.butClearBoard.Size = new System.Drawing.Size(326, 25);
 			this.butClearBoard.TabIndex = 0;
 			this.butClearBoard.Text = "Clear board";
 			this.butClearBoard.UseVisualStyleBackColor = true;
@@ -1674,7 +1728,8 @@
 			// 
 			// labEco
 			// 
-			this.labEco.Dock = System.Windows.Forms.DockStyle.Right;
+			this.labEco.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.labEco.Location = new System.Drawing.Point(380, 0);
 			this.labEco.Name = "labEco";
 			this.labEco.Size = new System.Drawing.Size(433, 22);
@@ -1915,6 +1970,7 @@
 			this.panBoard.Name = "panBoard";
 			this.panBoard.Size = new System.Drawing.Size(558, 525);
 			this.panBoard.TabIndex = 2;
+			this.panBoard.Paint += new System.Windows.Forms.PaintEventHandler(this.panBoard_Paint);
 			this.panBoard.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseDown);
 			this.panBoard.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseMove);
 			this.panBoard.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseUp);
@@ -1955,6 +2011,7 @@
 			this.labEloD.Size = new System.Drawing.Size(133, 24);
 			this.labEloD.TabIndex = 24;
 			this.labEloD.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.toolTip1.SetToolTip(this.labEloD, "Chess ranking");
 			// 
 			// labMaterialD
 			// 
@@ -1969,6 +2026,7 @@
 			this.labMaterialD.Size = new System.Drawing.Size(135, 24);
 			this.labMaterialD.TabIndex = 23;
 			this.labMaterialD.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.toolTip1.SetToolTip(this.labMaterialD, "Chess material value");
 			// 
 			// labTimeD
 			// 
@@ -1983,6 +2041,7 @@
 			this.labTimeD.Size = new System.Drawing.Size(133, 24);
 			this.labTimeD.TabIndex = 22;
 			this.labTimeD.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.toolTip1.SetToolTip(this.labTimeD, "Player time");
 			// 
 			// labColorD
 			// 
@@ -1997,6 +2056,7 @@
 			this.labColorD.Size = new System.Drawing.Size(24, 24);
 			this.labColorD.TabIndex = 21;
 			this.labColorD.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.toolTip1.SetToolTip(this.labColorD, "Player color");
 			// 
 			// labNameD
 			// 
@@ -2011,6 +2071,7 @@
 			this.labNameD.Size = new System.Drawing.Size(133, 24);
 			this.labNameD.TabIndex = 20;
 			this.labNameD.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.toolTip1.SetToolTip(this.labNameD, "Player name");
 			// 
 			// tlpBoardT
 			// 
@@ -2047,6 +2108,7 @@
 			this.labEloT.Size = new System.Drawing.Size(133, 24);
 			this.labEloT.TabIndex = 24;
 			this.labEloT.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.toolTip1.SetToolTip(this.labEloT, "Chess ranking");
 			// 
 			// labMaterialT
 			// 
@@ -2061,6 +2123,7 @@
 			this.labMaterialT.Size = new System.Drawing.Size(135, 24);
 			this.labMaterialT.TabIndex = 23;
 			this.labMaterialT.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.toolTip1.SetToolTip(this.labMaterialT, "Chess material value");
 			// 
 			// labTimeT
 			// 
@@ -2075,6 +2138,7 @@
 			this.labTimeT.Size = new System.Drawing.Size(133, 24);
 			this.labTimeT.TabIndex = 22;
 			this.labTimeT.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.toolTip1.SetToolTip(this.labTimeT, "Player time");
 			// 
 			// labColorT
 			// 
@@ -2089,6 +2153,7 @@
 			this.labColorT.Size = new System.Drawing.Size(24, 24);
 			this.labColorT.TabIndex = 21;
 			this.labColorT.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.toolTip1.SetToolTip(this.labColorT, "Player color");
 			// 
 			// labNameT
 			// 
@@ -2103,6 +2168,7 @@
 			this.labNameT.Size = new System.Drawing.Size(133, 24);
 			this.labNameT.TabIndex = 20;
 			this.labNameT.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.toolTip1.SetToolTip(this.labNameT, "Player name");
 			// 
 			// labTakenD
 			// 
@@ -2116,6 +2182,7 @@
 			this.labTakenD.Size = new System.Drawing.Size(334, 26);
 			this.labTakenD.TabIndex = 13;
 			this.labTakenD.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.toolTip1.SetToolTip(this.labTakenD, "Taken pieces");
 			// 
 			// labTakenT
 			// 
@@ -2129,6 +2196,7 @@
 			this.labTakenT.Size = new System.Drawing.Size(334, 26);
 			this.labTakenT.TabIndex = 12;
 			this.labTakenT.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.toolTip1.SetToolTip(this.labTakenT, "Taken pieces");
 			// 
 			// splitContainerMain
 			// 
@@ -2392,60 +2460,6 @@
 			this.labMovesB.Size = new System.Drawing.Size(128, 20);
 			this.labMovesB.TabIndex = 1;
 			this.labMovesB.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			// 
-			// lPlayer
-			// 
-			this.lPlayer.Dock = System.Windows.Forms.DockStyle.Top;
-			this.lPlayer.Location = new System.Drawing.Point(0, 0);
-			this.lPlayer.Name = "lPlayer";
-			this.lPlayer.Size = new System.Drawing.Size(322, 13);
-			this.lPlayer.TabIndex = 26;
-			this.lPlayer.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			// 
-			// listView2
-			// 
-			this.listView2.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader7,
-            this.columnHeader9,
-            this.columnHeader8,
-            this.columnHeader10});
-			this.listView2.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.listView2.FullRowSelect = true;
-			this.listView2.GridLines = true;
-			this.listView2.HideSelection = false;
-			this.listView2.Location = new System.Drawing.Point(0, 13);
-			this.listView2.MultiSelect = false;
-			this.listView2.Name = "listView2";
-			this.listView2.ShowGroups = false;
-			this.listView2.Size = new System.Drawing.Size(322, 135);
-			this.listView2.TabIndex = 27;
-			this.listView2.UseCompatibleStateImageBehavior = false;
-			this.listView2.View = System.Windows.Forms.View.Details;
-			this.listView2.Resize += new System.EventHandler(this.listView2_Resize);
-			// 
-			// columnHeader7
-			// 
-			this.columnHeader7.Tag = "";
-			this.columnHeader7.Text = "Player";
-			this.columnHeader7.Width = 140;
-			// 
-			// columnHeader9
-			// 
-			this.columnHeader9.Text = "Elo";
-			this.columnHeader9.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-			this.columnHeader9.Width = 50;
-			// 
-			// columnHeader8
-			// 
-			this.columnHeader8.Text = "Games";
-			this.columnHeader8.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-			this.columnHeader8.Width = 50;
-			// 
-			// columnHeader10
-			// 
-			this.columnHeader10.Text = "Score";
-			this.columnHeader10.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-			this.columnHeader10.Width = 50;
 			// 
 			// FormChess
 			// 

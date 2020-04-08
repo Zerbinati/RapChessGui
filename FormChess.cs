@@ -188,8 +188,8 @@ namespace RapChessGui
 
 		void AddLines(CGamer g)
 		{
-			if(GamerList.GamerCur().white)
-			lvMovesW.Items.Insert(0,new ListViewItem(new[] { g.GetDepth(), g.GetTimeElapsed(),g.nodes.ToString("N0"), g.nps.ToString("N0"),g.score,g.pv}));
+			if (GamerList.GamerCur().white)
+				lvMovesW.Items.Insert(0, new ListViewItem(new[] { g.GetDepth(), g.GetTimeElapsed(), g.nodes.ToString("N0"), g.nps.ToString("N0"), g.score, g.pv }));
 			else
 				lvMovesB.Items.Insert(0, new ListViewItem(new[] { g.GetDepth(), g.GetTimeElapsed(), g.nodes.ToString("N0"), g.nps.ToString("N0"), g.score, g.pv }));
 		}
@@ -966,7 +966,7 @@ namespace RapChessGui
 				if (GamerList.GamerCur().player.engine == "Human")
 					moves = Chess.GenerateValidMoves();
 				else
-					if(GamerList.GamerCur().white)
+					if (GamerList.GamerCur().white)
 					lvMovesW.Items.Clear();
 				else
 					lvMovesB.Items.Clear();
@@ -2000,18 +2000,19 @@ namespace RapChessGui
 
 		private void cbMode_SelectedIndexChanged(object sender, EventArgs e)
 		{
-			if (cbComputer.Text != "Auto")
-			{
-				CModeGame.mode = cbMode.Text;
-				nudValue.Value = CModeGame.GetValue(out int increment);
-				nudValue.Increment = increment;
-			}
+			CModeGame.mode = cbMode.Text;
+			nudValue.Value = CModeGame.GetValue(out int increment);
+			nudValue.Increment = increment;
 		}
 
 		private void nudValue_ValueChanged(object sender, EventArgs e)
 		{
-			if (cbComputer.Text != "Auto")
-				CModeGame.SetValue((int)nudValue.Value);
+			CModeGame.SetValue((int)nudValue.Value);
+		}
+
+		private void panBoard_Resize(object sender, EventArgs e)
+		{
+			BoardPrepare();
 		}
 
 		private void lvLines_Resize(object sender, EventArgs e)
@@ -2022,11 +2023,6 @@ namespace RapChessGui
 			for (int n = 0; n < lv.Columns.Count - 1; n++)
 				lv.Columns[n].Width = w;
 			lv.Columns[lv.Columns.Count - 1].Width = lv.Width - 32 - w * (lv.Columns.Count - 1);
-		}
-
-		private void panBoard_Resize(object sender, EventArgs e)
-		{
-			BoardPrepare();
 		}
 
 		private void listView2_Resize(object sender, EventArgs e)
@@ -2048,6 +2044,11 @@ namespace RapChessGui
 			lv.Columns[0].Width = w * 2;
 			lv.Columns[1].Width = w;
 			lv.Columns[2].Width = w;
+		}
+
+		private void panBoard_Paint(object sender, PaintEventArgs e)
+		{
+			RenderBoard();
 		}
 	}
 }
