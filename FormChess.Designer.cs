@@ -272,7 +272,7 @@
 			this.tabControl1.Location = new System.Drawing.Point(0, 26);
 			this.tabControl1.Name = "tabControl1";
 			this.tabControl1.SelectedIndex = 0;
-			this.tabControl1.Size = new System.Drawing.Size(338, 525);
+			this.tabControl1.Size = new System.Drawing.Size(334, 521);
 			this.tabControl1.TabIndex = 9;
 			this.tabControl1.Selected += new System.Windows.Forms.TabControlEventHandler(this.tabControl1_Selected);
 			// 
@@ -936,13 +936,14 @@
 			this.tabPageTournament.Controls.Add(this.butStartTournament);
 			this.tabPageTournament.Location = new System.Drawing.Point(4, 25);
 			this.tabPageTournament.Name = "tabPageTournament";
-			this.tabPageTournament.Size = new System.Drawing.Size(330, 496);
+			this.tabPageTournament.Size = new System.Drawing.Size(326, 492);
 			this.tabPageTournament.TabIndex = 3;
 			this.tabPageTournament.Text = "Tournament";
 			this.tabPageTournament.UseVisualStyleBackColor = true;
 			// 
 			// splitContainer1
 			// 
+			this.splitContainer1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
 			this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.splitContainer1.Location = new System.Drawing.Point(0, 23);
 			this.splitContainer1.Name = "splitContainer1";
@@ -956,8 +957,8 @@
 			// 
 			this.splitContainer1.Panel2.Controls.Add(this.listView2);
 			this.splitContainer1.Panel2.Controls.Add(this.lPlayer);
-			this.splitContainer1.Size = new System.Drawing.Size(330, 473);
-			this.splitContainer1.SplitterDistance = 315;
+			this.splitContainer1.Size = new System.Drawing.Size(326, 469);
+			this.splitContainer1.SplitterDistance = 313;
 			this.splitContainer1.TabIndex = 26;
 			// 
 			// listView1
@@ -974,7 +975,7 @@
 			this.listView1.MultiSelect = false;
 			this.listView1.Name = "listView1";
 			this.listView1.ShowGroups = false;
-			this.listView1.Size = new System.Drawing.Size(330, 315);
+			this.listView1.Size = new System.Drawing.Size(322, 309);
 			this.listView1.Sorting = System.Windows.Forms.SortOrder.Ascending;
 			this.listView1.TabIndex = 23;
 			this.listView1.UseCompatibleStateImageBehavior = false;
@@ -1006,7 +1007,7 @@
 			this.butStartTournament.Dock = System.Windows.Forms.DockStyle.Top;
 			this.butStartTournament.Location = new System.Drawing.Point(0, 0);
 			this.butStartTournament.Name = "butStartTournament";
-			this.butStartTournament.Size = new System.Drawing.Size(330, 23);
+			this.butStartTournament.Size = new System.Drawing.Size(326, 23);
 			this.butStartTournament.TabIndex = 21;
 			this.butStartTournament.Text = "Start";
 			this.butStartTournament.UseVisualStyleBackColor = true;
@@ -1887,6 +1888,7 @@
 			// 
 			// splitContainerBoard
 			// 
+			this.splitContainerBoard.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
 			this.splitContainerBoard.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.splitContainerBoard.Location = new System.Drawing.Point(0, 24);
 			this.splitContainerBoard.Name = "splitContainerBoard";
@@ -1911,7 +1913,7 @@
 			this.panBoard.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.panBoard.Location = new System.Drawing.Point(0, 24);
 			this.panBoard.Name = "panBoard";
-			this.panBoard.Size = new System.Drawing.Size(562, 529);
+			this.panBoard.Size = new System.Drawing.Size(558, 525);
 			this.panBoard.TabIndex = 2;
 			this.panBoard.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseDown);
 			this.panBoard.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseMove);
@@ -1932,12 +1934,12 @@
 			this.tlpBoardD.Controls.Add(this.labColorD, 0, 0);
 			this.tlpBoardD.Controls.Add(this.labNameD, 0, 0);
 			this.tlpBoardD.Dock = System.Windows.Forms.DockStyle.Bottom;
-			this.tlpBoardD.Location = new System.Drawing.Point(0, 553);
+			this.tlpBoardD.Location = new System.Drawing.Point(0, 549);
 			this.tlpBoardD.Margin = new System.Windows.Forms.Padding(0);
 			this.tlpBoardD.Name = "tlpBoardD";
 			this.tlpBoardD.RowCount = 1;
 			this.tlpBoardD.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-			this.tlpBoardD.Size = new System.Drawing.Size(562, 24);
+			this.tlpBoardD.Size = new System.Drawing.Size(558, 24);
 			this.tlpBoardD.TabIndex = 1;
 			// 
 			// labEloD
@@ -1947,10 +1949,10 @@
 			this.labEloD.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.labEloD.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
 			this.labEloD.ForeColor = System.Drawing.Color.Black;
-			this.labEloD.Location = new System.Drawing.Point(292, 0);
+			this.labEloD.Location = new System.Drawing.Point(290, 0);
 			this.labEloD.Margin = new System.Windows.Forms.Padding(0);
 			this.labEloD.Name = "labEloD";
-			this.labEloD.Size = new System.Drawing.Size(134, 24);
+			this.labEloD.Size = new System.Drawing.Size(133, 24);
 			this.labEloD.TabIndex = 24;
 			this.labEloD.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
@@ -1961,10 +1963,10 @@
 			this.labMaterialD.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.labMaterialD.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
 			this.labMaterialD.ForeColor = System.Drawing.Color.Black;
-			this.labMaterialD.Location = new System.Drawing.Point(426, 0);
+			this.labMaterialD.Location = new System.Drawing.Point(423, 0);
 			this.labMaterialD.Margin = new System.Windows.Forms.Padding(0);
 			this.labMaterialD.Name = "labMaterialD";
-			this.labMaterialD.Size = new System.Drawing.Size(136, 24);
+			this.labMaterialD.Size = new System.Drawing.Size(135, 24);
 			this.labMaterialD.TabIndex = 23;
 			this.labMaterialD.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
@@ -1975,10 +1977,10 @@
 			this.labTimeD.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.labTimeD.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
 			this.labTimeD.ForeColor = System.Drawing.Color.Black;
-			this.labTimeD.Location = new System.Drawing.Point(158, 0);
+			this.labTimeD.Location = new System.Drawing.Point(157, 0);
 			this.labTimeD.Margin = new System.Windows.Forms.Padding(0);
 			this.labTimeD.Name = "labTimeD";
-			this.labTimeD.Size = new System.Drawing.Size(134, 24);
+			this.labTimeD.Size = new System.Drawing.Size(133, 24);
 			this.labTimeD.TabIndex = 22;
 			this.labTimeD.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
@@ -2006,7 +2008,7 @@
 			this.labNameD.Location = new System.Drawing.Point(24, 0);
 			this.labNameD.Margin = new System.Windows.Forms.Padding(0);
 			this.labNameD.Name = "labNameD";
-			this.labNameD.Size = new System.Drawing.Size(134, 24);
+			this.labNameD.Size = new System.Drawing.Size(133, 24);
 			this.labNameD.TabIndex = 20;
 			this.labNameD.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
@@ -2029,7 +2031,7 @@
 			this.tlpBoardT.Name = "tlpBoardT";
 			this.tlpBoardT.RowCount = 1;
 			this.tlpBoardT.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-			this.tlpBoardT.Size = new System.Drawing.Size(562, 24);
+			this.tlpBoardT.Size = new System.Drawing.Size(558, 24);
 			this.tlpBoardT.TabIndex = 0;
 			// 
 			// labEloT
@@ -2039,10 +2041,10 @@
 			this.labEloT.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.labEloT.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
 			this.labEloT.ForeColor = System.Drawing.Color.Black;
-			this.labEloT.Location = new System.Drawing.Point(292, 0);
+			this.labEloT.Location = new System.Drawing.Point(290, 0);
 			this.labEloT.Margin = new System.Windows.Forms.Padding(0);
 			this.labEloT.Name = "labEloT";
-			this.labEloT.Size = new System.Drawing.Size(134, 24);
+			this.labEloT.Size = new System.Drawing.Size(133, 24);
 			this.labEloT.TabIndex = 24;
 			this.labEloT.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
@@ -2053,10 +2055,10 @@
 			this.labMaterialT.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.labMaterialT.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
 			this.labMaterialT.ForeColor = System.Drawing.Color.Black;
-			this.labMaterialT.Location = new System.Drawing.Point(426, 0);
+			this.labMaterialT.Location = new System.Drawing.Point(423, 0);
 			this.labMaterialT.Margin = new System.Windows.Forms.Padding(0);
 			this.labMaterialT.Name = "labMaterialT";
-			this.labMaterialT.Size = new System.Drawing.Size(136, 24);
+			this.labMaterialT.Size = new System.Drawing.Size(135, 24);
 			this.labMaterialT.TabIndex = 23;
 			this.labMaterialT.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
@@ -2067,10 +2069,10 @@
 			this.labTimeT.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.labTimeT.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
 			this.labTimeT.ForeColor = System.Drawing.Color.Black;
-			this.labTimeT.Location = new System.Drawing.Point(158, 0);
+			this.labTimeT.Location = new System.Drawing.Point(157, 0);
 			this.labTimeT.Margin = new System.Windows.Forms.Padding(0);
 			this.labTimeT.Name = "labTimeT";
-			this.labTimeT.Size = new System.Drawing.Size(134, 24);
+			this.labTimeT.Size = new System.Drawing.Size(133, 24);
 			this.labTimeT.TabIndex = 22;
 			this.labTimeT.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
@@ -2098,7 +2100,7 @@
 			this.labNameT.Location = new System.Drawing.Point(24, 0);
 			this.labNameT.Margin = new System.Windows.Forms.Padding(0);
 			this.labNameT.Name = "labNameT";
-			this.labNameT.Size = new System.Drawing.Size(134, 24);
+			this.labNameT.Size = new System.Drawing.Size(133, 24);
 			this.labNameT.TabIndex = 20;
 			this.labNameT.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
@@ -2109,9 +2111,9 @@
 			this.labTakenD.Dock = System.Windows.Forms.DockStyle.Bottom;
 			this.labTakenD.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
 			this.labTakenD.ForeColor = System.Drawing.Color.Black;
-			this.labTakenD.Location = new System.Drawing.Point(0, 551);
+			this.labTakenD.Location = new System.Drawing.Point(0, 547);
 			this.labTakenD.Name = "labTakenD";
-			this.labTakenD.Size = new System.Drawing.Size(338, 26);
+			this.labTakenD.Size = new System.Drawing.Size(334, 26);
 			this.labTakenD.TabIndex = 13;
 			this.labTakenD.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
@@ -2124,7 +2126,7 @@
 			this.labTakenT.ForeColor = System.Drawing.Color.Black;
 			this.labTakenT.Location = new System.Drawing.Point(0, 0);
 			this.labTakenT.Name = "labTakenT";
-			this.labTakenT.Size = new System.Drawing.Size(338, 26);
+			this.labTakenT.Size = new System.Drawing.Size(334, 26);
 			this.labTakenT.TabIndex = 12;
 			this.labTakenT.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
@@ -2198,6 +2200,7 @@
 			// 
 			// splitContainerMoves
 			// 
+			this.splitContainerMoves.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
 			this.splitContainerMoves.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.splitContainerMoves.Location = new System.Drawing.Point(0, 0);
 			this.splitContainerMoves.Name = "splitContainerMoves";
@@ -2235,7 +2238,7 @@
 			this.lvMovesW.MultiSelect = false;
 			this.lvMovesW.Name = "lvMovesW";
 			this.lvMovesW.ShowGroups = false;
-			this.lvMovesW.Size = new System.Drawing.Size(904, 114);
+			this.lvMovesW.Size = new System.Drawing.Size(900, 110);
 			this.lvMovesW.TabIndex = 32;
 			this.lvMovesW.UseCompatibleStateImageBehavior = false;
 			this.lvMovesW.View = System.Windows.Forms.View.Details;
@@ -2280,7 +2283,7 @@
 			this.panelW.Dock = System.Windows.Forms.DockStyle.Top;
 			this.panelW.Location = new System.Drawing.Point(0, 0);
 			this.panelW.Name = "panelW";
-			this.panelW.Size = new System.Drawing.Size(904, 20);
+			this.panelW.Size = new System.Drawing.Size(900, 20);
 			this.panelW.TabIndex = 33;
 			// 
 			// labProtocolW
@@ -2322,7 +2325,7 @@
 			this.lvMovesB.MultiSelect = false;
 			this.lvMovesB.Name = "lvMovesB";
 			this.lvMovesB.ShowGroups = false;
-			this.lvMovesB.Size = new System.Drawing.Size(904, 127);
+			this.lvMovesB.Size = new System.Drawing.Size(900, 123);
 			this.lvMovesB.TabIndex = 32;
 			this.lvMovesB.UseCompatibleStateImageBehavior = false;
 			this.lvMovesB.View = System.Windows.Forms.View.Details;
@@ -2367,7 +2370,7 @@
 			this.panelB.Dock = System.Windows.Forms.DockStyle.Top;
 			this.panelB.Location = new System.Drawing.Point(0, 0);
 			this.panelB.Name = "panelB";
-			this.panelB.Size = new System.Drawing.Size(904, 20);
+			this.panelB.Size = new System.Drawing.Size(900, 20);
 			this.panelB.TabIndex = 34;
 			// 
 			// labProtocolB
@@ -2395,7 +2398,7 @@
 			this.lPlayer.Dock = System.Windows.Forms.DockStyle.Top;
 			this.lPlayer.Location = new System.Drawing.Point(0, 0);
 			this.lPlayer.Name = "lPlayer";
-			this.lPlayer.Size = new System.Drawing.Size(330, 13);
+			this.lPlayer.Size = new System.Drawing.Size(322, 13);
 			this.lPlayer.TabIndex = 26;
 			this.lPlayer.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
@@ -2414,7 +2417,7 @@
 			this.listView2.MultiSelect = false;
 			this.listView2.Name = "listView2";
 			this.listView2.ShowGroups = false;
-			this.listView2.Size = new System.Drawing.Size(330, 141);
+			this.listView2.Size = new System.Drawing.Size(322, 135);
 			this.listView2.TabIndex = 27;
 			this.listView2.UseCompatibleStateImageBehavior = false;
 			this.listView2.View = System.Windows.Forms.View.Details;
