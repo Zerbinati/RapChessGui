@@ -62,6 +62,7 @@ namespace RapChessGui
 			Chess.Initialize();
 			listView1_Resize(listView1, null);
 			listView2_Resize(listView2, null);
+			lvMoves_Resize(lvMoves, null);
 			BoardPrepare();
 			GameStart();
 		}
@@ -171,6 +172,13 @@ namespace RapChessGui
 
 		void IniLoad()
 		{
+			Width = RapIni.ReadInt("position>width", Width); 
+			Height = RapIni.ReadInt("position>height", Height);
+			int x = RapIni.ReadInt("position>x", Location.X);
+			int y = RapIni.ReadInt("position>y", Location.Y);
+			Location = new Point(x,y);
+			if (RapIni.ReadBool("position>maximized", false))
+				WindowState = FormWindowState.Maximized;
 			CEngineList.LoadFromIni();
 			CBookList.LoadFromIni();
 			CPlayerList.LoadFromIni();
@@ -1575,6 +1583,16 @@ namespace RapChessGui
 
 		private void FormChess_FormClosed(object sender, FormClosedEventArgs e)
 		{
+			bool maximized = WindowState == FormWindowState.Maximized;
+			int width = maximized ? RestoreBounds.Width : Width;
+			int height = maximized ? RestoreBounds.Height : Height;
+			int x = maximized ? RestoreBounds.X : Location.X;
+			int y = maximized ? RestoreBounds.Y : Location.Y;
+			RapIni.Write("position>maximized", maximized.ToString());
+			RapIni.Write("position>width", width.ToString());
+			RapIni.Write("position>height", height.ToString());
+			RapIni.Write("position>x", x.ToString());
+			RapIni.Write("position>y", y.ToString());
 			GamerList.Terminate();
 			SortingColumn.Dispose();
 
@@ -2046,9 +2064,20 @@ namespace RapChessGui
 			lv.Columns[2].Width = w;
 		}
 
+		private void lvMoves_Resize(object sender, EventArgs e)
+		{
+			ListView lv = (ListView)sender;
+			int w = lv.Width - 32;
+			w = Convert.ToInt32(w / 5);
+			lv.Columns[0].Width = w;
+			lv.Columns[1].Width = w * 2;
+			lv.Columns[2].Width = w * 2;
+		}
+
 		private void panBoard_Paint(object sender, PaintEventArgs e)
 		{
 			RenderBoard();
 		}
+
 	}
 }
