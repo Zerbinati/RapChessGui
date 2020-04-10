@@ -16,6 +16,7 @@ namespace RapChessGui
 		public bool go = false;
 		public bool white = true;
 		public int usedBook;
+		public int iScore = 0;
 		public ulong nodes;
 		public ulong nps;
 		public ulong totalNps;
@@ -68,6 +69,7 @@ namespace RapChessGui
 			ponder = "";
 			pv = "";
 			timeTotal = 0;
+			iScore = 0;
 			timer.Reset();
 		}
 

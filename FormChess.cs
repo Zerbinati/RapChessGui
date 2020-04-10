@@ -172,11 +172,11 @@ namespace RapChessGui
 
 		void IniLoad()
 		{
-			Width = RapIni.ReadInt("position>width", Width); 
+			Width = RapIni.ReadInt("position>width", Width);
 			Height = RapIni.ReadInt("position>height", Height);
 			int x = RapIni.ReadInt("position>x", Location.X);
 			int y = RapIni.ReadInt("position>y", Location.Y);
-			Location = new Point(x,y);
+			Location = new Point(x, y);
 			if (RapIni.ReadBool("position>maximized", false))
 				WindowState = FormWindowState.Maximized;
 			CEngineList.LoadFromIni();
@@ -197,9 +197,9 @@ namespace RapChessGui
 		void AddLines(CGamer g)
 		{
 			if (GamerList.GamerCur().white)
-				lvMovesW.Items.Insert(0, new ListViewItem(new[] { g.GetDepth(), g.GetTimeElapsed(), g.nodes.ToString("N0"), g.nps.ToString("N0"), g.score, g.pv }));
+				lvMovesW.Items.Insert(0, new ListViewItem(new[] { g.GetTimeElapsed(), g.GetDepth(), g.nodes.ToString("N0"), g.nps.ToString("N0"), g.score, g.pv }));
 			else
-				lvMovesB.Items.Insert(0, new ListViewItem(new[] { g.GetDepth(), g.GetTimeElapsed(), g.nodes.ToString("N0"), g.nps.ToString("N0"), g.score, g.pv }));
+				lvMovesB.Items.Insert(0, new ListViewItem(new[] { g.GetTimeElapsed(), g.GetDepth(), g.nodes.ToString("N0"), g.nps.ToString("N0"), g.score, g.pv }));
 		}
 
 		public void GetMessageUci(CGamer g, string msg)
@@ -229,14 +229,24 @@ namespace RapChessGui
 					tssMoves.ForeColor = Color.Gainsboro;
 					string s = Uci.GetValue("cp");
 					if (s != "")
+					{
 						g.score = s;
+						g.iScore = Int32.Parse(s);
+					}
 					s = Uci.GetValue("mate");
 					if (s != "")
 					{
-						if (Int32.Parse(s) > 0)
+						int ip = Int32.Parse(s);
+						if (ip > 0)
+						{
 							g.score = $"+{s}M";
+							g.iScore = 0xffff - ip;
+						}
 						else
+						{
 							g.score = $"{s}M";
+							g.iScore = -0xffff + ip;
+						}
 					}
 					s = Uci.GetValue("depth");
 					if (s != "")
@@ -919,6 +929,9 @@ namespace RapChessGui
 			emo = emo.ToLower();
 			CPlayer uw = GamerList.GamerCur().player;
 			CPlayer ul = GamerList.GamerSec().player;
+			double m = GamerList.curIndex == 0 ? 0.01 : -0.01;
+			chart1.Series[GamerList.curIndex].Points.Add(GamerList.GamerCur().iScore * m);
+			GamerList.GamerCur().iScore = 0;
 			if (IsAutoElo() && CModeGame.ranked && (cp.engine == null) && ((Chess.g_moveNumber >> 1) == 4))
 			{
 				cp.player.eloOld = Convert.ToDouble(cp.player.elo);
@@ -1141,6 +1154,8 @@ namespace RapChessGui
 			tssMove.Text = "Move 1 0";
 			tssMoves.ForeColor = Color.Gainsboro;
 			tssMoves.Text = "Good luck";
+			chart1.Series[0].Points.Clear();
+			chart1.Series[1].Points.Clear();
 			CDrag.lastSou = -1;
 			CDrag.lastDes = -1;
 			Chess.InitializeFromFen(CData.fen);
@@ -1579,6 +1594,14 @@ namespace RapChessGui
 			}
 			CDrag.lastDes = i;
 			CDrag.lastSou = -1;
+		}
+
+		void LinesResize(ListView lv)
+		{
+			int w = 100;
+			for (int n = 0; n < lv.Columns.Count - 1; n++)
+				lv.Columns[n].Width = w;
+			lv.Columns[lv.Columns.Count - 1].Width = lv.Width - 32 - w * (lv.Columns.Count - 1);
 		}
 
 		private void FormChess_FormClosed(object sender, FormClosedEventArgs e)
@@ -2037,10 +2060,20 @@ namespace RapChessGui
 		{
 			ListView lv = (ListView)sender;
 			int w = lv.Width;
-			w = Convert.ToInt32(w / 9);
+			w = 100;// Convert.ToInt32(w / 9);
 			for (int n = 0; n < lv.Columns.Count - 1; n++)
 				lv.Columns[n].Width = w;
 			lv.Columns[lv.Columns.Count - 1].Width = lv.Width - 32 - w * (lv.Columns.Count - 1);
+		}
+
+		private void listView1_Resize(object sender, EventArgs e)
+		{
+			ListView lv = (ListView)sender;
+			int w = lv.Width - 32;
+			w = Convert.ToInt32(w / 4);
+			lv.Columns[0].Width = w * 2;
+			lv.Columns[1].Width = w;
+			lv.Columns[2].Width = w;
 		}
 
 		private void listView2_Resize(object sender, EventArgs e)
@@ -2052,16 +2085,6 @@ namespace RapChessGui
 			lv.Columns[1].Width = w;
 			lv.Columns[2].Width = w;
 			lv.Columns[3].Width = w;
-		}
-
-		private void listView1_Resize(object sender, EventArgs e)
-		{
-			ListView lv = (ListView)sender;
-			int w = lv.Width - 32;
-			w = Convert.ToInt32(w / 4);
-			lv.Columns[0].Width = w * 2;
-			lv.Columns[1].Width = w;
-			lv.Columns[2].Width = w;
 		}
 
 		private void lvMoves_Resize(object sender, EventArgs e)
@@ -2079,5 +2102,10 @@ namespace RapChessGui
 			RenderBoard();
 		}
 
+		private void FormChess_Resize(object sender, EventArgs e)
+		{
+			LinesResize(lvMovesW);
+			LinesResize(lvMovesB);
+		}
 	}
 }
