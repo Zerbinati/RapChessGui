@@ -607,40 +607,12 @@ namespace RapChessGui
 			CPlayer p1 = new CPlayer("Player 1");
 			p1.engine = CModeMatch.engine1;
 			p1.book = CModeMatch.book1;
-			switch (CModeMatch.modeValue1.mode)
-			{
-				case "Blitz":
-					p1.mode = "blitz";
-					break;
-				case "Depth":
-					p1.mode = "depth";
-					break;
-				case "Nodes":
-					p1.mode = "nodes";
-					break;
-				default:
-					p1.mode = "movetime";
-					break;
-			}
+			p1.mode = CModeMatch.modeValue1.GetUci();
 			p1.value = Convert.ToString(CModeMatch.modeValue1.GetValue());
 			CPlayer p2 = new CPlayer("Player 2");
 			p2.engine = CModeMatch.engine2;
 			p2.book = CModeMatch.book2;
-			switch (CModeMatch.modeValue1.mode)
-			{
-				case "Blitz":
-					p2.mode = "blitz";
-					break;
-				case "Depth":
-					p2.mode = "depth";
-					break;
-				case "Nodes":
-					p2.mode = "nodes";
-					break;
-				default:
-					p2.mode = "movetime";
-					break;
-			}
+			p2.mode = CModeMatch.modeValue2.GetUci();
 			p2.value = Convert.ToString(CModeMatch.modeValue2.GetValue());
 			GamerList.gamer[0].SetPlayer(p1);
 			GamerList.gamer[1].SetPlayer(p2);
@@ -2105,6 +2077,7 @@ namespace RapChessGui
 			nudValue1.Increment = CModeMatch.modeValue1.GetIncrement();
 			nudValue1.Minimum = nudValue1.Increment;
 			nudValue1.Value = CModeMatch.modeValue1.GetValue();
+			toolTip1.SetToolTip(nudValue1, CModeMatch.modeValue1.GetTip());
 		}
 
 		private void cbMode2_SelectedIndexChanged(object sender, EventArgs e)
@@ -2113,6 +2086,7 @@ namespace RapChessGui
 			nudValue2.Increment = CModeMatch.modeValue2.GetIncrement();
 			nudValue2.Minimum = nudValue2.Increment;
 			nudValue2.Value = CModeMatch.modeValue2.GetValue();
+			toolTip1.SetToolTip(nudValue2, CModeMatch.modeValue2.GetTip());
 		}
 
 		private void cbTrainedMode_SelectedIndexChanged(object sender, EventArgs e)
@@ -2121,6 +2095,7 @@ namespace RapChessGui
 			nudTrained.Increment = CModeTraining.modeValueTrained.GetIncrement();
 			nudTrained.Minimum = nudTrained.Increment;
 			nudTrained.Value = CModeTraining.modeValueTrained.GetValue();
+			toolTip1.SetToolTip(nudTrained, CModeTraining.modeValueTrained.GetTip());
 		}
 
 		private void cbTeacherMode_SelectedIndexChanged(object sender, EventArgs e)
@@ -2129,6 +2104,7 @@ namespace RapChessGui
 			nudTeacher.Increment = CModeTraining.modeValueTeacher.GetIncrement();
 			nudTeacher.Minimum = nudTeacher.Increment;
 			nudTeacher.Value = CModeTraining.modeValueTeacher.GetValue();
+			toolTip1.SetToolTip(nudTeacher, CModeTraining.modeValueTeacher.GetTip());
 		}
 	}
 }
