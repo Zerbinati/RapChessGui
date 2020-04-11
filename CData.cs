@@ -64,10 +64,59 @@ namespace RapChessGui
 
 	}
 
+	class CModeValue
+	{
+		public string mode = "Time";
+		public int value = 1;
+
+		public void SetValue(int v)
+		{
+			switch (mode)
+			{
+				case "Blitz":
+					value = v / 60000;
+					break;
+				case "Depth":
+					value = v;
+					break;
+				case "Nodes":
+					value = v / 1000000;
+					break;
+				case "Time":
+					value = v / 1000;
+					break;
+			}
+			if (value < 1)
+				value = 1;
+		}
+
+		public int GetValue(out int increment)
+		{
+			increment = 1;
+			switch (mode)
+			{
+				case "Blitz":
+					increment = 1000;
+					return value * 60;
+				case "Depth":
+					return value;
+				case "Nodes":
+					increment = 100000;
+					return value * 1000000;
+				case "Infinite":
+					return 0;
+				default:
+					increment = 100;
+					return value * 1000;
+			}
+		}
+
+	}
+
 	public class ListViewComparer : System.Collections.IComparer
 	{
-		private int ColumnNumber;
-		private SortOrder SortOrder;
+		readonly private int ColumnNumber;
+		readonly private SortOrder SortOrder;
 
 		public ListViewComparer(int column_number,
 			SortOrder sort_order)

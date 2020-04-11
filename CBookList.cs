@@ -28,6 +28,12 @@ namespace RapChessGui
 			CRapIni.This.Write($"book>{name}>parameters", parameters);
 		}
 
+		public string ShortName()
+		{
+			string n = name[0].ToString();
+			return n.ToUpper();
+		}
+
 	}
 
 	public static class CBookList

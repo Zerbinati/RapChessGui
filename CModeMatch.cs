@@ -11,12 +11,10 @@ namespace RapChessGui
 		public static int loose = 0;
 		public static string engine1;
 		public static string engine2;
-		public static string mode1;
-		public static string mode2;
-		public static int value1;
-		public static int value2;
 		public static string book1 = "Eco";
 		public static string book2 = "Eco";
+		public static CModeValue modeValue1 = new CModeValue();
+		public static CModeValue modeValue2 = new CModeValue();
 
 		public static void Reset()
 		{
@@ -54,10 +52,10 @@ namespace RapChessGui
 			book2 = CRapIni.This.Read("mode>match>book2", book2);
 			engine1 = CRapIni.This.Read("mode>match>engine1", CEngineList.def);
 			engine2 = CRapIni.This.Read("mode>match>engine2", CEngineList.def);
-			mode1 = CRapIni.This.Read("mode>match>mode1", "Time");
-			mode2 = CRapIni.This.Read("mode>match>mode2", "Time");
-			value1 = CRapIni.This.ReadInt("mode>match>value1", 1);
-			value2 = CRapIni.This.ReadInt("mode>match>value2", 1);
+			modeValue1.mode = CRapIni.This.Read("mode>match>mode1", "Time");
+			modeValue2.mode = CRapIni.This.Read("mode>match>mode2", "Time");
+			modeValue1.value = CRapIni.This.ReadInt("mode>match>value1", 1);
+			modeValue2.value = CRapIni.This.ReadInt("mode>match>value2", 1);
 		}
 
 		public static void SaveToIni()
@@ -71,10 +69,10 @@ namespace RapChessGui
 			CRapIni.This.Write("mode>match>book2", book2);
 			CRapIni.This.Write("mode>match>engine1", engine1);
 			CRapIni.This.Write("mode>match>engine2", engine2);
-			CRapIni.This.Write("mode>match>mode1", mode1);
-			CRapIni.This.Write("mode>match>mode2", mode2);
-			CRapIni.This.Write("mode>match>value1", value1.ToString());
-			CRapIni.This.Write("mode>match>value2", value2.ToString());
+			CRapIni.This.Write("mode>match>mode1", modeValue1.mode);
+			CRapIni.This.Write("mode>match>mode2", modeValue2.mode);
+			CRapIni.This.Write("mode>match>value1", modeValue1.value.ToString());
+			CRapIni.This.Write("mode>match>value2", modeValue2.value.ToString());
 		}
 
 	}

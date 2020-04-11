@@ -13,10 +13,8 @@ namespace RapChessGui
 		public static string trained = "";
 		public static string teacherBook = "Eco";
 		public static string trainedBook = "Eco";
-		public static string teacherMode = "Time";
-		public static string trainedMode = "Time";
-		public static int teacherValue = 10;
-		public static int trainedValue = 10;
+		public static CModeValue modeValueTeacher = new CModeValue();
+		public static CModeValue modeValueTrained = new CModeValue();
 
 		public static void Reset()
 		{
@@ -49,10 +47,10 @@ namespace RapChessGui
 			CRapIni.This.Write("mode>training>trained", trained);
 			CRapIni.This.Write("mode>training>teacherBook", teacherBook);
 			CRapIni.This.Write("mode>training>trainedBook", trainedBook);
-			CRapIni.This.Write("mode>training>teacherValue", teacherValue.ToString());
-			CRapIni.This.Write("mode>training>trainedValue", trainedValue.ToString());
-			CRapIni.This.Write("mode>training>teacherMode", teacherMode);
-			CRapIni.This.Write("mode>training>trainedMode", trainedMode);
+			CRapIni.This.Write("mode>training>teacherValue", modeValueTeacher.value.ToString());
+			CRapIni.This.Write("mode>training>trainedValue", modeValueTrained.value.ToString());
+			CRapIni.This.Write("mode>training>teacherMode", modeValueTeacher.mode);
+			CRapIni.This.Write("mode>training>trainedMode", modeValueTrained.mode);
 		}
 
 		public static void LoadFromIni()
@@ -61,10 +59,10 @@ namespace RapChessGui
 			trained = CRapIni.This.Read("mode>training>trained", CEngineList.def);
 			teacherBook = CRapIni.This.Read("mode>training>teacherBook", teacherBook);
 			trainedBook = CRapIni.This.Read("mode>training>trainedBook", trainedBook);
-			teacherValue =CRapIni.This.ReadInt("mode>training>teacherValue", teacherValue);
-			trainedValue = CRapIni.This.ReadInt("mode>training>trainedValue", trainedValue);
-			teacherMode = CRapIni.This.Read("mode>training>teacherMode", teacherMode);
-			trainedMode = CRapIni.This.Read("mode>training>trainedMode", trainedMode);
+			modeValueTeacher.value = CRapIni.This.ReadInt("mode>training>teacherValue", modeValueTeacher.value);
+			modeValueTrained.value = CRapIni.This.ReadInt("mode>training>trainedValue", modeValueTrained.value);
+			modeValueTeacher.mode = CRapIni.This.Read("mode>training>teacherMode", modeValueTeacher.mode);
+			modeValueTrained.mode = CRapIni.This.Read("mode>training>trainedMode", modeValueTrained.mode);
 		}
 
 	}

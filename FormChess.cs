@@ -573,12 +573,15 @@ namespace RapChessGui
 		{
 			cbEngine1.SelectedIndex = cbEngine1.FindStringExact(CModeMatch.engine1);
 			cbEngine2.SelectedIndex = cbEngine2.FindStringExact(CModeMatch.engine2);
-			cbMode1.SelectedIndex = cbMode1.FindStringExact(CModeMatch.mode1);
-			cbMode2.SelectedIndex = cbMode2.FindStringExact(CModeMatch.mode2);
+			cbMode1.SelectedIndex = cbMode1.FindStringExact(CModeMatch.modeValue1.mode);
+			cbMode2.SelectedIndex = cbMode2.FindStringExact(CModeMatch.modeValue2.mode);
 			cbBook1.SelectedIndex = cbBook1.FindStringExact(CModeMatch.book1);
 			cbBook2.SelectedIndex = cbBook2.FindStringExact(CModeMatch.book2);
-			cbValue1.SelectedIndex = CModeMatch.value1 - 1;
-			cbValue2.SelectedIndex = CModeMatch.value2 - 1;
+			int increment;
+			nudValue1.Value = CModeMatch.modeValue1.GetValue(out increment);
+			nudValue1.Increment = increment;
+			nudValue2.Value = CModeMatch.modeValue2.GetValue(out increment);
+			nudValue2.Increment = increment;
 			labMatchGames.Text = $"Games {CModeMatch.games}";
 			labMatch11.Text = CModeMatch.win.ToString();
 			labMatch12.Text = CModeMatch.loose.ToString();
@@ -595,59 +598,50 @@ namespace RapChessGui
 			CData.fen = CChess.defFen;
 			CModeMatch.engine1 = cbEngine1.Text;
 			CModeMatch.engine2 = cbEngine2.Text;
-			CModeMatch.mode1 = cbMode1.Text;
-			CModeMatch.mode2 = cbMode2.Text;
-			CModeMatch.value1 = cbValue1.SelectedIndex + 1;
-			CModeMatch.value2 = cbValue2.SelectedIndex + 1;
+			CModeMatch.modeValue1.mode = cbMode1.Text;
+			CModeMatch.modeValue2.mode = cbMode2.Text;
 			CModeMatch.book1 = cbBook1.Text;
 			CModeMatch.book2 = cbBook2.Text;
 			SetMode((int)CMode.match);
 			CPlayer p1 = new CPlayer("Player 1");
 			p1.engine = CModeMatch.engine1;
 			p1.book = CModeMatch.book1;
-			switch (CModeMatch.mode1)
+			switch (CModeMatch.modeValue1.mode)
 			{
 				case "Blitz":
 					p1.mode = "blitz";
-					p1.value = Convert.ToString(CModeMatch.value1 * 60000);
 					break;
 				case "Depth":
 					p1.mode = "depth";
-					p1.value = Convert.ToString(CModeMatch.value1);
 					break;
 				case "Nodes":
 					p1.mode = "nodes";
-					p1.value = Convert.ToString(CModeMatch.value1 * 1000000);
 					break;
 				default:
 					p1.mode = "movetime";
-					p1.value = Convert.ToString(CModeMatch.value1 * 1000);
 					break;
 			}
+			int increment;
+			p1.value = Convert.ToString(CModeMatch.modeValue1.GetValue(out increment));
 			CPlayer p2 = new CPlayer("Player 2");
 			p2.engine = CModeMatch.engine2;
 			p2.book = CModeMatch.book2;
-			switch (CModeMatch.mode2)
+			switch (CModeMatch.modeValue1.mode)
 			{
 				case "Blitz":
 					p2.mode = "blitz";
-					p2.value = Convert.ToString(CModeMatch.value2 * 60000);
 					break;
 				case "Depth":
 					p2.mode = "depth";
-					p2.value = Convert.ToString(CModeMatch.value2);
 					break;
 				case "Nodes":
 					p2.mode = "nodes";
-					p2.value = Convert.ToString(CModeMatch.value2 * 1000000);
 					break;
 				default:
 					p2.mode = "movetime";
-					p2.value = Convert.ToString(CModeMatch.value2 * 1000);
 					break;
 			}
-			tbCommand1.Text = p1.GetCommand();
-			tbCommand2.Text = p2.GetCommand();
+			p2.value = Convert.ToString(CModeMatch.modeValue2.GetValue(out increment));
 			GamerList.gamer[0].SetPlayer(p1);
 			GamerList.gamer[1].SetPlayer(p2);
 			if (CModeMatch.rotate)
@@ -733,12 +727,15 @@ namespace RapChessGui
 			labGames.Text = $"Games {CModeTraining.games}";
 			cbTeacherEngine.SelectedIndex = cbTeacherEngine.FindStringExact(CModeTraining.teacher);
 			cbTrainedEngine.SelectedIndex = cbTrainedEngine.FindStringExact(CModeTraining.trained);
-			cbTeacherMode.SelectedIndex = cbTeacherMode.FindStringExact(CModeTraining.teacherMode);
-			cbTrainedMode.SelectedIndex = cbTrainedMode.FindStringExact(CModeTraining.trainedMode);
+			cbTeacherMode.SelectedIndex = cbTeacherMode.FindStringExact(CModeTraining.modeValueTeacher.mode);
+			cbTrainedMode.SelectedIndex = cbTrainedMode.FindStringExact(CModeTraining.modeValueTrained.mode);
 			cbTeacherBook.SelectedIndex = cbTeacherBook.FindStringExact(CModeTraining.teacherBook);
 			cbTrainedBook.SelectedIndex = cbTrainedBook.FindStringExact(CModeTraining.trainedBook);
-			nudTeacher.Value = CModeTraining.teacherValue;
-			nudTrained.Value = CModeTraining.trainedValue;
+			int increment;
+			nudTeacher.Value = CModeTraining.modeValueTeacher.GetValue(out increment);
+			nudTeacher.Increment = increment;
+			nudTrained.Value = CModeTraining.modeValueTrained.GetValue(out increment);
+			nudTrained.Increment = increment;
 			label12.Text = CModeTraining.win.ToString();
 			label13.Text = CModeTraining.loose.ToString();
 			label14.Text = CModeTraining.draw.ToString();
@@ -754,57 +751,52 @@ namespace RapChessGui
 			CData.fen = CChess.defFen;
 			CModeTraining.teacher = cbTeacherEngine.Text;
 			CModeTraining.trained = cbTrainedEngine.Text;
-			CModeTraining.teacherMode = cbTeacherMode.Text;
-			CModeTraining.trainedMode = cbTrainedMode.Text;
+			CModeTraining.modeValueTeacher.mode = cbTeacherMode.Text;
+			CModeTraining.modeValueTrained.mode = cbTrainedMode.Text;
 			CModeTraining.teacherBook = cbTeacherBook.Text;
 			CModeTraining.trainedBook = cbTrainedBook.Text;
-			CModeTraining.teacherValue = (int)nudTeacher.Value;
-			CModeTraining.trainedValue = (int)nudTrained.Value;
+			CModeTraining.modeValueTeacher.SetValue((int)nudTeacher.Value);
+			CModeTraining.modeValueTrained.SetValue((int)nudTrained.Value);
 			SetMode((int)CMode.training);
 			CPlayer uw = new CPlayer("Trained");
 			uw.engine = CModeTraining.trained;
 			uw.book = CModeTraining.trainedBook;
-			switch (CModeTraining.trainedMode)
+			switch (CModeTraining.modeValueTrained.mode)
 			{
 				case "Blitz":
 					uw.mode = "blitz";
-					uw.value = Convert.ToString(CModeTraining.trainedValue * 10000);
 					break;
 				case "Depth":
 					uw.mode = "depth";
-					uw.value = Convert.ToString(CModeTraining.trainedValue);
 					break;
 				case "Nodes":
 					uw.mode = "nodes";
-					uw.value = Convert.ToString(CModeTraining.trainedValue * 100000);
 					break;
 				default:
 					uw.mode = "movetime";
-					uw.value = Convert.ToString(CModeTraining.trainedValue * 100);
 					break;
 			}
+			int increment;
+			uw.value = Convert.ToString(CModeTraining.modeValueTrained.GetValue(out increment));
 			CPlayer ub = new CPlayer("Teacher");
 			ub.engine = CModeTraining.teacher;
 			ub.book = CModeTraining.teacherBook;
-			switch (CModeTraining.teacherMode)
+			switch (CModeTraining.modeValueTeacher.mode)
 			{
 				case "Blitz":
 					ub.mode = "blitz";
-					ub.value = Convert.ToString(CModeTraining.teacherValue * 10000);
 					break;
 				case "Depth":
 					ub.mode = "depth";
-					ub.value = Convert.ToString(CModeTraining.teacherValue);
 					break;
 				case "Nodes":
 					ub.mode = "nodes";
-					ub.value = Convert.ToString(CModeTraining.teacherValue * 100000);
 					break;
 				default:
 					ub.mode = "movetime";
-					ub.value = Convert.ToString(CModeTraining.teacherValue * 100);
 					break;
 			}
+			ub.value = Convert.ToString(CModeTraining.modeValueTeacher.GetValue(out increment));
 			GamerList.gamer[0].SetPlayer(uw);
 			GamerList.gamer[1].SetPlayer(ub);
 			if (CModeTraining.rotate)
@@ -1114,19 +1106,19 @@ namespace RapChessGui
 					if (uw.name == "Teacher")
 					{
 						CModeTraining.win++;
-						if (--CModeTraining.teacherValue < 1)
-							CModeTraining.teacherValue = 1;
+						if (--CModeTraining.modeValueTeacher.value < 1)
+							CModeTraining.modeValueTeacher.value = 1;
 					}
 					else
 					{
 						CModeTraining.loose++;
-						CModeTraining.teacherValue++;
+						CModeTraining.modeValueTeacher.value++;
 					}
 				}
 				else
 				{
 					CModeTraining.draw++;
-					CModeTraining.teacherValue++;
+					CModeTraining.modeValueTeacher.value++;
 				}
 				TrainingShow();
 			}
@@ -1393,11 +1385,11 @@ namespace RapChessGui
 			string mw = material.ToString();
 			if (material > 0)
 				mw = $"+{mw}";
-			mw = $"Material {mw}";
+			mw = $"DPV {mw}";
 			string mb = (-material).ToString();
 			if (-material > 0)
 				mb = $"+{mb}";
-			mb = $"Material {mb}";
+			mb = $"DPV {mb}";
 			if (boardRotate)
 			{
 				labTakenT.Text = w;
@@ -2041,14 +2033,14 @@ namespace RapChessGui
 
 		private void cbMode_SelectedIndexChanged(object sender, EventArgs e)
 		{
-			CModeGame.mode = cbMode.Text;
-			nudValue.Value = CModeGame.GetValue(out int increment);
+			CModeGame.modeValue.mode = cbMode.Text;
+			nudValue.Value = CModeGame.modeValue.GetValue(out int increment);
 			nudValue.Increment = increment;
 		}
 
 		private void nudValue_ValueChanged(object sender, EventArgs e)
 		{
-			CModeGame.SetValue((int)nudValue.Value);
+			CModeGame.modeValue.SetValue((int)nudValue.Value);
 		}
 
 		private void panBoard_Resize(object sender, EventArgs e)
@@ -2106,6 +2098,34 @@ namespace RapChessGui
 		{
 			LinesResize(lvMovesW);
 			LinesResize(lvMovesB);
+		}
+
+		private void cbMode1_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			CModeMatch.modeValue1.mode = cbMode1.Text;
+			nudValue1.Value = CModeMatch.modeValue1.GetValue(out int increment);
+			nudValue1.Increment = increment;
+		}
+
+		private void cbMode2_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			CModeMatch.modeValue2.mode = cbMode2.Text;
+			nudValue2.Value = CModeMatch.modeValue2.GetValue(out int increment);
+			nudValue2.Increment = increment;
+		}
+
+		private void cbTrainedMode_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			CModeTraining.modeValueTrained.mode = cbTrainedMode.Text;
+			nudTrained.Value = CModeTraining.modeValueTrained.GetValue(out int increment);
+			nudTrained.Increment = increment;
+		}
+
+		private void cbTeacherMode_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			CModeTraining.modeValueTeacher.mode = cbTeacherMode.Text;
+			nudTeacher.Value = CModeTraining.modeValueTeacher.GetValue(out int increment);
+			nudTeacher.Increment = increment;
 		}
 	}
 }
