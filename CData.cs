@@ -90,24 +90,37 @@ namespace RapChessGui
 				value = 1;
 		}
 
-		public int GetValue(out int increment)
+		public int GetValue()
 		{
-			increment = 1;
 			switch (mode)
 			{
 				case "Blitz":
-					increment = 1000;
 					return value * 60;
 				case "Depth":
 					return value;
 				case "Nodes":
-					increment = 100000;
 					return value * 1000000;
 				case "Infinite":
 					return 0;
 				default:
-					increment = 100;
 					return value * 1000;
+			}
+		}
+
+		public int GetIncrement()
+		{
+			switch (mode)
+			{
+				case "Blitz":
+					return 1000;
+				case "Depth":
+					return 1;
+				case "Nodes":
+					return 100000;
+				case "Infinite":
+					return 0;
+				default:
+					return 100;
 			}
 		}
 

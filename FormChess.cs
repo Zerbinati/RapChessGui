@@ -577,11 +577,10 @@ namespace RapChessGui
 			cbMode2.SelectedIndex = cbMode2.FindStringExact(CModeMatch.modeValue2.mode);
 			cbBook1.SelectedIndex = cbBook1.FindStringExact(CModeMatch.book1);
 			cbBook2.SelectedIndex = cbBook2.FindStringExact(CModeMatch.book2);
-			int increment;
-			nudValue1.Value = CModeMatch.modeValue1.GetValue(out increment);
-			nudValue1.Increment = increment;
-			nudValue2.Value = CModeMatch.modeValue2.GetValue(out increment);
-			nudValue2.Increment = increment;
+			nudValue1.Value = CModeMatch.modeValue1.GetValue();
+			nudValue1.Increment = CModeMatch.modeValue1.GetIncrement();
+			nudValue2.Value = CModeMatch.modeValue2.GetValue();
+			nudValue2.Increment = CModeMatch.modeValue2.GetIncrement();
 			labMatchGames.Text = $"Games {CModeMatch.games}";
 			labMatch11.Text = CModeMatch.win.ToString();
 			labMatch12.Text = CModeMatch.loose.ToString();
@@ -621,8 +620,7 @@ namespace RapChessGui
 					p1.mode = "movetime";
 					break;
 			}
-			int increment;
-			p1.value = Convert.ToString(CModeMatch.modeValue1.GetValue(out increment));
+			p1.value = Convert.ToString(CModeMatch.modeValue1.GetValue());
 			CPlayer p2 = new CPlayer("Player 2");
 			p2.engine = CModeMatch.engine2;
 			p2.book = CModeMatch.book2;
@@ -641,7 +639,7 @@ namespace RapChessGui
 					p2.mode = "movetime";
 					break;
 			}
-			p2.value = Convert.ToString(CModeMatch.modeValue2.GetValue(out increment));
+			p2.value = Convert.ToString(CModeMatch.modeValue2.GetValue());
 			GamerList.gamer[0].SetPlayer(p1);
 			GamerList.gamer[1].SetPlayer(p2);
 			if (CModeMatch.rotate)
@@ -731,11 +729,10 @@ namespace RapChessGui
 			cbTrainedMode.SelectedIndex = cbTrainedMode.FindStringExact(CModeTraining.modeValueTrained.mode);
 			cbTeacherBook.SelectedIndex = cbTeacherBook.FindStringExact(CModeTraining.teacherBook);
 			cbTrainedBook.SelectedIndex = cbTrainedBook.FindStringExact(CModeTraining.trainedBook);
-			int increment;
-			nudTeacher.Value = CModeTraining.modeValueTeacher.GetValue(out increment);
-			nudTeacher.Increment = increment;
-			nudTrained.Value = CModeTraining.modeValueTrained.GetValue(out increment);
-			nudTrained.Increment = increment;
+			nudTeacher.Value = CModeTraining.modeValueTeacher.GetValue();
+			nudTeacher.Increment = CModeTraining.modeValueTeacher.GetIncrement();
+			nudTrained.Value = CModeTraining.modeValueTrained.GetValue();
+			nudTrained.Increment = CModeTraining.modeValueTrained.GetIncrement();
 			label12.Text = CModeTraining.win.ToString();
 			label13.Text = CModeTraining.loose.ToString();
 			label14.Text = CModeTraining.draw.ToString();
@@ -776,8 +773,7 @@ namespace RapChessGui
 					uw.mode = "movetime";
 					break;
 			}
-			int increment;
-			uw.value = Convert.ToString(CModeTraining.modeValueTrained.GetValue(out increment));
+			uw.value = Convert.ToString(CModeTraining.modeValueTrained.GetValue());
 			CPlayer ub = new CPlayer("Teacher");
 			ub.engine = CModeTraining.teacher;
 			ub.book = CModeTraining.teacherBook;
@@ -796,7 +792,7 @@ namespace RapChessGui
 					ub.mode = "movetime";
 					break;
 			}
-			ub.value = Convert.ToString(CModeTraining.modeValueTeacher.GetValue(out increment));
+			ub.value = Convert.ToString(CModeTraining.modeValueTeacher.GetValue());
 			GamerList.gamer[0].SetPlayer(uw);
 			GamerList.gamer[1].SetPlayer(ub);
 			if (CModeTraining.rotate)
@@ -2034,8 +2030,8 @@ namespace RapChessGui
 		private void cbMode_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			CModeGame.modeValue.mode = cbMode.Text;
-			nudValue.Value = CModeGame.modeValue.GetValue(out int increment);
-			nudValue.Increment = increment;
+			nudValue.Value = CModeGame.modeValue.GetValue();
+			nudValue.Increment = CModeGame.modeValue.GetIncrement();
 		}
 
 		private void nudValue_ValueChanged(object sender, EventArgs e)
@@ -2051,8 +2047,7 @@ namespace RapChessGui
 		private void lvLines_Resize(object sender, EventArgs e)
 		{
 			ListView lv = (ListView)sender;
-			int w = lv.Width;
-			w = 100;// Convert.ToInt32(w / 9);
+			int w = 100;
 			for (int n = 0; n < lv.Columns.Count - 1; n++)
 				lv.Columns[n].Width = w;
 			lv.Columns[lv.Columns.Count - 1].Width = lv.Width - 32 - w * (lv.Columns.Count - 1);
@@ -2103,29 +2098,29 @@ namespace RapChessGui
 		private void cbMode1_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			CModeMatch.modeValue1.mode = cbMode1.Text;
-			nudValue1.Value = CModeMatch.modeValue1.GetValue(out int increment);
-			nudValue1.Increment = increment;
+			nudValue1.Value = CModeMatch.modeValue1.GetValue();
+			nudValue1.Increment = CModeMatch.modeValue1.GetIncrement();
 		}
 
 		private void cbMode2_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			CModeMatch.modeValue2.mode = cbMode2.Text;
-			nudValue2.Value = CModeMatch.modeValue2.GetValue(out int increment);
-			nudValue2.Increment = increment;
+			nudValue2.Value = CModeMatch.modeValue2.GetValue();
+			nudValue2.Increment = CModeMatch.modeValue2.GetIncrement();
 		}
 
 		private void cbTrainedMode_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			CModeTraining.modeValueTrained.mode = cbTrainedMode.Text;
-			nudTrained.Value = CModeTraining.modeValueTrained.GetValue(out int increment);
-			nudTrained.Increment = increment;
+			nudTrained.Value = CModeTraining.modeValueTrained.GetValue();
+			nudTrained.Increment = CModeTraining.modeValueTrained.GetIncrement();
 		}
 
 		private void cbTeacherMode_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			CModeTraining.modeValueTeacher.mode = cbTeacherMode.Text;
-			nudTeacher.Value = CModeTraining.modeValueTeacher.GetValue(out int increment);
-			nudTeacher.Increment = increment;
+			nudTeacher.Value = CModeTraining.modeValueTeacher.GetValue();
+			nudTeacher.Increment = CModeTraining.modeValueTeacher.GetIncrement();
 		}
 	}
 }
