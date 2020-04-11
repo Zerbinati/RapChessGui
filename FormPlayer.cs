@@ -10,6 +10,7 @@ namespace RapChessGui
 	{
 		public static FormPlayer This;
 		string curPlayerName;
+		readonly CModeValue modeValue = new CModeValue();
 
 		public FormPlayer()
 		{
@@ -24,37 +25,23 @@ namespace RapChessGui
 
 		void SelectUser(string name)
 		{
-			var user = CPlayerList.GetPlayerAuto(name);
-			if (user == null)
+			CPlayer p = CPlayerList.GetPlayerAuto(name);
+			if (p == null)
 				return;
-			tbPlayerName.Text = user.name;
-			if (CEngineList.GetIndex(user.engine) >= 0)
-				cbEngineList.Text = user.engine;
+			tbPlayerName.Text = p.name;
+			if (CEngineList.GetIndex(p.engine) >= 0)
+				cbEngineList.Text = p.engine;
 			else
 				cbEngineList.Text = "Human";
-			if (cbBookList.Items.IndexOf(user.book) >= 0)
-				cbBookList.Text = user.book;
+			if (cbBookList.Items.IndexOf(p.book) >= 0)
+				cbBookList.Text = p.book;
 			else
 				cbBookList.Text = "None";
-			curPlayerName = user.name;
-			nudElo.Value = Int32.Parse(user.elo);
-			switch (user.mode)
-			{
-				case "movetime":
-					nudTime.Value = Int32.Parse(user.value);
-					break;
-				case "depth":
-					nudDepth.Value = Int32.Parse(user.value);
-					break;
-				case "nodes":
-					nudNodes.Value = Int32.Parse(user.value);
-					break;
-				case "blitz":
-					nudBlitz.Value = Int32.Parse(user.value);
-					break;
-			}
-			List<RadioButton> list = gbMode.Controls.OfType<RadioButton>().ToList();
-			list[CData.ModeStoi(user.mode)].Select();
+			curPlayerName = p.name;
+			nudElo.Value = Int32.Parse(p.elo);
+			nudValue.Value = Int32.Parse(p.value);
+			modeValue.SetUci(p.mode);
+			cbMode.SelectedIndex = cbMode.FindStringExact(modeValue.mode);
 		}
 
 		void UpdateListBox()
@@ -69,40 +56,19 @@ namespace RapChessGui
 			SelectUser(listBox1.SelectedItem.ToString());
 		}
 
-		void SaveToIni(CPlayer user)
+		void SaveToIni(CPlayer p)
 		{
-			user.name = tbPlayerName.Text;
-			user.engine = cbEngineList.Text;
-			user.book = cbBookList.Text;
-			user.elo = nudElo.Value.ToString();
-			user.eloOld = Convert.ToDouble(user.elo);
-			curPlayerName = user.name;
-			var checkedButton = gbMode.Controls.OfType<RadioButton>().FirstOrDefault(r => r.Checked);
-			List<RadioButton> list = gbMode.Controls.OfType<RadioButton>().ToList();
-			int mode = list.IndexOf(checkedButton);
-			user.mode = list[mode].Text;
-			switch (mode)
-			{
-				case 3:
-					user.mode = "movetime";
-					user.value = nudTime.Value.ToString();
-					break;
-				case 2:
-					user.mode = "depth";
-					user.value = nudDepth.Value.ToString();
-					break;
-				case 1:
-					user.mode = "nodes";
-					user.value = nudNodes.Value.ToString();
-					break;
-				case 0:
-					user.mode = "blitz";
-					user.value = nudBlitz.Value.ToString();
-					break;
-			}
-			user.SaveToIni();
+			p.name = tbPlayerName.Text;
+			p.engine = cbEngineList.Text;
+			p.book = cbBookList.Text;
+			p.elo = nudElo.Value.ToString();
+			p.eloOld = Convert.ToDouble(p.elo);
+			p.mode = modeValue.GetUci();
+			p.value = modeValue.GetValue().ToString();
+			p.SaveToIni();
+			curPlayerName = p.name;
 			UpdateListBox();
-			int index = listBox1.FindString(user.name);
+			int index = listBox1.FindString(p.name);
 			if (index == -1) return;
 			listBox1.SetSelected(index, true);
 		}
@@ -169,5 +135,12 @@ namespace RapChessGui
 				listBox1.SetSelected(0, true);
 		}
 
+		private void cbMode_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			modeValue.mode = cbMode.Text;
+			nudValue.Increment = modeValue.GetIncrement();
+			nudValue.Minimum = nudValue.Increment;
+			nudValue.Value = modeValue.GetValue();
+		}
 	}
 }

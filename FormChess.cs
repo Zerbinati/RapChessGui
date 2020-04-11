@@ -445,7 +445,9 @@ namespace RapChessGui
 				cbEngine.SelectedIndex = cbEngine.FindStringExact(p.engine);
 				cbMode.SelectedIndex = cbMode.FindStringExact(p.GetMode());
 				cbBook.SelectedIndex = cbBook.FindStringExact(p.book);
-				nudValue.Value = Convert.ToInt32(p.value);
+				int v = Convert.ToInt32(p.value);
+				if (v >= nudValue.Minimum)
+					nudValue.Value = v;
 			}
 		}
 
@@ -755,46 +757,46 @@ namespace RapChessGui
 			CModeTraining.modeValueTeacher.SetValue((int)nudTeacher.Value);
 			CModeTraining.modeValueTrained.SetValue((int)nudTrained.Value);
 			SetMode((int)CMode.training);
-			CPlayer uw = new CPlayer("Trained");
-			uw.engine = CModeTraining.trained;
-			uw.book = CModeTraining.trainedBook;
+			CPlayer pw = new CPlayer("Trained");
+			pw.engine = CModeTraining.trained;
+			pw.book = CModeTraining.trainedBook;
 			switch (CModeTraining.modeValueTrained.mode)
 			{
 				case "Blitz":
-					uw.mode = "blitz";
+					pw.mode = "blitz";
 					break;
 				case "Depth":
-					uw.mode = "depth";
+					pw.mode = "depth";
 					break;
 				case "Nodes":
-					uw.mode = "nodes";
+					pw.mode = "nodes";
 					break;
 				default:
-					uw.mode = "movetime";
+					pw.mode = "movetime";
 					break;
 			}
-			uw.value = Convert.ToString(CModeTraining.modeValueTrained.GetValue());
-			CPlayer ub = new CPlayer("Teacher");
-			ub.engine = CModeTraining.teacher;
-			ub.book = CModeTraining.teacherBook;
+			pw.value = Convert.ToString(CModeTraining.modeValueTrained.GetValue());
+			CPlayer pb = new CPlayer("Teacher");
+			pb.engine = CModeTraining.teacher;
+			pb.book = CModeTraining.teacherBook;
 			switch (CModeTraining.modeValueTeacher.mode)
 			{
 				case "Blitz":
-					ub.mode = "blitz";
+					pb.mode = "blitz";
 					break;
 				case "Depth":
-					ub.mode = "depth";
+					pb.mode = "depth";
 					break;
 				case "Nodes":
-					ub.mode = "nodes";
+					pb.mode = "nodes";
 					break;
 				default:
-					ub.mode = "movetime";
+					pb.mode = "movetime";
 					break;
 			}
-			ub.value = Convert.ToString(CModeTraining.modeValueTeacher.GetValue());
-			GamerList.gamer[0].SetPlayer(uw);
-			GamerList.gamer[1].SetPlayer(ub);
+			pb.value = Convert.ToString(CModeTraining.modeValueTeacher.GetValue());
+			GamerList.gamer[0].SetPlayer(pw);
+			GamerList.gamer[1].SetPlayer(pb);
 			if (CModeTraining.rotate)
 				GamerList.Rotate();
 			CModeTraining.rotate = !CModeTraining.rotate;
@@ -2027,13 +2029,6 @@ namespace RapChessGui
 			ShowHistoryList();
 		}
 
-		private void cbMode_SelectedIndexChanged(object sender, EventArgs e)
-		{
-			CModeGame.modeValue.mode = cbMode.Text;
-			nudValue.Value = CModeGame.modeValue.GetValue();
-			nudValue.Increment = CModeGame.modeValue.GetIncrement();
-		}
-
 		private void nudValue_ValueChanged(object sender, EventArgs e)
 		{
 			CModeGame.modeValue.SetValue((int)nudValue.Value);
@@ -2095,32 +2090,45 @@ namespace RapChessGui
 			LinesResize(lvMovesB);
 		}
 
+		private void cbMode_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			CModeGame.modeValue.mode = cbMode.Text;
+			nudValue.Increment = CModeGame.modeValue.GetIncrement();
+			nudValue.Minimum = nudValue.Increment;
+			nudValue.Value = CModeGame.modeValue.GetValue();
+			toolTip1.SetToolTip(nudValue,CModeGame.modeValue.GetTip());
+		}
+
 		private void cbMode1_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			CModeMatch.modeValue1.mode = cbMode1.Text;
-			nudValue1.Value = CModeMatch.modeValue1.GetValue();
 			nudValue1.Increment = CModeMatch.modeValue1.GetIncrement();
+			nudValue1.Minimum = nudValue1.Increment;
+			nudValue1.Value = CModeMatch.modeValue1.GetValue();
 		}
 
 		private void cbMode2_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			CModeMatch.modeValue2.mode = cbMode2.Text;
-			nudValue2.Value = CModeMatch.modeValue2.GetValue();
 			nudValue2.Increment = CModeMatch.modeValue2.GetIncrement();
+			nudValue2.Minimum = nudValue2.Increment;
+			nudValue2.Value = CModeMatch.modeValue2.GetValue();
 		}
 
 		private void cbTrainedMode_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			CModeTraining.modeValueTrained.mode = cbTrainedMode.Text;
-			nudTrained.Value = CModeTraining.modeValueTrained.GetValue();
 			nudTrained.Increment = CModeTraining.modeValueTrained.GetIncrement();
+			nudTrained.Minimum = nudTrained.Increment;
+			nudTrained.Value = CModeTraining.modeValueTrained.GetValue();
 		}
 
 		private void cbTeacherMode_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			CModeTraining.modeValueTeacher.mode = cbTeacherMode.Text;
-			nudTeacher.Value = CModeTraining.modeValueTeacher.GetValue();
 			nudTeacher.Increment = CModeTraining.modeValueTeacher.GetIncrement();
+			nudTeacher.Minimum = nudTeacher.Increment;
+			nudTeacher.Value = CModeTraining.modeValueTeacher.GetValue();
 		}
 	}
 }

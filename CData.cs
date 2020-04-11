@@ -5,7 +5,7 @@ using System.Windows.Forms;
 
 namespace RapChessGui
 {
-	enum CMode { game, match, tournament, training ,edit}
+	enum CMode { game, match, tournament, training, edit }
 
 	public static class CDrag
 	{
@@ -28,17 +28,8 @@ namespace RapChessGui
 		public static double fps = 0;
 		public static string fen = CChess.defFen;
 		public static string modeName = "Game";
-		public static string[] arrModeNames = new string[] {"blitz","nodes","depth", "movetime"};
 		public static List<string> fileBook = new List<string>();
 		public static List<string> fileEngine = new List<string>();
-
-		public static int ModeStoi(string s)
-		{
-			for (int i = 0; i < arrModeNames.Length; i++)
-				if (s == arrModeNames[i])
-					return i;
-			return 0;
-		}
 
 		public static void UpdateFileBook()
 		{
@@ -67,44 +58,20 @@ namespace RapChessGui
 	class CModeValue
 	{
 		public string mode = "Time";
-		public int value = 1;
+		public int value = 10;
 
 		public void SetValue(int v)
 		{
-			switch (mode)
-			{
-				case "Blitz":
-					value = v / 60000;
-					break;
-				case "Depth":
-					value = v;
-					break;
-				case "Nodes":
-					value = v / 1000000;
-					break;
-				case "Time":
-					value = v / 1000;
-					break;
-			}
+			int increment = GetIncrement();
+			if (increment > 0)
+				value = v / increment;
 			if (value < 1)
 				value = 1;
 		}
 
 		public int GetValue()
 		{
-			switch (mode)
-			{
-				case "Blitz":
-					return value * 60;
-				case "Depth":
-					return value;
-				case "Nodes":
-					return value * 1000000;
-				case "Infinite":
-					return 0;
-				default:
-					return value * 1000;
-			}
+			return value * GetIncrement();
 		}
 
 		public int GetIncrement()
@@ -121,6 +88,62 @@ namespace RapChessGui
 					return 0;
 				default:
 					return 100;
+			}
+		}
+
+		public string GetUci()
+		{
+			switch (mode)
+			{
+				case "Blitz":
+					return "blitz";
+				case "Depth":
+					return "depth";
+				case "Nodes":
+					return "nodes";
+				case "Infinite":
+					return "infinite";
+				default:
+					return "movetime";
+			}
+		}
+
+		public void SetUci(string uci)
+		{
+			switch (uci)
+			{
+				case "blitz":
+					mode = "Blitz";
+					break;
+				case "depth":
+					mode = "Depth";
+					break;
+				case "nodes":
+					mode = "Nodes";
+					break;
+				case "infinite":
+					mode = "Infinite";
+					break;
+				default:
+					mode = "Time";
+					break;
+			}
+		}
+
+		public string GetTip()
+		{
+			switch (mode)
+			{
+				case "Blitz":
+					return "Base for whole game in seconds";
+				case "Depth":
+					return "Depth in half-moves";
+				case "Nodes":
+					return "Maximum nodes per move";
+				case "Infinite":
+					return "Infinite mode until click stop";
+				default:
+					return "Time per move in miliseconds";
 			}
 		}
 

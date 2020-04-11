@@ -36,12 +36,6 @@
 			this.gbElo = new System.Windows.Forms.GroupBox();
 			this.nudElo = new System.Windows.Forms.NumericUpDown();
 			this.gbMode = new System.Windows.Forms.GroupBox();
-			this.nudNodes = new System.Windows.Forms.NumericUpDown();
-			this.radioButton3 = new System.Windows.Forms.RadioButton();
-			this.nudDepth = new System.Windows.Forms.NumericUpDown();
-			this.nudTime = new System.Windows.Forms.NumericUpDown();
-			this.radioButton2 = new System.Windows.Forms.RadioButton();
-			this.radioButton1 = new System.Windows.Forms.RadioButton();
 			this.gbBook = new System.Windows.Forms.GroupBox();
 			this.cbBookList = new System.Windows.Forms.ComboBox();
 			this.gbEngine = new System.Windows.Forms.GroupBox();
@@ -50,20 +44,17 @@
 			this.tbPlayerName = new System.Windows.Forms.TextBox();
 			this.groupBox2 = new System.Windows.Forms.GroupBox();
 			this.listBox1 = new System.Windows.Forms.ListBox();
-			this.radioButton4 = new System.Windows.Forms.RadioButton();
-			this.nudBlitz = new System.Windows.Forms.NumericUpDown();
+			this.cbMode = new System.Windows.Forms.ComboBox();
+			this.nudValue = new System.Windows.Forms.NumericUpDown();
 			this.panel1.SuspendLayout();
 			this.gbElo.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.nudElo)).BeginInit();
 			this.gbMode.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.nudNodes)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.nudDepth)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.nudTime)).BeginInit();
 			this.gbBook.SuspendLayout();
 			this.gbEngine.SuspendLayout();
 			this.groupBox1.SuspendLayout();
 			this.groupBox2.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.nudBlitz)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.nudValue)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// panel1
@@ -86,7 +77,7 @@
 			// butClearHistory
 			// 
 			this.butClearHistory.Dock = System.Windows.Forms.DockStyle.Top;
-			this.butClearHistory.Location = new System.Drawing.Point(0, 392);
+			this.butClearHistory.Location = new System.Drawing.Point(0, 340);
 			this.butClearHistory.Name = "butClearHistory";
 			this.butClearHistory.Size = new System.Drawing.Size(311, 33);
 			this.butClearHistory.TabIndex = 28;
@@ -97,7 +88,7 @@
 			// bDelete
 			// 
 			this.bDelete.Dock = System.Windows.Forms.DockStyle.Top;
-			this.bDelete.Location = new System.Drawing.Point(0, 359);
+			this.bDelete.Location = new System.Drawing.Point(0, 307);
 			this.bDelete.Name = "bDelete";
 			this.bDelete.Size = new System.Drawing.Size(311, 33);
 			this.bDelete.TabIndex = 27;
@@ -108,7 +99,7 @@
 			// bCreate
 			// 
 			this.bCreate.Dock = System.Windows.Forms.DockStyle.Top;
-			this.bCreate.Location = new System.Drawing.Point(0, 326);
+			this.bCreate.Location = new System.Drawing.Point(0, 274);
 			this.bCreate.Name = "bCreate";
 			this.bCreate.Size = new System.Drawing.Size(311, 33);
 			this.bCreate.TabIndex = 26;
@@ -119,7 +110,7 @@
 			// bUpdate
 			// 
 			this.bUpdate.Dock = System.Windows.Forms.DockStyle.Top;
-			this.bUpdate.Location = new System.Drawing.Point(0, 299);
+			this.bUpdate.Location = new System.Drawing.Point(0, 247);
 			this.bUpdate.Name = "bUpdate";
 			this.bUpdate.Size = new System.Drawing.Size(311, 27);
 			this.bUpdate.TabIndex = 25;
@@ -131,7 +122,7 @@
 			// 
 			this.gbElo.Controls.Add(this.nudElo);
 			this.gbElo.Dock = System.Windows.Forms.DockStyle.Top;
-			this.gbElo.Location = new System.Drawing.Point(0, 254);
+			this.gbElo.Location = new System.Drawing.Point(0, 202);
 			this.gbElo.Name = "gbElo";
 			this.gbElo.Size = new System.Drawing.Size(311, 45);
 			this.gbElo.TabIndex = 24;
@@ -160,130 +151,15 @@
 			// 
 			// gbMode
 			// 
-			this.gbMode.Controls.Add(this.nudBlitz);
-			this.gbMode.Controls.Add(this.radioButton4);
-			this.gbMode.Controls.Add(this.nudNodes);
-			this.gbMode.Controls.Add(this.radioButton3);
-			this.gbMode.Controls.Add(this.nudDepth);
-			this.gbMode.Controls.Add(this.nudTime);
-			this.gbMode.Controls.Add(this.radioButton2);
-			this.gbMode.Controls.Add(this.radioButton1);
+			this.gbMode.Controls.Add(this.nudValue);
+			this.gbMode.Controls.Add(this.cbMode);
 			this.gbMode.Dock = System.Windows.Forms.DockStyle.Top;
 			this.gbMode.Location = new System.Drawing.Point(0, 135);
 			this.gbMode.Name = "gbMode";
-			this.gbMode.Size = new System.Drawing.Size(311, 119);
+			this.gbMode.Size = new System.Drawing.Size(311, 67);
 			this.gbMode.TabIndex = 16;
 			this.gbMode.TabStop = false;
 			this.gbMode.Text = "Mode";
-			// 
-			// nudNodes
-			// 
-			this.nudNodes.Increment = new decimal(new int[] {
-            1000,
-            0,
-            0,
-            0});
-			this.nudNodes.Location = new System.Drawing.Point(83, 65);
-			this.nudNodes.Maximum = new decimal(new int[] {
-            1000000000,
-            0,
-            0,
-            0});
-			this.nudNodes.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-			this.nudNodes.Name = "nudNodes";
-			this.nudNodes.Size = new System.Drawing.Size(222, 20);
-			this.nudNodes.TabIndex = 5;
-			this.nudNodes.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-			this.nudNodes.ThousandsSeparator = true;
-			this.nudNodes.Value = new decimal(new int[] {
-            1000000,
-            0,
-            0,
-            0});
-			// 
-			// radioButton3
-			// 
-			this.radioButton3.AutoSize = true;
-			this.radioButton3.Location = new System.Drawing.Point(6, 65);
-			this.radioButton3.Name = "radioButton3";
-			this.radioButton3.Size = new System.Drawing.Size(56, 17);
-			this.radioButton3.TabIndex = 2;
-			this.radioButton3.Text = "Nodes";
-			this.radioButton3.UseVisualStyleBackColor = true;
-			// 
-			// nudDepth
-			// 
-			this.nudDepth.Location = new System.Drawing.Point(83, 39);
-			this.nudDepth.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-			this.nudDepth.Name = "nudDepth";
-			this.nudDepth.Size = new System.Drawing.Size(222, 20);
-			this.nudDepth.TabIndex = 3;
-			this.nudDepth.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-			this.nudDepth.ThousandsSeparator = true;
-			this.nudDepth.Value = new decimal(new int[] {
-            3,
-            0,
-            0,
-            0});
-			// 
-			// nudTime
-			// 
-			this.nudTime.Increment = new decimal(new int[] {
-            100,
-            0,
-            0,
-            0});
-			this.nudTime.Location = new System.Drawing.Point(83, 16);
-			this.nudTime.Maximum = new decimal(new int[] {
-            1000000,
-            0,
-            0,
-            0});
-			this.nudTime.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-			this.nudTime.Name = "nudTime";
-			this.nudTime.Size = new System.Drawing.Size(222, 20);
-			this.nudTime.TabIndex = 2;
-			this.nudTime.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-			this.nudTime.ThousandsSeparator = true;
-			this.nudTime.Value = new decimal(new int[] {
-            1000,
-            0,
-            0,
-            0});
-			// 
-			// radioButton2
-			// 
-			this.radioButton2.AutoSize = true;
-			this.radioButton2.Location = new System.Drawing.Point(6, 42);
-			this.radioButton2.Name = "radioButton2";
-			this.radioButton2.Size = new System.Drawing.Size(54, 17);
-			this.radioButton2.TabIndex = 1;
-			this.radioButton2.Text = "Depth";
-			this.radioButton2.UseVisualStyleBackColor = true;
-			// 
-			// radioButton1
-			// 
-			this.radioButton1.AutoSize = true;
-			this.radioButton1.Checked = true;
-			this.radioButton1.Location = new System.Drawing.Point(6, 19);
-			this.radioButton1.Name = "radioButton1";
-			this.radioButton1.Size = new System.Drawing.Size(48, 17);
-			this.radioButton1.TabIndex = 0;
-			this.radioButton1.TabStop = true;
-			this.radioButton1.Text = "Time";
-			this.radioButton1.UseVisualStyleBackColor = true;
 			// 
 			// gbBook
 			// 
@@ -372,41 +248,39 @@
 			this.listBox1.TabIndex = 1;
 			this.listBox1.SelectedValueChanged += new System.EventHandler(this.ListBox1_SelectedValueChanged);
 			// 
-			// radioButton4
+			// cbMode
 			// 
-			this.radioButton4.AutoSize = true;
-			this.radioButton4.Location = new System.Drawing.Point(6, 88);
-			this.radioButton4.Name = "radioButton4";
-			this.radioButton4.Size = new System.Drawing.Size(44, 17);
-			this.radioButton4.TabIndex = 6;
-			this.radioButton4.Text = "Blitz";
-			this.radioButton4.UseVisualStyleBackColor = true;
+			this.cbMode.Dock = System.Windows.Forms.DockStyle.Top;
+			this.cbMode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.cbMode.FormattingEnabled = true;
+			this.cbMode.Items.AddRange(new object[] {
+            "Blitz",
+            "Depth",
+            "Nodes",
+            "Time"});
+			this.cbMode.Location = new System.Drawing.Point(3, 16);
+			this.cbMode.Name = "cbMode";
+			this.cbMode.Size = new System.Drawing.Size(305, 21);
+			this.cbMode.Sorted = true;
+			this.cbMode.TabIndex = 48;
+			this.cbMode.SelectedIndexChanged += new System.EventHandler(this.cbMode_SelectedIndexChanged);
 			// 
-			// nudBlitz
+			// nudValue
 			// 
-			this.nudBlitz.Increment = new decimal(new int[] {
-            10,
+			this.nudValue.Dock = System.Windows.Forms.DockStyle.Top;
+			this.nudValue.Location = new System.Drawing.Point(3, 37);
+			this.nudValue.Maximum = new decimal(new int[] {
+            1000000000,
             0,
             0,
             0});
-			this.nudBlitz.Location = new System.Drawing.Point(83, 91);
-			this.nudBlitz.Maximum = new decimal(new int[] {
-            360000,
-            0,
-            0,
-            0});
-			this.nudBlitz.Minimum = new decimal(new int[] {
+			this.nudValue.Name = "nudValue";
+			this.nudValue.Size = new System.Drawing.Size(305, 20);
+			this.nudValue.TabIndex = 51;
+			this.nudValue.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			this.nudValue.ThousandsSeparator = true;
+			this.nudValue.Value = new decimal(new int[] {
             1,
-            0,
-            0,
-            0});
-			this.nudBlitz.Name = "nudBlitz";
-			this.nudBlitz.Size = new System.Drawing.Size(222, 20);
-			this.nudBlitz.TabIndex = 7;
-			this.nudBlitz.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-			this.nudBlitz.ThousandsSeparator = true;
-			this.nudBlitz.Value = new decimal(new int[] {
-            60,
             0,
             0,
             0});
@@ -430,16 +304,12 @@
 			this.gbElo.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.nudElo)).EndInit();
 			this.gbMode.ResumeLayout(false);
-			this.gbMode.PerformLayout();
-			((System.ComponentModel.ISupportInitialize)(this.nudNodes)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.nudDepth)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.nudTime)).EndInit();
 			this.gbBook.ResumeLayout(false);
 			this.gbEngine.ResumeLayout(false);
 			this.groupBox1.ResumeLayout(false);
 			this.groupBox1.PerformLayout();
 			this.groupBox2.ResumeLayout(false);
-			((System.ComponentModel.ISupportInitialize)(this.nudBlitz)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.nudValue)).EndInit();
 			this.ResumeLayout(false);
 
 		}
@@ -453,10 +323,6 @@
 		private System.Windows.Forms.GroupBox gbEngine;
 		private System.Windows.Forms.ComboBox cbEngineList;
 		private System.Windows.Forms.GroupBox gbMode;
-		private System.Windows.Forms.NumericUpDown nudDepth;
-		private System.Windows.Forms.NumericUpDown nudTime;
-		private System.Windows.Forms.RadioButton radioButton2;
-		private System.Windows.Forms.RadioButton radioButton1;
 		private System.Windows.Forms.GroupBox gbBook;
 		public System.Windows.Forms.ComboBox cbBookList;
 		private System.Windows.Forms.Button bDelete;
@@ -465,9 +331,7 @@
 		private System.Windows.Forms.GroupBox gbElo;
 		private System.Windows.Forms.NumericUpDown nudElo;
 		private System.Windows.Forms.Button butClearHistory;
-		private System.Windows.Forms.NumericUpDown nudNodes;
-		private System.Windows.Forms.RadioButton radioButton3;
-		private System.Windows.Forms.NumericUpDown nudBlitz;
-		private System.Windows.Forms.RadioButton radioButton4;
+		private System.Windows.Forms.ComboBox cbMode;
+		private System.Windows.Forms.NumericUpDown nudValue;
 	}
 }

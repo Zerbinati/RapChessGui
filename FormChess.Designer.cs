@@ -1302,11 +1302,6 @@
             0,
             0,
             0});
-			this.nudTeacher.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
 			this.nudTeacher.Name = "nudTeacher";
 			this.nudTeacher.Size = new System.Drawing.Size(405, 20);
 			this.nudTeacher.TabIndex = 28;
@@ -1379,11 +1374,6 @@
 			this.nudTrained.Location = new System.Drawing.Point(3, 79);
 			this.nudTrained.Maximum = new decimal(new int[] {
             1000000000,
-            0,
-            0,
-            0});
-			this.nudTrained.Minimum = new decimal(new int[] {
-            1,
             0,
             0,
             0});
