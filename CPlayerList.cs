@@ -7,7 +7,7 @@ namespace RapChessGui
 
 	public class CPlayer
 	{
-		public string name = "Human";
+		public string name = "";
 		public string engine = "Human";
 		public string book = "None";
 		public string elo = "1000";
@@ -18,6 +18,10 @@ namespace RapChessGui
 		public int distance = 0;
 		public int position = 0;
 		public CModeValue modeValue = new CModeValue();
+
+		public CPlayer()
+		{
+		}
 
 		public CPlayer(string n)
 		{
@@ -94,13 +98,14 @@ namespace RapChessGui
 
 	static class CPlayerList
 	{
-		public const string def = "RapChess CS";
 		public static List<CPlayer> list = new List<CPlayer>();
 
-		public static void Add(CPlayer u)
+		public static void Add(CPlayer p)
 		{
-			if (GetIndex(u.name) < 0)
-				list.Add(u);
+			if (p.name == "")
+				p.name = p.GetName();
+			if (GetIndex(p.name) < 0)
+				list.Add(p);
 		}
 
 		public static int GetIndex(string name)
@@ -124,7 +129,9 @@ namespace RapChessGui
 
 		public static CPlayer GetPlayerAuto()
 		{
-			CPlayer ph = GetPlayerAuto("Human");
+			CPlayer ph = GetPlayer("Human");
+			if(ph == null)
+				ph = new CPlayer("Human");
 			CPlayer pe = GetPlayerElo(ph);
 			CPlayer pc = new CPlayer(pe.name);
 			pc.SetPlayer(pe.name);

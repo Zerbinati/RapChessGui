@@ -112,56 +112,56 @@ namespace RapChessGui
 			CPlayer p;
 			p = new CPlayer("Human");
 			CPlayerList.Add(p);
-			p = new CPlayer("RapChess CS R90");
+			p = new CPlayer();
 			p.engine = "RapChess CS";
 			p.book = "Rand90";
 			p.modeValue.mode = "Time";
 			p.modeValue.value = 10;
 			p.elo = "200";
 			CPlayerList.Add(p);
-			p = new CPlayer("RapChess CS R70");
+			p = new CPlayer();
 			p.engine = "RapChess CS";
 			p.book = "Rand70";
 			p.modeValue.mode = "Time";
 			p.modeValue.value = 10;
 			p.elo = "400";
 			CPlayerList.Add(p);
-			p = new CPlayer("RapChess CS R50");
+			p = new CPlayer();
 			p.engine = "RapChess CS";
 			p.book = "Rand50";
 			p.modeValue.mode = "Time";
 			p.modeValue.value = 10;
 			p.elo = "600";
 			CPlayerList.Add(p);
-			p = new CPlayer("RapChess CS R30");
+			p = new CPlayer();
 			p.engine = "RapChess CS";
 			p.book = "Rand30";
 			p.modeValue.mode = "Time";
 			p.modeValue.value = 10;
 			p.elo = "800";
 			CPlayerList.Add(p);
-			p = new CPlayer("RapChess CS R10");
+			p = new CPlayer();
 			p.engine = "RapChess CS";
 			p.book = "Rand10";
 			p.modeValue.mode = "Time";
 			p.modeValue.value = 10;
 			p.elo = "1000";
 			CPlayerList.Add(p);
-			p = new CPlayer("RapShort CS");
+			p = new CPlayer();
 			p.engine = "RapShort CS";
 			p.book = "Eco";
 			p.modeValue.mode = "Time";
 			p.modeValue.value = 10;
 			p.elo = "500";
 			CPlayerList.Add(p);
-			p = new CPlayer("RapSimple CS");
+			p = new CPlayer();
 			p.engine = "RapSimple CS";
 			p.book = "Eco";
 			p.modeValue.mode = "Time";
 			p.modeValue.value = 10;
 			p.elo = "1000";
 			CPlayerList.Add(p);
-			p = new CPlayer(CPlayerList.def);
+			p = new CPlayer();
 			p.engine = "RapChess CS";
 			p.book = "Eco";
 			p.modeValue.mode = "Time";
@@ -439,9 +439,9 @@ namespace RapChessGui
 		}
 
 
-		void ShowAuto()
+		void ShowAuto(bool first = false)
 		{
-			if (CModeGame.ranked)
+			if (CModeGame.ranked || first)
 			{
 				CPlayer p = CPlayerList.GetPlayerAuto();
 				cbEngine.SelectedIndex = cbEngine.FindStringExact(p.engine);
@@ -833,6 +833,7 @@ namespace RapChessGui
 			listView1.Columns[1].Text = $"▼ {listView1.Columns[1].Text}";
 			listView1.ListViewItemSorter = new ListViewComparer(1, SortOrder.Descending);
 			listView1.Sort();
+			ShowAuto(true);
 		}
 
 		public bool MakeMove(string emo)

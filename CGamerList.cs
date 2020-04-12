@@ -228,16 +228,10 @@ namespace RapChessGui
 
 		public string GetName()
 		{
-			string n = "Human";
-			string b = "";
-			string m = "";
-			if (engine != null) {
-				n = engine.name;
-				m = player.modeValue.ShortName();
-			}
-			if (book != null)
-				b = book.ShortName();
-			return $"{n}{b}{m}";
+			if (player == null)
+				return "Human";
+			else
+				return player.GetName();
 		}
 
 		public void SetPlayer(CPlayer p)

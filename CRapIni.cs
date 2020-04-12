@@ -135,9 +135,8 @@ namespace RapIni
 
 		public bool ReadBool(string key, bool def = false)
 		{
-			bool result = def;
 			string s = Read(key, Convert.ToString(def));
-			bool.TryParse(s,out result);
+			bool.TryParse(s,out bool result);
 			return result;
 		}
 
