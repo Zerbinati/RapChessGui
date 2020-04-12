@@ -16,9 +16,8 @@ namespace RapLog
 			string path = new FileInfo(name + ".log").FullName.ToString();
 			if (File.Exists(path))
 				list = File.ReadAllLines(path).ToList();
-			list.Add($"{DateTime.Now.ToString()} {m}");
-			int remove = Math.Max(0, list.Count - 100);
-			list.RemoveRange(0, remove);
+			list.Insert(0,$"{DateTime.Now.ToString()} {m}");
+			list.RemoveRange(100, list.Count - 100);
 			File.WriteAllLines(path, list);
 		}
 

@@ -30,8 +30,13 @@ namespace RapChessGui
 
 		public string ShortName()
 		{
-			string n = name[0].ToString();
-			return n.ToUpper();
+			string result = "";
+			for (int n = 0; n < name.Length; n++) {
+				char c = name[n];
+				if ((n == 0) || char.IsUpper(c) || char.IsNumber(c))
+					result += c;
+			}
+			return $" {result.ToUpper()}";
 		}
 
 	}

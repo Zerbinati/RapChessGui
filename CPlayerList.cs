@@ -52,6 +52,8 @@ namespace RapChessGui
 
 		public void SaveToIni()
 		{
+			if (name == "")
+				name = GetName();
 			CRapIni.This.Write($"player>{name}>engine", engine);
 			CRapIni.This.Write($"player>{name}>mode", modeValue.mode);
 			CRapIni.This.Write($"player>{name}>value", modeValue.value.ToString());
@@ -60,6 +62,34 @@ namespace RapChessGui
 			CRapIni.This.Write($"player>{name}>eloNew", Convert.ToString(eloNew));
 			CRapIni.This.Write($"player>{name}>eloOld", Convert.ToString(eloOld));
 		}
+
+		string MakeShort(string name)
+		{
+			string result = "";
+			for (int n = 0; n < name.Length; n++)
+			{
+				char c = name[n];
+				if ((n == 0) || char.IsUpper(c) || char.IsNumber(c))
+					result += c;
+			}
+			return result;
+		}
+
+		public string GetName()
+		{
+			string n = "Human";
+			string b = "";
+			string m = "";
+			if (engine != "Human")
+			{
+				n = engine;
+				m = modeValue.ShortName();
+			}
+			if (book != "None")
+				b = $" {MakeShort(book)}";
+			return $"{n}{b}{m}";
+		}
+
 	}
 
 	static class CPlayerList

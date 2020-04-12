@@ -155,7 +155,14 @@ namespace RapChessGui
 			}
 		}
 
-	}
+		public string ShortName()
+		{
+			string result = mode[0].ToString();
+			if(mode !="Infinite")
+				result = $"{result}{value}";
+			return $" {result}";
+		}
+	} 
 
 	public class ListViewComparer : System.Collections.IComparer
 	{

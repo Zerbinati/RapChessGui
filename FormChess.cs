@@ -65,6 +65,7 @@ namespace RapChessGui
 			lvMoves_Resize(lvMoves, null);
 			BoardPrepare();
 			GameStart();
+			toolTip1.Active = FormOptions.ShowTips();
 		}
 
 		void CreateIni()
@@ -773,7 +774,7 @@ namespace RapChessGui
 							if (elo == 0)
 								lvi.BackColor = Color.FromArgb(0xff, 0xff, 0xff);
 							listView2.Items.Add(lvi);
-							if ((player.position - p.position) == 4)
+							if ((player.position - p.position) == (listView2.ClientRectangle.Height / lvi.Bounds.Height) >> 1)
 								top2 = lvi;
 						}
 					}
@@ -1587,6 +1588,7 @@ namespace RapChessGui
 			CArrow.Hide();
 			BoardPrepare();
 			ShowAutoElo();
+			toolTip1.Active = FormOptions.ShowTips();
 		}
 
 		private void ButTraining_Click(object sender, EventArgs e)

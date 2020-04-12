@@ -22,6 +22,7 @@ namespace RapChessGui
 			cbRotateBoard.Checked = Convert.ToInt32(CRapIni.This.Read("options>interface>rotate", "0")) == 1;
 			cbAttack.Checked = Convert.ToInt32(CRapIni.This.Read("options>interface>attack", cbAttack.Checked ? "1" : "0")) == 1;
 			cbArrow.Checked = Convert.ToInt32(CRapIni.This.Read("options>interface>arrow", cbArrow.Checked ? "1" : "0")) == 1;
+			cbTips.Checked = Convert.ToInt32(CRapIni.This.Read("options>interface>tips", cbTips.Checked ? "1" : "0")) == 1;
 			nudSpeed.Value = Convert.ToInt32(CRapIni.This.Read("options>interface>speed", "200"));
 			CBoard.color = ColorTranslator.FromHtml(CRapIni.This.Read("options>interface>color", "#400000"));
 			cbGameAutoElo.Checked = Convert.ToInt32(CRapIni.This.Read("options>game>autoelo", "1")) == 1;
@@ -36,11 +37,17 @@ namespace RapChessGui
 			CRapIni.This.Write("options>interface>rotate", cbRotateBoard.Checked ? "1" : "0");
 			CRapIni.This.Write("options>interface>attack", cbAttack.Checked ? "1" : "0");
 			CRapIni.This.Write("options>interface>arrow", cbArrow.Checked ? "1" : "0");
+			CRapIni.This.Write("options>interface>tips", cbTips.Checked ? "1" : "0");
 			CRapIni.This.Write("options>interface>speed", nudSpeed.Value.ToString());
 			CRapIni.This.Write("options>interface>color", ColorTranslator.ToHtml(CBoard.color));
 			CRapIni.This.Write("options>game>autoelo", cbGameAutoElo.Checked ? "1" : "0");
 			CRapIni.This.Write("options>tournament>records", nudTournament.Value.ToString());
 			CBoard.showArrow = cbArrow.Checked;
+		}
+
+		public static bool ShowTips()
+		{
+			return This.cbTips.Checked;
 		}
 
 		private void CbRotateBoard_CheckedChanged(object sender, EventArgs e)
@@ -53,7 +60,8 @@ namespace RapChessGui
 		{
 			colorDialog1.Color = Color.FromArgb(64,8,8);
 			cbShowPonder.Checked = true;
-			cbArrow.Checked = false;
+			cbArrow.Checked = true;
+			cbTips.Checked = true;
 			CData.rotateBoard = cbRotateBoard.Checked = false;
 			CBoard.color = colorDialog1.Color;
 			FormChess.This.RenderBoard();
