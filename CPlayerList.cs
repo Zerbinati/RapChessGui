@@ -10,8 +10,6 @@ namespace RapChessGui
 		public string name = "Human";
 		public string engine = "Human";
 		public string book = "None";
-		public string mode = "movetime";
-		public string value = "1000";
 		public string elo = "1000";
 		public double eloOld = 1000;
 		public int eloNew = 1000;
@@ -19,6 +17,7 @@ namespace RapChessGui
 		public int eloMore = 0;
 		public int distance = 0;
 		public int position = 0;
+		public CModeValue modeValue = new CModeValue();
 
 		public CPlayer(string n)
 		{
@@ -30,76 +29,12 @@ namespace RapChessGui
 			return Convert.ToInt32(elo) - Convert.ToInt32(eloOld);
 		}
 
-		public bool SetCommand(string command)
-		{
-			string[] t = command.Split(new[] { ' ', '\t' }, StringSplitOptions.RemoveEmptyEntries);
-			string c1 = "";
-			string c2 = "";
-			if (t.Length > 0)
-				c1 = t[0].ToLower();
-			if (t.Length > 1)
-				if (int.TryParse(t[1], out int v))
-					c2 = v.ToString();
-			switch (c1)
-			{
-				case "movetime":
-					if (c2 == "")
-						return false;
-					break;
-				case "depth":
-					if (c2 == "")
-						return false;
-					break;
-				case "nodes":
-					if (c2 == "")
-						return false;
-					break;
-				case "infinite":
-					break;
-				default:
-					return false;
-			}
-			mode = c1;
-			value = c2;
-			return true;
-		}
-
-		public string GetCommand()
-		{
-			if (engine == "Human")
-				return "";
-			else if (value == "blitz")
-			{
-
-				return $" wtime 121000 btime 120000 winc 0 binc 0";
-			}
-			else if (value == "")
-				return mode;
-			else
-				return $"{mode} {value}";
-		}
-
-		public string GetMode()
-		{
-			switch (mode)
-			{
-				case "depth":
-					return "Depth";
-				case "nodes":
-					return "Nodes";
-				case "blitz":
-					return "Blitz";
-				default:
-					return "Time";
-			}
-		}
-
 		public void SetPlayer(string name)
 		{
 			CPlayer p = CPlayerList.GetPlayerAuto(name);
 			engine = p.engine;
-			mode = p.mode;
-			value = p.value;
+			modeValue.mode = p.modeValue.mode;
+			modeValue.value = p.modeValue.value;
 			book = p.book;
 			elo = p.elo;
 		}
@@ -107,8 +42,8 @@ namespace RapChessGui
 		public void LoadFromIni()
 		{
 			engine = CRapIni.This.Read($"player>{name}>engine", "Human");
-			mode = CRapIni.This.Read($"player>{name}>mode", "movetime");
-			value = CRapIni.This.Read($"player>{name}>value", "1000");
+			modeValue.mode = CRapIni.This.Read($"player>{name}>mode", "movetime");
+			modeValue.value = CRapIni.This.ReadInt($"player>{name}>value", 10);
 			book = CRapIni.This.Read($"player>{name}>book", "None");
 			elo = CRapIni.This.Read($"player>{name}>elo", "1000");
 			eloNew = CRapIni.This.ReadInt($"player>{name}>eloNew", 1000);
@@ -118,8 +53,8 @@ namespace RapChessGui
 		public void SaveToIni()
 		{
 			CRapIni.This.Write($"player>{name}>engine", engine);
-			CRapIni.This.Write($"player>{name}>mode", mode);
-			CRapIni.This.Write($"player>{name}>value", value);
+			CRapIni.This.Write($"player>{name}>mode", modeValue.mode);
+			CRapIni.This.Write($"player>{name}>value", modeValue.value.ToString());
 			CRapIni.This.Write($"player>{name}>book", book);
 			CRapIni.This.Write($"player>{name}>elo", elo);
 			CRapIni.This.Write($"player>{name}>eloNew", Convert.ToString(eloNew));

@@ -1914,7 +1914,7 @@
 			this.labMaterialD.Size = new System.Drawing.Size(92, 24);
 			this.labMaterialD.TabIndex = 23;
 			this.labMaterialD.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			this.toolTip1.SetToolTip(this.labMaterialD, "Difference of pieces values between players");
+			this.toolTip1.SetToolTip(this.labMaterialD, "Difference of pieces material between players");
 			// 
 			// labTimeD
 			// 
@@ -1989,7 +1989,7 @@
 			this.labMaterialT.Size = new System.Drawing.Size(92, 24);
 			this.labMaterialT.TabIndex = 23;
 			this.labMaterialT.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			this.toolTip1.SetToolTip(this.labMaterialT, "Difference of pieces values between players");
+			this.toolTip1.SetToolTip(this.labMaterialT, "Difference of pieces material between players");
 			// 
 			// labTimeT
 			// 

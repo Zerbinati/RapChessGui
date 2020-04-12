@@ -39,8 +39,9 @@ namespace RapChessGui
 				cbBookList.Text = "None";
 			curPlayerName = p.name;
 			nudElo.Value = Int32.Parse(p.elo);
-			nudValue.Value = Int32.Parse(p.value);
-			modeValue.SetUci(p.mode);
+			nudValue.Value = p.modeValue.GetValue();
+			modeValue.mode = p.modeValue.mode;
+			modeValue.value = p.modeValue.value;
 			cbMode.SelectedIndex = cbMode.FindStringExact(modeValue.mode);
 		}
 
@@ -63,8 +64,8 @@ namespace RapChessGui
 			p.book = cbBookList.Text;
 			p.elo = nudElo.Value.ToString();
 			p.eloOld = Convert.ToDouble(p.elo);
-			p.mode = modeValue.GetUci();
-			p.value = modeValue.GetValue().ToString();
+			p.modeValue.mode = modeValue.mode;
+			p.modeValue.value = modeValue.value;
 			p.SaveToIni();
 			curPlayerName = p.name;
 			UpdateListBox();

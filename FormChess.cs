@@ -114,57 +114,57 @@ namespace RapChessGui
 			p = new CPlayer("RapChess CS R90");
 			p.engine = "RapChess CS";
 			p.book = "Rand90";
-			p.mode = "movetime";
-			p.value = "1";
+			p.modeValue.mode = "Time";
+			p.modeValue.value = 10;
 			p.elo = "200";
 			CPlayerList.Add(p);
 			p = new CPlayer("RapChess CS R70");
 			p.engine = "RapChess CS";
 			p.book = "Rand70";
-			p.mode = "movetime";
-			p.value = "1";
+			p.modeValue.mode = "Time";
+			p.modeValue.value = 10;
 			p.elo = "400";
 			CPlayerList.Add(p);
 			p = new CPlayer("RapChess CS R50");
 			p.engine = "RapChess CS";
 			p.book = "Rand50";
-			p.mode = "movetime";
-			p.value = "1";
+			p.modeValue.mode = "Time";
+			p.modeValue.value = 10;
 			p.elo = "600";
 			CPlayerList.Add(p);
 			p = new CPlayer("RapChess CS R30");
 			p.engine = "RapChess CS";
 			p.book = "Rand30";
-			p.mode = "movetime";
-			p.value = "1";
+			p.modeValue.mode = "Time";
+			p.modeValue.value = 10;
 			p.elo = "800";
 			CPlayerList.Add(p);
 			p = new CPlayer("RapChess CS R10");
 			p.engine = "RapChess CS";
 			p.book = "Rand10";
-			p.mode = "movetime";
-			p.value = "1";
+			p.modeValue.mode = "Time";
+			p.modeValue.value = 10;
 			p.elo = "1000";
 			CPlayerList.Add(p);
 			p = new CPlayer("RapShort CS");
 			p.engine = "RapShort CS";
 			p.book = "Eco";
-			p.mode = "movetime";
-			p.value = "1000";
+			p.modeValue.mode = "Time";
+			p.modeValue.value = 10;
 			p.elo = "500";
 			CPlayerList.Add(p);
 			p = new CPlayer("RapSimple CS");
 			p.engine = "RapSimple CS";
 			p.book = "Eco";
-			p.mode = "movetime";
-			p.value = "1000";
+			p.modeValue.mode = "Time";
+			p.modeValue.value = 10;
 			p.elo = "1000";
 			CPlayerList.Add(p);
 			p = new CPlayer(CPlayerList.def);
 			p.engine = "RapChess CS";
 			p.book = "Eco";
-			p.mode = "movetime";
-			p.value = "1000";
+			p.modeValue.mode = "Time";
+			p.modeValue.value = 10;
 			p.elo = "1200";
 			CPlayerList.Add(p);
 			CPlayerList.SaveToIni();
@@ -443,11 +443,9 @@ namespace RapChessGui
 			{
 				CPlayer p = CPlayerList.GetPlayerAuto();
 				cbEngine.SelectedIndex = cbEngine.FindStringExact(p.engine);
-				cbMode.SelectedIndex = cbMode.FindStringExact(p.GetMode());
+				cbMode.SelectedIndex = cbMode.FindStringExact(p.modeValue.GetUci());
 				cbBook.SelectedIndex = cbBook.FindStringExact(p.book);
-				int v = Convert.ToInt32(p.value);
-				if (v >= nudValue.Minimum)
-					nudValue.Value = v;
+				nudValue.Value = p.modeValue.GetValue();
 			}
 		}
 
@@ -505,29 +503,8 @@ namespace RapChessGui
 			{
 				pc.engine = cbEngine.Text;
 				pc.book = cbBook.Text;
-				switch (cbMode.Text)
-				{
-					case "Blitz":
-						pc.mode = "blitz";
-						pc.value = Convert.ToString(nudValue.Value * 1000);
-						break;
-					case "Depth":
-						pc.mode = "depth";
-						pc.value = Convert.ToString(nudValue.Value);
-						break;
-					case "Nodes":
-						pc.mode = "nodes";
-						pc.value = Convert.ToString(nudValue.Value);
-						break;
-					case "Infinite":
-						pc.mode = "infinite";
-						pc.value = "";
-						break;
-					default:
-						pc.mode = "movetime";
-						pc.value = Convert.ToString(nudValue.Value);
-						break;
-				}
+				pc.modeValue.mode = CModeGame.modeValue.mode;
+				pc.modeValue.value = CModeGame.modeValue.value;
 			}
 			else
 				pc = CPlayerList.GetPlayer(cbComputer.Text);
@@ -600,20 +577,22 @@ namespace RapChessGui
 			CModeMatch.engine1 = cbEngine1.Text;
 			CModeMatch.engine2 = cbEngine2.Text;
 			CModeMatch.modeValue1.mode = cbMode1.Text;
+			CModeMatch.modeValue1.SetValue((int)nudValue1.Value);
 			CModeMatch.modeValue2.mode = cbMode2.Text;
+			CModeMatch.modeValue2.SetValue((int)nudValue2.Value);
 			CModeMatch.book1 = cbBook1.Text;
 			CModeMatch.book2 = cbBook2.Text;
 			SetMode((int)CMode.match);
 			CPlayer p1 = new CPlayer("Player 1");
 			p1.engine = CModeMatch.engine1;
 			p1.book = CModeMatch.book1;
-			p1.mode = CModeMatch.modeValue1.GetUci();
-			p1.value = Convert.ToString(CModeMatch.modeValue1.GetValue());
+			p1.modeValue.mode = CModeMatch.modeValue1.mode;
+			p1.modeValue.value = CModeMatch.modeValue1.value;
 			CPlayer p2 = new CPlayer("Player 2");
 			p2.engine = CModeMatch.engine2;
 			p2.book = CModeMatch.book2;
-			p2.mode = CModeMatch.modeValue2.GetUci();
-			p2.value = Convert.ToString(CModeMatch.modeValue2.GetValue());
+			p2.modeValue.mode = CModeMatch.modeValue2.mode;
+			p2.modeValue.value = CModeMatch.modeValue2.value;
 			GamerList.gamer[0].SetPlayer(p1);
 			GamerList.gamer[1].SetPlayer(p2);
 			if (CModeMatch.rotate)
@@ -732,41 +711,13 @@ namespace RapChessGui
 			CPlayer pw = new CPlayer("Trained");
 			pw.engine = CModeTraining.trained;
 			pw.book = CModeTraining.trainedBook;
-			switch (CModeTraining.modeValueTrained.mode)
-			{
-				case "Blitz":
-					pw.mode = "blitz";
-					break;
-				case "Depth":
-					pw.mode = "depth";
-					break;
-				case "Nodes":
-					pw.mode = "nodes";
-					break;
-				default:
-					pw.mode = "movetime";
-					break;
-			}
-			pw.value = Convert.ToString(CModeTraining.modeValueTrained.GetValue());
+			pw.modeValue.mode = CModeTraining.modeValueTrained.mode;
+			pw.modeValue.value = CModeTraining.modeValueTrained.value;
 			CPlayer pb = new CPlayer("Teacher");
 			pb.engine = CModeTraining.teacher;
 			pb.book = CModeTraining.teacherBook;
-			switch (CModeTraining.modeValueTeacher.mode)
-			{
-				case "Blitz":
-					pb.mode = "blitz";
-					break;
-				case "Depth":
-					pb.mode = "depth";
-					break;
-				case "Nodes":
-					pb.mode = "nodes";
-					break;
-				default:
-					pb.mode = "movetime";
-					break;
-			}
-			pb.value = Convert.ToString(CModeTraining.modeValueTeacher.GetValue());
+			pb.modeValue.mode = CModeTraining.modeValueTeacher.mode;
+			pb.modeValue.value = CModeTraining.modeValueTeacher.value;
 			GamerList.gamer[0].SetPlayer(pw);
 			GamerList.gamer[1].SetPlayer(pb);
 			if (CModeTraining.rotate)
@@ -1355,11 +1306,11 @@ namespace RapChessGui
 			string mw = material.ToString();
 			if (material > 0)
 				mw = $"+{mw}";
-			mw = $"DPV {mw}";
+			mw = $"M {mw}";
 			string mb = (-material).ToString();
 			if (-material > 0)
 				mb = $"+{mb}";
-			mb = $"DPV {mb}";
+			mb = $"M {mb}";
 			if (boardRotate)
 			{
 				labTakenT.Text = w;

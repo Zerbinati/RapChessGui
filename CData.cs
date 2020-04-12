@@ -55,7 +55,7 @@ namespace RapChessGui
 
 	}
 
-	class CModeValue
+	public class CModeValue
 	{
 		public string mode = "Time";
 		public int value = 10;
@@ -74,12 +74,20 @@ namespace RapChessGui
 			return value * GetIncrement();
 		}
 
+		public int GetUciValue()
+		{
+			int result = value * GetIncrement();
+			if (mode == "Blitz")
+				result *= 1000;
+			return result;
+		}
+
 		public int GetIncrement()
 		{
 			switch (mode)
 			{
 				case "Blitz":
-					return 1000;
+					return 1;
 				case "Depth":
 					return 1;
 				case "Nodes":

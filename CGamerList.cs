@@ -86,8 +86,8 @@ namespace RapChessGui
 
 		public void Start()
 		{
-			mode = player.mode;
-			value = player.value;
+			mode = player.modeValue.GetUci();
+			value = player.modeValue.GetUciValue().ToString();
 			if (engine.protocol == "Uci")
 			{
 				SendMessage("uci");
@@ -108,7 +108,7 @@ namespace RapChessGui
 						break;
 					case "movetime":
 						mode = "st";
-						int v = Convert.ToInt32(player.value) / 1000;
+						int v = Convert.ToInt32(player.modeValue.GetUciValue()) / 1000;
 						if (v < 1)
 							v = 1;
 						value = v.ToString();
@@ -121,22 +121,26 @@ namespace RapChessGui
 		void UciGo()
 		{
 			SendMessage(CHistory.GetPosition());
-			if (player.mode == "blitz")
+			if (player.modeValue.mode == "Blitz")
 			{
-				Int64 v = Convert.ToInt64(player.value);
+				Int64 v = Convert.ToInt64(player.modeValue.GetUciValue());
 				Int64 t = Convert.ToInt64(v - timeTotal);
+				if (t < 1)
+					t = 1;
 				SendMessage($"go wtime {t} btime {t} winc 0 binc 0");
 			}
 			else
-				SendMessage($"go {player.mode} {player.value}");
+				SendMessage($"go {player.modeValue.GetUci()} {player.modeValue.GetUciValue()}");
 		}
 
 		void XbGo()
 		{
-			if (player.mode == "blitz")
+			if (player.modeValue.mode == "Blitz")
 			{
-				int v = Convert.ToInt32(player.value);
+				int v = Convert.ToInt32(player.modeValue.GetUciValue());
 				int t = Convert.ToInt32(v - timeTotal);
+				if (t < 1)
+					t = 1;
 				SendMessage($"time {t}");
 				SendMessage($"otim {t}");
 			}
