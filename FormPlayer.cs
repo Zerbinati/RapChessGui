@@ -76,6 +76,8 @@ namespace RapChessGui
 
 		private void ButUpdate_Click(object sender, EventArgs e)
 		{
+			modeValue.mode = cbMode.Text;
+			modeValue.SetValue((int)nudValue.Value);
 			CPlayer player = CPlayerList.GetPlayer(curPlayerName);
 			if (player == null)
 				return;
@@ -90,6 +92,8 @@ namespace RapChessGui
 			string name = tbPlayerName.Text;
 			if (CPlayerList.GetPlayer(name) == null)
 			{
+				modeValue.mode = cbMode.Text;
+				modeValue.SetValue((int)nudValue.Value);
 				CPlayer player = new CPlayer(name);
 				player.engine = cbEngineList.Text;
 				CPlayerList.list.Add(player);
@@ -142,6 +146,7 @@ namespace RapChessGui
 			nudValue.Increment = modeValue.GetIncrement();
 			nudValue.Minimum = nudValue.Increment;
 			nudValue.Value = modeValue.GetValue();
+			toolTip1.SetToolTip(nudValue, modeValue.GetTip());
 		}
 	}
 }

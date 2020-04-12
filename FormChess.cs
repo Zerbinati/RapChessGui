@@ -443,7 +443,7 @@ namespace RapChessGui
 			{
 				CPlayer p = CPlayerList.GetPlayerAuto();
 				cbEngine.SelectedIndex = cbEngine.FindStringExact(p.engine);
-				cbMode.SelectedIndex = cbMode.FindStringExact(p.modeValue.GetUci());
+				cbMode.SelectedIndex = cbMode.FindStringExact(p.modeValue.mode);
 				cbBook.SelectedIndex = cbBook.FindStringExact(p.book);
 				nudValue.Value = p.modeValue.GetValue();
 			}

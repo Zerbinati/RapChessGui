@@ -28,6 +28,7 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
+			this.components = new System.ComponentModel.Container();
 			this.panel1 = new System.Windows.Forms.Panel();
 			this.butClearHistory = new System.Windows.Forms.Button();
 			this.bDelete = new System.Windows.Forms.Button();
@@ -36,6 +37,8 @@
 			this.gbElo = new System.Windows.Forms.GroupBox();
 			this.nudElo = new System.Windows.Forms.NumericUpDown();
 			this.gbMode = new System.Windows.Forms.GroupBox();
+			this.nudValue = new System.Windows.Forms.NumericUpDown();
+			this.cbMode = new System.Windows.Forms.ComboBox();
 			this.gbBook = new System.Windows.Forms.GroupBox();
 			this.cbBookList = new System.Windows.Forms.ComboBox();
 			this.gbEngine = new System.Windows.Forms.GroupBox();
@@ -44,17 +47,16 @@
 			this.tbPlayerName = new System.Windows.Forms.TextBox();
 			this.groupBox2 = new System.Windows.Forms.GroupBox();
 			this.listBox1 = new System.Windows.Forms.ListBox();
-			this.cbMode = new System.Windows.Forms.ComboBox();
-			this.nudValue = new System.Windows.Forms.NumericUpDown();
+			this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
 			this.panel1.SuspendLayout();
 			this.gbElo.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.nudElo)).BeginInit();
 			this.gbMode.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.nudValue)).BeginInit();
 			this.gbBook.SuspendLayout();
 			this.gbEngine.SuspendLayout();
 			this.groupBox1.SuspendLayout();
 			this.groupBox2.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.nudValue)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// panel1
@@ -161,6 +163,43 @@
 			this.gbMode.TabStop = false;
 			this.gbMode.Text = "Mode";
 			// 
+			// nudValue
+			// 
+			this.nudValue.Dock = System.Windows.Forms.DockStyle.Top;
+			this.nudValue.Location = new System.Drawing.Point(3, 37);
+			this.nudValue.Maximum = new decimal(new int[] {
+            1000000000,
+            0,
+            0,
+            0});
+			this.nudValue.Name = "nudValue";
+			this.nudValue.Size = new System.Drawing.Size(305, 20);
+			this.nudValue.TabIndex = 51;
+			this.nudValue.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			this.nudValue.ThousandsSeparator = true;
+			this.nudValue.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+			// 
+			// cbMode
+			// 
+			this.cbMode.Dock = System.Windows.Forms.DockStyle.Top;
+			this.cbMode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.cbMode.FormattingEnabled = true;
+			this.cbMode.Items.AddRange(new object[] {
+            "Blitz",
+            "Depth",
+            "Nodes",
+            "Time"});
+			this.cbMode.Location = new System.Drawing.Point(3, 16);
+			this.cbMode.Name = "cbMode";
+			this.cbMode.Size = new System.Drawing.Size(305, 21);
+			this.cbMode.Sorted = true;
+			this.cbMode.TabIndex = 48;
+			this.cbMode.SelectedIndexChanged += new System.EventHandler(this.cbMode_SelectedIndexChanged);
+			// 
 			// gbBook
 			// 
 			this.gbBook.Controls.Add(this.cbBookList);
@@ -248,43 +287,6 @@
 			this.listBox1.TabIndex = 1;
 			this.listBox1.SelectedValueChanged += new System.EventHandler(this.ListBox1_SelectedValueChanged);
 			// 
-			// cbMode
-			// 
-			this.cbMode.Dock = System.Windows.Forms.DockStyle.Top;
-			this.cbMode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.cbMode.FormattingEnabled = true;
-			this.cbMode.Items.AddRange(new object[] {
-            "Blitz",
-            "Depth",
-            "Nodes",
-            "Time"});
-			this.cbMode.Location = new System.Drawing.Point(3, 16);
-			this.cbMode.Name = "cbMode";
-			this.cbMode.Size = new System.Drawing.Size(305, 21);
-			this.cbMode.Sorted = true;
-			this.cbMode.TabIndex = 48;
-			this.cbMode.SelectedIndexChanged += new System.EventHandler(this.cbMode_SelectedIndexChanged);
-			// 
-			// nudValue
-			// 
-			this.nudValue.Dock = System.Windows.Forms.DockStyle.Top;
-			this.nudValue.Location = new System.Drawing.Point(3, 37);
-			this.nudValue.Maximum = new decimal(new int[] {
-            1000000000,
-            0,
-            0,
-            0});
-			this.nudValue.Name = "nudValue";
-			this.nudValue.Size = new System.Drawing.Size(305, 20);
-			this.nudValue.TabIndex = 51;
-			this.nudValue.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-			this.nudValue.ThousandsSeparator = true;
-			this.nudValue.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-			// 
 			// FormPlayer
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -304,12 +306,12 @@
 			this.gbElo.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.nudElo)).EndInit();
 			this.gbMode.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this.nudValue)).EndInit();
 			this.gbBook.ResumeLayout(false);
 			this.gbEngine.ResumeLayout(false);
 			this.groupBox1.ResumeLayout(false);
 			this.groupBox1.PerformLayout();
 			this.groupBox2.ResumeLayout(false);
-			((System.ComponentModel.ISupportInitialize)(this.nudValue)).EndInit();
 			this.ResumeLayout(false);
 
 		}
@@ -333,5 +335,6 @@
 		private System.Windows.Forms.Button butClearHistory;
 		private System.Windows.Forms.ComboBox cbMode;
 		private System.Windows.Forms.NumericUpDown nudValue;
+		private System.Windows.Forms.ToolTip toolTip1;
 	}
 }
