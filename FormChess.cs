@@ -198,9 +198,9 @@ namespace RapChessGui
 		void AddLines(CGamer g)
 		{
 			if (g.white)
-				lvMovesW.Items.Insert(0, new ListViewItem(new[] { g.GetTimeElapsed(), g.GetDepth(), g.nodes.ToString("N0"), g.nps.ToString("N0"), g.score, g.pv }));
+				lvMovesW.Items.Insert(0, new ListViewItem(new[] { g.GetTimeElapsed(), g.score, g.GetDepth(), g.nodes.ToString("N0"), g.nps.ToString("N0"), g.pv }));
 			else
-				lvMovesB.Items.Insert(0, new ListViewItem(new[] { g.GetTimeElapsed(), g.GetDepth(), g.nodes.ToString("N0"), g.nps.ToString("N0"), g.score, g.pv }));
+				lvMovesB.Items.Insert(0, new ListViewItem(new[] { g.GetTimeElapsed(), g.score, g.GetDepth(), g.nodes.ToString("N0"), g.nps.ToString("N0"), g.pv }));
 		}
 
 		public void GetMessageUci(CGamer g, string msg)
@@ -1245,32 +1245,30 @@ namespace RapChessGui
 			labFPS.Text = $"FPS {Convert.ToInt32(CData.fps)}";
 		}
 
-		void RenderInfo(CGamer cp)
+		void RenderInfo(CGamer g)
 		{
 			if (!FormOptions.This.cbShowPonder.Checked)
-				cp.ponder = "";
-			ulong nps = cp.totalNps > 0 ? cp.totalNps : cp.nps;
-			if (boardRotate ^ cp.white)
+				g.ponder = "";
+			ulong nps = g.totalNps > 0 ? g.totalNps : g.nps;
+			if (boardRotate ^ g.white)
 			{
-				labTimeD.Text = cp.GetTime();
-				labEloD.Text = cp.GetElo();
-				labScoreB.Text = $"Score {cp.score}";
-				labNodesB.Text = $"Nodes {cp.nodes.ToString("N0")}";
+				labTimeD.Text = g.GetTime();
+				labScoreB.Text = $"Score {g.score}";
+				labNodesB.Text = $"Nodes {g.nodes.ToString("N0")}";
 				labNpsB.Text = $"Nps {nps.ToString("N0")}";
-				labPonderB.Text = $"Ponder {cp.ponder}";
-				labBookB.Text = $"Book {cp.usedBook}";
-				labDepthB.Text = $"Depth {cp.GetDepth()}";
+				labPonderB.Text = $"Ponder {g.ponder}";
+				labBookB.Text = $"Book {g.usedBook}";
+				labDepthB.Text = $"Depth {g.GetDepth()}";
 			}
 			else
 			{
-				labTimeT.Text = cp.GetTime();
-				labEloT.Text = cp.GetElo();
-				labScoreT.Text = $"Score {cp.score}";
-				labNodesT.Text = $"Nodes {cp.nodes.ToString("N0")}";
+				labTimeT.Text = g.GetTime();
+				labScoreT.Text = $"Score {g.score}";
+				labNodesT.Text = $"Nodes {g.nodes.ToString("N0")}";
 				labNpsT.Text = $"Nps {nps.ToString("N0")}";
-				labPonderT.Text = $"Ponder {cp.ponder}";
-				labBookT.Text = $"Book {cp.usedBook}";
-				labDepthT.Text = $"Depth {cp.GetDepth()}";
+				labPonderT.Text = $"Ponder {g.ponder}";
+				labBookT.Text = $"Book {g.usedBook}";
+				labDepthT.Text = $"Depth {g.GetDepth()}";
 			}
 		}
 
@@ -1309,11 +1307,11 @@ namespace RapChessGui
 			string mw = material.ToString();
 			if (material > 0)
 				mw = $"+{mw}";
-			mw = $"M {mw}";
+			mw = $"Material {mw}";
 			string mb = (-material).ToString();
 			if (-material > 0)
 				mb = $"+{mb}";
-			mb = $"M {mb}";
+			mb = $"Material {mb}";
 			if (boardRotate)
 			{
 				labTakenT.Text = w;
@@ -1466,6 +1464,8 @@ namespace RapChessGui
 			labMovesB.Text = gb.GetName();
 			labProtocolW.Text = gw.GetProtocol();
 			labProtocolB.Text = gb.GetProtocol();
+			labEloW.Text = gw.GetElo();
+			labEloB.Text = gb.GetElo();
 			splitContainerMoves.Panel1Collapsed = gw.IsHuman();
 			splitContainerMoves.Panel2Collapsed = gb.IsHuman();
 		}
