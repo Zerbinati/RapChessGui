@@ -1893,10 +1893,10 @@
 			this.labEloD.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.labEloD.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
 			this.labEloD.ForeColor = System.Drawing.Color.Black;
-			this.labEloD.Location = new System.Drawing.Point(220, 0);
+			this.labEloD.Location = new System.Drawing.Point(245, 0);
 			this.labEloD.Margin = new System.Windows.Forms.Padding(0);
 			this.labEloD.Name = "labEloD";
-			this.labEloD.Size = new System.Drawing.Size(89, 24);
+			this.labEloD.Size = new System.Drawing.Size(88, 24);
 			this.labEloD.TabIndex = 24;
 			this.labEloD.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			this.toolTip1.SetToolTip(this.labEloD, "Chess ranking");
@@ -1908,10 +1908,10 @@
 			this.labMaterialD.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.labMaterialD.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
 			this.labMaterialD.ForeColor = System.Drawing.Color.Black;
-			this.labMaterialD.Location = new System.Drawing.Point(309, 0);
+			this.labMaterialD.Location = new System.Drawing.Point(333, 0);
 			this.labMaterialD.Margin = new System.Windows.Forms.Padding(0);
 			this.labMaterialD.Name = "labMaterialD";
-			this.labMaterialD.Size = new System.Drawing.Size(92, 24);
+			this.labMaterialD.Size = new System.Drawing.Size(68, 24);
 			this.labMaterialD.TabIndex = 23;
 			this.labMaterialD.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			this.toolTip1.SetToolTip(this.labMaterialD, "Difference of pieces material between players");
@@ -1923,10 +1923,10 @@
 			this.labTimeD.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.labTimeD.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
 			this.labTimeD.ForeColor = System.Drawing.Color.Black;
-			this.labTimeD.Location = new System.Drawing.Point(131, 0);
+			this.labTimeD.Location = new System.Drawing.Point(157, 0);
 			this.labTimeD.Margin = new System.Windows.Forms.Padding(0);
 			this.labTimeD.Name = "labTimeD";
-			this.labTimeD.Size = new System.Drawing.Size(89, 24);
+			this.labTimeD.Size = new System.Drawing.Size(88, 24);
 			this.labTimeD.TabIndex = 22;
 			this.labTimeD.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			this.toolTip1.SetToolTip(this.labTimeD, "Player time");
@@ -1956,7 +1956,7 @@
 			this.labNameD.Location = new System.Drawing.Point(24, 0);
 			this.labNameD.Margin = new System.Windows.Forms.Padding(0);
 			this.labNameD.Name = "labNameD";
-			this.labNameD.Size = new System.Drawing.Size(107, 24);
+			this.labNameD.Size = new System.Drawing.Size(133, 24);
 			this.labNameD.TabIndex = 20;
 			this.labNameD.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			this.toolTip1.SetToolTip(this.labNameD, "Player name");
@@ -1968,10 +1968,10 @@
 			this.labEloT.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.labEloT.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
 			this.labEloT.ForeColor = System.Drawing.Color.Black;
-			this.labEloT.Location = new System.Drawing.Point(220, 0);
+			this.labEloT.Location = new System.Drawing.Point(245, 0);
 			this.labEloT.Margin = new System.Windows.Forms.Padding(0);
 			this.labEloT.Name = "labEloT";
-			this.labEloT.Size = new System.Drawing.Size(89, 24);
+			this.labEloT.Size = new System.Drawing.Size(88, 24);
 			this.labEloT.TabIndex = 24;
 			this.labEloT.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			this.toolTip1.SetToolTip(this.labEloT, "Chess ranking");
@@ -1983,10 +1983,10 @@
 			this.labMaterialT.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.labMaterialT.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
 			this.labMaterialT.ForeColor = System.Drawing.Color.Black;
-			this.labMaterialT.Location = new System.Drawing.Point(309, 0);
+			this.labMaterialT.Location = new System.Drawing.Point(333, 0);
 			this.labMaterialT.Margin = new System.Windows.Forms.Padding(0);
 			this.labMaterialT.Name = "labMaterialT";
-			this.labMaterialT.Size = new System.Drawing.Size(92, 24);
+			this.labMaterialT.Size = new System.Drawing.Size(68, 24);
 			this.labMaterialT.TabIndex = 23;
 			this.labMaterialT.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			this.toolTip1.SetToolTip(this.labMaterialT, "Difference of pieces material between players");
@@ -1998,10 +1998,10 @@
 			this.labTimeT.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.labTimeT.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
 			this.labTimeT.ForeColor = System.Drawing.Color.Black;
-			this.labTimeT.Location = new System.Drawing.Point(131, 0);
+			this.labTimeT.Location = new System.Drawing.Point(157, 0);
 			this.labTimeT.Margin = new System.Windows.Forms.Padding(0);
 			this.labTimeT.Name = "labTimeT";
-			this.labTimeT.Size = new System.Drawing.Size(89, 24);
+			this.labTimeT.Size = new System.Drawing.Size(88, 24);
 			this.labTimeT.TabIndex = 22;
 			this.labTimeT.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			this.toolTip1.SetToolTip(this.labTimeT, "Player time");
@@ -2031,7 +2031,7 @@
 			this.labNameT.Location = new System.Drawing.Point(24, 0);
 			this.labNameT.Margin = new System.Windows.Forms.Padding(0);
 			this.labNameT.Name = "labNameT";
-			this.labNameT.Size = new System.Drawing.Size(107, 24);
+			this.labNameT.Size = new System.Drawing.Size(133, 24);
 			this.labNameT.TabIndex = 20;
 			this.labNameT.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			this.toolTip1.SetToolTip(this.labNameT, "Player name");
@@ -2126,10 +2126,10 @@
 			// 
 			this.tlpBoardD.ColumnCount = 5;
 			this.tlpBoardD.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 24F));
-			this.tlpBoardD.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 28.57143F));
-			this.tlpBoardD.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 23.80952F));
-			this.tlpBoardD.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 23.80952F));
-			this.tlpBoardD.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 23.80952F));
+			this.tlpBoardD.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 35.29412F));
+			this.tlpBoardD.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 23.52941F));
+			this.tlpBoardD.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 23.52941F));
+			this.tlpBoardD.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 17.64706F));
 			this.tlpBoardD.Controls.Add(this.labEloD, 0, 0);
 			this.tlpBoardD.Controls.Add(this.labMaterialD, 0, 0);
 			this.tlpBoardD.Controls.Add(this.labTimeD, 0, 0);
@@ -2148,10 +2148,10 @@
 			// 
 			this.tlpBoardT.ColumnCount = 5;
 			this.tlpBoardT.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 24F));
-			this.tlpBoardT.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 28.57143F));
-			this.tlpBoardT.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 23.80952F));
-			this.tlpBoardT.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 23.80952F));
-			this.tlpBoardT.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 23.80952F));
+			this.tlpBoardT.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 35.29412F));
+			this.tlpBoardT.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 23.52941F));
+			this.tlpBoardT.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 23.52941F));
+			this.tlpBoardT.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 17.64706F));
 			this.tlpBoardT.Controls.Add(this.labEloT, 0, 0);
 			this.tlpBoardT.Controls.Add(this.labMaterialT, 0, 0);
 			this.tlpBoardT.Controls.Add(this.labTimeT, 0, 0);

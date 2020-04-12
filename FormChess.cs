@@ -343,6 +343,7 @@ namespace RapChessGui
 						{
 							g.depth = Uci.tokens[0];
 							g.score = Uci.tokens[1];
+							g.iScore = Convert.ToInt32(g.score);
 							ulong ms = (ulong)Convert.ToInt64(Uci.tokens[2]);
 							g.nodes = (ulong)Convert.ToInt64(Uci.tokens[3]);
 							g.nps = ms > 0 ? (g.nodes * 100) / ms : 0;
