@@ -2263,9 +2263,11 @@
         System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(0))))),
         System.Drawing.Color.Olive};
 			series1.ChartArea = "ChartArea1";
+			series1.CustomProperties = "PointWidth=1";
 			series1.IsVisibleInLegend = false;
 			series1.Name = "Series1";
 			series2.ChartArea = "ChartArea1";
+			series2.CustomProperties = "PointWidth=1";
 			series2.Name = "Series2";
 			this.chart1.Series.Add(series1);
 			this.chart1.Series.Add(series2);

@@ -197,7 +197,7 @@ namespace RapChessGui
 
 		void AddLines(CGamer g)
 		{
-			if (GamerList.GamerCur().white)
+			if (g.white)
 				lvMovesW.Items.Insert(0, new ListViewItem(new[] { g.GetTimeElapsed(), g.GetDepth(), g.nodes.ToString("N0"), g.nps.ToString("N0"), g.score, g.pv }));
 			else
 				lvMovesB.Items.Insert(0, new ListViewItem(new[] { g.GetTimeElapsed(), g.GetDepth(), g.nodes.ToString("N0"), g.nps.ToString("N0"), g.score, g.pv }));
