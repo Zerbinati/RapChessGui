@@ -1306,7 +1306,7 @@ namespace RapChessGui
 				labNodesB.Text = $"Nodes {g.nodes.ToString("N0")}";
 				labNpsB.Text = $"Nps {nps.ToString("N0")}";
 				labPonderB.Text = $"Ponder {g.ponder}";
-				labBookB.Text = $"Book {g.usedBook}";
+				labBookD.Text = $"Book {g.usedBook}";
 				labDepthB.Text = $"Depth {g.GetDepth()}";
 			}
 			else
@@ -1508,12 +1508,14 @@ namespace RapChessGui
 		{
 			CGamer gw = GamerList.gamer[0];
 			CGamer gb = GamerList.gamer[1];
-			labMovesW.Text = gw.GetName();
-			labMovesB.Text = gb.GetName();
+			labEngineW.Text = gw.GetEngine();
+			labEngineB.Text = gb.GetEngine();
+			labBookW.Text = gw.GetBook();
+			labBookB.Text = gb.GetBook();
+			labModeW.Text = gw.GetMode();
+			labModeB.Text = gb.GetMode();
 			labProtocolW.Text = gw.GetProtocol();
 			labProtocolB.Text = gb.GetProtocol();
-			labEloW.Text = gw.GetElo();
-			labEloB.Text = gb.GetElo();
 			splitContainerMoves.Panel1Collapsed = gw.IsHuman();
 			splitContainerMoves.Panel2Collapsed = gb.IsHuman();
 		}

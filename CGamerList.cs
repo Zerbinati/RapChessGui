@@ -188,6 +188,30 @@ namespace RapChessGui
 			}
 		}
 
+		public string GetEngine()
+		{
+			if (engine == null)
+				return "Engine";
+			else
+				return engine.name;
+		}
+
+		public string GetBook()
+		{
+			if (player == null)
+				return "Book";
+			else
+				return player.book;
+		}
+
+		public string GetMode()
+		{
+			if (player == null)
+				return "Mode";
+			else
+				return player.modeValue.LongName();
+		}
+
 		public string GetProtocol()
 		{
 			if (engine == null)

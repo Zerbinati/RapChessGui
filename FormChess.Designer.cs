@@ -158,7 +158,7 @@
 			this.labDepthT = new System.Windows.Forms.Label();
 			this.labNodesT = new System.Windows.Forms.Label();
 			this.labNpsB = new System.Windows.Forms.Label();
-			this.labBookB = new System.Windows.Forms.Label();
+			this.labBookD = new System.Windows.Forms.Label();
 			this.labPonderB = new System.Windows.Forms.Label();
 			this.labScoreB = new System.Windows.Forms.Label();
 			this.labDepthB = new System.Windows.Forms.Label();
@@ -170,14 +170,10 @@
 			this.labEloT = new System.Windows.Forms.Label();
 			this.labColorT = new System.Windows.Forms.Label();
 			this.labNameT = new System.Windows.Forms.Label();
-			this.labMovesW = new System.Windows.Forms.Label();
+			this.labEngineW = new System.Windows.Forms.Label();
 			this.labWhite = new System.Windows.Forms.Label();
+			this.labBookW = new System.Windows.Forms.Label();
 			this.labProtocolW = new System.Windows.Forms.Label();
-			this.labEloW = new System.Windows.Forms.Label();
-			this.labEloB = new System.Windows.Forms.Label();
-			this.labProtocolB = new System.Windows.Forms.Label();
-			this.labBlack = new System.Windows.Forms.Label();
-			this.labMovesB = new System.Windows.Forms.Label();
 			this.labTimeT = new System.Windows.Forms.Label();
 			this.cbMainMode = new System.Windows.Forms.ComboBox();
 			this.statusStrip1 = new System.Windows.Forms.StatusStrip();
@@ -213,13 +209,19 @@
 			this.columnHeader20 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeader21 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeader22 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
 			this.tlpChartT = new System.Windows.Forms.TableLayoutPanel();
 			this.labTakenT = new System.Windows.Forms.Label();
 			this.labMaterialT = new System.Windows.Forms.Label();
 			this.tlpChartD = new System.Windows.Forms.TableLayoutPanel();
 			this.labMaterialD = new System.Windows.Forms.Label();
 			this.labTakenD = new System.Windows.Forms.Label();
+			this.labModeW = new System.Windows.Forms.Label();
+			this.tlpBlack = new System.Windows.Forms.TableLayoutPanel();
+			this.labModeB = new System.Windows.Forms.Label();
+			this.labProtocolB = new System.Windows.Forms.Label();
+			this.labBookB = new System.Windows.Forms.Label();
+			this.labBlack = new System.Windows.Forms.Label();
+			this.labEngineB = new System.Windows.Forms.Label();
 			this.tabControl1.SuspendLayout();
 			this.tabPageGame.SuspendLayout();
 			this.groupBox2.SuspendLayout();
@@ -274,9 +276,9 @@
 			this.splitContainerMoves.Panel2.SuspendLayout();
 			this.splitContainerMoves.SuspendLayout();
 			this.tlpWhite.SuspendLayout();
-			this.tableLayoutPanel3.SuspendLayout();
 			this.tlpChartT.SuspendLayout();
 			this.tlpChartD.SuspendLayout();
+			this.tlpBlack.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// timer1
@@ -1821,20 +1823,20 @@
 			this.labNpsB.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			this.toolTip1.SetToolTip(this.labNpsB, "Searched nodes per second");
 			// 
-			// labBookB
+			// labBookD
 			// 
-			this.labBookB.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(160)))));
-			this.labBookB.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-			this.labBookB.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.labBookB.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-			this.labBookB.ForeColor = System.Drawing.Color.Black;
-			this.labBookB.Location = new System.Drawing.Point(788, 0);
-			this.labBookB.Margin = new System.Windows.Forms.Padding(0);
-			this.labBookB.Name = "labBookB";
-			this.labBookB.Size = new System.Drawing.Size(197, 24);
-			this.labBookB.TabIndex = 14;
-			this.labBookB.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			this.toolTip1.SetToolTip(this.labBookB, "Number of moves read from the opening book");
+			this.labBookD.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(160)))));
+			this.labBookD.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+			this.labBookD.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.labBookD.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+			this.labBookD.ForeColor = System.Drawing.Color.Black;
+			this.labBookD.Location = new System.Drawing.Point(788, 0);
+			this.labBookD.Margin = new System.Windows.Forms.Padding(0);
+			this.labBookD.Name = "labBookD";
+			this.labBookD.Size = new System.Drawing.Size(197, 24);
+			this.labBookD.TabIndex = 14;
+			this.labBookD.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.toolTip1.SetToolTip(this.labBookD, "Number of moves read from the opening book");
 			// 
 			// labPonderB
 			// 
@@ -2001,20 +2003,20 @@
 			this.labNameT.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			this.toolTip1.SetToolTip(this.labNameT, "Player name");
 			// 
-			// labMovesW
+			// labEngineW
 			// 
-			this.labMovesW.BackColor = System.Drawing.Color.Olive;
-			this.labMovesW.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-			this.labMovesW.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.labMovesW.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-			this.labMovesW.ForeColor = System.Drawing.Color.White;
-			this.labMovesW.Location = new System.Drawing.Point(24, 0);
-			this.labMovesW.Margin = new System.Windows.Forms.Padding(0);
-			this.labMovesW.Name = "labMovesW";
-			this.labMovesW.Size = new System.Drawing.Size(385, 24);
-			this.labMovesW.TabIndex = 13;
-			this.labMovesW.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			this.toolTip1.SetToolTip(this.labMovesW, "The score from the engine\'s point of view in centipawns");
+			this.labEngineW.BackColor = System.Drawing.Color.Olive;
+			this.labEngineW.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+			this.labEngineW.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.labEngineW.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+			this.labEngineW.ForeColor = System.Drawing.Color.White;
+			this.labEngineW.Location = new System.Drawing.Point(24, 0);
+			this.labEngineW.Margin = new System.Windows.Forms.Padding(0);
+			this.labEngineW.Name = "labEngineW";
+			this.labEngineW.Size = new System.Drawing.Size(289, 24);
+			this.labEngineW.TabIndex = 13;
+			this.labEngineW.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.toolTip1.SetToolTip(this.labEngineW, "Chess engine name");
 			// 
 			// labWhite
 			// 
@@ -2031,6 +2033,21 @@
 			this.labWhite.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			this.toolTip1.SetToolTip(this.labWhite, "The score from the engine\'s point of view in centipawns");
 			// 
+			// labBookW
+			// 
+			this.labBookW.BackColor = System.Drawing.Color.Olive;
+			this.labBookW.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+			this.labBookW.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.labBookW.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+			this.labBookW.ForeColor = System.Drawing.Color.White;
+			this.labBookW.Location = new System.Drawing.Point(313, 0);
+			this.labBookW.Margin = new System.Windows.Forms.Padding(0);
+			this.labBookW.Name = "labBookW";
+			this.labBookW.Size = new System.Drawing.Size(289, 24);
+			this.labBookW.TabIndex = 15;
+			this.labBookW.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.toolTip1.SetToolTip(this.labBookW, "Chess open book name");
+			// 
 			// labProtocolW
 			// 
 			this.labProtocolW.BackColor = System.Drawing.Color.Olive;
@@ -2038,88 +2055,13 @@
 			this.labProtocolW.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.labProtocolW.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
 			this.labProtocolW.ForeColor = System.Drawing.Color.White;
-			this.labProtocolW.Location = new System.Drawing.Point(794, 0);
+			this.labProtocolW.Location = new System.Drawing.Point(891, 0);
 			this.labProtocolW.Margin = new System.Windows.Forms.Padding(0);
 			this.labProtocolW.Name = "labProtocolW";
-			this.labProtocolW.Size = new System.Drawing.Size(386, 24);
-			this.labProtocolW.TabIndex = 15;
+			this.labProtocolW.Size = new System.Drawing.Size(289, 24);
+			this.labProtocolW.TabIndex = 16;
 			this.labProtocolW.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			this.toolTip1.SetToolTip(this.labProtocolW, "The score from the engine\'s point of view in centipawns");
-			// 
-			// labEloW
-			// 
-			this.labEloW.BackColor = System.Drawing.Color.Olive;
-			this.labEloW.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-			this.labEloW.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.labEloW.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-			this.labEloW.ForeColor = System.Drawing.Color.White;
-			this.labEloW.Location = new System.Drawing.Point(409, 0);
-			this.labEloW.Margin = new System.Windows.Forms.Padding(0);
-			this.labEloW.Name = "labEloW";
-			this.labEloW.Size = new System.Drawing.Size(385, 24);
-			this.labEloW.TabIndex = 16;
-			this.labEloW.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			this.toolTip1.SetToolTip(this.labEloW, "Player strength in chess rating points");
-			// 
-			// labEloB
-			// 
-			this.labEloB.BackColor = System.Drawing.Color.Olive;
-			this.labEloB.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-			this.labEloB.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.labEloB.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-			this.labEloB.ForeColor = System.Drawing.Color.White;
-			this.labEloB.Location = new System.Drawing.Point(409, 0);
-			this.labEloB.Margin = new System.Windows.Forms.Padding(0);
-			this.labEloB.Name = "labEloB";
-			this.labEloB.Size = new System.Drawing.Size(385, 24);
-			this.labEloB.TabIndex = 16;
-			this.labEloB.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			this.toolTip1.SetToolTip(this.labEloB, "Player strength in chess rating points");
-			// 
-			// labProtocolB
-			// 
-			this.labProtocolB.BackColor = System.Drawing.Color.Olive;
-			this.labProtocolB.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-			this.labProtocolB.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.labProtocolB.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-			this.labProtocolB.ForeColor = System.Drawing.Color.White;
-			this.labProtocolB.Location = new System.Drawing.Point(794, 0);
-			this.labProtocolB.Margin = new System.Windows.Forms.Padding(0);
-			this.labProtocolB.Name = "labProtocolB";
-			this.labProtocolB.Size = new System.Drawing.Size(386, 24);
-			this.labProtocolB.TabIndex = 15;
-			this.labProtocolB.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			this.toolTip1.SetToolTip(this.labProtocolB, "The score from the engine\'s point of view in centipawns");
-			// 
-			// labBlack
-			// 
-			this.labBlack.BackColor = System.Drawing.Color.Black;
-			this.labBlack.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-			this.labBlack.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.labBlack.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-			this.labBlack.ForeColor = System.Drawing.Color.Black;
-			this.labBlack.Location = new System.Drawing.Point(0, 0);
-			this.labBlack.Margin = new System.Windows.Forms.Padding(0);
-			this.labBlack.Name = "labBlack";
-			this.labBlack.Size = new System.Drawing.Size(24, 24);
-			this.labBlack.TabIndex = 14;
-			this.labBlack.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			this.toolTip1.SetToolTip(this.labBlack, "The score from the engine\'s point of view in centipawns");
-			// 
-			// labMovesB
-			// 
-			this.labMovesB.BackColor = System.Drawing.Color.Olive;
-			this.labMovesB.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-			this.labMovesB.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.labMovesB.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-			this.labMovesB.ForeColor = System.Drawing.Color.White;
-			this.labMovesB.Location = new System.Drawing.Point(24, 0);
-			this.labMovesB.Margin = new System.Windows.Forms.Padding(0);
-			this.labMovesB.Name = "labMovesB";
-			this.labMovesB.Size = new System.Drawing.Size(385, 24);
-			this.labMovesB.TabIndex = 13;
-			this.labMovesB.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			this.toolTip1.SetToolTip(this.labMovesB, "The score from the engine\'s point of view in centipawns");
+			this.toolTip1.SetToolTip(this.labProtocolW, "Chess engine protocol");
 			// 
 			// labTimeT
 			// 
@@ -2424,7 +2366,7 @@
 			this.tlpEngineB.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
 			this.tlpEngineB.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
 			this.tlpEngineB.Controls.Add(this.labNpsB, 0, 0);
-			this.tlpEngineB.Controls.Add(this.labBookB, 0, 0);
+			this.tlpEngineB.Controls.Add(this.labBookD, 0, 0);
 			this.tlpEngineB.Controls.Add(this.labPonderB, 0, 0);
 			this.tlpEngineB.Controls.Add(this.labScoreB, 0, 0);
 			this.tlpEngineB.Controls.Add(this.labDepthB, 0, 0);
@@ -2454,7 +2396,7 @@
 			// splitContainerMoves.Panel2
 			// 
 			this.splitContainerMoves.Panel2.Controls.Add(this.lvMovesB);
-			this.splitContainerMoves.Panel2.Controls.Add(this.tableLayoutPanel3);
+			this.splitContainerMoves.Panel2.Controls.Add(this.tlpBlack);
 			this.splitContainerMoves.Size = new System.Drawing.Size(1184, 238);
 			this.splitContainerMoves.SplitterDistance = 111;
 			this.splitContainerMoves.TabIndex = 33;
@@ -2519,15 +2461,17 @@
 			// 
 			// tlpWhite
 			// 
-			this.tlpWhite.ColumnCount = 4;
+			this.tlpWhite.ColumnCount = 5;
 			this.tlpWhite.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 24F));
-			this.tlpWhite.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-			this.tlpWhite.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-			this.tlpWhite.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-			this.tlpWhite.Controls.Add(this.labEloW, 0, 0);
+			this.tlpWhite.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
+			this.tlpWhite.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
+			this.tlpWhite.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
+			this.tlpWhite.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
+			this.tlpWhite.Controls.Add(this.labModeW, 0, 0);
 			this.tlpWhite.Controls.Add(this.labProtocolW, 0, 0);
+			this.tlpWhite.Controls.Add(this.labBookW, 0, 0);
 			this.tlpWhite.Controls.Add(this.labWhite, 0, 0);
-			this.tlpWhite.Controls.Add(this.labMovesW, 0, 0);
+			this.tlpWhite.Controls.Add(this.labEngineW, 0, 0);
 			this.tlpWhite.Dock = System.Windows.Forms.DockStyle.Top;
 			this.tlpWhite.Location = new System.Drawing.Point(0, 0);
 			this.tlpWhite.Name = "tlpWhite";
@@ -2593,25 +2537,6 @@
 			// 
 			this.columnHeader22.Text = "Moves";
 			this.columnHeader22.Width = 100;
-			// 
-			// tableLayoutPanel3
-			// 
-			this.tableLayoutPanel3.ColumnCount = 4;
-			this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 24F));
-			this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-			this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-			this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-			this.tableLayoutPanel3.Controls.Add(this.labEloB, 0, 0);
-			this.tableLayoutPanel3.Controls.Add(this.labProtocolB, 0, 0);
-			this.tableLayoutPanel3.Controls.Add(this.labBlack, 0, 0);
-			this.tableLayoutPanel3.Controls.Add(this.labMovesB, 0, 0);
-			this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Top;
-			this.tableLayoutPanel3.Location = new System.Drawing.Point(0, 0);
-			this.tableLayoutPanel3.Name = "tableLayoutPanel3";
-			this.tableLayoutPanel3.RowCount = 1;
-			this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-			this.tableLayoutPanel3.Size = new System.Drawing.Size(1180, 24);
-			this.tableLayoutPanel3.TabIndex = 35;
 			// 
 			// tlpChartT
 			// 
@@ -2707,6 +2632,117 @@
 			this.labTakenD.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.toolTip1.SetToolTip(this.labTakenD, "Taken pieces");
 			// 
+			// labModeW
+			// 
+			this.labModeW.BackColor = System.Drawing.Color.Olive;
+			this.labModeW.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+			this.labModeW.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.labModeW.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+			this.labModeW.ForeColor = System.Drawing.Color.White;
+			this.labModeW.Location = new System.Drawing.Point(602, 0);
+			this.labModeW.Margin = new System.Windows.Forms.Padding(0);
+			this.labModeW.Name = "labModeW";
+			this.labModeW.Size = new System.Drawing.Size(289, 24);
+			this.labModeW.TabIndex = 17;
+			this.labModeW.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.toolTip1.SetToolTip(this.labModeW, "Chess mode");
+			// 
+			// tlpBlack
+			// 
+			this.tlpBlack.ColumnCount = 5;
+			this.tlpBlack.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 24F));
+			this.tlpBlack.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
+			this.tlpBlack.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
+			this.tlpBlack.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
+			this.tlpBlack.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
+			this.tlpBlack.Controls.Add(this.labModeB, 0, 0);
+			this.tlpBlack.Controls.Add(this.labProtocolB, 0, 0);
+			this.tlpBlack.Controls.Add(this.labBookB, 0, 0);
+			this.tlpBlack.Controls.Add(this.labBlack, 0, 0);
+			this.tlpBlack.Controls.Add(this.labEngineB, 0, 0);
+			this.tlpBlack.Dock = System.Windows.Forms.DockStyle.Top;
+			this.tlpBlack.Location = new System.Drawing.Point(0, 0);
+			this.tlpBlack.Name = "tlpBlack";
+			this.tlpBlack.RowCount = 1;
+			this.tlpBlack.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+			this.tlpBlack.Size = new System.Drawing.Size(1180, 24);
+			this.tlpBlack.TabIndex = 35;
+			// 
+			// labModeB
+			// 
+			this.labModeB.BackColor = System.Drawing.Color.Olive;
+			this.labModeB.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+			this.labModeB.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.labModeB.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+			this.labModeB.ForeColor = System.Drawing.Color.White;
+			this.labModeB.Location = new System.Drawing.Point(602, 0);
+			this.labModeB.Margin = new System.Windows.Forms.Padding(0);
+			this.labModeB.Name = "labModeB";
+			this.labModeB.Size = new System.Drawing.Size(289, 24);
+			this.labModeB.TabIndex = 17;
+			this.labModeB.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.toolTip1.SetToolTip(this.labModeB, "Chess mode");
+			// 
+			// labProtocolB
+			// 
+			this.labProtocolB.BackColor = System.Drawing.Color.Olive;
+			this.labProtocolB.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+			this.labProtocolB.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.labProtocolB.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+			this.labProtocolB.ForeColor = System.Drawing.Color.White;
+			this.labProtocolB.Location = new System.Drawing.Point(891, 0);
+			this.labProtocolB.Margin = new System.Windows.Forms.Padding(0);
+			this.labProtocolB.Name = "labProtocolB";
+			this.labProtocolB.Size = new System.Drawing.Size(289, 24);
+			this.labProtocolB.TabIndex = 16;
+			this.labProtocolB.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.toolTip1.SetToolTip(this.labProtocolB, "Chess engine protocol");
+			// 
+			// labBookB
+			// 
+			this.labBookB.BackColor = System.Drawing.Color.Olive;
+			this.labBookB.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+			this.labBookB.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.labBookB.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+			this.labBookB.ForeColor = System.Drawing.Color.White;
+			this.labBookB.Location = new System.Drawing.Point(313, 0);
+			this.labBookB.Margin = new System.Windows.Forms.Padding(0);
+			this.labBookB.Name = "labBookB";
+			this.labBookB.Size = new System.Drawing.Size(289, 24);
+			this.labBookB.TabIndex = 15;
+			this.labBookB.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.toolTip1.SetToolTip(this.labBookB, "Chess open book name");
+			// 
+			// labBlack
+			// 
+			this.labBlack.BackColor = System.Drawing.Color.Black;
+			this.labBlack.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+			this.labBlack.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.labBlack.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+			this.labBlack.ForeColor = System.Drawing.Color.Black;
+			this.labBlack.Location = new System.Drawing.Point(0, 0);
+			this.labBlack.Margin = new System.Windows.Forms.Padding(0);
+			this.labBlack.Name = "labBlack";
+			this.labBlack.Size = new System.Drawing.Size(24, 24);
+			this.labBlack.TabIndex = 14;
+			this.labBlack.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.toolTip1.SetToolTip(this.labBlack, "The score from the engine\'s point of view in centipawns");
+			// 
+			// labEngineB
+			// 
+			this.labEngineB.BackColor = System.Drawing.Color.Olive;
+			this.labEngineB.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+			this.labEngineB.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.labEngineB.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+			this.labEngineB.ForeColor = System.Drawing.Color.White;
+			this.labEngineB.Location = new System.Drawing.Point(24, 0);
+			this.labEngineB.Margin = new System.Windows.Forms.Padding(0);
+			this.labEngineB.Name = "labEngineB";
+			this.labEngineB.Size = new System.Drawing.Size(289, 24);
+			this.labEngineB.TabIndex = 13;
+			this.labEngineB.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.toolTip1.SetToolTip(this.labEngineB, "Chess engine name");
+			// 
 			// FormChess
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -2781,9 +2817,9 @@
 			((System.ComponentModel.ISupportInitialize)(this.splitContainerMoves)).EndInit();
 			this.splitContainerMoves.ResumeLayout(false);
 			this.tlpWhite.ResumeLayout(false);
-			this.tableLayoutPanel3.ResumeLayout(false);
 			this.tlpChartT.ResumeLayout(false);
 			this.tlpChartD.ResumeLayout(false);
+			this.tlpBlack.ResumeLayout(false);
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -2938,7 +2974,7 @@
 		private System.Windows.Forms.Label labNodesT;
 		private System.Windows.Forms.TableLayoutPanel tlpEngineB;
 		private System.Windows.Forms.Label labNpsB;
-		private System.Windows.Forms.Label labBookB;
+		private System.Windows.Forms.Label labBookD;
 		private System.Windows.Forms.Label labPonderB;
 		private System.Windows.Forms.Label labScoreB;
 		private System.Windows.Forms.Label labDepthB;
@@ -2960,15 +2996,10 @@
 		private System.Windows.Forms.NumericUpDown nudValue2;
 		private System.Windows.Forms.NumericUpDown nudValue1;
 		private System.Windows.Forms.TableLayoutPanel tlpWhite;
-		private System.Windows.Forms.Label labEloW;
 		private System.Windows.Forms.Label labProtocolW;
+		private System.Windows.Forms.Label labBookW;
 		private System.Windows.Forms.Label labWhite;
-		private System.Windows.Forms.Label labMovesW;
-		private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
-		private System.Windows.Forms.Label labEloB;
-		private System.Windows.Forms.Label labProtocolB;
-		private System.Windows.Forms.Label labBlack;
-		private System.Windows.Forms.Label labMovesB;
+		private System.Windows.Forms.Label labEngineW;
 		private System.Windows.Forms.Label labTimeT;
 		public System.Windows.Forms.ComboBox cbMainMode;
 		private System.Windows.Forms.TableLayoutPanel tlpChartT;
@@ -2977,6 +3008,13 @@
 		private System.Windows.Forms.TableLayoutPanel tlpChartD;
 		private System.Windows.Forms.Label labMaterialD;
 		private System.Windows.Forms.Label labTakenD;
+		private System.Windows.Forms.Label labModeW;
+		private System.Windows.Forms.TableLayoutPanel tlpBlack;
+		private System.Windows.Forms.Label labModeB;
+		private System.Windows.Forms.Label labProtocolB;
+		private System.Windows.Forms.Label labBookB;
+		private System.Windows.Forms.Label labBlack;
+		private System.Windows.Forms.Label labEngineB;
 	}
 }
 

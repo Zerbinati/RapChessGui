@@ -161,6 +161,14 @@ namespace RapChessGui
 				result = $"{result}{value}";
 			return $" {result}";
 		}
+
+		public string LongName()
+		{
+			if (mode != "Infinite")
+				return $"{mode} {value}";
+			return mode;
+		}
+
 	} 
 
 	public class ListViewComparer : System.Collections.IComparer
