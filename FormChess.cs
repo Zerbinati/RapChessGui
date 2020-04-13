@@ -884,7 +884,6 @@ namespace RapChessGui
 		{
 			CArrow.Hide();
 			CGamer cp = GamerList.GamerCur();
-			cp.UpdateTime();
 			cp.timer.Stop();
 			emo = emo.ToLower();
 			CPlayer uw = GamerList.GamerCur().player;
@@ -909,8 +908,8 @@ namespace RapChessGui
 			if (!ivm)
 			{
 				tssMoves.ForeColor = Color.Red;
-				tssMoves.Text = "Move error " + emo;
-				FormLog.This.richTextBox1.AppendText($" error {emo}\n", Color.Red);
+				tssMoves.Text = "Wrong move " + emo;
+				FormLog.This.richTextBox1.AppendText($"Wrong move {emo}\n", Color.Red);
 				FormLog.This.richTextBox1.AppendText($"{Chess.GetFen()}\n");
 				List<int> gMoves = Chess.GenerateValidMoves();
 				List<string> eMoves = new List<string>();
@@ -918,6 +917,7 @@ namespace RapChessGui
 					eMoves.Add(Chess.FormatMove(gm));
 				FormLog.This.richTextBox1.AppendText($"{string.Join(" ", eMoves)}\n");
 				FormLog.This.richTextBox1.SaveFile("Error.rtf");
+				CRapLog.Add($"Wrong move {uw.engine} {emo} {Chess.GetFen()}");
 				return false;
 			}
 
@@ -935,11 +935,6 @@ namespace RapChessGui
 				labEco.ForeColor = Color.Black;
 			int moveNumber = (Chess.g_moveNumber >> 1) + 1;
 			tssMove.Text = "Move " + moveNumber.ToString() + " " + Chess.g_move50.ToString();
-			if (cp.timeTotal > 100)
-			{
-				cp.totalNpsSum += cp.nodes;
-				cp.totalNps = (ulong)Convert.ToInt64((cp.totalNpsSum * 1000) / cp.timeTotal);
-			}
 			CData.gameState = Chess.GetGameState();
 			if (CData.gameState == 0)
 			{
@@ -1149,13 +1144,16 @@ namespace RapChessGui
 				return;
 			Stopwatch stopwatch = new Stopwatch();
 			stopwatch.Start();
+			CGamer gt, gd;
 			boardRotate = ((GamerList.gamer[1].engine == null) && (GamerList.gamer[0].engine != null)) ^ CData.rotateBoard;
 			if ((GamerList.gamer[1].engine == null) && (GamerList.gamer[0].engine == null))
 				boardRotate = !CChess.whiteTurn;
 			if (boardRotate)
 			{
-				labNameT.Text = GamerList.gamer[0].player.name;
-				labNameD.Text = GamerList.gamer[1].player.name;
+				gt = GamerList.gamer[0];
+				gd = GamerList.gamer[1];
+				labNameT.Text = gt.player.name;
+				labNameD.Text = gd.player.name;
 				labColorT.BackColor = Color.White;
 				labColorD.BackColor = Color.Black;
 				labTakenT.ForeColor = Color.White;
@@ -1165,24 +1163,16 @@ namespace RapChessGui
 			}
 			else
 			{
-				labNameT.Text = GamerList.gamer[1].player.name;
-				labNameD.Text = GamerList.gamer[0].player.name;
+				gt = GamerList.gamer[1];
+				gd = GamerList.gamer[0];
+				labNameT.Text = gt.player.name;
+				labNameD.Text = gd.player.name;
 				labColorT.BackColor = Color.Black;
 				labColorD.BackColor = Color.White;
 				labTakenT.ForeColor = Color.Black;
 				labTakenD.ForeColor = Color.White;
 				labMaterialT.ForeColor = Color.Black;
 				labMaterialD.ForeColor = Color.White;
-			}
-			if ((boardRotate ^ CChess.whiteTurn) ^ (CData.gameState != 0))
-			{
-				labTimeT.BackColor = Color.LightGray;
-				labTimeD.BackColor = Color.Yellow;
-			}
-			else
-			{
-				labTimeT.BackColor = Color.Yellow;
-				labTimeD.BackColor = Color.LightGray;
 			}
 			CBoard.board = new Bitmap(CBoard.bitmap[boardRotate ? 1 : 0]);
 			Graphics g = Graphics.FromImage(CBoard.board);
@@ -1297,14 +1287,18 @@ namespace RapChessGui
 		{
 			if (!FormOptions.This.cbShowPonder.Checked)
 				g.ponder = "";
-			ulong nps = g.totalNps > 0 ? g.totalNps : g.nps;
 			if (boardRotate ^ g.white)
 			{
 				labTimeD.Text = g.GetTime();
+				if (g.timer.IsRunning)
+					labTimeD.BackColor = labTimeD.Text[2] == '.' ? Color.Pink : Color.Yellow;
+				else
+					if (CData.gameState == 0)
+					labTimeD.BackColor = Color.LightGray;
 				labEloD.Text = g.GetElo();
 				labScoreB.Text = $"Score {g.score}";
 				labNodesB.Text = $"Nodes {g.nodes.ToString("N0")}";
-				labNpsB.Text = $"Nps {nps.ToString("N0")}";
+				labNpsB.Text = $"Nps {g.nps.ToString("N0")}";
 				labPonderB.Text = $"Ponder {g.ponder}";
 				labBookD.Text = $"Book {g.usedBook}";
 				labDepthB.Text = $"Depth {g.GetDepth()}";
@@ -1312,10 +1306,15 @@ namespace RapChessGui
 			else
 			{
 				labTimeT.Text = g.GetTime();
+				if (g.timer.IsRunning)
+					labTimeT.BackColor = labTimeT.Text[2] == '.' ? Color.Pink : Color.Yellow;
+				else
+					if (CData.gameState == 0)
+					labTimeT.BackColor = Color.LightGray;
 				labEloT.Text = g.GetElo();
 				labScoreT.Text = $"Score {g.score}";
 				labNodesT.Text = $"Nodes {g.nodes.ToString("N0")}";
-				labNpsT.Text = $"Nps {nps.ToString("N0")}";
+				labNpsT.Text = $"Nps {g.nps.ToString("N0")}";
 				labPonderT.Text = $"Ponder {g.ponder}";
 				labBookT.Text = $"Book {g.usedBook}";
 				labDepthT.Text = $"Depth {g.GetDepth()}";
@@ -1780,7 +1779,7 @@ namespace RapChessGui
 
 		private void tabControl1_Selected(object sender, TabControlEventArgs e)
 		{
-			
+
 		}
 
 		private void pictureBox1_MouseMove(object sender, MouseEventArgs e)
@@ -2047,7 +2046,7 @@ namespace RapChessGui
 			nudValue.Increment = CModeGame.modeValue.GetIncrement();
 			nudValue.Minimum = nudValue.Increment;
 			nudValue.Value = CModeGame.modeValue.GetValue();
-			toolTip1.SetToolTip(nudValue,CModeGame.modeValue.GetTip());
+			toolTip1.SetToolTip(nudValue, CModeGame.modeValue.GetTip());
 		}
 
 		private void cbMode1_SelectedIndexChanged(object sender, EventArgs e)
@@ -2086,18 +2085,18 @@ namespace RapChessGui
 			toolTip1.SetToolTip(nudTeacher, CModeTraining.modeValueTeacher.GetTip());
 		}
 
-		private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+		private void cbColor_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			ShowAutoElo();
+		}
+
+		private void cbMainMode_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			tabControl1.SelectedIndex = cbMainMode.SelectedIndex;
 			CData.fen = Chess.GetFen();
 			CBoard.Fill();
 			RenderBoard();
 			SetMode(cbMainMode.SelectedIndex);
-		}
-
-		private void cbColor_SelectedIndexChanged(object sender, EventArgs e)
-		{
-			ShowAutoElo();
 		}
 	}
 }

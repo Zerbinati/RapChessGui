@@ -2,7 +2,6 @@
 using System.IO;
 using System.Drawing;
 using System.Diagnostics;
-using System.Threading;
 
 namespace RapChessGui
 {
@@ -19,9 +18,6 @@ namespace RapChessGui
 		public int iScore = 0;
 		public ulong nodes;
 		public ulong nps;
-		public ulong totalNps;
-		public ulong totalNpsSum;
-		public double timeTotal;
 		public string score;
 		public string depth;
 		public string seldepth;
@@ -29,6 +25,7 @@ namespace RapChessGui
 		public string mode;
 		public string value;
 		public string pv;
+		public double timerStart;
 		public Stopwatch timer = new Stopwatch();
 		public CEnginePro enginePro = new CEnginePro();
 		public CBook book = null;
@@ -61,16 +58,19 @@ namespace RapChessGui
 			usedBook = 0;
 			nodes = 0;
 			nps = 0;
-			totalNps = 0;
-			totalNpsSum = 0;
 			score = "0";
 			depth = "0";
 			seldepth = "0";
 			ponder = "";
 			pv = "";
-			timeTotal = 0;
 			iScore = 0;
+			timerStart = 0;
 			timer.Reset();
+		}
+
+		public void TimerStart() {
+			timerStart = timer.Elapsed.TotalMilliseconds;
+			timer.Start();
 		}
 
 		public bool IsHuman()
@@ -124,13 +124,14 @@ namespace RapChessGui
 			if (player.modeValue.mode == "Blitz")
 			{
 				Int64 v = Convert.ToInt64(player.modeValue.GetUciValue());
-				Int64 t = Convert.ToInt64(v - timeTotal);
+				Int64 t = Convert.ToInt64(v - timer.Elapsed.TotalMilliseconds);
 				if (t < 1)
 					t = 1;
 				SendMessage($"go wtime {t} btime {t} winc 0 binc 0");
 			}
 			else
 				SendMessage($"go {player.modeValue.GetUci()} {player.modeValue.GetUciValue()}");
+			TimerStart();
 		}
 
 		void XbGo()
@@ -138,7 +139,7 @@ namespace RapChessGui
 			if (player.modeValue.mode == "Blitz")
 			{
 				int v = Convert.ToInt32(player.modeValue.GetUciValue());
-				int t = Convert.ToInt32(v - timeTotal);
+				int t = Convert.ToInt32(v - timer.Elapsed.TotalMilliseconds);
 				if (t < 1)
 					t = 1;
 				SendMessage($"time {t}");
@@ -174,9 +175,9 @@ namespace RapChessGui
 					}
 					wbok = true;
 				}
+				TimerStart();
 			}
 			go = true;
-			timer.Restart();
 		}
 
 		public void SendMessage(string msg)
@@ -230,16 +231,25 @@ namespace RapChessGui
 
 		public string GetTime()
 		{
-			DateTime dt1 = new DateTime();
-			dt1 = dt1.AddMilliseconds(timeTotal + timer.Elapsed.TotalMilliseconds);
-			return dt1.ToString("HH:mm:ss");
+			DateTime dt = new DateTime();
+			if ((player != null) && (player.modeValue.mode == "Blitz"))
+			{
+				double v = Convert.ToDouble(player.modeValue.GetUciValue());
+				double t = v - timer.Elapsed.TotalMilliseconds;
+				dt = dt.AddMilliseconds(t);
+				if (t < 10000)
+					return dt.ToString("ss.ff");
+			}
+			else
+				dt = dt.AddMilliseconds(timer.Elapsed.TotalMilliseconds);
+			return dt.ToString("HH:mm:ss");
 		}
 
 		public string GetTimeElapsed()
 		{
-			DateTime dt1 = new DateTime();
-			DateTime dt2 = dt1.AddMilliseconds(timer.Elapsed.TotalMilliseconds);
-			return dt2.ToString("HH:mm:ss.ff");
+			DateTime dt = new DateTime();
+			dt = dt.AddMilliseconds(timer.Elapsed.TotalMilliseconds - timerStart);
+			return dt.ToString("HH:mm:ss.ff");
 		}
 
 		public string GetElo()
@@ -277,12 +287,6 @@ namespace RapChessGui
 			SetPlayer(p);
 		}
 
-		public void UpdateTime()
-		{
-			timeTotal += timer.Elapsed.TotalMilliseconds;
-			timer.Reset();
-		}
-
 	}
 
 	class CGamerList
@@ -300,11 +304,12 @@ namespace RapChessGui
 
 		public void Next()
 		{
-			CGamer cp = GamerCur();
-			cp.UpdateTime();
-			cp.go = false;
+			CGamer cg = GamerCur();
+			cg.go = false;
 			curIndex ^= 1;
-			GamerCur().timer.Restart();
+			cg = GamerCur();
+			if (cg.IsHuman())
+				cg.TimerStart();
 		}
 
 		public void Init()
