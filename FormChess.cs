@@ -69,6 +69,19 @@ namespace RapChessGui
 			toolTip1.Active = FormOptions.ShowTips();
 		}
 
+		void SplitSaveToIni(SplitContainer sc)
+		{
+			double p = (double)sc.SplitterDistance / sc.ClientSize.Height;
+			RapIni.Write($"position>split>{sc.Name}", p.ToString());
+		}
+
+		void SplitLoadFromIni(SplitContainer sc)
+		{
+			double p = (double)sc.SplitterDistance / sc.ClientSize.Height;
+			p = RapIni.ReadDouble($"position>split>{sc.Name}", p);
+			sc.SplitterDistance = Convert.ToInt32(sc.ClientSize.Height * p);
+		}
+
 		private void FormChess_FormClosed(object sender, FormClosedEventArgs e)
 		{
 			bool maximized = WindowState == FormWindowState.Maximized;
@@ -76,13 +89,15 @@ namespace RapChessGui
 			int height = maximized ? RestoreBounds.Height : Height;
 			int x = maximized ? RestoreBounds.X : Location.X;
 			int y = maximized ? RestoreBounds.Y : Location.Y;
-			double p = (double)splitContainerMain.SplitterDistance / splitContainerMain.ClientSize.Height;
-			RapIni.Write("position>split>main", p.ToString());
 			RapIni.Write("position>maximized", maximized.ToString());
 			RapIni.Write("position>width", width.ToString());
 			RapIni.Write("position>height", height.ToString());
 			RapIni.Write("position>x", x.ToString());
 			RapIni.Write("position>y", y.ToString());
+			SplitSaveToIni(splitContainerMain);
+			SplitSaveToIni(splitContainerBoard);
+			SplitSaveToIni(splitContainerChart);
+			SplitSaveToIni(splitContainerTournament);
 			GamerList.Terminate();
 			SortingColumn.Dispose();
 
@@ -94,12 +109,15 @@ namespace RapChessGui
 			CEngine e;
 			e = new CEngine(CEngineList.def);
 			e.file = "RapChessCs.exe";
+			e.elo = "1100";
 			CEngineList.Add(e);
 			e = new CEngine("RapSimple CS");
 			e.file = "RapSimpleCs.exe";
+			e.elo = "1000";
 			CEngineList.Add(e);
 			e = new CEngine("RapShort CS");
 			e.file = "RapShortCs.exe";
+			e.elo = "900";
 			CEngineList.Add(e);
 			CEngineList.SaveToIni();
 			CBookList.LoadFromIni();
@@ -200,9 +218,10 @@ namespace RapChessGui
 			Location = new Point(x, y);
 			if (RapIni.ReadBool("position>maximized", false))
 				WindowState = FormWindowState.Maximized;
-			double p = (double)splitContainerMain.SplitterDistance / splitContainerMain.ClientSize.Height;
-			p = RapIni.ReadDouble("position>split>main", p);
-			splitContainerMain.SplitterDistance = Convert.ToInt32(splitContainerMain.ClientSize.Height * p);
+			SplitLoadFromIni(splitContainerMain);
+			SplitLoadFromIni(splitContainerBoard);
+			SplitLoadFromIni(splitContainerChart);
+			SplitLoadFromIni(splitContainerTournament);
 			CEngineList.LoadFromIni();
 			CBookList.LoadFromIni();
 			CPlayerList.LoadFromIni();
@@ -414,7 +433,7 @@ namespace RapChessGui
 			list.Add($"[Result \"{result}\"]");
 			list.Add("");
 			list.Add(CHistory.GetPgn());
-			TextWriter tw = new StreamWriter($"{CData.modeName}.pgn");
+			TextWriter tw = new StreamWriter($"{cbMainMode.Text}.pgn");
 			foreach (String s in list)
 				tw.WriteLine(s);
 			tw.Close();
@@ -620,6 +639,8 @@ namespace RapChessGui
 			p2.modeValue.value = CModeMatch.modeValue2.value;
 			GamerList.gamer[0].SetPlayer(p1);
 			GamerList.gamer[1].SetPlayer(p2);
+			p1.elo = GamerList.gamer[0].engine.elo;
+			p2.elo = GamerList.gamer[1].engine.elo;
 			if (CModeMatch.rotate)
 				GamerList.Rotate();
 			CModeMatch.rotate = !CModeMatch.rotate;
@@ -1069,7 +1090,7 @@ namespace RapChessGui
 				}
 				TrainingShow();
 			}
-			FormLog.This.richTextBox1.SaveFile($"{CData.modeName}.rtf");
+			FormLog.This.richTextBox1.SaveFile($"{cbMainMode.Text}.rtf");
 			CreatePgn();
 			timerStart.Start();
 		}
@@ -1139,6 +1160,8 @@ namespace RapChessGui
 				labColorD.BackColor = Color.Black;
 				labTakenT.ForeColor = Color.White;
 				labTakenD.ForeColor = Color.Black;
+				labMaterialT.ForeColor = Color.White;
+				labMaterialD.ForeColor = Color.Black;
 			}
 			else
 			{
@@ -1148,6 +1171,8 @@ namespace RapChessGui
 				labColorD.BackColor = Color.White;
 				labTakenT.ForeColor = Color.Black;
 				labTakenD.ForeColor = Color.White;
+				labMaterialT.ForeColor = Color.Black;
+				labMaterialD.ForeColor = Color.White;
 			}
 			if ((boardRotate ^ CChess.whiteTurn) ^ (CData.gameState != 0))
 			{
@@ -1276,6 +1301,7 @@ namespace RapChessGui
 			if (boardRotate ^ g.white)
 			{
 				labTimeD.Text = g.GetTime();
+				labEloD.Text = g.GetElo();
 				labScoreB.Text = $"Score {g.score}";
 				labNodesB.Text = $"Nodes {g.nodes.ToString("N0")}";
 				labNpsB.Text = $"Nps {nps.ToString("N0")}";
@@ -1286,6 +1312,7 @@ namespace RapChessGui
 			else
 			{
 				labTimeT.Text = g.GetTime();
+				labEloT.Text = g.GetElo();
 				labScoreT.Text = $"Score {g.score}";
 				labNodesT.Text = $"Nodes {g.nodes.ToString("N0")}";
 				labNpsT.Text = $"Nps {nps.ToString("N0")}";
@@ -1330,11 +1357,9 @@ namespace RapChessGui
 			string mw = material.ToString();
 			if (material > 0)
 				mw = $"+{mw}";
-			mw = $"Material {mw}";
 			string mb = (-material).ToString();
 			if (-material > 0)
 				mb = $"+{mb}";
-			mb = $"Material {mb}";
 			if (boardRotate)
 			{
 				labTakenT.Text = w;
@@ -1753,11 +1778,7 @@ namespace RapChessGui
 
 		private void tabControl1_Selected(object sender, TabControlEventArgs e)
 		{
-			CData.fen = Chess.GetFen();
-			CData.modeName = tabControl1.SelectedTab.Text;
-			CBoard.Fill();
-			RenderBoard();
-			SetMode(tabControl1.SelectedIndex);
+			
 		}
 
 		private void pictureBox1_MouseMove(object sender, MouseEventArgs e)
@@ -1927,11 +1948,6 @@ namespace RapChessGui
 			RenderBoard();
 		}
 
-		private void cbColor_SelectedValueChanged(object sender, EventArgs e)
-		{
-			ShowAutoElo();
-		}
-
 		private void cbComputer_SelectedValueChanged(object sender, EventArgs e)
 		{
 			CModeGame.ranked = cbComputer.Text == "Auto";
@@ -2071,7 +2087,15 @@ namespace RapChessGui
 		private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			tabControl1.SelectedIndex = cbMainMode.SelectedIndex;
+			CData.fen = Chess.GetFen();
+			CBoard.Fill();
+			RenderBoard();
+			SetMode(cbMainMode.SelectedIndex);
 		}
 
+		private void cbColor_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			ShowAutoElo();
+		}
 	}
 }

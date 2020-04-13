@@ -44,6 +44,8 @@
 			this.tbEngineName = new System.Windows.Forms.TextBox();
 			this.groupBox2 = new System.Windows.Forms.GroupBox();
 			this.listBox1 = new System.Windows.Forms.ListBox();
+			this.gbElo = new System.Windows.Forms.GroupBox();
+			this.nudElo = new System.Windows.Forms.NumericUpDown();
 			this.panel1.SuspendLayout();
 			this.gbOptions.SuspendLayout();
 			this.groupBox3.SuspendLayout();
@@ -51,6 +53,8 @@
 			this.groupBox4.SuspendLayout();
 			this.groupBox1.SuspendLayout();
 			this.groupBox2.SuspendLayout();
+			this.gbElo.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.nudElo)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// panel1
@@ -58,6 +62,7 @@
 			this.panel1.Controls.Add(this.bDelete);
 			this.panel1.Controls.Add(this.bCreate);
 			this.panel1.Controls.Add(this.bUpdate);
+			this.panel1.Controls.Add(this.gbElo);
 			this.panel1.Controls.Add(this.gbOptions);
 			this.panel1.Controls.Add(this.groupBox3);
 			this.panel1.Controls.Add(this.groupBox7);
@@ -72,7 +77,7 @@
 			// bDelete
 			// 
 			this.bDelete.Dock = System.Windows.Forms.DockStyle.Top;
-			this.bDelete.Location = new System.Drawing.Point(0, 398);
+			this.bDelete.Location = new System.Drawing.Point(0, 443);
 			this.bDelete.Name = "bDelete";
 			this.bDelete.Size = new System.Drawing.Size(311, 33);
 			this.bDelete.TabIndex = 27;
@@ -83,7 +88,7 @@
 			// bCreate
 			// 
 			this.bCreate.Dock = System.Windows.Forms.DockStyle.Top;
-			this.bCreate.Location = new System.Drawing.Point(0, 365);
+			this.bCreate.Location = new System.Drawing.Point(0, 410);
 			this.bCreate.Name = "bCreate";
 			this.bCreate.Size = new System.Drawing.Size(311, 33);
 			this.bCreate.TabIndex = 26;
@@ -94,7 +99,7 @@
 			// bUpdate
 			// 
 			this.bUpdate.Dock = System.Windows.Forms.DockStyle.Top;
-			this.bUpdate.Location = new System.Drawing.Point(0, 338);
+			this.bUpdate.Location = new System.Drawing.Point(0, 383);
 			this.bUpdate.Name = "bUpdate";
 			this.bUpdate.Size = new System.Drawing.Size(311, 27);
 			this.bUpdate.TabIndex = 25;
@@ -231,6 +236,37 @@
 			this.listBox1.TabIndex = 1;
 			this.listBox1.SelectedValueChanged += new System.EventHandler(this.ListBox1_SelectedValueChanged);
 			// 
+			// gbElo
+			// 
+			this.gbElo.Controls.Add(this.nudElo);
+			this.gbElo.Dock = System.Windows.Forms.DockStyle.Top;
+			this.gbElo.Location = new System.Drawing.Point(0, 338);
+			this.gbElo.Name = "gbElo";
+			this.gbElo.Size = new System.Drawing.Size(311, 45);
+			this.gbElo.TabIndex = 30;
+			this.gbElo.TabStop = false;
+			this.gbElo.Text = "Elo";
+			// 
+			// nudElo
+			// 
+			this.nudElo.Dock = System.Windows.Forms.DockStyle.Top;
+			this.nudElo.Location = new System.Drawing.Point(3, 16);
+			this.nudElo.Maximum = new decimal(new int[] {
+            10000,
+            0,
+            0,
+            0});
+			this.nudElo.Name = "nudElo";
+			this.nudElo.Size = new System.Drawing.Size(305, 20);
+			this.nudElo.TabIndex = 0;
+			this.nudElo.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			this.nudElo.ThousandsSeparator = true;
+			this.nudElo.Value = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
+			// 
 			// FormEngine
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -255,6 +291,8 @@
 			this.groupBox1.ResumeLayout(false);
 			this.groupBox1.PerformLayout();
 			this.groupBox2.ResumeLayout(false);
+			this.gbElo.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this.nudElo)).EndInit();
 			this.ResumeLayout(false);
 
 		}
@@ -276,5 +314,7 @@
 		public System.Windows.Forms.ComboBox cbProtocol;
 		private System.Windows.Forms.GroupBox gbOptions;
 		private System.Windows.Forms.RichTextBox rtbOptions;
+		private System.Windows.Forms.GroupBox gbElo;
+		private System.Windows.Forms.NumericUpDown nudElo;
 	}
 }

@@ -47,11 +47,11 @@ namespace RapChessGui
 		{
 			engine = CRapIni.This.Read($"player>{name}>engine", "Human");
 			modeValue.mode = CRapIni.This.Read($"player>{name}>mode", "movetime");
-			modeValue.value = CRapIni.This.ReadInt($"player>{name}>value", 10);
+			modeValue.value = CRapIni.This.ReadInt($"player>{name}>value", modeValue.value);
 			book = CRapIni.This.Read($"player>{name}>book", "None");
 			elo = CRapIni.This.Read($"player>{name}>elo", "1000");
-			eloNew = CRapIni.This.ReadInt($"player>{name}>eloNew", 1000);
-			eloOld = CRapIni.This.ReadDouble($"player>{name}>eloOld", 1000);
+			eloNew = CRapIni.This.ReadInt($"player>{name}>eloNew", eloNew);
+			eloOld = CRapIni.This.ReadDouble($"player>{name}>eloOld", eloOld);
 		}
 
 		public void SaveToIni()
@@ -60,11 +60,11 @@ namespace RapChessGui
 				name = GetName();
 			CRapIni.This.Write($"player>{name}>engine", engine);
 			CRapIni.This.Write($"player>{name}>mode", modeValue.mode);
-			CRapIni.This.Write($"player>{name}>value", modeValue.value.ToString());
+			CRapIni.This.Write($"player>{name}>value", modeValue.value);
 			CRapIni.This.Write($"player>{name}>book", book);
 			CRapIni.This.Write($"player>{name}>elo", elo);
-			CRapIni.This.Write($"player>{name}>eloNew", Convert.ToString(eloNew));
-			CRapIni.This.Write($"player>{name}>eloOld", Convert.ToString(eloOld));
+			CRapIni.This.Write($"player>{name}>eloNew", eloNew);
+			CRapIni.This.Write($"player>{name}>eloOld", eloOld);
 		}
 
 		string MakeShort(string name)

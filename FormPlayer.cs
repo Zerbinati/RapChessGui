@@ -20,10 +20,10 @@ namespace RapChessGui
 
 		public void SelectUser()
 		{
-			SelectUser(curPlayerName);
+			SelectPlayer(curPlayerName);
 		}
 
-		void SelectUser(string name)
+		void SelectPlayer(string name)
 		{
 			CPlayer p = CPlayerList.GetPlayerAuto(name);
 			if (p == null)
@@ -38,7 +38,7 @@ namespace RapChessGui
 			else
 				cbBookList.Text = "None";
 			curPlayerName = p.name;
-			nudElo.Value = Int32.Parse(p.elo);
+			nudElo.Value = Convert.ToInt32(p.elo);
 			nudValue.Value = p.modeValue.GetValue();
 			modeValue.mode = p.modeValue.mode;
 			modeValue.value = p.modeValue.value;
@@ -54,7 +54,7 @@ namespace RapChessGui
 
 		private void ListBox1_SelectedValueChanged(object sender, EventArgs e)
 		{
-			SelectUser(listBox1.SelectedItem.ToString());
+			SelectPlayer(listBox1.SelectedItem.ToString());
 		}
 
 		void SaveToIni(CPlayer p)

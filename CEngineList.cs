@@ -10,6 +10,8 @@ namespace RapChessGui
 		public string file = "";
 		public string protocol = "Uci";
 		public string parameters = "";
+		public string elo = "1000";
+		public double eloOld = 1000;
 		public List<string> options = new List<string>();
 
 		public CEngine(string n)
@@ -23,6 +25,8 @@ namespace RapChessGui
 			protocol = CRapIni.This.Read($"engine>{name}>protocol", "Uci");
 			parameters = CRapIni.This.Read($"engine>{name}>parameters", "");
 			options = CRapIni.This.ReadList($"engine>{name}>options");
+			elo = CRapIni.This.Read($"engine>{name}>elo", "1000");
+			eloOld = CRapIni.This.ReadDouble($"engine>{name}>eloOld",eloOld);
 		}
 
 		public void SaveToIni()
@@ -31,6 +35,8 @@ namespace RapChessGui
 			CRapIni.This.Write($"engine>{name}>protocol", protocol);
 			CRapIni.This.Write($"engine>{name}>parameters", parameters);
 			CRapIni.This.WriteList($"engine>{name}>options", options);
+			CRapIni.This.Write($"engine>{name}>elo", elo);
+			CRapIni.This.Write($"engine>{name}>eloOld", eloOld);
 		}
 	}
 

@@ -71,6 +71,11 @@ namespace RapIni
 
 		}
 
+		public void Write(string key, double value)
+		{
+			Write(key,value.ToString());
+		}
+
 		public string ReadFromFile(string key, string def = "")
 		{
 			if (Load())

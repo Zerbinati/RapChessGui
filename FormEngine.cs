@@ -1,6 +1,4 @@
 ﻿using System;
-using System.IO;
-using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 using RapIni;
@@ -20,15 +18,16 @@ namespace RapChessGui
 
 		void SelectEngine(string name)
 		{
-			CEngine engine = CEngineList.GetEngine(name);
-			if (engine == null)
+			CEngine e = CEngineList.GetEngine(name);
+			if (e == null)
 				return;
-			tbEngineName.Text = engine.name;
-			tbParameters.Text = engine.parameters;
-			cbFileList.Text = engine.file;
-			cbProtocol.Text = engine.protocol;
-			curEngineName = engine.name;
-			rtbOptions.Lines = engine.options.ToArray();
+			tbEngineName.Text = e.name;
+			tbParameters.Text = e.parameters;
+			cbFileList.Text = e.file;
+			cbProtocol.Text = e.protocol;
+			curEngineName = e.name;
+			nudElo.Value = Convert.ToInt32(e.elo);
+			rtbOptions.Lines = e.options.ToArray();
 		}
 
 		void UpdateListBox()
@@ -43,17 +42,19 @@ namespace RapChessGui
 			SelectEngine(listBox1.SelectedItem.ToString());
 		}
 
-		void SaveToIni(CEngine engine)
+		void SaveToIni(CEngine e)
 		{
-			engine.name = tbEngineName.Text;
-			engine.file = cbFileList.Text;
-			engine.protocol = cbProtocol.Text;
-			engine.parameters = tbParameters.Text;
-			engine.options = rtbOptions.Lines.Cast<String>().ToList();
-			engine.SaveToIni();
-			curEngineName = engine.name;
+			e.name = tbEngineName.Text;
+			e.file = cbFileList.Text;
+			e.protocol = cbProtocol.Text;
+			e.parameters = tbParameters.Text;
+			e.elo = nudElo.Value.ToString();
+			e.eloOld = Convert.ToDouble(e.elo);
+			e.options = rtbOptions.Lines.Cast<String>().ToList();
+			e.SaveToIni();
+			curEngineName = e.name;
 			UpdateListBox();
-			int index = listBox1.FindString(engine.name);
+			int index = listBox1.FindString(e.name);
 			if (index == -1) return;
 			listBox1.SetSelected(index, true);
 		}
