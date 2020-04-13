@@ -244,6 +244,8 @@ namespace RapChessGui
 
 		public static void Prepare(int w, int h)
 		{
+			if (w < 0xf) w = 0xf;
+			if (h < 0xf) h = 0xf;
 			int min = Math.Min(w, h);
 			field = min / 9;
 			marginW = (w - (field * 8)) >> 1;

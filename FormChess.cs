@@ -63,9 +63,29 @@ namespace RapChessGui
 			listView1_Resize(listView1, null);
 			listView2_Resize(listView2, null);
 			lvMoves_Resize(lvMoves, null);
+			cbMainMode.SelectedIndex = 0;
 			BoardPrepare();
 			GameStart();
 			toolTip1.Active = FormOptions.ShowTips();
+		}
+
+		private void FormChess_FormClosed(object sender, FormClosedEventArgs e)
+		{
+			bool maximized = WindowState == FormWindowState.Maximized;
+			int width = maximized ? RestoreBounds.Width : Width;
+			int height = maximized ? RestoreBounds.Height : Height;
+			int x = maximized ? RestoreBounds.X : Location.X;
+			int y = maximized ? RestoreBounds.Y : Location.Y;
+			double p = (double)splitContainerMain.SplitterDistance / splitContainerMain.ClientSize.Height;
+			RapIni.Write("position>split>main", p.ToString());
+			RapIni.Write("position>maximized", maximized.ToString());
+			RapIni.Write("position>width", width.ToString());
+			RapIni.Write("position>height", height.ToString());
+			RapIni.Write("position>x", x.ToString());
+			RapIni.Write("position>y", y.ToString());
+			GamerList.Terminate();
+			SortingColumn.Dispose();
+
 		}
 
 		void CreateIni()
@@ -180,6 +200,9 @@ namespace RapChessGui
 			Location = new Point(x, y);
 			if (RapIni.ReadBool("position>maximized", false))
 				WindowState = FormWindowState.Maximized;
+			double p = (double)splitContainerMain.SplitterDistance / splitContainerMain.ClientSize.Height;
+			p = RapIni.ReadDouble("position>split>main", p);
+			splitContainerMain.SplitterDistance = Convert.ToInt32(splitContainerMain.ClientSize.Height * p);
 			CEngineList.LoadFromIni();
 			CBookList.LoadFromIni();
 			CPlayerList.LoadFromIni();
@@ -1520,23 +1543,6 @@ namespace RapChessGui
 			lv.Columns[lv.Columns.Count - 1].Width = lv.Width - 32 - w * (lv.Columns.Count - 1);
 		}
 
-		private void FormChess_FormClosed(object sender, FormClosedEventArgs e)
-		{
-			bool maximized = WindowState == FormWindowState.Maximized;
-			int width = maximized ? RestoreBounds.Width : Width;
-			int height = maximized ? RestoreBounds.Height : Height;
-			int x = maximized ? RestoreBounds.X : Location.X;
-			int y = maximized ? RestoreBounds.Y : Location.Y;
-			RapIni.Write("position>maximized", maximized.ToString());
-			RapIni.Write("position>width", width.ToString());
-			RapIni.Write("position>height", height.ToString());
-			RapIni.Write("position>x", x.ToString());
-			RapIni.Write("position>y", y.ToString());
-			GamerList.Terminate();
-			SortingColumn.Dispose();
-
-		}
-
 		private void Timer1_Tick_1(object sender, EventArgs e)
 		{
 			lock (CMessageList.list)
@@ -2061,5 +2067,11 @@ namespace RapChessGui
 			nudTeacher.Value = CModeTraining.modeValueTeacher.GetValue();
 			toolTip1.SetToolTip(nudTeacher, CModeTraining.modeValueTeacher.GetTip());
 		}
+
+		private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			tabControl1.SelectedIndex = cbMainMode.SelectedIndex;
+		}
+
 	}
 }
