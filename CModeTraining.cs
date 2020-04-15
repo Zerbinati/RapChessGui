@@ -5,10 +5,11 @@ namespace RapChessGui
 	static class CModeTraining
 	{
 		public static bool rotate = false;
-		public static int games = 0;
-		public static int win = 0;
-		public static int draw = 0;
-		public static int loose = 0;
+		public static int games;
+		public static int win;
+		public static int draw;
+		public static int loose;
+		public static int errors;
 		public static string teacher = "";
 		public static string trained = "";
 		public static string teacherBook = "Eco";
@@ -23,6 +24,7 @@ namespace RapChessGui
 			win = 0;
 			draw = 0;
 			loose = 0;
+			errors = 0;
 		}
 
 		public static int Total()
@@ -47,8 +49,8 @@ namespace RapChessGui
 			CRapIni.This.Write("mode>training>trained", trained);
 			CRapIni.This.Write("mode>training>teacherBook", teacherBook);
 			CRapIni.This.Write("mode>training>trainedBook", trainedBook);
-			CRapIni.This.Write("mode>training>teacherValue", modeValueTeacher.value.ToString());
-			CRapIni.This.Write("mode>training>trainedValue", modeValueTrained.value.ToString());
+			CRapIni.This.Write("mode>training>teacherValue", modeValueTeacher.value);
+			CRapIni.This.Write("mode>training>trainedValue", modeValueTrained.value);
 			CRapIni.This.Write("mode>training>teacherMode", modeValueTeacher.mode);
 			CRapIni.This.Write("mode>training>trainedMode", modeValueTrained.mode);
 		}

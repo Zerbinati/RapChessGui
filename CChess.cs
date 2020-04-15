@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace RapChessGui
 {
-	enum CGameState { normal, mate, stalemate, repetition, move50, material, resignation, stop }
+	public enum CGameState { normal, mate, stalemate, repetition, move50, material, time,error,resignation, stop }
 
 	class CUndo
 	{
@@ -146,22 +146,22 @@ namespace RapChessGui
 			return y * 8 + x;
 		}
 
-		public int GetGameState()
+		public CGameState GetGameState()
 		{
 			GenerateAllMoves(whiteTurn, false);
 			bool myInsufficient = adjInsufficient;
 			if (g_move50 >= 100)
-				return (int)CGameState.move50;
+				return CGameState.move50;
 			if (IsRepetition())
-				return (int)CGameState.repetition;
+				return CGameState.repetition;
 			GenerateAllMoves(!whiteTurn, false);
 			bool check = g_inCheck;
 			if (adjInsufficient && myInsufficient)
-				return (int)CGameState.material;
+				return CGameState.material;
 			List<int> moves = GenerateValidMoves();
 			if (moves.Count > 0)
 				return (int)CGameState.normal;
-			return check ? (int)CGameState.mate : (int)CGameState.stalemate;
+			return check ? CGameState.mate : CGameState.stalemate;
 		}
 
 		public string EmoToSan(string emo)

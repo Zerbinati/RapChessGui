@@ -1,7 +1,7 @@
 ﻿using System;
-using System.IO;
 using System.Drawing;
 using System.Diagnostics;
+using RapLog;
 
 namespace RapChessGui
 {
@@ -236,6 +236,13 @@ namespace RapChessGui
 			{
 				double v = Convert.ToDouble(player.modeValue.GetUciValue());
 				double t = v - timer.Elapsed.TotalMilliseconds;
+				if (t < 0)
+				{
+					FormChess.SetGameState(CGameState.time);
+					if(engine != null)
+					CRapLog.Add($"{engine.name} time out");
+					return "Time out";
+				}
 				dt = dt.AddMilliseconds(t);
 				if (t < 10000)
 					return dt.ToString("ss.ff");

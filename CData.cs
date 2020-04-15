@@ -5,7 +5,7 @@ using System.Windows.Forms;
 
 namespace RapChessGui
 {
-	enum CMode { game, match, tournament, training, edit }
+	public enum CMode { game, match, tournament, training, edit }
 
 	public static class CDrag
 	{
@@ -22,8 +22,8 @@ namespace RapChessGui
 	{
 		public static bool reset = true;
 		public static bool rotateBoard = false;
-		public static int gameState = 0;
-		public static int gameMode = 0;
+		public static CGameState gameState = CGameState.normal;
+		public static CMode gameMode = CMode.game;
 		public static int back = 0;
 		public static double fps = 0;
 		public static string fen = CChess.defFen;
@@ -86,7 +86,7 @@ namespace RapChessGui
 			switch (mode)
 			{
 				case "Blitz":
-					return 1;
+					return 15;
 				case "Depth":
 					return 1;
 				case "Nodes":

@@ -69,17 +69,189 @@ namespace RapChessGui
 			toolTip1.Active = FormOptions.ShowTips();
 		}
 
+		public static void SetGameState(CGameState gs)
+		{
+			if (gs == CGameState.normal)
+			{
+				CData.gameState = CGameState.normal;
+				return;
+			}
+			if (CData.gameState != CGameState.normal)
+				return;
+			CData.gameState = gs;
+			CPlayer uw = This.GamerList.GamerCur().player;
+			CPlayer ul = This.GamerList.GamerSec().player;
+			int eloW = Convert.ToInt32(uw.elo);
+			int eloL = Convert.ToInt32(ul.elo);
+			bool isDraw = false;
+			switch (CData.gameState)
+			{
+				case CGameState.mate:
+					This.tssMoves.ForeColor = Color.Lime;
+					This.tssMoves.Text = uw.name + " win";
+					break;
+				case CGameState.stalemate:
+					isDraw = true;
+					This.tssMoves.ForeColor = Color.Yellow;
+					This.tssMoves.Text = "Stalemate";
+					break;
+				case CGameState.repetition:
+					isDraw = true;
+					This.tssMoves.ForeColor = Color.Yellow;
+					This.tssMoves.Text = "Threefold repetition";
+					break;
+				case CGameState.move50:
+					isDraw = true;
+					This.tssMoves.ForeColor = Color.Yellow;
+					This.tssMoves.Text = "Fifty-move rule";
+					break;
+				case CGameState.material:
+					isDraw = true;
+					This.tssMoves.ForeColor = Color.Yellow;
+					This.tssMoves.Text = "Insufficient material";
+					break;
+				case CGameState.resignation:
+					This.tssMoves.ForeColor = Color.Yellow;
+					This.tssMoves.Text = $"{ul.name} resign";
+					break;
+				case CGameState.time:
+					This.tssMoves.ForeColor = Color.Red;
+					This.tssMoves.Text = $"{ul.name}Time out";
+					break;
+				case CGameState.error:
+					This.tssMoves.ForeColor = Color.Red;
+					This.tssMoves.Text = $"{ul.name} make Wrong move";
+					break;
+			}
+			if (CData.gameMode == CMode.game)
+			{
+				if (This.IsAutoElo())
+					if (uw.name == "Human")
+					{
+						if (!isDraw)
+							uw.eloNew = uw.eloMore;
+						else
+							uw.eloNew = Convert.ToInt32(uw.eloOld);
+					}
+					else
+					{
+						if (!isDraw)
+							ul.eloNew = ul.eloLess;
+						else
+							ul.eloNew = Convert.ToInt32(ul.eloOld);
+					}
+				This.ShowLastGame();
+			}
+			if (CData.gameMode == CMode.match)
+			{
+				CModeMatch.games++;
+				if (!isDraw)
+				{
+					if (uw.name == This.labMatch10.Text)
+					{
+						CModeMatch.win++;
+					}
+					else
+					{
+						CModeMatch.loose++;
+					}
+				}
+				else
+				{
+					CModeMatch.draw++;
+				}
+				CModeMatch.SaveToIni();
+				This.MatchShow();
+			}
+			if (CData.gameMode == CMode.tournament)
+			{
+				int indexW = CPlayerList.GetIndexElo(eloW);
+				int indexL = CPlayerList.GetIndexElo(eloL);
+				int optW = CPlayerList.GetOptElo(indexW);
+				int optL = CPlayerList.GetOptElo(indexL);
+				int OW = optW;
+				int OL = optL;
+				if (!isDraw)
+				{
+					if (eloW <= eloL)
+					{
+						OW = optL;
+						OL = optW;
+					}
+					if (OW < eloW)
+						OW = eloW;
+					if (OL > eloL)
+						OL = eloL;
+					string r = uw == This.GamerList.gamer[0].player ? "w" : "b";
+					CModeTournament.tourList.Write(This.GamerList.gamer[0].player.name, This.GamerList.gamer[1].player.name, r);
+				}
+				else
+				{
+					int opt = (OW + OL) >> 1;
+					OW = opt;
+					OL = opt;
+					CModeTournament.tourList.Write(This.GamerList.gamer[0].player.name, This.GamerList.gamer[1].player.name, "d");
+				}
+				int newW = Convert.ToInt32(eloW * 0.9 + Math.Max(OW, eloL) * 0.1);
+				int newL = Convert.ToInt32(eloL * 0.9 + Math.Min(OL, eloW) * 0.1);
+				uw.elo = newW.ToString();
+				ul.elo = newL.ToString();
+				uw.eloOld = uw.eloOld * .9 + newW * .1;
+				ul.eloOld = ul.eloOld * .9 + newL * .1; ;
+				uw.SaveToIni();
+				ul.SaveToIni();
+				This.TournamentUpdate(uw);
+				This.TournamentUpdate(ul);
+				CModeTournament.rotate = (OW != OL) && (newW < newL);
+			}
+			if (CData.gameMode == CMode.training)
+			{
+				CModeTraining.games++;
+				if (!isDraw)
+				{
+					if (uw.name == "Teacher")
+					{
+						CModeTraining.win++;
+						if (--CModeTraining.modeValueTeacher.value < 1)
+							CModeTraining.modeValueTeacher.value = 1;
+					}
+					else
+					{
+						CModeTraining.loose++;
+						CModeTraining.modeValueTeacher.value++;
+					}
+				}
+				else
+				{
+					CModeTraining.draw++;
+					CModeTraining.modeValueTeacher.value++;
+				}
+				if ((CData.gameState == CGameState.time) || (CData.gameState == CGameState.error))
+					CModeTraining.errors++;
+				This.TrainingShow();
+			}
+			FormLog.This.richTextBox1.AppendText($"Finish {This.tssMoves.Text}\n", Color.Gray);
+			if (CData.gameState != CGameState.error)
+			{
+				This.CreateRtf();
+				This.CreatePgn();
+			}
+			This.timerStart.Start();
+		}
+
 		void SplitSaveToIni(SplitContainer sc)
 		{
-			double p = (double)sc.SplitterDistance / sc.ClientSize.Height;
+			int size = sc.Orientation == Orientation.Horizontal ? sc.ClientSize.Height : sc.ClientSize.Width;
+			double p = (double)sc.SplitterDistance / size;
 			RapIni.Write($"position>split>{sc.Name}", p.ToString());
 		}
 
 		void SplitLoadFromIni(SplitContainer sc)
 		{
-			double p = (double)sc.SplitterDistance / sc.ClientSize.Height;
+			int size = sc.Orientation == Orientation.Horizontal ? sc.ClientSize.Height : sc.ClientSize.Width;
+			double p = (double)sc.SplitterDistance / size;
 			p = RapIni.ReadDouble($"position>split>{sc.Name}", p);
-			sc.SplitterDistance = Convert.ToInt32(sc.ClientSize.Height * p);
+			sc.SplitterDistance = Convert.ToInt32(size * p);
 		}
 
 		private void FormChess_FormClosed(object sender, FormClosedEventArgs e)
@@ -231,6 +403,263 @@ namespace RapChessGui
 			CModeTraining.LoadFromIni();
 		}
 
+
+		void GamePrepare()
+		{
+			lvMoves.Items.Clear();
+			lvMovesW.Items.Clear();
+			lvMovesB.Items.Clear();
+			GamerList.gamer[0].SetPlayer("Human");
+			CPlayer pc = new CPlayer(cbComputer.Text);
+			if (cbComputer.Text == "Custom")
+			{
+				pc.engine = cbEngine.Text;
+				pc.book = cbBook.Text;
+				pc.modeValue.mode = CModeGame.modeValue.mode;
+				pc.modeValue.value = CModeGame.modeValue.value;
+			}
+			else
+				pc = CPlayerList.GetPlayer(cbComputer.Text);
+			if (pc == null)
+				pc = CPlayerList.GetPlayerAuto();
+			GamerList.gamer[1].SetPlayer(pc);
+		}
+
+		void GameStart()
+		{
+			CData.fen = CChess.defFen;
+			CModeGame.color = cbColor.Text;
+			CModeGame.computer = cbComputer.Text;
+			CModeGame.ranked = IsAutoElo();
+			ShowAutoElo();
+			ShowAuto();
+			SetMode((int)CMode.game);
+			GamePrepare();
+			bool lg = ShowLastGame();
+			if ((!lg && CModeGame.rotate && (cbColor.Text == "Auto")) || (cbColor.Text == "Black"))
+			{
+				CModeGame.rotate = false;
+				GamerList.Rotate();
+			}
+			else
+				CModeGame.rotate = true;
+			Clear();
+			if (GamerList.GamerCur().player.engine == "Human")
+				moves = Chess.GenerateValidMoves();
+			CPlayer uh = CPlayerList.GetPlayerAuto("Human");
+			int levelDif = 2000 / listView1.Items.Count;
+			if (levelDif < 10)
+				levelDif = 10;
+			int elo = Convert.ToInt32(uh.elo);
+			uh.eloNew = elo;
+			uh.eloOld = elo;
+			uh.eloLess = elo - levelDif;
+			uh.eloMore = elo + levelDif;
+			if (uh.eloLess < 0)
+				uh.eloLess = 0;
+			CModeGame.SaveToIni();
+		}
+
+		void GameShow()
+		{
+			ShowAutoElo();
+		}
+
+		void MatchShow()
+		{
+			cbEngine1.SelectedIndex = cbEngine1.FindStringExact(CModeMatch.engine1);
+			cbEngine2.SelectedIndex = cbEngine2.FindStringExact(CModeMatch.engine2);
+			cbMode1.SelectedIndex = cbMode1.FindStringExact(CModeMatch.modeValue1.mode);
+			cbMode2.SelectedIndex = cbMode2.FindStringExact(CModeMatch.modeValue2.mode);
+			cbBook1.SelectedIndex = cbBook1.FindStringExact(CModeMatch.book1);
+			cbBook2.SelectedIndex = cbBook2.FindStringExact(CModeMatch.book2);
+			nudValue1.Value = CModeMatch.modeValue1.GetValue();
+			nudValue1.Increment = CModeMatch.modeValue1.GetIncrement();
+			nudValue2.Value = CModeMatch.modeValue2.GetValue();
+			nudValue2.Increment = CModeMatch.modeValue2.GetIncrement();
+			labMatchGames.Text = $"Games {CModeMatch.games}";
+			labMatch11.Text = CModeMatch.win.ToString();
+			labMatch12.Text = CModeMatch.loose.ToString();
+			labMatch13.Text = CModeMatch.draw.ToString();
+			labMatch14.Text = $"{CModeMatch.Result(false)}%";
+			labMatch21.Text = CModeMatch.loose.ToString();
+			labMatch22.Text = CModeMatch.win.ToString();
+			labMatch23.Text = CModeMatch.draw.ToString();
+			labMatch24.Text = $"{CModeMatch.Result(true)}%";
+		}
+
+		void MatchStart()
+		{
+			CData.fen = CChess.defFen;
+			CModeMatch.engine1 = cbEngine1.Text;
+			CModeMatch.engine2 = cbEngine2.Text;
+			CModeMatch.modeValue1.mode = cbMode1.Text;
+			CModeMatch.modeValue1.SetValue((int)nudValue1.Value);
+			CModeMatch.modeValue2.mode = cbMode2.Text;
+			CModeMatch.modeValue2.SetValue((int)nudValue2.Value);
+			CModeMatch.book1 = cbBook1.Text;
+			CModeMatch.book2 = cbBook2.Text;
+			SetMode(CMode.match);
+			CPlayer p1 = new CPlayer("Player 1");
+			p1.engine = CModeMatch.engine1;
+			p1.book = CModeMatch.book1;
+			p1.modeValue.mode = CModeMatch.modeValue1.mode;
+			p1.modeValue.value = CModeMatch.modeValue1.value;
+			CPlayer p2 = new CPlayer("Player 2");
+			p2.engine = CModeMatch.engine2;
+			p2.book = CModeMatch.book2;
+			p2.modeValue.mode = CModeMatch.modeValue2.mode;
+			p2.modeValue.value = CModeMatch.modeValue2.value;
+			GamerList.gamer[0].SetPlayer(p1);
+			GamerList.gamer[1].SetPlayer(p2);
+			p1.elo = GamerList.gamer[0].engine.elo;
+			p2.elo = GamerList.gamer[1].engine.elo;
+			if (CModeMatch.rotate)
+				GamerList.Rotate();
+			CModeMatch.rotate = !CModeMatch.rotate;
+			Clear();
+			moves = Chess.GenerateValidMoves();
+			CModeMatch.SaveToIni();
+		}
+
+		void TournamentReset()
+		{
+			listView1.Items.Clear();
+			foreach (CPlayer p in CPlayerList.list)
+				if (p.engine != "Human")
+				{
+					int del = p.GetDeltaElo();
+					ListViewItem lvi = new ListViewItem(new[] { p.name, p.elo, del.ToString().ToString() });
+					if (del > 0)
+						lvi.BackColor = Color.FromArgb(0xe0, 0xff, 0xe0);
+					if (del < 0)
+						lvi.BackColor = Color.FromArgb(0xff, 0xe0, 0xe0);
+					if (del == 0)
+						lvi.BackColor = Color.FromArgb(0xff, 0xff, 0xff);
+					listView1.Items.Add(lvi);
+				}
+		}
+
+		void TournamentUpdate(CPlayer p)
+		{
+			foreach (ListViewItem lvi in listView1.Items)
+				if (lvi.Text == p.name)
+				{
+					int del = p.GetDeltaElo();
+					lvi.SubItems[1].Text = p.elo;
+					lvi.SubItems[2].Text = del.ToString();
+					if (del > 0)
+						lvi.BackColor = Color.FromArgb(0xe0, 0xff, 0xe0);
+					if (del < 0)
+						lvi.BackColor = Color.FromArgb(0xff, 0xe0, 0xe0);
+					if (del == 0)
+						lvi.BackColor = Color.FromArgb(0xff, 0xff, 0xff);
+				}
+		}
+
+		void TournamentStart()
+		{
+			CData.fen = CChess.defFen;
+			SetMode(CMode.tournament);
+			CPlayer p1;
+			CPlayer p2;
+			if (CModeTournament.rotate)
+			{
+				p1 = GamerList.gamer[1].player;
+				p2 = GamerList.gamer[0].player;
+			}
+			else
+			{
+				p1 = CModeTournament.SelectPlayer();
+				p2 = CModeTournament.SelectOpponent(p1);
+			}
+			GamerList.gamer[0].SetPlayer(p1);
+			GamerList.gamer[1].SetPlayer(p2);
+			foreach (ListViewItem lvi in listView1.Items)
+				if (lvi.Text == CModeTournament.player)
+				{
+					int top = lvi.Index;
+					top -= 4;
+					if (top < 0)
+						top = 0;
+					lvi.Selected = true;
+					listView1.TopItem = listView1.Items[top];
+					listView1.Sort();
+					listView1.Focus();
+					ShowHistoryList();
+					break;
+				}
+			Clear();
+		}
+
+		void TrainingShow()
+		{
+			labGames.Text = $"Games {CModeTraining.games}";
+			labErrors.Text = $"Errors {CModeTraining.errors}";
+			cbTeacherEngine.SelectedIndex = cbTeacherEngine.FindStringExact(CModeTraining.teacher);
+			cbTrainedEngine.SelectedIndex = cbTrainedEngine.FindStringExact(CModeTraining.trained);
+			cbTeacherMode.SelectedIndex = cbTeacherMode.FindStringExact(CModeTraining.modeValueTeacher.mode);
+			cbTrainedMode.SelectedIndex = cbTrainedMode.FindStringExact(CModeTraining.modeValueTrained.mode);
+			cbTeacherBook.SelectedIndex = cbTeacherBook.FindStringExact(CModeTraining.teacherBook);
+			cbTrainedBook.SelectedIndex = cbTrainedBook.FindStringExact(CModeTraining.trainedBook);
+			nudTeacher.Value = CModeTraining.modeValueTeacher.GetValue();
+			nudTeacher.Increment = CModeTraining.modeValueTeacher.GetIncrement();
+			nudTrained.Value = CModeTraining.modeValueTrained.GetValue();
+			nudTrained.Increment = CModeTraining.modeValueTrained.GetIncrement();
+			label12.Text = CModeTraining.win.ToString();
+			label13.Text = CModeTraining.loose.ToString();
+			label14.Text = CModeTraining.draw.ToString();
+			label15.Text = $"{CModeTraining.Result(false)}%";
+			label7.Text = CModeTraining.loose.ToString();
+			label8.Text = CModeTraining.win.ToString();
+			label9.Text = CModeTraining.draw.ToString();
+			label10.Text = $"{CModeTraining.Result(true)}%";
+		}
+
+		void TraingStart()
+		{
+			CData.fen = CChess.defFen;
+			CModeTraining.teacher = cbTeacherEngine.Text;
+			CModeTraining.trained = cbTrainedEngine.Text;
+			CModeTraining.modeValueTeacher.mode = cbTeacherMode.Text;
+			CModeTraining.modeValueTrained.mode = cbTrainedMode.Text;
+			CModeTraining.teacherBook = cbTeacherBook.Text;
+			CModeTraining.trainedBook = cbTrainedBook.Text;
+			CModeTraining.modeValueTeacher.SetValue((int)nudTeacher.Value);
+			CModeTraining.modeValueTrained.SetValue((int)nudTrained.Value);
+			SetMode(CMode.training);
+			CPlayer pw = new CPlayer("Trained");
+			pw.engine = CModeTraining.trained;
+			pw.book = CModeTraining.trainedBook;
+			pw.modeValue.mode = CModeTraining.modeValueTrained.mode;
+			pw.modeValue.value = CModeTraining.modeValueTrained.value;
+			CPlayer pb = new CPlayer("Teacher");
+			pb.engine = CModeTraining.teacher;
+			pb.book = CModeTraining.teacherBook;
+			pb.modeValue.mode = CModeTraining.modeValueTeacher.mode;
+			pb.modeValue.value = CModeTraining.modeValueTeacher.value;
+			GamerList.gamer[0].SetPlayer(pw);
+			GamerList.gamer[1].SetPlayer(pb);
+			if (CModeTraining.rotate)
+				GamerList.Rotate();
+			CModeTraining.rotate = !CModeTraining.rotate;
+			Clear();
+			CModeTraining.SaveToIni();
+		}
+
+		void EditShow()
+		{
+			List<RadioButton> list = gbToMove.Controls.OfType<RadioButton>().ToList();
+			int i = CChess.whiteTurn ? 1 : 0;
+			list[i].Select();
+			int cr = Chess.g_castleRights;
+			clbCastling.SetItemChecked(0, (Chess.g_castleRights & 1) > 0);
+			clbCastling.SetItemChecked(1, (Chess.g_castleRights & 2) > 0);
+			clbCastling.SetItemChecked(2, (Chess.g_castleRights & 4) > 0);
+			clbCastling.SetItemChecked(3, (Chess.g_castleRights & 8) > 0);
+			Chess.g_castleRights = cr;
+		}
+
 		public void BoardPrepare()
 		{
 			CBoard.Prepare(panBoard.Width, panBoard.Height);
@@ -239,10 +668,11 @@ namespace RapChessGui
 
 		void AddLines(CGamer g)
 		{
-			if (g.white)
-				lvMovesW.Items.Insert(0, new ListViewItem(new[] { g.GetTimeElapsed(), g.score, g.GetDepth(), g.nodes.ToString("N0"), g.nps.ToString("N0"), g.pv }));
-			else
-				lvMovesB.Items.Insert(0, new ListViewItem(new[] { g.GetTimeElapsed(), g.score, g.GetDepth(), g.nodes.ToString("N0"), g.nps.ToString("N0"), g.pv }));
+			ListViewItem lvi = new ListViewItem(new[] { g.GetTimeElapsed(), g.score, g.GetDepth(), g.nodes.ToString("N0"), g.nps.ToString("N0"), g.pv });
+			ListView lv = g.white ? lvMovesW : lvMovesB;
+			if ((lv.Items.Count & 1) > 0)
+				lvi.BackColor = Color.LemonChiffon;
+			lv.Items.Insert(0, lvi);
 		}
 
 		public void GetMessageUci(CGamer g, string msg)
@@ -363,7 +793,7 @@ namespace RapChessGui
 				case "0-1":
 				case "1-0":
 				case "1/2-1/2":
-					XBGameOver(msg);
+					SetGameState(CGameState.resignation);
 					break;
 				case "move":
 					g.ponder = Uci.GetValue("ponder");
@@ -379,7 +809,7 @@ namespace RapChessGui
 				default:
 					string s = msg.ToLower();
 					if (s.Contains("resign") || s.Contains("illegal"))
-						XBGameOver(msg);
+						SetGameState(CGameState.resignation);
 					else if (g.wbok && Char.IsDigit(Uci.tokens[0][0]) && (Uci.tokens.Length > 4))
 					{
 						try
@@ -418,11 +848,16 @@ namespace RapChessGui
 			}
 		}
 
+		void CreateRtf()
+		{
+			FormLog.This.richTextBox1.SaveFile($"{cbMainMode.Text}.rtf");
+		}
+
 		void CreatePgn()
 		{
 			List<string> list = new List<string>();
 			string result = "1/2-1/2";
-			if (CData.gameState == (int)CGameState.mate)
+			if (CData.gameState == CGameState.mate)
 				if ((CHistory.moveList.Count & 1) > 0)
 					result = "1-0";
 				else
@@ -447,29 +882,29 @@ namespace RapChessGui
 			tssMoves.Text = $"book {emo}";
 		}
 
-		void SetMode(int mode)
+		void SetMode(CMode mode)
 		{
 			moveToolStripMenuItem.Visible = false;
 			timer1.Enabled = false;
 			timerStart.Enabled = false;
 			GamerList.Terminate();
-			CData.gameMode = (int)mode;
+			CData.gameMode = mode;
 			CMessageList.list.Clear();
 			moveToolStripMenuItem.Visible = mode == (int)CMode.game;
 			Clear();
 			switch (mode)
 			{
-				case (int)CMode.game:
+				case CMode.game:
 					moveToolStripMenuItem.Visible = true;
 					GameShow();
 					break;
-				case (int)CMode.match:
+				case CMode.match:
 					MatchShow();
 					break;
-				case (int)CMode.training:
+				case CMode.training:
 					TrainingShow();
 					break;
-				case (int)CMode.edit:
+				case CMode.edit:
 					EditShow();
 					break;
 			}
@@ -529,261 +964,6 @@ namespace RapChessGui
 			hu.elo = hu.eloNew.ToString();
 			hu.SaveToIni();
 			return result;
-		}
-
-		void GameShow()
-		{
-			ShowAutoElo();
-		}
-
-		void GamePrepare()
-		{
-			lvMoves.Items.Clear();
-			lvMovesW.Items.Clear();
-			lvMovesB.Items.Clear();
-			GamerList.gamer[0].SetPlayer("Human");
-			CPlayer pc = new CPlayer(cbComputer.Text);
-			if (cbComputer.Text == "Custom")
-			{
-				pc.engine = cbEngine.Text;
-				pc.book = cbBook.Text;
-				pc.modeValue.mode = CModeGame.modeValue.mode;
-				pc.modeValue.value = CModeGame.modeValue.value;
-			}
-			else
-				pc = CPlayerList.GetPlayer(cbComputer.Text);
-			if (pc == null)
-				pc = CPlayerList.GetPlayerAuto();
-			GamerList.gamer[1].SetPlayer(pc);
-		}
-
-		void GameStart()
-		{
-			CData.fen = CChess.defFen;
-			CModeGame.color = cbColor.Text;
-			CModeGame.computer = cbComputer.Text;
-			CModeGame.ranked = IsAutoElo();
-			ShowAutoElo();
-			ShowAuto();
-			SetMode((int)CMode.game);
-			GamePrepare();
-			bool lg = ShowLastGame();
-			if ((!lg && CModeGame.rotate && (cbColor.Text == "Auto")) || (cbColor.Text == "Black"))
-			{
-				CModeGame.rotate = false;
-				GamerList.Rotate();
-			}
-			else
-				CModeGame.rotate = true;
-			Clear();
-			if (GamerList.GamerCur().player.engine == "Human")
-				moves = Chess.GenerateValidMoves();
-			CPlayer uh = CPlayerList.GetPlayerAuto("Human");
-			int levelDif = 2000 / listView1.Items.Count;
-			if (levelDif < 10)
-				levelDif = 10;
-			int elo = Convert.ToInt32(uh.elo);
-			uh.eloNew = elo;
-			uh.eloOld = elo;
-			uh.eloLess = elo - levelDif;
-			uh.eloMore = elo + levelDif;
-			if (uh.eloLess < 0)
-				uh.eloLess = 0;
-			CModeGame.SaveToIni();
-		}
-
-		void MatchShow()
-		{
-			cbEngine1.SelectedIndex = cbEngine1.FindStringExact(CModeMatch.engine1);
-			cbEngine2.SelectedIndex = cbEngine2.FindStringExact(CModeMatch.engine2);
-			cbMode1.SelectedIndex = cbMode1.FindStringExact(CModeMatch.modeValue1.mode);
-			cbMode2.SelectedIndex = cbMode2.FindStringExact(CModeMatch.modeValue2.mode);
-			cbBook1.SelectedIndex = cbBook1.FindStringExact(CModeMatch.book1);
-			cbBook2.SelectedIndex = cbBook2.FindStringExact(CModeMatch.book2);
-			nudValue1.Value = CModeMatch.modeValue1.GetValue();
-			nudValue1.Increment = CModeMatch.modeValue1.GetIncrement();
-			nudValue2.Value = CModeMatch.modeValue2.GetValue();
-			nudValue2.Increment = CModeMatch.modeValue2.GetIncrement();
-			labMatchGames.Text = $"Games {CModeMatch.games}";
-			labMatch11.Text = CModeMatch.win.ToString();
-			labMatch12.Text = CModeMatch.loose.ToString();
-			labMatch13.Text = CModeMatch.draw.ToString();
-			labMatch14.Text = $"{CModeMatch.Result(false)}%";
-			labMatch21.Text = CModeMatch.loose.ToString();
-			labMatch22.Text = CModeMatch.win.ToString();
-			labMatch23.Text = CModeMatch.draw.ToString();
-			labMatch24.Text = $"{CModeMatch.Result(true)}%";
-		}
-
-		void MatchStart()
-		{
-			CData.fen = CChess.defFen;
-			CModeMatch.engine1 = cbEngine1.Text;
-			CModeMatch.engine2 = cbEngine2.Text;
-			CModeMatch.modeValue1.mode = cbMode1.Text;
-			CModeMatch.modeValue1.SetValue((int)nudValue1.Value);
-			CModeMatch.modeValue2.mode = cbMode2.Text;
-			CModeMatch.modeValue2.SetValue((int)nudValue2.Value);
-			CModeMatch.book1 = cbBook1.Text;
-			CModeMatch.book2 = cbBook2.Text;
-			SetMode((int)CMode.match);
-			CPlayer p1 = new CPlayer("Player 1");
-			p1.engine = CModeMatch.engine1;
-			p1.book = CModeMatch.book1;
-			p1.modeValue.mode = CModeMatch.modeValue1.mode;
-			p1.modeValue.value = CModeMatch.modeValue1.value;
-			CPlayer p2 = new CPlayer("Player 2");
-			p2.engine = CModeMatch.engine2;
-			p2.book = CModeMatch.book2;
-			p2.modeValue.mode = CModeMatch.modeValue2.mode;
-			p2.modeValue.value = CModeMatch.modeValue2.value;
-			GamerList.gamer[0].SetPlayer(p1);
-			GamerList.gamer[1].SetPlayer(p2);
-			p1.elo = GamerList.gamer[0].engine.elo;
-			p2.elo = GamerList.gamer[1].engine.elo;
-			if (CModeMatch.rotate)
-				GamerList.Rotate();
-			CModeMatch.rotate = !CModeMatch.rotate;
-			Clear();
-			moves = Chess.GenerateValidMoves();
-			CModeMatch.SaveToIni();
-		}
-
-		void TournamentReset()
-		{
-			listView1.Items.Clear();
-			foreach (CPlayer p in CPlayerList.list)
-				if (p.engine != "Human")
-				{
-					int del = p.GetDeltaElo();
-					ListViewItem lvi = new ListViewItem(new[] { p.name, p.elo, del.ToString().ToString() });
-					if (del > 0)
-						lvi.BackColor = Color.FromArgb(0xe0, 0xff, 0xe0);
-					if (del < 0)
-						lvi.BackColor = Color.FromArgb(0xff, 0xe0, 0xe0);
-					if (del == 0)
-						lvi.BackColor = Color.FromArgb(0xff, 0xff, 0xff);
-					listView1.Items.Add(lvi);
-				}
-		}
-
-		void TournamentUpdate(CPlayer p)
-		{
-			foreach (ListViewItem lvi in listView1.Items)
-				if (lvi.Text == p.name)
-				{
-					int del = p.GetDeltaElo();
-					lvi.SubItems[1].Text = p.elo;
-					lvi.SubItems[2].Text = del.ToString();
-					if (del > 0)
-						lvi.BackColor = Color.FromArgb(0xe0, 0xff, 0xe0);
-					if (del < 0)
-						lvi.BackColor = Color.FromArgb(0xff, 0xe0, 0xe0);
-					if (del == 0)
-						lvi.BackColor = Color.FromArgb(0xff, 0xff, 0xff);
-				}
-		}
-
-		void TournamentStart()
-		{
-			CData.fen = CChess.defFen;
-			SetMode((int)CMode.tournament);
-			CPlayer p1;
-			CPlayer p2;
-			if (CModeTournament.rotate)
-			{
-				p1 = GamerList.gamer[1].player;
-				p2 = GamerList.gamer[0].player;
-			}
-			else
-			{
-				p1 = CModeTournament.SelectPlayer();
-				p2 = CModeTournament.SelectOpponent(p1);
-			}
-			GamerList.gamer[0].SetPlayer(p1);
-			GamerList.gamer[1].SetPlayer(p2);
-			foreach (ListViewItem lvi in listView1.Items)
-				if (lvi.Text == CModeTournament.player)
-				{
-					int top = lvi.Index;
-					top -= 4;
-					if (top < 0)
-						top = 0;
-					lvi.Selected = true;
-					listView1.TopItem = listView1.Items[top];
-					listView1.Sort();
-					listView1.Focus();
-					ShowHistoryList();
-					break;
-				}
-			Clear();
-		}
-
-		void TrainingShow()
-		{
-			labGames.Text = $"Games {CModeTraining.games}";
-			cbTeacherEngine.SelectedIndex = cbTeacherEngine.FindStringExact(CModeTraining.teacher);
-			cbTrainedEngine.SelectedIndex = cbTrainedEngine.FindStringExact(CModeTraining.trained);
-			cbTeacherMode.SelectedIndex = cbTeacherMode.FindStringExact(CModeTraining.modeValueTeacher.mode);
-			cbTrainedMode.SelectedIndex = cbTrainedMode.FindStringExact(CModeTraining.modeValueTrained.mode);
-			cbTeacherBook.SelectedIndex = cbTeacherBook.FindStringExact(CModeTraining.teacherBook);
-			cbTrainedBook.SelectedIndex = cbTrainedBook.FindStringExact(CModeTraining.trainedBook);
-			nudTeacher.Value = CModeTraining.modeValueTeacher.GetValue();
-			nudTeacher.Increment = CModeTraining.modeValueTeacher.GetIncrement();
-			nudTrained.Value = CModeTraining.modeValueTrained.GetValue();
-			nudTrained.Increment = CModeTraining.modeValueTrained.GetIncrement();
-			label12.Text = CModeTraining.win.ToString();
-			label13.Text = CModeTraining.loose.ToString();
-			label14.Text = CModeTraining.draw.ToString();
-			label15.Text = $"{CModeTraining.Result(false)}%";
-			label7.Text = CModeTraining.loose.ToString();
-			label8.Text = CModeTraining.win.ToString();
-			label9.Text = CModeTraining.draw.ToString();
-			label10.Text = $"{CModeTraining.Result(true)}%";
-		}
-
-		void TraingStart()
-		{
-			CData.fen = CChess.defFen;
-			CModeTraining.teacher = cbTeacherEngine.Text;
-			CModeTraining.trained = cbTrainedEngine.Text;
-			CModeTraining.modeValueTeacher.mode = cbTeacherMode.Text;
-			CModeTraining.modeValueTrained.mode = cbTrainedMode.Text;
-			CModeTraining.teacherBook = cbTeacherBook.Text;
-			CModeTraining.trainedBook = cbTrainedBook.Text;
-			CModeTraining.modeValueTeacher.SetValue((int)nudTeacher.Value);
-			CModeTraining.modeValueTrained.SetValue((int)nudTrained.Value);
-			SetMode((int)CMode.training);
-			CPlayer pw = new CPlayer("Trained");
-			pw.engine = CModeTraining.trained;
-			pw.book = CModeTraining.trainedBook;
-			pw.modeValue.mode = CModeTraining.modeValueTrained.mode;
-			pw.modeValue.value = CModeTraining.modeValueTrained.value;
-			CPlayer pb = new CPlayer("Teacher");
-			pb.engine = CModeTraining.teacher;
-			pb.book = CModeTraining.teacherBook;
-			pb.modeValue.mode = CModeTraining.modeValueTeacher.mode;
-			pb.modeValue.value = CModeTraining.modeValueTeacher.value;
-			GamerList.gamer[0].SetPlayer(pw);
-			GamerList.gamer[1].SetPlayer(pb);
-			if (CModeTraining.rotate)
-				GamerList.Rotate();
-			CModeTraining.rotate = !CModeTraining.rotate;
-			Clear();
-			CModeTraining.SaveToIni();
-		}
-
-		void EditShow()
-		{
-			List<RadioButton> list = gbToMove.Controls.OfType<RadioButton>().ToList();
-			int i = CChess.whiteTurn ? 1 : 0;
-			list[i].Select();
-			int cr = Chess.g_castleRights;
-			clbCastling.SetItemChecked(0, (Chess.g_castleRights & 1) > 0);
-			clbCastling.SetItemChecked(1, (Chess.g_castleRights & 2) > 0);
-			clbCastling.SetItemChecked(2, (Chess.g_castleRights & 4) > 0);
-			clbCastling.SetItemChecked(3, (Chess.g_castleRights & 8) > 0);
-			Chess.g_castleRights = cr;
 		}
 
 		void ShowHistoryList()
@@ -882,6 +1062,8 @@ namespace RapChessGui
 
 		public bool MakeMove(string emo)
 		{
+			if (CData.gameState != 0)
+				return false;
 			CArrow.Hide();
 			CGamer cp = GamerList.GamerCur();
 			cp.timer.Stop();
@@ -907,17 +1089,16 @@ namespace RapChessGui
 			}
 			if (!ivm)
 			{
-				tssMoves.ForeColor = Color.Red;
-				tssMoves.Text = "Wrong move " + emo;
-				FormLog.This.richTextBox1.AppendText($"Wrong move {emo}\n", Color.Red);
-				FormLog.This.richTextBox1.AppendText($"{Chess.GetFen()}\n");
 				List<int> gMoves = Chess.GenerateValidMoves();
 				List<string> eMoves = new List<string>();
 				foreach (int gm in gMoves)
 					eMoves.Add(Chess.FormatMove(gm));
+				FormLog.This.richTextBox1.AppendText($"Wrong move {emo}\n", Color.Red);
+				FormLog.This.richTextBox1.AppendText($"{Chess.GetFen()}\n");
 				FormLog.This.richTextBox1.AppendText($"{string.Join(" ", eMoves)}\n");
 				FormLog.This.richTextBox1.SaveFile("Error.rtf");
 				CRapLog.Add($"Wrong move {uw.engine} {emo} {Chess.GetFen()}");
+				SetGameState(CGameState.error);
 				return false;
 			}
 
@@ -935,7 +1116,7 @@ namespace RapChessGui
 				labEco.ForeColor = Color.Black;
 			int moveNumber = (Chess.g_moveNumber >> 1) + 1;
 			tssMove.Text = "Move " + moveNumber.ToString() + " " + Chess.g_move50.ToString();
-			CData.gameState = Chess.GetGameState();
+			SetGameState(Chess.GetGameState());
 			if (CData.gameState == 0)
 			{
 				GamerList.Next();
@@ -947,159 +1128,7 @@ namespace RapChessGui
 				else
 					lvMovesB.Items.Clear();
 			}
-			else
-				GameOver(uw, ul);
 			return true;
-		}
-
-		void GameOver(CPlayer uw, CPlayer ul)
-		{
-			int eloW = Convert.ToInt32(uw.elo);
-			int eloL = Convert.ToInt32(ul.elo);
-			switch (CData.gameState)
-			{
-				case (int)CGameState.mate:
-					tssMoves.ForeColor = Color.Lime;
-					tssMoves.Text = uw.name + " win";
-					break;
-				case (int)CGameState.stalemate:
-					tssMoves.ForeColor = Color.Yellow;
-					tssMoves.Text = "Stalemate";
-					break;
-				case (int)CGameState.repetition:
-					tssMoves.ForeColor = Color.Yellow;
-					tssMoves.Text = "Threefold repetition";
-					break;
-				case (int)CGameState.move50:
-					tssMoves.ForeColor = Color.Yellow;
-					tssMoves.Text = "Fifty-move rule";
-					break;
-				case (int)CGameState.material:
-					tssMoves.ForeColor = Color.Yellow;
-					tssMoves.Text = "Insufficient material";
-					break;
-			}
-			FormLog.This.richTextBox1.AppendText($"Finish {tssMoves.Text}\n", Color.Gray);
-			if (CData.gameMode == (int)CMode.game)
-			{
-				if (IsAutoElo())
-					if (uw.name == "Human")
-					{
-						if (CData.gameState == (int)CGameState.mate)
-							uw.eloNew = uw.eloMore;
-						else
-							uw.eloNew = Convert.ToInt32(uw.eloOld);
-					}
-					else
-					{
-						if (CData.gameState == (int)CGameState.mate)
-							ul.eloNew = ul.eloLess;
-						else
-							ul.eloNew = Convert.ToInt32(ul.eloOld);
-					}
-				ShowLastGame();
-			}
-			if (CData.gameMode == (int)CMode.match)
-			{
-				CModeMatch.games++;
-				if (CData.gameState == (int)CGameState.mate)
-				{
-					if (uw.name == labMatch10.Text)
-					{
-						CModeMatch.win++;
-					}
-					else
-					{
-						CModeMatch.loose++;
-					}
-				}
-				else
-				{
-					CModeMatch.draw++;
-				}
-				CModeMatch.SaveToIni();
-				MatchShow();
-			}
-			if (CData.gameMode == (int)CMode.tournament)
-			{
-				int indexW = CPlayerList.GetIndexElo(eloW);
-				int indexL = CPlayerList.GetIndexElo(eloL);
-				int optW = CPlayerList.GetOptElo(indexW);
-				int optL = CPlayerList.GetOptElo(indexL);
-				int OW = optW;
-				int OL = optL;
-				if (CData.gameState == (int)CGameState.mate)
-				{
-					if (eloW <= eloL)
-					{
-						OW = optL;
-						OL = optW;
-					}
-					if (OW < eloW)
-						OW = eloW;
-					if (OL > eloL)
-						OL = eloL;
-					string r = uw == GamerList.gamer[0].player ? "w" : "b";
-					CModeTournament.tourList.Write(GamerList.gamer[0].player.name, GamerList.gamer[1].player.name, r);
-				}
-				else
-				{
-					int opt = (OW + OL) >> 1;
-					OW = opt;
-					OL = opt;
-					CModeTournament.tourList.Write(GamerList.gamer[0].player.name, GamerList.gamer[1].player.name, "d");
-				}
-				int newW = Convert.ToInt32(eloW * 0.9 + Math.Max(OW, eloL) * 0.1);
-				int newL = Convert.ToInt32(eloL * 0.9 + Math.Min(OL, eloW) * 0.1);
-				uw.elo = newW.ToString();
-				ul.elo = newL.ToString();
-				uw.eloOld = uw.eloOld * .9 + newW * .1;
-				ul.eloOld = ul.eloOld * .9 + newL * .1; ;
-				uw.SaveToIni();
-				ul.SaveToIni();
-				TournamentUpdate(uw);
-				TournamentUpdate(ul);
-				CModeTournament.rotate = (OW != OL) && (newW < newL);
-			}
-			if (CData.gameMode == (int)CMode.training)
-			{
-				CModeTraining.games++;
-				if (CData.gameState == (int)CGameState.mate)
-				{
-					if (uw.name == "Teacher")
-					{
-						CModeTraining.win++;
-						if (--CModeTraining.modeValueTeacher.value < 1)
-							CModeTraining.modeValueTeacher.value = 1;
-					}
-					else
-					{
-						CModeTraining.loose++;
-						CModeTraining.modeValueTeacher.value++;
-					}
-				}
-				else
-				{
-					CModeTraining.draw++;
-					CModeTraining.modeValueTeacher.value++;
-				}
-				TrainingShow();
-			}
-			FormLog.This.richTextBox1.SaveFile($"{cbMainMode.Text}.rtf");
-			CreatePgn();
-			timerStart.Start();
-		}
-
-		void XBGameOver(string msg)
-		{
-			if (CData.gameState == (int)CGameState.normal)
-			{
-				CPlayer ul = GamerList.GamerCur().player;
-				CPlayer uw = GamerList.GamerSec().player;
-				CData.gameState = (int)CGameState.mate;
-				FormLog.This.richTextBox1.AppendText($"Game over {ul.name} {msg}\n", Color.Gray);
-				GameOver(uw, ul);
-			}
 		}
 
 		void Clear()
@@ -1130,11 +1159,11 @@ namespace RapChessGui
 			if (pb.engine != null)
 				FormLog.This.richTextBox1.AppendText($"Black {pb.player.name} {pb.player.engine} {pb.engine.parameters}\n", Color.Gray);
 			labBack.Text = $"Back {CData.back}";
+			CData.gameState = (int)CGameState.normal;
 			RenderInfo(pw);
 			RenderInfo(pb);
-			CData.gameState = (int)CGameState.normal;
 			CArrow.Hide();
-			timer1.Enabled = CData.gameMode != (int)CMode.edit;
+			timer1.Enabled = CData.gameMode != CMode.edit;
 			ShowGamers();
 		}
 
@@ -1205,7 +1234,7 @@ namespace RapChessGui
 					rec.Height = CBoard.field;
 					if ((i == CDrag.lastSou) || (i == CDrag.lastDes) || (CBoard.list[i].color != Color.Empty))
 						g.FillRectangle(brushYellow, rec);
-					else if (CBoard.list[i].attacked && (CData.gameMode != (int)CMode.edit))
+					else if (CBoard.list[i].attacked && (CData.gameMode != CMode.edit))
 						g.FillRectangle(brushRed, rec);
 					CPiece piece = CBoard.list[i].piece;
 					if (piece == null)
@@ -1289,12 +1318,14 @@ namespace RapChessGui
 				g.ponder = "";
 			if (boardRotate ^ g.white)
 			{
-				labTimeD.Text = g.GetTime();
-				if (g.timer.IsRunning)
-					labTimeD.BackColor = labTimeD.Text[2] == '.' ? Color.Pink : Color.Yellow;
-				else
-					if (CData.gameState == 0)
-					labTimeD.BackColor = Color.LightGray;
+				if (CData.gameState == CGameState.normal)
+				{
+					labTimeD.Text = g.GetTime();
+					if (g.timer.IsRunning)
+						labTimeD.BackColor = labTimeD.Text[2] == '.' ? Color.Pink : Color.Yellow;
+					else
+						labTimeD.BackColor = Color.LightGray;
+				}
 				labEloD.Text = g.GetElo();
 				labScoreB.Text = $"Score {g.score}";
 				labNodesB.Text = $"Nodes {g.nodes.ToString("N0")}";
@@ -1305,12 +1336,14 @@ namespace RapChessGui
 			}
 			else
 			{
-				labTimeT.Text = g.GetTime();
-				if (g.timer.IsRunning)
-					labTimeT.BackColor = labTimeT.Text[2] == '.' ? Color.Pink : Color.Yellow;
-				else
-					if (CData.gameState == 0)
-					labTimeT.BackColor = Color.LightGray;
+				if (CData.gameState == CGameState.normal)
+				{
+					labTimeT.Text = g.GetTime();
+					if (g.timer.IsRunning)
+						labTimeT.BackColor = labTimeT.Text[2] == '.' ? Color.Pink : Color.Yellow;
+					else
+						labTimeT.BackColor = Color.LightGray;
+				}
 				labEloT.Text = g.GetElo();
 				labScoreT.Text = $"Score {g.score}";
 				labNodesT.Text = $"Nodes {g.nodes.ToString("N0")}";
@@ -1412,9 +1445,9 @@ namespace RapChessGui
 			tssMoves.ForeColor = Color.Lime;
 			tssMoves.Text = $"Load fen {Chess.GetFen()}";
 			labBack.Text = $"Back {CData.back}";
+			CData.gameState = CGameState.normal;
 			RenderInfo(pw);
 			RenderInfo(pb);
-			CData.gameState = 0;
 			moves = Chess.GenerateValidMoves();
 			timer1.Enabled = true;
 		}
@@ -1633,15 +1666,15 @@ namespace RapChessGui
 		private void TimerStart_Tick(object sender, EventArgs e)
 		{
 			timerStart.Stop();
-			if (CData.gameMode == (int)CMode.match)
+			if (CData.gameMode == CMode.match)
 			{
 				MatchStart();
 			}
-			if (CData.gameMode == (int)CMode.tournament)
+			if (CData.gameMode == CMode.tournament)
 			{
 				TournamentStart();
 			}
-			if (CData.gameMode == (int)CMode.training)
+			if (CData.gameMode == CMode.training)
 			{
 				TraingStart();
 			}
@@ -1693,9 +1726,9 @@ namespace RapChessGui
 			tssMoves.ForeColor = Color.Gainsboro;
 			tssMoves.Text = $"Pgn {CHistory.GetMoves()}";
 			labBack.Text = $"Back {CData.back}";
+			CData.gameState = CGameState.normal;
 			RenderInfo(pw);
 			RenderInfo(pb);
-			CData.gameState = 0;
 			moves = Chess.GenerateValidMoves();
 			timer1.Enabled = true;
 		}
@@ -1798,7 +1831,7 @@ namespace RapChessGui
 
 		private void pictureBox1_MouseDown(object sender, MouseEventArgs e)
 		{
-			if (CData.gameMode == (int)CMode.edit)
+			if (CData.gameMode == CMode.edit)
 			{
 				int i = CChess.arrField[CDrag.mouseIndex];
 				int f = CChess.g_board[i];
@@ -1889,22 +1922,6 @@ namespace RapChessGui
 		private void butContinueGame_Click(object sender, EventArgs e)
 		{
 			LoadFen(Chess.GetFen());
-		}
-
-		private void backToolStripMenuItem_Click_1(object sender, EventArgs e)
-		{
-			if (CHistory.Back())
-			{
-				labBack.Text = $"Back {++CData.back}";
-				RenderHistory();
-				moves = Chess.GenerateValidMoves();
-				CData.gameState = Chess.GetGameState();
-				ShowLastGame();
-				CModeGame.ranked = false;
-				ShowAutoElo();
-				GamerList.GamerCur().player.elo = GamerList.GamerCur().player.eloLess.ToString();
-				GamerList.GamerSec().Undo();
-			}
 		}
 
 		private void forwardToolStripMenuItem_Click(object sender, EventArgs e)
@@ -2096,7 +2113,23 @@ namespace RapChessGui
 			CData.fen = Chess.GetFen();
 			CBoard.Fill();
 			RenderBoard();
-			SetMode(cbMainMode.SelectedIndex);
+			SetMode((CMode)cbMainMode.SelectedIndex);
+		}
+
+		private void backToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			if (CHistory.Back())
+			{
+				labBack.Text = $"Back {++CData.back}";
+				RenderHistory();
+				moves = Chess.GenerateValidMoves();
+				SetGameState(Chess.GetGameState());
+				ShowLastGame();
+				CModeGame.ranked = false;
+				ShowAutoElo();
+				GamerList.GamerCur().player.elo = GamerList.GamerCur().player.eloLess.ToString();
+				GamerList.GamerSec().Undo();
+			}
 		}
 	}
 }
