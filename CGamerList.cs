@@ -68,7 +68,8 @@ namespace RapChessGui
 			timer.Reset();
 		}
 
-		public void TimerStart() {
+		public void TimerStart()
+		{
 			timerStart = timer.Elapsed.TotalMilliseconds;
 			timer.Start();
 		}
@@ -189,20 +190,20 @@ namespace RapChessGui
 			}
 		}
 
-		public string GetEngine()
-		{
-			if (engine == null)
-				return "Engine";
-			else
-				return engine.name;
-		}
-
 		public string GetBook()
 		{
 			if (player == null)
 				return "Book";
 			else
 				return player.book;
+		}
+
+		public string GetEngine()
+		{
+			if (engine == null)
+				return "Engine";
+			else
+				return engine.name;
 		}
 
 		public string GetMode()
@@ -239,8 +240,8 @@ namespace RapChessGui
 				if (t < 0)
 				{
 					FormChess.SetGameState(CGameState.time);
-					if(engine != null)
-					CRapLog.Add($"{engine.name} time out");
+					if (engine != null)
+						CRapLog.Add($"{engine.name} time out");
 					return "Time out";
 				}
 				dt = dt.AddMilliseconds(t);
@@ -350,6 +351,24 @@ namespace RapChessGui
 			return null;
 		}
 
+		public CGamer GetGamerPid(int pid)
+		{
+			foreach (CGamer p in gamer)
+				if (p.enginePro.GetPid() == pid)
+					return p;
+			return null;
+		}
+
+		public CGamer GamerWinner()
+		{
+			return gamer[(CChess.g_moveNumber & 1) ^ 1];
+		}
+
+		public CGamer GamerLoser()
+		{
+			return gamer[CChess.g_moveNumber & 1];
+		}
+
 		public CGamer PlayerHum()
 		{
 			if (gamer[0].IsHuman())
@@ -367,14 +386,6 @@ namespace RapChessGui
 		public CGamer GamerSec()
 		{
 			return gamer[curIndex ^ 1];
-		}
-
-		public CGamer GetGamerPid(int pid)
-		{
-			foreach (CGamer p in gamer)
-				if (p.enginePro.GetPid() == pid)
-					return p;
-			return null;
 		}
 
 		public void Terminate()

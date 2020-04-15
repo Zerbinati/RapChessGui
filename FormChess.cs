@@ -79,8 +79,8 @@ namespace RapChessGui
 			if (CData.gameState != CGameState.normal)
 				return;
 			CData.gameState = gs;
-			CPlayer uw = This.GamerList.GamerCur().player;
-			CPlayer ul = This.GamerList.GamerSec().player;
+			CPlayer uw = This.GamerList.GamerWinner().player;
+			CPlayer ul = This.GamerList.GamerLoser().player;
 			int eloW = Convert.ToInt32(uw.elo);
 			int eloL = Convert.ToInt32(ul.elo);
 			bool isDraw = false;
@@ -1073,7 +1073,7 @@ namespace RapChessGui
 			double m = GamerList.curIndex == 0 ? 0.01 : -0.01;
 			chart1.Series[GamerList.curIndex].Points.Add(GamerList.GamerCur().iScore * m);
 			GamerList.GamerCur().iScore = 0;
-			if (IsAutoElo() && CModeGame.ranked && (cp.engine == null) && ((Chess.g_moveNumber >> 1) == 4))
+			if (IsAutoElo() && CModeGame.ranked && (cp.engine == null) && ((CChess.g_moveNumber >> 1) == 4))
 			{
 				cp.player.eloOld = Convert.ToDouble(cp.player.elo);
 				cp.player.eloNew = cp.player.eloLess;
@@ -1114,7 +1114,7 @@ namespace RapChessGui
 			}
 			else
 				labEco.ForeColor = Color.Black;
-			int moveNumber = (Chess.g_moveNumber >> 1) + 1;
+			int moveNumber = (CChess.g_moveNumber >> 1) + 1;
 			tssMove.Text = "Move " + moveNumber.ToString() + " " + Chess.g_move50.ToString();
 			SetGameState(Chess.GetGameState());
 			if (CData.gameState == 0)
@@ -1321,7 +1321,7 @@ namespace RapChessGui
 				if (CData.gameState == CGameState.normal)
 				{
 					labTimeD.Text = g.GetTime();
-					if (g.timer.IsRunning)
+					if ((g.timer.IsRunning) || (CData.gameState != CGameState.normal))
 						labTimeD.BackColor = labTimeD.Text[2] == '.' ? Color.Pink : Color.Yellow;
 					else
 						labTimeD.BackColor = Color.LightGray;
@@ -1339,9 +1339,9 @@ namespace RapChessGui
 				if (CData.gameState == CGameState.normal)
 				{
 					labTimeT.Text = g.GetTime();
-					if (g.timer.IsRunning)
+					if ((g.timer.IsRunning) || (CData.gameState != CGameState.normal))
 						labTimeT.BackColor = labTimeT.Text[2] == '.' ? Color.Pink : Color.Yellow;
-					else
+					else if (CData.gameState == CGameState.normal)
 						labTimeT.BackColor = Color.LightGray;
 				}
 				labEloT.Text = g.GetElo();
@@ -1417,7 +1417,7 @@ namespace RapChessGui
 				MessageBox.Show("Wrong fen");
 				return;
 			}
-			GamerList.curIndex = Chess.g_moveNumber & 1;
+			GamerList.curIndex = CChess.g_moveNumber & 1;
 			GamePrepare();
 			int w = CChess.whiteTurn ? 0 : 1;
 			if (!GamerList.gamer[w].IsHuman())
@@ -1707,7 +1707,7 @@ namespace RapChessGui
 				}
 				else break;
 			}
-			GamerList.curIndex = Chess.g_moveNumber & 1;
+			GamerList.curIndex = CChess.g_moveNumber & 1;
 			GamePrepare();
 			GamerList.gamer[0].Init(true);
 			GamerList.gamer[1].Init(false);
@@ -2129,6 +2129,15 @@ namespace RapChessGui
 				ShowAutoElo();
 				GamerList.GamerCur().player.elo = GamerList.GamerCur().player.eloLess.ToString();
 				GamerList.GamerSec().Undo();
+			}
+		}
+
+		private void tlpTraining_Resize(object sender, EventArgs e)
+		{
+			foreach (Control ctrl in tlpTraining.Controls)
+			{
+				float size = (float)(tlpTraining.Width * 0.03);
+				ctrl.Font = new Font(ctrl.Font.Name, size);
 			}
 		}
 	}

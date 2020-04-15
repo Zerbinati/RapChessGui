@@ -90,7 +90,7 @@ namespace RapChessGui
 		int g_hash = 0;
 		int g_passing = 0;
 		public int g_move50 = 0;
-		public int g_moveNumber = 0;
+		public static int g_moveNumber = 0;
 		int g_phase = 32;
 		int g_totalNodes = 0;
 		bool g_inCheck = false;
