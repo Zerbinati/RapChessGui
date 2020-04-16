@@ -131,14 +131,14 @@ namespace RapChessGui
 					if (uw.name == "Human")
 					{
 						if (!isDraw)
-							uw.eloNew = uw.eloMore;
+							uw.eloNew = uw.GetEloMore();
 						else
 							uw.eloNew = Convert.ToInt32(uw.eloOld);
 					}
 					else
 					{
 						if (!isDraw)
-							ul.eloNew = ul.eloLess;
+							ul.eloNew = ul.GetEloLess();
 						else
 							ul.eloNew = Convert.ToInt32(ul.eloOld);
 					}
@@ -437,6 +437,7 @@ namespace RapChessGui
 			ShowAuto();
 			SetMode((int)CMode.game);
 			GamePrepare();
+			Clear();
 			bool lg = ShowLastGame();
 			if ((!lg && CModeGame.rotate && (cbColor.Text == "Auto")) || (cbColor.Text == "Black"))
 			{
@@ -445,20 +446,12 @@ namespace RapChessGui
 			}
 			else
 				CModeGame.rotate = true;
-			Clear();
 			if (GamerList.GamerCur().player.engine == "Human")
 				moves = Chess.GenerateValidMoves();
 			CPlayer uh = CPlayerList.GetPlayerAuto("Human");
-			int levelDif = 2000 / listView1.Items.Count;
-			if (levelDif < 10)
-				levelDif = 10;
 			int elo = Convert.ToInt32(uh.elo);
 			uh.eloNew = elo;
 			uh.eloOld = elo;
-			uh.eloLess = elo - levelDif;
-			uh.eloMore = elo + levelDif;
-			if (uh.eloLess < 0)
-				uh.eloLess = 0;
 			CModeGame.SaveToIni();
 		}
 
@@ -841,14 +834,6 @@ namespace RapChessGui
 			}
 		}
 
-		public static void MessageClear()
-		{
-			lock (CMessageList.list)
-			{
-				CMessageList.list.Clear();
-			}
-		}
-
 		public void GetMessage()
 		{
 			lock (CMessageList.list)
@@ -1090,7 +1075,7 @@ namespace RapChessGui
 			if (IsAutoElo() && CModeGame.ranked && (cg.engine == null) && ((CChess.g_moveNumber >> 1) == 4))
 			{
 				cg.player.eloOld = Convert.ToDouble(cg.player.elo);
-				cg.player.eloNew = cg.player.eloLess;
+				cg.player.eloNew = cg.player.GetEloLess();
 				cg.player.SaveToIni();
 			}
 			bool ivm = Chess.IsValidMove(emo) != 0;
@@ -2139,7 +2124,7 @@ namespace RapChessGui
 				ShowLastGame();
 				CModeGame.ranked = false;
 				ShowAutoElo();
-				GamerList.GamerCur().player.elo = GamerList.GamerCur().player.eloLess.ToString();
+				GamerList.GamerCur().player.elo = GamerList.GamerCur().player.GetEloLess().ToString();
 				GamerList.GamerSec().Undo();
 			}
 		}
@@ -2152,6 +2137,13 @@ namespace RapChessGui
 				float size = (float)(tlp.Width * 0.028);
 				ctrl.Font = new Font(ctrl.Font.Name, size);
 			}
+		}
+
+		private void butResignation_Click(object sender, EventArgs e)
+		{
+			CPlayer hu = CPlayerList.GetPlayerAuto("Human");
+			hu.eloNew = hu.GetEloLess();
+			GameStart();
 		}
 	}
 }

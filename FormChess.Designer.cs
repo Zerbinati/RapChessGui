@@ -225,6 +225,7 @@
 			this.columnHeader21 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeader22 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.tlpBlack = new System.Windows.Forms.TableLayoutPanel();
+			this.butResignation = new System.Windows.Forms.Button();
 			this.tabControl1.SuspendLayout();
 			this.tabPageGame.SuspendLayout();
 			this.groupBox2.SuspendLayout();
@@ -311,6 +312,7 @@
 			// 
 			// tabPageGame
 			// 
+			this.tabPageGame.Controls.Add(this.butResignation);
 			this.tabPageGame.Controls.Add(this.butStop);
 			this.tabPageGame.Controls.Add(this.butContinueGame);
 			this.tabPageGame.Controls.Add(this.butNewGame);
@@ -2833,6 +2835,19 @@
 			this.tlpBlack.Size = new System.Drawing.Size(1180, 24);
 			this.tlpBlack.TabIndex = 35;
 			// 
+			// butResignation
+			// 
+			this.butResignation.Cursor = System.Windows.Forms.Cursors.Hand;
+			this.butResignation.Dock = System.Windows.Forms.DockStyle.Top;
+			this.butResignation.Location = new System.Drawing.Point(3, 284);
+			this.butResignation.Name = "butResignation";
+			this.butResignation.Size = new System.Drawing.Size(352, 23);
+			this.butResignation.TabIndex = 25;
+			this.butResignation.Text = "Resignation";
+			this.toolTip1.SetToolTip(this.butResignation, "Resignation from further play");
+			this.butResignation.UseVisualStyleBackColor = true;
+			this.butResignation.Click += new System.EventHandler(this.butResignation_Click);
+			// 
 			// FormChess
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -3110,6 +3125,7 @@
 		private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
 		private System.Windows.Forms.Label labErrors;
 		private System.Windows.Forms.Label labGames;
+		private System.Windows.Forms.Button butResignation;
 	}
 }
 

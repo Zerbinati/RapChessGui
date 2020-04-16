@@ -13,8 +13,6 @@ namespace RapChessGui
 		public string elo = "1000";
 		public double eloOld = 1000;
 		public int eloNew = 1000;
-		public int eloLess = 0;
-		public int eloMore = 0;
 		public int distance = 0;
 		public int position = 0;
 		public CModeValue modeValue = new CModeValue();
@@ -27,6 +25,26 @@ namespace RapChessGui
 		{
 			name = n;
 		}
+
+		public int GetEloLess()
+		{
+			int levelDif = 2000 / CPlayerList.list.Count;
+			if (levelDif < 10)
+				levelDif = 10;
+			int result = Convert.ToInt32(elo) - levelDif;
+			if (result < 0)
+				result = 0;
+			return result;
+		}
+
+		public int GetEloMore()
+		{
+			int levelDif = 2000 / CPlayerList.list.Count;
+			if (levelDif < 10)
+				levelDif = 10;
+			return Convert.ToInt32(elo) + levelDif;
+		}
+
 
 		public int GetDeltaElo()
 		{
@@ -49,7 +67,7 @@ namespace RapChessGui
 			modeValue.mode = CRapIni.This.Read($"player>{name}>mode", "movetime");
 			modeValue.value = CRapIni.This.ReadInt($"player>{name}>value", modeValue.value);
 			book = CRapIni.This.Read($"player>{name}>book", "None");
-			elo = CRapIni.This.Read($"player>{name}>elo", "1000");
+			elo = CRapIni.This.Read($"player>{name}>elo",elo);
 			eloNew = CRapIni.This.ReadInt($"player>{name}>eloNew", eloNew);
 			eloOld = CRapIni.This.ReadDouble($"player>{name}>eloOld", eloOld);
 		}

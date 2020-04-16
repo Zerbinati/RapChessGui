@@ -64,6 +64,7 @@ namespace RapChessGui
 			p.book = cbBookList.Text;
 			p.elo = nudElo.Value.ToString();
 			p.eloOld = Convert.ToDouble(p.elo);
+			p.eloNew = Convert.ToInt32(p.elo);
 			p.modeValue.mode = modeValue.mode;
 			p.modeValue.value = modeValue.value;
 			p.SaveToIni();

@@ -161,7 +161,6 @@ namespace RapChessGui
 
 		public void CompMakeMove()
 		{
-			FormChess.MessageClear();
 			if (engine.protocol == "Uci")
 				UciGo();
 			else
