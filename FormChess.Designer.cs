@@ -50,7 +50,7 @@
 			this.labBack = new System.Windows.Forms.Label();
 			this.cbColor = new System.Windows.Forms.ComboBox();
 			this.tabPageMatch = new System.Windows.Forms.TabPage();
-			this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
+			this.tlpMatch = new System.Windows.Forms.TableLayoutPanel();
 			this.labMatch24 = new System.Windows.Forms.Label();
 			this.labMatch23 = new System.Windows.Forms.Label();
 			this.labMatch22 = new System.Windows.Forms.Label();
@@ -231,7 +231,7 @@
 			((System.ComponentModel.ISupportInitialize)(this.nudValue)).BeginInit();
 			this.groupBox1.SuspendLayout();
 			this.tabPageMatch.SuspendLayout();
-			this.tableLayoutPanel2.SuspendLayout();
+			this.tlpMatch.SuspendLayout();
 			this.groupBox6.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.nudValue2)).BeginInit();
 			this.groupBox5.SuspendLayout();
@@ -518,7 +518,7 @@
 			// 
 			// tabPageMatch
 			// 
-			this.tabPageMatch.Controls.Add(this.tableLayoutPanel2);
+			this.tabPageMatch.Controls.Add(this.tlpMatch);
 			this.tabPageMatch.Controls.Add(this.labMatchGames);
 			this.tabPageMatch.Controls.Add(this.butContinueMatch);
 			this.tabPageMatch.Controls.Add(this.butNewMatch);
@@ -531,48 +531,51 @@
 			this.tabPageMatch.Text = "Match";
 			this.tabPageMatch.UseVisualStyleBackColor = true;
 			// 
-			// tableLayoutPanel2
+			// tlpMatch
 			// 
-			this.tableLayoutPanel2.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Single;
-			this.tableLayoutPanel2.ColumnCount = 5;
-			this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-			this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
-			this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
-			this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
-			this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
-			this.tableLayoutPanel2.Controls.Add(this.labMatch24, 4, 2);
-			this.tableLayoutPanel2.Controls.Add(this.labMatch23, 3, 2);
-			this.tableLayoutPanel2.Controls.Add(this.labMatch22, 2, 2);
-			this.tableLayoutPanel2.Controls.Add(this.labMatch21, 1, 2);
-			this.tableLayoutPanel2.Controls.Add(this.labMatch20, 0, 2);
-			this.tableLayoutPanel2.Controls.Add(this.labMatch14, 4, 1);
-			this.tableLayoutPanel2.Controls.Add(this.labMatch13, 3, 1);
-			this.tableLayoutPanel2.Controls.Add(this.labMatch12, 2, 1);
-			this.tableLayoutPanel2.Controls.Add(this.labMatch11, 1, 1);
-			this.tableLayoutPanel2.Controls.Add(this.label26, 4, 0);
-			this.tableLayoutPanel2.Controls.Add(this.label27, 3, 0);
-			this.tableLayoutPanel2.Controls.Add(this.label28, 2, 0);
-			this.tableLayoutPanel2.Controls.Add(this.label29, 1, 0);
-			this.tableLayoutPanel2.Controls.Add(this.label30, 0, 0);
-			this.tableLayoutPanel2.Controls.Add(this.labMatch10, 0, 1);
-			this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Top;
-			this.tableLayoutPanel2.Location = new System.Drawing.Point(0, 286);
-			this.tableLayoutPanel2.Name = "tableLayoutPanel2";
-			this.tableLayoutPanel2.RowCount = 3;
-			this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-			this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-			this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-			this.tableLayoutPanel2.Size = new System.Drawing.Size(358, 100);
-			this.tableLayoutPanel2.TabIndex = 26;
+			this.tlpMatch.BackColor = System.Drawing.Color.White;
+			this.tlpMatch.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Single;
+			this.tlpMatch.ColumnCount = 5;
+			this.tlpMatch.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
+			this.tlpMatch.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
+			this.tlpMatch.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
+			this.tlpMatch.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
+			this.tlpMatch.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
+			this.tlpMatch.Controls.Add(this.labMatch24, 4, 2);
+			this.tlpMatch.Controls.Add(this.labMatch23, 3, 2);
+			this.tlpMatch.Controls.Add(this.labMatch22, 2, 2);
+			this.tlpMatch.Controls.Add(this.labMatch21, 1, 2);
+			this.tlpMatch.Controls.Add(this.labMatch20, 0, 2);
+			this.tlpMatch.Controls.Add(this.labMatch14, 4, 1);
+			this.tlpMatch.Controls.Add(this.labMatch13, 3, 1);
+			this.tlpMatch.Controls.Add(this.labMatch12, 2, 1);
+			this.tlpMatch.Controls.Add(this.labMatch11, 1, 1);
+			this.tlpMatch.Controls.Add(this.label26, 4, 0);
+			this.tlpMatch.Controls.Add(this.label27, 3, 0);
+			this.tlpMatch.Controls.Add(this.label28, 2, 0);
+			this.tlpMatch.Controls.Add(this.label29, 1, 0);
+			this.tlpMatch.Controls.Add(this.label30, 0, 0);
+			this.tlpMatch.Controls.Add(this.labMatch10, 0, 1);
+			this.tlpMatch.Dock = System.Windows.Forms.DockStyle.Top;
+			this.tlpMatch.Location = new System.Drawing.Point(0, 286);
+			this.tlpMatch.Name = "tlpMatch";
+			this.tlpMatch.RowCount = 3;
+			this.tlpMatch.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+			this.tlpMatch.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 31.31313F));
+			this.tlpMatch.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 36.36364F));
+			this.tlpMatch.Size = new System.Drawing.Size(358, 100);
+			this.tlpMatch.TabIndex = 26;
+			this.tlpMatch.Resize += new System.EventHandler(this.tlp_Resize);
 			// 
 			// labMatch24
 			// 
 			this.labMatch24.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.labMatch24.Location = new System.Drawing.Point(299, 67);
+			this.labMatch24.BackColor = System.Drawing.Color.Transparent;
+			this.labMatch24.Location = new System.Drawing.Point(288, 63);
 			this.labMatch24.Name = "labMatch24";
-			this.labMatch24.Size = new System.Drawing.Size(55, 32);
+			this.labMatch24.Size = new System.Drawing.Size(66, 36);
 			this.labMatch24.TabIndex = 14;
 			this.labMatch24.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
@@ -581,9 +584,10 @@
 			this.labMatch23.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.labMatch23.Location = new System.Drawing.Point(240, 67);
+			this.labMatch23.BackColor = System.Drawing.Color.Transparent;
+			this.labMatch23.Location = new System.Drawing.Point(217, 63);
 			this.labMatch23.Name = "labMatch23";
-			this.labMatch23.Size = new System.Drawing.Size(52, 32);
+			this.labMatch23.Size = new System.Drawing.Size(64, 36);
 			this.labMatch23.TabIndex = 13;
 			this.labMatch23.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
@@ -592,9 +596,10 @@
 			this.labMatch22.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.labMatch22.Location = new System.Drawing.Point(181, 67);
+			this.labMatch22.BackColor = System.Drawing.Color.Transparent;
+			this.labMatch22.Location = new System.Drawing.Point(146, 63);
 			this.labMatch22.Name = "labMatch22";
-			this.labMatch22.Size = new System.Drawing.Size(52, 32);
+			this.labMatch22.Size = new System.Drawing.Size(64, 36);
 			this.labMatch22.TabIndex = 12;
 			this.labMatch22.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
@@ -603,9 +608,10 @@
 			this.labMatch21.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.labMatch21.Location = new System.Drawing.Point(122, 67);
+			this.labMatch21.BackColor = System.Drawing.Color.Transparent;
+			this.labMatch21.Location = new System.Drawing.Point(75, 63);
 			this.labMatch21.Name = "labMatch21";
-			this.labMatch21.Size = new System.Drawing.Size(52, 32);
+			this.labMatch21.Size = new System.Drawing.Size(64, 36);
 			this.labMatch21.TabIndex = 11;
 			this.labMatch21.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
@@ -614,9 +620,10 @@
 			this.labMatch20.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.labMatch20.Location = new System.Drawing.Point(4, 67);
+			this.labMatch20.BackColor = System.Drawing.Color.Transparent;
+			this.labMatch20.Location = new System.Drawing.Point(4, 63);
 			this.labMatch20.Name = "labMatch20";
-			this.labMatch20.Size = new System.Drawing.Size(111, 32);
+			this.labMatch20.Size = new System.Drawing.Size(64, 36);
 			this.labMatch20.TabIndex = 10;
 			this.labMatch20.Text = "Player 2";
 			this.labMatch20.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -626,9 +633,10 @@
 			this.labMatch14.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.labMatch14.Location = new System.Drawing.Point(299, 34);
+			this.labMatch14.BackColor = System.Drawing.Color.Transparent;
+			this.labMatch14.Location = new System.Drawing.Point(288, 33);
 			this.labMatch14.Name = "labMatch14";
-			this.labMatch14.Size = new System.Drawing.Size(55, 32);
+			this.labMatch14.Size = new System.Drawing.Size(66, 29);
 			this.labMatch14.TabIndex = 9;
 			this.labMatch14.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
@@ -637,9 +645,10 @@
 			this.labMatch13.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.labMatch13.Location = new System.Drawing.Point(240, 34);
+			this.labMatch13.BackColor = System.Drawing.Color.Transparent;
+			this.labMatch13.Location = new System.Drawing.Point(217, 33);
 			this.labMatch13.Name = "labMatch13";
-			this.labMatch13.Size = new System.Drawing.Size(52, 32);
+			this.labMatch13.Size = new System.Drawing.Size(64, 29);
 			this.labMatch13.TabIndex = 8;
 			this.labMatch13.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
@@ -648,9 +657,10 @@
 			this.labMatch12.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.labMatch12.Location = new System.Drawing.Point(181, 34);
+			this.labMatch12.BackColor = System.Drawing.Color.Transparent;
+			this.labMatch12.Location = new System.Drawing.Point(146, 33);
 			this.labMatch12.Name = "labMatch12";
-			this.labMatch12.Size = new System.Drawing.Size(52, 32);
+			this.labMatch12.Size = new System.Drawing.Size(64, 29);
 			this.labMatch12.TabIndex = 7;
 			this.labMatch12.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
@@ -659,9 +669,10 @@
 			this.labMatch11.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.labMatch11.Location = new System.Drawing.Point(122, 34);
+			this.labMatch11.BackColor = System.Drawing.Color.Transparent;
+			this.labMatch11.Location = new System.Drawing.Point(75, 33);
 			this.labMatch11.Name = "labMatch11";
-			this.labMatch11.Size = new System.Drawing.Size(52, 32);
+			this.labMatch11.Size = new System.Drawing.Size(64, 29);
 			this.labMatch11.TabIndex = 6;
 			this.labMatch11.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
@@ -670,9 +681,10 @@
 			this.label26.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.label26.Location = new System.Drawing.Point(299, 1);
+			this.label26.BackColor = System.Drawing.Color.Transparent;
+			this.label26.Location = new System.Drawing.Point(288, 1);
 			this.label26.Name = "label26";
-			this.label26.Size = new System.Drawing.Size(55, 32);
+			this.label26.Size = new System.Drawing.Size(66, 31);
 			this.label26.TabIndex = 4;
 			this.label26.Text = "Result";
 			this.label26.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -682,9 +694,10 @@
 			this.label27.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.label27.Location = new System.Drawing.Point(240, 1);
+			this.label27.BackColor = System.Drawing.Color.Transparent;
+			this.label27.Location = new System.Drawing.Point(217, 1);
 			this.label27.Name = "label27";
-			this.label27.Size = new System.Drawing.Size(52, 32);
+			this.label27.Size = new System.Drawing.Size(64, 31);
 			this.label27.TabIndex = 3;
 			this.label27.Text = "Draw";
 			this.label27.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -694,9 +707,10 @@
 			this.label28.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.label28.Location = new System.Drawing.Point(181, 1);
+			this.label28.BackColor = System.Drawing.Color.Transparent;
+			this.label28.Location = new System.Drawing.Point(146, 1);
 			this.label28.Name = "label28";
-			this.label28.Size = new System.Drawing.Size(52, 32);
+			this.label28.Size = new System.Drawing.Size(64, 31);
 			this.label28.TabIndex = 2;
 			this.label28.Text = "Loose";
 			this.label28.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -706,9 +720,10 @@
 			this.label29.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.label29.Location = new System.Drawing.Point(122, 1);
+			this.label29.BackColor = System.Drawing.Color.Transparent;
+			this.label29.Location = new System.Drawing.Point(75, 1);
 			this.label29.Name = "label29";
-			this.label29.Size = new System.Drawing.Size(52, 32);
+			this.label29.Size = new System.Drawing.Size(64, 31);
 			this.label29.TabIndex = 1;
 			this.label29.Text = "Win";
 			this.label29.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -718,9 +733,10 @@
 			this.label30.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+			this.label30.BackColor = System.Drawing.Color.Transparent;
 			this.label30.Location = new System.Drawing.Point(4, 1);
 			this.label30.Name = "label30";
-			this.label30.Size = new System.Drawing.Size(111, 32);
+			this.label30.Size = new System.Drawing.Size(64, 31);
 			this.label30.TabIndex = 0;
 			this.label30.Text = "Player";
 			this.label30.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -730,15 +746,17 @@
 			this.labMatch10.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.labMatch10.Location = new System.Drawing.Point(4, 34);
+			this.labMatch10.BackColor = System.Drawing.Color.Transparent;
+			this.labMatch10.Location = new System.Drawing.Point(4, 33);
 			this.labMatch10.Name = "labMatch10";
-			this.labMatch10.Size = new System.Drawing.Size(111, 32);
+			this.labMatch10.Size = new System.Drawing.Size(64, 29);
 			this.labMatch10.TabIndex = 5;
 			this.labMatch10.Text = "Player 1";
 			this.labMatch10.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
 			// labMatchGames
 			// 
+			this.labMatchGames.BackColor = System.Drawing.Color.Transparent;
 			this.labMatchGames.Dock = System.Windows.Forms.DockStyle.Top;
 			this.labMatchGames.Location = new System.Drawing.Point(0, 262);
 			this.labMatchGames.Name = "labMatchGames";
@@ -1101,7 +1119,7 @@
 			this.tlpTraining.Controls.Add(this.label2, 1, 0);
 			this.tlpTraining.Controls.Add(this.label6, 0, 0);
 			this.tlpTraining.Controls.Add(this.label16, 0, 1);
-			this.tlpTraining.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.tlpTraining.Dock = System.Windows.Forms.DockStyle.Top;
 			this.tlpTraining.Location = new System.Drawing.Point(3, 272);
 			this.tlpTraining.Name = "tlpTraining";
 			this.tlpTraining.RowCount = 3;
@@ -1110,7 +1128,7 @@
 			this.tlpTraining.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
 			this.tlpTraining.Size = new System.Drawing.Size(352, 101);
 			this.tlpTraining.TabIndex = 25;
-			this.tlpTraining.Resize += new System.EventHandler(this.tlpTraining_Resize);
+			this.tlpTraining.Resize += new System.EventHandler(this.tlp_Resize);
 			// 
 			// label15
 			// 
@@ -2837,7 +2855,7 @@
 			((System.ComponentModel.ISupportInitialize)(this.nudValue)).EndInit();
 			this.groupBox1.ResumeLayout(false);
 			this.tabPageMatch.ResumeLayout(false);
-			this.tableLayoutPanel2.ResumeLayout(false);
+			this.tlpMatch.ResumeLayout(false);
 			this.groupBox6.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.nudValue2)).EndInit();
 			this.groupBox5.ResumeLayout(false);
@@ -2932,7 +2950,7 @@
 		private System.Windows.Forms.Label label6;
 		private System.Windows.Forms.Label label16;
 		private System.Windows.Forms.TabPage tabPageMatch;
-		private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
+		private System.Windows.Forms.TableLayoutPanel tlpMatch;
 		private System.Windows.Forms.Label labMatch24;
 		private System.Windows.Forms.Label labMatch23;
 		private System.Windows.Forms.Label labMatch22;

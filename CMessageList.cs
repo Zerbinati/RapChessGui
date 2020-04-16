@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using RapLog;
 
 namespace RapChessGui
@@ -41,6 +42,13 @@ namespace RapChessGui
 					CRapLog.Add($"CMessageList ({msg})");
 					return false;
 				}
+				FormLog.This.richTextBox1.AppendText($"{gamer.GetTimeElapsed()} ",Color.Green);
+				if (gamer.white)
+				{
+					FormLog.This.richTextBox1.AppendText($"{gamer.player.name}", Color.DimGray);
+					FormLog.This.richTextBox1.AppendText($" > {msg}\n");
+				}
+				else
 				FormLog.This.richTextBox1.AppendText($"{gamer.player.name} > {msg}\n");
 				return true;
 			}

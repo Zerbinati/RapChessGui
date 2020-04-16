@@ -57,15 +57,13 @@ namespace RapChessGui
 	public class CModeValue
 	{
 		public string mode = "Time";
-		public int value = 10;
+		public int value = 0;
 
 		public void SetValue(int v)
 		{
 			int increment = GetIncrement();
 			if (increment > 0)
 				value = v / increment;
-			if (value < 1)
-				value = 1;
 		}
 
 		public int GetValue()

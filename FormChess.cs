@@ -79,8 +79,10 @@ namespace RapChessGui
 			if (CData.gameState != CGameState.normal)
 				return;
 			CData.gameState = gs;
-			CPlayer uw = This.GamerList.GamerWinner().player;
-			CPlayer ul = This.GamerList.GamerLoser().player;
+			CGamer gw = This.GamerList.GamerWinner();
+			CGamer gl = This.GamerList.GamerLoser();
+			CPlayer uw = gw.player;
+			CPlayer ul = gl.player;
 			int eloW = Convert.ToInt32(uw.elo);
 			int eloL = Convert.ToInt32(ul.elo);
 			bool isDraw = false;
@@ -226,7 +228,7 @@ namespace RapChessGui
 					CModeTraining.draw++;
 					CModeTraining.modeValueTeacher.value++;
 				}
-				if ((CData.gameState == CGameState.time) || (CData.gameState == CGameState.error))
+				if ((gl.player.name == "Trained") && ((CData.gameState == CGameState.time) || (CData.gameState == CGameState.error) || gl.timeOut))
 					CModeTraining.errors++;
 				This.TrainingShow();
 			}
@@ -594,8 +596,9 @@ namespace RapChessGui
 
 		void TrainingShow()
 		{
+			double procent = CModeTraining.games > 0 ? (CModeTraining.errors * 100.0) / CModeTraining.games : 0;
 			labGames.Text = $"Games {CModeTraining.games}";
-			labErrors.Text = $"Errors {CModeTraining.errors}";
+			labErrors.Text = string.Format("Errors {0} ({1:N2}%)", CModeTraining.errors,procent);
 			cbTeacherEngine.SelectedIndex = cbTeacherEngine.FindStringExact(CModeTraining.teacher);
 			cbTrainedEngine.SelectedIndex = cbTrainedEngine.FindStringExact(CModeTraining.trained);
 			cbTeacherMode.SelectedIndex = cbTeacherMode.FindStringExact(CModeTraining.modeValueTeacher.mode);
@@ -764,6 +767,7 @@ namespace RapChessGui
 							{
 								if (moves.Count == 0)
 								{
+									g.lastMove = emo;
 									CChess.EmoToSD(emo, out int sou, out int des);
 									CArrow.SetAB(sou, des);
 									RenderBoard();
@@ -837,14 +841,25 @@ namespace RapChessGui
 			}
 		}
 
+		public static void MessageClear()
+		{
+			lock (CMessageList.list)
+			{
+				CMessageList.list.Clear();
+			}
+		}
+
 		public void GetMessage()
 		{
-			while (CMessageList.GetMessage(out CGamer g, out string msg))
+			lock (CMessageList.list)
 			{
-				if (g.engine.protocol == "Uci")
-					GetMessageUci(g, msg);
-				if (g.engine.protocol == "Winboard")
-					GetMessageXb(g, msg);
+				while (CMessageList.GetMessage(out CGamer g, out string msg))
+				{
+					if (g.engine.protocol == "Uci")
+						GetMessageUci(g, msg);
+					if (g.engine.protocol == "Winboard")
+						GetMessageXb(g, msg);
+				}
 			}
 		}
 
@@ -1062,22 +1077,21 @@ namespace RapChessGui
 
 		public bool MakeMove(string emo)
 		{
-			if (CData.gameState != 0)
+			if (CData.gameState != CGameState.normal)
 				return false;
 			CArrow.Hide();
-			CGamer cp = GamerList.GamerCur();
-			cp.timer.Stop();
+			CGamer cg = GamerList.GamerCur();
+			CPlayer cp = cg.player;
+			cg.timer.Stop();
 			emo = emo.ToLower();
-			CPlayer uw = GamerList.GamerCur().player;
-			CPlayer ul = GamerList.GamerSec().player;
 			double m = GamerList.curIndex == 0 ? 0.01 : -0.01;
-			chart1.Series[GamerList.curIndex].Points.Add(GamerList.GamerCur().iScore * m);
-			GamerList.GamerCur().iScore = 0;
-			if (IsAutoElo() && CModeGame.ranked && (cp.engine == null) && ((CChess.g_moveNumber >> 1) == 4))
+			chart1.Series[GamerList.curIndex].Points.Add(cg.iScore * m);
+			cg.iScore = 0;
+			if (IsAutoElo() && CModeGame.ranked && (cg.engine == null) && ((CChess.g_moveNumber >> 1) == 4))
 			{
-				cp.player.eloOld = Convert.ToDouble(cp.player.elo);
-				cp.player.eloNew = cp.player.eloLess;
-				cp.player.SaveToIni();
+				cg.player.eloOld = Convert.ToDouble(cg.player.elo);
+				cg.player.eloNew = cg.player.eloLess;
+				cg.player.SaveToIni();
 			}
 			bool ivm = Chess.IsValidMove(emo) != 0;
 			if (!ivm)
@@ -1097,7 +1111,7 @@ namespace RapChessGui
 				FormLog.This.richTextBox1.AppendText($"{Chess.GetFen()}\n");
 				FormLog.This.richTextBox1.AppendText($"{string.Join(" ", eMoves)}\n");
 				FormLog.This.richTextBox1.SaveFile("Error.rtf");
-				CRapLog.Add($"Wrong move {uw.engine} {emo} {Chess.GetFen()}");
+				CRapLog.Add($"Wrong move {cp.engine} {emo} {Chess.GetFen()}");
 				SetGameState(CGameState.error);
 				return false;
 			}
@@ -1117,7 +1131,7 @@ namespace RapChessGui
 			int moveNumber = (CChess.g_moveNumber >> 1) + 1;
 			tssMove.Text = "Move " + moveNumber.ToString() + " " + Chess.g_move50.ToString();
 			SetGameState(Chess.GetGameState());
-			if (CData.gameState == 0)
+			if (CData.gameState == CGameState.normal)
 			{
 				GamerList.Next();
 				if (GamerList.GamerCur().player.engine == "Human")
@@ -1604,10 +1618,7 @@ namespace RapChessGui
 
 		private void Timer1_Tick_1(object sender, EventArgs e)
 		{
-			lock (CMessageList.list)
-			{
-				GetMessage();
-			}
+			GetMessage();
 			if (CBoard.animated || CBoard.finished || CDrag.dragged)
 			{
 				RenderBoard();
@@ -1618,6 +1629,7 @@ namespace RapChessGui
 				CGamer sp = GamerList.GamerSec();
 				RenderInfo(cp);
 				RenderInfo(sp);
+				cp = GamerList.GamerCur();
 				if (cp.engine != null)
 				{
 					if (!cp.started)
@@ -2132,11 +2144,12 @@ namespace RapChessGui
 			}
 		}
 
-		private void tlpTraining_Resize(object sender, EventArgs e)
+		private void tlp_Resize(object sender, EventArgs e)
 		{
-			foreach (Control ctrl in tlpTraining.Controls)
+			TableLayoutPanel tlp = sender as TableLayoutPanel;
+			foreach (Control ctrl in tlp.Controls)
 			{
-				float size = (float)(tlpTraining.Width * 0.03);
+				float size = (float)(tlp.Width * 0.028);
 				ctrl.Font = new Font(ctrl.Font.Name, size);
 			}
 		}

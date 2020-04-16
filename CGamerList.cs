@@ -8,6 +8,7 @@ namespace RapChessGui
 
 	public class CGamer
 	{
+		public bool timeOut = false;
 		public bool started = false;
 		public bool uciok = false;
 		public bool wbok = false;
@@ -25,6 +26,7 @@ namespace RapChessGui
 		public string mode;
 		public string value;
 		public string pv;
+		public string lastMove;
 		public double timerStart;
 		public Stopwatch timer = new Stopwatch();
 		public CEnginePro enginePro = new CEnginePro();
@@ -52,6 +54,7 @@ namespace RapChessGui
 
 		public void Init(bool w)
 		{
+			timeOut = false;
 			white = w;
 			started = false;
 			go = false;
@@ -65,13 +68,19 @@ namespace RapChessGui
 			pv = "";
 			iScore = 0;
 			timerStart = 0;
+			lastMove = "";
 			timer.Reset();
 		}
 
 		public void TimerStart()
 		{
-			timerStart = timer.Elapsed.TotalMilliseconds;
 			timer.Start();
+			timerStart = timer.Elapsed.TotalMilliseconds;
+		}
+
+		public bool IsComputer()
+		{
+			return engine != null;
 		}
 
 		public bool IsHuman()
@@ -87,6 +96,7 @@ namespace RapChessGui
 
 		public void Start()
 		{
+			lastMove = "";
 			mode = player.modeValue.GetUci();
 			value = player.modeValue.GetUciValue().ToString();
 			if (engine.protocol == "Uci")
@@ -151,6 +161,7 @@ namespace RapChessGui
 
 		public void CompMakeMove()
 		{
+			FormChess.MessageClear();
 			if (engine.protocol == "Uci")
 				UciGo();
 			else
@@ -230,26 +241,43 @@ namespace RapChessGui
 				return depth;
 		}
 
+		string SetTimeOut()
+		{
+			FormChess.SetGameState(CGameState.time);
+			if (engine != null)
+				CRapLog.Add($"{engine.name} time out");
+			return "Time out";
+		}
+
 		public string GetTime()
 		{
+			double ms = timer.Elapsed.TotalMilliseconds;
 			DateTime dt = new DateTime();
-			if ((player != null) && (player.modeValue.mode == "Blitz"))
+			if (timer.IsRunning && IsComputer() && (player.modeValue.mode == "Blitz"))
 			{
 				double v = Convert.ToDouble(player.modeValue.GetUciValue());
-				double t = v - timer.Elapsed.TotalMilliseconds;
+				double t = v - ms;
 				if (t < 0)
-				{
-					FormChess.SetGameState(CGameState.time);
-					if (engine != null)
-						CRapLog.Add($"{engine.name} time out");
-					return "Time out";
-				}
+					return SetTimeOut();
 				dt = dt.AddMilliseconds(t);
 				if (t < 10000)
 					return dt.ToString("ss.ff");
 			}
+			else if (timer.IsRunning && IsComputer() && (player.modeValue.mode == "Time"))
+			{
+				double v = Convert.ToDouble(player.modeValue.GetUciValue());
+				if (ms - timerStart > v + 1000)
+				{
+					if (CChess.This.IsValidMove(lastMove) > 0)
+						FormChess.This.MakeMove(lastMove);
+					else
+						return SetTimeOut();
+					timeOut = true;
+				}
+				dt = dt.AddMilliseconds(ms);
+			}
 			else
-				dt = dt.AddMilliseconds(timer.Elapsed.TotalMilliseconds);
+				dt = dt.AddMilliseconds(ms);
 			return dt.ToString("HH:mm:ss");
 		}
 
@@ -313,6 +341,7 @@ namespace RapChessGui
 		public void Next()
 		{
 			CGamer cg = GamerCur();
+			cg.timer.Stop();
 			cg.go = false;
 			curIndex ^= 1;
 			cg = GamerCur();
