@@ -5,7 +5,7 @@ using System.Windows.Forms;
 
 namespace RapChessGui
 {
-	public enum CMode { game, match, tournament, training, edit }
+	public enum CMode { game, match,tourE, tourP, training, edit }
 
 	public static class CDrag
 	{
@@ -57,7 +57,7 @@ namespace RapChessGui
 	public class CModeValue
 	{
 		public string mode = "Time";
-		public int value = 0;
+		public int value = 1;
 
 		public void SetValue(int v)
 		{

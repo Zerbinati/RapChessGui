@@ -4,20 +4,20 @@ using RapIni;
 
 namespace RapChessGui
 {
-	static class CModeTournament
+	static class CModeTournamentP
 	{
 		public static string player;
 		public static bool rotate = false;
-		public static CTourList tourList = new CTourList();
+		public static CTourList tourList = new CTourList("Tour-players");
 
 		public static void SaveToIni()
 		{
-			CRapIni.This.Write("mode>tournament>player", player);
+			CRapIni.This.Write("mode>tournamentP>player", player);
 		}
 
 		public static void LoadFromIni()
 		{
-			player = CRapIni.This.Read("mode>tournament>player","");
+			player = CRapIni.This.Read("mode>tournamentP>player","");
 		}
 
 		public static CPlayer ChooseOpponent(CPlayer player, CPlayer player1, CPlayer player2)
@@ -67,11 +67,13 @@ namespace RapChessGui
 			CPlayer p = CPlayerList.GetPlayer(player);
 			if(p == null)
 				p = tourList.LastPlayer();
+			if (p == null)
+				p = CPlayerList.list[0];
 			CPlayer n = CPlayerList.NextPlayer(p);
 			int rw = 0;
 			int rl = 0;
 			int rd = 0;
-			CModeTournament.tourList.CountGames(p.name, n.name, ref rw, ref rl, ref rd);
+			tourList.CountGames(p.name, n.name, ref rw, ref rl, ref rd);
 			CPlayer result = rw >= rl ? n : p;
 			player = result.name;
 			SaveToIni();

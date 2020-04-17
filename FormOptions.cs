@@ -84,8 +84,8 @@ namespace RapChessGui
 
 		private void FormOptions_Shown(object sender, EventArgs e)
 		{
-			CModeTournament.SelectPlayer();
-			labFill.Text = $"Fill {(CTourList.list.Count * 100)/CTourList.maxRecords}%";
+			CModeTournamentP.SelectPlayer();
+			labFill.Text = $"Fill {(CModeTournamentP.tourList.list.Count * 100)/CTourList.maxRecords}%";
 		}
 
 	}

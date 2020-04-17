@@ -71,8 +71,8 @@ namespace RapChessGui
 			CRapIni.This.Write("mode>match>engine2", engine2);
 			CRapIni.This.Write("mode>match>mode1", modeValue1.mode);
 			CRapIni.This.Write("mode>match>mode2", modeValue2.mode);
-			CRapIni.This.Write("mode>match>value1", modeValue1.value.ToString());
-			CRapIni.This.Write("mode>match>value2", modeValue2.value.ToString());
+			CRapIni.This.Write("mode>match>value1", modeValue1.value);
+			CRapIni.This.Write("mode>match>value2", modeValue2.value);
 		}
 
 	}

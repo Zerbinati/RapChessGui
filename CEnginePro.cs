@@ -44,12 +44,8 @@ namespace RapChessGui
 		private static void ProEvent(object sender, DataReceivedEventArgs e)
 		{
 			if (!String.IsNullOrEmpty(e.Data))
-			{
-			lock (CMessageList.list)
-				{
+				lock (CMessageList.list)
 					CMessageList.Add((sender as Process).Id, e.Data);
-				}
-			}
 		}
 
 		public void SetPlayer(CGamer p)

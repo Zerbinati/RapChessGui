@@ -39,12 +39,13 @@ namespace RapChessGui
 
 	class CTourList
 	{
-		static string path = $"{AppDomain.CurrentDomain.BaseDirectory}Tournament.his";
-		public static List<CTour> list = new List<CTour>();
+		string path;
+		public List<CTour> list = new List<CTour>();
 		public static int maxRecords = 10000;
 
-		public CTourList()
+		public CTourList(string name)
 		{
+			path = $"{AppDomain.CurrentDomain.BaseDirectory}{name}.his";
 			LoadFromFile();
 		}
 
@@ -76,7 +77,7 @@ namespace RapChessGui
 			}
 		}
 
-		public static int DeletePlayer(string p)
+		public int DeletePlayer(string p)
 		{
 			int c = list.Count;
 			for(int n= list.Count - 1; n >= 0; n--)
@@ -110,7 +111,7 @@ namespace RapChessGui
 			}
 		}
 
-		public static void SaveToFile()
+		public void SaveToFile()
 		{
 			using (StreamWriter file = new StreamWriter(path))
 			{
@@ -119,12 +120,20 @@ namespace RapChessGui
 			}
 		}
 
+		public CEngine LastEngine()
+		{
+			string n = "";
+			if (list.Count > 0)
+				n = list[list.Count - 1].w;
+			return CEngineList.GetEngine(n);
+		}
+
 		public CPlayer LastPlayer()
 		{
 			string n = "";
 			if (list.Count > 0)
 				n = list[list.Count - 1].w;
-			return CPlayerList.GetPlayerAuto(n);
+			return CPlayerList.GetPlayer(n);
 		}
 
 		public void Write(string w, string b, string r)
@@ -133,6 +142,7 @@ namespace RapChessGui
 			list.Add(t);
 			using (StreamWriter file = new StreamWriter(path, true))
 				file.WriteLine(t.SaveToString());
+			SaveToFile();
 		}
 
 	}

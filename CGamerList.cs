@@ -265,7 +265,7 @@ namespace RapChessGui
 			else if (timer.IsRunning && IsComputer() && (player.modeValue.mode == "Time"))
 			{
 				double v = Convert.ToDouble(player.modeValue.GetUciValue());
-				if (ms - timerStart > v + 1000)
+				if (ms - timerStart > v + 2000)
 				{
 					if (CChess.This.IsValidMove(lastMove) > 0)
 						FormChess.This.MakeMove(lastMove);

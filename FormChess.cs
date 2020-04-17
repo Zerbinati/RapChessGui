@@ -22,7 +22,6 @@ namespace RapChessGui
 		public static FormChess This;
 		public static bool boardRotate;
 		bool isBook = false;
-		ColumnHeader SortingColumn = null;
 		List<int> moves = new List<int>();
 		public CRapIni RapIni = new CRapIni();
 		readonly CEcoList EcoList = new CEcoList();
@@ -60,8 +59,10 @@ namespace RapChessGui
 			labTakenT.Font = fontChess;
 			labTakenD.Font = fontChess;
 			Chess.Initialize();
-			listView1_Resize(listView1, null);
-			listView2_Resize(listView2, null);
+			listView1_Resize(lvPlayer, null);
+			listView2_Resize(lvPlayerH, null);
+			listView1_Resize(lvEngine, null);
+			listView2_Resize(lvEngineH, null);
 			lvMoves_Resize(lvMoves, null);
 			cbMainMode.SelectedIndex = 0;
 			BoardPrepare();
@@ -81,16 +82,16 @@ namespace RapChessGui
 			CData.gameState = gs;
 			CGamer gw = This.GamerList.GamerWinner();
 			CGamer gl = This.GamerList.GamerLoser();
-			CPlayer uw = gw.player;
-			CPlayer ul = gl.player;
-			int eloW = Convert.ToInt32(uw.elo);
-			int eloL = Convert.ToInt32(ul.elo);
+			CPlayer pw = gw.player;
+			CPlayer pl = gl.player;
+			int eloW = Convert.ToInt32(pw.elo);
+			int eloL = Convert.ToInt32(pl.elo);
 			bool isDraw = false;
 			switch (CData.gameState)
 			{
 				case CGameState.mate:
 					This.tssMoves.ForeColor = Color.Lime;
-					This.tssMoves.Text = uw.name + " win";
+					This.tssMoves.Text = pw.name + " win";
 					break;
 				case CGameState.stalemate:
 					isDraw = true;
@@ -114,33 +115,33 @@ namespace RapChessGui
 					break;
 				case CGameState.resignation:
 					This.tssMoves.ForeColor = Color.Yellow;
-					This.tssMoves.Text = $"{ul.name} resign";
+					This.tssMoves.Text = $"{pl.name} resign";
 					break;
 				case CGameState.time:
 					This.tssMoves.ForeColor = Color.Red;
-					This.tssMoves.Text = $"{ul.name}Time out";
+					This.tssMoves.Text = $"{pl.name}Time out";
 					break;
 				case CGameState.error:
 					This.tssMoves.ForeColor = Color.Red;
-					This.tssMoves.Text = $"{ul.name} make Wrong move";
+					This.tssMoves.Text = $"{pl.name} make Wrong move";
 					break;
 			}
 			if (CData.gameMode == CMode.game)
 			{
 				if (This.IsAutoElo())
-					if (uw.name == "Human")
+					if (pw.name == "Human")
 					{
 						if (!isDraw)
-							uw.eloNew = uw.GetEloMore();
+							pw.eloNew = pw.GetEloMore();
 						else
-							uw.eloNew = Convert.ToInt32(uw.eloOld);
+							pw.eloNew = Convert.ToInt32(pw.eloOld);
 					}
 					else
 					{
 						if (!isDraw)
-							ul.eloNew = ul.GetEloLess();
+							pl.eloNew = pl.GetEloLess();
 						else
-							ul.eloNew = Convert.ToInt32(ul.eloOld);
+							pl.eloNew = Convert.ToInt32(pl.eloOld);
 					}
 				This.ShowLastGame();
 			}
@@ -149,7 +150,7 @@ namespace RapChessGui
 				CModeMatch.games++;
 				if (!isDraw)
 				{
-					if (uw.name == This.labMatch10.Text)
+					if (pw.name == This.labMatch10.Text)
 					{
 						CModeMatch.win++;
 					}
@@ -165,7 +166,54 @@ namespace RapChessGui
 				CModeMatch.SaveToIni();
 				This.MatchShow();
 			}
-			if (CData.gameMode == CMode.tournament)
+			if (CData.gameMode == CMode.tourE)
+			{
+				CEngine ew = gw.engine;
+				CEngine el = gl.engine;
+				eloW = Convert.ToInt32(gw.engine.elo);
+				eloL = Convert.ToInt32(gl.engine.elo);
+				int indexW = CEngineList.GetIndexElo(eloW);
+				int indexL = CEngineList.GetIndexElo(eloL);
+				int optW = CEngineList.GetOptElo(indexW);
+				int optL = CEngineList.GetOptElo(indexL);
+				int OW = optW;
+				int OL = optL;
+				if (!isDraw)
+				{
+					if (eloW <= eloL)
+					{
+						OW = optL;
+						OL = optW;
+					}
+					if (OW < eloW)
+						OW = eloW;
+					if (OL > eloL)
+						OL = eloL;
+					if (OW == OL)
+						OW = CEngineList.GetOptElo(indexW + 1);
+					string r = pw == This.GamerList.gamer[0].player ? "w" : "b";
+					CModeTournamentE.tourList.Write(This.GamerList.gamer[0].engine.name, This.GamerList.gamer[1].engine.name, r);
+				}
+				else
+				{
+					int opt = (OW + OL) >> 1;
+					OW = opt;
+					OL = opt;
+					CModeTournamentE.tourList.Write(This.GamerList.gamer[0].engine.name, This.GamerList.gamer[1].engine.name, "d");
+				}
+				int newW = Convert.ToInt32(eloW * 0.9 + Math.Max(OW, eloL) * 0.1);
+				int newL = Convert.ToInt32(eloL * 0.9 + Math.Min(OL, eloW) * 0.1);
+				ew.elo = newW.ToString();
+				el.elo = newL.ToString();
+				ew.eloOld = pw.eloOld * .9 + newW * .1;
+				el.eloOld = pl.eloOld * .9 + newL * .1; ;
+				ew.SaveToIni();
+				el.SaveToIni();
+				This.TournamentEUpdate(ew);
+				This.TournamentEUpdate(el);
+				CModeTournamentE.rotate = (OW != OL) && (newW < newL);
+			}
+			if (CData.gameMode == CMode.tourP)
 			{
 				int indexW = CPlayerList.GetIndexElo(eloW);
 				int indexL = CPlayerList.GetIndexElo(eloL);
@@ -184,34 +232,36 @@ namespace RapChessGui
 						OW = eloW;
 					if (OL > eloL)
 						OL = eloL;
-					string r = uw == This.GamerList.gamer[0].player ? "w" : "b";
-					CModeTournament.tourList.Write(This.GamerList.gamer[0].player.name, This.GamerList.gamer[1].player.name, r);
+					if (OW == OL)
+						OW = CEngineList.GetOptElo(indexW + 1);
+					string r = pw == This.GamerList.gamer[0].player ? "w" : "b";
+					CModeTournamentP.tourList.Write(This.GamerList.gamer[0].player.name, This.GamerList.gamer[1].player.name, r);
 				}
 				else
 				{
 					int opt = (OW + OL) >> 1;
 					OW = opt;
 					OL = opt;
-					CModeTournament.tourList.Write(This.GamerList.gamer[0].player.name, This.GamerList.gamer[1].player.name, "d");
+					CModeTournamentP.tourList.Write(This.GamerList.gamer[0].player.name, This.GamerList.gamer[1].player.name, "d");
 				}
 				int newW = Convert.ToInt32(eloW * 0.9 + Math.Max(OW, eloL) * 0.1);
 				int newL = Convert.ToInt32(eloL * 0.9 + Math.Min(OL, eloW) * 0.1);
-				uw.elo = newW.ToString();
-				ul.elo = newL.ToString();
-				uw.eloOld = uw.eloOld * .9 + newW * .1;
-				ul.eloOld = ul.eloOld * .9 + newL * .1; ;
-				uw.SaveToIni();
-				ul.SaveToIni();
-				This.TournamentUpdate(uw);
-				This.TournamentUpdate(ul);
-				CModeTournament.rotate = (OW != OL) && (newW < newL);
+				pw.elo = newW.ToString();
+				pl.elo = newL.ToString();
+				pw.eloOld = pw.eloOld * .9 + newW * .1;
+				pl.eloOld = pl.eloOld * .9 + newL * .1; ;
+				pw.SaveToIni();
+				pl.SaveToIni();
+				This.TournamentPUpdate(pw);
+				This.TournamentPUpdate(pl);
+				CModeTournamentP.rotate = (OW != OL) && (newW < newL);
 			}
 			if (CData.gameMode == CMode.training)
 			{
 				CModeTraining.games++;
 				if (!isDraw)
 				{
-					if (uw.name == "Teacher")
+					if (pw.name == "Teacher")
 					{
 						CModeTraining.win++;
 						if (--CModeTraining.modeValueTeacher.value < 1)
@@ -252,8 +302,9 @@ namespace RapChessGui
 		{
 			int size = sc.Orientation == Orientation.Horizontal ? sc.ClientSize.Height : sc.ClientSize.Width;
 			double p = (double)sc.SplitterDistance / size;
-			p = RapIni.ReadDouble($"position>split>{sc.Name}", p);
-			sc.SplitterDistance = Convert.ToInt32(size * p);
+			p = RapIni.ReadDouble($"position>split>{sc.Name}", p) * size;
+			if (p > 0)
+				sc.SplitterDistance = Convert.ToInt32(p);
 		}
 
 		private void FormChess_FormClosed(object sender, FormClosedEventArgs e)
@@ -273,7 +324,6 @@ namespace RapChessGui
 			SplitSaveToIni(splitContainerChart);
 			SplitSaveToIni(splitContainerTournament);
 			GamerList.Terminate();
-			SortingColumn.Dispose();
 
 		}
 
@@ -300,9 +350,9 @@ namespace RapChessGui
 			b.file = "BookReaderUci.exe";
 			b.parameters = "eco.uci";
 			CBookList.Add(b);
-			b = new CBook("Small");
+			b = new CBook("Tiny");
 			b.file = "BookReaderUci.exe";
-			b.parameters = "small.uci";
+			b.parameters = "tiny.uci";
 			CBookList.Add(b);
 			b = new CBook("Random1");
 			b.file = "BookReaderUci.exe";
@@ -387,8 +437,16 @@ namespace RapChessGui
 		{
 			Width = RapIni.ReadInt("position>width", Width);
 			Height = RapIni.ReadInt("position>height", Height);
+			if (Width < 600)
+				Width = 600;
+			if (Height < 400)
+				Height = 400;
 			int x = RapIni.ReadInt("position>x", Location.X);
 			int y = RapIni.ReadInt("position>y", Location.Y);
+			if (x < 0)
+				x = 0;
+			if (y < 0)
+				y = 0;
 			Location = new Point(x, y);
 			if (RapIni.ReadBool("position>maximized", false))
 				WindowState = FormWindowState.Maximized;
@@ -401,7 +459,8 @@ namespace RapChessGui
 			CPlayerList.LoadFromIni();
 			CModeGame.LoadFromIni();
 			CModeMatch.LoadFromIni();
-			CModeTournament.LoadFromIni();
+			CModeTournamentE.LoadFromIni();
+			CModeTournamentP.LoadFromIni();
 			CModeTraining.LoadFromIni();
 		}
 
@@ -482,7 +541,6 @@ namespace RapChessGui
 			labMatch23.Text = CModeMatch.draw.ToString();
 			labMatch24.Text = $"{CModeMatch.Result(true)}%";
 		}
-
 		void MatchStart()
 		{
 			CData.fen = CChess.defFen;
@@ -517,9 +575,103 @@ namespace RapChessGui
 			CModeMatch.SaveToIni();
 		}
 
-		void TournamentReset()
+		void TournamentEShow()
 		{
-			listView1.Items.Clear();
+			cbTourEMode.SelectedIndex = cbTourEMode.FindStringExact(CModeTournamentE.modeValue.mode);
+			cbTourEBook.SelectedIndex = cbTourEBook.FindStringExact(CModeTournamentE.book);
+			nudTourE.Value = CModeTournamentE.modeValue.GetValue();
+		}
+
+		void TournamentEReset()
+		{
+			lvEngine.Items.Clear();
+			foreach (CEngine e in CEngineList.list)
+			{
+				int del = e.GetDeltaElo();
+				ListViewItem lvi = new ListViewItem(new[] { e.name, e.elo, del.ToString() });
+				if (del > 0)
+					lvi.BackColor = Color.FromArgb(0xe0, 0xff, 0xe0);
+				if (del < 0)
+					lvi.BackColor = Color.FromArgb(0xff, 0xe0, 0xe0);
+				if (del == 0)
+					lvi.BackColor = Color.FromArgb(0xff, 0xff, 0xff);
+				lvEngine.Items.Add(lvi);
+			}
+		}
+
+		void TournamentEUpdate(CEngine e)
+		{
+			foreach (ListViewItem lvi in lvEngine.Items)
+				if (lvi.Text == e.name)
+				{
+					int del = e.GetDeltaElo();
+					lvi.SubItems[1].Text = e.elo;
+					lvi.SubItems[2].Text = del.ToString();
+					if (del > 0)
+						lvi.BackColor = Color.FromArgb(0xe0, 0xff, 0xe0);
+					if (del < 0)
+						lvi.BackColor = Color.FromArgb(0xff, 0xe0, 0xe0);
+					if (del == 0)
+						lvi.BackColor = Color.FromArgb(0xff, 0xff, 0xff);
+				}
+		}
+
+		void TournamentEStart()
+		{
+			CModeTournamentE.modeValue.mode = cbTourEMode.Text;
+			CModeTournamentE.modeValue.SetValue((int)nudTourE.Value);
+			CModeTournamentE.book = cbTourEBook.Text;
+			CModeTournamentE.SaveToIni();
+			CData.fen = CChess.defFen;
+			SetMode(CMode.tourE);
+			CPlayer p1;
+			CPlayer p2;
+			CEngine e1;
+			CEngine e2;
+			if (CModeTournamentE.rotate)
+			{
+				p1 = GamerList.gamer[1].player;
+				p2 = GamerList.gamer[0].player;
+				e1 = GamerList.gamer[1].engine;
+				e2 = GamerList.gamer[1].engine;
+			}
+			else
+			{
+				e1 = CModeTournamentE.SelectEngine();
+				e2 = CModeTournamentE.SelectOpponent(e1);
+				p1 = new CPlayer(e1.name);
+				p2 = new CPlayer(e2.name);
+				p1.engine = e1.name;
+				p2.engine = e2.name;
+			}
+			p1.book = e1.protocol == "Uci" ? CModeTournamentE.book : "None";
+			p1.modeValue.mode = CModeTournamentE.modeValue.mode;
+			p1.modeValue.value = CModeTournamentE.modeValue.value;
+			p2.book = e2.protocol == "Uci" ? CModeTournamentE.book : "None";
+			p2.modeValue.mode = CModeTournamentE.modeValue.mode;
+			p2.modeValue.value = CModeTournamentE.modeValue.value;
+			GamerList.gamer[0].SetPlayer(p1);
+			GamerList.gamer[1].SetPlayer(p2);
+			foreach (ListViewItem lvi in lvEngine.Items)
+				if (lvi.Text == CModeTournamentE.engine)
+				{
+					int top = lvi.Index;
+					top -= 4;
+					if (top < 0)
+						top = 0;
+					lvi.Selected = true;
+					lvEngine.TopItem = lvEngine.Items[top];
+					lvEngine.Sort();
+					lvEngine.Focus();
+					ShowHistoryTourE();
+					break;
+				}
+			Clear();
+		}
+
+		void TournamentPReset()
+		{
+			lvPlayer.Items.Clear();
 			foreach (CPlayer p in CPlayerList.list)
 				if (p.engine != "Human")
 				{
@@ -531,13 +683,13 @@ namespace RapChessGui
 						lvi.BackColor = Color.FromArgb(0xff, 0xe0, 0xe0);
 					if (del == 0)
 						lvi.BackColor = Color.FromArgb(0xff, 0xff, 0xff);
-					listView1.Items.Add(lvi);
+					lvPlayer.Items.Add(lvi);
 				}
 		}
 
-		void TournamentUpdate(CPlayer p)
+		void TournamentPUpdate(CPlayer p)
 		{
-			foreach (ListViewItem lvi in listView1.Items)
+			foreach (ListViewItem lvi in lvPlayer.Items)
 				if (lvi.Text == p.name)
 				{
 					int del = p.GetDeltaElo();
@@ -552,36 +704,36 @@ namespace RapChessGui
 				}
 		}
 
-		void TournamentStart()
+		void TournamentPStart()
 		{
 			CData.fen = CChess.defFen;
-			SetMode(CMode.tournament);
+			SetMode(CMode.tourP);
 			CPlayer p1;
 			CPlayer p2;
-			if (CModeTournament.rotate)
+			if (CModeTournamentP.rotate)
 			{
 				p1 = GamerList.gamer[1].player;
 				p2 = GamerList.gamer[0].player;
 			}
 			else
 			{
-				p1 = CModeTournament.SelectPlayer();
-				p2 = CModeTournament.SelectOpponent(p1);
+				p1 = CModeTournamentP.SelectPlayer();
+				p2 = CModeTournamentP.SelectOpponent(p1);
 			}
 			GamerList.gamer[0].SetPlayer(p1);
 			GamerList.gamer[1].SetPlayer(p2);
-			foreach (ListViewItem lvi in listView1.Items)
-				if (lvi.Text == CModeTournament.player)
+			foreach (ListViewItem lvi in lvPlayer.Items)
+				if (lvi.Text == CModeTournamentP.player)
 				{
 					int top = lvi.Index;
 					top -= 4;
 					if (top < 0)
 						top = 0;
 					lvi.Selected = true;
-					listView1.TopItem = listView1.Items[top];
-					listView1.Sort();
-					listView1.Focus();
-					ShowHistoryList();
+					lvPlayer.TopItem = lvPlayer.Items[top];
+					lvPlayer.Sort();
+					lvPlayer.Focus();
+					ShowHistoryTourP();
 					break;
 				}
 			Clear();
@@ -591,7 +743,7 @@ namespace RapChessGui
 		{
 			double procent = CModeTraining.games > 0 ? (CModeTraining.errors * 100.0) / CModeTraining.games : 0;
 			labGames.Text = $"Games {CModeTraining.games}";
-			labErrors.Text = string.Format("Errors {0} ({1:N2}%)", CModeTraining.errors,procent);
+			labErrors.Text = string.Format("Errors {0} ({1:N2}%)", CModeTraining.errors, procent);
 			cbTeacherEngine.SelectedIndex = cbTeacherEngine.FindStringExact(CModeTraining.teacher);
 			cbTrainedEngine.SelectedIndex = cbTrainedEngine.FindStringExact(CModeTraining.trained);
 			cbTeacherMode.SelectedIndex = cbTeacherMode.FindStringExact(CModeTraining.modeValueTeacher.mode);
@@ -837,7 +989,6 @@ namespace RapChessGui
 		public void GetMessage()
 		{
 			lock (CMessageList.list)
-			{
 				while (CMessageList.GetMessage(out CGamer g, out string msg))
 				{
 					if (g.engine.protocol == "Uci")
@@ -845,7 +996,6 @@ namespace RapChessGui
 					if (g.engine.protocol == "Winboard")
 						GetMessageXb(g, msg);
 				}
-			}
 		}
 
 		void CreateRtf()
@@ -900,6 +1050,9 @@ namespace RapChessGui
 					break;
 				case CMode.match:
 					MatchShow();
+					break;
+				case CMode.tourE:
+					TournamentEShow();
 					break;
 				case CMode.training:
 					TrainingShow();
@@ -966,45 +1119,83 @@ namespace RapChessGui
 			return result;
 		}
 
-		void ShowHistoryList()
+		void ShowHistoryTourE()
 		{
-			if (listView1.SelectedItems.Count > 0)
+			if (lvEngine.SelectedItems.Count == 0)
+				return;
+			ListViewItem top2 = null;
+			ListViewItem item = lvEngine.SelectedItems[0];
+			string name = item.SubItems[0].Text;
+			CEngine engine = CEngineList.GetEngine(name);
+			labEngine.Text = $"{engine.name} - {engine.elo}";
+			lvEngineH.Items.Clear();
+			CEngineList.Sort();
+			CEngineList.FillPosition();
+			foreach (CEngine e in CEngineList.list)
 			{
-				ListViewItem top2 = null;
-				ListViewItem item = listView1.SelectedItems[0];
-				string name = item.SubItems[0].Text;
-				CPlayer player = CPlayerList.GetPlayerAuto(name);
-				lPlayer.Text = $"{player.name} - {player.elo}";
-				listView2.Items.Clear();
-				CPlayerList.Sort();
-				CPlayerList.FillPosition();
-				foreach (CPlayer p in CPlayerList.list)
-					if (p.engine != "Human")
-					{
-						int rw = 0;
-						int rl = 0;
-						int rd = 0;
-						CModeTournament.tourList.CountGames(name, p.name, ref rw, ref rl, ref rd);
-						int count = rw + rl + rd;
-						if (count > 0)
-						{
-							int pro = (rw * 200 + rd * 100) / count - 100;
-							int elo = Convert.ToInt32(player.elo) - Convert.ToInt32(p.elo);
-							ListViewItem lvi = new ListViewItem(new[] { p.name, elo.ToString(), count.ToString(), pro.ToString() });
-							if (elo > 0)
-								lvi.BackColor = Color.FromArgb(0xe0, 0xff, 0xe0);
-							if (elo < 0)
-								lvi.BackColor = Color.FromArgb(0xff, 0xe0, 0xe0);
-							if (elo == 0)
-								lvi.BackColor = Color.FromArgb(0xff, 0xff, 0xff);
-							listView2.Items.Add(lvi);
-							if ((player.position - p.position) == (listView2.ClientRectangle.Height / lvi.Bounds.Height) >> 1)
-								top2 = lvi;
-						}
-					}
-				if (top2 != null)
-					listView2.TopItem = top2;
+				int rw = 0;
+				int rl = 0;
+				int rd = 0;
+				CModeTournamentE.tourList.CountGames(name, e.name, ref rw, ref rl, ref rd);
+				int count = rw + rl + rd;
+				if (count > 0)
+				{
+					int pro = (rw * 200 + rd * 100) / count - 100;
+					int elo = Convert.ToInt32(engine.elo) - Convert.ToInt32(e.elo);
+					ListViewItem lvi = new ListViewItem(new[] { e.name, elo.ToString(), count.ToString(), pro.ToString() });
+					if (elo > 0)
+						lvi.BackColor = Color.FromArgb(0xe0, 0xff, 0xe0);
+					if (elo < 0)
+						lvi.BackColor = Color.FromArgb(0xff, 0xe0, 0xe0);
+					if (elo == 0)
+						lvi.BackColor = Color.FromArgb(0xff, 0xff, 0xff);
+					lvEngineH.Items.Add(lvi);
+					if ((engine.position - e.position) == (lvEngineH.ClientRectangle.Height / lvi.Bounds.Height) >> 1)
+						top2 = lvi;
+				}
 			}
+			if (top2 != null)
+				lvEngineH.TopItem = top2;
+		}
+
+		void ShowHistoryTourP()
+		{
+			if (lvPlayer.SelectedItems.Count == 0)
+				return;
+			ListViewItem top2 = null;
+			ListViewItem item = lvPlayer.SelectedItems[0];
+			string name = item.SubItems[0].Text;
+			CPlayer player = CPlayerList.GetPlayerAuto(name);
+			labPlayer.Text = $"{player.name} - {player.elo}";
+			lvPlayerH.Items.Clear();
+			CPlayerList.Sort();
+			CPlayerList.FillPosition();
+			foreach (CPlayer p in CPlayerList.list)
+				if (p.engine != "Human")
+				{
+					int rw = 0;
+					int rl = 0;
+					int rd = 0;
+					CModeTournamentP.tourList.CountGames(name, p.name, ref rw, ref rl, ref rd);
+					int count = rw + rl + rd;
+					if (count > 0)
+					{
+						int pro = (rw * 200 + rd * 100) / count - 100;
+						int elo = Convert.ToInt32(player.elo) - Convert.ToInt32(p.elo);
+						ListViewItem lvi = new ListViewItem(new[] { p.name, elo.ToString(), count.ToString(), pro.ToString() });
+						if (elo > 0)
+							lvi.BackColor = Color.FromArgb(0xe0, 0xff, 0xe0);
+						if (elo < 0)
+							lvi.BackColor = Color.FromArgb(0xff, 0xe0, 0xe0);
+						if (elo == 0)
+							lvi.BackColor = Color.FromArgb(0xff, 0xff, 0xff);
+						lvPlayerH.Items.Add(lvi);
+						if ((player.position - p.position) == (lvPlayerH.ClientRectangle.Height / lvi.Bounds.Height) >> 1)
+							top2 = lvi;
+					}
+				}
+			if (top2 != null)
+				lvPlayerH.TopItem = top2;
 		}
 
 		void Reset()
@@ -1025,11 +1216,13 @@ namespace RapChessGui
 				cbTeacherEngine.Items.Add(e.name);
 				cbTrainedEngine.Items.Add(e.name);
 			}
+			cbTourEBook.Items.Clear();
 			cbTeacherBook.Items.Clear();
 			cbTrainedBook.Items.Clear();
 			cbBook.Items.Clear();
 			cbBook1.Items.Clear();
 			cbBook2.Items.Clear();
+			cbTourEBook.Items.Add("None");
 			cbTeacherBook.Items.Add("None");
 			cbTrainedBook.Items.Add("None");
 			cbBook.Items.Add("None");
@@ -1037,26 +1230,24 @@ namespace RapChessGui
 			cbBook2.Items.Add("None");
 			foreach (CBook b in CBookList.list)
 			{
+				cbTourEBook.Items.Add(b.name);
 				cbTeacherBook.Items.Add(b.name);
 				cbTrainedBook.Items.Add(b.name);
 				cbBook.Items.Add(b.name);
 				cbBook1.Items.Add(b.name);
 				cbBook2.Items.Add(b.name);
 			}
-			cbMode.SelectedIndex = 0;
+			cbTourEBook.SelectedIndex = 0;
 			cbTeacherBook.SelectedIndex = 0;
 			cbTrainedBook.SelectedIndex = 0;
 			cbBook.SelectedIndex = 0;
 			cbBook1.SelectedIndex = 0;
 			cbBook2.SelectedIndex = 0;
 			cbEngine.SelectedIndex = 0;
-			TournamentReset();
-			if (SortingColumn != null)
-				SortingColumn.Text = SortingColumn.Text.Substring(2);
-			SortingColumn = listView1.Columns[1];
-			listView1.Columns[1].Text = $"▼ {listView1.Columns[1].Text}";
-			listView1.ListViewItemSorter = new ListViewComparer(1, SortOrder.Descending);
-			listView1.Sort();
+			TournamentEReset();
+			TournamentPReset();
+			lvPlayer.ListViewItemSorter = new ListViewComparer(1, SortOrder.Descending);
+			lvEngine.ListViewItemSorter = new ListViewComparer(1, SortOrder.Descending);
 			ShowAuto(true);
 		}
 
@@ -1326,12 +1517,12 @@ namespace RapChessGui
 						labTimeD.BackColor = Color.LightGray;
 				}
 				labEloD.Text = g.GetElo();
-				labScoreB.Text = $"Score {g.score}";
-				labNodesB.Text = $"Nodes {g.nodes.ToString("N0")}";
-				labNpsB.Text = $"Nps {g.nps.ToString("N0")}";
-				labPonderB.Text = $"Ponder {g.ponder}";
+				labScoreD.Text = $"Score {g.score}";
+				labNodesD.Text = $"Nodes {g.nodes.ToString("N0")}";
+				labNpsD.Text = $"Nps {g.nps.ToString("N0")}";
+				labPonderD.Text = $"Ponder {g.ponder}";
 				labBookD.Text = $"Book {g.usedBook}";
-				labDepthB.Text = $"Depth {g.GetDepth()}";
+				labDepthD.Text = $"Depth {g.GetDepth()}";
 			}
 			else
 			{
@@ -1663,17 +1854,20 @@ namespace RapChessGui
 		private void TimerStart_Tick(object sender, EventArgs e)
 		{
 			timerStart.Stop();
-			if (CData.gameMode == CMode.match)
+			switch (CData.gameMode)
 			{
-				MatchStart();
-			}
-			if (CData.gameMode == CMode.tournament)
-			{
-				TournamentStart();
-			}
-			if (CData.gameMode == CMode.training)
-			{
-				TraingStart();
+				case CMode.match:
+					MatchStart();
+					break;
+				case CMode.tourE:
+					TournamentEStart();
+					break;
+				case CMode.tourP:
+					TournamentPStart();
+					break;
+				case CMode.training:
+					TraingStart();
+					break;
 			}
 		}
 
@@ -1744,47 +1938,7 @@ namespace RapChessGui
 
 		private void butStartTournament_Click(object sender, EventArgs e)
 		{
-			TournamentStart();
-		}
-
-		private void listView1_ColumnClick(object sender, ColumnClickEventArgs e)
-		{
-			ColumnHeader new_sorting_column = listView1.Columns[e.Column];
-			SortOrder sort_order;
-			if (SortingColumn == null)
-			{
-				sort_order = SortOrder.Ascending;
-			}
-			else
-			{
-				if (new_sorting_column == SortingColumn)
-				{
-					if (SortingColumn.Text.StartsWith("▼ "))
-					{
-						sort_order = SortOrder.Descending;
-					}
-					else
-					{
-						sort_order = SortOrder.Ascending;
-					}
-				}
-				else
-				{
-					sort_order = SortOrder.Ascending;
-				}
-				SortingColumn.Text = SortingColumn.Text.Substring(2);
-			}
-			SortingColumn = new_sorting_column;
-			if (sort_order == SortOrder.Ascending)
-			{
-				SortingColumn.Text = "▼ " + SortingColumn.Text;
-			}
-			else
-			{
-				SortingColumn.Text = "▲ " + SortingColumn.Text;
-			}
-			listView1.ListViewItemSorter = new ListViewComparer(e.Column, sort_order);
-			listView1.Sort();
+			TournamentPStart();
 		}
 
 		private void stopToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1805,11 +1959,6 @@ namespace RapChessGui
 		private void closeToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			GamerList.GamerCur().EngineClose();
-		}
-
-		private void tabControl1_Selected(object sender, TabControlEventArgs e)
-		{
-
 		}
 
 		private void pictureBox1_MouseMove(object sender, MouseEventArgs e)
@@ -1990,7 +2139,7 @@ namespace RapChessGui
 
 		private void listView1_SelectedIndexChanged(object sender, EventArgs e)
 		{
-			ShowHistoryList();
+			ShowHistoryTourP();
 		}
 
 		private void nudValue_ValueChanged(object sender, EventArgs e)
@@ -2144,6 +2293,35 @@ namespace RapChessGui
 			CPlayer hu = CPlayerList.GetPlayerAuto("Human");
 			hu.eloNew = hu.GetEloLess();
 			GameStart();
+		}
+
+		private void button1_Click(object sender, EventArgs e)
+		{
+			TournamentEStart();
+		}
+
+		private void cbTourEMode_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			CModeTournamentE.modeValue.mode = (sender as ComboBox).Text;
+			nudTourE.Increment = CModeTournamentE.modeValue.GetIncrement();
+			nudTourE.Minimum = nudTourE.Increment;
+			nudTourE.Value = CModeTournamentE.modeValue.GetValue();
+			toolTip1.SetToolTip(nudTourE, CModeTournamentE.modeValue.GetTip());
+		}
+
+		private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			SetMode((CMode)tabControl1.SelectedIndex);
+		}
+
+		private void lvEngine_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			ShowHistoryTourE();
+		}
+
+		private void lv_ColumnClick(object sender, ColumnClickEventArgs e)
+		{
+			(sender as ListView).ListViewItemSorter = new ListViewComparer(e.Column, e.Column == 0 ? SortOrder.Ascending : SortOrder.Descending);
 		}
 	}
 }

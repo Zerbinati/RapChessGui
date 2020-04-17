@@ -122,7 +122,7 @@ namespace RapChessGui
 		private void butClearHistory_Click(object sender, EventArgs e)
 		{
 			string playerName = tbPlayerName.Text;
-			int count=CTourList.DeletePlayer(playerName);
+			int count=CModeTournamentP.tourList.DeletePlayer(playerName);
 			MessageBox.Show($"{count} records have been deleted");
 		}
 
@@ -145,7 +145,6 @@ namespace RapChessGui
 		{
 			modeValue.mode = cbMode.Text;
 			nudValue.Increment = modeValue.GetIncrement();
-			nudValue.Minimum = nudValue.Increment;
 			nudValue.Value = modeValue.GetValue();
 			toolTip1.SetToolTip(nudValue, modeValue.GetTip());
 		}

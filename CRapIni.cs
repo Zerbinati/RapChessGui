@@ -129,7 +129,8 @@ namespace RapIni
 		public double ReadDouble(string key, double def = 0)
 		{
 			string s = Read(key, Convert.ToString(def));
-			return Convert.ToDouble(s);
+			Double.TryParse(s, out def);
+			return def;
 		}
 
 		public int ReadInt(string key, int def = 0)

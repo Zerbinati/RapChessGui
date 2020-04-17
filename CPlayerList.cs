@@ -64,7 +64,7 @@ namespace RapChessGui
 		public void LoadFromIni()
 		{
 			engine = CRapIni.This.Read($"player>{name}>engine", "Human");
-			modeValue.mode = CRapIni.This.Read($"player>{name}>mode", "movetime");
+			modeValue.mode = CRapIni.This.Read($"player>{name}>mode", modeValue.mode);
 			modeValue.value = CRapIni.This.ReadInt($"player>{name}>value", modeValue.value);
 			book = CRapIni.This.Read($"player>{name}>book", "None");
 			elo = CRapIni.This.Read($"player>{name}>elo",elo);
@@ -261,15 +261,15 @@ namespace RapChessGui
 				if (cp.name != "Human")
 					return cp;
 			}
-			return GetPlayerAuto("Human");
+			return p;
 		}
 
 		public static void FillPosition()
 		{
 			int position = 1;
-			for (int n = 0; n < CPlayerList.list.Count; n++)
+			for (int n = 0; n < list.Count; n++)
 			{
-				CPlayer p = CPlayerList.list[n];
+				CPlayer p = list[n];
 				p.position = p.engine == "Human" ? 0 : position++;
 			}
 		}

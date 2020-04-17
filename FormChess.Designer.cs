@@ -36,6 +36,7 @@
 			this.timer1 = new System.Windows.Forms.Timer(this.components);
 			this.tabControl1 = new System.Windows.Forms.TabControl();
 			this.tabPageGame = new System.Windows.Forms.TabPage();
+			this.butResignation = new System.Windows.Forms.Button();
 			this.butStop = new System.Windows.Forms.Button();
 			this.butContinueGame = new System.Windows.Forms.Button();
 			this.butNewGame = new System.Windows.Forms.Button();
@@ -79,18 +80,35 @@
 			this.cbBook1 = new System.Windows.Forms.ComboBox();
 			this.cbMode1 = new System.Windows.Forms.ComboBox();
 			this.cbEngine1 = new System.Windows.Forms.ComboBox();
-			this.tabPageTournament = new System.Windows.Forms.TabPage();
+			this.tabPageTourE = new System.Windows.Forms.TabPage();
+			this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+			this.lvEngine = new System.Windows.Forms.ListView();
+			this.columnHeader23 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.columnHeader24 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.columnHeader25 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.lvEngineH = new System.Windows.Forms.ListView();
+			this.columnHeader26 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.columnHeader27 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.columnHeader28 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.columnHeader29 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.labEngine = new System.Windows.Forms.Label();
+			this.groupBox8 = new System.Windows.Forms.GroupBox();
+			this.nudTourE = new System.Windows.Forms.NumericUpDown();
+			this.cbTourEBook = new System.Windows.Forms.ComboBox();
+			this.cbTourEMode = new System.Windows.Forms.ComboBox();
+			this.button1 = new System.Windows.Forms.Button();
+			this.tabPageTourP = new System.Windows.Forms.TabPage();
 			this.splitContainerTournament = new System.Windows.Forms.SplitContainer();
-			this.listView1 = new System.Windows.Forms.ListView();
+			this.lvPlayer = new System.Windows.Forms.ListView();
 			this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeader6 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.listView2 = new System.Windows.Forms.ListView();
+			this.lvPlayerH = new System.Windows.Forms.ListView();
 			this.columnHeader7 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeader9 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeader8 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeader10 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.lPlayer = new System.Windows.Forms.Label();
+			this.labPlayer = new System.Windows.Forms.Label();
 			this.butStartTournament = new System.Windows.Forms.Button();
 			this.tabPageTraining = new System.Windows.Forms.TabPage();
 			this.tlpTraining = new System.Windows.Forms.TableLayoutPanel();
@@ -159,12 +177,12 @@
 			this.labScoreT = new System.Windows.Forms.Label();
 			this.labDepthT = new System.Windows.Forms.Label();
 			this.labNodesT = new System.Windows.Forms.Label();
-			this.labNpsB = new System.Windows.Forms.Label();
+			this.labNpsD = new System.Windows.Forms.Label();
 			this.labBookD = new System.Windows.Forms.Label();
-			this.labPonderB = new System.Windows.Forms.Label();
-			this.labScoreB = new System.Windows.Forms.Label();
-			this.labDepthB = new System.Windows.Forms.Label();
-			this.labNodesB = new System.Windows.Forms.Label();
+			this.labPonderD = new System.Windows.Forms.Label();
+			this.labScoreD = new System.Windows.Forms.Label();
+			this.labDepthD = new System.Windows.Forms.Label();
+			this.labNodesD = new System.Windows.Forms.Label();
 			this.labTimeD = new System.Windows.Forms.Label();
 			this.labEloD = new System.Windows.Forms.Label();
 			this.labColorD = new System.Windows.Forms.Label();
@@ -225,7 +243,6 @@
 			this.columnHeader21 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeader22 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.tlpBlack = new System.Windows.Forms.TableLayoutPanel();
-			this.butResignation = new System.Windows.Forms.Button();
 			this.tabControl1.SuspendLayout();
 			this.tabPageGame.SuspendLayout();
 			this.groupBox2.SuspendLayout();
@@ -237,7 +254,14 @@
 			((System.ComponentModel.ISupportInitialize)(this.nudValue2)).BeginInit();
 			this.groupBox5.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.nudValue1)).BeginInit();
-			this.tabPageTournament.SuspendLayout();
+			this.tabPageTourE.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
+			this.splitContainer1.Panel1.SuspendLayout();
+			this.splitContainer1.Panel2.SuspendLayout();
+			this.splitContainer1.SuspendLayout();
+			this.groupBox8.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.nudTourE)).BeginInit();
+			this.tabPageTourP.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainerTournament)).BeginInit();
 			this.splitContainerTournament.Panel1.SuspendLayout();
 			this.splitContainerTournament.Panel2.SuspendLayout();
@@ -297,7 +321,8 @@
 			this.tabControl1.Appearance = System.Windows.Forms.TabAppearance.FlatButtons;
 			this.tabControl1.Controls.Add(this.tabPageGame);
 			this.tabControl1.Controls.Add(this.tabPageMatch);
-			this.tabControl1.Controls.Add(this.tabPageTournament);
+			this.tabControl1.Controls.Add(this.tabPageTourE);
+			this.tabControl1.Controls.Add(this.tabPageTourP);
 			this.tabControl1.Controls.Add(this.tabPageTraining);
 			this.tabControl1.Controls.Add(this.tabPageEdit);
 			this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -308,7 +333,7 @@
 			this.tabControl1.Size = new System.Drawing.Size(366, 385);
 			this.tabControl1.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
 			this.tabControl1.TabIndex = 9;
-			this.tabControl1.Selected += new System.Windows.Forms.TabControlEventHandler(this.tabControl1_Selected);
+			this.tabControl1.SelectedIndexChanged += new System.EventHandler(this.tabControl1_SelectedIndexChanged);
 			// 
 			// tabPageGame
 			// 
@@ -318,12 +343,25 @@
 			this.tabPageGame.Controls.Add(this.butNewGame);
 			this.tabPageGame.Controls.Add(this.groupBox2);
 			this.tabPageGame.Controls.Add(this.groupBox1);
-			this.tabPageGame.Location = new System.Drawing.Point(4, 5);
+			this.tabPageGame.Location = new System.Drawing.Point(4, 24);
 			this.tabPageGame.Name = "tabPageGame";
 			this.tabPageGame.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPageGame.Size = new System.Drawing.Size(358, 376);
+			this.tabPageGame.Size = new System.Drawing.Size(358, 357);
 			this.tabPageGame.TabIndex = 0;
 			this.tabPageGame.Text = "Game";
+			// 
+			// butResignation
+			// 
+			this.butResignation.Cursor = System.Windows.Forms.Cursors.Hand;
+			this.butResignation.Dock = System.Windows.Forms.DockStyle.Top;
+			this.butResignation.Location = new System.Drawing.Point(3, 284);
+			this.butResignation.Name = "butResignation";
+			this.butResignation.Size = new System.Drawing.Size(352, 23);
+			this.butResignation.TabIndex = 25;
+			this.butResignation.Text = "Resignation";
+			this.toolTip1.SetToolTip(this.butResignation, "Resignation from further play");
+			this.butResignation.UseVisualStyleBackColor = true;
+			this.butResignation.Click += new System.EventHandler(this.butResignation_Click);
 			// 
 			// butStop
 			// 
@@ -526,9 +564,9 @@
 			this.tabPageMatch.Controls.Add(this.butNewMatch);
 			this.tabPageMatch.Controls.Add(this.groupBox6);
 			this.tabPageMatch.Controls.Add(this.groupBox5);
-			this.tabPageMatch.Location = new System.Drawing.Point(4, 5);
+			this.tabPageMatch.Location = new System.Drawing.Point(4, 24);
 			this.tabPageMatch.Name = "tabPageMatch";
-			this.tabPageMatch.Size = new System.Drawing.Size(358, 376);
+			this.tabPageMatch.Size = new System.Drawing.Size(358, 357);
 			this.tabPageMatch.TabIndex = 2;
 			this.tabPageMatch.Text = "Match";
 			this.tabPageMatch.UseVisualStyleBackColor = true;
@@ -943,16 +981,220 @@
 			this.cbEngine1.TabIndex = 28;
 			this.toolTip1.SetToolTip(this.cbEngine1, "Select engine");
 			// 
-			// tabPageTournament
+			// tabPageTourE
 			// 
-			this.tabPageTournament.Controls.Add(this.splitContainerTournament);
-			this.tabPageTournament.Controls.Add(this.butStartTournament);
-			this.tabPageTournament.Location = new System.Drawing.Point(4, 5);
-			this.tabPageTournament.Name = "tabPageTournament";
-			this.tabPageTournament.Size = new System.Drawing.Size(358, 376);
-			this.tabPageTournament.TabIndex = 3;
-			this.tabPageTournament.Text = "Tournament";
-			this.tabPageTournament.UseVisualStyleBackColor = true;
+			this.tabPageTourE.Controls.Add(this.splitContainer1);
+			this.tabPageTourE.Controls.Add(this.groupBox8);
+			this.tabPageTourE.Controls.Add(this.button1);
+			this.tabPageTourE.Location = new System.Drawing.Point(4, 24);
+			this.tabPageTourE.Name = "tabPageTourE";
+			this.tabPageTourE.Padding = new System.Windows.Forms.Padding(3);
+			this.tabPageTourE.Size = new System.Drawing.Size(358, 357);
+			this.tabPageTourE.TabIndex = 5;
+			this.tabPageTourE.Text = "TourE";
+			this.tabPageTourE.UseVisualStyleBackColor = true;
+			// 
+			// splitContainer1
+			// 
+			this.splitContainer1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+			this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.splitContainer1.Location = new System.Drawing.Point(3, 112);
+			this.splitContainer1.Name = "splitContainer1";
+			this.splitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal;
+			// 
+			// splitContainer1.Panel1
+			// 
+			this.splitContainer1.Panel1.Controls.Add(this.lvEngine);
+			// 
+			// splitContainer1.Panel2
+			// 
+			this.splitContainer1.Panel2.Controls.Add(this.lvEngineH);
+			this.splitContainer1.Panel2.Controls.Add(this.labEngine);
+			this.splitContainer1.Size = new System.Drawing.Size(352, 242);
+			this.splitContainer1.SplitterDistance = 112;
+			this.splitContainer1.TabIndex = 27;
+			// 
+			// lvEngine
+			// 
+			this.lvEngine.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader23,
+            this.columnHeader24,
+            this.columnHeader25});
+			this.lvEngine.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.lvEngine.FullRowSelect = true;
+			this.lvEngine.GridLines = true;
+			this.lvEngine.HideSelection = false;
+			this.lvEngine.Location = new System.Drawing.Point(0, 0);
+			this.lvEngine.MultiSelect = false;
+			this.lvEngine.Name = "lvEngine";
+			this.lvEngine.ShowGroups = false;
+			this.lvEngine.Size = new System.Drawing.Size(348, 108);
+			this.lvEngine.Sorting = System.Windows.Forms.SortOrder.Descending;
+			this.lvEngine.TabIndex = 23;
+			this.lvEngine.UseCompatibleStateImageBehavior = false;
+			this.lvEngine.View = System.Windows.Forms.View.Details;
+			this.lvEngine.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.lv_ColumnClick);
+			this.lvEngine.SelectedIndexChanged += new System.EventHandler(this.lvEngine_SelectedIndexChanged);
+			this.lvEngine.Resize += new System.EventHandler(this.listView1_Resize);
+			// 
+			// columnHeader23
+			// 
+			this.columnHeader23.Tag = "";
+			this.columnHeader23.Text = "Engine";
+			this.columnHeader23.Width = 150;
+			// 
+			// columnHeader24
+			// 
+			this.columnHeader24.Tag = "";
+			this.columnHeader24.Text = "Elo";
+			this.columnHeader24.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			this.columnHeader24.Width = 80;
+			// 
+			// columnHeader25
+			// 
+			this.columnHeader25.Text = "Changes";
+			this.columnHeader25.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			// 
+			// lvEngineH
+			// 
+			this.lvEngineH.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader26,
+            this.columnHeader27,
+            this.columnHeader28,
+            this.columnHeader29});
+			this.lvEngineH.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.lvEngineH.FullRowSelect = true;
+			this.lvEngineH.GridLines = true;
+			this.lvEngineH.HideSelection = false;
+			this.lvEngineH.Location = new System.Drawing.Point(0, 13);
+			this.lvEngineH.MultiSelect = false;
+			this.lvEngineH.Name = "lvEngineH";
+			this.lvEngineH.ShowGroups = false;
+			this.lvEngineH.Size = new System.Drawing.Size(348, 109);
+			this.lvEngineH.TabIndex = 27;
+			this.lvEngineH.UseCompatibleStateImageBehavior = false;
+			this.lvEngineH.View = System.Windows.Forms.View.Details;
+			this.lvEngineH.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.lv_ColumnClick);
+			this.lvEngineH.Resize += new System.EventHandler(this.listView2_Resize);
+			// 
+			// columnHeader26
+			// 
+			this.columnHeader26.Tag = "";
+			this.columnHeader26.Text = "Engine";
+			this.columnHeader26.Width = 140;
+			// 
+			// columnHeader27
+			// 
+			this.columnHeader27.Text = "Elo";
+			this.columnHeader27.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			this.columnHeader27.Width = 50;
+			// 
+			// columnHeader28
+			// 
+			this.columnHeader28.Text = "Games";
+			this.columnHeader28.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			this.columnHeader28.Width = 50;
+			// 
+			// columnHeader29
+			// 
+			this.columnHeader29.Text = "Score";
+			this.columnHeader29.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			this.columnHeader29.Width = 50;
+			// 
+			// labEngine
+			// 
+			this.labEngine.Dock = System.Windows.Forms.DockStyle.Top;
+			this.labEngine.Location = new System.Drawing.Point(0, 0);
+			this.labEngine.Name = "labEngine";
+			this.labEngine.Size = new System.Drawing.Size(348, 13);
+			this.labEngine.TabIndex = 26;
+			this.labEngine.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			// 
+			// groupBox8
+			// 
+			this.groupBox8.Controls.Add(this.nudTourE);
+			this.groupBox8.Controls.Add(this.cbTourEBook);
+			this.groupBox8.Controls.Add(this.cbTourEMode);
+			this.groupBox8.Dock = System.Windows.Forms.DockStyle.Top;
+			this.groupBox8.Location = new System.Drawing.Point(3, 26);
+			this.groupBox8.Name = "groupBox8";
+			this.groupBox8.Size = new System.Drawing.Size(352, 86);
+			this.groupBox8.TabIndex = 23;
+			this.groupBox8.TabStop = false;
+			this.groupBox8.Text = "Game mode";
+			// 
+			// nudTourE
+			// 
+			this.nudTourE.Dock = System.Windows.Forms.DockStyle.Top;
+			this.nudTourE.Location = new System.Drawing.Point(3, 58);
+			this.nudTourE.Maximum = new decimal(new int[] {
+            1000000000,
+            0,
+            0,
+            0});
+			this.nudTourE.Name = "nudTourE";
+			this.nudTourE.Size = new System.Drawing.Size(346, 20);
+			this.nudTourE.TabIndex = 51;
+			this.nudTourE.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			this.nudTourE.ThousandsSeparator = true;
+			this.nudTourE.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+			// 
+			// cbTourEBook
+			// 
+			this.cbTourEBook.Dock = System.Windows.Forms.DockStyle.Top;
+			this.cbTourEBook.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.cbTourEBook.FormattingEnabled = true;
+			this.cbTourEBook.Location = new System.Drawing.Point(3, 37);
+			this.cbTourEBook.Name = "cbTourEBook";
+			this.cbTourEBook.Size = new System.Drawing.Size(346, 21);
+			this.cbTourEBook.Sorted = true;
+			this.cbTourEBook.TabIndex = 31;
+			this.toolTip1.SetToolTip(this.cbTourEBook, "Select engine opening book");
+			// 
+			// cbTourEMode
+			// 
+			this.cbTourEMode.Dock = System.Windows.Forms.DockStyle.Top;
+			this.cbTourEMode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.cbTourEMode.FormattingEnabled = true;
+			this.cbTourEMode.Items.AddRange(new object[] {
+            "Blitz",
+            "Depth",
+            "Nodes",
+            "Time"});
+			this.cbTourEMode.Location = new System.Drawing.Point(3, 16);
+			this.cbTourEMode.Name = "cbTourEMode";
+			this.cbTourEMode.Size = new System.Drawing.Size(346, 21);
+			this.cbTourEMode.Sorted = true;
+			this.cbTourEMode.TabIndex = 29;
+			this.toolTip1.SetToolTip(this.cbTourEMode, "Select engine mode");
+			this.cbTourEMode.SelectedIndexChanged += new System.EventHandler(this.cbTourEMode_SelectedIndexChanged);
+			// 
+			// button1
+			// 
+			this.button1.Dock = System.Windows.Forms.DockStyle.Top;
+			this.button1.Location = new System.Drawing.Point(3, 3);
+			this.button1.Name = "button1";
+			this.button1.Size = new System.Drawing.Size(352, 23);
+			this.button1.TabIndex = 22;
+			this.button1.Text = "Start";
+			this.toolTip1.SetToolTip(this.button1, "Start tournament");
+			this.button1.UseVisualStyleBackColor = true;
+			this.button1.Click += new System.EventHandler(this.button1_Click);
+			// 
+			// tabPageTourP
+			// 
+			this.tabPageTourP.Controls.Add(this.splitContainerTournament);
+			this.tabPageTourP.Controls.Add(this.butStartTournament);
+			this.tabPageTourP.Location = new System.Drawing.Point(4, 5);
+			this.tabPageTourP.Name = "tabPageTourP";
+			this.tabPageTourP.Size = new System.Drawing.Size(358, 376);
+			this.tabPageTourP.TabIndex = 3;
+			this.tabPageTourP.Text = "TourP";
+			this.tabPageTourP.UseVisualStyleBackColor = true;
 			// 
 			// splitContainerTournament
 			// 
@@ -964,38 +1206,38 @@
 			// 
 			// splitContainerTournament.Panel1
 			// 
-			this.splitContainerTournament.Panel1.Controls.Add(this.listView1);
+			this.splitContainerTournament.Panel1.Controls.Add(this.lvPlayer);
 			// 
 			// splitContainerTournament.Panel2
 			// 
-			this.splitContainerTournament.Panel2.Controls.Add(this.listView2);
-			this.splitContainerTournament.Panel2.Controls.Add(this.lPlayer);
+			this.splitContainerTournament.Panel2.Controls.Add(this.lvPlayerH);
+			this.splitContainerTournament.Panel2.Controls.Add(this.labPlayer);
 			this.splitContainerTournament.Size = new System.Drawing.Size(358, 353);
-			this.splitContainerTournament.SplitterDistance = 233;
+			this.splitContainerTournament.SplitterDistance = 232;
 			this.splitContainerTournament.TabIndex = 26;
 			// 
-			// listView1
+			// lvPlayer
 			// 
-			this.listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+			this.lvPlayer.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeader1,
             this.columnHeader2,
             this.columnHeader6});
-			this.listView1.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.listView1.FullRowSelect = true;
-			this.listView1.GridLines = true;
-			this.listView1.HideSelection = false;
-			this.listView1.Location = new System.Drawing.Point(0, 0);
-			this.listView1.MultiSelect = false;
-			this.listView1.Name = "listView1";
-			this.listView1.ShowGroups = false;
-			this.listView1.Size = new System.Drawing.Size(354, 229);
-			this.listView1.Sorting = System.Windows.Forms.SortOrder.Ascending;
-			this.listView1.TabIndex = 23;
-			this.listView1.UseCompatibleStateImageBehavior = false;
-			this.listView1.View = System.Windows.Forms.View.Details;
-			this.listView1.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.listView1_ColumnClick);
-			this.listView1.SelectedIndexChanged += new System.EventHandler(this.listView1_SelectedIndexChanged);
-			this.listView1.Resize += new System.EventHandler(this.listView1_Resize);
+			this.lvPlayer.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.lvPlayer.FullRowSelect = true;
+			this.lvPlayer.GridLines = true;
+			this.lvPlayer.HideSelection = false;
+			this.lvPlayer.Location = new System.Drawing.Point(0, 0);
+			this.lvPlayer.MultiSelect = false;
+			this.lvPlayer.Name = "lvPlayer";
+			this.lvPlayer.ShowGroups = false;
+			this.lvPlayer.Size = new System.Drawing.Size(354, 228);
+			this.lvPlayer.Sorting = System.Windows.Forms.SortOrder.Ascending;
+			this.lvPlayer.TabIndex = 23;
+			this.lvPlayer.UseCompatibleStateImageBehavior = false;
+			this.lvPlayer.View = System.Windows.Forms.View.Details;
+			this.lvPlayer.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.lv_ColumnClick);
+			this.lvPlayer.SelectedIndexChanged += new System.EventHandler(this.listView1_SelectedIndexChanged);
+			this.lvPlayer.Resize += new System.EventHandler(this.listView1_Resize);
 			// 
 			// columnHeader1
 			// 
@@ -1015,26 +1257,27 @@
 			this.columnHeader6.Text = "Changes";
 			this.columnHeader6.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
 			// 
-			// listView2
+			// lvPlayerH
 			// 
-			this.listView2.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+			this.lvPlayerH.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeader7,
             this.columnHeader9,
             this.columnHeader8,
             this.columnHeader10});
-			this.listView2.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.listView2.FullRowSelect = true;
-			this.listView2.GridLines = true;
-			this.listView2.HideSelection = false;
-			this.listView2.Location = new System.Drawing.Point(0, 13);
-			this.listView2.MultiSelect = false;
-			this.listView2.Name = "listView2";
-			this.listView2.ShowGroups = false;
-			this.listView2.Size = new System.Drawing.Size(354, 99);
-			this.listView2.TabIndex = 27;
-			this.listView2.UseCompatibleStateImageBehavior = false;
-			this.listView2.View = System.Windows.Forms.View.Details;
-			this.listView2.Resize += new System.EventHandler(this.listView2_Resize);
+			this.lvPlayerH.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.lvPlayerH.FullRowSelect = true;
+			this.lvPlayerH.GridLines = true;
+			this.lvPlayerH.HideSelection = false;
+			this.lvPlayerH.Location = new System.Drawing.Point(0, 13);
+			this.lvPlayerH.MultiSelect = false;
+			this.lvPlayerH.Name = "lvPlayerH";
+			this.lvPlayerH.ShowGroups = false;
+			this.lvPlayerH.Size = new System.Drawing.Size(354, 100);
+			this.lvPlayerH.TabIndex = 27;
+			this.lvPlayerH.UseCompatibleStateImageBehavior = false;
+			this.lvPlayerH.View = System.Windows.Forms.View.Details;
+			this.lvPlayerH.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.lv_ColumnClick);
+			this.lvPlayerH.Resize += new System.EventHandler(this.listView2_Resize);
 			// 
 			// columnHeader7
 			// 
@@ -1060,14 +1303,14 @@
 			this.columnHeader10.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
 			this.columnHeader10.Width = 50;
 			// 
-			// lPlayer
+			// labPlayer
 			// 
-			this.lPlayer.Dock = System.Windows.Forms.DockStyle.Top;
-			this.lPlayer.Location = new System.Drawing.Point(0, 0);
-			this.lPlayer.Name = "lPlayer";
-			this.lPlayer.Size = new System.Drawing.Size(354, 13);
-			this.lPlayer.TabIndex = 26;
-			this.lPlayer.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.labPlayer.Dock = System.Windows.Forms.DockStyle.Top;
+			this.labPlayer.Location = new System.Drawing.Point(0, 0);
+			this.labPlayer.Name = "labPlayer";
+			this.labPlayer.Size = new System.Drawing.Size(354, 13);
+			this.labPlayer.TabIndex = 26;
+			this.labPlayer.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
 			// butStartTournament
 			// 
@@ -1088,10 +1331,10 @@
 			this.tabPageTraining.Controls.Add(this.butTraining);
 			this.tabPageTraining.Controls.Add(this.groupBox4);
 			this.tabPageTraining.Controls.Add(this.groupBox3);
-			this.tabPageTraining.Location = new System.Drawing.Point(4, 5);
+			this.tabPageTraining.Location = new System.Drawing.Point(4, 24);
 			this.tabPageTraining.Name = "tabPageTraining";
 			this.tabPageTraining.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPageTraining.Size = new System.Drawing.Size(358, 376);
+			this.tabPageTraining.Size = new System.Drawing.Size(358, 357);
 			this.tabPageTraining.TabIndex = 1;
 			this.tabPageTraining.Text = "Training";
 			this.tabPageTraining.UseVisualStyleBackColor = true;
@@ -1517,9 +1760,9 @@
 			this.tabPageEdit.Controls.Add(this.gbToMove);
 			this.tabPageEdit.Controls.Add(this.butDefault);
 			this.tabPageEdit.Controls.Add(this.butClearBoard);
-			this.tabPageEdit.Location = new System.Drawing.Point(4, 5);
+			this.tabPageEdit.Location = new System.Drawing.Point(4, 24);
 			this.tabPageEdit.Name = "tabPageEdit";
-			this.tabPageEdit.Size = new System.Drawing.Size(358, 376);
+			this.tabPageEdit.Size = new System.Drawing.Size(358, 357);
 			this.tabPageEdit.TabIndex = 4;
 			this.tabPageEdit.Text = "Edit";
 			this.tabPageEdit.UseVisualStyleBackColor = true;
@@ -1888,20 +2131,20 @@
 			this.labNodesT.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			this.toolTip1.SetToolTip(this.labNodesT, "Searched nodes");
 			// 
-			// labNpsB
+			// labNpsD
 			// 
-			this.labNpsB.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(160)))));
-			this.labNpsB.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-			this.labNpsB.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.labNpsB.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-			this.labNpsB.ForeColor = System.Drawing.Color.Black;
-			this.labNpsB.Location = new System.Drawing.Point(591, 0);
-			this.labNpsB.Margin = new System.Windows.Forms.Padding(0);
-			this.labNpsB.Name = "labNpsB";
-			this.labNpsB.Size = new System.Drawing.Size(197, 24);
-			this.labNpsB.TabIndex = 15;
-			this.labNpsB.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			this.toolTip1.SetToolTip(this.labNpsB, "Searched nodes per second");
+			this.labNpsD.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(160)))));
+			this.labNpsD.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+			this.labNpsD.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.labNpsD.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+			this.labNpsD.ForeColor = System.Drawing.Color.Black;
+			this.labNpsD.Location = new System.Drawing.Point(591, 0);
+			this.labNpsD.Margin = new System.Windows.Forms.Padding(0);
+			this.labNpsD.Name = "labNpsD";
+			this.labNpsD.Size = new System.Drawing.Size(197, 24);
+			this.labNpsD.TabIndex = 15;
+			this.labNpsD.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.toolTip1.SetToolTip(this.labNpsD, "Searched nodes per second");
 			// 
 			// labBookD
 			// 
@@ -1918,65 +2161,65 @@
 			this.labBookD.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			this.toolTip1.SetToolTip(this.labBookD, "Number of moves read from the opening book");
 			// 
-			// labPonderB
+			// labPonderD
 			// 
-			this.labPonderB.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(160)))));
-			this.labPonderB.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-			this.labPonderB.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.labPonderB.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-			this.labPonderB.ForeColor = System.Drawing.Color.Black;
-			this.labPonderB.Location = new System.Drawing.Point(985, 0);
-			this.labPonderB.Margin = new System.Windows.Forms.Padding(0);
-			this.labPonderB.Name = "labPonderB";
-			this.labPonderB.Size = new System.Drawing.Size(199, 24);
-			this.labPonderB.TabIndex = 13;
-			this.labPonderB.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			this.toolTip1.SetToolTip(this.labPonderB, "Next move expected");
+			this.labPonderD.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(160)))));
+			this.labPonderD.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+			this.labPonderD.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.labPonderD.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+			this.labPonderD.ForeColor = System.Drawing.Color.Black;
+			this.labPonderD.Location = new System.Drawing.Point(985, 0);
+			this.labPonderD.Margin = new System.Windows.Forms.Padding(0);
+			this.labPonderD.Name = "labPonderD";
+			this.labPonderD.Size = new System.Drawing.Size(199, 24);
+			this.labPonderD.TabIndex = 13;
+			this.labPonderD.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.toolTip1.SetToolTip(this.labPonderD, "Next move expected");
 			// 
-			// labScoreB
+			// labScoreD
 			// 
-			this.labScoreB.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(160)))));
-			this.labScoreB.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-			this.labScoreB.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.labScoreB.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-			this.labScoreB.ForeColor = System.Drawing.Color.Black;
-			this.labScoreB.Location = new System.Drawing.Point(0, 0);
-			this.labScoreB.Margin = new System.Windows.Forms.Padding(0);
-			this.labScoreB.Name = "labScoreB";
-			this.labScoreB.Size = new System.Drawing.Size(197, 24);
-			this.labScoreB.TabIndex = 12;
-			this.labScoreB.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			this.toolTip1.SetToolTip(this.labScoreB, "The score from the engine\'s point of view in centipawns");
+			this.labScoreD.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(160)))));
+			this.labScoreD.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+			this.labScoreD.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.labScoreD.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+			this.labScoreD.ForeColor = System.Drawing.Color.Black;
+			this.labScoreD.Location = new System.Drawing.Point(0, 0);
+			this.labScoreD.Margin = new System.Windows.Forms.Padding(0);
+			this.labScoreD.Name = "labScoreD";
+			this.labScoreD.Size = new System.Drawing.Size(197, 24);
+			this.labScoreD.TabIndex = 12;
+			this.labScoreD.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.toolTip1.SetToolTip(this.labScoreD, "The score from the engine\'s point of view in centipawns");
 			// 
-			// labDepthB
+			// labDepthD
 			// 
-			this.labDepthB.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(160)))));
-			this.labDepthB.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-			this.labDepthB.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.labDepthB.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-			this.labDepthB.ForeColor = System.Drawing.Color.Black;
-			this.labDepthB.Location = new System.Drawing.Point(197, 0);
-			this.labDepthB.Margin = new System.Windows.Forms.Padding(0);
-			this.labDepthB.Name = "labDepthB";
-			this.labDepthB.Size = new System.Drawing.Size(197, 24);
-			this.labDepthB.TabIndex = 9;
-			this.labDepthB.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			this.toolTip1.SetToolTip(this.labDepthB, "Search depth in plies");
+			this.labDepthD.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(160)))));
+			this.labDepthD.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+			this.labDepthD.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.labDepthD.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+			this.labDepthD.ForeColor = System.Drawing.Color.Black;
+			this.labDepthD.Location = new System.Drawing.Point(197, 0);
+			this.labDepthD.Margin = new System.Windows.Forms.Padding(0);
+			this.labDepthD.Name = "labDepthD";
+			this.labDepthD.Size = new System.Drawing.Size(197, 24);
+			this.labDepthD.TabIndex = 9;
+			this.labDepthD.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.toolTip1.SetToolTip(this.labDepthD, "Search depth in plies");
 			// 
-			// labNodesB
+			// labNodesD
 			// 
-			this.labNodesB.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(160)))));
-			this.labNodesB.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-			this.labNodesB.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.labNodesB.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-			this.labNodesB.ForeColor = System.Drawing.Color.Black;
-			this.labNodesB.Location = new System.Drawing.Point(394, 0);
-			this.labNodesB.Margin = new System.Windows.Forms.Padding(0);
-			this.labNodesB.Name = "labNodesB";
-			this.labNodesB.Size = new System.Drawing.Size(197, 24);
-			this.labNodesB.TabIndex = 8;
-			this.labNodesB.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			this.toolTip1.SetToolTip(this.labNodesB, "Searched nodes");
+			this.labNodesD.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(160)))));
+			this.labNodesD.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+			this.labNodesD.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.labNodesD.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+			this.labNodesD.ForeColor = System.Drawing.Color.Black;
+			this.labNodesD.Location = new System.Drawing.Point(394, 0);
+			this.labNodesD.Margin = new System.Windows.Forms.Padding(0);
+			this.labNodesD.Name = "labNodesD";
+			this.labNodesD.Size = new System.Drawing.Size(197, 24);
+			this.labNodesD.TabIndex = 8;
+			this.labNodesD.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.toolTip1.SetToolTip(this.labNodesD, "Searched nodes");
 			// 
 			// labTimeD
 			// 
@@ -2321,7 +2564,8 @@
 			this.cbMainMode.Items.AddRange(new object[] {
             "Game",
             "Match",
-            "Tournament",
+            "Tournament-engines",
+            "Tournament-players",
             "Training",
             "Edit"});
 			this.cbMainMode.Location = new System.Drawing.Point(8, 8);
@@ -2641,12 +2885,12 @@
 			this.tlpEngineB.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
 			this.tlpEngineB.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
 			this.tlpEngineB.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
-			this.tlpEngineB.Controls.Add(this.labNpsB, 0, 0);
+			this.tlpEngineB.Controls.Add(this.labNpsD, 0, 0);
 			this.tlpEngineB.Controls.Add(this.labBookD, 0, 0);
-			this.tlpEngineB.Controls.Add(this.labPonderB, 0, 0);
-			this.tlpEngineB.Controls.Add(this.labScoreB, 0, 0);
-			this.tlpEngineB.Controls.Add(this.labDepthB, 0, 0);
-			this.tlpEngineB.Controls.Add(this.labNodesB, 0, 0);
+			this.tlpEngineB.Controls.Add(this.labPonderD, 0, 0);
+			this.tlpEngineB.Controls.Add(this.labScoreD, 0, 0);
+			this.tlpEngineB.Controls.Add(this.labDepthD, 0, 0);
+			this.tlpEngineB.Controls.Add(this.labNodesD, 0, 0);
 			this.tlpEngineB.Dock = System.Windows.Forms.DockStyle.Bottom;
 			this.tlpEngineB.Location = new System.Drawing.Point(0, 448);
 			this.tlpEngineB.Margin = new System.Windows.Forms.Padding(0);
@@ -2835,19 +3079,6 @@
 			this.tlpBlack.Size = new System.Drawing.Size(1180, 24);
 			this.tlpBlack.TabIndex = 35;
 			// 
-			// butResignation
-			// 
-			this.butResignation.Cursor = System.Windows.Forms.Cursors.Hand;
-			this.butResignation.Dock = System.Windows.Forms.DockStyle.Top;
-			this.butResignation.Location = new System.Drawing.Point(3, 284);
-			this.butResignation.Name = "butResignation";
-			this.butResignation.Size = new System.Drawing.Size(352, 23);
-			this.butResignation.TabIndex = 25;
-			this.butResignation.Text = "Resignation";
-			this.toolTip1.SetToolTip(this.butResignation, "Resignation from further play");
-			this.butResignation.UseVisualStyleBackColor = true;
-			this.butResignation.Click += new System.EventHandler(this.butResignation_Click);
-			// 
 			// FormChess
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -2875,7 +3106,14 @@
 			((System.ComponentModel.ISupportInitialize)(this.nudValue2)).EndInit();
 			this.groupBox5.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.nudValue1)).EndInit();
-			this.tabPageTournament.ResumeLayout(false);
+			this.tabPageTourE.ResumeLayout(false);
+			this.splitContainer1.Panel1.ResumeLayout(false);
+			this.splitContainer1.Panel2.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
+			this.splitContainer1.ResumeLayout(false);
+			this.groupBox8.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this.nudTourE)).EndInit();
+			this.tabPageTourP.ResumeLayout(false);
 			this.splitContainerTournament.Panel1.ResumeLayout(false);
 			this.splitContainerTournament.Panel2.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.splitContainerTournament)).EndInit();
@@ -2988,9 +3226,9 @@
 		private System.Windows.Forms.NumericUpDown nudTrained;
 		private System.Windows.Forms.NumericUpDown nudTeacher;
 		private System.Windows.Forms.ComboBox cbTeacherBook;
-		private System.Windows.Forms.TabPage tabPageTournament;
+		private System.Windows.Forms.TabPage tabPageTourP;
 		private System.Windows.Forms.Button butStartTournament;
-		private System.Windows.Forms.ListView listView1;
+		private System.Windows.Forms.ListView lvPlayer;
 		private System.Windows.Forms.ColumnHeader columnHeader1;
 		private System.Windows.Forms.ColumnHeader columnHeader2;
 		private System.Windows.Forms.TabPage tabPageEdit;
@@ -3079,19 +3317,19 @@
 		private System.Windows.Forms.Label labDepthT;
 		private System.Windows.Forms.Label labNodesT;
 		private System.Windows.Forms.TableLayoutPanel tlpEngineB;
-		private System.Windows.Forms.Label labNpsB;
+		private System.Windows.Forms.Label labNpsD;
 		private System.Windows.Forms.Label labBookD;
-		private System.Windows.Forms.Label labPonderB;
-		private System.Windows.Forms.Label labScoreB;
-		private System.Windows.Forms.Label labDepthB;
-		private System.Windows.Forms.Label labNodesB;
+		private System.Windows.Forms.Label labPonderD;
+		private System.Windows.Forms.Label labScoreD;
+		private System.Windows.Forms.Label labDepthD;
+		private System.Windows.Forms.Label labNodesD;
 		private System.Windows.Forms.SplitContainer splitContainerTournament;
-		private System.Windows.Forms.ListView listView2;
+		private System.Windows.Forms.ListView lvPlayerH;
 		private System.Windows.Forms.ColumnHeader columnHeader7;
 		private System.Windows.Forms.ColumnHeader columnHeader9;
 		private System.Windows.Forms.ColumnHeader columnHeader8;
 		private System.Windows.Forms.ColumnHeader columnHeader10;
-		private System.Windows.Forms.Label lPlayer;
+		private System.Windows.Forms.Label labPlayer;
 		private System.Windows.Forms.SplitContainer splitContainerMode;
 		private System.Windows.Forms.SplitContainer splitContainerChart;
 		private System.Windows.Forms.ListView lvMoves;
@@ -3126,6 +3364,23 @@
 		private System.Windows.Forms.Label labErrors;
 		private System.Windows.Forms.Label labGames;
 		private System.Windows.Forms.Button butResignation;
+		private System.Windows.Forms.TabPage tabPageTourE;
+		private System.Windows.Forms.SplitContainer splitContainer1;
+		private System.Windows.Forms.ListView lvEngine;
+		private System.Windows.Forms.ColumnHeader columnHeader23;
+		private System.Windows.Forms.ColumnHeader columnHeader24;
+		private System.Windows.Forms.ColumnHeader columnHeader25;
+		private System.Windows.Forms.ListView lvEngineH;
+		private System.Windows.Forms.ColumnHeader columnHeader26;
+		private System.Windows.Forms.ColumnHeader columnHeader27;
+		private System.Windows.Forms.ColumnHeader columnHeader28;
+		private System.Windows.Forms.ColumnHeader columnHeader29;
+		private System.Windows.Forms.Label labEngine;
+		private System.Windows.Forms.GroupBox groupBox8;
+		private System.Windows.Forms.NumericUpDown nudTourE;
+		private System.Windows.Forms.ComboBox cbTourEBook;
+		private System.Windows.Forms.ComboBox cbTourEMode;
+		private System.Windows.Forms.Button button1;
 	}
 }
 

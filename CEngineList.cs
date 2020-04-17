@@ -6,6 +6,8 @@ namespace RapChessGui
 {
 	public class CEngine
 	{
+		public int distance = 0;
+		public int position = 0;
 		public string name = "Human";
 		public string file = "";
 		public string protocol = "Uci";
@@ -38,6 +40,12 @@ namespace RapChessGui
 			CRapIni.This.Write($"engine>{name}>elo", elo);
 			CRapIni.This.Write($"engine>{name}>eloOld", eloOld);
 		}
+
+		public int GetDeltaElo()
+		{
+			return Convert.ToInt32(elo) - Convert.ToInt32(eloOld);
+		}
+
 	}
 
 	static class CEngineList
@@ -78,6 +86,24 @@ namespace RapChessGui
 			return -1;
 		}
 
+		public static int GetIndexElo(int elo)
+		{
+			int result = 0;
+			foreach (CEngine e in list)
+				if (Convert.ToInt32(e.elo) < elo)
+					result++;
+			return result;
+		}
+
+		public static int GetOptElo(double index)
+		{
+			if (index < 0)
+				index = 0;
+			if (index >= list.Count)
+				index = list.Count - 1;
+			return Convert.ToInt32((3000 * (index + 1)) / list.Count);
+		}
+
 		public static void LoadFromIni()
 		{
 			list.Clear();
@@ -90,11 +116,44 @@ namespace RapChessGui
 			}
 		}
 
+		public static CEngine NextEngine(CEngine e)
+		{
+			Sort();
+			int i =( GetIndex(e.name) + 1) % list.Count;
+			return list[i];
+		}
+
 		public static void SaveToIni()
 		{
 			CRapIni.This.DeleteKey("engine");
 			foreach (CEngine e in list)
 				e.SaveToIni();
+		}
+
+		public static void Sort()
+		{
+			list.Sort(delegate (CEngine e1, CEngine e2)
+			{
+				int result = Convert.ToInt32(e2.elo) - Convert.ToInt32(e1.elo);
+				if (result == 0)
+					result = Convert.ToInt32(e2.eloOld) - Convert.ToInt32(e1.eloOld);
+				return result;
+			});
+		}
+
+		public static void SortDistance()
+		{
+			list.Sort(delegate (CEngine e1, CEngine e2)
+			{
+				return e1.distance - e2.distance;
+			});
+		}
+
+		public static void FillPosition()
+		{
+			int position = 1;
+			for (int n = 0; n < list.Count; n++)
+				list[n].position = position++;
 		}
 
 	}
