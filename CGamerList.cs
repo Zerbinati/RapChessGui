@@ -244,7 +244,7 @@ namespace RapChessGui
 		{
 			FormChess.SetGameState(CGameState.time);
 			if (engine != null)
-				CRapLog.Add($"{engine.name} time out");
+				CRapLog.Add($"Time out {engine.name}");
 			return "Time out";
 		}
 
@@ -252,9 +252,16 @@ namespace RapChessGui
 		{
 			double ms = timer.Elapsed.TotalMilliseconds;
 			DateTime dt = new DateTime();
-			if (timer.IsRunning && IsComputer() && (player.modeValue.mode == "Standard"))
+			string mode = "";
+			int value = 0;
+			if (player != null)
 			{
-				double v = Convert.ToDouble(player.modeValue.GetUciValue());
+				mode = player.modeValue.mode;
+				value = player.modeValue.GetUciValue();
+			}
+			if (mode == "Standard")
+			{
+				double v = Convert.ToDouble(value);
 				double t = v - ms;
 				if ((t < -FormOptions.marginStandard) && (FormOptions.marginStandard >= 0))
 					return SetTimeOut();
@@ -262,10 +269,10 @@ namespace RapChessGui
 				if (t < 10000)
 					return dt.ToString("ss.ff");
 			}
-			else if (timer.IsRunning && IsComputer() && (player.modeValue.mode == "Time"))
+			else if (mode == "Time")
 			{
-				double v = Convert.ToDouble(player.modeValue.GetUciValue());
-				if ((ms - timerStart > v + FormOptions.marginTime) && (FormOptions.marginTime >= 0))
+				double v = Convert.ToDouble(value);
+				if ((ms - timerStart > v + FormOptions.marginTime) && (FormOptions.marginTime >= 0) && (value > 0))
 				{
 					if (CChess.This.IsValidMove(lastMove) > 0)
 						FormChess.This.MakeMove(lastMove);

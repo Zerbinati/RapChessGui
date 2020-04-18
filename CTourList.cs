@@ -41,7 +41,7 @@ namespace RapChessGui
 	{
 		string path;
 		public List<CTour> list = new List<CTour>();
-		public static int maxRecords = 10000;
+		public int maxRecords = 10000;
 
 		public CTourList(string name)
 		{

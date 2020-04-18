@@ -64,9 +64,8 @@ namespace RapIni
 
 		public void Write(string key, string value)
 		{
-			if (script == "")
-				WriteToFile(key, value);
-			else
+			WriteToFile(key, value);
+			if (script != "")
 				WriteToServer(key, value);
 
 		}

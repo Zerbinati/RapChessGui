@@ -27,11 +27,13 @@ namespace RapChessGui
 			cbTips.Checked = CRapIni.This.ReadBool("options>interface>tips", cbTips.Checked);
 			nudSpeed.Value = CRapIni.This.ReadInt("options>interface>speed", 200);
 			CBoard.color = ColorTranslator.FromHtml(CRapIni.This.Read("options>interface>color", "#400000"));
-			cbGameAutoElo.Checked = Convert.ToInt32(CRapIni.This.Read("options>game>autoelo", "1")) == 1;
-			nudTournament.Value = Convert.ToInt32(CRapIni.This.Read("options>tournament>records", "10000"));
+			cbGameAutoElo.Checked = CRapIni.This.ReadBool("options>game>autoelo");
+			nudTourE.Value = CRapIni.This.ReadInt("options>tournamentE>records",10000);
+			nudTourP.Value = CRapIni.This.ReadInt("options>tournamentP>records", 10000);
 			cbModeStandard.SelectedIndex = CRapIni.This.ReadInt("options>margin>standard", 1);
 			cbModeTime.SelectedIndex = CRapIni.This.ReadInt("options>margin>time", 4);
-			CTourList.maxRecords = (int)nudTournament.Value;
+			CModeTournamentE.tourList.maxRecords = (int)nudTourE.Value;
+			CModeTournamentP.tourList.maxRecords = (int)nudTourP.Value;
 			CBoard.showArrow = cbArrow.Checked;
 			marginStandard = CbToMargin(cbModeStandard.SelectedIndex);
 			marginTime = CbToMargin(cbModeTime.SelectedIndex);
@@ -46,10 +48,13 @@ namespace RapChessGui
 			CRapIni.This.Write("options>interface>tips", cbTips.Checked);
 			CRapIni.This.Write("options>interface>speed", nudSpeed.Value);
 			CRapIni.This.Write("options>interface>color", ColorTranslator.ToHtml(CBoard.color));
-			CRapIni.This.Write("options>game>autoelo", cbGameAutoElo.Checked ? "1" : "0");
-			CRapIni.This.Write("options>tournament>records", nudTournament.Value);
+			CRapIni.This.Write("options>game>autoelo", cbGameAutoElo.Checked);
+			CRapIni.This.Write("options>tournamentE>records", nudTourE.Value);
+			CRapIni.This.Write("options>tournamentP>records", nudTourP.Value);
 			CRapIni.This.Write("options>margin>standard", cbModeStandard.SelectedIndex);
 			CRapIni.This.Write("options>margin>time", cbModeTime.SelectedIndex);
+			CModeTournamentE.tourList.maxRecords = (int)nudTourE.Value;
+			CModeTournamentP.tourList.maxRecords = (int)nudTourP.Value;
 			CBoard.showArrow = cbArrow.Checked;
 			marginStandard = CbToMargin(cbModeStandard.SelectedIndex);
 			marginTime = CbToMargin(cbModeTime.SelectedIndex);
@@ -99,8 +104,10 @@ namespace RapChessGui
 
 		private void FormOptions_Shown(object sender, EventArgs e)
 		{
+			CModeTournamentE.SelectEngine();
 			CModeTournamentP.SelectPlayer();
-			labFill.Text = $"Fill {(CModeTournamentP.tourList.list.Count * 100) / CTourList.maxRecords}%";
+			labTourE.Text = $"Fill {(CModeTournamentE.tourList.list.Count * 100) / CModeTournamentE.tourList.maxRecords}%";
+			labTourP.Text = $"Fill {(CModeTournamentP.tourList.list.Count * 100) / CModeTournamentP.tourList.maxRecords}%";
 		}
 
 	}
