@@ -31,6 +31,7 @@
 			this.colorDialog1 = new System.Windows.Forms.ColorDialog();
 			this.butDefault = new System.Windows.Forms.Button();
 			this.gbInterface = new System.Windows.Forms.GroupBox();
+			this.cbTips = new System.Windows.Forms.CheckBox();
 			this.cbArrow = new System.Windows.Forms.CheckBox();
 			this.label1 = new System.Windows.Forms.Label();
 			this.nudSpeed = new System.Windows.Forms.NumericUpDown();
@@ -45,18 +46,23 @@
 			this.labFill = new System.Windows.Forms.Label();
 			this.label2 = new System.Windows.Forms.Label();
 			this.nudTournament = new System.Windows.Forms.NumericUpDown();
-			this.cbTips = new System.Windows.Forms.CheckBox();
+			this.groupBox1 = new System.Windows.Forms.GroupBox();
+			this.cbModeStandard = new System.Windows.Forms.ComboBox();
+			this.cbModeTime = new System.Windows.Forms.ComboBox();
+			this.label3 = new System.Windows.Forms.Label();
+			this.label4 = new System.Windows.Forms.Label();
 			this.gbInterface.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.nudSpeed)).BeginInit();
 			this.gbGame.SuspendLayout();
 			this.gbTournament.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.nudTournament)).BeginInit();
+			this.groupBox1.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// butDefault
 			// 
 			this.butDefault.Dock = System.Windows.Forms.DockStyle.Top;
-			this.butDefault.Location = new System.Drawing.Point(0, 259);
+			this.butDefault.Location = new System.Drawing.Point(0, 337);
 			this.butDefault.Name = "butDefault";
 			this.butDefault.Size = new System.Drawing.Size(286, 24);
 			this.butDefault.TabIndex = 2;
@@ -75,12 +81,25 @@
 			this.gbInterface.Controls.Add(this.cbRotateBoard);
 			this.gbInterface.Controls.Add(this.butColor);
 			this.gbInterface.Dock = System.Windows.Forms.DockStyle.Top;
-			this.gbInterface.Location = new System.Drawing.Point(0, 91);
+			this.gbInterface.Location = new System.Drawing.Point(0, 169);
 			this.gbInterface.Name = "gbInterface";
 			this.gbInterface.Size = new System.Drawing.Size(286, 168);
 			this.gbInterface.TabIndex = 4;
 			this.gbInterface.TabStop = false;
 			this.gbInterface.Text = "Interface";
+			// 
+			// cbTips
+			// 
+			this.cbTips.AutoSize = true;
+			this.cbTips.Checked = true;
+			this.cbTips.CheckState = System.Windows.Forms.CheckState.Checked;
+			this.cbTips.Dock = System.Windows.Forms.DockStyle.Top;
+			this.cbTips.Location = new System.Drawing.Point(3, 84);
+			this.cbTips.Name = "cbTips";
+			this.cbTips.Size = new System.Drawing.Size(280, 17);
+			this.cbTips.TabIndex = 12;
+			this.cbTips.Text = "Show Tips";
+			this.cbTips.UseVisualStyleBackColor = true;
 			// 
 			// cbArrow
 			// 
@@ -180,7 +199,7 @@
 			// 
 			this.button1.DialogResult = System.Windows.Forms.DialogResult.OK;
 			this.button1.Dock = System.Windows.Forms.DockStyle.Top;
-			this.button1.Location = new System.Drawing.Point(0, 283);
+			this.button1.Location = new System.Drawing.Point(0, 361);
 			this.button1.Name = "button1";
 			this.button1.Size = new System.Drawing.Size(286, 24);
 			this.button1.TabIndex = 1;
@@ -243,6 +262,11 @@
 			// 
 			// nudTournament
 			// 
+			this.nudTournament.Increment = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
 			this.nudTournament.Location = new System.Drawing.Point(6, 19);
 			this.nudTournament.Maximum = new decimal(new int[] {
             100000,
@@ -250,7 +274,7 @@
             0,
             0});
 			this.nudTournament.Minimum = new decimal(new int[] {
-            100,
+            1000,
             0,
             0,
             0});
@@ -260,32 +284,88 @@
 			this.nudTournament.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
 			this.nudTournament.ThousandsSeparator = true;
 			this.nudTournament.Value = new decimal(new int[] {
-            200,
+            1000,
             0,
             0,
             0});
 			// 
-			// cbTips
+			// groupBox1
 			// 
-			this.cbTips.AutoSize = true;
-			this.cbTips.Checked = true;
-			this.cbTips.CheckState = System.Windows.Forms.CheckState.Checked;
-			this.cbTips.Dock = System.Windows.Forms.DockStyle.Top;
-			this.cbTips.Location = new System.Drawing.Point(3, 84);
-			this.cbTips.Name = "cbTips";
-			this.cbTips.Size = new System.Drawing.Size(280, 17);
-			this.cbTips.TabIndex = 12;
-			this.cbTips.Text = "Show Tips";
-			this.cbTips.UseVisualStyleBackColor = true;
+			this.groupBox1.Controls.Add(this.label4);
+			this.groupBox1.Controls.Add(this.label3);
+			this.groupBox1.Controls.Add(this.cbModeTime);
+			this.groupBox1.Controls.Add(this.cbModeStandard);
+			this.groupBox1.Dock = System.Windows.Forms.DockStyle.Top;
+			this.groupBox1.Location = new System.Drawing.Point(0, 91);
+			this.groupBox1.Name = "groupBox1";
+			this.groupBox1.Size = new System.Drawing.Size(286, 78);
+			this.groupBox1.TabIndex = 8;
+			this.groupBox1.TabStop = false;
+			this.groupBox1.Text = "Time margin";
+			// 
+			// cbModeStandard
+			// 
+			this.cbModeStandard.AutoCompleteCustomSource.AddRange(new string[] {
+            "White",
+            "Black"});
+			this.cbModeStandard.Cursor = System.Windows.Forms.Cursors.Hand;
+			this.cbModeStandard.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.cbModeStandard.Items.AddRange(new object[] {
+            "Off",
+            "0 sec",
+            "1 sec",
+            "2 sec",
+            "5 sec"});
+			this.cbModeStandard.Location = new System.Drawing.Point(6, 19);
+			this.cbModeStandard.Name = "cbModeStandard";
+			this.cbModeStandard.Size = new System.Drawing.Size(153, 21);
+			this.cbModeStandard.TabIndex = 3;
+			// 
+			// cbModeTime
+			// 
+			this.cbModeTime.AutoCompleteCustomSource.AddRange(new string[] {
+            "White",
+            "Black"});
+			this.cbModeTime.Cursor = System.Windows.Forms.Cursors.Hand;
+			this.cbModeTime.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.cbModeTime.Items.AddRange(new object[] {
+            "Off",
+            "0 sec",
+            "1 sec",
+            "2 sec",
+            "5 sec"});
+			this.cbModeTime.Location = new System.Drawing.Point(6, 46);
+			this.cbModeTime.Name = "cbModeTime";
+			this.cbModeTime.Size = new System.Drawing.Size(153, 21);
+			this.cbModeTime.TabIndex = 4;
+			// 
+			// label3
+			// 
+			this.label3.AutoSize = true;
+			this.label3.Location = new System.Drawing.Point(168, 22);
+			this.label3.Name = "label3";
+			this.label3.Size = new System.Drawing.Size(78, 13);
+			this.label3.TabIndex = 11;
+			this.label3.Text = "Mode standard";
+			// 
+			// label4
+			// 
+			this.label4.AutoSize = true;
+			this.label4.Location = new System.Drawing.Point(168, 49);
+			this.label4.Name = "label4";
+			this.label4.Size = new System.Drawing.Size(56, 13);
+			this.label4.TabIndex = 12;
+			this.label4.Text = "Mode time";
 			// 
 			// FormOptions
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(286, 316);
+			this.ClientSize = new System.Drawing.Size(286, 394);
 			this.Controls.Add(this.button1);
 			this.Controls.Add(this.butDefault);
 			this.Controls.Add(this.gbInterface);
+			this.Controls.Add(this.groupBox1);
 			this.Controls.Add(this.gbTournament);
 			this.Controls.Add(this.gbGame);
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
@@ -303,6 +383,8 @@
 			this.gbTournament.ResumeLayout(false);
 			this.gbTournament.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.nudTournament)).EndInit();
+			this.groupBox1.ResumeLayout(false);
+			this.groupBox1.PerformLayout();
 			this.ResumeLayout(false);
 
 		}
@@ -326,5 +408,10 @@
 		public System.Windows.Forms.NumericUpDown nudTournament;
 		public System.Windows.Forms.CheckBox cbArrow;
 		public System.Windows.Forms.CheckBox cbTips;
+		private System.Windows.Forms.GroupBox groupBox1;
+		private System.Windows.Forms.Label label4;
+		private System.Windows.Forms.Label label3;
+		private System.Windows.Forms.ComboBox cbModeTime;
+		private System.Windows.Forms.ComboBox cbModeStandard;
 	}
 }

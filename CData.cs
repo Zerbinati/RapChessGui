@@ -74,7 +74,7 @@ namespace RapChessGui
 		public int GetUciValue()
 		{
 			int result = value * GetIncrement();
-			if (mode == "Blitz")
+			if (mode == "Standard")
 				result *= 1000;
 			return result;
 		}
@@ -83,7 +83,7 @@ namespace RapChessGui
 		{
 			switch (mode)
 			{
-				case "Blitz":
+				case "Standard":
 					return 15;
 				case "Depth":
 					return 1;
@@ -100,8 +100,8 @@ namespace RapChessGui
 		{
 			switch (mode)
 			{
-				case "Blitz":
-					return "blitz";
+				case "Standard":
+					return "standard";
 				case "Depth":
 					return "depth";
 				case "Nodes":
@@ -117,8 +117,8 @@ namespace RapChessGui
 		{
 			switch (uci)
 			{
-				case "blitz":
-					mode = "Blitz";
+				case "standard":
+					mode = "Standard";
 					break;
 				case "depth":
 					mode = "Depth";
@@ -139,7 +139,7 @@ namespace RapChessGui
 		{
 			switch (mode)
 			{
-				case "Blitz":
+				case "Standard":
 					return "Base for whole game in seconds";
 				case "Depth":
 					return "Depth in half-moves";

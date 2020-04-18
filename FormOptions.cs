@@ -8,6 +8,8 @@ namespace RapChessGui
 	public partial class FormOptions : Form
 	{
 		public static FormOptions This;
+		public static int marginStandard = 0;
+		public static int marginTime = 5000;
 
 		public FormOptions()
 		{
@@ -18,31 +20,44 @@ namespace RapChessGui
 
 		public void LoadFromIni()
 		{
-			cbShowPonder.Checked = Convert.ToInt32(CRapIni.This.Read("options>interface>showponder", cbShowPonder.Checked ? "1" : "0")) == 1;
-			cbRotateBoard.Checked = Convert.ToInt32(CRapIni.This.Read("options>interface>rotate", "0")) == 1;
-			cbAttack.Checked = Convert.ToInt32(CRapIni.This.Read("options>interface>attack", cbAttack.Checked ? "1" : "0")) == 1;
-			cbArrow.Checked = Convert.ToInt32(CRapIni.This.Read("options>interface>arrow", cbArrow.Checked ? "1" : "0")) == 1;
-			cbTips.Checked = Convert.ToInt32(CRapIni.This.Read("options>interface>tips", cbTips.Checked ? "1" : "0")) == 1;
-			nudSpeed.Value = Convert.ToInt32(CRapIni.This.Read("options>interface>speed", "200"));
+			cbShowPonder.Checked = CRapIni.This.ReadBool("options>interface>showponder", cbShowPonder.Checked);
+			cbRotateBoard.Checked = CRapIni.This.ReadBool("options>interface>rotate", cbRotateBoard.Checked);
+			cbAttack.Checked = CRapIni.This.ReadBool("options>interface>attack", cbAttack.Checked);
+			cbArrow.Checked = CRapIni.This.ReadBool("options>interface>arrow", cbArrow.Checked);
+			cbTips.Checked = CRapIni.This.ReadBool("options>interface>tips", cbTips.Checked);
+			nudSpeed.Value = CRapIni.This.ReadInt("options>interface>speed", 200);
 			CBoard.color = ColorTranslator.FromHtml(CRapIni.This.Read("options>interface>color", "#400000"));
 			cbGameAutoElo.Checked = Convert.ToInt32(CRapIni.This.Read("options>game>autoelo", "1")) == 1;
 			nudTournament.Value = Convert.ToInt32(CRapIni.This.Read("options>tournament>records", "10000"));
+			cbModeStandard.SelectedIndex = CRapIni.This.ReadInt("options>margin>standard", 1);
+			cbModeTime.SelectedIndex = CRapIni.This.ReadInt("options>margin>time", 4);
 			CTourList.maxRecords = (int)nudTournament.Value;
 			CBoard.showArrow = cbArrow.Checked;
+			marginStandard = CbToMargin(cbModeStandard.SelectedIndex);
+			marginTime = CbToMargin(cbModeTime.SelectedIndex);
 		}
 
 		public void SaveToIni()
 		{
-			CRapIni.This.Write("options>interface>showponder", cbShowPonder.Checked ? "1" : "0");
-			CRapIni.This.Write("options>interface>rotate", cbRotateBoard.Checked ? "1" : "0");
-			CRapIni.This.Write("options>interface>attack", cbAttack.Checked ? "1" : "0");
-			CRapIni.This.Write("options>interface>arrow", cbArrow.Checked ? "1" : "0");
-			CRapIni.This.Write("options>interface>tips", cbTips.Checked ? "1" : "0");
-			CRapIni.This.Write("options>interface>speed", nudSpeed.Value.ToString());
+			CRapIni.This.Write("options>interface>showponder", cbShowPonder.Checked);
+			CRapIni.This.Write("options>interface>rotate", cbRotateBoard.Checked);
+			CRapIni.This.Write("options>interface>attack", cbAttack.Checked);
+			CRapIni.This.Write("options>interface>arrow", cbArrow.Checked);
+			CRapIni.This.Write("options>interface>tips", cbTips.Checked);
+			CRapIni.This.Write("options>interface>speed", nudSpeed.Value);
 			CRapIni.This.Write("options>interface>color", ColorTranslator.ToHtml(CBoard.color));
 			CRapIni.This.Write("options>game>autoelo", cbGameAutoElo.Checked ? "1" : "0");
-			CRapIni.This.Write("options>tournament>records", nudTournament.Value.ToString());
+			CRapIni.This.Write("options>tournament>records", nudTournament.Value);
+			CRapIni.This.Write("options>margin>standard", cbModeStandard.SelectedIndex);
+			CRapIni.This.Write("options>margin>time", cbModeTime.SelectedIndex);
 			CBoard.showArrow = cbArrow.Checked;
+			marginStandard = CbToMargin(cbModeStandard.SelectedIndex);
+			marginTime = CbToMargin(cbModeTime.SelectedIndex);
+		}
+
+		int CbToMargin(int i)
+		{
+			return new int[5] { -1, 0, 1000, 2000, 5000 }[i];
 		}
 
 		public static bool ShowTips()
@@ -58,7 +73,7 @@ namespace RapChessGui
 
 		private void butDefault_Click(object sender, EventArgs e)
 		{
-			colorDialog1.Color = Color.FromArgb(64,8,8);
+			colorDialog1.Color = Color.FromArgb(64, 8, 8);
 			cbShowPonder.Checked = true;
 			cbArrow.Checked = true;
 			cbTips.Checked = true;
@@ -85,7 +100,7 @@ namespace RapChessGui
 		private void FormOptions_Shown(object sender, EventArgs e)
 		{
 			CModeTournamentP.SelectPlayer();
-			labFill.Text = $"Fill {(CModeTournamentP.tourList.list.Count * 100)/CTourList.maxRecords}%";
+			labFill.Text = $"Fill {(CModeTournamentP.tourList.list.Count * 100) / CTourList.maxRecords}%";
 		}
 
 	}

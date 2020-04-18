@@ -132,7 +132,7 @@ namespace RapChessGui
 		void UciGo()
 		{
 			SendMessage(CHistory.GetPosition());
-			if (player.modeValue.mode == "Blitz")
+			if (player.modeValue.mode == "Standard")
 			{
 				Int64 v = Convert.ToInt64(player.modeValue.GetUciValue());
 				Int64 t = Convert.ToInt64(v - timer.Elapsed.TotalMilliseconds);
@@ -147,7 +147,7 @@ namespace RapChessGui
 
 		void XbGo()
 		{
-			if (player.modeValue.mode == "Blitz")
+			if (player.modeValue.mode == "Standard")
 			{
 				int v = Convert.ToInt32(player.modeValue.GetUciValue());
 				int t = Convert.ToInt32(v - timer.Elapsed.TotalMilliseconds);
@@ -252,11 +252,11 @@ namespace RapChessGui
 		{
 			double ms = timer.Elapsed.TotalMilliseconds;
 			DateTime dt = new DateTime();
-			if (timer.IsRunning && IsComputer() && (player.modeValue.mode == "Blitz"))
+			if (timer.IsRunning && IsComputer() && (player.modeValue.mode == "Standard"))
 			{
 				double v = Convert.ToDouble(player.modeValue.GetUciValue());
 				double t = v - ms;
-				if (t < 0)
+				if ((t < -FormOptions.marginStandard) && (FormOptions.marginStandard >= 0))
 					return SetTimeOut();
 				dt = dt.AddMilliseconds(t);
 				if (t < 10000)
@@ -265,7 +265,7 @@ namespace RapChessGui
 			else if (timer.IsRunning && IsComputer() && (player.modeValue.mode == "Time"))
 			{
 				double v = Convert.ToDouble(player.modeValue.GetUciValue());
-				if (ms - timerStart > v + 2000)
+				if ((ms - timerStart > v + FormOptions.marginTime) && (FormOptions.marginTime >= 0))
 				{
 					if (CChess.This.IsValidMove(lastMove) > 0)
 						FormChess.This.MakeMove(lastMove);

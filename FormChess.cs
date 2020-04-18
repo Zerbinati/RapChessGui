@@ -1152,7 +1152,9 @@ namespace RapChessGui
 					if (elo == 0)
 						lvi.BackColor = Color.FromArgb(0xff, 0xff, 0xff);
 					lvEngineH.Items.Add(lvi);
-					if ((engine.position - e.position) == (lvEngineH.ClientRectangle.Height / lvi.Bounds.Height) >> 1)
+					int up = (lvEngineH.ClientRectangle.Height / lvi.Bounds.Height) >> 1;
+					int del = engine.position - e.position;
+					if (del >= up)
 						top2 = lvi;
 				}
 			}
@@ -1192,7 +1194,9 @@ namespace RapChessGui
 						if (elo == 0)
 							lvi.BackColor = Color.FromArgb(0xff, 0xff, 0xff);
 						lvPlayerH.Items.Add(lvi);
-						if ((player.position - p.position) == (lvPlayerH.ClientRectangle.Height / lvi.Bounds.Height) >> 1)
+						int up = (lvPlayerH.ClientRectangle.Height / lvi.Bounds.Height) >> 1;
+						int del = player.position - p.position;
+						if(del >= up)
 							top2 = lvi;
 					}
 				}
@@ -1515,7 +1519,7 @@ namespace RapChessGui
 				{
 					labTimeD.Text = g.GetTime();
 					if ((g.timer.IsRunning) || (CData.gameState != CGameState.normal))
-						labTimeD.BackColor = labTimeD.Text[2] == '.' ? Color.Pink : Color.Yellow;
+						labTimeD.BackColor = labTimeD.Text.Contains('.') ? Color.Pink : Color.Yellow;
 					else
 						labTimeD.BackColor = Color.LightGray;
 				}
@@ -1533,7 +1537,7 @@ namespace RapChessGui
 				{
 					labTimeT.Text = g.GetTime();
 					if ((g.timer.IsRunning) || (CData.gameState != CGameState.normal))
-						labTimeT.BackColor = labTimeT.Text[2] == '.' ? Color.Pink : Color.Yellow;
+						labTimeT.BackColor = labTimeT.Text.Contains('.') ? Color.Pink : Color.Yellow;
 					else if (CData.gameState == CGameState.normal)
 						labTimeT.BackColor = Color.LightGray;
 				}

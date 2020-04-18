@@ -71,6 +71,21 @@ namespace RapIni
 
 		}
 
+		public void Write(string key, bool value)
+		{
+			Write(key, value.ToString());
+		}
+
+		public void Write(string key, int value)
+		{
+			Write(key, value.ToString());
+		}
+
+		public void Write(string key, decimal value)
+		{
+			Write(key, value.ToString());
+		}
+
 		public void Write(string key, double value)
 		{
 			Write(key,value.ToString());

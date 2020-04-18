@@ -457,7 +457,7 @@
 			this.cbMode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.cbMode.FormattingEnabled = true;
 			this.cbMode.Items.AddRange(new object[] {
-            "Blitz",
+            "Standard",
             "Depth",
             "Infinite",
             "Nodes",
@@ -880,7 +880,7 @@
 			this.cbMode2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.cbMode2.FormattingEnabled = true;
 			this.cbMode2.Items.AddRange(new object[] {
-            "Blitz",
+            "Standard",
             "Depth",
             "Nodes",
             "Time"});
@@ -956,7 +956,7 @@
 			this.cbMode1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.cbMode1.FormattingEnabled = true;
 			this.cbMode1.Items.AddRange(new object[] {
-            "Blitz",
+            "Standard",
             "Depth",
             "Nodes",
             "Time"});
@@ -1160,7 +1160,7 @@
 			this.cbTourEMode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.cbTourEMode.FormattingEnabled = true;
 			this.cbTourEMode.Items.AddRange(new object[] {
-            "Blitz",
+            "Standard",
             "Depth",
             "Nodes",
             "Time"});
@@ -1651,7 +1651,7 @@
 			this.cbTeacherMode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.cbTeacherMode.FormattingEnabled = true;
 			this.cbTeacherMode.Items.AddRange(new object[] {
-            "Blitz",
+            "Standard",
             "Depth",
             "Nodes",
             "Time"});
@@ -1729,7 +1729,7 @@
 			this.cbTrainedMode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.cbTrainedMode.FormattingEnabled = true;
 			this.cbTrainedMode.Items.AddRange(new object[] {
-            "Blitz",
+            "Standard",
             "Depth",
             "Nodes",
             "Time"});
