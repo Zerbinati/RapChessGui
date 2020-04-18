@@ -322,7 +322,8 @@ namespace RapChessGui
 			SplitSaveToIni(splitContainerMain);
 			SplitSaveToIni(splitContainerBoard);
 			SplitSaveToIni(splitContainerChart);
-			SplitSaveToIni(splitContainerTournament);
+			SplitSaveToIni(splitContainerTourE);
+			SplitSaveToIni(splitContainerTourP);
 			GamerList.Terminate();
 
 		}
@@ -453,7 +454,8 @@ namespace RapChessGui
 			SplitLoadFromIni(splitContainerMain);
 			SplitLoadFromIni(splitContainerBoard);
 			SplitLoadFromIni(splitContainerChart);
-			SplitLoadFromIni(splitContainerTournament);
+			SplitLoadFromIni(splitContainerTourE);
+			SplitLoadFromIni(splitContainerTourP);
 			CEngineList.LoadFromIni();
 			CBookList.LoadFromIni();
 			CPlayerList.LoadFromIni();
@@ -630,10 +632,12 @@ namespace RapChessGui
 			CEngine e2;
 			if (CModeTournamentE.rotate)
 			{
-				p1 = GamerList.gamer[1].player;
-				p2 = GamerList.gamer[0].player;
-				e1 = GamerList.gamer[1].engine;
-				e2 = GamerList.gamer[1].engine;
+				CGamer g1 = GamerList.gamer[1];
+				CGamer g2 = GamerList.gamer[0];
+				p1 = g1.player;
+				p2 = g2.player;
+				e1 = g1.engine;
+				e2 = g2.engine;
 			}
 			else
 			{
@@ -643,6 +647,8 @@ namespace RapChessGui
 				p2 = new CPlayer(e2.name);
 				p1.engine = e1.name;
 				p2.engine = e2.name;
+				p1.elo = e1.elo;
+				p2.elo = e2.elo;
 			}
 			p1.book = e1.protocol == "Uci" ? CModeTournamentE.book : "None";
 			p1.modeValue.mode = CModeTournamentE.modeValue.mode;
@@ -655,8 +661,7 @@ namespace RapChessGui
 			foreach (ListViewItem lvi in lvEngine.Items)
 				if (lvi.Text == CModeTournamentE.engine)
 				{
-					int top = lvi.Index;
-					top -= 4;
+					int top = lvi.Index - ((lvEngine.ClientRectangle.Height / lvi.Bounds.Height) >> 1);
 					if (top < 0)
 						top = 0;
 					lvi.Selected = true;
@@ -725,8 +730,7 @@ namespace RapChessGui
 			foreach (ListViewItem lvi in lvPlayer.Items)
 				if (lvi.Text == CModeTournamentP.player)
 				{
-					int top = lvi.Index;
-					top -= 4;
+					int top = lvi.Index - ((lvPlayer.ClientRectangle.Height / lvi.Bounds.Height) >> 1);
 					if (top < 0)
 						top = 0;
 					lvi.Selected = true;
@@ -988,8 +992,7 @@ namespace RapChessGui
 
 		public void GetMessage()
 		{
-			lock (CMessageList.list)
-				while (CMessageList.GetMessage(out CGamer g, out string msg))
+				while (CMessageList.MessageGet(out CGamer g, out string msg))
 				{
 					if (g.engine.protocol == "Uci")
 						GetMessageUci(g, msg);
@@ -1039,7 +1042,6 @@ namespace RapChessGui
 			timerStart.Enabled = false;
 			GamerList.Terminate();
 			CData.gameMode = mode;
-			CMessageList.list.Clear();
 			moveToolStripMenuItem.Visible = mode == (int)CMode.game;
 			Clear();
 			switch (mode)
@@ -1353,6 +1355,7 @@ namespace RapChessGui
 			RenderInfo(pw);
 			RenderInfo(pb);
 			CArrow.Hide();
+			CMessageList.Clear();
 			timer1.Enabled = CData.gameMode != CMode.edit;
 			ShowGamers();
 		}
@@ -1816,12 +1819,6 @@ namespace RapChessGui
 				else
 					cp.go = true;
 			}
-		}
-
-		private void NewGameToolStripMenuItem_Click(object sender, EventArgs e)
-		{
-			tabControl1.SelectedTab = tabPageGame;
-			GameStart();
 		}
 
 		private void ButStart_Click(object sender, EventArgs e)
@@ -2321,7 +2318,10 @@ namespace RapChessGui
 
 		private void lv_ColumnClick(object sender, ColumnClickEventArgs e)
 		{
-			(sender as ListView).ListViewItemSorter = new ListViewComparer(e.Column, e.Column == 0 ? SortOrder.Ascending : SortOrder.Descending);
+			ListView lv = sender as ListView;
+			lv.Tag = lv.Tag == null ? new Object() : null;
+			(sender as ListView).ListViewItemSorter = new ListViewComparer(e.Column, lv.Tag == null ? SortOrder.Ascending : SortOrder.Descending);
 		}
+
 	}
 }

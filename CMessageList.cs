@@ -19,22 +19,49 @@ namespace RapChessGui
 
 	static class CMessageList
 	{
-		public static List<CMessage> list = new List<CMessage>();
+		static List<CMessage> list = new List<CMessage>();
+		static List<CMessage> buffer = new List<CMessage>();
 
-		public static void Add(int pid,string msg)
+		static void MsgSet(CMessage m)
 		{
-			list.Add(new CMessage(pid,msg));
+			lock (list)
+				list.Add(m);
 		}
 
-		public static bool GetMessage(out CGamer gamer ,out string msg)
+		static List<CMessage> MsgGet()
+		{
+			List<CMessage> result;
+			lock (list)
+			{
+				result = list.GetRange(0, list.Count);
+				list.Clear();
+			}
+			return result;
+		}
+
+		public static void Clear()
+		{
+			list.Clear();
+			buffer.Clear();
+		}
+
+
+		public static void MessageAdd(int pid,string msg)
+		{
+			MsgSet(new CMessage(pid,msg));
+		}
+
+		public static bool MessageGet(out CGamer gamer ,out string msg)
 		{
 			gamer = null;
 			msg = "";
-			if (list.Count > 0)
+			if (buffer.Count == 0)
+				buffer = MsgGet();
+			else
 			{
-				int pid = list[0].pid;
-				msg = list[0].msg;
-				list.RemoveAt(0);
+				int pid = buffer[0].pid;
+				msg = buffer[0].msg;
+				buffer.RemoveAt(0);
 				gamer = CGamerList.This.GetGamerPid(pid);
 				if (gamer == null)
 				{
