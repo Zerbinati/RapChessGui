@@ -58,6 +58,7 @@ namespace RapChessGui
 	{
 		public string mode = "Time";
 		public int value = 0;
+		public int increment = 0;
 
 		public void SetValue(int v)
 		{
@@ -162,6 +163,25 @@ namespace RapChessGui
 
 		public string LongName()
 		{
+			if(mode == "Standard")
+			{
+				int t = value * 15 + increment * 60;
+				int m = value / 4;
+				string min = m > 0 ? m.ToString() : "";
+				string sec = new string[4] {"", "¼", "½", "¾"}[value % 4];
+				string tim = $"{min}{sec}+{increment}";
+				if (t > 21600)
+					return $"Mail {tim}";
+				if(t > 1800)
+					return $"Classical {tim}";
+				if (t > 600)
+					return $"Rapid {tim}";
+				if (t > 180)
+					return $"Blitz {tim}";
+				if (t > 30)
+					return $"Bullet {tim}";
+				return $"UltraBullet {tim}";
+			}
 			if (mode != "Infinite")
 				return $"{mode} {value}";
 			return mode;

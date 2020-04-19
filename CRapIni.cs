@@ -251,9 +251,8 @@ namespace RapIni
 
 		public void DeleteKey(string key)
 		{
-			if (script == "")
-				DeleteKeyFromFile(key);
-			else
+			DeleteKeyFromFile(key);
+			if (script != "")
 				DeleteKeyFromServer(key);
 		}
 
