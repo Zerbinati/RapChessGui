@@ -41,8 +41,11 @@ namespace RapChessGui
 
 		public static void Clear()
 		{
-			list.Clear();
-			buffer.Clear();
+			lock (list)
+			{
+				list.Clear();
+				buffer.Clear();
+			}
 		}
 
 
@@ -51,34 +54,30 @@ namespace RapChessGui
 			MsgSet(new CMessage(pid,msg));
 		}
 
-		public static bool MessageGet(out CGamer gamer ,out string msg)
+		public static bool MessageGet(out CMessage message)
 		{
-			gamer = null;
-			msg = "";
-			if (buffer.Count == 0)
-				buffer = MsgGet();
-			else
-			{
-				int pid = buffer[0].pid;
-				msg = buffer[0].msg;
-				buffer.RemoveAt(0);
-				gamer = CGamerList.This.GetGamerPid(pid);
-				if (gamer == null)
-				{
-					CRapLog.Add($"CMessageList ({msg})");
-					return false;
+			message = null;
+			List<CMessage> last = MsgGet();
+			foreach (CMessage m in last) { 
+				CGamer gamer = CGamerList.This.GetGamerPid(m.pid);
+				if (gamer != null) {
+					string protocol = gamer.GetProtocol();
+					if (protocol == "Uci") {
+						if (m.msg.Contains("bestmove"))
+							gamer.timer.Stop();
+					}
+					else
+						if (m.msg.Contains("move"))
+						gamer.timer.Stop();
 				}
-				FormLog.This.richTextBox1.AppendText($"{gamer.GetTimeElapsed()} ",Color.Green);
-				if (gamer.white)
-				{
-					FormLog.This.richTextBox1.AppendText($"{gamer.player.name}", Color.DimGray);
-					FormLog.This.richTextBox1.AppendText($" > {msg}\n");
-				}
-				else
-				FormLog.This.richTextBox1.AppendText($"{gamer.player.name} > {msg}\n");
-				return true;
 			}
-			return false;
+			buffer.AddRange(last);
+			if(buffer.Count >0)
+			{
+				message = buffer[0];
+				buffer.RemoveAt(0);
+			}
+			return message != null;
 		}
 
 	}

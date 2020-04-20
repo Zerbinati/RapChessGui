@@ -47,10 +47,10 @@
 			this.label2 = new System.Windows.Forms.Label();
 			this.nudTourP = new System.Windows.Forms.NumericUpDown();
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
-			this.cbModeStandard = new System.Windows.Forms.ComboBox();
-			this.cbModeTime = new System.Windows.Forms.ComboBox();
-			this.label3 = new System.Windows.Forms.Label();
 			this.label4 = new System.Windows.Forms.Label();
+			this.label3 = new System.Windows.Forms.Label();
+			this.cbModeTime = new System.Windows.Forms.ComboBox();
+			this.cbModeStandard = new System.Windows.Forms.ComboBox();
 			this.groupBox2 = new System.Windows.Forms.GroupBox();
 			this.labTourE = new System.Windows.Forms.Label();
 			this.label6 = new System.Windows.Forms.Label();
@@ -227,6 +227,8 @@
 			// cbGameAutoElo
 			// 
 			this.cbGameAutoElo.AutoSize = true;
+			this.cbGameAutoElo.Checked = true;
+			this.cbGameAutoElo.CheckState = System.Windows.Forms.CheckState.Checked;
 			this.cbGameAutoElo.Dock = System.Windows.Forms.DockStyle.Top;
 			this.cbGameAutoElo.Location = new System.Drawing.Point(3, 16);
 			this.cbGameAutoElo.Name = "cbGameAutoElo";
@@ -309,23 +311,23 @@
 			this.groupBox1.TabStop = false;
 			this.groupBox1.Text = "Time margin";
 			// 
-			// cbModeStandard
+			// label4
 			// 
-			this.cbModeStandard.AutoCompleteCustomSource.AddRange(new string[] {
-            "White",
-            "Black"});
-			this.cbModeStandard.Cursor = System.Windows.Forms.Cursors.Hand;
-			this.cbModeStandard.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.cbModeStandard.Items.AddRange(new object[] {
-            "Off",
-            "0 sec",
-            "1 sec",
-            "2 sec",
-            "5 sec"});
-			this.cbModeStandard.Location = new System.Drawing.Point(6, 19);
-			this.cbModeStandard.Name = "cbModeStandard";
-			this.cbModeStandard.Size = new System.Drawing.Size(153, 21);
-			this.cbModeStandard.TabIndex = 3;
+			this.label4.AutoSize = true;
+			this.label4.Location = new System.Drawing.Point(168, 49);
+			this.label4.Name = "label4";
+			this.label4.Size = new System.Drawing.Size(56, 13);
+			this.label4.TabIndex = 12;
+			this.label4.Text = "Mode time";
+			// 
+			// label3
+			// 
+			this.label3.AutoSize = true;
+			this.label3.Location = new System.Drawing.Point(168, 22);
+			this.label3.Name = "label3";
+			this.label3.Size = new System.Drawing.Size(78, 13);
+			this.label3.TabIndex = 11;
+			this.label3.Text = "Mode standard";
 			// 
 			// cbModeTime
 			// 
@@ -345,23 +347,23 @@
 			this.cbModeTime.Size = new System.Drawing.Size(153, 21);
 			this.cbModeTime.TabIndex = 4;
 			// 
-			// label3
+			// cbModeStandard
 			// 
-			this.label3.AutoSize = true;
-			this.label3.Location = new System.Drawing.Point(168, 22);
-			this.label3.Name = "label3";
-			this.label3.Size = new System.Drawing.Size(78, 13);
-			this.label3.TabIndex = 11;
-			this.label3.Text = "Mode standard";
-			// 
-			// label4
-			// 
-			this.label4.AutoSize = true;
-			this.label4.Location = new System.Drawing.Point(168, 49);
-			this.label4.Name = "label4";
-			this.label4.Size = new System.Drawing.Size(56, 13);
-			this.label4.TabIndex = 12;
-			this.label4.Text = "Mode time";
+			this.cbModeStandard.AutoCompleteCustomSource.AddRange(new string[] {
+            "White",
+            "Black"});
+			this.cbModeStandard.Cursor = System.Windows.Forms.Cursors.Hand;
+			this.cbModeStandard.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.cbModeStandard.Items.AddRange(new object[] {
+            "Off",
+            "0 sec",
+            "1 sec",
+            "2 sec",
+            "5 sec"});
+			this.cbModeStandard.Location = new System.Drawing.Point(6, 19);
+			this.cbModeStandard.Name = "cbModeStandard";
+			this.cbModeStandard.Size = new System.Drawing.Size(153, 21);
+			this.cbModeStandard.TabIndex = 3;
 			// 
 			// groupBox2
 			// 

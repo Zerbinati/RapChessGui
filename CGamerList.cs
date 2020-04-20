@@ -16,7 +16,8 @@ namespace RapChessGui
 		public bool go = false;
 		public bool white = true;
 		public int usedBook;
-		public int iScore = 0;
+		public int iScore;
+		public ulong infMs;
 		public ulong nodes;
 		public ulong nps;
 		public string score;
@@ -58,6 +59,7 @@ namespace RapChessGui
 			white = w;
 			started = false;
 			go = false;
+			infMs = 0;
 			usedBook = 0;
 			nodes = 0;
 			nps = 0;
@@ -263,8 +265,10 @@ namespace RapChessGui
 			{
 				double v = Convert.ToDouble(value);
 				double t = v - ms;
-				if ((t < -FormOptions.marginStandard) && (FormOptions.marginStandard >= 0))
+				if ((t < -FormOptions.marginStandard) && (FormOptions.marginStandard >= 0) && timer.IsRunning)
 					return SetTimeOut();
+				if (t < 0)
+					t = 0;
 				dt = dt.AddMilliseconds(t);
 				if (t < 10000)
 					return dt.ToString("ss.ff");
@@ -272,7 +276,7 @@ namespace RapChessGui
 			else if (mode == "Time")
 			{
 				double v = Convert.ToDouble(value);
-				if ((ms - timerStart > v + FormOptions.marginTime) && (FormOptions.marginTime >= 0) && (value > 0))
+				if ((ms - timerStart > v + FormOptions.marginTime) && (FormOptions.marginTime >= 0) && (value > 0) && timer.IsRunning)
 				{
 					if (CChess.This.IsValidMove(lastMove) > 0)
 						FormChess.This.MakeMove(lastMove);
@@ -291,7 +295,7 @@ namespace RapChessGui
 		{
 			DateTime dt = new DateTime();
 			dt = dt.AddMilliseconds(timer.Elapsed.TotalMilliseconds - timerStart);
-			return dt.ToString("HH:mm:ss.ff");
+			return dt.ToString("HH:mm:ss.fff");
 		}
 
 		public string GetElo()
@@ -302,12 +306,12 @@ namespace RapChessGui
 				return $"Elo {player.elo}";
 		}
 
-		public string GetName()
+		public string GetPlayerName()
 		{
 			if (player == null)
 				return "Human";
 			else
-				return player.GetName();
+				return player.name;
 		}
 
 		public void SetPlayer(CPlayer p)

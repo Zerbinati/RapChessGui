@@ -151,9 +151,6 @@
 			this.butClearBoard = new System.Windows.Forms.Button();
 			this.timerStart = new System.Windows.Forms.Timer(this.components);
 			this.menuStrip1 = new System.Windows.Forms.MenuStrip();
-			this.moveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.backToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.forwardToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.fenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.saveToClipboardToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.loadFromClipboardToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -206,6 +203,8 @@
 			this.labEngineB = new System.Windows.Forms.Label();
 			this.cbMainMode = new System.Windows.Forms.ComboBox();
 			this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
+			this.labPlayerW = new System.Windows.Forms.Label();
+			this.labPlayerB = new System.Windows.Forms.Label();
 			this.statusStrip1 = new System.Windows.Forms.StatusStrip();
 			this.tssMove = new System.Windows.Forms.ToolStripStatusLabel();
 			this.tssMoves = new System.Windows.Forms.ToolStripStatusLabel();
@@ -242,6 +241,8 @@
 			this.columnHeader21 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeader22 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.tlpBlack = new System.Windows.Forms.TableLayoutPanel();
+			this.butForward = new System.Windows.Forms.Button();
+			this.butBack = new System.Windows.Forms.Button();
 			this.tabControl1.SuspendLayout();
 			this.tabPageGame.SuspendLayout();
 			this.groupBox2.SuspendLayout();
@@ -336,6 +337,8 @@
 			// 
 			// tabPageGame
 			// 
+			this.tabPageGame.Controls.Add(this.butBack);
+			this.tabPageGame.Controls.Add(this.butForward);
 			this.tabPageGame.Controls.Add(this.butResignation);
 			this.tabPageGame.Controls.Add(this.butStop);
 			this.tabPageGame.Controls.Add(this.butContinueGame);
@@ -457,10 +460,10 @@
 			this.cbMode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.cbMode.FormattingEnabled = true;
 			this.cbMode.Items.AddRange(new object[] {
-            "Standard",
             "Depth",
             "Infinite",
             "Nodes",
+            "Standard",
             "Time"});
 			this.cbMode.Location = new System.Drawing.Point(3, 58);
 			this.cbMode.Name = "cbMode";
@@ -880,9 +883,9 @@
 			this.cbMode2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.cbMode2.FormattingEnabled = true;
 			this.cbMode2.Items.AddRange(new object[] {
-            "Standard",
             "Depth",
             "Nodes",
+            "Standard",
             "Time"});
 			this.cbMode2.Location = new System.Drawing.Point(3, 37);
 			this.cbMode2.Name = "cbMode2";
@@ -956,9 +959,9 @@
 			this.cbMode1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.cbMode1.FormattingEnabled = true;
 			this.cbMode1.Items.AddRange(new object[] {
-            "Standard",
             "Depth",
             "Nodes",
+            "Standard",
             "Time"});
 			this.cbMode1.Location = new System.Drawing.Point(3, 37);
 			this.cbMode1.Name = "cbMode1";
@@ -1160,9 +1163,9 @@
 			this.cbTourEMode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.cbTourEMode.FormattingEnabled = true;
 			this.cbTourEMode.Items.AddRange(new object[] {
-            "Standard",
             "Depth",
             "Nodes",
+            "Standard",
             "Time"});
 			this.cbTourEMode.Location = new System.Drawing.Point(3, 16);
 			this.cbTourEMode.Name = "cbTourEMode";
@@ -1651,9 +1654,9 @@
 			this.cbTeacherMode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.cbTeacherMode.FormattingEnabled = true;
 			this.cbTeacherMode.Items.AddRange(new object[] {
-            "Standard",
             "Depth",
             "Nodes",
+            "Standard",
             "Time"});
 			this.cbTeacherMode.Location = new System.Drawing.Point(3, 37);
 			this.cbTeacherMode.Name = "cbTeacherMode";
@@ -1729,9 +1732,9 @@
 			this.cbTrainedMode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.cbTrainedMode.FormattingEnabled = true;
 			this.cbTrainedMode.Items.AddRange(new object[] {
-            "Standard",
             "Depth",
             "Nodes",
+            "Standard",
             "Time"});
 			this.cbTrainedMode.Location = new System.Drawing.Point(3, 37);
 			this.cbTrainedMode.Name = "cbTrainedMode";
@@ -1863,7 +1866,6 @@
 			this.menuStrip1.BackColor = System.Drawing.SystemColors.Control;
 			this.menuStrip1.Dock = System.Windows.Forms.DockStyle.None;
 			this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.moveToolStripMenuItem,
             this.fenToolStripMenuItem,
             this.pgnToolStripMenuItem,
             this.manageToolStripMenuItem,
@@ -1871,32 +1873,9 @@
             this.logToolStripMenuItem});
 			this.menuStrip1.Location = new System.Drawing.Point(0, 2);
 			this.menuStrip1.Name = "menuStrip1";
-			this.menuStrip1.Size = new System.Drawing.Size(421, 24);
+			this.menuStrip1.Size = new System.Drawing.Size(252, 24);
 			this.menuStrip1.TabIndex = 1;
 			this.menuStrip1.Text = "menuStrip1";
-			// 
-			// moveToolStripMenuItem
-			// 
-			this.moveToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.backToolStripMenuItem,
-            this.forwardToolStripMenuItem});
-			this.moveToolStripMenuItem.Name = "moveToolStripMenuItem";
-			this.moveToolStripMenuItem.Size = new System.Drawing.Size(49, 20);
-			this.moveToolStripMenuItem.Text = "Move";
-			// 
-			// backToolStripMenuItem
-			// 
-			this.backToolStripMenuItem.Name = "backToolStripMenuItem";
-			this.backToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
-			this.backToolStripMenuItem.Text = "Back";
-			this.backToolStripMenuItem.Click += new System.EventHandler(this.backToolStripMenuItem_Click);
-			// 
-			// forwardToolStripMenuItem
-			// 
-			this.forwardToolStripMenuItem.Name = "forwardToolStripMenuItem";
-			this.forwardToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
-			this.forwardToolStripMenuItem.Text = "Make";
-			this.forwardToolStripMenuItem.Click += new System.EventHandler(this.forwardToolStripMenuItem_Click);
 			// 
 			// fenToolStripMenuItem
 			// 
@@ -2324,10 +2303,10 @@
 			this.labEngineW.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.labEngineW.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
 			this.labEngineW.ForeColor = System.Drawing.Color.White;
-			this.labEngineW.Location = new System.Drawing.Point(24, 0);
+			this.labEngineW.Location = new System.Drawing.Point(255, 0);
 			this.labEngineW.Margin = new System.Windows.Forms.Padding(0);
 			this.labEngineW.Name = "labEngineW";
-			this.labEngineW.Size = new System.Drawing.Size(289, 24);
+			this.labEngineW.Size = new System.Drawing.Size(231, 24);
 			this.labEngineW.TabIndex = 13;
 			this.labEngineW.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			this.toolTip1.SetToolTip(this.labEngineW, "Chess engine name");
@@ -2354,10 +2333,10 @@
 			this.labBookW.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.labBookW.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
 			this.labBookW.ForeColor = System.Drawing.Color.White;
-			this.labBookW.Location = new System.Drawing.Point(313, 0);
+			this.labBookW.Location = new System.Drawing.Point(486, 0);
 			this.labBookW.Margin = new System.Windows.Forms.Padding(0);
 			this.labBookW.Name = "labBookW";
-			this.labBookW.Size = new System.Drawing.Size(289, 24);
+			this.labBookW.Size = new System.Drawing.Size(231, 24);
 			this.labBookW.TabIndex = 15;
 			this.labBookW.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			this.toolTip1.SetToolTip(this.labBookW, "Chess open book name");
@@ -2369,10 +2348,10 @@
 			this.labProtocolW.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.labProtocolW.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
 			this.labProtocolW.ForeColor = System.Drawing.Color.White;
-			this.labProtocolW.Location = new System.Drawing.Point(891, 0);
+			this.labProtocolW.Location = new System.Drawing.Point(948, 0);
 			this.labProtocolW.Margin = new System.Windows.Forms.Padding(0);
 			this.labProtocolW.Name = "labProtocolW";
-			this.labProtocolW.Size = new System.Drawing.Size(289, 24);
+			this.labProtocolW.Size = new System.Drawing.Size(232, 24);
 			this.labProtocolW.TabIndex = 16;
 			this.labProtocolW.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			this.toolTip1.SetToolTip(this.labProtocolW, "Chess engine protocol");
@@ -2459,10 +2438,10 @@
 			this.labModeW.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.labModeW.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
 			this.labModeW.ForeColor = System.Drawing.Color.White;
-			this.labModeW.Location = new System.Drawing.Point(602, 0);
+			this.labModeW.Location = new System.Drawing.Point(717, 0);
 			this.labModeW.Margin = new System.Windows.Forms.Padding(0);
 			this.labModeW.Name = "labModeW";
-			this.labModeW.Size = new System.Drawing.Size(289, 24);
+			this.labModeW.Size = new System.Drawing.Size(231, 24);
 			this.labModeW.TabIndex = 17;
 			this.labModeW.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			this.toolTip1.SetToolTip(this.labModeW, "Chess mode");
@@ -2474,10 +2453,10 @@
 			this.labModeB.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.labModeB.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
 			this.labModeB.ForeColor = System.Drawing.Color.White;
-			this.labModeB.Location = new System.Drawing.Point(602, 0);
+			this.labModeB.Location = new System.Drawing.Point(717, 0);
 			this.labModeB.Margin = new System.Windows.Forms.Padding(0);
 			this.labModeB.Name = "labModeB";
-			this.labModeB.Size = new System.Drawing.Size(289, 24);
+			this.labModeB.Size = new System.Drawing.Size(231, 24);
 			this.labModeB.TabIndex = 17;
 			this.labModeB.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			this.toolTip1.SetToolTip(this.labModeB, "Chess mode");
@@ -2489,10 +2468,10 @@
 			this.labProtocolB.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.labProtocolB.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
 			this.labProtocolB.ForeColor = System.Drawing.Color.White;
-			this.labProtocolB.Location = new System.Drawing.Point(891, 0);
+			this.labProtocolB.Location = new System.Drawing.Point(948, 0);
 			this.labProtocolB.Margin = new System.Windows.Forms.Padding(0);
 			this.labProtocolB.Name = "labProtocolB";
-			this.labProtocolB.Size = new System.Drawing.Size(289, 24);
+			this.labProtocolB.Size = new System.Drawing.Size(232, 24);
 			this.labProtocolB.TabIndex = 16;
 			this.labProtocolB.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			this.toolTip1.SetToolTip(this.labProtocolB, "Chess engine protocol");
@@ -2504,10 +2483,10 @@
 			this.labBookB.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.labBookB.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
 			this.labBookB.ForeColor = System.Drawing.Color.White;
-			this.labBookB.Location = new System.Drawing.Point(313, 0);
+			this.labBookB.Location = new System.Drawing.Point(486, 0);
 			this.labBookB.Margin = new System.Windows.Forms.Padding(0);
 			this.labBookB.Name = "labBookB";
-			this.labBookB.Size = new System.Drawing.Size(289, 24);
+			this.labBookB.Size = new System.Drawing.Size(231, 24);
 			this.labBookB.TabIndex = 15;
 			this.labBookB.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			this.toolTip1.SetToolTip(this.labBookB, "Chess open book name");
@@ -2534,10 +2513,10 @@
 			this.labEngineB.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.labEngineB.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
 			this.labEngineB.ForeColor = System.Drawing.Color.White;
-			this.labEngineB.Location = new System.Drawing.Point(24, 0);
+			this.labEngineB.Location = new System.Drawing.Point(255, 0);
 			this.labEngineB.Margin = new System.Windows.Forms.Padding(0);
 			this.labEngineB.Name = "labEngineB";
-			this.labEngineB.Size = new System.Drawing.Size(289, 24);
+			this.labEngineB.Size = new System.Drawing.Size(231, 24);
 			this.labEngineB.TabIndex = 13;
 			this.labEngineB.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			this.toolTip1.SetToolTip(this.labEngineB, "Chess engine name");
@@ -2601,6 +2580,36 @@
 			this.chart1.Text = "chart1";
 			this.toolTip1.SetToolTip(this.chart1, "Graphic representation of the game scores white player is  represent by light bar" +
         "s black player is represent by dark bars");
+			// 
+			// labPlayerW
+			// 
+			this.labPlayerW.BackColor = System.Drawing.Color.Olive;
+			this.labPlayerW.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+			this.labPlayerW.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.labPlayerW.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+			this.labPlayerW.ForeColor = System.Drawing.Color.White;
+			this.labPlayerW.Location = new System.Drawing.Point(24, 0);
+			this.labPlayerW.Margin = new System.Windows.Forms.Padding(0);
+			this.labPlayerW.Name = "labPlayerW";
+			this.labPlayerW.Size = new System.Drawing.Size(231, 24);
+			this.labPlayerW.TabIndex = 18;
+			this.labPlayerW.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.toolTip1.SetToolTip(this.labPlayerW, "Player name");
+			// 
+			// labPlayerB
+			// 
+			this.labPlayerB.BackColor = System.Drawing.Color.Olive;
+			this.labPlayerB.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+			this.labPlayerB.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.labPlayerB.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+			this.labPlayerB.ForeColor = System.Drawing.Color.White;
+			this.labPlayerB.Location = new System.Drawing.Point(24, 0);
+			this.labPlayerB.Margin = new System.Windows.Forms.Padding(0);
+			this.labPlayerB.Name = "labPlayerB";
+			this.labPlayerB.Size = new System.Drawing.Size(231, 24);
+			this.labPlayerB.TabIndex = 18;
+			this.labPlayerB.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.toolTip1.SetToolTip(this.labPlayerB, "Player name");
 			// 
 			// statusStrip1
 			// 
@@ -2972,16 +2981,18 @@
 			// 
 			// tlpWhite
 			// 
-			this.tlpWhite.ColumnCount = 5;
+			this.tlpWhite.ColumnCount = 6;
 			this.tlpWhite.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 24F));
-			this.tlpWhite.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
-			this.tlpWhite.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
-			this.tlpWhite.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
-			this.tlpWhite.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
+			this.tlpWhite.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
+			this.tlpWhite.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
+			this.tlpWhite.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
+			this.tlpWhite.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
+			this.tlpWhite.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
+			this.tlpWhite.Controls.Add(this.labBookW, 0, 0);
 			this.tlpWhite.Controls.Add(this.labModeW, 0, 0);
 			this.tlpWhite.Controls.Add(this.labProtocolW, 0, 0);
-			this.tlpWhite.Controls.Add(this.labBookW, 0, 0);
 			this.tlpWhite.Controls.Add(this.labWhite, 0, 0);
+			this.tlpWhite.Controls.Add(this.labPlayerW, 0, 0);
 			this.tlpWhite.Controls.Add(this.labEngineW, 0, 0);
 			this.tlpWhite.Dock = System.Windows.Forms.DockStyle.Top;
 			this.tlpWhite.Location = new System.Drawing.Point(0, 0);
@@ -3051,16 +3062,18 @@
 			// 
 			// tlpBlack
 			// 
-			this.tlpBlack.ColumnCount = 5;
+			this.tlpBlack.ColumnCount = 6;
 			this.tlpBlack.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 24F));
-			this.tlpBlack.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
-			this.tlpBlack.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
-			this.tlpBlack.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
-			this.tlpBlack.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
+			this.tlpBlack.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
+			this.tlpBlack.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
+			this.tlpBlack.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
+			this.tlpBlack.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
+			this.tlpBlack.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
+			this.tlpBlack.Controls.Add(this.labBookB, 0, 0);
 			this.tlpBlack.Controls.Add(this.labModeB, 0, 0);
 			this.tlpBlack.Controls.Add(this.labProtocolB, 0, 0);
-			this.tlpBlack.Controls.Add(this.labBookB, 0, 0);
 			this.tlpBlack.Controls.Add(this.labBlack, 0, 0);
+			this.tlpBlack.Controls.Add(this.labPlayerB, 0, 0);
 			this.tlpBlack.Controls.Add(this.labEngineB, 0, 0);
 			this.tlpBlack.Dock = System.Windows.Forms.DockStyle.Top;
 			this.tlpBlack.Location = new System.Drawing.Point(0, 0);
@@ -3069,6 +3082,32 @@
 			this.tlpBlack.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
 			this.tlpBlack.Size = new System.Drawing.Size(1180, 24);
 			this.tlpBlack.TabIndex = 35;
+			// 
+			// butForward
+			// 
+			this.butForward.Cursor = System.Windows.Forms.Cursors.Hand;
+			this.butForward.Dock = System.Windows.Forms.DockStyle.Top;
+			this.butForward.Location = new System.Drawing.Point(3, 307);
+			this.butForward.Name = "butForward";
+			this.butForward.Size = new System.Drawing.Size(352, 23);
+			this.butForward.TabIndex = 26;
+			this.butForward.Text = "Make move";
+			this.toolTip1.SetToolTip(this.butForward, "Resignation from further play");
+			this.butForward.UseVisualStyleBackColor = true;
+			this.butForward.Click += new System.EventHandler(this.button2_Click);
+			// 
+			// butBack
+			// 
+			this.butBack.Cursor = System.Windows.Forms.Cursors.Hand;
+			this.butBack.Dock = System.Windows.Forms.DockStyle.Top;
+			this.butBack.Location = new System.Drawing.Point(3, 330);
+			this.butBack.Name = "butBack";
+			this.butBack.Size = new System.Drawing.Size(352, 23);
+			this.butBack.TabIndex = 27;
+			this.butBack.Text = "Back move";
+			this.toolTip1.SetToolTip(this.butBack, "Resignation from further play");
+			this.butBack.UseVisualStyleBackColor = true;
+			this.butBack.Click += new System.EventHandler(this.button3_Click);
 			// 
 			// FormChess
 			// 
@@ -3246,9 +3285,6 @@
 		private System.Windows.Forms.ComboBox cbTeacherMode;
 		private System.Windows.Forms.ComboBox cbTrainedMode;
 		private System.Windows.Forms.MenuStrip menuStrip1;
-		private System.Windows.Forms.ToolStripMenuItem moveToolStripMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem backToolStripMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem forwardToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem fenToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem saveToClipboardToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem loadFromClipboardToolStripMenuItem;
@@ -3371,6 +3407,10 @@
 		private System.Windows.Forms.ComboBox cbTourEBook;
 		private System.Windows.Forms.ComboBox cbTourEMode;
 		private System.Windows.Forms.Button button1;
+		private System.Windows.Forms.Label labPlayerW;
+		private System.Windows.Forms.Label labPlayerB;
+		private System.Windows.Forms.Button butBack;
+		private System.Windows.Forms.Button butForward;
 	}
 }
 

@@ -27,7 +27,7 @@ namespace RapChessGui
 			cbTips.Checked = CRapIni.This.ReadBool("options>interface>tips", cbTips.Checked);
 			nudSpeed.Value = CRapIni.This.ReadInt("options>interface>speed", 200);
 			CBoard.color = ColorTranslator.FromHtml(CRapIni.This.Read("options>interface>color", "#400000"));
-			cbGameAutoElo.Checked = CRapIni.This.ReadBool("options>game>autoelo");
+			cbGameAutoElo.Checked = CRapIni.This.ReadBool("options>game>autoelo",cbGameAutoElo.Checked);
 			nudTourE.Value = CRapIni.This.ReadInt("options>tournamentE>records",10000);
 			nudTourP.Value = CRapIni.This.ReadInt("options>tournamentP>records", 10000);
 			cbModeStandard.SelectedIndex = CRapIni.This.ReadInt("options>margin>standard", 1);
