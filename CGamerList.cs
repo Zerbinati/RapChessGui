@@ -276,7 +276,7 @@ namespace RapChessGui
 			else if (mode == "Time")
 			{
 				double v = Convert.ToDouble(value);
-				if ((ms - timerStart > v + FormOptions.marginTime) && (FormOptions.marginTime >= 0) && (value > 0) && timer.IsRunning)
+				if (((ms - timerStart) > (v + FormOptions.marginTime)) && (FormOptions.marginTime >= 0) && (value > 0) && timer.IsRunning)
 				{
 					if (CChess.This.IsValidMove(lastMove) > 0)
 						FormChess.This.MakeMove(lastMove);

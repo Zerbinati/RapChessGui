@@ -1,27 +1,26 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Collections.Generic;
-using RapIni;
 
 namespace RapChessGui
 {
 	class CPiece
 	{
-		bool animated = false;
 		public int desImage = -1;
 		public int image = -1;
 		public Point curXY = new Point();
 		public Point souXY = new Point();
 		public Point desXY = new Point();
-		public DateTime dt;
+		Stopwatch timer = new Stopwatch();
 
-		public bool Render()
+		public bool UpdatePosition()
 		{
 			if ((curXY.X == desXY.X) && (curXY.Y == desXY.Y))
 				return false;
 			int speed = Convert.ToInt32(FormOptions.This.nudSpeed.Value);
-			double dif = (DateTime.Now - dt).TotalMilliseconds / speed;
+			double dif = timer.Elapsed.TotalMilliseconds / speed;
 			if (dif >= 1)
 			{
 				curXY.X = desXY.X;
@@ -46,27 +45,34 @@ namespace RapChessGui
 				image += 6;
 		}
 
-		public void SetDes(int x, int y)
+		public void SetPositionAni(int x, int y)
 		{
-			if (!animated)
+			if ((desXY.X != x) || (desXY.Y != y))
 			{
-				animated = true;
-				curXY.X = x;
-				curXY.Y = y;
+				desXY.X = x;
+				desXY.Y = y;
+				souXY.X = curXY.X;
+				souXY.Y = curXY.Y;
+				timer.Restart();
 			}
-			if ((x == desXY.X) && (y == desXY.Y))
-				return;
-			souXY.X = curXY.X;
-			souXY.Y = curXY.Y;
-			dt = DateTime.Now;
+		}
+
+		public void SetPositionSta(int x, int y)
+		{
+			curXY.X = x;
+			curXY.Y = y;
 			desXY.X = x;
 			desXY.Y = y;
 		}
+
+
 	}
 
 	class CField
 	{
 		public bool attacked = false;
+		public int x;
+		public int y;
 		public Color color = Color.Empty;
 		public CPiece piece = null;
 	}
@@ -107,9 +113,9 @@ namespace RapChessGui
 
 	}
 
-	static class CBoard
+	class CBoard
 	{
-		public static bool animated = true;
+		public static bool animated = false;
 		public static bool finished = true;
 		public static bool showArrow = false;
 		public static CField[] list = new CField[64];
@@ -118,11 +124,11 @@ namespace RapChessGui
 		public static int marginH = 32;
 		public static int sizeW = field * 8 + marginW * 2;
 		public static int sizeH = field * 8 + marginH * 2;
-		public static Bitmap[] bitmap = new Bitmap[2];
-		public static Bitmap board;
+		public static Bitmap[] background = new Bitmap[2];
+		static Bitmap bmpBoard;
 		public static Color color;
 
-		public static void Init()
+		public CBoard()
 		{
 			for (int n = 0; n < 64; n++)
 				list[n] = new CField();
@@ -134,6 +140,14 @@ namespace RapChessGui
 				list[n].color = Color.Empty;
 		}
 
+		public static void ChangePosition(int sou, int des)
+		{
+			CPiece p = list[sou].piece;
+			CField f = list[des];
+			p.curXY.X = f.x;
+			p.curXY.Y = f.y;
+		}
+
 		public static Point GetMiddle(int x, int y)
 		{
 			int xr = FormChess.boardRotate ? 7 - x : x;
@@ -143,9 +157,24 @@ namespace RapChessGui
 			return new Point(x, y);
 		}
 
-		public static Point GetMiddle(Point p)
+		static Point GetMiddle(Point p)
 		{
 			return GetMiddle(p.X, p.Y);
+		}
+
+		public static void RenderArrow(Graphics g)
+		{
+			if (showArrow && (CArrow.visible))
+			{
+				Bitmap bmpArrow = new Bitmap(bmpBoard);
+				Graphics ga = Graphics.FromImage(bmpArrow);
+				Pen pen = new Pen(Color.FromArgb(0x90, 0x10, 0xff, 0x10), 8);
+				pen.StartCap = LineCap.RoundAnchor;
+				pen.EndCap = LineCap.ArrowAnchor;
+				ga.DrawLine(pen, GetMiddle(CArrow.a), GetMiddle(CArrow.b));
+				g.DrawImage(bmpArrow, 0, 0);
+			}
+			else g.DrawImage(bmpBoard, 0, 0);
 		}
 
 		public static void UpdateField(int index)
@@ -166,10 +195,12 @@ namespace RapChessGui
 		{
 			for (int n = 0; n < 64; n++)
 				UpdateField(n);
-			animated = true;
+			SetPosition();
+			ShowAttack(FormOptions.This.cbAttack.Checked);
+			RenderBoard();
 		}
 
-		public static void Prepare(int index)
+		public static void CreateBackground(int index)
 		{
 			string abc = "ABCDEFGH";
 			Rectangle rec = new Rectangle();
@@ -229,7 +260,7 @@ namespace RapChessGui
 			}
 			g.DrawPath(outline, gp);
 			g.FillPath(foreBrush, gp);
-			bitmap[index] = new Bitmap(bmp);
+			background[index] = new Bitmap(bmp);
 			brush1.Dispose();
 			brush2.Dispose();
 			brush3.Dispose();
@@ -242,7 +273,7 @@ namespace RapChessGui
 			outline.Dispose();
 		}
 
-		public static void Prepare(int w, int h)
+		public static void Resize(int w, int h)
 		{
 			if (w < 0xf) w = 0xf;
 			if (h < 0xf) h = 0xf;
@@ -252,8 +283,97 @@ namespace RapChessGui
 			marginH = (h - (field * 8)) >> 1;
 			sizeW = w;
 			sizeH = h;
-			Prepare(0);
-			Prepare(1);
+			CreateBackground(0);
+			CreateBackground(1);
+			SetPosition();
+			RenderBoard();
+		}
+
+		public static void RenderBoard()
+		{
+			bmpBoard = new Bitmap(background[FormChess.boardRotate ? 1 : 0]);
+			Graphics g = Graphics.FromImage(bmpBoard);
+			Brush brushRed = new SolidBrush(Color.FromArgb(0x80, 0xff, 0x00, 0x00));
+			Brush brushYellow = new SolidBrush(Color.FromArgb(0x80, 0xff, 0xff, 0x00));
+			Brush brushWhite = new SolidBrush(Color.White);
+			Brush brushBlack = new SolidBrush(Color.Black);
+			Font fontPiece = new Font(FormChess.pfc.Families[0], field);
+			Pen penW = new Pen(Color.Black, 4);
+			Pen penB = new Pen(Color.White, 4);
+			GraphicsPath gpW = new GraphicsPath();
+			GraphicsPath gpB = new GraphicsPath();
+			StringFormat sf = new StringFormat();
+			sf.Alignment = StringAlignment.Center;
+			sf.LineAlignment = StringAlignment.Center;
+			g.SmoothingMode = SmoothingMode.HighQuality;
+			Rectangle rec = new Rectangle();
+			for (int y = 0; y < 8; y++)
+			{
+				int yr = FormChess.boardRotate ? 7 - y : y;
+				int y2 = marginH + yr * field;
+				for (int x = 0; x < 8; x++)
+				{
+					int i = y * 8 + x;
+					int xr = FormChess.boardRotate ? 7 - x : x;
+					int x2 = marginW + xr * field;
+					rec.X = x2;
+					rec.Y = y2;
+					rec.Width = field;
+					rec.Height = field;
+					if ((i == CDrag.lastSou) || (i == CDrag.lastDes) || (list[i].color != Color.Empty))
+						g.FillRectangle(brushYellow, rec);
+					else if (list[i].attacked && (CData.gameMode != CMode.edit))
+						g.FillRectangle(brushRed, rec);
+					CPiece piece = list[i].piece;
+					if (piece == null)
+						continue;
+					if (piece.image < 0)
+						continue;
+					GraphicsPath gp1;
+					int image;
+					if (piece.desImage >= 0)
+					{
+						gp1 = piece.desImage > 5 ? gpB : gpW;
+						image = piece.desImage % 6;
+						gp1.AddString("pnbrqk"[image].ToString(), fontPiece.FontFamily, (int)fontPiece.Style, fontPiece.Size, rec, sf);
+					}
+					list[i].x = x2;
+					list[i].y = y2;
+					piece.SetPositionAni(x2, y2);
+					if ((i == CDrag.lastDes) && CDrag.dragged)
+						piece.SetPositionSta(CDrag.mouseX - (field >> 1), CDrag.mouseY - (field >> 1));
+					rec.X = piece.curXY.X;
+					rec.Y = piece.curXY.Y;
+					gp1 = piece.image > 5 ? gpB : gpW;
+					image = piece.image % 6;
+					gp1.AddString("pnbrqk"[image].ToString(), fontPiece.FontFamily, (int)fontPiece.Style, fontPiece.Size, rec, sf);
+				}
+			}
+			if (CChess.whiteTurn)
+			{
+				g.DrawPath(penB, gpB);
+				g.FillPath(brushBlack, gpB);
+				g.DrawPath(penW, gpW);
+				g.FillPath(brushWhite, gpW);
+
+			}
+			else
+			{
+				g.DrawPath(penW, gpW);
+				g.FillPath(brushWhite, gpW);
+				g.DrawPath(penB, gpB);
+				g.FillPath(brushBlack, gpB);
+
+			}
+			sf.Dispose();
+			penW.Dispose();
+			penB.Dispose();
+			brushRed.Dispose();
+			brushYellow.Dispose();
+			brushWhite.Dispose();
+			brushBlack.Dispose();
+			fontPiece.Dispose();
+			g.Dispose();
 		}
 
 		static void MakeMove(int sou, int des)
@@ -289,15 +409,36 @@ namespace RapChessGui
 			Clear();
 		}
 
-		public static void Render()
+		public static void UpdatePosition()
 		{
 			animated = false;
-			for (int n = 0; n < 64; n++)
+			foreach (CField f in list)
 			{
-				CPiece p = list[n].piece;
+				CPiece p = f.piece;
 				if (p != null)
-					if (p.Render())
+					if (p.UpdatePosition())
 						animated = true;
+			}
+		}
+
+		public static void SetPosition()
+		{
+			for (int y = 0; y < 8; y++)
+			{
+				int yr = FormChess.boardRotate ? 7 - y : y;
+				int y2 = marginH + yr * field;
+				for (int x = 0; x < 8; x++)
+				{
+					int i = y * 8 + x;
+					int xr = FormChess.boardRotate ? 7 - x : x;
+					int x2 = marginW + xr * field;
+					list[i].x = x2;
+					list[i].y = y2;
+					CPiece piece = list[i].piece;
+					if (piece == null)
+						continue;
+					piece.SetPositionSta(x2, y2);
+				}
 			}
 		}
 

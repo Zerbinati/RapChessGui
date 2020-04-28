@@ -64,7 +64,7 @@ namespace RapChessGui
 	class CChess
 	{
 		public static CChess This;
-		public const string defFen = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 0";
+		public const string defFen = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
 		public static Random random = new Random();
 		public const int piecePawn = 0x01;
 		public const int pieceKnight = 0x02;
@@ -218,7 +218,7 @@ namespace RapChessGui
 			return ((row + 4) << 4) | (column + 4);
 		}
 
-		public int IsValidMove(int s, int d, string q)
+		public bool IsValidMove(int s, int d,out string fm, out bool promo)
 		{
 			int max = s & 7;
 			int mbx = d & 7;
@@ -230,9 +230,14 @@ namespace RapChessGui
 			string fb = FormatSquare(sb);
 			string move = fa + fb;
 			int piece = g_board[sa] & 0xf;
+			fm = move;
+			promo = false;
 			if (((piece & 7) == piecePawn) && ((mby == 0) || (mby == 7)))
-				move += q;
-			return IsValidMove(move);
+			{
+				promo = true;
+				move += 'q';
+			}
+			return IsValidMove(move) > 0;
 		}
 
 		public int IsValidMove(int gmo)
@@ -383,7 +388,7 @@ namespace RapChessGui
 
 		public string GetFen()
 		{
-			return GetEpd() + ' ' + g_move50 + ' ' + g_moveNumber;
+			return GetEpd() + ' ' + g_move50 + ' ' + ((g_moveNumber >> 1) + 1);
 		}
 
 		int StrToSquare(string s)
@@ -657,6 +662,11 @@ namespace RapChessGui
 			g_passing = StrToSquare(chunks[3]);
 			g_move50 = Int32.Parse(chunks[4]);
 			g_moveNumber = Int32.Parse(chunks[5]);
+			if (g_moveNumber > 0)
+				g_moveNumber--;
+			g_moveNumber <<= 1;
+			if (!whiteTurn)
+				g_moveNumber++;
 			undoIndex = 0;
 			return true;
 		}

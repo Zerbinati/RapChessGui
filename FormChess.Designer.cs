@@ -36,6 +36,8 @@
 			this.timer1 = new System.Windows.Forms.Timer(this.components);
 			this.tabControl1 = new System.Windows.Forms.TabControl();
 			this.tabPageGame = new System.Windows.Forms.TabPage();
+			this.butBack = new System.Windows.Forms.Button();
+			this.butForward = new System.Windows.Forms.Button();
 			this.butResignation = new System.Windows.Forms.Button();
 			this.butStop = new System.Windows.Forms.Button();
 			this.butContinueGame = new System.Windows.Forms.Button();
@@ -205,11 +207,16 @@
 			this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
 			this.labPlayerW = new System.Windows.Forms.Label();
 			this.labPlayerB = new System.Windows.Forms.Label();
+			this.labPromoB = new System.Windows.Forms.Label();
+			this.labPromoN = new System.Windows.Forms.Label();
+			this.labPromoQ = new System.Windows.Forms.Label();
+			this.labPromoR = new System.Windows.Forms.Label();
 			this.statusStrip1 = new System.Windows.Forms.StatusStrip();
 			this.tssMove = new System.Windows.Forms.ToolStripStatusLabel();
 			this.tssMoves = new System.Windows.Forms.ToolStripStatusLabel();
 			this.splitContainerBoard = new System.Windows.Forms.SplitContainer();
 			this.panBoard = new System.Windows.Forms.Panel();
+			this.tlpPromotion = new System.Windows.Forms.TableLayoutPanel();
 			this.tlpBoardD = new System.Windows.Forms.TableLayoutPanel();
 			this.tlpBoardT = new System.Windows.Forms.TableLayoutPanel();
 			this.splitContainerMode = new System.Windows.Forms.SplitContainer();
@@ -241,8 +248,6 @@
 			this.columnHeader21 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeader22 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.tlpBlack = new System.Windows.Forms.TableLayoutPanel();
-			this.butForward = new System.Windows.Forms.Button();
-			this.butBack = new System.Windows.Forms.Button();
 			this.tabControl1.SuspendLayout();
 			this.tabPageGame.SuspendLayout();
 			this.groupBox2.SuspendLayout();
@@ -284,6 +289,8 @@
 			this.splitContainerBoard.Panel1.SuspendLayout();
 			this.splitContainerBoard.Panel2.SuspendLayout();
 			this.splitContainerBoard.SuspendLayout();
+			this.panBoard.SuspendLayout();
+			this.tlpPromotion.SuspendLayout();
 			this.tlpBoardD.SuspendLayout();
 			this.tlpBoardT.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainerMode)).BeginInit();
@@ -351,6 +358,32 @@
 			this.tabPageGame.Size = new System.Drawing.Size(358, 376);
 			this.tabPageGame.TabIndex = 0;
 			this.tabPageGame.Text = "Game";
+			// 
+			// butBack
+			// 
+			this.butBack.Cursor = System.Windows.Forms.Cursors.Hand;
+			this.butBack.Dock = System.Windows.Forms.DockStyle.Top;
+			this.butBack.Location = new System.Drawing.Point(3, 330);
+			this.butBack.Name = "butBack";
+			this.butBack.Size = new System.Drawing.Size(352, 23);
+			this.butBack.TabIndex = 27;
+			this.butBack.Text = "Back move";
+			this.toolTip1.SetToolTip(this.butBack, "Resignation from further play");
+			this.butBack.UseVisualStyleBackColor = true;
+			this.butBack.Click += new System.EventHandler(this.button3_Click);
+			// 
+			// butForward
+			// 
+			this.butForward.Cursor = System.Windows.Forms.Cursors.Hand;
+			this.butForward.Dock = System.Windows.Forms.DockStyle.Top;
+			this.butForward.Location = new System.Drawing.Point(3, 307);
+			this.butForward.Name = "butForward";
+			this.butForward.Size = new System.Drawing.Size(352, 23);
+			this.butForward.TabIndex = 26;
+			this.butForward.Text = "Make move";
+			this.toolTip1.SetToolTip(this.butForward, "Resignation from further play");
+			this.butForward.UseVisualStyleBackColor = true;
+			this.butForward.Click += new System.EventHandler(this.button2_Click);
 			// 
 			// butResignation
 			// 
@@ -516,7 +549,7 @@
 			this.groupBox1.Size = new System.Drawing.Size(352, 81);
 			this.groupBox1.TabIndex = 18;
 			this.groupBox1.TabStop = false;
-			this.groupBox1.Text = "Human";
+			this.groupBox1.Text = "Human color";
 			// 
 			// labAutoElo
 			// 
@@ -2611,6 +2644,70 @@
 			this.labPlayerB.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			this.toolTip1.SetToolTip(this.labPlayerB, "Player name");
 			// 
+			// labPromoB
+			// 
+			this.labPromoB.BackColor = System.Drawing.Color.Transparent;
+			this.labPromoB.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.labPromoB.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+			this.labPromoB.ForeColor = System.Drawing.Color.Black;
+			this.labPromoB.Location = new System.Drawing.Point(204, 0);
+			this.labPromoB.Margin = new System.Windows.Forms.Padding(0);
+			this.labPromoB.Name = "labPromoB";
+			this.labPromoB.Size = new System.Drawing.Size(102, 52);
+			this.labPromoB.TabIndex = 23;
+			this.labPromoB.Text = "b";
+			this.labPromoB.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.toolTip1.SetToolTip(this.labPromoB, "Promotion bishop");
+			this.labPromoB.Click += new System.EventHandler(this.labPromoQ_Click);
+			// 
+			// labPromoN
+			// 
+			this.labPromoN.BackColor = System.Drawing.Color.Transparent;
+			this.labPromoN.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.labPromoN.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+			this.labPromoN.ForeColor = System.Drawing.Color.Black;
+			this.labPromoN.Location = new System.Drawing.Point(306, 0);
+			this.labPromoN.Margin = new System.Windows.Forms.Padding(0);
+			this.labPromoN.Name = "labPromoN";
+			this.labPromoN.Size = new System.Drawing.Size(104, 52);
+			this.labPromoN.TabIndex = 22;
+			this.labPromoN.Text = "n";
+			this.labPromoN.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.toolTip1.SetToolTip(this.labPromoN, "Promotion kinght");
+			this.labPromoN.Click += new System.EventHandler(this.labPromoQ_Click);
+			// 
+			// labPromoQ
+			// 
+			this.labPromoQ.BackColor = System.Drawing.Color.Transparent;
+			this.labPromoQ.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.labPromoQ.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+			this.labPromoQ.ForeColor = System.Drawing.Color.Black;
+			this.labPromoQ.Location = new System.Drawing.Point(0, 0);
+			this.labPromoQ.Margin = new System.Windows.Forms.Padding(0);
+			this.labPromoQ.Name = "labPromoQ";
+			this.labPromoQ.Size = new System.Drawing.Size(102, 52);
+			this.labPromoQ.TabIndex = 21;
+			this.labPromoQ.Text = "q";
+			this.labPromoQ.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.toolTip1.SetToolTip(this.labPromoQ, "Promotion queen");
+			this.labPromoQ.Click += new System.EventHandler(this.labPromoQ_Click);
+			// 
+			// labPromoR
+			// 
+			this.labPromoR.BackColor = System.Drawing.Color.Transparent;
+			this.labPromoR.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.labPromoR.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+			this.labPromoR.ForeColor = System.Drawing.Color.Black;
+			this.labPromoR.Location = new System.Drawing.Point(102, 0);
+			this.labPromoR.Margin = new System.Windows.Forms.Padding(0);
+			this.labPromoR.Name = "labPromoR";
+			this.labPromoR.Size = new System.Drawing.Size(102, 52);
+			this.labPromoR.TabIndex = 20;
+			this.labPromoR.Text = "r";
+			this.labPromoR.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.toolTip1.SetToolTip(this.labPromoR, "Promotion rook");
+			this.labPromoR.Click += new System.EventHandler(this.labPromoQ_Click);
+			// 
 			// statusStrip1
 			// 
 			this.statusStrip1.BackColor = System.Drawing.Color.Black;
@@ -2658,6 +2755,8 @@
 			// 
 			// panBoard
 			// 
+			this.panBoard.Controls.Add(this.tlpPromotion);
+			this.panBoard.Cursor = System.Windows.Forms.Cursors.Default;
 			this.panBoard.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.panBoard.Location = new System.Drawing.Point(0, 24);
 			this.panBoard.Name = "panBoard";
@@ -2668,6 +2767,28 @@
 			this.panBoard.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseMove);
 			this.panBoard.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseUp);
 			this.panBoard.Resize += new System.EventHandler(this.panBoard_Resize);
+			// 
+			// tlpPromotion
+			// 
+			this.tlpPromotion.BackColor = System.Drawing.Color.BlanchedAlmond;
+			this.tlpPromotion.ColumnCount = 4;
+			this.tlpPromotion.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
+			this.tlpPromotion.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
+			this.tlpPromotion.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
+			this.tlpPromotion.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
+			this.tlpPromotion.Controls.Add(this.labPromoB, 0, 0);
+			this.tlpPromotion.Controls.Add(this.labPromoN, 0, 0);
+			this.tlpPromotion.Controls.Add(this.labPromoQ, 0, 0);
+			this.tlpPromotion.Controls.Add(this.labPromoR, 0, 0);
+			this.tlpPromotion.Cursor = System.Windows.Forms.Cursors.Hand;
+			this.tlpPromotion.Dock = System.Windows.Forms.DockStyle.Bottom;
+			this.tlpPromotion.Location = new System.Drawing.Point(0, 320);
+			this.tlpPromotion.Name = "tlpPromotion";
+			this.tlpPromotion.RowCount = 1;
+			this.tlpPromotion.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+			this.tlpPromotion.Size = new System.Drawing.Size(410, 52);
+			this.tlpPromotion.TabIndex = 2;
+			this.tlpPromotion.Visible = false;
 			// 
 			// tlpBoardD
 			// 
@@ -3083,32 +3204,6 @@
 			this.tlpBlack.Size = new System.Drawing.Size(1180, 24);
 			this.tlpBlack.TabIndex = 35;
 			// 
-			// butForward
-			// 
-			this.butForward.Cursor = System.Windows.Forms.Cursors.Hand;
-			this.butForward.Dock = System.Windows.Forms.DockStyle.Top;
-			this.butForward.Location = new System.Drawing.Point(3, 307);
-			this.butForward.Name = "butForward";
-			this.butForward.Size = new System.Drawing.Size(352, 23);
-			this.butForward.TabIndex = 26;
-			this.butForward.Text = "Make move";
-			this.toolTip1.SetToolTip(this.butForward, "Resignation from further play");
-			this.butForward.UseVisualStyleBackColor = true;
-			this.butForward.Click += new System.EventHandler(this.button2_Click);
-			// 
-			// butBack
-			// 
-			this.butBack.Cursor = System.Windows.Forms.Cursors.Hand;
-			this.butBack.Dock = System.Windows.Forms.DockStyle.Top;
-			this.butBack.Location = new System.Drawing.Point(3, 330);
-			this.butBack.Name = "butBack";
-			this.butBack.Size = new System.Drawing.Size(352, 23);
-			this.butBack.TabIndex = 27;
-			this.butBack.Text = "Back move";
-			this.toolTip1.SetToolTip(this.butBack, "Resignation from further play");
-			this.butBack.UseVisualStyleBackColor = true;
-			this.butBack.Click += new System.EventHandler(this.button3_Click);
-			// 
 			// FormChess
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -3170,6 +3265,8 @@
 			this.splitContainerBoard.Panel2.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.splitContainerBoard)).EndInit();
 			this.splitContainerBoard.ResumeLayout(false);
+			this.panBoard.ResumeLayout(false);
+			this.tlpPromotion.ResumeLayout(false);
 			this.tlpBoardD.ResumeLayout(false);
 			this.tlpBoardT.ResumeLayout(false);
 			this.splitContainerMode.Panel1.ResumeLayout(false);
@@ -3411,6 +3508,11 @@
 		private System.Windows.Forms.Label labPlayerB;
 		private System.Windows.Forms.Button butBack;
 		private System.Windows.Forms.Button butForward;
+		private System.Windows.Forms.TableLayoutPanel tlpPromotion;
+		private System.Windows.Forms.Label labPromoB;
+		private System.Windows.Forms.Label labPromoN;
+		private System.Windows.Forms.Label labPromoQ;
+		private System.Windows.Forms.Label labPromoR;
 	}
 }
 
