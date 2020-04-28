@@ -867,7 +867,8 @@ namespace RapChessGui
 			}
 			for (int n = moves.Count - 1; n >= 0; n--)
 				Chess.UnmakeMove(moves[n]);
-			g.pv = pv;
+			if (pv != "")
+				g.pv = pv;
 			tssMoves.Text = pv;
 			AddLines(g);
 		}
@@ -1027,7 +1028,7 @@ namespace RapChessGui
 
 		public void GetMessage()
 		{
-			if (CMessageList.MessageGet(out CMessage m))
+			while(CMessageList.MessageGet(out CMessage m))
 			{
 				CGamer gamer = GamerList.GetGamerPid(m.pid);
 				if (gamer == null)
