@@ -2265,7 +2265,7 @@ namespace RapChessGui
 			CModeTournamentE.modeValue.mode = (sender as ComboBox).Text;
 			nudTourE.Increment = CModeTournamentE.modeValue.GetIncrement();
 			nudTourE.Minimum = nudTourE.Increment;
-			nudTourE.Value = CModeTournamentE.modeValue.GetValue();
+			nudTourE.Value = Math.Max(CModeTournamentE.modeValue.GetValue(),nudTourE.Maximum);
 			toolTip1.SetToolTip(nudTourE, CModeTournamentE.modeValue.GetTip());
 		}
 
