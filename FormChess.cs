@@ -842,7 +842,7 @@ namespace RapChessGui
 			lv.Items.Insert(0, lvi);
 		}
 
-		void SetPv(int i,CGamer g)
+		void SetPv(int i, CGamer g)
 		{
 			string pv = "";
 			List<int> moves = new List<int>();
@@ -966,7 +966,7 @@ namespace RapChessGui
 					}
 					int i = Uci.GetIndex("pv", 0);
 					if (i > 0)
-						SetPv(i,g);
+						SetPv(i, g);
 					isBook = Uci.GetIndex("book", 0) > 0;
 					break;
 			}
@@ -1027,7 +1027,7 @@ namespace RapChessGui
 
 		public void GetMessage()
 		{
-			while (CMessageList.MessageGet(out CMessage m))
+			if (CMessageList.MessageGet(out CMessage m))
 			{
 				CGamer gamer = GamerList.GetGamerPid(m.pid);
 				if (gamer == null)
@@ -2255,7 +2255,7 @@ namespace RapChessGui
 			CModeTournamentE.modeValue.mode = (sender as ComboBox).Text;
 			nudTourE.Increment = CModeTournamentE.modeValue.GetIncrement();
 			nudTourE.Minimum = nudTourE.Increment;
-			nudTourE.Value = Math.Max(CModeTournamentE.modeValue.GetValue(),nudTourE.Maximum);
+			nudTourE.Value = Math.Max(CModeTournamentE.modeValue.GetValue(), nudTourE.Maximum);
 			toolTip1.SetToolTip(nudTourE, CModeTournamentE.modeValue.GetTip());
 		}
 
