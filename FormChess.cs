@@ -2007,6 +2007,8 @@ namespace RapChessGui
 
 		private void pictureBox1_MouseUp(object sender, MouseEventArgs e)
 		{
+			if (tlpPromotion.Visible)
+				return;
 			if (CData.gameMode == (int)CMode.game)
 			{
 				if (CDrag.lastDes == CDrag.mouseIndex)
