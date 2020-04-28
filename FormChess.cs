@@ -842,6 +842,36 @@ namespace RapChessGui
 			lv.Items.Insert(0, lvi);
 		}
 
+		void SetPv(int i,CGamer g)
+		{
+			string pv = "";
+			List<int> moves = new List<int>();
+			for (int n = i; n < Uci.tokens.Length; n++)
+			{
+				string emo = Uci.tokens[n];
+				int gmo = Chess.IsValidMove(emo);
+				if (gmo > 0)
+				{
+					if (moves.Count == 0)
+					{
+						g.lastMove = emo;
+						CChess.EmoToSD(emo, out int sou, out int des);
+						CArrow.SetAB(sou, des);
+						RenderBoard();
+					}
+					Chess.MakeMove(gmo);
+					moves.Add(gmo);
+					pv += $" {emo}";
+				}
+				else break;
+			}
+			for (int n = moves.Count - 1; n >= 0; n--)
+				Chess.UnmakeMove(moves[n]);
+			g.pv = pv;
+			tssMoves.Text = pv;
+			AddLines(g);
+		}
+
 		public void GetMessageUci(CGamer g, string msg)
 		{
 			string emo;
@@ -934,36 +964,9 @@ namespace RapChessGui
 						if (nps == 0)
 							g.nps = g.infMs > 0 ? (g.nodes * 1000) / g.infMs : 0;
 					}
-					string pv = "";
 					int i = Uci.GetIndex("pv", 0);
 					if (i > 0)
-					{
-						List<int> moves = new List<int>();
-						for (int n = i; n < Uci.tokens.Length; n++)
-						{
-							emo = Uci.tokens[n];
-							int gmo = Chess.IsValidMove(emo);
-							if (gmo > 0)
-							{
-								if (moves.Count == 0)
-								{
-									g.lastMove = emo;
-									CChess.EmoToSD(emo, out int sou, out int des);
-									CArrow.SetAB(sou, des);
-									RenderBoard();
-								}
-								Chess.MakeMove(gmo);
-								moves.Add(gmo);
-								pv = $"{pv} {emo}";
-							}
-							else break;
-						}
-						for (int n = moves.Count - 1; n >= 0; n--)
-							Chess.UnmakeMove(moves[n]);
-						g.pv = pv;
-						tssMoves.Text = pv;
-						AddLines(g);
-					}
+						SetPv(i,g);
 					isBook = Uci.GetIndex("book", 0) > 0;
 					break;
 			}
@@ -1004,13 +1007,7 @@ namespace RapChessGui
 							g.infMs = (ulong)Convert.ToInt64(Uci.tokens[2]) * 10;
 							g.nodes = (ulong)Convert.ToInt64(Uci.tokens[3]);
 							g.nps = g.infMs > 0 ? (g.nodes * 1000) / g.infMs : 0;
-							string pv = "";
-							for (int n = 4; n < Uci.tokens.Length; n++)
-								pv += Uci.tokens[n] + " ";
-							tssMoves.ForeColor = Color.Gainsboro;
-							g.pv = pv;
-							tssMoves.Text = pv;
-							AddLines(g);
+							SetPv(4, g);
 						}
 						catch
 						{
@@ -1325,13 +1322,6 @@ namespace RapChessGui
 				cg.player.SaveToIni();
 			}
 			bool ivm = Chess.IsValidMove(emo) != 0;
-			/*if (!ivm)
-			{
-				string emo2 = $"{emo}q";
-				ivm = Chess.IsValidMove(emo2) != 0;
-				if (ivm)
-					emo = emo2;
-			}*/
 			if (!ivm)
 			{
 				List<int> gMoves = Chess.GenerateValidMoves();
@@ -1400,7 +1390,7 @@ namespace RapChessGui
 			CGamer pw = GamerList.gamer[0];
 			CGamer pb = GamerList.gamer[1];
 			FormLog.This.richTextBox1.Clear();
-			FormLog.This.richTextBox1.AppendText($"Time {new DateTime().ToString("yyyy-MM-dd HH:mm")}\n", Color.Gray);
+			FormLog.This.richTextBox1.AppendText($"Time {DateTime.Now.ToString("yyyy-MM-dd HH:mm")}\n", Color.Gray);
 			if (pw.engine != null)
 				FormLog.This.richTextBox1.AppendText($"White {pw.player.name} {pw.player.engine} {pw.engine.parameters}\n", Color.Gray);
 			if (pb.engine != null)
