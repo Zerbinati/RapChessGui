@@ -7,6 +7,13 @@ namespace RapChessGui
 {
 	public enum CMode { game, match,tourE, tourP, training, edit }
 
+	public static class CPromotion
+	{
+		public static string emo;
+		public static int sou;
+		public static int des;
+	}
+
 	public static class CDrag
 	{
 		public static bool dragged = false;

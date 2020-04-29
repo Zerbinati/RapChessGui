@@ -21,7 +21,6 @@ namespace RapChessGui
 		public static FormChess This;
 		public static bool boardRotate;
 		bool isBook = false;
-		string movePromo;
 		List<int> moves = new List<int>();
 		public CRapIni RapIni = new CRapIni();
 		readonly CEcoList EcoList = new CEcoList();
@@ -1381,7 +1380,7 @@ namespace RapChessGui
 			CDrag.lastDes = -1;
 			Chess.InitializeFromFen(CData.fen);
 			CHistory.NewGame(Chess.GetFen());
-			CBoard.Clear();
+			CBoard.ColorClear();
 			CBoard.Fill();
 			GamerList.Init();
 			lvMoves.Items.Clear();
@@ -1455,8 +1454,11 @@ namespace RapChessGui
 			if (!CBoard.animated && !CBoard.finished)
 			{
 				CBoard.finished = true;
-				CBoard.Fill();
-				RenderTaken();
+				if (!tlpPromotion.Visible)
+				{
+					CBoard.Fill();
+					RenderTaken();
+				}
 			}
 			Graphics pg = panBoard.CreateGraphics();
 			CBoard.RenderArrow(pg);
@@ -1655,11 +1657,14 @@ namespace RapChessGui
 
 		bool TryMove(int s, int d)
 		{
-			bool result = Chess.IsValidMove(s, d, out movePromo, out bool promo);
+			bool result = Chess.IsValidMove(s, d, out string emo, out bool promo);
 			if (result)
 				if (promo)
 				{
-					CBoard.ChangePosition(s, d);
+					CPromotion.emo = emo;
+					CPromotion.sou = s;
+					CPromotion.des = d;
+					CBoard.MakeMove(s,d);
 					CBoard.RenderBoard();
 					RenderBoard();
 					tlpPromotion.Dock = boardRotate ^ CChess.whiteTurn ? DockStyle.Bottom : DockStyle.Top;
@@ -1670,7 +1675,7 @@ namespace RapChessGui
 					tlpPromotion.Show();
 				}
 				else
-					MakeMove(movePromo);
+					MakeMove(emo);
 			return result;
 		}
 
@@ -1749,7 +1754,7 @@ namespace RapChessGui
 
 		void SetIndex(int i)
 		{
-			CBoard.Clear();
+			CBoard.ColorClear();
 			if (i == -1)
 			{
 				ShowValid();
@@ -2304,7 +2309,8 @@ namespace RapChessGui
 
 		private void labPromoQ_Click(object sender, EventArgs e)
 		{
-			MakeMove(movePromo + (sender as Label).Text);
+			CBoard.MakeMove(CPromotion.des,CPromotion.sou);
+			MakeMove(CPromotion.emo + (sender as Label).Text);
 			tlpPromotion.Hide();
 		}
 	}

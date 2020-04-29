@@ -134,18 +134,10 @@ namespace RapChessGui
 				list[n] = new CField();
 		}
 
-		public static void Clear()
+		public static void ColorClear()
 		{
 			for (int n = 0; n < 64; n++)
 				list[n].color = Color.Empty;
-		}
-
-		public static void ChangePosition(int sou, int des)
-		{
-			CPiece p = list[sou].piece;
-			CField f = list[des];
-			p.curXY.X = f.x;
-			p.curXY.Y = f.y;
 		}
 
 		public static Point GetMiddle(int x, int y)
@@ -376,7 +368,7 @@ namespace RapChessGui
 			g.Dispose();
 		}
 
-		static void MakeMove(int sou, int des)
+		public static void MakeMove(int sou, int des)
 		{
 			list[des].piece = list[sou].piece;
 			list[sou].piece = null;
@@ -406,7 +398,7 @@ namespace RapChessGui
 			{
 				MakeMove(sou - 4, sou - 1);
 			}
-			Clear();
+			ColorClear();
 		}
 
 		public static void UpdatePosition()
