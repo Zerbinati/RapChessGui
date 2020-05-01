@@ -584,6 +584,7 @@ namespace RapChessGui
 		void TournamentEShow()
 		{
 			cbTourEMode.SelectedIndex = cbTourEMode.FindStringExact(CModeTournamentE.modeValue.mode);
+			cbTourEBook.SelectedIndex = cbTourEBook.FindStringExact(CModeTournamentE.book);
 		}
 
 		void TournamentEReset()
