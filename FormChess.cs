@@ -132,6 +132,12 @@ namespace RapChessGui
 					This.tssMoves.Text = $"{pl.name} make Wrong move";
 					break;
 			}
+			FormLog.This.richTextBox1.AppendText($"Finish {This.tssMoves.Text}\n", Color.Gray);
+			if (CData.gameState != CGameState.error)
+			{
+				This.CreateRtf();
+				This.CreatePgn();
+			}
 			if (CData.gameMode == CMode.game)
 			{
 				if (This.IsAutoElo())
@@ -285,12 +291,6 @@ namespace RapChessGui
 				if ((gl.player.name == "Trained") && ((CData.gameState == CGameState.time) || (CData.gameState == CGameState.error) || gl.timeOut))
 					CModeTraining.errors++;
 				This.TrainingShow();
-			}
-			FormLog.This.richTextBox1.AppendText($"Finish {This.tssMoves.Text}\n", Color.Gray);
-			if (CData.gameState != CGameState.error)
-			{
-				This.CreateRtf();
-				This.CreatePgn();
 			}
 			This.timerStart.Start();
 		}
@@ -583,10 +583,7 @@ namespace RapChessGui
 
 		void TournamentEShow()
 		{
-			nudTourE.Increment = CModeTournamentE.modeValue.GetIncrement();
-			nudTourE.Minimum = nudTourE.Increment;
-			nudTourE.Value = Math.Max(CModeTournamentE.modeValue.GetValue(), nudTourE.Maximum);
-			toolTip1.SetToolTip(nudTourE, CModeTournamentE.modeValue.GetTip());
+			cbTourEMode.SelectedIndex = cbTourEMode.FindStringExact(CModeTournamentE.modeValue.mode);
 		}
 
 		void TournamentEReset()
@@ -1068,6 +1065,8 @@ namespace RapChessGui
 			list.Add($"[Date \"{DateTime.Now.ToString("yyyy.MM.dd")}\"]");
 			list.Add($"[White \"{GamerList.gamer[0].player.name}\"]");
 			list.Add($"[Black \"{GamerList.gamer[1].player.name}\"]");
+			list.Add($"[WhiteElo \"{GamerList.gamer[0].player.elo}\"]");
+			list.Add($"[BlackElo \"{GamerList.gamer[1].player.elo}\"]");
 			list.Add($"[Result \"{result}\"]");
 			list.Add("");
 			list.Add(CHistory.GetPgn());
@@ -2262,7 +2261,10 @@ namespace RapChessGui
 		private void cbTourEMode_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			CModeTournamentE.modeValue.mode = (sender as ComboBox).Text;
-			TournamentEShow();
+			nudTourE.Increment = CModeTournamentE.modeValue.GetIncrement();
+			nudTourE.Minimum = nudTourE.Increment;
+			nudTourE.Value = Math.Max(CModeTournamentE.modeValue.GetValue(), nudTourE.Minimum);
+			toolTip1.SetToolTip(nudTourE, CModeTournamentE.modeValue.GetTip());
 		}
 
 		private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)

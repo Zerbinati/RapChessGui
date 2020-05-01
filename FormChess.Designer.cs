@@ -96,7 +96,6 @@
 			this.labEngine = new System.Windows.Forms.Label();
 			this.groupBox8 = new System.Windows.Forms.GroupBox();
 			this.nudTourE = new System.Windows.Forms.NumericUpDown();
-			this.cbTourEBook = new System.Windows.Forms.ComboBox();
 			this.cbTourEMode = new System.Windows.Forms.ComboBox();
 			this.button1 = new System.Windows.Forms.Button();
 			this.tabPageTourP = new System.Windows.Forms.TabPage();
@@ -248,6 +247,8 @@
 			this.columnHeader21 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeader22 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.tlpBlack = new System.Windows.Forms.TableLayoutPanel();
+			this.groupBox9 = new System.Windows.Forms.GroupBox();
+			this.cbTourEBook = new System.Windows.Forms.ComboBox();
 			this.tabControl1.SuspendLayout();
 			this.tabPageGame.SuspendLayout();
 			this.groupBox2.SuspendLayout();
@@ -316,6 +317,7 @@
 			this.splitContainerMoves.SuspendLayout();
 			this.tlpWhite.SuspendLayout();
 			this.tlpBlack.SuspendLayout();
+			this.groupBox9.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// timer1
@@ -1019,6 +1021,7 @@
 			// tabPageTourE
 			// 
 			this.tabPageTourE.Controls.Add(this.splitContainerTourE);
+			this.tabPageTourE.Controls.Add(this.groupBox9);
 			this.tabPageTourE.Controls.Add(this.groupBox8);
 			this.tabPageTourE.Controls.Add(this.button1);
 			this.tabPageTourE.Location = new System.Drawing.Point(4, 5);
@@ -1033,7 +1036,7 @@
 			// 
 			this.splitContainerTourE.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
 			this.splitContainerTourE.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.splitContainerTourE.Location = new System.Drawing.Point(3, 112);
+			this.splitContainerTourE.Location = new System.Drawing.Point(3, 131);
 			this.splitContainerTourE.Name = "splitContainerTourE";
 			this.splitContainerTourE.Orientation = System.Windows.Forms.Orientation.Horizontal;
 			// 
@@ -1045,8 +1048,8 @@
 			// 
 			this.splitContainerTourE.Panel2.Controls.Add(this.lvEngineH);
 			this.splitContainerTourE.Panel2.Controls.Add(this.labEngine);
-			this.splitContainerTourE.Size = new System.Drawing.Size(352, 261);
-			this.splitContainerTourE.SplitterDistance = 165;
+			this.splitContainerTourE.Size = new System.Drawing.Size(352, 242);
+			this.splitContainerTourE.SplitterDistance = 152;
 			this.splitContainerTourE.TabIndex = 27;
 			// 
 			// lvEngine
@@ -1063,7 +1066,7 @@
 			this.lvEngine.MultiSelect = false;
 			this.lvEngine.Name = "lvEngine";
 			this.lvEngine.ShowGroups = false;
-			this.lvEngine.Size = new System.Drawing.Size(348, 161);
+			this.lvEngine.Size = new System.Drawing.Size(348, 148);
 			this.lvEngine.Sorting = System.Windows.Forms.SortOrder.Descending;
 			this.lvEngine.TabIndex = 23;
 			this.lvEngine.UseCompatibleStateImageBehavior = false;
@@ -1105,7 +1108,7 @@
 			this.lvEngineH.MultiSelect = false;
 			this.lvEngineH.Name = "lvEngineH";
 			this.lvEngineH.ShowGroups = false;
-			this.lvEngineH.Size = new System.Drawing.Size(348, 75);
+			this.lvEngineH.Size = new System.Drawing.Size(348, 69);
 			this.lvEngineH.TabIndex = 27;
 			this.lvEngineH.UseCompatibleStateImageBehavior = false;
 			this.lvEngineH.View = System.Windows.Forms.View.Details;
@@ -1148,20 +1151,19 @@
 			// groupBox8
 			// 
 			this.groupBox8.Controls.Add(this.nudTourE);
-			this.groupBox8.Controls.Add(this.cbTourEBook);
 			this.groupBox8.Controls.Add(this.cbTourEMode);
 			this.groupBox8.Dock = System.Windows.Forms.DockStyle.Top;
 			this.groupBox8.Location = new System.Drawing.Point(3, 26);
 			this.groupBox8.Name = "groupBox8";
-			this.groupBox8.Size = new System.Drawing.Size(352, 86);
+			this.groupBox8.Size = new System.Drawing.Size(352, 61);
 			this.groupBox8.TabIndex = 23;
 			this.groupBox8.TabStop = false;
-			this.groupBox8.Text = "Game mode";
+			this.groupBox8.Text = "Time control";
 			// 
 			// nudTourE
 			// 
 			this.nudTourE.Dock = System.Windows.Forms.DockStyle.Top;
-			this.nudTourE.Location = new System.Drawing.Point(3, 58);
+			this.nudTourE.Location = new System.Drawing.Point(3, 37);
 			this.nudTourE.Maximum = new decimal(new int[] {
             1000000000,
             0,
@@ -1177,18 +1179,6 @@
             0,
             0,
             0});
-			// 
-			// cbTourEBook
-			// 
-			this.cbTourEBook.Dock = System.Windows.Forms.DockStyle.Top;
-			this.cbTourEBook.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.cbTourEBook.FormattingEnabled = true;
-			this.cbTourEBook.Location = new System.Drawing.Point(3, 37);
-			this.cbTourEBook.Name = "cbTourEBook";
-			this.cbTourEBook.Size = new System.Drawing.Size(346, 21);
-			this.cbTourEBook.Sorted = true;
-			this.cbTourEBook.TabIndex = 31;
-			this.toolTip1.SetToolTip(this.cbTourEBook, "Select engine opening book");
 			// 
 			// cbTourEMode
 			// 
@@ -3204,6 +3194,29 @@
 			this.tlpBlack.Size = new System.Drawing.Size(1180, 24);
 			this.tlpBlack.TabIndex = 35;
 			// 
+			// groupBox9
+			// 
+			this.groupBox9.Controls.Add(this.cbTourEBook);
+			this.groupBox9.Dock = System.Windows.Forms.DockStyle.Top;
+			this.groupBox9.Location = new System.Drawing.Point(3, 87);
+			this.groupBox9.Name = "groupBox9";
+			this.groupBox9.Size = new System.Drawing.Size(352, 44);
+			this.groupBox9.TabIndex = 28;
+			this.groupBox9.TabStop = false;
+			this.groupBox9.Text = "Opening book";
+			// 
+			// cbTourEBook
+			// 
+			this.cbTourEBook.Dock = System.Windows.Forms.DockStyle.Top;
+			this.cbTourEBook.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.cbTourEBook.FormattingEnabled = true;
+			this.cbTourEBook.Location = new System.Drawing.Point(3, 16);
+			this.cbTourEBook.Name = "cbTourEBook";
+			this.cbTourEBook.Size = new System.Drawing.Size(346, 21);
+			this.cbTourEBook.Sorted = true;
+			this.cbTourEBook.TabIndex = 32;
+			this.toolTip1.SetToolTip(this.cbTourEBook, "Select engine opening book");
+			// 
 			// FormChess
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -3292,6 +3305,7 @@
 			this.splitContainerMoves.ResumeLayout(false);
 			this.tlpWhite.ResumeLayout(false);
 			this.tlpBlack.ResumeLayout(false);
+			this.groupBox9.ResumeLayout(false);
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -3501,7 +3515,6 @@
 		private System.Windows.Forms.Label labEngine;
 		private System.Windows.Forms.GroupBox groupBox8;
 		private System.Windows.Forms.NumericUpDown nudTourE;
-		private System.Windows.Forms.ComboBox cbTourEBook;
 		private System.Windows.Forms.ComboBox cbTourEMode;
 		private System.Windows.Forms.Button button1;
 		private System.Windows.Forms.Label labPlayerW;
@@ -3513,6 +3526,8 @@
 		private System.Windows.Forms.Label labPromoN;
 		private System.Windows.Forms.Label labPromoQ;
 		private System.Windows.Forms.Label labPromoR;
+		private System.Windows.Forms.GroupBox groupBox9;
+		private System.Windows.Forms.ComboBox cbTourEBook;
 	}
 }
 
