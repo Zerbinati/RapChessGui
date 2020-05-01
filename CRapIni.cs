@@ -52,10 +52,9 @@ namespace RapIni
 			reqparm.Add("name", name);
 			reqparm.Add("key", key);
 			reqparm.Add("value", value);
-			byte[] data;
 			try
 			{
-				data = new WebClient().UploadValues(script, "POST", reqparm);
+				new WebClient().UploadValues(script, "POST", reqparm);
 			}
 			catch
 			{
@@ -239,10 +238,9 @@ namespace RapIni
 			reqparm.Add("action", "delete");
 			reqparm.Add("name", name);
 			reqparm.Add("key", key);
-			byte[] data;
 			try
 			{
-				data = new WebClient().UploadValues(script, "POST", reqparm);
+				new WebClient().UploadValues(script, "POST", reqparm);
 			}
 			catch
 			{

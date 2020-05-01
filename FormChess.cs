@@ -583,9 +583,10 @@ namespace RapChessGui
 
 		void TournamentEShow()
 		{
-			cbTourEMode.SelectedIndex = cbTourEMode.FindStringExact(CModeTournamentE.modeValue.mode);
-			cbTourEBook.SelectedIndex = cbTourEBook.FindStringExact(CModeTournamentE.book);
-			nudTourE.Value = CModeTournamentE.modeValue.GetValue();
+			nudTourE.Increment = CModeTournamentE.modeValue.GetIncrement();
+			nudTourE.Minimum = nudTourE.Increment;
+			nudTourE.Value = Math.Max(CModeTournamentE.modeValue.GetValue(), nudTourE.Maximum);
+			toolTip1.SetToolTip(nudTourE, CModeTournamentE.modeValue.GetTip());
 		}
 
 		void TournamentEReset()
@@ -2261,10 +2262,7 @@ namespace RapChessGui
 		private void cbTourEMode_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			CModeTournamentE.modeValue.mode = (sender as ComboBox).Text;
-			nudTourE.Increment = CModeTournamentE.modeValue.GetIncrement();
-			nudTourE.Minimum = nudTourE.Increment;
-			nudTourE.Value = Math.Max(CModeTournamentE.modeValue.GetValue(), nudTourE.Maximum);
-			toolTip1.SetToolTip(nudTourE, CModeTournamentE.modeValue.GetTip());
+			TournamentEShow();
 		}
 
 		private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
