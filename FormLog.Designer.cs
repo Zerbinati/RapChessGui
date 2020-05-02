@@ -124,7 +124,7 @@
 			this.ShowIcon = false;
 			this.ShowInTaskbar = false;
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-			this.Text = "Log";
+			this.Text = "Log engines";
 			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormLog_FormClosing);
 			this.panel1.ResumeLayout(false);
 			this.menuStrip1.ResumeLayout(false);

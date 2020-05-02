@@ -105,6 +105,12 @@
     <Compile Include="FormEngine.Designer.cs">
       <DependentUpon>FormEngine.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormPgn.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormPgn.Designer.cs">
+      <DependentUpon>FormPgn.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormPlayer.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -127,6 +133,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormEngine.resx">
       <DependentUpon>FormEngine.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormPgn.resx">
+      <DependentUpon>FormPgn.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormPlayer.resx">
       <DependentUpon>FormPlayer.cs</DependentUpon>

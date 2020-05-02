@@ -94,6 +94,8 @@
 			this.columnHeader28 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeader29 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.labEngine = new System.Windows.Forms.Label();
+			this.groupBox9 = new System.Windows.Forms.GroupBox();
+			this.cbTourEBook = new System.Windows.Forms.ComboBox();
 			this.groupBox8 = new System.Windows.Forms.GroupBox();
 			this.nudTourE = new System.Windows.Forms.NumericUpDown();
 			this.cbTourEMode = new System.Windows.Forms.ComboBox();
@@ -247,8 +249,8 @@
 			this.columnHeader21 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeader22 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.tlpBlack = new System.Windows.Forms.TableLayoutPanel();
-			this.groupBox9 = new System.Windows.Forms.GroupBox();
-			this.cbTourEBook = new System.Windows.Forms.ComboBox();
+			this.enginesToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+			this.gamesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.tabControl1.SuspendLayout();
 			this.tabPageGame.SuspendLayout();
 			this.groupBox2.SuspendLayout();
@@ -265,6 +267,7 @@
 			this.splitContainerTourE.Panel1.SuspendLayout();
 			this.splitContainerTourE.Panel2.SuspendLayout();
 			this.splitContainerTourE.SuspendLayout();
+			this.groupBox9.SuspendLayout();
 			this.groupBox8.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.nudTourE)).BeginInit();
 			this.tabPageTourP.SuspendLayout();
@@ -317,7 +320,6 @@
 			this.splitContainerMoves.SuspendLayout();
 			this.tlpWhite.SuspendLayout();
 			this.tlpBlack.SuspendLayout();
-			this.groupBox9.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// timer1
@@ -1148,6 +1150,29 @@
 			this.labEngine.TabIndex = 26;
 			this.labEngine.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
+			// groupBox9
+			// 
+			this.groupBox9.Controls.Add(this.cbTourEBook);
+			this.groupBox9.Dock = System.Windows.Forms.DockStyle.Top;
+			this.groupBox9.Location = new System.Drawing.Point(3, 87);
+			this.groupBox9.Name = "groupBox9";
+			this.groupBox9.Size = new System.Drawing.Size(352, 44);
+			this.groupBox9.TabIndex = 28;
+			this.groupBox9.TabStop = false;
+			this.groupBox9.Text = "Opening book";
+			// 
+			// cbTourEBook
+			// 
+			this.cbTourEBook.Dock = System.Windows.Forms.DockStyle.Top;
+			this.cbTourEBook.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.cbTourEBook.FormattingEnabled = true;
+			this.cbTourEBook.Location = new System.Drawing.Point(3, 16);
+			this.cbTourEBook.Name = "cbTourEBook";
+			this.cbTourEBook.Size = new System.Drawing.Size(346, 21);
+			this.cbTourEBook.Sorted = true;
+			this.cbTourEBook.TabIndex = 32;
+			this.toolTip1.SetToolTip(this.cbTourEBook, "Select engine opening book");
+			// 
 			// groupBox8
 			// 
 			this.groupBox8.Controls.Add(this.nudTourE);
@@ -1896,7 +1921,7 @@
             this.logToolStripMenuItem});
 			this.menuStrip1.Location = new System.Drawing.Point(0, 2);
 			this.menuStrip1.Name = "menuStrip1";
-			this.menuStrip1.Size = new System.Drawing.Size(252, 24);
+			this.menuStrip1.Size = new System.Drawing.Size(372, 24);
 			this.menuStrip1.TabIndex = 1;
 			this.menuStrip1.Text = "menuStrip1";
 			// 
@@ -1986,10 +2011,12 @@
 			// 
 			// logToolStripMenuItem
 			// 
+			this.logToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.enginesToolStripMenuItem1,
+            this.gamesToolStripMenuItem});
 			this.logToolStripMenuItem.Name = "logToolStripMenuItem";
 			this.logToolStripMenuItem.Size = new System.Drawing.Size(39, 20);
 			this.logToolStripMenuItem.Text = "Log";
-			this.logToolStripMenuItem.Click += new System.EventHandler(this.logToolStripMenuItem_Click);
 			// 
 			// labFPS
 			// 
@@ -3194,28 +3221,19 @@
 			this.tlpBlack.Size = new System.Drawing.Size(1180, 24);
 			this.tlpBlack.TabIndex = 35;
 			// 
-			// groupBox9
+			// enginesToolStripMenuItem1
 			// 
-			this.groupBox9.Controls.Add(this.cbTourEBook);
-			this.groupBox9.Dock = System.Windows.Forms.DockStyle.Top;
-			this.groupBox9.Location = new System.Drawing.Point(3, 87);
-			this.groupBox9.Name = "groupBox9";
-			this.groupBox9.Size = new System.Drawing.Size(352, 44);
-			this.groupBox9.TabIndex = 28;
-			this.groupBox9.TabStop = false;
-			this.groupBox9.Text = "Opening book";
+			this.enginesToolStripMenuItem1.Name = "enginesToolStripMenuItem1";
+			this.enginesToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
+			this.enginesToolStripMenuItem1.Text = "Engines";
+			this.enginesToolStripMenuItem1.Click += new System.EventHandler(this.enginesToolStripMenuItem1_Click);
 			// 
-			// cbTourEBook
+			// gamesToolStripMenuItem
 			// 
-			this.cbTourEBook.Dock = System.Windows.Forms.DockStyle.Top;
-			this.cbTourEBook.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.cbTourEBook.FormattingEnabled = true;
-			this.cbTourEBook.Location = new System.Drawing.Point(3, 16);
-			this.cbTourEBook.Name = "cbTourEBook";
-			this.cbTourEBook.Size = new System.Drawing.Size(346, 21);
-			this.cbTourEBook.Sorted = true;
-			this.cbTourEBook.TabIndex = 32;
-			this.toolTip1.SetToolTip(this.cbTourEBook, "Select engine opening book");
+			this.gamesToolStripMenuItem.Name = "gamesToolStripMenuItem";
+			this.gamesToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+			this.gamesToolStripMenuItem.Text = "Games";
+			this.gamesToolStripMenuItem.Click += new System.EventHandler(this.gamesToolStripMenuItem_Click);
 			// 
 			// FormChess
 			// 
@@ -3226,6 +3244,7 @@
 			this.Controls.Add(this.splitContainerMain);
 			this.Controls.Add(this.statusStrip1);
 			this.Controls.Add(this.panMenu);
+			this.DoubleBuffered = true;
 			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.MainMenuStrip = this.menuStrip1;
 			this.Name = "FormChess";
@@ -3249,6 +3268,7 @@
 			this.splitContainerTourE.Panel2.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.splitContainerTourE)).EndInit();
 			this.splitContainerTourE.ResumeLayout(false);
+			this.groupBox9.ResumeLayout(false);
 			this.groupBox8.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.nudTourE)).EndInit();
 			this.tabPageTourP.ResumeLayout(false);
@@ -3305,7 +3325,6 @@
 			this.splitContainerMoves.ResumeLayout(false);
 			this.tlpWhite.ResumeLayout(false);
 			this.tlpBlack.ResumeLayout(false);
-			this.groupBox9.ResumeLayout(false);
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -3528,6 +3547,8 @@
 		private System.Windows.Forms.Label labPromoR;
 		private System.Windows.Forms.GroupBox groupBox9;
 		private System.Windows.Forms.ComboBox cbTourEBook;
+		private System.Windows.Forms.ToolStripMenuItem enginesToolStripMenuItem1;
+		private System.Windows.Forms.ToolStripMenuItem gamesToolStripMenuItem;
 	}
 }
 

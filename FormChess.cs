@@ -27,14 +27,15 @@ namespace RapChessGui
 		readonly CChess Chess = new CChess();
 		readonly CGamerList GamerList = new CGamerList();
 		readonly CUci Uci = new CUci();
+		readonly CBoard Board = new CBoard();
 		public static PrivateFontCollection pfc = new PrivateFontCollection();
-		CBoard Board = new CBoard();
 		public static Stopwatch timer = new Stopwatch();
+		FormLog formLog = new FormLog();
+		FormPgn formPgn = new FormPgn();
 
 		public FormChess()
 		{
 			This = this;
-
 			int fontLength = Properties.Resources.ChessPiece.Length;
 			byte[] fontData = Properties.Resources.ChessPiece;
 			IntPtr data = Marshal.AllocCoTaskMem(fontLength);
@@ -43,12 +44,10 @@ namespace RapChessGui
 			AddFontMemResourceEx(data, (uint)fontData.Length, IntPtr.Zero, ref cFonts);
 			pfc.AddMemoryFont(data, fontLength);
 			Marshal.FreeCoTaskMem(data);
-
 			InitializeComponent();
 			if (!CRapIni.This.Exists())
 				CreateIni();
 			IniLoad();
-			FormLog.This = new FormLog();
 			FormOptions.This = new FormOptions();
 			FormEngine.This = new FormEngine();
 			FormBook.This = new FormBook();
@@ -378,6 +377,7 @@ namespace RapChessGui
 			CBookList.SaveToIni();
 			CPlayer p;
 			p = new CPlayer("Human");
+			p.modeValue.value = 0;
 			CPlayerList.Add(p);
 			p = new CPlayer();
 			p.engine = "RapChess CS";
@@ -1063,6 +1063,7 @@ namespace RapChessGui
 					result = "1-0";
 				else
 					result = "0-1";
+			list.Add("");
 			list.Add($"[Date \"{DateTime.Now.ToString("yyyy.MM.dd")}\"]");
 			list.Add($"[White \"{GamerList.gamer[0].player.name}\"]");
 			list.Add($"[Black \"{GamerList.gamer[1].player.name}\"]");
@@ -1071,10 +1072,9 @@ namespace RapChessGui
 			list.Add($"[Result \"{result}\"]");
 			list.Add("");
 			list.Add(CHistory.GetPgn());
-			TextWriter tw = new StreamWriter($"{cbMainMode.Text}.pgn");
 			foreach (String s in list)
-				tw.WriteLine(s);
-			tw.Close();
+				FormPgn.This.textBox1.Text += $"{s}\r\n";
+			File.WriteAllText($"{cbMainMode.Text}.pgn", FormPgn.This.textBox1.Text);
 		}
 
 		public void AddBook(string emo)
@@ -1149,18 +1149,19 @@ namespace RapChessGui
 			bool result = false;
 			CPlayer hu = CPlayerList.GetPlayerAuto("Human");
 			int eloCur = Convert.ToInt32(hu.elo);
+			int eloDel = hu.eloNew - eloCur;
 			if (hu.eloNew > eloCur)
 			{
 				result = true;
 				tssMoves.ForeColor = Color.FromArgb(0, 0xff, 0);
-				tssMoves.Text = $"Last game you win new elo is {hu.eloNew} ({eloCur})";
+				tssMoves.Text = $"Last game you win new elo is {hu.eloNew} (+{eloDel})";
 				CRapLog.Add(tssMoves.Text);
 			}
 			if (hu.eloNew < eloCur)
 			{
 				result = true;
 				tssMoves.ForeColor = Color.FromArgb(0xff, 0, 0);
-				tssMoves.Text = $"Last game you loose new elo is {hu.eloNew} ({eloCur})";
+				tssMoves.Text = $"Last game you loose new elo is {hu.eloNew} ({eloDel})";
 				CRapLog.Add(tssMoves.Text);
 			}
 			hu.elo = hu.eloNew.ToString();
@@ -1902,12 +1903,6 @@ namespace RapChessGui
 			timer1.Enabled = true;
 		}
 
-		private void logToolStripMenuItem_Click(object sender, EventArgs e)
-		{
-			if (!FormLog.This.Visible)
-				FormLog.This.Show(this);
-		}
-
 		private void bStartMatch_Click(object sender, EventArgs e)
 		{
 			CModeMatch.Reset();
@@ -2230,6 +2225,7 @@ namespace RapChessGui
 
 		private void cbMainMode_SelectedIndexChanged(object sender, EventArgs e)
 		{
+			FormPgn.This.textBox1.Text = "";
 			tabControl1.SelectedIndex = cbMainMode.SelectedIndex;
 			CData.fen = Chess.GetFen();
 			CBoard.Fill();
@@ -2313,6 +2309,16 @@ namespace RapChessGui
 			CBoard.MakeMove(CPromotion.des,CPromotion.sou);
 			MakeMove(CPromotion.emo + (sender as Label).Text);
 			tlpPromotion.Hide();
+		}
+
+		private void enginesToolStripMenuItem1_Click(object sender, EventArgs e)
+		{
+			formLog.Show();
+		}
+
+		private void gamesToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			formPgn.Show();
 		}
 	}
 }
