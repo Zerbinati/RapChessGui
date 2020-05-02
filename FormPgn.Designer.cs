@@ -53,6 +53,7 @@
 			this.ShowIcon = false;
 			this.ShowInTaskbar = false;
 			this.Text = "Log games";
+			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormPgn_FormClosing);
 			this.ResumeLayout(false);
 			this.PerformLayout();
 

@@ -2313,11 +2313,13 @@ namespace RapChessGui
 
 		private void enginesToolStripMenuItem1_Click(object sender, EventArgs e)
 		{
+			formLog.Focus();
 			formLog.Show();
 		}
 
 		private void gamesToolStripMenuItem_Click(object sender, EventArgs e)
 		{
+			formPgn.Focus();
 			formPgn.Show();
 		}
 	}
