@@ -124,7 +124,7 @@ namespace RapChessGui
 					break;
 				case CGameState.time:
 					This.tssMoves.ForeColor = Color.Red;
-					This.tssMoves.Text = $"{pl.name}Time out";
+					This.tssMoves.Text = $"{pl.name} time out";
 					break;
 				case CGameState.error:
 					This.tssMoves.ForeColor = Color.Red;
@@ -1026,7 +1026,7 @@ namespace RapChessGui
 
 		public void GetMessage()
 		{
-			while(CMessageList.MessageGet(out CMessage m))
+			while(CMessageList.MessageGet(out CMessage m,GamerList.GamerCur().timer.IsRunning))
 			{
 				CGamer gamer = GamerList.GetGamerPid(m.pid);
 				if (gamer == null)
@@ -1051,7 +1051,15 @@ namespace RapChessGui
 
 		void CreateRtf()
 		{
-			FormLog.This.richTextBox1.SaveFile($"{cbMainMode.Text}.rtf");
+			string fn = $"{cbMainMode.Text}.rtf";
+			try
+			{
+				FormLog.This.richTextBox1.SaveFile(fn);
+			}
+			catch
+			{
+				CRapLog.Add($"Error save {fn}");
+			}
 		}
 
 		void CreatePgn()
@@ -2319,6 +2327,7 @@ namespace RapChessGui
 
 		private void gamesToolStripMenuItem_Click(object sender, EventArgs e)
 		{
+			formPgn.textBox1.Select(0, 0);
 			formPgn.Focus();
 			formPgn.Show();
 		}
