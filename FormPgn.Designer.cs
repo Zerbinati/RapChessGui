@@ -54,7 +54,6 @@
 			this.ShowInTaskbar = false;
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
 			this.Text = "Log games";
-			this.TopMost = true;
 			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormPgn_FormClosing);
 			this.ResumeLayout(false);
 			this.PerformLayout();

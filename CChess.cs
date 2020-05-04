@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace RapChessGui
 {
-	public enum CGameState { normal, mate, stalemate, repetition, move50, material, time,error,resignation, stop }
+	public enum CGameState { normal, mate, stalemate, repetition, move50, material, time, error, resignation }
 
 	class CUndo
 	{
@@ -93,7 +93,7 @@ namespace RapChessGui
 		public static int g_moveNumber = 0;
 		int g_phase = 32;
 		int g_totalNodes = 0;
-		bool g_inCheck = false;
+		public bool g_inCheck = false;
 		int g_nodeout = 0;
 		int g_timeout = 0;
 		bool g_stop = false;
@@ -218,7 +218,7 @@ namespace RapChessGui
 			return ((row + 4) << 4) | (column + 4);
 		}
 
-		public bool IsValidMove(int s, int d,out string fm, out bool promo)
+		public bool IsValidMove(int s, int d, out string fm, out bool promo)
 		{
 			int max = s & 7;
 			int mbx = d & 7;
@@ -266,7 +266,7 @@ namespace RapChessGui
 		public int EmoToGmo(string emo)
 		{
 			List<int> moves = GenerateAllMoves(whiteTurn, false);
-			foreach(int m in moves)
+			foreach (int m in moves)
 				if (FormatMove(m) == emo)
 					return m;
 			return 0;
@@ -425,7 +425,7 @@ namespace RapChessGui
 			List<int> moves = new List<int>();
 			List<int> am = GenerateAllMoves(whiteTurn, false);
 			if (!g_inCheck)
-				foreach(int m in am)
+				foreach (int m in am)
 				{
 					MakeMove(m);
 					GenerateAllMoves(whiteTurn, false);
@@ -436,7 +436,7 @@ namespace RapChessGui
 			return moves;
 		}
 
-		public List<int> GenerateAllMoves(bool wt, bool attack)
+		public List<int> GenerateAllMoves(bool wt, bool onlyAattack)
 		{
 			adjMobility = 0;
 			g_inCheck = false;
@@ -460,11 +460,11 @@ namespace RapChessGui
 						pieceM++;
 						int del = wt ? -16 : 16;
 						int to = fr + del;
-						if (((g_board[to] & colorEmpty) > 0) && !attack)
+						if (((g_board[to] & colorEmpty) > 0) && !onlyAattack)
 						{
-							GeneratePwnMoves(moves, fr, to, !attack, 0);
+							GeneratePwnMoves(moves, fr, to, !onlyAattack, 0);
 							if ((g_board[fr - del - del] == 0) && (g_board[to + del] & colorEmpty) > 0)
-								GeneratePwnMoves(moves, fr, to + del, !attack, 0);
+								GeneratePwnMoves(moves, fr, to + del, !onlyAattack, 0);
 						}
 						if ((g_board[to - 1] & enColor) > 0)
 							GeneratePwnMoves(moves, fr, to - 1, true, 0);
@@ -481,26 +481,26 @@ namespace RapChessGui
 						break;
 					case 2:
 						pieceN++;
-						GenerateUniMoves(moves, attack, fr, arrDirKinght, 1);
+						GenerateUniMoves(moves, onlyAattack, fr, arrDirKinght, 1);
 						adjMobility += arrMobility[g_phase, f, g_countMove];
 						break;
 					case 3:
 						pieceB++;
-						GenerateUniMoves(moves, attack, fr, arrDirBishop, 7);
+						GenerateUniMoves(moves, onlyAattack, fr, arrDirBishop, 7);
 						adjMobility += arrMobility[g_phase, f, g_countMove];
 						break;
 					case 4:
 						pieceM++;
-						GenerateUniMoves(moves, attack, fr, arrDirRock, 7);
+						GenerateUniMoves(moves, onlyAattack, fr, arrDirRock, 7);
 						adjMobility += arrMobility[g_phase, f, g_countMove];
 						break;
 					case 5:
 						pieceM++;
-						GenerateUniMoves(moves, attack, fr, arrDirQueen, 7);
+						GenerateUniMoves(moves, onlyAattack, fr, arrDirQueen, 7);
 						adjMobility += arrMobility[g_phase, f, g_countMove];
 						break;
 					case 6:
-						GenerateUniMoves(moves, attack, fr, arrDirQueen, 1);
+						GenerateUniMoves(moves, onlyAattack, fr, arrDirQueen, 1);
 						int cr = wt ? g_castleRights : g_castleRights >> 2;
 						if ((cr & 1) > 0)
 							if (((g_board[fr + 1] & colorEmpty) > 0) && ((g_board[fr + 2] & colorEmpty) > 0))

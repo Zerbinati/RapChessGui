@@ -132,11 +132,8 @@ namespace RapChessGui
 					break;
 			}
 			FormLog.This.richTextBox1.AppendText($"Finish {This.tssMoves.Text}\n", Color.Gray);
-			if (CData.gameState != CGameState.error)
-			{
-				This.CreateRtf();
-				This.CreatePgn();
-			}
+			This.CreateRtf();
+			This.CreatePgn();
 			if (CData.gameMode == CMode.game)
 			{
 				if (This.IsAutoElo())
@@ -1026,7 +1023,7 @@ namespace RapChessGui
 
 		public void GetMessage()
 		{
-			while(CMessageList.MessageGet(out CMessage m,GamerList.GamerCur().timer.IsRunning))
+			while (CMessageList.MessageGet(out CMessage m, GamerList.GamerCur().timer.IsRunning))
 			{
 				CGamer gamer = GamerList.GetGamerPid(m.pid);
 				if (gamer == null)
@@ -1066,7 +1063,7 @@ namespace RapChessGui
 		{
 			List<string> list = new List<string>();
 			string result = "1/2-1/2";
-			if (CData.gameState == CGameState.mate)
+			if ((CData.gameState == CGameState.mate) || (CData.gameState == CGameState.time) || (CData.gameState == CGameState.error) || (CData.gameState == CGameState.resignation))
 				if ((CHistory.moveList.Count & 1) > 0)
 					result = "1-0";
 				else
@@ -1081,8 +1078,9 @@ namespace RapChessGui
 			list.Add("");
 			list.Add(CHistory.GetPgn());
 			foreach (String s in list)
-				FormPgn.This.textBox1.Text += $"{s}\r\n";
-			File.WriteAllText($"{cbMainMode.Text}.pgn", FormPgn.This.textBox1.Text);
+				formPgn.textBox1.Text += $"{s}\r\n";
+			formPgn.textBox1.Select(0, 0);
+			File.WriteAllText($"{cbMainMode.Text}.pgn", formPgn.textBox1.Text);
 		}
 
 		public void AddBook(string emo)
@@ -1346,11 +1344,21 @@ namespace RapChessGui
 				SetGameState(CGameState.error);
 				return false;
 			}
-
 			int gmo = Chess.EmoToGmo(emo);
-			AddMove(gmo, emo);
+			MoveToRtb(CHistory.moveList.Count, gmo, emo);
+			string san = Chess.EmoToSan(emo);
+			CChess.EmoToSD(emo, out CDrag.lastSou, out CDrag.lastDes);
 			CBoard.MakeMove(gmo);
 			Chess.MakeMove(gmo);
+			if (Chess.GetGameState() == CGameState.mate)
+				san += '#';
+			else
+			{
+				Chess.GenerateAllMoves(CChess.whiteTurn ^ true, true);
+				if (Chess.g_inCheck)
+					san += '+';
+			}
+			CHistory.AddMove(gmo, emo, san);
 			CEco eco = EcoList.GetEco(Chess.GetEpd());
 			if (eco != null)
 			{
@@ -1633,14 +1641,6 @@ namespace RapChessGui
 				lvMoves.Items[lvMoves.Items.Count - 1].SubItems[2].Text = m;
 		}
 
-		private void AddMove(int gmo, string emo)
-		{
-			MoveToRtb(CHistory.moveList.Count, gmo, emo);
-			string san = Chess.EmoToSan(emo);
-			CHistory.AddMove(gmo, emo, san);
-			CChess.EmoToSD(emo, out CDrag.lastSou, out CDrag.lastDes);
-		}
-
 		void ShowHistory()
 		{
 			lvMoves.Items.Clear();
@@ -1674,7 +1674,7 @@ namespace RapChessGui
 					CPromotion.emo = emo;
 					CPromotion.sou = s;
 					CPromotion.des = d;
-					CBoard.MakeMove(s,d);
+					CBoard.MakeMove(s, d);
 					CBoard.RenderBoard();
 					RenderBoard();
 					tlpPromotion.Dock = boardRotate ^ CChess.whiteTurn ? DockStyle.Bottom : DockStyle.Top;
@@ -2314,22 +2314,25 @@ namespace RapChessGui
 
 		private void labPromoQ_Click(object sender, EventArgs e)
 		{
-			CBoard.MakeMove(CPromotion.des,CPromotion.sou);
+			CBoard.MakeMove(CPromotion.des, CPromotion.sou);
 			MakeMove(CPromotion.emo + (sender as Label).Text);
 			tlpPromotion.Hide();
 		}
 
 		private void enginesToolStripMenuItem1_Click(object sender, EventArgs e)
 		{
-			formLog.Focus();
-			formLog.Show();
+			if (formLog.Visible)
+				formLog.Focus();
+			else
+				formLog.Show(this);
 		}
 
 		private void gamesToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			formPgn.textBox1.Select(0, 0);
-			formPgn.Focus();
-			formPgn.Show();
+			if (formPgn.Visible)
+				formPgn.Focus();
+			else
+				formPgn.Show(this);
 		}
 	}
 }
