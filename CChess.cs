@@ -196,11 +196,11 @@ namespace RapChessGui
 				if (f != fr)
 				{
 					int piece = g_board[f] & 7;
-					if (piece == pieceFr)
+					if ((piece == pieceFr) && ((m & 0xff00) == (gmo & 0xff00)))
 					{
-						if ((m & 0xf000) == (gmo & 0xf000))
+						if ((m & 0xf0) != (gmo & 0xf0))
 							uniRank = false;
-						if ((m & 0xf00) == (gmo & 0xf00))
+						if ((m & 0xf) != (gmo & 0xf))
 							uniFile = false;
 					}
 				}
@@ -700,7 +700,7 @@ namespace RapChessGui
 			return true;
 		}
 
-		public int MakeMove(string emo,out int piece)
+		public int MakeMove(string emo, out int piece)
 		{
 			piece = 0;
 			int m = EmoToGmo(emo);
