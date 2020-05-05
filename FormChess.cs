@@ -1348,7 +1348,7 @@ namespace RapChessGui
 			CChess.EmoToSD(emo, out CDrag.lastSou, out CDrag.lastDes);
 			CBoard.MakeMove(gmo);
 			Chess.MakeMove(emo,out int piece);
-			MoveToLvMoves(CHistory.moveList.Count, piece, emo);
+			MoveToLvMoves(CHistory.moveList.Count, piece, san);
 			CHistory.AddMove(piece,gmo, emo, san);
 			CEco eco = EcoList.GetEco(Chess.GetEpd());
 			if (eco != null)
@@ -1639,7 +1639,7 @@ namespace RapChessGui
 			for (int n = 0; n < CHistory.moveList.Count; n++)
 			{
 				CHisMove m = CHistory.moveList[n];
-				MoveToLvMoves(n, m.piece, m.emo);
+				MoveToLvMoves(n, m.piece, m.san);
 			}
 		}
 
@@ -1868,9 +1868,10 @@ namespace RapChessGui
 				if (Char.IsDigit(san, 0))
 					continue;
 				string emo = Chess.SanToEmo(san);
+				string san2 = Chess.EmoToSan(emo);
 				int gmo = Chess.MakeMove(emo,out int piece);
 				if (gmo > 0)
-					CHistory.AddMove(piece,gmo, emo, Chess.EmoToSan(emo));
+					CHistory.AddMove(piece,gmo, emo, san2);
 				else break;
 			}
 			GamerList.curIndex = CChess.g_moveNumber & 1;
@@ -1878,15 +1879,14 @@ namespace RapChessGui
 			GamerList.gamer[0].Init(true);
 			GamerList.gamer[1].Init(false);
 			cbColor.SelectedIndex = GamerList.curIndex;
-			CDrag.lastSou = -1;
-			CDrag.lastDes = -1;
+			CChess.EmoToSD(CHistory.LastMove(),out CDrag.lastSou,out CDrag.lastDes);
 			ShowHistory();
 			CBoard.Fill();
 			RenderBoard();
 			CGamer pw = GamerList.gamer[0];
 			CGamer pb = GamerList.gamer[1];
 			FormLog.This.richTextBox1.Clear();
-			FormLog.This.richTextBox1.AppendText($"Pgn {CHistory.GetMoves()}\n", Color.Gray);
+			FormLog.This.richTextBox1.AppendText($"Pgn {CHistory.GetPgn()}\n", Color.Gray);
 			FormLog.This.richTextBox1.AppendText($"White {pw.player.name} {pw.player.engine}\n", Color.Gray);
 			FormLog.This.richTextBox1.AppendText($"Black {pb.player.name} {pb.player.engine}\n", Color.Gray);
 			tssMoves.ForeColor = Color.Gainsboro;
@@ -2290,6 +2290,7 @@ namespace RapChessGui
 				ShowAutoElo();
 				GamerList.GamerCur().player.elo = GamerList.GamerCur().player.GetEloLess().ToString();
 				GamerList.GamerSec().Undo();
+				RenderBoard();
 			}
 		}
 

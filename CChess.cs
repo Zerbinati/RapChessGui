@@ -149,6 +149,7 @@ namespace RapChessGui
 		public CGameState GetGameState(out bool check)
 		{
 			GenerateAllMoves(!whiteTurn, true);
+			bool enInsufficient = adjInsufficient;
 			check = g_inCheck;
 			GenerateAllMoves(whiteTurn, false);
 			bool myInsufficient = adjInsufficient;
@@ -156,7 +157,7 @@ namespace RapChessGui
 				return CGameState.move50;
 			if (IsRepetition())
 				return CGameState.repetition;
-			if (adjInsufficient && myInsufficient)
+			if (enInsufficient && myInsufficient)
 				return CGameState.material;
 			List<int> moves = GenerateValidMoves();
 			if (moves.Count > 0)
@@ -197,9 +198,9 @@ namespace RapChessGui
 					int piece = g_board[f] & 7;
 					if (piece == pieceFr)
 					{
-						if ((m & 0xf0ff) == (gmo & 0xf0ff))
+						if ((m & 0xf000) == (gmo & 0xf000))
 							uniRank = false;
-						if ((m & 0xfff) == (gmo & 0xfff))
+						if ((m & 0xf00) == (gmo & 0xf00))
 							uniFile = false;
 					}
 				}
