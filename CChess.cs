@@ -146,16 +146,16 @@ namespace RapChessGui
 			return y * 8 + x;
 		}
 
-		public CGameState GetGameState()
+		public CGameState GetGameState(out bool check)
 		{
+			GenerateAllMoves(!whiteTurn, true);
+			check = g_inCheck;
 			GenerateAllMoves(whiteTurn, false);
 			bool myInsufficient = adjInsufficient;
 			if (g_move50 >= 100)
 				return CGameState.move50;
 			if (IsRepetition())
 				return CGameState.repetition;
-			GenerateAllMoves(!whiteTurn, false);
-			bool check = g_inCheck;
 			if (adjInsufficient && myInsufficient)
 				return CGameState.material;
 			List<int> moves = GenerateValidMoves();
@@ -164,10 +164,19 @@ namespace RapChessGui
 			return check ? CGameState.mate : CGameState.stalemate;
 		}
 
+		public CGameState GetGameState()
+		{
+			return GetGameState(out bool check);
+		}
+
 		public string EmoToSan(string emo)
 		{
+			int gmo = MakeMove(emo);
+			if (gmo == 0)
+				return "";
+			CGameState gs = GetGameState(out bool check);
+			UnmakeMove(gmo);
 			string[] arrPiece = { "", "", "N", "B", "R", "Q", "K" };
-			int gmo = EmoToGmo(emo);
 			int fr = gmo & 0xff;
 			int to = (gmo >> 8) & 0xff;
 			int flags = gmo & 0xff0000;
@@ -210,7 +219,26 @@ namespace RapChessGui
 				promo = "=R";
 			if ((flags & moveflagPromoteQueen) > 0)
 				promo = "=Q";
-			return $"{arrPiece[pieceFr]}{faf}{far}{attack}{fb}{promo}";
+			string fin = check ? "+" : "";
+			if (gs == CGameState.mate)
+				fin = "#";
+			return $"{arrPiece[pieceFr]}{faf}{far}{attack}{fb}{promo}{fin}";
+		}
+
+		public string SanToEmo(string san)
+		{
+			char[] charsToTrim = { '+', '#' };
+			san = san.Trim(charsToTrim);
+			List<int> moves = GenerateValidMoves();
+			foreach (int gmo in moves)
+			{
+				string emo = GmoToEmo(gmo);
+				if (emo == san)
+					return emo;
+				if (EmoToSan(emo).Trim(charsToTrim) == san)
+					return emo;
+			}
+			return "";
 		}
 
 		public int MakeSquare(int row, int column)
@@ -253,7 +281,7 @@ namespace RapChessGui
 		{
 			List<int> moves = GenerateValidMoves();
 			foreach (int m in moves)
-				if (FormatMove(m) == emo)
+				if (GmoToEmo(m) == emo)
 					return m;
 			return 0;
 		}
@@ -267,7 +295,7 @@ namespace RapChessGui
 		{
 			List<int> moves = GenerateAllMoves(whiteTurn, false);
 			foreach (int m in moves)
-				if (FormatMove(m) == emo)
+				if (GmoToEmo(m) == emo)
 					return m;
 			return 0;
 		}
@@ -296,7 +324,7 @@ namespace RapChessGui
 			}
 		}
 
-		public string FormatMove(int move)
+		public string GmoToEmo(int move)
 		{
 			string result = FormatSquare(move & 0xFF) + FormatSquare((move >> 8) & 0xFF);
 			if ((move & moveflagPromotion) > 0)
@@ -671,17 +699,24 @@ namespace RapChessGui
 			return true;
 		}
 
+		public int MakeMove(string emo,out int piece)
+		{
+			piece = 0;
+			int m = EmoToGmo(emo);
+			if (m > 0)
+			{
+				piece = g_board[m & 0xff] & 7;
+				MakeMove(m);
+			}
+			return m;
+		}
+
 		public int MakeMove(string emo)
 		{
 			int m = EmoToGmo(emo);
 			if (m > 0)
-			{
-				int fr = m & 0xff;
-				int piece = g_board[fr];
 				MakeMove(m);
-				return piece & 0xf;
-			}
-			return 0;
+			return m;
 		}
 
 		public void MakeMove(int move)
@@ -827,7 +862,7 @@ namespace RapChessGui
 					{
 						alpha = osScore;
 						alphaDe = g_depth + 1;
-						string alphaFm = FormatMove(cm);
+						string alphaFm = GmoToEmo(cm);
 						alphaPv = alphaFm + ' ' + g_pv;
 					}
 					if (alpha >= beta) break;
@@ -871,7 +906,7 @@ namespace RapChessGui
 				if (alpha < osScore)
 				{
 					alpha = osScore;
-					string alphaFm = FormatMove(cm);
+					string alphaFm = GmoToEmo(cm);
 					alphaPv = alphaFm + ' ' + g_pv;
 					alphaDe = g_depth + 1;
 					if (ply == 1)

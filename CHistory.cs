@@ -1,16 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace RapChessGui
 {
 	public class CHisMove
 	{
+		public int piece;
 		public int gmo;
 		public string emo;
 		public string san;
 
-		public CHisMove(int gmo,string emo,string san)
+		public CHisMove(int piece, int gmo, string emo, string san)
 		{
+			this.piece = piece;
 			this.gmo = gmo;
 			this.emo = emo;
 			this.san = san;
@@ -23,9 +24,9 @@ namespace RapChessGui
 		public static string fen = CChess.defFen;
 		public static List<CHisMove> moveList = new List<CHisMove>();
 
-		public static void AddMove(int gmo,string emo,string san)
+		public static void AddMove(int piece, int gmo, string emo, string san)
 		{
-			moveList.Add(new CHisMove(gmo,emo,san));
+			moveList.Add(new CHisMove(piece, gmo, emo, san));
 		}
 
 		public static bool Back()
@@ -65,7 +66,7 @@ namespace RapChessGui
 			int c = 0;
 			for (int n = 0; n < moveList.Count; n++)
 			{
-				if((++c & 1)>0)
+				if ((++c & 1) > 0)
 					result += $" {(c >> 1) + 1}.";
 				CHisMove hm = moveList[n];
 				result += $" {hm.san}";
