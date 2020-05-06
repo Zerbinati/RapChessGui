@@ -1875,13 +1875,16 @@ namespace RapChessGui
 				else break;
 			}
 			GamerList.curIndex = CChess.g_moveNumber & 1;
+			cbColor.SelectedIndex = GamerList.curIndex;
 			GamePrepare();
 			GamerList.gamer[0].Init(true);
 			GamerList.gamer[1].Init(false);
-			cbColor.SelectedIndex = GamerList.curIndex;
 			CChess.EmoToSD(CHistory.LastMove(),out CDrag.lastSou,out CDrag.lastDes);
 			ShowHistory();
+			SetBoardRotate();
 			CBoard.Fill();
+			CBoard.SetPosition();
+			CBoard.RenderBoard();
 			RenderBoard();
 			CGamer pw = GamerList.gamer[0];
 			CGamer pb = GamerList.gamer[1];
