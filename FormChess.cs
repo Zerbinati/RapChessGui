@@ -1856,7 +1856,7 @@ namespace RapChessGui
 			LoadFen(Clipboard.GetText().Trim());
 		}
 
-		private void loadFromClipboardToolStripMenuItem1_Click(object sender, EventArgs e)
+		private void loadPgnFromClipboard_Click(object sender, EventArgs e)
 		{
 			SetMode((int)CMode.game);
 			string pgn = Clipboard.GetText().Trim();

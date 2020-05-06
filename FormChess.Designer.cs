@@ -166,6 +166,8 @@
 			this.playersToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
 			this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.logToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.enginesToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+			this.gamesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.labFPS = new System.Windows.Forms.Label();
 			this.panMenu = new System.Windows.Forms.Panel();
 			this.labEco = new System.Windows.Forms.Label();
@@ -249,8 +251,6 @@
 			this.columnHeader21 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeader22 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.tlpBlack = new System.Windows.Forms.TableLayoutPanel();
-			this.enginesToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-			this.gamesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.tabControl1.SuspendLayout();
 			this.tabPageGame.SuspendLayout();
 			this.groupBox2.SuspendLayout();
@@ -1969,7 +1969,7 @@
 			this.loadFromClipboardToolStripMenuItem1.Name = "loadFromClipboardToolStripMenuItem1";
 			this.loadFromClipboardToolStripMenuItem1.Size = new System.Drawing.Size(182, 22);
 			this.loadFromClipboardToolStripMenuItem1.Text = "Load from clipboard";
-			this.loadFromClipboardToolStripMenuItem1.Click += new System.EventHandler(this.loadFromClipboardToolStripMenuItem1_Click);
+			this.loadFromClipboardToolStripMenuItem1.Click += new System.EventHandler(this.loadPgnFromClipboard_Click);
 			// 
 			// manageToolStripMenuItem
 			// 
@@ -2017,6 +2017,20 @@
 			this.logToolStripMenuItem.Name = "logToolStripMenuItem";
 			this.logToolStripMenuItem.Size = new System.Drawing.Size(39, 20);
 			this.logToolStripMenuItem.Text = "Log";
+			// 
+			// enginesToolStripMenuItem1
+			// 
+			this.enginesToolStripMenuItem1.Name = "enginesToolStripMenuItem1";
+			this.enginesToolStripMenuItem1.Size = new System.Drawing.Size(115, 22);
+			this.enginesToolStripMenuItem1.Text = "Engines";
+			this.enginesToolStripMenuItem1.Click += new System.EventHandler(this.enginesToolStripMenuItem1_Click);
+			// 
+			// gamesToolStripMenuItem
+			// 
+			this.gamesToolStripMenuItem.Name = "gamesToolStripMenuItem";
+			this.gamesToolStripMenuItem.Size = new System.Drawing.Size(115, 22);
+			this.gamesToolStripMenuItem.Text = "Games";
+			this.gamesToolStripMenuItem.Click += new System.EventHandler(this.gamesToolStripMenuItem_Click);
 			// 
 			// labFPS
 			// 
@@ -3220,20 +3234,6 @@
 			this.tlpBlack.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
 			this.tlpBlack.Size = new System.Drawing.Size(1180, 24);
 			this.tlpBlack.TabIndex = 35;
-			// 
-			// enginesToolStripMenuItem1
-			// 
-			this.enginesToolStripMenuItem1.Name = "enginesToolStripMenuItem1";
-			this.enginesToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
-			this.enginesToolStripMenuItem1.Text = "Engines";
-			this.enginesToolStripMenuItem1.Click += new System.EventHandler(this.enginesToolStripMenuItem1_Click);
-			// 
-			// gamesToolStripMenuItem
-			// 
-			this.gamesToolStripMenuItem.Name = "gamesToolStripMenuItem";
-			this.gamesToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-			this.gamesToolStripMenuItem.Text = "Games";
-			this.gamesToolStripMenuItem.Click += new System.EventHandler(this.gamesToolStripMenuItem_Click);
 			// 
 			// FormChess
 			// 
