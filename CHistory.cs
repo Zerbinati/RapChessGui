@@ -17,6 +17,14 @@ namespace RapChessGui
 			this.san = san;
 		}
 
+		public string GetNotation()
+		{
+			if (FormOptions.This.rbSan.Checked)
+				return san;
+			else
+				return emo;
+		}
+
 	}
 
 	public static class CHistory
@@ -43,7 +51,7 @@ namespace RapChessGui
 		{
 			if (moveList.Count == 0)
 				return "";
-			return moveList[moveList.Count - 1].emo;
+			return moveList[moveList.Count - 1].GetNotation();
 		}
 
 		public static void NewGame(string f = CChess.defFen)

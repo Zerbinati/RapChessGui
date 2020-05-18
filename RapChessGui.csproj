@@ -69,7 +69,7 @@
     <Compile Include="CRapLog.cs" />
     <Compile Include="CModeMatch.cs" />
     <Compile Include="CBoard.cs" />
-    <Compile Include="CEnginePro.cs" />
+    <Compile Include="CProcess.cs" />
     <Compile Include="CGamerList.cs" />
     <Compile Include="CRapIni.cs" />
     <Compile Include="CModeTraining.cs" />

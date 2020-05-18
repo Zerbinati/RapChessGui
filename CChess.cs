@@ -287,11 +287,6 @@ namespace RapChessGui
 			return 0;
 		}
 
-		int RAND_32()
-		{
-			return random.Next();
-		}
-
 		public int EmoToGmo(string emo)
 		{
 			List<int> moves = GenerateAllMoves(whiteTurn, false);
@@ -299,6 +294,11 @@ namespace RapChessGui
 				if (GmoToEmo(m) == emo)
 					return m;
 			return 0;
+		}
+
+		int RAND_32()
+		{
+			return random.Next();
 		}
 
 		public static int EmoToIndex(string emo)

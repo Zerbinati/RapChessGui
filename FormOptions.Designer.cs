@@ -55,6 +55,9 @@
 			this.labTourE = new System.Windows.Forms.Label();
 			this.label6 = new System.Windows.Forms.Label();
 			this.nudTourE = new System.Windows.Forms.NumericUpDown();
+			this.gbNotation = new System.Windows.Forms.GroupBox();
+			this.rbSan = new System.Windows.Forms.RadioButton();
+			this.rbUci = new System.Windows.Forms.RadioButton();
 			this.gbInterface.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.nudSpeed)).BeginInit();
 			this.gbGame.SuspendLayout();
@@ -63,12 +66,13 @@
 			this.groupBox1.SuspendLayout();
 			this.groupBox2.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.nudTourE)).BeginInit();
+			this.gbNotation.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// butDefault
 			// 
 			this.butDefault.Dock = System.Windows.Forms.DockStyle.Top;
-			this.butDefault.Location = new System.Drawing.Point(0, 389);
+			this.butDefault.Location = new System.Drawing.Point(0, 442);
 			this.butDefault.Name = "butDefault";
 			this.butDefault.Size = new System.Drawing.Size(286, 24);
 			this.butDefault.TabIndex = 2;
@@ -78,6 +82,7 @@
 			// 
 			// gbInterface
 			// 
+			this.gbInterface.Controls.Add(this.butColor);
 			this.gbInterface.Controls.Add(this.cbTips);
 			this.gbInterface.Controls.Add(this.cbArrow);
 			this.gbInterface.Controls.Add(this.label1);
@@ -85,7 +90,6 @@
 			this.gbInterface.Controls.Add(this.cbAttack);
 			this.gbInterface.Controls.Add(this.cbShowPonder);
 			this.gbInterface.Controls.Add(this.cbRotateBoard);
-			this.gbInterface.Controls.Add(this.butColor);
 			this.gbInterface.Dock = System.Windows.Forms.DockStyle.Top;
 			this.gbInterface.Location = new System.Drawing.Point(0, 221);
 			this.gbInterface.Name = "gbInterface";
@@ -205,7 +209,7 @@
 			// 
 			this.button1.DialogResult = System.Windows.Forms.DialogResult.OK;
 			this.button1.Dock = System.Windows.Forms.DockStyle.Top;
-			this.button1.Location = new System.Drawing.Point(0, 413);
+			this.button1.Location = new System.Drawing.Point(0, 466);
 			this.button1.Name = "button1";
 			this.button1.Size = new System.Drawing.Size(286, 24);
 			this.button1.TabIndex = 1;
@@ -425,13 +429,50 @@
             0,
             0});
 			// 
+			// gbNotation
+			// 
+			this.gbNotation.Controls.Add(this.rbUci);
+			this.gbNotation.Controls.Add(this.rbSan);
+			this.gbNotation.Dock = System.Windows.Forms.DockStyle.Top;
+			this.gbNotation.Location = new System.Drawing.Point(0, 389);
+			this.gbNotation.Name = "gbNotation";
+			this.gbNotation.Size = new System.Drawing.Size(286, 53);
+			this.gbNotation.TabIndex = 10;
+			this.gbNotation.TabStop = false;
+			this.gbNotation.Text = "Notation";
+			// 
+			// rbSan
+			// 
+			this.rbSan.AutoSize = true;
+			this.rbSan.Checked = true;
+			this.rbSan.Dock = System.Windows.Forms.DockStyle.Top;
+			this.rbSan.Location = new System.Drawing.Point(3, 16);
+			this.rbSan.Name = "rbSan";
+			this.rbSan.Size = new System.Drawing.Size(280, 17);
+			this.rbSan.TabIndex = 0;
+			this.rbSan.TabStop = true;
+			this.rbSan.Text = "San";
+			this.rbSan.UseVisualStyleBackColor = true;
+			// 
+			// rbUci
+			// 
+			this.rbUci.AutoSize = true;
+			this.rbUci.Dock = System.Windows.Forms.DockStyle.Top;
+			this.rbUci.Location = new System.Drawing.Point(3, 33);
+			this.rbUci.Name = "rbUci";
+			this.rbUci.Size = new System.Drawing.Size(280, 17);
+			this.rbUci.TabIndex = 1;
+			this.rbUci.Text = "Uci";
+			this.rbUci.UseVisualStyleBackColor = true;
+			// 
 			// FormOptions
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(286, 444);
+			this.ClientSize = new System.Drawing.Size(286, 496);
 			this.Controls.Add(this.button1);
 			this.Controls.Add(this.butDefault);
+			this.Controls.Add(this.gbNotation);
 			this.Controls.Add(this.gbInterface);
 			this.Controls.Add(this.groupBox1);
 			this.Controls.Add(this.gbTournament);
@@ -457,6 +498,8 @@
 			this.groupBox2.ResumeLayout(false);
 			this.groupBox2.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.nudTourE)).EndInit();
+			this.gbNotation.ResumeLayout(false);
+			this.gbNotation.PerformLayout();
 			this.ResumeLayout(false);
 
 		}
@@ -489,5 +532,8 @@
 		private System.Windows.Forms.Label labTourE;
 		private System.Windows.Forms.Label label6;
 		public System.Windows.Forms.NumericUpDown nudTourE;
+		private System.Windows.Forms.GroupBox gbNotation;
+		private System.Windows.Forms.RadioButton rbUci;
+		public System.Windows.Forms.RadioButton rbSan;
 	}
 }

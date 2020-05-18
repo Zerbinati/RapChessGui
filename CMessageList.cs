@@ -19,8 +19,8 @@ namespace RapChessGui
 
 	static class CMessageList
 	{
-		static List<CMessage> list = new List<CMessage>();
-		static List<CMessage> buffer = new List<CMessage>();
+		readonly static List<CMessage> list = new List<CMessage>();
+		readonly static List<CMessage> buffer = new List<CMessage>();
 
 		static void MsgSet(CMessage m)
 		{
@@ -62,10 +62,9 @@ namespace RapChessGui
 				List<CMessage> last = MsgGet();
 				foreach (CMessage m in last)
 				{
-					CGamer gamer = CGamerList.This.GetGamerPid(m.pid);
+					CGamer gamer = CGamerList.This.GetGamerPid(m.pid,out string protocol);
 					if (gamer != null)
 					{
-						string protocol = gamer.GetProtocol();
 						if (protocol == "Uci")
 						{
 							if (m.msg.Contains("bestmove"))

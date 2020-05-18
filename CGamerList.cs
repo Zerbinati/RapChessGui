@@ -9,11 +9,25 @@ namespace RapChessGui
 	public class CGamer
 	{
 		public bool timeOut = false;
-		public bool started = false;
 		public bool uciok = false;
 		public bool wbok = false;
 		public bool readyok = false;
-		public bool go = false;
+		/// <summary>
+		/// The book is already started.
+		/// </summary>
+		public bool isBookStarted = false;
+		/// <summary>
+		/// The book is already finished.
+		/// </summary>
+		public bool isBookFinished = false;
+		/// <summary>
+		/// The engine is already prepared.
+		/// </summary>
+		public bool isPrepared = false;
+		/// <summary>
+		/// The engine is already running.
+		/// </summary>
+		public bool isRunning = false;
 		public bool white = true;
 		public int usedBook;
 		public int iScore;
@@ -30,7 +44,8 @@ namespace RapChessGui
 		public string lastMove;
 		public double timerStart;
 		public Stopwatch timer = new Stopwatch();
-		public CEnginePro enginePro = new CEnginePro();
+		public CProcess bookPro = new CProcess();
+		public CProcess enginePro = new CProcess();
 		public CBook book = null;
 		public CEngine engine = null;
 		public CPlayer player = null;
@@ -57,8 +72,10 @@ namespace RapChessGui
 		{
 			timeOut = false;
 			white = w;
-			started = false;
-			go = false;
+			isBookStarted = false;
+			isBookFinished = false;
+			isPrepared = false;
+			isRunning = false;
 			infMs = 0;
 			usedBook = 0;
 			nodes = 0;
@@ -72,6 +89,38 @@ namespace RapChessGui
 			timerStart = 0;
 			lastMove = "";
 			timer.Reset();
+		}
+
+		/// <summary>
+		/// The engine starts if needed.
+		/// </summary>
+		public void TryStart()
+		{
+			if ((book != null) && (!isBookFinished))
+			{
+				if (!isBookStarted)
+				{
+					SendMessageBook(CHistory.GetPosition());
+					SendMessageBook("go");
+					isBookStarted = true;
+				}
+			}
+			else
+				TryEngine();
+		}
+
+		public void TryEngine()
+		{
+			if (engine != null)
+			{
+				if (!isPrepared)
+				{
+					SetPlayer();
+					Prepare();
+				}
+				else if (readyok && !isRunning)
+					CompMakeMove();
+			}
 		}
 
 		public void TimerStart()
@@ -96,7 +145,7 @@ namespace RapChessGui
 				wbok = false;
 		}
 
-		public void Start()
+		void Prepare()
 		{
 			lastMove = "";
 			mode = player.modeValue.GetUci();
@@ -128,7 +177,7 @@ namespace RapChessGui
 						break;
 				}
 			}
-			started = true;
+			isPrepared = true;
 		}
 
 		void UciGo()
@@ -155,8 +204,8 @@ namespace RapChessGui
 				int t = Convert.ToInt32(v - timer.Elapsed.TotalMilliseconds);
 				if (t < 1)
 					t = 1;
-				SendMessage($"time {t}");
-				SendMessage($"otim {t}");
+				SendMessage($"time {t / 10}");
+				SendMessage($"otim {t / 10}");
 			}
 			SendMessage(CHistory.LastMove());
 		}
@@ -172,33 +221,52 @@ namespace RapChessGui
 				else
 				{
 					SendMessage("new");
-					SendMessage($"{mode} {value}");
 					SendMessage("post");
 					if (CHistory.fen != CChess.defFen)
 					{
 						SendMessage($"setboard {CHistory.fen}");
 					}
 					SendMessage("easy");
+					SendMessage("force");
 					foreach (CHisMove m in CHistory.moveList)
 						SendMessage(m.emo);
-					if (CHistory.moveList.Count == 0)
+					if (player.modeValue.mode == "Standard")
 					{
+						int v = Convert.ToInt32(player.modeValue.GetUciValue());
+						int t = Convert.ToInt32(v - timer.Elapsed.TotalMilliseconds);
+						if (t < 1)
+							t = 1;
+						SendMessage($"time {t / 10}");
+						SendMessage($"otim {t / 10}");
+					}else
+						SendMessage($"{mode} {value}");
+					if ((CHistory.moveList.Count & 1) == 0)
 						SendMessage("white");
-						SendMessage("go");
-					}
+					else
+						SendMessage("black");
+					SendMessage("go");
 					wbok = true;
 				}
 				TimerStart();
 			}
-			go = true;
+			isRunning = true;
+		}
+
+		public void SendMessageBook(string msg)
+		{
+			if (bookPro.process != null)
+			{
+				FormLog.This.richTextBox1.AppendText($"{player.name} < {msg}\n", Color.Brown);
+				bookPro.process.StandardInput.WriteLine(msg);
+			}
 		}
 
 		public void SendMessage(string msg)
 		{
-			if (engine != null)
+			if (enginePro.process != null)
 			{
 				FormLog.This.richTextBox1.AppendText($"{player.name} < {msg}\n", Color.Brown);
-				enginePro.streamWriter.WriteLine(msg);
+				enginePro.process.StandardInput.WriteLine(msg);
 			}
 		}
 
@@ -279,7 +347,10 @@ namespace RapChessGui
 				if (((ms - timerStart) > (v + FormOptions.marginTime)) && (FormOptions.marginTime >= 0) && (value > 0) && timer.IsRunning)
 				{
 					if (CChess.This.IsValidMove(lastMove) > 0)
+					{
+						isPrepared = false;
 						FormChess.This.MakeMove(lastMove);
+					}
 					else
 						return SetTimeOut();
 					timeOut = true;
@@ -319,7 +390,10 @@ namespace RapChessGui
 			player = p;
 			book = CBookList.GetBook(p.book);
 			engine = CEngineList.GetEngine(p.engine);
-			enginePro.SetPlayer(this);
+			if (book != null)
+				bookPro.SetProgram("Books\\" + book.file, book.parameters);
+			if (engine != null)
+				enginePro.SetProgram("Engines\\" + engine.file, engine.parameters);
 		}
 
 		public void SetPlayer()
@@ -352,7 +426,9 @@ namespace RapChessGui
 		{
 			CGamer cg = GamerCur();
 			cg.timer.Stop();
-			cg.go = false;
+			cg.isBookStarted = false;
+			cg.isBookFinished = false;
+			cg.isRunning = false;
 			curIndex ^= 1;
 			cg = GamerCur();
 			if (cg.IsHuman())
@@ -390,11 +466,19 @@ namespace RapChessGui
 			return null;
 		}
 
-		public CGamer GetGamerPid(int pid)
+		public CGamer GetGamerPid(int pid, out string protocol)
 		{
-			foreach (CGamer p in gamer)
-				if (p.enginePro.GetPid() == pid)
-					return p;
+			protocol = "Uci";
+			foreach (CGamer g in gamer)
+			{
+				if (g.bookPro.GetPid() == pid)
+					return g;
+				if (g.enginePro.GetPid() == pid)
+				{
+					protocol = g.engine.protocol;
+					return g;
+				}
+			}
 			return null;
 		}
 
@@ -429,8 +513,11 @@ namespace RapChessGui
 
 		public void Terminate()
 		{
-			gamer[0].enginePro.Terminate();
-			gamer[1].enginePro.Terminate();
+			foreach (CGamer g in gamer)
+			{
+				g.bookPro.Terminate();
+				g.enginePro.Terminate();
+			}
 		}
 
 	}

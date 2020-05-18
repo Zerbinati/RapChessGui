@@ -6,9 +6,9 @@ namespace RapChessGui
 {
 	class CTour
 	{
-		public string w;
-		public string b;
-		public string r;
+		public string w = "";
+		public string b = "";
+		public string r = "";
 
 		public CTour(string tw, string tb, string tr)
 		{
@@ -25,9 +25,12 @@ namespace RapChessGui
 		public void LoadFromString(string s)
 		{
 			string[] a = s.Split('#');
-			w = a[0];
-			b = a[1];
-			r = a[2];
+			if (a.Length == 3)
+			{
+				w = a[0];
+				b = a[1];
+				r = a[2];
+			}
 		}
 
 		public string SaveToString()
@@ -80,7 +83,7 @@ namespace RapChessGui
 		public int DeletePlayer(string p)
 		{
 			int c = list.Count;
-			for(int n= list.Count - 1; n >= 0; n--)
+			for (int n = list.Count - 1; n >= 0; n--)
 			{
 				CTour t = list[n];
 				if ((t.w == p) || (t.b == p))
@@ -100,7 +103,8 @@ namespace RapChessGui
 					while ((line = file.ReadLine()) != null)
 					{
 						CTour t = new CTour(line);
-						list.Add(t);
+						if (t.r != "")
+							list.Add(t);
 					}
 				}
 			if (list.Count > maxRecords)

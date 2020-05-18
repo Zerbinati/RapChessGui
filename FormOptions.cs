@@ -20,6 +20,10 @@ namespace RapChessGui
 
 		public void LoadFromIni()
 		{
+			if(CRapIni.This.ReadBool("options>interface>san", true))
+				rbSan.Checked = true;
+			else
+				rbUci.Checked = true;
 			cbShowPonder.Checked = CRapIni.This.ReadBool("options>interface>showponder", cbShowPonder.Checked);
 			cbRotateBoard.Checked = CRapIni.This.ReadBool("options>interface>rotate", cbRotateBoard.Checked);
 			cbAttack.Checked = CRapIni.This.ReadBool("options>interface>attack", cbAttack.Checked);
@@ -36,11 +40,12 @@ namespace RapChessGui
 			CModeTournamentP.tourList.maxRecords = (int)nudTourP.Value;
 			CBoard.showArrow = cbArrow.Checked;
 			marginStandard = CbToMargin(cbModeStandard.SelectedIndex);
-			marginTime = CbToMargin(cbModeTime.SelectedIndex);
+			marginTime = CbToMargin(cbModeTime.SelectedIndex);		
 		}
 
 		public void SaveToIni()
 		{
+			CRapIni.This.Write("options>interface>san",rbSan.Checked);
 			CRapIni.This.Write("options>interface>showponder", cbShowPonder.Checked);
 			CRapIni.This.Write("options>interface>rotate", cbRotateBoard.Checked);
 			CRapIni.This.Write("options>interface>attack", cbAttack.Checked);
@@ -109,6 +114,5 @@ namespace RapChessGui
 			labTourE.Text = $"Fill {(CModeTournamentE.tourList.list.Count * 100) / CModeTournamentE.tourList.maxRecords}%";
 			labTourP.Text = $"Fill {(CModeTournamentP.tourList.list.Count * 100) / CModeTournamentP.tourList.maxRecords}%";
 		}
-
 	}
 }
