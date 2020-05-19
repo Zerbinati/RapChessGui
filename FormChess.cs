@@ -900,6 +900,8 @@ namespace RapChessGui
 					if (isBook)
 						AddBook(emo);
 					MakeMove(emo);
+					if ((g.ponder != "") && FormOptions.This.rbSan.Checked)
+						g.ponder = Chess.EmoToSan(g.ponder);
 					break;
 				case "info":
 					ulong nps = 0;
