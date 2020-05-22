@@ -349,7 +349,9 @@ namespace RapChessGui
 					if (CChess.This.IsValidMove(lastMove) > 0)
 					{
 						isPrepared = false;
+						enginePro.Terminate();
 						FormChess.This.MakeMove(lastMove);
+						FormLog.This.richTextBox1.AppendText($"{player.name} forced move {lastMove}\n", Color.Orange);
 					}
 					else
 						return SetTimeOut();

@@ -20,16 +20,7 @@ namespace RapChessGui
 		private void KillProcessAndChildren(int pid)
 		{
 			if (pid == 0)
-			{
 				return;
-			}
-			ManagementObjectSearcher searcher = new ManagementObjectSearcher
-					("Select * From Win32_Process Where ParentProcessID=" + pid);
-			ManagementObjectCollection moc = searcher.Get();
-			foreach (ManagementObject mo in moc)
-			{
-				KillProcessAndChildren(Convert.ToInt32(mo["ProcessID"]));
-			}
 			try
 			{
 				Process proc = Process.GetProcessById(pid);
@@ -37,6 +28,14 @@ namespace RapChessGui
 			}
 			catch
 			{
+			}
+			ManagementObjectSearcher searcher = new ManagementObjectSearcher("Select * From Win32_Process Where ParentProcessID=" + pid);
+			ManagementObjectCollection moc = searcher.Get();
+			foreach (ManagementObject mo in moc)
+			{
+				int childrenPid = Convert.ToInt32(mo["ProcessID"]);
+				if(childrenPid != pid)
+					KillProcessAndChildren(childrenPid);
 			}
 		}
 

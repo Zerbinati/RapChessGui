@@ -895,13 +895,16 @@ namespace RapChessGui
 					g.isBookFinished = true;
 					break;
 				case "bestmove":
-					g.ponder = Uci.GetValue("ponder");
-					emo = Uci.tokens[1];
-					if (isBook)
-						AddBook(emo);
-					MakeMove(emo);
-					if ((g.ponder != "") && FormOptions.This.rbSan.Checked)
-						g.ponder = Chess.EmoToSan(g.ponder);
+					if (GamerList.GamerCur() == g)
+					{
+						g.ponder = Uci.GetValue("ponder");
+						emo = Uci.tokens[1];
+						if (isBook)
+							AddBook(emo);
+						MakeMove(emo);
+						if ((g.ponder != "") && FormOptions.This.rbSan.Checked)
+							g.ponder = Chess.EmoToSan(g.ponder);
+					}
 					break;
 				case "info":
 					ulong nps = 0;
@@ -1647,11 +1650,11 @@ namespace RapChessGui
 			{
 				if (Char.IsDigit(san, 0))
 					continue;
-				string emo = Chess.SanToEmo(san);
-				string san2 = Chess.EmoToSan(emo);
-				int gmo = Chess.MakeMove(emo, out int piece);
+				string emo2 = Chess.SanToEmo(san);
+				string san2 = Chess.EmoToSan(emo2);
+				int gmo = Chess.MakeMove(emo2, out int piece);
 				if (gmo > 0)
-					CHistory.AddMove(piece, gmo, emo, san2);
+					CHistory.AddMove(piece, gmo, emo2, san2);
 				else break;
 			}
 			GamerList.curIndex = CChess.g_moveNumber & 1;
@@ -1659,7 +1662,8 @@ namespace RapChessGui
 			GamePrepare();
 			GamerList.gamer[0].Init(true);
 			GamerList.gamer[1].Init(false);
-			CChess.EmoToSD(CHistory.LastMove(), out CDrag.lastSou, out CDrag.lastDes);
+			string emo = CHistory.moveList[CHistory.moveList.Count - 1].emo;
+			CChess.EmoToSD(emo, out CDrag.lastSou, out CDrag.lastDes);
 			ShowHistory();
 			SetBoardRotate();
 			CBoard.Fill();
