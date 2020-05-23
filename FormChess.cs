@@ -1851,12 +1851,10 @@ namespace RapChessGui
 			}
 			else
 			{
-				CGamer cg = GamerList.GamerCur();
-				CGamer sg = GamerList.GamerSec();
-				RenderInfo(cg);
-				RenderInfo(sg);
+				RenderInfo(GamerList.GamerCur());
+				RenderInfo(GamerList.GamerSec());
 				if (CData.gameState == CGameState.normal)
-					cg.TryStart();
+					GamerList.GamerCur().TryStart();
 			}
 		}
 

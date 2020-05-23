@@ -256,7 +256,7 @@ namespace RapChessGui
 		{
 			if (bookPro.process != null)
 			{
-				FormLog.This.richTextBox1.AppendText($"{player.name} < {msg}\n", Color.Brown);
+				FormLog.This.richTextBox1.AppendText($"book {player.name} < {msg}\n", Color.Brown);
 				bookPro.process.StandardInput.WriteLine(msg);
 			}
 		}
