@@ -221,6 +221,17 @@ namespace RapChessGui
 				else
 				{
 					SendMessage("new");
+					if (player.modeValue.mode == "Standard")
+					{
+						int v = Convert.ToInt32(player.modeValue.GetUciValue());
+						int t = Convert.ToInt32(v - timer.Elapsed.TotalMilliseconds);
+						if (t < 1)
+							t = 1;
+						SendMessage($"time {t / 10}");
+						SendMessage($"otim {t / 10}");
+					}
+					else
+						SendMessage($"{mode} {value}");
 					SendMessage("post");
 					if (CHistory.fen != CChess.defFen)
 					{
@@ -230,16 +241,6 @@ namespace RapChessGui
 					SendMessage("force");
 					foreach (CHisMove m in CHistory.moveList)
 						SendMessage(m.emo);
-					if (player.modeValue.mode == "Standard")
-					{
-						int v = Convert.ToInt32(player.modeValue.GetUciValue());
-						int t = Convert.ToInt32(v - timer.Elapsed.TotalMilliseconds);
-						if (t < 1)
-							t = 1;
-						SendMessage($"time {t / 10}");
-						SendMessage($"otim {t / 10}");
-					}else
-						SendMessage($"{mode} {value}");
 					if ((CHistory.moveList.Count & 1) == 0)
 						SendMessage("white");
 					else
