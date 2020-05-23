@@ -1662,7 +1662,7 @@ namespace RapChessGui
 			GamePrepare();
 			GamerList.gamer[0].Init(true);
 			GamerList.gamer[1].Init(false);
-			string emo = CHistory.moveList[CHistory.moveList.Count - 1].emo;
+			string emo = CHistory.Last().emo;
 			CChess.EmoToSD(emo, out CDrag.lastSou, out CDrag.lastDes);
 			ShowHistory();
 			SetBoardRotate();

@@ -47,6 +47,13 @@ namespace RapChessGui
 			return false;
 		}
 
+		public static CHisMove Last()
+		{
+			if (moveList.Count == 0)
+				return null;
+			return moveList[moveList.Count - 1];
+		}
+
 		public static string LastMove()
 		{
 			if (moveList.Count == 0)

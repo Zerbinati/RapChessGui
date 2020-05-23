@@ -207,7 +207,7 @@ namespace RapChessGui
 				SendMessage($"time {t / 10}");
 				SendMessage($"otim {t / 10}");
 			}
-			SendMessage(CHistory.LastMove());
+			SendMessage(CHistory.Last().emo);
 		}
 
 		public void CompMakeMove()
