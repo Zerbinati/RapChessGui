@@ -9,6 +9,7 @@ namespace RapChessGui
 		public static string player;
 		public static bool rotate = false;
 		public static CTourList tourList = new CTourList("Tour-players");
+		public static CPlayerList playerList = new CPlayerList();
 
 		public static void SaveToIni()
 		{
@@ -62,14 +63,22 @@ namespace RapChessGui
 			return null;
 		}
 
+		public static void FillList()
+		{
+			playerList.list.Clear();
+			foreach (CPlayer p in CData.playerList.list)
+				if (p.tournament)
+					playerList.Add(p);
+		}
+
 		public static CPlayer SelectPlayer()
 		{
-			CPlayer p = CPlayerList.GetPlayer(player);
+			CPlayer p = playerList.GetPlayer(player);
 			if(p == null)
 				p = tourList.LastPlayer();
 			if (p == null)
-				p = CPlayerList.list[0];
-			CPlayer n = CPlayerList.NextPlayer(p);
+				p = playerList.list[0];
+			CPlayer n = playerList.NextPlayer(p);
 			int rw = 0;
 			int rl = 0;
 			int rd = 0;
@@ -82,21 +91,21 @@ namespace RapChessGui
 
 		public static CPlayer SelectOpponent(CPlayer player)
 		{
-			CPlayerList.Sort();
-			CPlayerList.FillPosition();
-			for (int n = 0; n < CPlayerList.list.Count; n++)
+			playerList.Sort();
+			playerList.FillPosition();
+			for (int n = 0; n < playerList.list.Count; n++)
 			{
-				CPlayer p = CPlayerList.list[n];
+				CPlayer p = playerList.list[n];
 				p.distance = Math.Abs(player.position - p.position);
 			}
-			CPlayerList.SortDistance();
+			playerList.SortDistance();
 			List<CPlayer> pl = new List<CPlayer>();
-			foreach (CPlayer p in CPlayerList.list)
+			foreach (CPlayer p in playerList.list)
 				if ((p != player) && (p.engine != "Human"))
 					pl.Add(p);
 			if (pl.Count == 0)
 				return player;
-			CPlayerList.Sort();
+			playerList.Sort();
 			for (int n = 0; n < pl.Count - 1; n++)
 			{
 				CPlayer p = ChooseOpponent(player, pl[n], pl[n + 1]);

@@ -23,11 +23,11 @@ namespace RapChessGui
 
 		void SelectPlayer(string name)
 		{
-			CPlayer p = CPlayerList.GetPlayerAuto(name);
+			CPlayer p = CData.playerList.GetPlayerAuto(name);
 			if (p == null)
 				return;
 			tbPlayerName.Text = p.name;
-			if (CEngineList.GetIndex(p.engine) >= 0)
+			if (CData.engineList.GetIndex(p.engine) >= 0)
 				cbEngineList.Text = p.engine;
 			else
 				cbEngineList.Text = "Human";
@@ -36,6 +36,7 @@ namespace RapChessGui
 			else
 				cbBookList.Text = "None";
 			curPlayerName = p.name;
+			cbTournament.Checked = p.tournament;
 			nudElo.Value = Convert.ToInt32(p.elo);
 			nudValue.Value = p.modeValue.GetValue();
 			modeValue.mode = p.modeValue.mode;
@@ -46,7 +47,7 @@ namespace RapChessGui
 		void UpdateListBox()
 		{
 			listBox1.Items.Clear();
-			foreach (CPlayer u in CPlayerList.list)
+			foreach (CPlayer u in CData.playerList.list)
 				listBox1.Items.Add(u.name);
 		}
 
@@ -60,6 +61,7 @@ namespace RapChessGui
 			p.name = tbPlayerName.Text;
 			p.engine = cbEngineList.Text;
 			p.book = cbBookList.Text;
+			p.tournament = cbTournament.Checked;
 			p.elo = nudElo.Value.ToString();
 			p.eloOld = Convert.ToDouble(p.elo);
 			p.eloNew = Convert.ToInt32(p.elo);
@@ -77,7 +79,7 @@ namespace RapChessGui
 		{
 			modeValue.mode = cbMode.Text;
 			modeValue.SetValue((int)nudValue.Value);
-			CPlayer player = CPlayerList.GetPlayer(curPlayerName);
+			CPlayer player = CData.playerList.GetPlayer(curPlayerName);
 			if (player == null)
 				return;
 			CRapIni.This.DeleteKey($"player>{player.name}");
@@ -89,13 +91,13 @@ namespace RapChessGui
 		private void ButCreate_Click(object sender, EventArgs e)
 		{
 			string name = tbPlayerName.Text;
-			if (CPlayerList.GetPlayer(name) == null)
+			if (CData.playerList.GetPlayer(name) == null)
 			{
 				modeValue.mode = cbMode.Text;
 				modeValue.SetValue((int)nudValue.Value);
 				CPlayer player = new CPlayer(name);
 				player.engine = cbEngineList.Text;
-				CPlayerList.list.Add(player);
+				CData.playerList.list.Add(player);
 				SaveToIni(player);
 				MessageBox.Show($"Player {player.name} has been created");
 				CData.reset = true;
@@ -110,7 +112,7 @@ namespace RapChessGui
 			DialogResult dr = MessageBox.Show($"Are you sure to delete player {playerName}?","Confirm Delete",MessageBoxButtons.YesNo);
 			if (dr == DialogResult.Yes)
 			{
-				CPlayerList.DeletePlayer(playerName);
+				CData.playerList.DeletePlayer(playerName);
 				UpdateListBox();
 				MessageBox.Show($"Player {playerName} has been removed");
 				CData.reset = true;
@@ -128,7 +130,7 @@ namespace RapChessGui
 		{
 			cbEngineList.Items.Clear();
 			cbEngineList.Items.Add("Human");
-			foreach (CEngine engine in CEngineList.list)
+			foreach (CEngine engine in CData.engineList.list)
 				cbEngineList.Items.Add(engine.name);
 			cbBookList.Items.Clear();
 			cbBookList.Items.Add("None");

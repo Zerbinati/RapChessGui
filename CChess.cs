@@ -52,6 +52,11 @@ namespace RapChessGui
 			return "";
 		}
 
+		public string Last()
+		{
+			return tokens[tokens.Length - 1];
+		}
+
 		public void SetMsg(string msg)
 		{
 			if (msg == null)

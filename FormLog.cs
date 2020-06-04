@@ -1,11 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace RapChessGui
@@ -19,6 +13,13 @@ namespace RapChessGui
 		{
 			This = this;
 			InitializeComponent();
+			richTextBox1.AddContextMenu();
+		}
+
+		public static void AppendText(string txt,Color col)
+		{
+			This.richTextBox1.SelectionColor = col;
+			This.richTextBox1.SelectedText = txt;
 		}
 
 		private void FormLog_FormClosing(object sender, FormClosingEventArgs e)
@@ -49,5 +50,34 @@ namespace RapChessGui
 		{
 			System.Diagnostics.Process.Start(e.LinkText);
 		}
+
+		private void stopToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			CGamer g = CGamerList.This.GetGamer(cbPlayerList.Text);
+			if (g != null)
+				g.EngineStop();
+		}
+
+		private void resetToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			CGamer g = CGamerList.This.GetGamer(cbPlayerList.Text);
+			if (g != null)
+				g.EngineReset();
+		}
+
+		private void terminateToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			CGamer g = CGamerList.This.GetGamer(cbPlayerList.Text);
+			if (g != null)
+				g.EngineTerminate() ;
+		}
+
+		private void closeToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			CGamer g = CGamerList.This.GetGamer(cbPlayerList.Text);
+			if (g != null)
+				g.EngineClose();
+		}
 	}
+
 }

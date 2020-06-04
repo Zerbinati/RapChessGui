@@ -13,7 +13,7 @@ namespace RapChessGui
 		public Point curXY = new Point();
 		public Point souXY = new Point();
 		public Point desXY = new Point();
-		Stopwatch timer = new Stopwatch();
+		readonly Stopwatch timer = new Stopwatch();
 
 		public bool UpdatePosition()
 		{

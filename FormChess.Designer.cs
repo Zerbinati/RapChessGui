@@ -1921,7 +1921,7 @@
             this.logToolStripMenuItem});
 			this.menuStrip1.Location = new System.Drawing.Point(0, 2);
 			this.menuStrip1.Name = "menuStrip1";
-			this.menuStrip1.Size = new System.Drawing.Size(372, 24);
+			this.menuStrip1.Size = new System.Drawing.Size(252, 24);
 			this.menuStrip1.TabIndex = 1;
 			this.menuStrip1.Text = "menuStrip1";
 			// 
@@ -3244,7 +3244,6 @@
 			this.Controls.Add(this.splitContainerMain);
 			this.Controls.Add(this.statusStrip1);
 			this.Controls.Add(this.panMenu);
-			this.DoubleBuffered = true;
 			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.MainMenuStrip = this.menuStrip1;
 			this.Name = "FormChess";

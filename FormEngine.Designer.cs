@@ -32,6 +32,10 @@
 			this.bDelete = new System.Windows.Forms.Button();
 			this.bCreate = new System.Windows.Forms.Button();
 			this.bUpdate = new System.Windows.Forms.Button();
+			this.gbTournament = new System.Windows.Forms.GroupBox();
+			this.cbTournament = new System.Windows.Forms.CheckBox();
+			this.gbElo = new System.Windows.Forms.GroupBox();
+			this.nudElo = new System.Windows.Forms.NumericUpDown();
 			this.gbOptions = new System.Windows.Forms.GroupBox();
 			this.rtbOptions = new System.Windows.Forms.RichTextBox();
 			this.groupBox3 = new System.Windows.Forms.GroupBox();
@@ -44,17 +48,16 @@
 			this.tbEngineName = new System.Windows.Forms.TextBox();
 			this.groupBox2 = new System.Windows.Forms.GroupBox();
 			this.listBox1 = new System.Windows.Forms.ListBox();
-			this.gbElo = new System.Windows.Forms.GroupBox();
-			this.nudElo = new System.Windows.Forms.NumericUpDown();
 			this.panel1.SuspendLayout();
+			this.gbTournament.SuspendLayout();
+			this.gbElo.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.nudElo)).BeginInit();
 			this.gbOptions.SuspendLayout();
 			this.groupBox3.SuspendLayout();
 			this.groupBox7.SuspendLayout();
 			this.groupBox4.SuspendLayout();
 			this.groupBox1.SuspendLayout();
 			this.groupBox2.SuspendLayout();
-			this.gbElo.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.nudElo)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// panel1
@@ -62,6 +65,7 @@
 			this.panel1.Controls.Add(this.bDelete);
 			this.panel1.Controls.Add(this.bCreate);
 			this.panel1.Controls.Add(this.bUpdate);
+			this.panel1.Controls.Add(this.gbTournament);
 			this.panel1.Controls.Add(this.gbElo);
 			this.panel1.Controls.Add(this.gbOptions);
 			this.panel1.Controls.Add(this.groupBox3);
@@ -77,7 +81,7 @@
 			// bDelete
 			// 
 			this.bDelete.Dock = System.Windows.Forms.DockStyle.Top;
-			this.bDelete.Location = new System.Drawing.Point(0, 443);
+			this.bDelete.Location = new System.Drawing.Point(0, 488);
 			this.bDelete.Name = "bDelete";
 			this.bDelete.Size = new System.Drawing.Size(311, 33);
 			this.bDelete.TabIndex = 27;
@@ -88,7 +92,7 @@
 			// bCreate
 			// 
 			this.bCreate.Dock = System.Windows.Forms.DockStyle.Top;
-			this.bCreate.Location = new System.Drawing.Point(0, 410);
+			this.bCreate.Location = new System.Drawing.Point(0, 455);
 			this.bCreate.Name = "bCreate";
 			this.bCreate.Size = new System.Drawing.Size(311, 33);
 			this.bCreate.TabIndex = 26;
@@ -99,13 +103,66 @@
 			// bUpdate
 			// 
 			this.bUpdate.Dock = System.Windows.Forms.DockStyle.Top;
-			this.bUpdate.Location = new System.Drawing.Point(0, 383);
+			this.bUpdate.Location = new System.Drawing.Point(0, 428);
 			this.bUpdate.Name = "bUpdate";
 			this.bUpdate.Size = new System.Drawing.Size(311, 27);
 			this.bUpdate.TabIndex = 25;
 			this.bUpdate.Text = "Update";
 			this.bUpdate.UseVisualStyleBackColor = true;
 			this.bUpdate.Click += new System.EventHandler(this.ButUpdate_Click);
+			// 
+			// gbTournament
+			// 
+			this.gbTournament.Controls.Add(this.cbTournament);
+			this.gbTournament.Dock = System.Windows.Forms.DockStyle.Top;
+			this.gbTournament.Location = new System.Drawing.Point(0, 383);
+			this.gbTournament.Name = "gbTournament";
+			this.gbTournament.Size = new System.Drawing.Size(311, 45);
+			this.gbTournament.TabIndex = 31;
+			this.gbTournament.TabStop = false;
+			this.gbTournament.Text = "Options";
+			// 
+			// cbTournament
+			// 
+			this.cbTournament.AutoSize = true;
+			this.cbTournament.Dock = System.Windows.Forms.DockStyle.Top;
+			this.cbTournament.Location = new System.Drawing.Point(3, 16);
+			this.cbTournament.Name = "cbTournament";
+			this.cbTournament.Size = new System.Drawing.Size(305, 17);
+			this.cbTournament.TabIndex = 0;
+			this.cbTournament.Text = "Tournament";
+			this.cbTournament.UseVisualStyleBackColor = true;
+			// 
+			// gbElo
+			// 
+			this.gbElo.Controls.Add(this.nudElo);
+			this.gbElo.Dock = System.Windows.Forms.DockStyle.Top;
+			this.gbElo.Location = new System.Drawing.Point(0, 338);
+			this.gbElo.Name = "gbElo";
+			this.gbElo.Size = new System.Drawing.Size(311, 45);
+			this.gbElo.TabIndex = 30;
+			this.gbElo.TabStop = false;
+			this.gbElo.Text = "Elo";
+			// 
+			// nudElo
+			// 
+			this.nudElo.Dock = System.Windows.Forms.DockStyle.Top;
+			this.nudElo.Location = new System.Drawing.Point(3, 16);
+			this.nudElo.Maximum = new decimal(new int[] {
+            10000,
+            0,
+            0,
+            0});
+			this.nudElo.Name = "nudElo";
+			this.nudElo.Size = new System.Drawing.Size(305, 20);
+			this.nudElo.TabIndex = 0;
+			this.nudElo.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			this.nudElo.ThousandsSeparator = true;
+			this.nudElo.Value = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
 			// 
 			// gbOptions
 			// 
@@ -236,37 +293,6 @@
 			this.listBox1.TabIndex = 1;
 			this.listBox1.SelectedValueChanged += new System.EventHandler(this.ListBox1_SelectedValueChanged);
 			// 
-			// gbElo
-			// 
-			this.gbElo.Controls.Add(this.nudElo);
-			this.gbElo.Dock = System.Windows.Forms.DockStyle.Top;
-			this.gbElo.Location = new System.Drawing.Point(0, 338);
-			this.gbElo.Name = "gbElo";
-			this.gbElo.Size = new System.Drawing.Size(311, 45);
-			this.gbElo.TabIndex = 30;
-			this.gbElo.TabStop = false;
-			this.gbElo.Text = "Elo";
-			// 
-			// nudElo
-			// 
-			this.nudElo.Dock = System.Windows.Forms.DockStyle.Top;
-			this.nudElo.Location = new System.Drawing.Point(3, 16);
-			this.nudElo.Maximum = new decimal(new int[] {
-            10000,
-            0,
-            0,
-            0});
-			this.nudElo.Name = "nudElo";
-			this.nudElo.Size = new System.Drawing.Size(305, 20);
-			this.nudElo.TabIndex = 0;
-			this.nudElo.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-			this.nudElo.ThousandsSeparator = true;
-			this.nudElo.Value = new decimal(new int[] {
-            1000,
-            0,
-            0,
-            0});
-			// 
 			// FormEngine
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -283,6 +309,10 @@
 			this.TopMost = true;
 			this.Shown += new System.EventHandler(this.FormEngine_Shown);
 			this.panel1.ResumeLayout(false);
+			this.gbTournament.ResumeLayout(false);
+			this.gbTournament.PerformLayout();
+			this.gbElo.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this.nudElo)).EndInit();
 			this.gbOptions.ResumeLayout(false);
 			this.groupBox3.ResumeLayout(false);
 			this.groupBox3.PerformLayout();
@@ -291,8 +321,6 @@
 			this.groupBox1.ResumeLayout(false);
 			this.groupBox1.PerformLayout();
 			this.groupBox2.ResumeLayout(false);
-			this.gbElo.ResumeLayout(false);
-			((System.ComponentModel.ISupportInitialize)(this.nudElo)).EndInit();
 			this.ResumeLayout(false);
 
 		}
@@ -316,5 +344,7 @@
 		private System.Windows.Forms.RichTextBox rtbOptions;
 		private System.Windows.Forms.GroupBox gbElo;
 		private System.Windows.Forms.NumericUpDown nudElo;
+		private System.Windows.Forms.GroupBox gbTournament;
+		private System.Windows.Forms.CheckBox cbTournament;
 	}
 }

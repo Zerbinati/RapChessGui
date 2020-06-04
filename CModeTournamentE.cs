@@ -11,6 +11,7 @@ namespace RapChessGui
 		public static bool rotate = false;
 		public static CTourList tourList = new CTourList("Tour-engines");
 		public static CModeValue modeValue = new CModeValue();
+		public static CEngineList engineList = new CEngineList();
 
 		public static void SaveToIni()
 		{
@@ -26,6 +27,14 @@ namespace RapChessGui
 			engine = CRapIni.This.Read("mode>tournamentE>engine","");
 			modeValue.mode = CRapIni.This.Read("mode>tournamentE>mode",modeValue.mode);
 			modeValue.value = CRapIni.This.ReadInt("mode>tournamentE>value",modeValue.value);
+		}
+
+		public static void FillList()
+		{
+			engineList.list.Clear();
+			foreach (CEngine e in CData.engineList.list)
+				if (e.tournament)
+					engineList.Add(e);
 		}
 
 		public static CEngine ChooseOpponent(CEngine engine, CEngine engine1, CEngine engine2)
@@ -72,12 +81,12 @@ namespace RapChessGui
 
 		public static CEngine SelectEngine()
 		{
-			CEngine e = CEngineList.GetEngine(engine);
+			CEngine e = engineList.GetEngine(engine);
 			if(e == null)
 				e = tourList.LastEngine();
 			if (e == null)
-				e = CEngineList.list[0];
-			CEngine n = CEngineList.NextEngine(e);
+				e = engineList.list[0];
+			CEngine n = engineList.NextEngine(e);
 			int rw = 0;
 			int rl = 0;
 			int rd = 0;
@@ -90,21 +99,21 @@ namespace RapChessGui
 
 		public static CEngine SelectOpponent(CEngine engine)
 		{
-			CEngineList.Sort();
-			CEngineList.FillPosition();
-			for (int n = 0; n < CEngineList.list.Count; n++)
+			engineList.Sort();
+			engineList.FillPosition();
+			for (int n = 0; n < engineList.list.Count; n++)
 			{
-				CEngine e = CEngineList.list[n];
+				CEngine e = engineList.list[n];
 				e.distance = Math.Abs(engine.position - e.position);
 			}
-			CEngineList.SortDistance();
+			engineList.SortDistance();
 			List<CEngine> el = new List<CEngine>();
-			foreach (CEngine e in CEngineList.list)
+			foreach (CEngine e in engineList.list)
 				if (e != engine)
 					el.Add(e);
 			if (el.Count == 0)
 				return engine;
-			CEngineList.Sort();
+			engineList.Sort();
 			for (int n = 0; n < el.Count - 1; n++)
 			{
 				CEngine e = ChooseOpponent(engine, el[n], el[n + 1]);

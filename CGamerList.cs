@@ -55,12 +55,22 @@ namespace RapChessGui
 			Init(true);
 		}
 
+		public void EngineReset()
+		{
+			SetPlayer();
+		}
+
 		public void EngineStop()
 		{
 			if (engine.protocol == "Uci")
 				SendMessage("stop");
 			else
 				SendMessage("?");
+		}
+
+		public void EngineTerminate()
+		{
+			enginePro.Terminate();
 		}
 
 		public void EngineClose()
@@ -257,7 +267,7 @@ namespace RapChessGui
 		{
 			if (bookPro.process != null)
 			{
-				FormLog.This.richTextBox1.AppendText($"book {player.name} < {msg}\n", Color.Brown);
+				FormLog.AppendText($"book {player.name} < {msg}\n", Color.Brown);
 				bookPro.process.StandardInput.WriteLine(msg);
 			}
 		}
@@ -266,7 +276,7 @@ namespace RapChessGui
 		{
 			if (enginePro.process != null)
 			{
-				FormLog.This.richTextBox1.AppendText($"{player.name} < {msg}\n", Color.Brown);
+				FormLog.AppendText($"{player.name} < {msg}\n", Color.Brown);
 				enginePro.process.StandardInput.WriteLine(msg);
 			}
 		}
@@ -352,7 +362,7 @@ namespace RapChessGui
 						isPrepared = false;
 						enginePro.Terminate();
 						FormChess.This.MakeMove(lastMove);
-						FormLog.This.richTextBox1.AppendText($"{player.name} forced move {lastMove}\n", Color.Orange);
+						FormLog.AppendText($"{player.name} forced move {lastMove}\n", Color.Orange);
 					}
 					else
 						return SetTimeOut();
@@ -392,7 +402,7 @@ namespace RapChessGui
 		{
 			player = p;
 			book = CBookList.GetBook(p.book);
-			engine = CEngineList.GetEngine(p.engine);
+			engine = CData.engineList.GetEngine(p.engine);
 			if (book != null)
 				bookPro.SetProgram("Books\\" + book.file, book.parameters);
 			if (engine != null)
@@ -406,7 +416,7 @@ namespace RapChessGui
 
 		public void SetPlayer(string name)
 		{
-			CPlayer p = CPlayerList.GetPlayerAuto(name);
+			CPlayer p = CData.playerList.GetPlayerAuto(name);
 			SetPlayer(p);
 		}
 

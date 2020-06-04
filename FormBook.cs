@@ -82,7 +82,7 @@ namespace RapChessGui
 		private void ButDelete_Click(object sender, EventArgs e)
 		{
 			string userName = tbReaderName.Text;
-			CPlayerList.DeletePlayer(userName);
+			CData.playerList.DeletePlayer(userName);
 			UpdateListBox();
 			MessageBox.Show($"Player {userName} has been removed");
 		}

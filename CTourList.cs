@@ -42,7 +42,7 @@ namespace RapChessGui
 
 	class CTourList
 	{
-		string path;
+		readonly string path;
 		public List<CTour> list = new List<CTour>();
 		public int maxRecords = 10000;
 
@@ -129,7 +129,7 @@ namespace RapChessGui
 			string n = "";
 			if (list.Count > 0)
 				n = list[list.Count - 1].w;
-			return CEngineList.GetEngine(n);
+			return CData.engineList.GetEngine(n);
 		}
 
 		public CPlayer LastPlayer()
@@ -137,7 +137,7 @@ namespace RapChessGui
 			string n = "";
 			if (list.Count > 0)
 				n = list[list.Count - 1].w;
-			return CPlayerList.GetPlayer(n);
+			return CData.playerList.GetPlayer(n);
 		}
 
 		public void Write(string w, string b, string r)

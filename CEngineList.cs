@@ -6,6 +6,7 @@ namespace RapChessGui
 {
 	public class CEngine
 	{
+		public bool tournament = true;
 		public int distance = 0;
 		public int position = 0;
 		public string name = "Human";
@@ -23,6 +24,7 @@ namespace RapChessGui
 
 		public void LoadFromIni()
 		{
+			tournament = CRapIni.This.ReadBool($"engine>{name}>tournament", tournament);
 			file = CRapIni.This.Read($"engine>{name}>file", "Human");
 			protocol = CRapIni.This.Read($"engine>{name}>protocol", "Uci");
 			parameters = CRapIni.This.Read($"engine>{name}>parameters", "");
@@ -33,6 +35,7 @@ namespace RapChessGui
 
 		public void SaveToIni()
 		{
+			CRapIni.This.Write($"engine>{name}>tournament", tournament);
 			CRapIni.This.Write($"engine>{name}>file", file);
 			CRapIni.This.Write($"engine>{name}>protocol", protocol);
 			CRapIni.This.Write($"engine>{name}>parameters", parameters);
@@ -48,18 +51,18 @@ namespace RapChessGui
 
 	}
 
-	static class CEngineList
+	public class CEngineList
 	{
 		public const string def = "RapChess CS";
-		public static List<CEngine> list = new List<CEngine>();
+		public List<CEngine> list = new List<CEngine>();
 
-		public static void Add(CEngine e)
+		public void Add(CEngine e)
 		{
 			if (GetIndex(e.name) < 0)
 				list.Add(e);
 		}
 
-		public static void DeleteEngine(string name)
+		public void DeleteEngine(string name)
 		{
 			CRapIni.This.DeleteKey($"engine>{name}");
 			int i = GetIndex(name);
@@ -67,7 +70,7 @@ namespace RapChessGui
 				list.RemoveAt(i);
 		}
 
-		public static CEngine GetEngine(string name)
+		public CEngine GetEngine(string name)
 		{
 			foreach (CEngine e in list)
 				if (e.name == name)
@@ -75,7 +78,7 @@ namespace RapChessGui
 			return null;
 		}
 
-		public static int GetIndex(string name)
+		public int GetIndex(string name)
 		{
 			for (int n = 0; n < list.Count; n++)
 			{
@@ -86,7 +89,7 @@ namespace RapChessGui
 			return -1;
 		}
 
-		public static int GetIndexElo(int elo)
+		public int GetIndexElo(int elo)
 		{
 			int result = 0;
 			foreach (CEngine e in list)
@@ -95,7 +98,7 @@ namespace RapChessGui
 			return result;
 		}
 
-		public static int GetOptElo(double index)
+		public int GetOptElo(double index)
 		{
 			if (index < 0)
 				index = 0;
@@ -104,7 +107,7 @@ namespace RapChessGui
 			return Convert.ToInt32((3000 * (index + 1)) / list.Count);
 		}
 
-		public static void LoadFromIni()
+		public void LoadFromIni()
 		{
 			list.Clear();
 			List<string> en = CRapIni.This.ReadList("engine");
@@ -116,21 +119,21 @@ namespace RapChessGui
 			}
 		}
 
-		public static CEngine NextEngine(CEngine e)
+		public CEngine NextEngine(CEngine e)
 		{
 			Sort();
 			int i =( GetIndex(e.name) + 1) % list.Count;
 			return list[i];
 		}
 
-		public static void SaveToIni()
+		public void SaveToIni()
 		{
 			CRapIni.This.DeleteKey("engine");
 			foreach (CEngine e in list)
 				e.SaveToIni();
 		}
 
-		public static void Sort()
+		public void Sort()
 		{
 			list.Sort(delegate (CEngine e1, CEngine e2)
 			{
@@ -141,7 +144,7 @@ namespace RapChessGui
 			});
 		}
 
-		public static void SortDistance()
+		public void SortDistance()
 		{
 			list.Sort(delegate (CEngine e1, CEngine e2)
 			{
@@ -149,7 +152,7 @@ namespace RapChessGui
 			});
 		}
 
-		public static void FillPosition()
+		public void FillPosition()
 		{
 			int position = 1;
 			for (int n = 0; n < list.Count; n++)

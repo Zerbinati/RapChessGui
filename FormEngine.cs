@@ -18,7 +18,7 @@ namespace RapChessGui
 
 		void SelectEngine(string name)
 		{
-			CEngine e = CEngineList.GetEngine(name);
+			CEngine e = CData.engineList.GetEngine(name);
 			if (e == null)
 				return;
 			tbEngineName.Text = e.name;
@@ -26,6 +26,7 @@ namespace RapChessGui
 			cbFileList.Text = e.file;
 			cbProtocol.Text = e.protocol;
 			curEngineName = e.name;
+			cbTournament.Checked = e.tournament;
 			nudElo.Value = Convert.ToInt32(e.elo);
 			rtbOptions.Lines = e.options.ToArray();
 		}
@@ -33,7 +34,7 @@ namespace RapChessGui
 		void UpdateListBox()
 		{
 			listBox1.Items.Clear();
-			foreach(CEngine e in CEngineList.list)
+			foreach(CEngine e in CData.engineList.list)
 				listBox1.Items.Add(e.name);
 		}
 
@@ -48,6 +49,7 @@ namespace RapChessGui
 			e.file = cbFileList.Text;
 			e.protocol = cbProtocol.Text;
 			e.parameters = tbParameters.Text;
+			e.tournament = cbTournament.Checked;
 			e.elo = nudElo.Value.ToString();
 			e.eloOld = Convert.ToDouble(e.elo);
 			e.options = rtbOptions.Lines.Cast<String>().ToList();
@@ -63,7 +65,7 @@ namespace RapChessGui
 		{
 			string name = tbEngineName.Text;
 			CEngine engine = new CEngine(name);
-			CEngineList.list.Add(engine);
+			CData.engineList.list.Add(engine);
 			SaveToIni(engine);
 			MessageBox.Show($"Chess {engine.name} has been created");
 			CData.reset = true;
@@ -71,7 +73,7 @@ namespace RapChessGui
 
 		private void ButUpdate_Click(object sender, EventArgs e)
 		{
-			CEngine engine = CEngineList.GetEngine(curEngineName);
+			CEngine engine = CData.engineList.GetEngine(curEngineName);
 			if (engine == null)
 				return;
 			CRapIni.This.DeleteKey($"engine>{engine.name}");
@@ -83,7 +85,7 @@ namespace RapChessGui
 		private void ButDelete_Click(object sender, EventArgs e)
 		{
 			string engineName = tbEngineName.Text;
-			CEngineList.DeleteEngine(engineName);
+			CData.engineList.DeleteEngine(engineName);
 			UpdateListBox();
 			MessageBox.Show($"Chess {engineName} has been removed");
 			CData.reset = true;
