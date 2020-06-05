@@ -373,6 +373,7 @@ namespace RapChessGui
 			CBookList.SaveToIni();
 			CPlayer p;
 			p = new CPlayer("Human");
+			p.tournament = false;
 			p.modeValue.value = 0;
 			CData.playerList.Add(p);
 			p = new CPlayer();
@@ -464,6 +465,60 @@ namespace RapChessGui
 			CModeTournamentE.LoadFromIni();
 			CModeTournamentP.LoadFromIni();
 			CModeTraining.LoadFromIni();
+		}
+
+		public void BoardPrepare()
+		{
+			SetBoardRotate();
+			CBoard.Resize(panBoard.Width, panBoard.Height);
+			RenderBoard();
+		}
+
+		void AddLines(CGamer g)
+		{
+			DateTime dt = new DateTime();
+			dt = dt.AddMilliseconds(g.infMs);
+			ListViewItem lvi = new ListViewItem(new[] { dt.ToString("mm:ss.ff"), g.score, g.GetDepth(), g.nodes.ToString("N0"), g.nps.ToString("N0"), g.pv });
+			ListView lv = g.white ? lvMovesW : lvMovesB;
+			if ((lv.Items.Count & 1) > 0)
+				lvi.BackColor = Color.LemonChiffon;
+			lv.Items.Insert(0, lvi);
+		}
+
+		void SetPv(int i, CGamer g)
+		{
+			string pv = "";
+			List<int> moves = new List<int>();
+			for (int n = i; n < Uci.tokens.Length; n++)
+			{
+				string emo = Uci.tokens[n];
+				int gmo = Chess.IsValidMove(emo);
+				if (gmo > 0)
+				{
+					if (moves.Count == 0)
+					{
+						g.lastMove = emo;
+						CChess.EmoToSD(emo, out int sou, out int des);
+						CArrow.SetAB(sou, des);
+						RenderBoard();
+					}
+					string san = Chess.EmoToSan(emo);
+					Chess.MakeMove(gmo);
+					moves.Add(gmo);
+					if (FormOptions.This.rbSan.Checked)
+						pv += $" {san}";
+					else
+						pv += $" {emo}";
+				}
+				else break;
+			}
+			for (int n = moves.Count - 1; n >= 0; n--)
+				Chess.UnmakeMove(moves[n]);
+			if (pv != "")
+				g.pv = pv;
+			tssMoves.ForeColor = Color.Gainsboro;
+			tssMoves.Text = pv;
+			AddLines(g);
 		}
 
 		#region mode
@@ -826,60 +881,6 @@ namespace RapChessGui
 
 		#endregion
 
-		public void BoardPrepare()
-		{
-			SetBoardRotate();
-			CBoard.Resize(panBoard.Width, panBoard.Height);
-			RenderBoard();
-		}
-
-		void AddLines(CGamer g)
-		{
-			DateTime dt = new DateTime();
-			dt = dt.AddMilliseconds(g.infMs);
-			ListViewItem lvi = new ListViewItem(new[] { dt.ToString("mm:ss.ff"), g.score, g.GetDepth(), g.nodes.ToString("N0"), g.nps.ToString("N0"), g.pv });
-			ListView lv = g.white ? lvMovesW : lvMovesB;
-			if ((lv.Items.Count & 1) > 0)
-				lvi.BackColor = Color.LemonChiffon;
-			lv.Items.Insert(0, lvi);
-		}
-
-		void SetPv(int i, CGamer g)
-		{
-			string pv = "";
-			List<int> moves = new List<int>();
-			for (int n = i; n < Uci.tokens.Length; n++)
-			{
-				string emo = Uci.tokens[n];
-				int gmo = Chess.IsValidMove(emo);
-				if (gmo > 0)
-				{
-					if (moves.Count == 0)
-					{
-						g.lastMove = emo;
-						CChess.EmoToSD(emo, out int sou, out int des);
-						CArrow.SetAB(sou, des);
-						RenderBoard();
-					}
-					string san = Chess.EmoToSan(emo);
-					Chess.MakeMove(gmo);
-					moves.Add(gmo);
-					if (FormOptions.This.rbSan.Checked)
-						pv += $" {san}";
-					else
-						pv += $" {emo}";
-				}
-				else break;
-			}
-			for (int n = moves.Count - 1; n >= 0; n--)
-				Chess.UnmakeMove(moves[n]);
-			if (pv != "")
-				g.pv = pv;
-			tssMoves.ForeColor = Color.Gainsboro;
-			tssMoves.Text = pv;
-			AddLines(g);
-		}
-
 		public void GetMessageUci(CGamer g, string msg)
 		{
 			string emo;
@@ -989,7 +990,7 @@ namespace RapChessGui
 			}
 		}
 
-		bool GetMoveXb(string xmo,out string umo)
+		bool GetMoveXb(string xmo, out string umo)
 		{
 			umo = xmo.ToLower();
 			if (xmo == "o-o")
@@ -1001,7 +1002,13 @@ namespace RapChessGui
 			else
 			{
 				umo += "q";
-				return Chess.IsValidMove(umo) > 0;
+				if (Chess.IsValidMove(umo) > 0)
+					return true;
+				else
+				{
+					umo = xmo;
+					return false;
+				}
 			}
 		}
 
@@ -1018,7 +1025,7 @@ namespace RapChessGui
 					break;
 				case "move":
 					g.ponder = Uci.GetValue("ponder");
-					if(GetMoveXb(Uci.tokens[1],out umo))
+					GetMoveXb(Uci.tokens[1], out umo);
 					MakeMove(umo);
 					break;
 				default:
@@ -1060,7 +1067,7 @@ namespace RapChessGui
 
 		public void GetMessage()
 		{
-			while(CMessageList.MessageGet(out CMessage m, GamerList.GamerCur().timer.IsRunning))
+			while (CMessageList.MessageGet(out CMessage m, GamerList.GamerCur().timer.IsRunning))
 			{
 				CGamer gamer = GamerList.GetGamerPid(m.pid, out string protocol);
 				if (gamer == null)
@@ -1071,10 +1078,10 @@ namespace RapChessGui
 					if (gamer.white)
 					{
 						FormLog.AppendText($"{gamer.player.name}", Color.DimGray);
-						FormLog.AppendText($" > {m.msg}\n",Color.Black);
+						FormLog.AppendText($" > {m.msg}\n", Color.Black);
 					}
 					else
-						FormLog.AppendText($"{gamer.player.name} > {m.msg}\n",Color.Black);
+						FormLog.AppendText($"{gamer.player.name} > {m.msg}\n", Color.Black);
 					if (protocol == "Uci")
 						GetMessageUci(gamer, m.msg);
 					if (protocol == "Winboard")
@@ -1378,8 +1385,8 @@ namespace RapChessGui
 				foreach (int gm in gMoves)
 					eMoves.Add(Chess.GmoToEmo(gm));
 				FormLog.AppendText($"Wrong move {emo}\n", Color.Red);
-				FormLog.AppendText($"{Chess.GetFen()}\n",Color.Black);
-				FormLog.AppendText($"{string.Join(" ", eMoves)}\n",Color.Black);
+				FormLog.AppendText($"{Chess.GetFen()}\n", Color.Black);
+				FormLog.AppendText($"{string.Join(" ", eMoves)}\n", Color.Black);
 				FormLog.This.richTextBox1.SaveFile("Error.rtf");
 				CRapLog.Add($"Wrong move {cp.engine} {emo} {Chess.GetFen()}");
 				SetGameState(CGameState.error);
