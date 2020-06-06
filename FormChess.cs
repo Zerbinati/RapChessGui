@@ -2193,12 +2193,6 @@ namespace RapChessGui
 			RenderBoard();
 		}
 
-		private void FormChess_Resize(object sender, EventArgs e)
-		{
-			LinesResize(lvMovesW);
-			LinesResize(lvMovesB);
-		}
-
 		private void cbMode_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			CModeGame.modeValue.mode = cbMode.Text;
@@ -2352,6 +2346,12 @@ namespace RapChessGui
 				formPgn.Focus();
 			else
 				formPgn.Show(this);
+		}
+
+		private void FormChess_Resize(object sender, EventArgs e)
+		{
+			LinesResize(lvMovesW);
+			LinesResize(lvMovesB);
 		}
 
 		#endregion

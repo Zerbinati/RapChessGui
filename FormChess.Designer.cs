@@ -1922,7 +1922,7 @@
 			this.menuStrip1.Location = new System.Drawing.Point(0, 2);
 			this.menuStrip1.Name = "menuStrip1";
 			this.menuStrip1.ShowItemToolTips = true;
-			this.menuStrip1.Size = new System.Drawing.Size(372, 24);
+			this.menuStrip1.Size = new System.Drawing.Size(252, 24);
 			this.menuStrip1.TabIndex = 1;
 			this.menuStrip1.Text = "menuStrip1";
 			// 
@@ -2078,9 +2078,11 @@
 			// 
 			// labNpsT
 			// 
+			this.labNpsT.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.labNpsT.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(160)))));
 			this.labNpsT.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-			this.labNpsT.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.labNpsT.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
 			this.labNpsT.ForeColor = System.Drawing.Color.Black;
 			this.labNpsT.Location = new System.Drawing.Point(591, 0);
@@ -2093,9 +2095,11 @@
 			// 
 			// labBookT
 			// 
+			this.labBookT.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.labBookT.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(160)))));
 			this.labBookT.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-			this.labBookT.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.labBookT.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
 			this.labBookT.ForeColor = System.Drawing.Color.Black;
 			this.labBookT.Location = new System.Drawing.Point(788, 0);
@@ -2108,9 +2112,11 @@
 			// 
 			// labPonderT
 			// 
+			this.labPonderT.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.labPonderT.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(160)))));
 			this.labPonderT.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-			this.labPonderT.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.labPonderT.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
 			this.labPonderT.ForeColor = System.Drawing.Color.Black;
 			this.labPonderT.Location = new System.Drawing.Point(985, 0);
@@ -2123,9 +2129,11 @@
 			// 
 			// labScoreT
 			// 
+			this.labScoreT.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.labScoreT.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(160)))));
 			this.labScoreT.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-			this.labScoreT.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.labScoreT.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
 			this.labScoreT.ForeColor = System.Drawing.Color.Black;
 			this.labScoreT.Location = new System.Drawing.Point(0, 0);
@@ -2138,9 +2146,11 @@
 			// 
 			// labDepthT
 			// 
+			this.labDepthT.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.labDepthT.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(160)))));
 			this.labDepthT.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-			this.labDepthT.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.labDepthT.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
 			this.labDepthT.ForeColor = System.Drawing.Color.Black;
 			this.labDepthT.Location = new System.Drawing.Point(197, 0);
@@ -2153,9 +2163,11 @@
 			// 
 			// labNodesT
 			// 
+			this.labNodesT.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.labNodesT.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(160)))));
 			this.labNodesT.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-			this.labNodesT.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.labNodesT.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
 			this.labNodesT.ForeColor = System.Drawing.Color.Black;
 			this.labNodesT.Location = new System.Drawing.Point(394, 0);
@@ -2168,9 +2180,11 @@
 			// 
 			// labNpsD
 			// 
+			this.labNpsD.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.labNpsD.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(160)))));
 			this.labNpsD.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-			this.labNpsD.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.labNpsD.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
 			this.labNpsD.ForeColor = System.Drawing.Color.Black;
 			this.labNpsD.Location = new System.Drawing.Point(591, 0);
@@ -2183,9 +2197,11 @@
 			// 
 			// labBookD
 			// 
+			this.labBookD.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.labBookD.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(160)))));
 			this.labBookD.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-			this.labBookD.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.labBookD.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
 			this.labBookD.ForeColor = System.Drawing.Color.Black;
 			this.labBookD.Location = new System.Drawing.Point(788, 0);
@@ -2198,9 +2214,11 @@
 			// 
 			// labPonderD
 			// 
+			this.labPonderD.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.labPonderD.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(160)))));
 			this.labPonderD.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-			this.labPonderD.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.labPonderD.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
 			this.labPonderD.ForeColor = System.Drawing.Color.Black;
 			this.labPonderD.Location = new System.Drawing.Point(985, 0);
@@ -2213,9 +2231,11 @@
 			// 
 			// labScoreD
 			// 
+			this.labScoreD.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.labScoreD.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(160)))));
 			this.labScoreD.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-			this.labScoreD.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.labScoreD.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
 			this.labScoreD.ForeColor = System.Drawing.Color.Black;
 			this.labScoreD.Location = new System.Drawing.Point(0, 0);
@@ -2228,9 +2248,11 @@
 			// 
 			// labDepthD
 			// 
+			this.labDepthD.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.labDepthD.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(160)))));
 			this.labDepthD.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-			this.labDepthD.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.labDepthD.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
 			this.labDepthD.ForeColor = System.Drawing.Color.Black;
 			this.labDepthD.Location = new System.Drawing.Point(197, 0);
@@ -2243,9 +2265,11 @@
 			// 
 			// labNodesD
 			// 
+			this.labNodesD.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.labNodesD.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(160)))));
 			this.labNodesD.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-			this.labNodesD.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.labNodesD.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
 			this.labNodesD.ForeColor = System.Drawing.Color.Black;
 			this.labNodesD.Location = new System.Drawing.Point(394, 0);
@@ -2363,9 +2387,11 @@
 			// 
 			// labEngineW
 			// 
+			this.labEngineW.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.labEngineW.BackColor = System.Drawing.Color.Olive;
 			this.labEngineW.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-			this.labEngineW.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.labEngineW.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
 			this.labEngineW.ForeColor = System.Drawing.Color.White;
 			this.labEngineW.Location = new System.Drawing.Point(255, 0);
@@ -2378,9 +2404,11 @@
 			// 
 			// labWhite
 			// 
+			this.labWhite.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.labWhite.BackColor = System.Drawing.Color.White;
 			this.labWhite.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-			this.labWhite.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.labWhite.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
 			this.labWhite.ForeColor = System.Drawing.Color.Black;
 			this.labWhite.Location = new System.Drawing.Point(0, 0);
@@ -2393,9 +2421,11 @@
 			// 
 			// labBookW
 			// 
+			this.labBookW.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.labBookW.BackColor = System.Drawing.Color.Olive;
 			this.labBookW.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-			this.labBookW.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.labBookW.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
 			this.labBookW.ForeColor = System.Drawing.Color.White;
 			this.labBookW.Location = new System.Drawing.Point(486, 0);
@@ -2408,9 +2438,11 @@
 			// 
 			// labProtocolW
 			// 
+			this.labProtocolW.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.labProtocolW.BackColor = System.Drawing.Color.Olive;
 			this.labProtocolW.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-			this.labProtocolW.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.labProtocolW.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
 			this.labProtocolW.ForeColor = System.Drawing.Color.White;
 			this.labProtocolW.Location = new System.Drawing.Point(948, 0);
@@ -2438,9 +2470,11 @@
 			// 
 			// labTakenT
 			// 
+			this.labTakenT.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.labTakenT.BackColor = System.Drawing.Color.DarkGray;
 			this.labTakenT.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-			this.labTakenT.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.labTakenT.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
 			this.labTakenT.ForeColor = System.Drawing.Color.Black;
 			this.labTakenT.Location = new System.Drawing.Point(0, 0);
@@ -2453,9 +2487,11 @@
 			// 
 			// labMaterialT
 			// 
+			this.labMaterialT.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.labMaterialT.BackColor = System.Drawing.Color.DarkGray;
 			this.labMaterialT.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-			this.labMaterialT.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.labMaterialT.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
 			this.labMaterialT.ForeColor = System.Drawing.Color.Black;
 			this.labMaterialT.Location = new System.Drawing.Point(303, 0);
@@ -2468,9 +2504,11 @@
 			// 
 			// labMaterialD
 			// 
+			this.labMaterialD.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.labMaterialD.BackColor = System.Drawing.Color.DarkGray;
 			this.labMaterialD.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-			this.labMaterialD.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.labMaterialD.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
 			this.labMaterialD.ForeColor = System.Drawing.Color.Black;
 			this.labMaterialD.Location = new System.Drawing.Point(303, 0);
@@ -2483,9 +2521,11 @@
 			// 
 			// labTakenD
 			// 
+			this.labTakenD.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.labTakenD.BackColor = System.Drawing.Color.DarkGray;
 			this.labTakenD.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-			this.labTakenD.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.labTakenD.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
 			this.labTakenD.ForeColor = System.Drawing.Color.Black;
 			this.labTakenD.Location = new System.Drawing.Point(0, 0);
@@ -2498,9 +2538,11 @@
 			// 
 			// labModeW
 			// 
+			this.labModeW.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.labModeW.BackColor = System.Drawing.Color.Olive;
 			this.labModeW.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-			this.labModeW.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.labModeW.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
 			this.labModeW.ForeColor = System.Drawing.Color.White;
 			this.labModeW.Location = new System.Drawing.Point(717, 0);
@@ -2513,9 +2555,11 @@
 			// 
 			// labModeB
 			// 
+			this.labModeB.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.labModeB.BackColor = System.Drawing.Color.Olive;
 			this.labModeB.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-			this.labModeB.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.labModeB.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
 			this.labModeB.ForeColor = System.Drawing.Color.White;
 			this.labModeB.Location = new System.Drawing.Point(717, 0);
@@ -2528,9 +2572,11 @@
 			// 
 			// labProtocolB
 			// 
+			this.labProtocolB.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.labProtocolB.BackColor = System.Drawing.Color.Olive;
 			this.labProtocolB.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-			this.labProtocolB.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.labProtocolB.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
 			this.labProtocolB.ForeColor = System.Drawing.Color.White;
 			this.labProtocolB.Location = new System.Drawing.Point(948, 0);
@@ -2543,9 +2589,11 @@
 			// 
 			// labBookB
 			// 
+			this.labBookB.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.labBookB.BackColor = System.Drawing.Color.Olive;
 			this.labBookB.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-			this.labBookB.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.labBookB.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
 			this.labBookB.ForeColor = System.Drawing.Color.White;
 			this.labBookB.Location = new System.Drawing.Point(486, 0);
@@ -2558,9 +2606,11 @@
 			// 
 			// labBlack
 			// 
+			this.labBlack.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.labBlack.BackColor = System.Drawing.Color.Black;
 			this.labBlack.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-			this.labBlack.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.labBlack.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
 			this.labBlack.ForeColor = System.Drawing.Color.Black;
 			this.labBlack.Location = new System.Drawing.Point(0, 0);
@@ -2573,9 +2623,11 @@
 			// 
 			// labEngineB
 			// 
+			this.labEngineB.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.labEngineB.BackColor = System.Drawing.Color.Olive;
 			this.labEngineB.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-			this.labEngineB.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.labEngineB.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
 			this.labEngineB.ForeColor = System.Drawing.Color.White;
 			this.labEngineB.Location = new System.Drawing.Point(255, 0);
@@ -2612,6 +2664,9 @@
 			// 
 			// chart1
 			// 
+			this.chart1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.chart1.BackColor = System.Drawing.Color.WhiteSmoke;
 			this.chart1.BorderlineColor = System.Drawing.Color.Silver;
 			chartArea1.AxisX.IsLabelAutoFit = false;
@@ -2624,7 +2679,6 @@
 			chartArea1.BackColor = System.Drawing.Color.WhiteSmoke;
 			chartArea1.Name = "ChartArea1";
 			this.chart1.ChartAreas.Add(chartArea1);
-			this.chart1.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.chart1.Location = new System.Drawing.Point(0, 0);
 			this.chart1.Name = "chart1";
 			this.chart1.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.None;
@@ -2648,9 +2702,11 @@
 			// 
 			// labPlayerW
 			// 
+			this.labPlayerW.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.labPlayerW.BackColor = System.Drawing.Color.Olive;
 			this.labPlayerW.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-			this.labPlayerW.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.labPlayerW.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
 			this.labPlayerW.ForeColor = System.Drawing.Color.White;
 			this.labPlayerW.Location = new System.Drawing.Point(24, 0);
@@ -2663,9 +2719,11 @@
 			// 
 			// labPlayerB
 			// 
+			this.labPlayerB.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.labPlayerB.BackColor = System.Drawing.Color.Olive;
 			this.labPlayerB.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-			this.labPlayerB.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.labPlayerB.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
 			this.labPlayerB.ForeColor = System.Drawing.Color.White;
 			this.labPlayerB.Location = new System.Drawing.Point(24, 0);
@@ -2905,11 +2963,13 @@
 			// 
 			// lvMoves
 			// 
+			this.lvMoves.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.lvMoves.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeader3,
             this.columnHeader4,
             this.columnHeader5});
-			this.lvMoves.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.lvMoves.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
 			this.lvMoves.FullRowSelect = true;
 			this.lvMoves.GridLines = true;
@@ -3245,6 +3305,7 @@
 			this.Controls.Add(this.splitContainerMain);
 			this.Controls.Add(this.statusStrip1);
 			this.Controls.Add(this.panMenu);
+			this.DoubleBuffered = true;
 			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.MainMenuStrip = this.menuStrip1;
 			this.Name = "FormChess";
