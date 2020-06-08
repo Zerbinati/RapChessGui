@@ -1520,7 +1520,7 @@ namespace RapChessGui
 			CBoard.RenderArrow(pg);
 			pg.Dispose();
 			stopwatch.Stop();
-			CData.fps = CData.fps * 0.9 + 100 / stopwatch.ElapsedMilliseconds;
+			CData.fps = stopwatch.ElapsedMilliseconds > 0 ? CData.fps * 0.9 + 100 / stopwatch.ElapsedMilliseconds : 0;
 			labFPS.Text = $"FPS {Convert.ToInt32(CData.fps)}";
 		}
 
