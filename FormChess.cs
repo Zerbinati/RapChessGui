@@ -144,7 +144,6 @@ namespace RapChessGui
 							pw.eloNew = pw.GetEloMore();
 						else
 							pw.eloNew = Convert.ToInt32(pw.eloOld);
-						This.chartGame.Series[0].Points.Add(pw.eloNew);
 					}
 					else
 					{
@@ -152,19 +151,7 @@ namespace RapChessGui
 							pl.eloNew = pl.GetEloLess();
 						else
 							pl.eloNew = Convert.ToInt32(pl.eloOld);
-						This.chartGame.Series[0].Points.Add(pw.eloNew);
 					}
-					string elo = "";
-					int x2 = This.chartGame.Series[0].Points.Count;
-					int x1 = x2 > 100 ? x2 - 100 : 0;
-					for (int n = x1; n < x2; n++)
-					{
-						DataPoint p = This.chartGame.Series[0].Points[n];
-						double e = p.YValues[0];
-						elo += $",{e}";
-					}
-					elo = elo.Trim(',');
-					This.RapIni.Write("mode>game>elo", elo);
 				}
 				This.ShowLastGame();
 			}
@@ -1230,6 +1217,21 @@ namespace RapChessGui
 				tssMoves.ForeColor = Color.FromArgb(0xff, 0, 0);
 				tssMoves.Text = $"Last game you loose new elo is {hu.eloNew} ({eloDel})";
 				CRapLog.Add(tssMoves.Text);
+			}
+			if (result)
+			{
+				chartGame.Series[0].Points.Add(hu.eloNew);
+				string elo = "";
+				int x2 = This.chartGame.Series[0].Points.Count;
+				int x1 = x2 > 100 ? x2 - 100 : 0;
+				for (int n = x1; n < x2; n++)
+				{
+					DataPoint p = This.chartGame.Series[0].Points[n];
+					double e = p.YValues[0];
+					elo += $",{e}";
+				}
+				elo = elo.Trim(',');
+				RapIni.Write("mode>game>elo", elo);
 			}
 			hu.elo = hu.eloNew.ToString();
 			hu.SaveToIni();
