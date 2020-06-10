@@ -377,6 +377,7 @@ namespace RapChessGui
 			p = new CPlayer("Human");
 			p.tournament = false;
 			p.modeValue.value = 0;
+			p.elo = "0";
 			CData.playerList.Add(p);
 			p = new CPlayer();
 			p.engine = "RapChess CS";
@@ -525,6 +526,303 @@ namespace RapChessGui
 			tssMoves.ForeColor = Color.Gainsboro;
 			tssMoves.Text = pv;
 			AddLines(g);
+		}
+
+		public void GetMessageUci(CGamer g, string msg)
+		{
+			string emo;
+			Uci.SetMsg(msg);
+			switch (Uci.command)
+			{
+				case "uciok":
+					g.uciok = true;
+					foreach (string op in g.engine.options)
+						g.SendMessage($"setoption {op}");
+					g.SendMessage("ucinewgame");
+					g.SendMessage("isready");
+					break;
+				case "readyok":
+					g.readyok = true;
+					break;
+				case "enginemove":
+					g.isBookFinished = true;
+					break;
+				case "bestmove":
+					if (GamerList.GamerCur() == g)
+					{
+						g.ponder = Uci.GetValue("ponder");
+						emo = (Uci.tokens[1]).ToLower();
+						if (g.isBookStarted && !g.isBookFinished)
+						{
+							AddBook(emo);
+							g.isPrepared = false;
+						}
+						MakeMove(emo);
+						if ((g.ponder != "") && FormOptions.This.rbSan.Checked)
+							g.ponder = Chess.EmoToSan(g.ponder);
+					}
+					break;
+				case "info":
+					ulong nps = 0;
+					string s = Uci.GetValue("cp");
+					if (s != "")
+					{
+						g.score = s;
+						g.iScore = Int32.Parse(s);
+					}
+					s = Uci.GetValue("mate");
+					if (s != "")
+					{
+						int ip = Int32.Parse(s);
+						if (ip > 0)
+						{
+							g.score = $"+{s}M";
+							g.iScore = 0xffff - ip;
+						}
+						else
+						{
+							g.score = $"{s}M";
+							g.iScore = -0xffff + ip;
+						}
+					}
+					s = Uci.GetValue("depth");
+					if (s != "")
+						g.depth = s;
+					s = Uci.GetValue("seldepth");
+					if (s != "")
+						g.seldepth = s;
+					s = Uci.GetValue("nodes");
+					if (s != "")
+					{
+						try
+						{
+							g.nodes = (ulong)Convert.ToInt64(s);
+						}
+						catch
+						{
+							g.nodes = 0;
+						}
+					}
+					s = Uci.GetValue("nps");
+					if (s != "")
+					{
+						try
+						{
+							g.nps = (ulong)Convert.ToInt64(s);
+						}
+						catch
+						{
+							g.nps = 0;
+						}
+						nps = g.nps;
+					}
+					s = Uci.GetValue("time");
+					if (s != "")
+					{
+						try
+						{
+							g.infMs = (ulong)Convert.ToInt64(s);
+						}
+						catch
+						{
+							g.infMs = 0;
+						}
+						if (nps == 0)
+							g.nps = g.infMs > 0 ? (g.nodes * 1000) / g.infMs : 0;
+					}
+					int i = Uci.GetIndex("pv", 0);
+					if (i > 0)
+						SetPv(i, g);
+					break;
+			}
+		}
+
+		bool GetMoveXb(string xmo, out string umo)
+		{
+			umo = xmo.ToLower();
+			if (xmo == "o-o")
+				umo = CChess.whiteTurn ? "e1g1" : "e8g8";
+			if (xmo == "o-o-o")
+				umo = CChess.whiteTurn ? "e1c1" : "e8c8";
+			if (Chess.IsValidMove(umo) > 0)
+				return true;
+			else
+			{
+				umo += "q";
+				if (Chess.IsValidMove(umo) > 0)
+					return true;
+				else
+				{
+					umo = xmo;
+					return false;
+				}
+			}
+		}
+
+		public void GetMessageXb(CGamer g, string msg)
+		{
+			string umo;
+			Uci.SetMsg(msg);
+			switch (Uci.command)
+			{
+				case "0-1":
+				case "1-0":
+				case "1/2-1/2":
+					SetGameState(CGameState.resignation);
+					break;
+				case "move":
+					g.ponder = Uci.GetValue("ponder");
+					GetMoveXb(Uci.tokens[1], out umo);
+					MakeMove(umo);
+					break;
+				default:
+					string s = msg.ToLower();
+					if (s.Contains("move"))
+					{
+						if (GetMoveXb(Uci.Last(), out umo))
+							MakeMove(umo);
+					}
+					else if (s.Contains("resign") || s.Contains("illegal"))
+						SetGameState(CGameState.resignation);
+					else if (g.wbok && Char.IsDigit(Uci.tokens[0][0]) && (Uci.tokens.Length > 4))
+					{
+						try
+						{
+							g.depth = Uci.tokens[0];
+							g.score = Uci.tokens[1];
+							g.iScore = Convert.ToInt32(g.score);
+							g.infMs = (ulong)Convert.ToInt64(Uci.tokens[2]) * 10;
+							g.nodes = (ulong)Convert.ToInt64(Uci.tokens[3]);
+							g.nps = g.infMs > 0 ? (g.nodes * 1000) / g.infMs : 0;
+							SetPv(4, g);
+						}
+						catch
+						{
+							CRapLog.Add($"{g.player.name} ({g.player.engine}) ({msg})");
+						}
+					}
+					break;
+			}
+		}
+
+		public string GetTimeElapsed()
+		{
+			DateTime dt = new DateTime();
+			dt = dt.AddMilliseconds(timer.Elapsed.TotalMilliseconds);
+			return dt.ToString("HH:mm:ss.fff");
+		}
+
+		public void GetMessage()
+		{
+			while (CMessageList.MessageGet(out CMessage m, GamerList.GamerCur().timer.IsRunning))
+			{
+				CGamer gamer = GamerList.GetGamerPid(m.pid, out string protocol);
+				if (gamer == null)
+					CRapLog.Add($"Unknown pid ({m.msg})");
+				else
+				{
+					FormLog.AppendText($"{GetTimeElapsed()} ", Color.Green);
+					if (gamer.white)
+					{
+						FormLog.AppendText($"{gamer.player.name}", Color.DimGray);
+						FormLog.AppendText($" > {m.msg}\n", Color.Black);
+					}
+					else
+						FormLog.AppendText($"{gamer.player.name} > {m.msg}\n", Color.Black);
+					if (protocol == "Uci")
+						GetMessageUci(gamer, m.msg);
+					if (protocol == "Winboard")
+						GetMessageXb(gamer, m.msg);
+				}
+			}
+		}
+
+		void CreateRtf()
+		{
+			string fn = $"{cbMainMode.Text}.rtf";
+			try
+			{
+				FormLog.This.richTextBox1.SaveFile(fn);
+			}
+			catch
+			{
+				CRapLog.Add($"Error save {fn}");
+			}
+		}
+
+		void CreatePgn()
+		{
+			List<string> list = new List<string>();
+			string result = "1/2-1/2";
+			if ((CData.gameState == CGameState.mate) || (CData.gameState == CGameState.time) || (CData.gameState == CGameState.error) || (CData.gameState == CGameState.resignation))
+				if ((CHistory.moveList.Count & 1) > 0)
+					result = "1-0";
+				else
+					result = "0-1";
+			list.Add("");
+			list.Add($"[Date \"{DateTime.Now.ToString("yyyy.MM.dd")}\"]");
+			list.Add($"[White \"{GamerList.gamer[0].player.name}\"]");
+			list.Add($"[Black \"{GamerList.gamer[1].player.name}\"]");
+			list.Add($"[WhiteElo \"{GamerList.gamer[0].player.elo}\"]");
+			list.Add($"[BlackElo \"{GamerList.gamer[1].player.elo}\"]");
+			list.Add($"[Result \"{result}\"]");
+			list.Add("");
+			list.Add(CHistory.GetPgn());
+			foreach (String s in list)
+				formPgn.textBox1.Text += $"{s}\r\n";
+			formPgn.textBox1.Select(0, 0);
+			File.WriteAllText($"{cbMainMode.Text}.pgn", formPgn.textBox1.Text);
+		}
+
+		public void AddBook(string emo)
+		{
+			GamerList.GamerCur().usedBook++;
+			tssMoves.ForeColor = Color.Aquamarine;
+			tssMoves.Text = $"book {emo}";
+		}
+
+		void SetMode(CMode mode)
+		{
+			timer1.Enabled = false;
+			timerStart.Enabled = false;
+			GamerList.Terminate();
+			CData.gameMode = mode;
+			Clear();
+			switch (mode)
+			{
+				case CMode.game:
+					GameShow();
+					break;
+				case CMode.match:
+					MatchShow();
+					break;
+				case CMode.tourE:
+					TournamentEShow();
+					break;
+				case CMode.training:
+					TrainingShow();
+					break;
+				case CMode.edit:
+					EditShow();
+					break;
+			}
+		}
+
+		bool IsAutoElo()
+		{
+			return (cbComputer.Text == "Auto") && FormOptions.This.cbGameAutoElo.Checked && (CData.gameMode == CMode.game);
+		}
+
+		void ShowAuto(bool first = false)
+		{
+			if (CModeGame.ranked || first)
+			{
+				CPlayer p = CData.playerList.GetPlayerAuto();
+				cbEngine.SelectedIndex = cbEngine.FindStringExact(p.engine);
+				cbMode.SelectedIndex = cbMode.FindStringExact(p.modeValue.mode);
+				cbBook.SelectedIndex = cbBook.FindStringExact(p.book);
+				nudValue.Value = p.modeValue.GetValue();
+			}
 		}
 
 		#region mode
@@ -886,303 +1184,6 @@ namespace RapChessGui
 		}
 
 		#endregion
-
-		public void GetMessageUci(CGamer g, string msg)
-		{
-			string emo;
-			Uci.SetMsg(msg);
-			switch (Uci.command)
-			{
-				case "uciok":
-					g.uciok = true;
-					foreach (string op in g.engine.options)
-						g.SendMessage($"setoption {op}");
-					g.SendMessage("ucinewgame");
-					g.SendMessage("isready");
-					break;
-				case "readyok":
-					g.readyok = true;
-					break;
-				case "enginemove":
-					g.isBookFinished = true;
-					break;
-				case "bestmove":
-					if (GamerList.GamerCur() == g)
-					{
-						g.ponder = Uci.GetValue("ponder");
-						emo = (Uci.tokens[1]).ToLower();
-						if (g.isBookStarted && !g.isBookFinished)
-						{
-							AddBook(emo);
-							g.isPrepared = false;
-						}
-						MakeMove(emo);
-						if ((g.ponder != "") && FormOptions.This.rbSan.Checked)
-							g.ponder = Chess.EmoToSan(g.ponder);
-					}
-					break;
-				case "info":
-					ulong nps = 0;
-					string s = Uci.GetValue("cp");
-					if (s != "")
-					{
-						g.score = s;
-						g.iScore = Int32.Parse(s);
-					}
-					s = Uci.GetValue("mate");
-					if (s != "")
-					{
-						int ip = Int32.Parse(s);
-						if (ip > 0)
-						{
-							g.score = $"+{s}M";
-							g.iScore = 0xffff - ip;
-						}
-						else
-						{
-							g.score = $"{s}M";
-							g.iScore = -0xffff + ip;
-						}
-					}
-					s = Uci.GetValue("depth");
-					if (s != "")
-						g.depth = s;
-					s = Uci.GetValue("seldepth");
-					if (s != "")
-						g.seldepth = s;
-					s = Uci.GetValue("nodes");
-					if (s != "")
-					{
-						try
-						{
-							g.nodes = (ulong)Convert.ToInt64(s);
-						}
-						catch
-						{
-							g.nodes = 0;
-						}
-					}
-					s = Uci.GetValue("nps");
-					if (s != "")
-					{
-						try
-						{
-							g.nps = (ulong)Convert.ToInt64(s);
-						}
-						catch
-						{
-							g.nps = 0;
-						}
-						nps = g.nps;
-					}
-					s = Uci.GetValue("time");
-					if (s != "")
-					{
-						try
-						{
-							g.infMs = (ulong)Convert.ToInt64(s);
-						}
-						catch
-						{
-							g.infMs = 0;
-						}
-						if (nps == 0)
-							g.nps = g.infMs > 0 ? (g.nodes * 1000) / g.infMs : 0;
-					}
-					int i = Uci.GetIndex("pv", 0);
-					if (i > 0)
-						SetPv(i, g);
-					break;
-			}
-		}
-
-		bool GetMoveXb(string xmo, out string umo)
-		{
-			umo = xmo.ToLower();
-			if (xmo == "o-o")
-				umo = CChess.whiteTurn ? "e1g1" : "e8g8";
-			if (xmo == "o-o-o")
-				umo = CChess.whiteTurn ? "e1c1" : "e8c8";
-			if (Chess.IsValidMove(umo) > 0)
-				return true;
-			else
-			{
-				umo += "q";
-				if (Chess.IsValidMove(umo) > 0)
-					return true;
-				else
-				{
-					umo = xmo;
-					return false;
-				}
-			}
-		}
-
-		public void GetMessageXb(CGamer g, string msg)
-		{
-			string umo;
-			Uci.SetMsg(msg);
-			switch (Uci.command)
-			{
-				case "0-1":
-				case "1-0":
-				case "1/2-1/2":
-					SetGameState(CGameState.resignation);
-					break;
-				case "move":
-					g.ponder = Uci.GetValue("ponder");
-					GetMoveXb(Uci.tokens[1], out umo);
-					MakeMove(umo);
-					break;
-				default:
-					string s = msg.ToLower();
-					if (s.Contains("move"))
-					{
-						if (GetMoveXb(Uci.Last(), out umo))
-							MakeMove(umo);
-					}
-					else if (s.Contains("resign") || s.Contains("illegal"))
-						SetGameState(CGameState.resignation);
-					else if (g.wbok && Char.IsDigit(Uci.tokens[0][0]) && (Uci.tokens.Length > 4))
-					{
-						try
-						{
-							g.depth = Uci.tokens[0];
-							g.score = Uci.tokens[1];
-							g.iScore = Convert.ToInt32(g.score);
-							g.infMs = (ulong)Convert.ToInt64(Uci.tokens[2]) * 10;
-							g.nodes = (ulong)Convert.ToInt64(Uci.tokens[3]);
-							g.nps = g.infMs > 0 ? (g.nodes * 1000) / g.infMs : 0;
-							SetPv(4, g);
-						}
-						catch
-						{
-							CRapLog.Add($"{g.player.name} ({g.player.engine}) ({msg})");
-						}
-					}
-					break;
-			}
-		}
-
-		public string GetTimeElapsed()
-		{
-			DateTime dt = new DateTime();
-			dt = dt.AddMilliseconds(timer.Elapsed.TotalMilliseconds);
-			return dt.ToString("HH:mm:ss.fff");
-		}
-
-		public void GetMessage()
-		{
-			while (CMessageList.MessageGet(out CMessage m, GamerList.GamerCur().timer.IsRunning))
-			{
-				CGamer gamer = GamerList.GetGamerPid(m.pid, out string protocol);
-				if (gamer == null)
-					CRapLog.Add($"Unknown pid ({m.msg})");
-				else
-				{
-					FormLog.AppendText($"{GetTimeElapsed()} ", Color.Green);
-					if (gamer.white)
-					{
-						FormLog.AppendText($"{gamer.player.name}", Color.DimGray);
-						FormLog.AppendText($" > {m.msg}\n", Color.Black);
-					}
-					else
-						FormLog.AppendText($"{gamer.player.name} > {m.msg}\n", Color.Black);
-					if (protocol == "Uci")
-						GetMessageUci(gamer, m.msg);
-					if (protocol == "Winboard")
-						GetMessageXb(gamer, m.msg);
-				}
-			}
-		}
-
-		void CreateRtf()
-		{
-			string fn = $"{cbMainMode.Text}.rtf";
-			try
-			{
-				FormLog.This.richTextBox1.SaveFile(fn);
-			}
-			catch
-			{
-				CRapLog.Add($"Error save {fn}");
-			}
-		}
-
-		void CreatePgn()
-		{
-			List<string> list = new List<string>();
-			string result = "1/2-1/2";
-			if ((CData.gameState == CGameState.mate) || (CData.gameState == CGameState.time) || (CData.gameState == CGameState.error) || (CData.gameState == CGameState.resignation))
-				if ((CHistory.moveList.Count & 1) > 0)
-					result = "1-0";
-				else
-					result = "0-1";
-			list.Add("");
-			list.Add($"[Date \"{DateTime.Now.ToString("yyyy.MM.dd")}\"]");
-			list.Add($"[White \"{GamerList.gamer[0].player.name}\"]");
-			list.Add($"[Black \"{GamerList.gamer[1].player.name}\"]");
-			list.Add($"[WhiteElo \"{GamerList.gamer[0].player.elo}\"]");
-			list.Add($"[BlackElo \"{GamerList.gamer[1].player.elo}\"]");
-			list.Add($"[Result \"{result}\"]");
-			list.Add("");
-			list.Add(CHistory.GetPgn());
-			foreach (String s in list)
-				formPgn.textBox1.Text += $"{s}\r\n";
-			formPgn.textBox1.Select(0, 0);
-			File.WriteAllText($"{cbMainMode.Text}.pgn", formPgn.textBox1.Text);
-		}
-
-		public void AddBook(string emo)
-		{
-			GamerList.GamerCur().usedBook++;
-			tssMoves.ForeColor = Color.Aquamarine;
-			tssMoves.Text = $"book {emo}";
-		}
-
-		void SetMode(CMode mode)
-		{
-			timer1.Enabled = false;
-			timerStart.Enabled = false;
-			GamerList.Terminate();
-			CData.gameMode = mode;
-			Clear();
-			switch (mode)
-			{
-				case CMode.game:
-					GameShow();
-					break;
-				case CMode.match:
-					MatchShow();
-					break;
-				case CMode.tourE:
-					TournamentEShow();
-					break;
-				case CMode.training:
-					TrainingShow();
-					break;
-				case CMode.edit:
-					EditShow();
-					break;
-			}
-		}
-
-		bool IsAutoElo()
-		{
-			return (cbComputer.Text == "Auto") && FormOptions.This.cbGameAutoElo.Checked && (CData.gameMode == CMode.game);
-		}
-
-		void ShowAuto(bool first = false)
-		{
-			if (CModeGame.ranked || first)
-			{
-				CPlayer p = CData.playerList.GetPlayerAuto();
-				cbEngine.SelectedIndex = cbEngine.FindStringExact(p.engine);
-				cbMode.SelectedIndex = cbMode.FindStringExact(p.modeValue.mode);
-				cbBook.SelectedIndex = cbBook.FindStringExact(p.book);
-				nudValue.Value = p.modeValue.GetValue();
-			}
-		}
 
 		void ShowAutoElo()
 		{
