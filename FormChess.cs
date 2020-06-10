@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using System.Linq;
 using RapIni;
 using RapLog;
+using System.Windows.Forms.DataVisualization.Charting;
 
 
 namespace RapChessGui
@@ -136,12 +137,14 @@ namespace RapChessGui
 			if (CData.gameMode == CMode.game)
 			{
 				if (This.IsAutoElo())
+				{
 					if (pw.name == "Human")
 					{
 						if (!isDraw)
 							pw.eloNew = pw.GetEloMore();
 						else
 							pw.eloNew = Convert.ToInt32(pw.eloOld);
+						This.chartGame.Series[0].Points.Add(pw.eloNew);
 					}
 					else
 					{
@@ -149,7 +152,20 @@ namespace RapChessGui
 							pl.eloNew = pl.GetEloLess();
 						else
 							pl.eloNew = Convert.ToInt32(pl.eloOld);
+						This.chartGame.Series[0].Points.Add(pw.eloNew);
 					}
+					string elo = "";
+					int x2 = This.chartGame.Series[0].Points.Count;
+					int x1 = x2 > 100 ? x2 - 100 : 0;
+					for (int n = x1; n < x2; n++)
+					{
+						DataPoint p = This.chartGame.Series[0].Points[n];
+						double e = p.YValues[0];
+						elo += $",{e}";
+					}
+					elo = elo.Trim(',');
+					This.RapIni.Write("mode>game>elo", elo);
+				}
 				This.ShowLastGame();
 			}
 			if (CData.gameMode == CMode.match)
@@ -324,7 +340,6 @@ namespace RapChessGui
 			SplitSaveToIni(splitContainerTourE);
 			SplitSaveToIni(splitContainerTourP);
 			GamerList.Terminate();
-
 		}
 
 		void CreateIni()
@@ -437,6 +452,10 @@ namespace RapChessGui
 
 		void IniLoad()
 		{
+			string elo = RapIni.Read("mode>game>elo", "");
+			string[] his = elo.Split(new[] { ',', '\t' }, StringSplitOptions.RemoveEmptyEntries);
+			foreach (string e in his)
+				chartGame.Series[0].Points.Add(Convert.ToInt32(e));
 			Width = RapIni.ReadInt("position>width", Width);
 			Height = RapIni.ReadInt("position>height", Height);
 			if (Width < 600)
@@ -1363,7 +1382,7 @@ namespace RapChessGui
 			cg.timer.Stop();
 			emo = emo.ToLower();
 			double m = GamerList.curIndex == 0 ? 0.01 : -0.01;
-			chart1.Series[GamerList.curIndex].Points.Add(cg.iScore * m);
+			chartMain.Series[GamerList.curIndex].Points.Add(cg.iScore * m);
 			cg.iScore = 0;
 			if (IsAutoElo() && CModeGame.ranked && (cg.engine == null) && ((CChess.g_moveNumber >> 1) == 4))
 			{
@@ -1429,8 +1448,8 @@ namespace RapChessGui
 			tssMove.Text = "Move 1 0";
 			tssMoves.ForeColor = Color.Gainsboro;
 			tssMoves.Text = "Good luck";
-			chart1.Series[0].Points.Clear();
-			chart1.Series[1].Points.Clear();
+			chartMain.Series[0].Points.Clear();
+			chartMain.Series[1].Points.Clear();
 			SetBoardRotate();
 			CDrag.lastSou = -1;
 			CDrag.lastDes = -1;
@@ -2355,6 +2374,5 @@ namespace RapChessGui
 		}
 
 		#endregion
-
 	}
 }

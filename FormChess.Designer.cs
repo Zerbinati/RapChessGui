@@ -31,11 +31,14 @@
 			this.components = new System.ComponentModel.Container();
 			System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
 			System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+			System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
 			System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+			System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormChess));
 			this.timer1 = new System.Windows.Forms.Timer(this.components);
 			this.tabControl1 = new System.Windows.Forms.TabControl();
 			this.tabPageGame = new System.Windows.Forms.TabPage();
+			this.chartGame = new System.Windows.Forms.DataVisualization.Charting.Chart();
 			this.butBack = new System.Windows.Forms.Button();
 			this.butForward = new System.Windows.Forms.Button();
 			this.butResignation = new System.Windows.Forms.Button();
@@ -207,7 +210,7 @@
 			this.labBlack = new System.Windows.Forms.Label();
 			this.labEngineB = new System.Windows.Forms.Label();
 			this.cbMainMode = new System.Windows.Forms.ComboBox();
-			this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
+			this.chartMain = new System.Windows.Forms.DataVisualization.Charting.Chart();
 			this.labPlayerW = new System.Windows.Forms.Label();
 			this.labPlayerB = new System.Windows.Forms.Label();
 			this.labPromoB = new System.Windows.Forms.Label();
@@ -253,6 +256,7 @@
 			this.tlpBlack = new System.Windows.Forms.TableLayoutPanel();
 			this.tabControl1.SuspendLayout();
 			this.tabPageGame.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.chartGame)).BeginInit();
 			this.groupBox2.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.nudValue)).BeginInit();
 			this.groupBox1.SuspendLayout();
@@ -287,7 +291,7 @@
 			this.gbToMove.SuspendLayout();
 			this.menuStrip1.SuspendLayout();
 			this.panMenu.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.chartMain)).BeginInit();
 			this.statusStrip1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainerBoard)).BeginInit();
 			this.splitContainerBoard.Panel1.SuspendLayout();
@@ -341,13 +345,14 @@
 			this.tabControl1.Location = new System.Drawing.Point(0, 35);
 			this.tabControl1.Name = "tabControl1";
 			this.tabControl1.SelectedIndex = 0;
-			this.tabControl1.Size = new System.Drawing.Size(366, 385);
+			this.tabControl1.Size = new System.Drawing.Size(366, 457);
 			this.tabControl1.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
 			this.tabControl1.TabIndex = 9;
 			this.tabControl1.SelectedIndexChanged += new System.EventHandler(this.tabControl1_SelectedIndexChanged);
 			// 
 			// tabPageGame
 			// 
+			this.tabPageGame.Controls.Add(this.chartGame);
 			this.tabPageGame.Controls.Add(this.butBack);
 			this.tabPageGame.Controls.Add(this.butForward);
 			this.tabPageGame.Controls.Add(this.butResignation);
@@ -359,9 +364,39 @@
 			this.tabPageGame.Location = new System.Drawing.Point(4, 5);
 			this.tabPageGame.Name = "tabPageGame";
 			this.tabPageGame.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPageGame.Size = new System.Drawing.Size(358, 376);
+			this.tabPageGame.Size = new System.Drawing.Size(358, 448);
 			this.tabPageGame.TabIndex = 0;
 			this.tabPageGame.Text = "Game";
+			// 
+			// chartGame
+			// 
+			this.chartGame.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.chartGame.BackColor = System.Drawing.Color.WhiteSmoke;
+			chartArea1.AxisX.LabelStyle.Enabled = false;
+			chartArea1.AxisX.MajorGrid.Enabled = false;
+			chartArea1.AxisX.MajorTickMark.Enabled = false;
+			chartArea1.AxisY.MajorGrid.Enabled = false;
+			chartArea1.AxisY.MajorTickMark.Enabled = false;
+			chartArea1.BackColor = System.Drawing.Color.WhiteSmoke;
+			chartArea1.Name = "ChartArea1";
+			this.chartGame.ChartAreas.Add(chartArea1);
+			this.chartGame.Location = new System.Drawing.Point(3, 359);
+			this.chartGame.Name = "chartGame";
+			this.chartGame.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.None;
+			this.chartGame.PaletteCustomColors = new System.Drawing.Color[] {
+        System.Drawing.Color.Olive};
+			series1.BorderWidth = 4;
+			series1.ChartArea = "ChartArea1";
+			series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+			series1.IsVisibleInLegend = false;
+			series1.Name = "Series1";
+			this.chartGame.Series.Add(series1);
+			this.chartGame.Size = new System.Drawing.Size(352, 86);
+			this.chartGame.TabIndex = 28;
+			this.chartGame.Text = "chart1";
+			this.toolTip1.SetToolTip(this.chartGame, "User progress history");
 			// 
 			// butBack
 			// 
@@ -605,7 +640,7 @@
 			this.tabPageMatch.Controls.Add(this.groupBox5);
 			this.tabPageMatch.Location = new System.Drawing.Point(4, 5);
 			this.tabPageMatch.Name = "tabPageMatch";
-			this.tabPageMatch.Size = new System.Drawing.Size(358, 376);
+			this.tabPageMatch.Size = new System.Drawing.Size(358, 448);
 			this.tabPageMatch.TabIndex = 2;
 			this.tabPageMatch.Text = "Match";
 			this.tabPageMatch.UseVisualStyleBackColor = true;
@@ -1029,7 +1064,7 @@
 			this.tabPageTourE.Location = new System.Drawing.Point(4, 5);
 			this.tabPageTourE.Name = "tabPageTourE";
 			this.tabPageTourE.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPageTourE.Size = new System.Drawing.Size(358, 376);
+			this.tabPageTourE.Size = new System.Drawing.Size(358, 448);
 			this.tabPageTourE.TabIndex = 5;
 			this.tabPageTourE.Text = "TourE";
 			this.tabPageTourE.UseVisualStyleBackColor = true;
@@ -1050,8 +1085,8 @@
 			// 
 			this.splitContainerTourE.Panel2.Controls.Add(this.lvEngineH);
 			this.splitContainerTourE.Panel2.Controls.Add(this.labEngine);
-			this.splitContainerTourE.Size = new System.Drawing.Size(352, 242);
-			this.splitContainerTourE.SplitterDistance = 152;
+			this.splitContainerTourE.Size = new System.Drawing.Size(352, 314);
+			this.splitContainerTourE.SplitterDistance = 197;
 			this.splitContainerTourE.TabIndex = 27;
 			// 
 			// lvEngine
@@ -1068,7 +1103,7 @@
 			this.lvEngine.MultiSelect = false;
 			this.lvEngine.Name = "lvEngine";
 			this.lvEngine.ShowGroups = false;
-			this.lvEngine.Size = new System.Drawing.Size(348, 148);
+			this.lvEngine.Size = new System.Drawing.Size(348, 193);
 			this.lvEngine.Sorting = System.Windows.Forms.SortOrder.Descending;
 			this.lvEngine.TabIndex = 23;
 			this.lvEngine.UseCompatibleStateImageBehavior = false;
@@ -1110,7 +1145,7 @@
 			this.lvEngineH.MultiSelect = false;
 			this.lvEngineH.Name = "lvEngineH";
 			this.lvEngineH.ShowGroups = false;
-			this.lvEngineH.Size = new System.Drawing.Size(348, 69);
+			this.lvEngineH.Size = new System.Drawing.Size(348, 96);
 			this.lvEngineH.TabIndex = 27;
 			this.lvEngineH.UseCompatibleStateImageBehavior = false;
 			this.lvEngineH.View = System.Windows.Forms.View.Details;
@@ -1241,7 +1276,7 @@
 			this.tabPageTourP.Controls.Add(this.butStartTournament);
 			this.tabPageTourP.Location = new System.Drawing.Point(4, 5);
 			this.tabPageTourP.Name = "tabPageTourP";
-			this.tabPageTourP.Size = new System.Drawing.Size(358, 376);
+			this.tabPageTourP.Size = new System.Drawing.Size(358, 448);
 			this.tabPageTourP.TabIndex = 3;
 			this.tabPageTourP.Text = "TourP";
 			this.tabPageTourP.UseVisualStyleBackColor = true;
@@ -1262,8 +1297,8 @@
 			// 
 			this.splitContainerTourP.Panel2.Controls.Add(this.lvPlayerH);
 			this.splitContainerTourP.Panel2.Controls.Add(this.labPlayer);
-			this.splitContainerTourP.Size = new System.Drawing.Size(358, 353);
-			this.splitContainerTourP.SplitterDistance = 232;
+			this.splitContainerTourP.Size = new System.Drawing.Size(358, 425);
+			this.splitContainerTourP.SplitterDistance = 279;
 			this.splitContainerTourP.TabIndex = 26;
 			// 
 			// lvPlayer
@@ -1280,7 +1315,7 @@
 			this.lvPlayer.MultiSelect = false;
 			this.lvPlayer.Name = "lvPlayer";
 			this.lvPlayer.ShowGroups = false;
-			this.lvPlayer.Size = new System.Drawing.Size(354, 228);
+			this.lvPlayer.Size = new System.Drawing.Size(354, 275);
 			this.lvPlayer.Sorting = System.Windows.Forms.SortOrder.Ascending;
 			this.lvPlayer.TabIndex = 23;
 			this.lvPlayer.UseCompatibleStateImageBehavior = false;
@@ -1322,7 +1357,7 @@
 			this.lvPlayerH.MultiSelect = false;
 			this.lvPlayerH.Name = "lvPlayerH";
 			this.lvPlayerH.ShowGroups = false;
-			this.lvPlayerH.Size = new System.Drawing.Size(354, 100);
+			this.lvPlayerH.Size = new System.Drawing.Size(354, 125);
 			this.lvPlayerH.TabIndex = 27;
 			this.lvPlayerH.UseCompatibleStateImageBehavior = false;
 			this.lvPlayerH.View = System.Windows.Forms.View.Details;
@@ -1384,7 +1419,7 @@
 			this.tabPageTraining.Location = new System.Drawing.Point(4, 5);
 			this.tabPageTraining.Name = "tabPageTraining";
 			this.tabPageTraining.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPageTraining.Size = new System.Drawing.Size(358, 376);
+			this.tabPageTraining.Size = new System.Drawing.Size(358, 448);
 			this.tabPageTraining.TabIndex = 1;
 			this.tabPageTraining.Text = "Training";
 			this.tabPageTraining.UseVisualStyleBackColor = true;
@@ -1812,7 +1847,7 @@
 			this.tabPageEdit.Controls.Add(this.butClearBoard);
 			this.tabPageEdit.Location = new System.Drawing.Point(4, 5);
 			this.tabPageEdit.Name = "tabPageEdit";
-			this.tabPageEdit.Size = new System.Drawing.Size(358, 376);
+			this.tabPageEdit.Size = new System.Drawing.Size(358, 448);
 			this.tabPageEdit.TabIndex = 4;
 			this.tabPageEdit.Text = "Edit";
 			this.tabPageEdit.UseVisualStyleBackColor = true;
@@ -2662,42 +2697,43 @@
 			this.toolTip1.SetToolTip(this.cbMainMode, "Select game mode");
 			this.cbMainMode.SelectedIndexChanged += new System.EventHandler(this.cbMainMode_SelectedIndexChanged);
 			// 
-			// chart1
+			// chartMain
 			// 
-			this.chart1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+			this.chartMain.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.chart1.BackColor = System.Drawing.Color.WhiteSmoke;
-			this.chart1.BorderlineColor = System.Drawing.Color.Silver;
-			chartArea1.AxisX.IsLabelAutoFit = false;
-			chartArea1.AxisX.MajorGrid.Enabled = false;
-			chartArea1.AxisX.MajorTickMark.Enabled = false;
-			chartArea1.AxisY.IsLabelAutoFit = false;
-			chartArea1.AxisY.MajorGrid.Interval = 5D;
-			chartArea1.AxisY.Maximum = 5D;
-			chartArea1.AxisY.Minimum = -5D;
-			chartArea1.BackColor = System.Drawing.Color.WhiteSmoke;
-			chartArea1.Name = "ChartArea1";
-			this.chart1.ChartAreas.Add(chartArea1);
-			this.chart1.Location = new System.Drawing.Point(0, 0);
-			this.chart1.Name = "chart1";
-			this.chart1.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.None;
-			this.chart1.PaletteCustomColors = new System.Drawing.Color[] {
+			this.chartMain.BackColor = System.Drawing.Color.WhiteSmoke;
+			this.chartMain.BorderlineColor = System.Drawing.Color.Silver;
+			chartArea2.AxisX.IsLabelAutoFit = false;
+			chartArea2.AxisX.MajorGrid.Enabled = false;
+			chartArea2.AxisX.MajorTickMark.Enabled = false;
+			chartArea2.AxisY.IsLabelAutoFit = false;
+			chartArea2.AxisY.MajorGrid.Interval = 5D;
+			chartArea2.AxisY.MajorTickMark.Enabled = false;
+			chartArea2.AxisY.Maximum = 5D;
+			chartArea2.AxisY.Minimum = -5D;
+			chartArea2.BackColor = System.Drawing.Color.WhiteSmoke;
+			chartArea2.Name = "ChartArea1";
+			this.chartMain.ChartAreas.Add(chartArea2);
+			this.chartMain.Location = new System.Drawing.Point(0, 0);
+			this.chartMain.Name = "chartMain";
+			this.chartMain.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.None;
+			this.chartMain.PaletteCustomColors = new System.Drawing.Color[] {
         System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(0))))),
         System.Drawing.Color.Olive};
-			series1.ChartArea = "ChartArea1";
-			series1.CustomProperties = "PointWidth=1";
-			series1.IsVisibleInLegend = false;
-			series1.Name = "Series1";
 			series2.ChartArea = "ChartArea1";
 			series2.CustomProperties = "PointWidth=1";
-			series2.Name = "Series2";
-			this.chart1.Series.Add(series1);
-			this.chart1.Series.Add(series2);
-			this.chart1.Size = new System.Drawing.Size(388, 146);
-			this.chart1.TabIndex = 0;
-			this.chart1.Text = "chart1";
-			this.toolTip1.SetToolTip(this.chart1, "Graphic representation of the game scores white player is  represent by light bar" +
+			series2.IsVisibleInLegend = false;
+			series2.Name = "Series1";
+			series3.ChartArea = "ChartArea1";
+			series3.CustomProperties = "PointWidth=1";
+			series3.Name = "Series2";
+			this.chartMain.Series.Add(series2);
+			this.chartMain.Series.Add(series3);
+			this.chartMain.Size = new System.Drawing.Size(388, 177);
+			this.chartMain.TabIndex = 0;
+			this.chartMain.Text = "chart1";
+			this.toolTip1.SetToolTip(this.chartMain, "Graphic representation of the game scores white player is  represent by light bar" +
         "s black player is represent by dark bars");
 			// 
 			// labPlayerW
@@ -2839,7 +2875,7 @@
 			// splitContainerBoard.Panel2
 			// 
 			this.splitContainerBoard.Panel2.Controls.Add(this.splitContainerMode);
-			this.splitContainerBoard.Size = new System.Drawing.Size(1184, 424);
+			this.splitContainerBoard.Size = new System.Drawing.Size(1184, 496);
 			this.splitContainerBoard.SplitterDistance = 414;
 			this.splitContainerBoard.TabIndex = 37;
 			// 
@@ -2850,7 +2886,7 @@
 			this.panBoard.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.panBoard.Location = new System.Drawing.Point(0, 24);
 			this.panBoard.Name = "panBoard";
-			this.panBoard.Size = new System.Drawing.Size(410, 372);
+			this.panBoard.Size = new System.Drawing.Size(410, 444);
 			this.panBoard.TabIndex = 2;
 			this.panBoard.Paint += new System.Windows.Forms.PaintEventHandler(this.panBoard_Paint);
 			this.panBoard.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseDown);
@@ -2872,7 +2908,7 @@
 			this.tlpPromotion.Controls.Add(this.labPromoR, 0, 0);
 			this.tlpPromotion.Cursor = System.Windows.Forms.Cursors.Hand;
 			this.tlpPromotion.Dock = System.Windows.Forms.DockStyle.Bottom;
-			this.tlpPromotion.Location = new System.Drawing.Point(0, 320);
+			this.tlpPromotion.Location = new System.Drawing.Point(0, 392);
 			this.tlpPromotion.Name = "tlpPromotion";
 			this.tlpPromotion.RowCount = 1;
 			this.tlpPromotion.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
@@ -2893,7 +2929,7 @@
 			this.tlpBoardD.Controls.Add(this.labColorD, 0, 0);
 			this.tlpBoardD.Controls.Add(this.labNameD, 0, 0);
 			this.tlpBoardD.Dock = System.Windows.Forms.DockStyle.Bottom;
-			this.tlpBoardD.Location = new System.Drawing.Point(0, 396);
+			this.tlpBoardD.Location = new System.Drawing.Point(0, 468);
 			this.tlpBoardD.Margin = new System.Windows.Forms.Padding(0);
 			this.tlpBoardD.Name = "tlpBoardD";
 			this.tlpBoardD.RowCount = 1;
@@ -2938,7 +2974,7 @@
 			// 
 			this.splitContainerMode.Panel2.Controls.Add(this.tabControl1);
 			this.splitContainerMode.Panel2.Controls.Add(this.panel1);
-			this.splitContainerMode.Size = new System.Drawing.Size(762, 420);
+			this.splitContainerMode.Size = new System.Drawing.Size(762, 492);
 			this.splitContainerMode.SplitterDistance = 392;
 			this.splitContainerMode.TabIndex = 14;
 			// 
@@ -2956,9 +2992,9 @@
 			// 
 			// splitContainerChart.Panel2
 			// 
-			this.splitContainerChart.Panel2.Controls.Add(this.chart1);
-			this.splitContainerChart.Size = new System.Drawing.Size(392, 364);
-			this.splitContainerChart.SplitterDistance = 210;
+			this.splitContainerChart.Panel2.Controls.Add(this.chartMain);
+			this.splitContainerChart.Size = new System.Drawing.Size(392, 436);
+			this.splitContainerChart.SplitterDistance = 251;
 			this.splitContainerChart.TabIndex = 27;
 			// 
 			// lvMoves
@@ -2979,7 +3015,7 @@
 			this.lvMoves.MultiSelect = false;
 			this.lvMoves.Name = "lvMoves";
 			this.lvMoves.ShowGroups = false;
-			this.lvMoves.Size = new System.Drawing.Size(388, 206);
+			this.lvMoves.Size = new System.Drawing.Size(388, 247);
 			this.lvMoves.TabIndex = 27;
 			this.lvMoves.UseCompatibleStateImageBehavior = false;
 			this.lvMoves.View = System.Windows.Forms.View.Details;
@@ -3008,7 +3044,7 @@
 			this.tlpChartD.Controls.Add(this.labMaterialD, 0, 0);
 			this.tlpChartD.Controls.Add(this.labTakenD, 0, 0);
 			this.tlpChartD.Dock = System.Windows.Forms.DockStyle.Bottom;
-			this.tlpChartD.Location = new System.Drawing.Point(0, 392);
+			this.tlpChartD.Location = new System.Drawing.Point(0, 464);
 			this.tlpChartD.Margin = new System.Windows.Forms.Padding(0);
 			this.tlpChartD.Name = "tlpChartD";
 			this.tlpChartD.RowCount = 1;
@@ -3062,7 +3098,7 @@
 			// 
 			this.splitContainerMain.Panel2.Controls.Add(this.splitContainerMoves);
 			this.splitContainerMain.Size = new System.Drawing.Size(1184, 714);
-			this.splitContainerMain.SplitterDistance = 472;
+			this.splitContainerMain.SplitterDistance = 544;
 			this.splitContainerMain.TabIndex = 38;
 			// 
 			// tlpEngineT
@@ -3105,7 +3141,7 @@
 			this.tlpEngineB.Controls.Add(this.labDepthD, 0, 0);
 			this.tlpEngineB.Controls.Add(this.labNodesD, 0, 0);
 			this.tlpEngineB.Dock = System.Windows.Forms.DockStyle.Bottom;
-			this.tlpEngineB.Location = new System.Drawing.Point(0, 448);
+			this.tlpEngineB.Location = new System.Drawing.Point(0, 520);
 			this.tlpEngineB.Margin = new System.Windows.Forms.Padding(0);
 			this.tlpEngineB.Name = "tlpEngineB";
 			this.tlpEngineB.RowCount = 1;
@@ -3130,8 +3166,8 @@
 			// 
 			this.splitContainerMoves.Panel2.Controls.Add(this.lvMovesB);
 			this.splitContainerMoves.Panel2.Controls.Add(this.tlpBlack);
-			this.splitContainerMoves.Size = new System.Drawing.Size(1184, 238);
-			this.splitContainerMoves.SplitterDistance = 119;
+			this.splitContainerMoves.Size = new System.Drawing.Size(1184, 166);
+			this.splitContainerMoves.SplitterDistance = 83;
 			this.splitContainerMoves.TabIndex = 33;
 			// 
 			// lvMovesW
@@ -3153,7 +3189,7 @@
 			this.lvMovesW.MultiSelect = false;
 			this.lvMovesW.Name = "lvMovesW";
 			this.lvMovesW.ShowGroups = false;
-			this.lvMovesW.Size = new System.Drawing.Size(1180, 91);
+			this.lvMovesW.Size = new System.Drawing.Size(1180, 55);
 			this.lvMovesW.TabIndex = 32;
 			this.lvMovesW.UseCompatibleStateImageBehavior = false;
 			this.lvMovesW.View = System.Windows.Forms.View.Details;
@@ -3234,7 +3270,7 @@
 			this.lvMovesB.MultiSelect = false;
 			this.lvMovesB.Name = "lvMovesB";
 			this.lvMovesB.ShowGroups = false;
-			this.lvMovesB.Size = new System.Drawing.Size(1180, 87);
+			this.lvMovesB.Size = new System.Drawing.Size(1180, 51);
 			this.lvMovesB.TabIndex = 32;
 			this.lvMovesB.UseCompatibleStateImageBehavior = false;
 			this.lvMovesB.View = System.Windows.Forms.View.Details;
@@ -3315,6 +3351,7 @@
 			this.Resize += new System.EventHandler(this.FormChess_Resize);
 			this.tabControl1.ResumeLayout(false);
 			this.tabPageGame.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this.chartGame)).EndInit();
 			this.groupBox2.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.nudValue)).EndInit();
 			this.groupBox1.ResumeLayout(false);
@@ -3352,7 +3389,7 @@
 			this.menuStrip1.PerformLayout();
 			this.panMenu.ResumeLayout(false);
 			this.panMenu.PerformLayout();
-			((System.ComponentModel.ISupportInitialize)(this.chart1)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.chartMain)).EndInit();
 			this.statusStrip1.ResumeLayout(false);
 			this.statusStrip1.PerformLayout();
 			this.splitContainerBoard.Panel1.ResumeLayout(false);
@@ -3553,7 +3590,7 @@
 		private System.Windows.Forms.ColumnHeader columnHeader3;
 		private System.Windows.Forms.ColumnHeader columnHeader4;
 		private System.Windows.Forms.ColumnHeader columnHeader5;
-		private System.Windows.Forms.DataVisualization.Charting.Chart chart1;
+		private System.Windows.Forms.DataVisualization.Charting.Chart chartMain;
 		private System.Windows.Forms.NumericUpDown nudValue2;
 		private System.Windows.Forms.NumericUpDown nudValue1;
 		private System.Windows.Forms.TableLayoutPanel tlpWhite;
@@ -3610,6 +3647,7 @@
 		private System.Windows.Forms.ComboBox cbTourEBook;
 		private System.Windows.Forms.ToolStripMenuItem enginesToolStripMenuItem1;
 		private System.Windows.Forms.ToolStripMenuItem gamesToolStripMenuItem;
+		public System.Windows.Forms.DataVisualization.Charting.Chart chartGame;
 	}
 }
 
