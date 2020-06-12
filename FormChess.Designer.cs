@@ -380,6 +380,7 @@
 			chartArea1.AxisY.MajorGrid.Enabled = false;
 			chartArea1.AxisY.MajorTickMark.Enabled = false;
 			chartArea1.BackColor = System.Drawing.Color.WhiteSmoke;
+			chartArea1.BorderDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Solid;
 			chartArea1.Name = "ChartArea1";
 			this.chartGame.ChartAreas.Add(chartArea1);
 			this.chartGame.Location = new System.Drawing.Point(3, 359);
@@ -2713,6 +2714,7 @@
 			chartArea2.AxisY.Maximum = 5D;
 			chartArea2.AxisY.Minimum = -5D;
 			chartArea2.BackColor = System.Drawing.Color.WhiteSmoke;
+			chartArea2.BorderDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Solid;
 			chartArea2.Name = "ChartArea1";
 			this.chartMain.ChartAreas.Add(chartArea2);
 			this.chartMain.Location = new System.Drawing.Point(0, 0);

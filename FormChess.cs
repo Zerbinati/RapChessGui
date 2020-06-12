@@ -377,7 +377,7 @@ namespace RapChessGui
 			p = new CPlayer("Human");
 			p.tournament = false;
 			p.modeValue.value = 0;
-			p.elo = "0";
+			p.elo = "500";
 			CData.playerList.Add(p);
 			p = new CPlayer();
 			p.engine = "RapChess CS";
