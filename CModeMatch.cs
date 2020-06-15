@@ -15,6 +15,8 @@ namespace RapChessGui
 		public static string book2 = "Eco";
 		public static CModeValue modeValue1 = new CModeValue();
 		public static CModeValue modeValue2 = new CModeValue();
+		public static CHisElo his1 = new CHisElo();
+		public static CHisElo his2 = new CHisElo();
 
 		public static void Reset()
 		{
@@ -23,6 +25,8 @@ namespace RapChessGui
 			win = 0;
 			draw = 0;
 			loose = 0;
+			his1.list.Clear();
+			his2.list.Clear();
 		}
 
 		public static int Total()
@@ -56,6 +60,8 @@ namespace RapChessGui
 			modeValue2.mode = CRapIni.This.Read("mode>match>mode2", "Time");
 			modeValue1.value = CRapIni.This.ReadInt("mode>match>value1", 1);
 			modeValue2.value = CRapIni.This.ReadInt("mode>match>value2", 1);
+			his1.LoadFromStr(CRapIni.This.Read("mode>match>his1", ""));
+			his2.LoadFromStr(CRapIni.This.Read("mode>match>his2", ""));
 		}
 
 		public static void SaveToIni()
@@ -73,6 +79,8 @@ namespace RapChessGui
 			CRapIni.This.Write("mode>match>mode2", modeValue2.mode);
 			CRapIni.This.Write("mode>match>value1", modeValue1.value);
 			CRapIni.This.Write("mode>match>value2", modeValue2.value);
+			CRapIni.This.Write("mode>match>his1", his1.SaveToStr());
+			CRapIni.This.Write("mode>match>his2", his2.SaveToStr());
 		}
 
 	}

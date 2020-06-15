@@ -160,18 +160,12 @@ namespace RapChessGui
 				if (!isDraw)
 				{
 					if (pw.name == This.labMatch10.Text)
-					{
-						CModeMatch.win++;
-					}
+					CModeMatch.win++;
 					else
-					{
 						CModeMatch.loose++;
-					}
 				}
 				else
-				{
 					CModeMatch.draw++;
-				}
 				CModeMatch.SaveToIni();
 				This.MatchShow();
 			}
@@ -472,7 +466,7 @@ namespace RapChessGui
 			CModeTournamentP.LoadFromIni();
 			CModeTraining.LoadFromIni();
 			CPlayer player = CData.playerList.GetPlayer("Human");
-			CData.StrToChart(player.hisElo.SaveToStr(),chartGame);
+			CData.StrToChart(player.hisElo.SaveToStr(), chartGame);
 		}
 
 		public void BoardPrepare()
@@ -1603,9 +1597,19 @@ namespace RapChessGui
 			labMatch22.Text = CModeMatch.win.ToString();
 			labMatch23.Text = CModeMatch.draw.ToString();
 			labMatch24.Text = $"{CModeMatch.Result(true)}%";
+			CHisElo his1 = CModeMatch.his1;
+			CHisElo his2 = CModeMatch.his2;
+			if (CModeMatch.rotate)
+			{
+				his1 = CModeMatch.his2;
+				his2 = CModeMatch.his1;
+			}
+			CData.HisToPoints(his1, chartMatch.Series[0].Points);
+			CData.HisToPoints(his2, chartMatch.Series[1].Points);
 		}
 		void MatchStart()
 		{
+			MatchShow();
 			CData.fen = CChess.defFen;
 			CModeMatch.engine1 = cbEngine1.Text;
 			CModeMatch.engine2 = cbEngine2.Text;
@@ -1635,6 +1639,8 @@ namespace RapChessGui
 			CModeMatch.rotate = !CModeMatch.rotate;
 			Clear();
 			moves = Chess.GenerateValidMoves();
+			CModeMatch.his1.Add(CModeMatch.Result(false));
+			CModeMatch.his2.Add(CModeMatch.Result(true));
 			CModeMatch.SaveToIni();
 		}
 

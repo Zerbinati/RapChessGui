@@ -31,11 +31,14 @@
 			this.components = new System.ComponentModel.Container();
 			System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
 			System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+			System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+			System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
+			System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+			System.Windows.Forms.DataVisualization.Charting.Series series5 = new System.Windows.Forms.DataVisualization.Charting.Series();
+			System.Windows.Forms.DataVisualization.Charting.Series series6 = new System.Windows.Forms.DataVisualization.Charting.Series();
 			System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
 			System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
-			System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
 			System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
-			System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormChess));
 			this.timer1 = new System.Windows.Forms.Timer(this.components);
 			this.tabControl1 = new System.Windows.Forms.TabControl();
@@ -257,6 +260,7 @@
 			this.columnHeader21 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeader22 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.tlpBlack = new System.Windows.Forms.TableLayoutPanel();
+			this.chartMatch = new System.Windows.Forms.DataVisualization.Charting.Chart();
 			this.tabControl1.SuspendLayout();
 			this.tabPageGame.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.chartGame)).BeginInit();
@@ -328,6 +332,7 @@
 			this.splitContainerMoves.SuspendLayout();
 			this.tlpWhite.SuspendLayout();
 			this.tlpBlack.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.chartMatch)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// timer1
@@ -641,6 +646,7 @@
 			// 
 			// tabPageMatch
 			// 
+			this.tabPageMatch.Controls.Add(this.chartMatch);
 			this.tabPageMatch.Controls.Add(this.tlpMatch);
 			this.tabPageMatch.Controls.Add(this.labMatchGames);
 			this.tabPageMatch.Controls.Add(this.butContinueMatch);
@@ -1437,27 +1443,27 @@
 			// chartTraining
 			// 
 			this.chartTraining.BackColor = System.Drawing.Color.WhiteSmoke;
-			chartArea2.AxisX.LabelStyle.Enabled = false;
-			chartArea2.AxisX.MajorGrid.Enabled = false;
-			chartArea2.AxisX.MajorTickMark.Enabled = false;
-			chartArea2.AxisY.MajorGrid.Enabled = false;
-			chartArea2.AxisY.MajorTickMark.Enabled = false;
-			chartArea2.BackColor = System.Drawing.Color.WhiteSmoke;
-			chartArea2.BorderDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Solid;
-			chartArea2.Name = "ChartArea1";
-			this.chartTraining.ChartAreas.Add(chartArea2);
+			chartArea3.AxisX.LabelStyle.Enabled = false;
+			chartArea3.AxisX.MajorGrid.Enabled = false;
+			chartArea3.AxisX.MajorTickMark.Enabled = false;
+			chartArea3.AxisY.MajorGrid.Enabled = false;
+			chartArea3.AxisY.MajorTickMark.Enabled = false;
+			chartArea3.BackColor = System.Drawing.Color.WhiteSmoke;
+			chartArea3.BorderDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Solid;
+			chartArea3.Name = "ChartArea1";
+			this.chartTraining.ChartAreas.Add(chartArea3);
 			this.chartTraining.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.chartTraining.Location = new System.Drawing.Point(3, 373);
 			this.chartTraining.Name = "chartTraining";
 			this.chartTraining.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.None;
 			this.chartTraining.PaletteCustomColors = new System.Drawing.Color[] {
         System.Drawing.Color.Olive};
-			series2.BorderWidth = 4;
-			series2.ChartArea = "ChartArea1";
-			series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-			series2.IsVisibleInLegend = false;
-			series2.Name = "Series1";
-			this.chartTraining.Series.Add(series2);
+			series4.BorderWidth = 4;
+			series4.ChartArea = "ChartArea1";
+			series4.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+			series4.IsVisibleInLegend = false;
+			series4.Name = "Series1";
+			this.chartTraining.Series.Add(series4);
 			this.chartTraining.Size = new System.Drawing.Size(352, 72);
 			this.chartTraining.TabIndex = 29;
 			this.chartTraining.Text = "chart1";
@@ -2742,34 +2748,33 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.chartMain.BackColor = System.Drawing.Color.WhiteSmoke;
-			this.chartMain.BorderlineColor = System.Drawing.Color.Silver;
-			chartArea3.AxisX.IsLabelAutoFit = false;
-			chartArea3.AxisX.MajorGrid.Enabled = false;
-			chartArea3.AxisX.MajorTickMark.Enabled = false;
-			chartArea3.AxisY.IsLabelAutoFit = false;
-			chartArea3.AxisY.MajorGrid.Interval = 5D;
-			chartArea3.AxisY.MajorTickMark.Enabled = false;
-			chartArea3.AxisY.Maximum = 5D;
-			chartArea3.AxisY.Minimum = -5D;
-			chartArea3.BackColor = System.Drawing.Color.WhiteSmoke;
-			chartArea3.BorderDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Solid;
-			chartArea3.Name = "ChartArea1";
-			this.chartMain.ChartAreas.Add(chartArea3);
+			chartArea4.AxisX.IsLabelAutoFit = false;
+			chartArea4.AxisX.MajorGrid.Enabled = false;
+			chartArea4.AxisX.MajorTickMark.Enabled = false;
+			chartArea4.AxisY.IsLabelAutoFit = false;
+			chartArea4.AxisY.MajorGrid.Interval = 5D;
+			chartArea4.AxisY.MajorTickMark.Enabled = false;
+			chartArea4.AxisY.Maximum = 5D;
+			chartArea4.AxisY.Minimum = -5D;
+			chartArea4.BackColor = System.Drawing.Color.WhiteSmoke;
+			chartArea4.BorderDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Solid;
+			chartArea4.Name = "ChartArea1";
+			this.chartMain.ChartAreas.Add(chartArea4);
 			this.chartMain.Location = new System.Drawing.Point(0, 0);
 			this.chartMain.Name = "chartMain";
 			this.chartMain.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.None;
 			this.chartMain.PaletteCustomColors = new System.Drawing.Color[] {
         System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(0))))),
         System.Drawing.Color.Olive};
-			series3.ChartArea = "ChartArea1";
-			series3.CustomProperties = "PointWidth=1";
-			series3.IsVisibleInLegend = false;
-			series3.Name = "Series1";
-			series4.ChartArea = "ChartArea1";
-			series4.CustomProperties = "PointWidth=1";
-			series4.Name = "Series2";
-			this.chartMain.Series.Add(series3);
-			this.chartMain.Series.Add(series4);
+			series5.ChartArea = "ChartArea1";
+			series5.CustomProperties = "PointWidth=1";
+			series5.IsVisibleInLegend = false;
+			series5.Name = "Series1";
+			series6.ChartArea = "ChartArea1";
+			series6.CustomProperties = "PointWidth=1";
+			series6.Name = "Series2";
+			this.chartMain.Series.Add(series5);
+			this.chartMain.Series.Add(series6);
 			this.chartMain.Size = new System.Drawing.Size(388, 177);
 			this.chartMain.TabIndex = 0;
 			this.chartMain.Text = "chart1";
@@ -3372,6 +3377,42 @@
 			this.tlpBlack.Size = new System.Drawing.Size(1180, 24);
 			this.tlpBlack.TabIndex = 35;
 			// 
+			// chartMatch
+			// 
+			this.chartMatch.BackColor = System.Drawing.Color.WhiteSmoke;
+			chartArea2.AxisX.LabelStyle.Enabled = false;
+			chartArea2.AxisX.MajorGrid.Enabled = false;
+			chartArea2.AxisX.MajorTickMark.Enabled = false;
+			chartArea2.AxisY.MajorGrid.Enabled = false;
+			chartArea2.AxisY.MajorTickMark.Enabled = false;
+			chartArea2.BackColor = System.Drawing.Color.WhiteSmoke;
+			chartArea2.BorderDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Solid;
+			chartArea2.Name = "ChartArea1";
+			this.chartMatch.ChartAreas.Add(chartArea2);
+			this.chartMatch.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.chartMatch.Location = new System.Drawing.Point(0, 386);
+			this.chartMatch.Name = "chartMatch";
+			this.chartMatch.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.None;
+			this.chartMatch.PaletteCustomColors = new System.Drawing.Color[] {
+        System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(0))))),
+        System.Drawing.Color.Olive};
+			series2.BorderWidth = 4;
+			series2.ChartArea = "ChartArea1";
+			series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+			series2.IsVisibleInLegend = false;
+			series2.Name = "Series1";
+			series3.BorderWidth = 4;
+			series3.ChartArea = "ChartArea1";
+			series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+			series3.IsVisibleInLegend = false;
+			series3.Name = "Series2";
+			this.chartMatch.Series.Add(series2);
+			this.chartMatch.Series.Add(series3);
+			this.chartMatch.Size = new System.Drawing.Size(358, 62);
+			this.chartMatch.TabIndex = 29;
+			this.chartMatch.Text = "chart1";
+			this.toolTip1.SetToolTip(this.chartMatch, "User progress history");
+			// 
 			// FormChess
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -3464,6 +3505,7 @@
 			this.splitContainerMoves.ResumeLayout(false);
 			this.tlpWhite.ResumeLayout(false);
 			this.tlpBlack.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this.chartMatch)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -3690,6 +3732,7 @@
 		private System.Windows.Forms.ToolStripMenuItem gamesToolStripMenuItem;
 		public System.Windows.Forms.DataVisualization.Charting.Chart chartGame;
 		public System.Windows.Forms.DataVisualization.Charting.Chart chartTraining;
+		public System.Windows.Forms.DataVisualization.Charting.Chart chartMatch;
 	}
 }
 

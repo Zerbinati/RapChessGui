@@ -63,6 +63,13 @@ namespace RapChessGui
 				chart.Series[0].Points.Add(Convert.ToInt32(e));
 		}
 
+		public static void HisToPoints(CHisElo he, DataPointCollection po)
+		{
+			po.Clear();
+			foreach (int i in he.list)
+				po.Add(i);
+		}
+
 		public static void UpdateFileBook()
 		{
 			fileBook.Clear();
@@ -89,25 +96,25 @@ namespace RapChessGui
 
 	public class CHisElo
 	{
-		readonly List<int> list = new List<int>(100);
+		readonly public List<double> list = new List<double>(100);
 
 		public void LoadFromStr(string elo)
 		{
 			list.Clear();
-			string[] his = elo.Split(new[] { ',', '\t' }, StringSplitOptions.RemoveEmptyEntries);
+			string[] his = elo.Split(new[] { ' ', '\t' }, StringSplitOptions.RemoveEmptyEntries);
 			foreach (string e in his)
-				Add(Convert.ToInt32(e));
+				Add(Convert.ToDouble(e));
 		}
 
 		public string SaveToStr()
 		{
 			string elo = "";
-			foreach (int e in list)
-				elo += $",{e}";
-			return elo.Trim(',');
+			foreach (double e in list)
+				elo += $" {e}";
+			return elo.Trim(' ');
 		}
 
-		public void Add(int value)
+		public void Add(double value)
 		{
 			list.Add(value);
 			int c = list.Count - 100;
@@ -115,7 +122,7 @@ namespace RapChessGui
 				list.RemoveRange(0,c);
 		}
 
-		public int Last()
+		public double Last()
 		{
 			if (list.Count > 0)
 				return list[list.Count - 1];
