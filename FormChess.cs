@@ -9,7 +9,6 @@ using System.Windows.Forms;
 using System.Linq;
 using RapIni;
 using RapLog;
-using System.Windows.Forms.DataVisualization.Charting;
 
 
 namespace RapChessGui
@@ -213,6 +212,8 @@ namespace RapChessGui
 				}
 				int newW = Convert.ToInt32(eloW * 0.9 + Math.Max(OW, eloL) * 0.1);
 				int newL = Convert.ToInt32(eloL * 0.9 + Math.Min(OL, eloW) * 0.1);
+				ew.hisElo.Add(newW);
+				el.hisElo.Add(newL);
 				ew.elo = newW.ToString();
 				el.elo = newL.ToString();
 				ew.eloOld = ew.eloOld * .9 + newW * .1;
@@ -254,6 +255,8 @@ namespace RapChessGui
 				}
 				int newW = Convert.ToInt32(eloW * 0.9 + Math.Max(OW, eloL) * 0.1);
 				int newL = Convert.ToInt32(eloL * 0.9 + Math.Min(OL, eloW) * 0.1);
+				pw.hisElo.Add(newW);
+				pl.hisElo.Add(newL);
 				pw.elo = newW.ToString();
 				pl.elo = newL.ToString();
 				pw.eloOld = pw.eloOld * .9 + newW * .1;
@@ -288,6 +291,7 @@ namespace RapChessGui
 					CRapLog.Add($"Training time {pl.name} {CChess.whiteTurn}");
 				if ((gl.player.name == "Trained") && ((CData.gameState == CGameState.time) || (CData.gameState == CGameState.error) || gl.timeOut))
 					CModeTraining.errors++;
+				This.chartTraining.Series[0].Points.Add((double)This.nudTeacher.Value);
 				This.TrainingShow();
 			}
 			This.timerStart.Start();
@@ -440,10 +444,6 @@ namespace RapChessGui
 
 		void IniLoad()
 		{
-			string elo = RapIni.Read("mode>game>elo", "");
-			string[] his = elo.Split(new[] { ',', '\t' }, StringSplitOptions.RemoveEmptyEntries);
-			foreach (string e in his)
-				chartGame.Series[0].Points.Add(Convert.ToInt32(e));
 			Width = RapIni.ReadInt("position>width", Width);
 			Height = RapIni.ReadInt("position>height", Height);
 			if (Width < 600)
@@ -472,6 +472,8 @@ namespace RapChessGui
 			CModeTournamentE.LoadFromIni();
 			CModeTournamentP.LoadFromIni();
 			CModeTraining.LoadFromIni();
+			CPlayer player = CData.playerList.GetPlayer("Human");
+			CData.StrToChart(player.hisElo.SaveToStr(),chartGame);
 		}
 
 		public void BoardPrepare()
@@ -825,366 +827,6 @@ namespace RapChessGui
 			}
 		}
 
-		#region mode
-
-		void GamePrepare()
-		{
-			lvMoves.Items.Clear();
-			lvMovesW.Items.Clear();
-			lvMovesB.Items.Clear();
-			GamerList.gamer[0].SetPlayer("Human");
-			CPlayer pc = new CPlayer(cbComputer.Text);
-			if (cbComputer.Text == "Custom")
-			{
-				pc.engine = cbEngine.Text;
-				pc.book = cbBook.Text;
-				pc.modeValue.mode = CModeGame.modeValue.mode;
-				pc.modeValue.value = CModeGame.modeValue.value;
-			}
-			else
-				pc = CData.playerList.GetPlayer(cbComputer.Text);
-			if (pc == null)
-				pc = CData.playerList.GetPlayerAuto();
-			GamerList.gamer[1].SetPlayer(pc);
-		}
-
-		void GameStart()
-		{
-			CData.fen = CChess.defFen;
-			CModeGame.color = cbColor.Text;
-			CModeGame.computer = cbComputer.Text;
-			CModeGame.ranked = IsAutoElo();
-			ShowAutoElo();
-			ShowAuto();
-			SetMode(CMode.game);
-			GamePrepare();
-			Clear();
-			bool lg = ShowLastGame();
-			if ((!lg && CModeGame.rotate && (cbColor.Text == "Auto")) || (cbColor.Text == "Black"))
-			{
-				CModeGame.rotate = false;
-				GamerList.Rotate();
-			}
-			else
-				CModeGame.rotate = true;
-			if (GamerList.GamerCur().player.engine == "Human")
-				moves = Chess.GenerateValidMoves();
-			CPlayer ph = CData.playerList.GetPlayerAuto("Human");
-			int elo = Convert.ToInt32(ph.elo);
-			ph.eloNew = elo;
-			ph.eloOld = elo;
-			CModeGame.SaveToIni();
-			SetBoardRotate();
-			CBoard.Fill();
-			CBoard.SetPosition();
-			CBoard.RenderBoard();
-			RenderBoard();
-		}
-
-		void GameShow()
-		{
-			ShowAutoElo();
-		}
-
-		void MatchShow()
-		{
-			cbEngine1.SelectedIndex = cbEngine1.FindStringExact(CModeMatch.engine1);
-			cbEngine2.SelectedIndex = cbEngine2.FindStringExact(CModeMatch.engine2);
-			cbMode1.SelectedIndex = cbMode1.FindStringExact(CModeMatch.modeValue1.mode);
-			cbMode2.SelectedIndex = cbMode2.FindStringExact(CModeMatch.modeValue2.mode);
-			cbBook1.SelectedIndex = cbBook1.FindStringExact(CModeMatch.book1);
-			cbBook2.SelectedIndex = cbBook2.FindStringExact(CModeMatch.book2);
-			nudValue1.Value = CModeMatch.modeValue1.GetValue();
-			nudValue1.Increment = CModeMatch.modeValue1.GetIncrement();
-			nudValue2.Value = CModeMatch.modeValue2.GetValue();
-			nudValue2.Increment = CModeMatch.modeValue2.GetIncrement();
-			labMatchGames.Text = $"Games {CModeMatch.games}";
-			labMatch11.Text = CModeMatch.win.ToString();
-			labMatch12.Text = CModeMatch.loose.ToString();
-			labMatch13.Text = CModeMatch.draw.ToString();
-			labMatch14.Text = $"{CModeMatch.Result(false)}%";
-			labMatch21.Text = CModeMatch.loose.ToString();
-			labMatch22.Text = CModeMatch.win.ToString();
-			labMatch23.Text = CModeMatch.draw.ToString();
-			labMatch24.Text = $"{CModeMatch.Result(true)}%";
-		}
-		void MatchStart()
-		{
-			CData.fen = CChess.defFen;
-			CModeMatch.engine1 = cbEngine1.Text;
-			CModeMatch.engine2 = cbEngine2.Text;
-			CModeMatch.modeValue1.mode = cbMode1.Text;
-			CModeMatch.modeValue1.SetValue((int)nudValue1.Value);
-			CModeMatch.modeValue2.mode = cbMode2.Text;
-			CModeMatch.modeValue2.SetValue((int)nudValue2.Value);
-			CModeMatch.book1 = cbBook1.Text;
-			CModeMatch.book2 = cbBook2.Text;
-			SetMode(CMode.match);
-			CPlayer p1 = new CPlayer("Player 1");
-			p1.engine = CModeMatch.engine1;
-			p1.book = CModeMatch.book1;
-			p1.modeValue.mode = CModeMatch.modeValue1.mode;
-			p1.modeValue.value = CModeMatch.modeValue1.value;
-			CPlayer p2 = new CPlayer("Player 2");
-			p2.engine = CModeMatch.engine2;
-			p2.book = CModeMatch.book2;
-			p2.modeValue.mode = CModeMatch.modeValue2.mode;
-			p2.modeValue.value = CModeMatch.modeValue2.value;
-			GamerList.gamer[0].SetPlayer(p1);
-			GamerList.gamer[1].SetPlayer(p2);
-			p1.elo = GamerList.gamer[0].engine.elo;
-			p2.elo = GamerList.gamer[1].engine.elo;
-			if (CModeMatch.rotate)
-				GamerList.Rotate();
-			CModeMatch.rotate = !CModeMatch.rotate;
-			Clear();
-			moves = Chess.GenerateValidMoves();
-			CModeMatch.SaveToIni();
-		}
-
-		void TournamentEShow()
-		{
-			cbTourEMode.SelectedIndex = cbTourEMode.FindStringExact(CModeTournamentE.modeValue.mode);
-			cbTourEBook.SelectedIndex = cbTourEBook.FindStringExact(CModeTournamentE.book);
-		}
-
-		void TournamentEReset()
-		{
-			lvEngine.Items.Clear();
-			CModeTournamentE.FillList();
-			foreach (CEngine e in CModeTournamentE.engineList.list)
-			{
-				int del = e.GetDeltaElo();
-				ListViewItem lvi = new ListViewItem(new[] { e.name, e.elo, del.ToString() });
-				if (del > 0)
-					lvi.BackColor = Color.FromArgb(0xe0, 0xff, 0xe0);
-				if (del < 0)
-					lvi.BackColor = Color.FromArgb(0xff, 0xe0, 0xe0);
-				if (del == 0)
-					lvi.BackColor = Color.FromArgb(0xff, 0xff, 0xff);
-				lvEngine.Items.Add(lvi);
-			}
-		}
-
-		void TournamentEUpdate(CEngine e)
-		{
-			if (e != null)
-				foreach (ListViewItem lvi in lvEngine.Items)
-					if (lvi.Text == e.name)
-					{
-						int del = e.GetDeltaElo();
-						lvi.SubItems[1].Text = e.elo;
-						lvi.SubItems[2].Text = del.ToString();
-						if (del > 0)
-							lvi.BackColor = Color.FromArgb(0xe0, 0xff, 0xe0);
-						if (del < 0)
-							lvi.BackColor = Color.FromArgb(0xff, 0xe0, 0xe0);
-						if (del == 0)
-							lvi.BackColor = Color.FromArgb(0xff, 0xff, 0xff);
-					}
-		}
-
-		void TournamentEStart()
-		{
-			TournamentEUpdate(GamerList.gamer[0].engine);
-			TournamentEUpdate(GamerList.gamer[1].engine);
-			CModeTournamentE.modeValue.mode = cbTourEMode.Text;
-			CModeTournamentE.modeValue.SetValue((int)nudTourE.Value);
-			CModeTournamentE.book = cbTourEBook.Text;
-			CModeTournamentE.SaveToIni();
-			CData.fen = CChess.defFen;
-			SetMode(CMode.tourE);
-			CPlayer p1;
-			CPlayer p2;
-			CEngine e1;
-			CEngine e2;
-			if (CModeTournamentE.rotate)
-			{
-				CGamer g1 = GamerList.gamer[1];
-				CGamer g2 = GamerList.gamer[0];
-				p1 = g1.player;
-				p2 = g2.player;
-			}
-			else
-			{
-				e1 = CModeTournamentE.SelectEngine();
-				e2 = CModeTournamentE.SelectOpponent(e1);
-				p1 = new CPlayer(e1.name);
-				p2 = new CPlayer(e2.name);
-				p1.engine = e1.name;
-				p2.engine = e2.name;
-				p1.elo = e1.elo;
-				p2.elo = e2.elo;
-			}
-			p1.book = CModeTournamentE.book;
-			p1.modeValue.mode = CModeTournamentE.modeValue.mode;
-			p1.modeValue.value = CModeTournamentE.modeValue.value;
-			p2.book = CModeTournamentE.book;
-			p2.modeValue.mode = CModeTournamentE.modeValue.mode;
-			p2.modeValue.value = CModeTournamentE.modeValue.value;
-			GamerList.gamer[0].SetPlayer(p1);
-			GamerList.gamer[1].SetPlayer(p2);
-			foreach (ListViewItem lvi in lvEngine.Items)
-				if (lvi.Text == CModeTournamentE.engine)
-				{
-					int top = lvi.Index - ((lvEngine.ClientRectangle.Height / lvi.Bounds.Height) >> 1);
-					if (top < 0)
-						top = 0;
-					lvi.Selected = true;
-					lvEngine.TopItem = lvEngine.Items[top];
-					lvEngine.Sort();
-					lvEngine.Focus();
-					ShowHistoryTourE();
-					break;
-				}
-			Clear();
-		}
-
-		void TournamentPReset()
-		{
-			lvPlayer.Items.Clear();
-			CModeTournamentP.FillList();
-			foreach (CPlayer p in CModeTournamentP.playerList.list)
-				if (p.engine != "Human")
-				{
-					int del = p.GetDeltaElo();
-					ListViewItem lvi = new ListViewItem(new[] { p.name, p.elo, del.ToString().ToString() });
-					if (del > 0)
-						lvi.BackColor = Color.FromArgb(0xe0, 0xff, 0xe0);
-					if (del < 0)
-						lvi.BackColor = Color.FromArgb(0xff, 0xe0, 0xe0);
-					if (del == 0)
-						lvi.BackColor = Color.FromArgb(0xff, 0xff, 0xff);
-					lvPlayer.Items.Add(lvi);
-				}
-		}
-
-		void TournamentPUpdate(CPlayer p)
-		{
-			foreach (ListViewItem lvi in lvPlayer.Items)
-				if (lvi.Text == p.name)
-				{
-					int del = p.GetDeltaElo();
-					lvi.SubItems[1].Text = p.elo;
-					lvi.SubItems[2].Text = del.ToString();
-					if (del > 0)
-						lvi.BackColor = Color.FromArgb(0xe0, 0xff, 0xe0);
-					if (del < 0)
-						lvi.BackColor = Color.FromArgb(0xff, 0xe0, 0xe0);
-					if (del == 0)
-						lvi.BackColor = Color.FromArgb(0xff, 0xff, 0xff);
-				}
-		}
-
-		void TournamentPStart()
-		{
-			TournamentPUpdate(GamerList.gamer[0].player);
-			TournamentPUpdate(GamerList.gamer[1].player);
-			CData.fen = CChess.defFen;
-			SetMode(CMode.tourP);
-			CPlayer p1;
-			CPlayer p2;
-			if (CModeTournamentP.rotate)
-			{
-				p1 = GamerList.gamer[1].player;
-				p2 = GamerList.gamer[0].player;
-			}
-			else
-			{
-				p1 = CModeTournamentP.SelectPlayer();
-				p2 = CModeTournamentP.SelectOpponent(p1);
-			}
-			GamerList.gamer[0].SetPlayer(p1);
-			GamerList.gamer[1].SetPlayer(p2);
-			foreach (ListViewItem lvi in lvPlayer.Items)
-				if (lvi.Text == CModeTournamentP.player)
-				{
-					int top = lvi.Index - ((lvPlayer.ClientRectangle.Height / lvi.Bounds.Height) >> 1);
-					if (top < 0)
-						top = 0;
-					lvi.Selected = true;
-					lvPlayer.TopItem = lvPlayer.Items[top];
-					lvPlayer.Sort();
-					lvPlayer.Focus();
-					ShowHistoryTourP();
-					break;
-				}
-			Clear();
-		}
-
-		void TrainingShow()
-		{
-			double procent = CModeTraining.games > 0 ? (CModeTraining.errors * 100.0) / CModeTraining.games : 0;
-			labGames.Text = $"Games {CModeTraining.games}";
-			labErrors.Text = string.Format("Errors {0} ({1:N2}%)", CModeTraining.errors, procent);
-			cbTeacherEngine.SelectedIndex = cbTeacherEngine.FindStringExact(CModeTraining.teacher);
-			cbTrainedEngine.SelectedIndex = cbTrainedEngine.FindStringExact(CModeTraining.trained);
-			cbTeacherMode.SelectedIndex = cbTeacherMode.FindStringExact(CModeTraining.modeValueTeacher.mode);
-			cbTrainedMode.SelectedIndex = cbTrainedMode.FindStringExact(CModeTraining.modeValueTrained.mode);
-			cbTeacherBook.SelectedIndex = cbTeacherBook.FindStringExact(CModeTraining.teacherBook);
-			cbTrainedBook.SelectedIndex = cbTrainedBook.FindStringExact(CModeTraining.trainedBook);
-			nudTeacher.Value = CModeTraining.modeValueTeacher.GetValue();
-			nudTeacher.Increment = CModeTraining.modeValueTeacher.GetIncrement();
-			nudTrained.Value = CModeTraining.modeValueTrained.GetValue();
-			nudTrained.Increment = CModeTraining.modeValueTrained.GetIncrement();
-			label12.Text = CModeTraining.win.ToString();
-			label13.Text = CModeTraining.loose.ToString();
-			label14.Text = CModeTraining.draw.ToString();
-			label15.Text = $"{CModeTraining.Result(false)}%";
-			label7.Text = CModeTraining.loose.ToString();
-			label8.Text = CModeTraining.win.ToString();
-			label9.Text = CModeTraining.draw.ToString();
-			label10.Text = $"{CModeTraining.Result(true)}%";
-		}
-
-		void TraingStart()
-		{
-			CData.fen = CChess.defFen;
-			CModeTraining.teacher = cbTeacherEngine.Text;
-			CModeTraining.trained = cbTrainedEngine.Text;
-			CModeTraining.modeValueTeacher.mode = cbTeacherMode.Text;
-			CModeTraining.modeValueTrained.mode = cbTrainedMode.Text;
-			CModeTraining.teacherBook = cbTeacherBook.Text;
-			CModeTraining.trainedBook = cbTrainedBook.Text;
-			CModeTraining.modeValueTeacher.SetValue((int)nudTeacher.Value);
-			CModeTraining.modeValueTrained.SetValue((int)nudTrained.Value);
-			SetMode(CMode.training);
-			CPlayer pw = new CPlayer("Trained");
-			pw.engine = CModeTraining.trained;
-			pw.book = CModeTraining.trainedBook;
-			pw.modeValue.mode = CModeTraining.modeValueTrained.mode;
-			pw.modeValue.value = CModeTraining.modeValueTrained.value;
-			CPlayer pb = new CPlayer("Teacher");
-			pb.engine = CModeTraining.teacher;
-			pb.book = CModeTraining.teacherBook;
-			pb.modeValue.mode = CModeTraining.modeValueTeacher.mode;
-			pb.modeValue.value = CModeTraining.modeValueTeacher.value;
-			GamerList.gamer[0].SetPlayer(pw);
-			GamerList.gamer[1].SetPlayer(pb);
-			pw.elo = GamerList.gamer[0].engine.elo;
-			pb.elo = GamerList.gamer[1].engine.elo;
-			if (CModeTraining.rotate)
-				GamerList.Rotate();
-			CModeTraining.rotate = !CModeTraining.rotate;
-			Clear();
-			CModeTraining.SaveToIni();
-		}
-
-		void EditShow()
-		{
-			List<RadioButton> list = gbToMove.Controls.OfType<RadioButton>().ToList();
-			int i = CChess.whiteTurn ? 1 : 0;
-			list[i].Select();
-			int cr = Chess.g_castleRights;
-			clbCastling.SetItemChecked(0, (Chess.g_castleRights & 1) > 0);
-			clbCastling.SetItemChecked(1, (Chess.g_castleRights & 2) > 0);
-			clbCastling.SetItemChecked(2, (Chess.g_castleRights & 4) > 0);
-			clbCastling.SetItemChecked(3, (Chess.g_castleRights & 8) > 0);
-			Chess.g_castleRights = cr;
-		}
-
-		#endregion
-
 		void ShowAutoElo()
 		{
 			if (IsAutoElo() && CModeGame.ranked)
@@ -1202,7 +844,7 @@ namespace RapChessGui
 		bool ShowLastGame()
 		{
 			bool result = false;
-			CPlayer hu = CData.playerList.GetPlayerAuto("Human");
+			CPlayer hu = CData.playerList.GetPlayer("Human");
 			int eloCur = Convert.ToInt32(hu.elo);
 			int eloDel = hu.eloNew - eloCur;
 			if (hu.eloNew > eloCur)
@@ -1222,17 +864,7 @@ namespace RapChessGui
 			if (result)
 			{
 				chartGame.Series[0].Points.Add(hu.eloNew);
-				string elo = "";
-				int x2 = This.chartGame.Series[0].Points.Count;
-				int x1 = x2 > 100 ? x2 - 100 : 0;
-				for (int n = x1; n < x2; n++)
-				{
-					DataPoint p = This.chartGame.Series[0].Points[n];
-					double e = p.YValues[0];
-					elo += $",{e}";
-				}
-				elo = elo.Trim(',');
-				RapIni.Write("mode>game>elo", elo);
+				hu.hisElo.LoadFromStr(CData.ChartToStr(chartGame));
 			}
 			hu.elo = hu.eloNew.ToString();
 			hu.SaveToIni();
@@ -1287,7 +919,7 @@ namespace RapChessGui
 			ListViewItem top2 = null;
 			ListViewItem item = lvPlayer.SelectedItems[0];
 			string name = item.SubItems[0].Text;
-			CPlayer player = CData.playerList.GetPlayerAuto(name);
+			CPlayer player = CData.playerList.GetPlayer(name);
 			labPlayer.Text = $"{player.name} - {player.elo}";
 			lvPlayerH.Items.Clear();
 			CData.playerList.Sort();
@@ -1416,7 +1048,7 @@ namespace RapChessGui
 			}
 			string san = Chess.EmoToSan(emo);
 			CChess.EmoToSD(emo, out CDrag.lastSou, out CDrag.lastDes);
-			CBoard.MakeMove(gmo);
+			Board.MakeMove(gmo);
 			Chess.MakeMove(emo, out int piece);
 			CHistory.AddMove(piece, gmo, emo, san);
 			MoveToLvMoves(CHistory.moveList.Count - 1, piece, CHistory.LastMove());
@@ -1458,7 +1090,7 @@ namespace RapChessGui
 			CDrag.lastDes = -1;
 			Chess.InitializeFromFen(CData.fen);
 			CHistory.NewGame(Chess.GetFen());
-			CBoard.ColorClear();
+			Board.ColorClear();
 			CBoard.Fill();
 			GamerList.Init();
 			lvMoves.Items.Clear();
@@ -1868,7 +1500,7 @@ namespace RapChessGui
 
 		void SetIndex(int i)
 		{
-			CBoard.ColorClear();
+			Board.ColorClear();
 			if (i == -1)
 			{
 				ShowValid();
@@ -1889,6 +1521,366 @@ namespace RapChessGui
 				lv.Columns[n].Width = w;
 			lv.Columns[lv.Columns.Count - 1].Width = lv.Width - 32 - w * (lv.Columns.Count - 1);
 		}
+
+		#region mode
+
+		void GamePrepare()
+		{
+			lvMoves.Items.Clear();
+			lvMovesW.Items.Clear();
+			lvMovesB.Items.Clear();
+			GamerList.gamer[0].SetPlayer("Human");
+			CPlayer pc = new CPlayer(cbComputer.Text);
+			if (cbComputer.Text == "Custom")
+			{
+				pc.engine = cbEngine.Text;
+				pc.book = cbBook.Text;
+				pc.modeValue.mode = CModeGame.modeValue.mode;
+				pc.modeValue.value = CModeGame.modeValue.value;
+			}
+			else
+				pc = CData.playerList.GetPlayer(cbComputer.Text);
+			if (pc == null)
+				pc = CData.playerList.GetPlayerAuto();
+			GamerList.gamer[1].SetPlayer(pc);
+		}
+
+		void GameStart()
+		{
+			CData.fen = CChess.defFen;
+			CModeGame.color = cbColor.Text;
+			CModeGame.computer = cbComputer.Text;
+			CModeGame.ranked = IsAutoElo();
+			ShowAutoElo();
+			ShowAuto();
+			SetMode(CMode.game);
+			GamePrepare();
+			Clear();
+			bool lg = ShowLastGame();
+			if ((!lg && CModeGame.rotate && (cbColor.Text == "Auto")) || (cbColor.Text == "Black"))
+			{
+				CModeGame.rotate = false;
+				GamerList.Rotate();
+			}
+			else
+				CModeGame.rotate = true;
+			if (GamerList.GamerCur().player.engine == "Human")
+				moves = Chess.GenerateValidMoves();
+			CPlayer ph = CData.playerList.GetPlayer("Human");
+			int elo = Convert.ToInt32(ph.elo);
+			ph.eloNew = elo;
+			ph.eloOld = elo;
+			CModeGame.SaveToIni();
+			SetBoardRotate();
+			CBoard.Fill();
+			CBoard.SetPosition();
+			CBoard.RenderBoard();
+			RenderBoard();
+		}
+
+		void GameShow()
+		{
+			ShowAutoElo();
+		}
+
+		void MatchShow()
+		{
+			cbEngine1.SelectedIndex = cbEngine1.FindStringExact(CModeMatch.engine1);
+			cbEngine2.SelectedIndex = cbEngine2.FindStringExact(CModeMatch.engine2);
+			cbMode1.SelectedIndex = cbMode1.FindStringExact(CModeMatch.modeValue1.mode);
+			cbMode2.SelectedIndex = cbMode2.FindStringExact(CModeMatch.modeValue2.mode);
+			cbBook1.SelectedIndex = cbBook1.FindStringExact(CModeMatch.book1);
+			cbBook2.SelectedIndex = cbBook2.FindStringExact(CModeMatch.book2);
+			nudValue1.Value = CModeMatch.modeValue1.GetValue();
+			nudValue1.Increment = CModeMatch.modeValue1.GetIncrement();
+			nudValue2.Value = CModeMatch.modeValue2.GetValue();
+			nudValue2.Increment = CModeMatch.modeValue2.GetIncrement();
+			labMatchGames.Text = $"Games {CModeMatch.games}";
+			labMatch11.Text = CModeMatch.win.ToString();
+			labMatch12.Text = CModeMatch.loose.ToString();
+			labMatch13.Text = CModeMatch.draw.ToString();
+			labMatch14.Text = $"{CModeMatch.Result(false)}%";
+			labMatch21.Text = CModeMatch.loose.ToString();
+			labMatch22.Text = CModeMatch.win.ToString();
+			labMatch23.Text = CModeMatch.draw.ToString();
+			labMatch24.Text = $"{CModeMatch.Result(true)}%";
+		}
+		void MatchStart()
+		{
+			CData.fen = CChess.defFen;
+			CModeMatch.engine1 = cbEngine1.Text;
+			CModeMatch.engine2 = cbEngine2.Text;
+			CModeMatch.modeValue1.mode = cbMode1.Text;
+			CModeMatch.modeValue1.SetValue((int)nudValue1.Value);
+			CModeMatch.modeValue2.mode = cbMode2.Text;
+			CModeMatch.modeValue2.SetValue((int)nudValue2.Value);
+			CModeMatch.book1 = cbBook1.Text;
+			CModeMatch.book2 = cbBook2.Text;
+			SetMode(CMode.match);
+			CPlayer p1 = new CPlayer("Player 1");
+			p1.engine = CModeMatch.engine1;
+			p1.book = CModeMatch.book1;
+			p1.modeValue.mode = CModeMatch.modeValue1.mode;
+			p1.modeValue.value = CModeMatch.modeValue1.value;
+			CPlayer p2 = new CPlayer("Player 2");
+			p2.engine = CModeMatch.engine2;
+			p2.book = CModeMatch.book2;
+			p2.modeValue.mode = CModeMatch.modeValue2.mode;
+			p2.modeValue.value = CModeMatch.modeValue2.value;
+			GamerList.gamer[0].SetPlayer(p1);
+			GamerList.gamer[1].SetPlayer(p2);
+			p1.elo = GamerList.gamer[0].engine.elo;
+			p2.elo = GamerList.gamer[1].engine.elo;
+			if (CModeMatch.rotate)
+				GamerList.Rotate();
+			CModeMatch.rotate = !CModeMatch.rotate;
+			Clear();
+			moves = Chess.GenerateValidMoves();
+			CModeMatch.SaveToIni();
+		}
+
+		void TournamentEShow()
+		{
+			cbTourEMode.SelectedIndex = cbTourEMode.FindStringExact(CModeTournamentE.modeValue.mode);
+			cbTourEBook.SelectedIndex = cbTourEBook.FindStringExact(CModeTournamentE.book);
+		}
+
+		void TournamentEReset()
+		{
+			lvEngine.Items.Clear();
+			CModeTournamentE.FillList();
+			foreach (CEngine e in CModeTournamentE.engineList.list)
+			{
+				int del = e.GetDeltaElo();
+				ListViewItem lvi = new ListViewItem(new[] { e.name, e.elo, del.ToString() });
+				if (del > 0)
+					lvi.BackColor = Color.FromArgb(0xe0, 0xff, 0xe0);
+				if (del < 0)
+					lvi.BackColor = Color.FromArgb(0xff, 0xe0, 0xe0);
+				if (del == 0)
+					lvi.BackColor = Color.FromArgb(0xff, 0xff, 0xff);
+				lvEngine.Items.Add(lvi);
+			}
+		}
+
+		void TournamentEUpdate(CEngine e)
+		{
+			if (e != null)
+				foreach (ListViewItem lvi in lvEngine.Items)
+					if (lvi.Text == e.name)
+					{
+						int del = e.GetDeltaElo();
+						lvi.SubItems[1].Text = e.elo;
+						lvi.SubItems[2].Text = del.ToString();
+						if (del > 0)
+							lvi.BackColor = Color.FromArgb(0xe0, 0xff, 0xe0);
+						if (del < 0)
+							lvi.BackColor = Color.FromArgb(0xff, 0xe0, 0xe0);
+						if (del == 0)
+							lvi.BackColor = Color.FromArgb(0xff, 0xff, 0xff);
+					}
+		}
+
+		void TournamentEStart()
+		{
+			TournamentEUpdate(GamerList.gamer[0].engine);
+			TournamentEUpdate(GamerList.gamer[1].engine);
+			CModeTournamentE.modeValue.mode = cbTourEMode.Text;
+			CModeTournamentE.modeValue.SetValue((int)nudTourE.Value);
+			CModeTournamentE.book = cbTourEBook.Text;
+			CModeTournamentE.SaveToIni();
+			CData.fen = CChess.defFen;
+			SetMode(CMode.tourE);
+			CPlayer p1;
+			CPlayer p2;
+			CEngine e1;
+			CEngine e2;
+			if (CModeTournamentE.rotate)
+			{
+				CGamer g1 = GamerList.gamer[1];
+				CGamer g2 = GamerList.gamer[0];
+				p1 = g1.player;
+				p2 = g2.player;
+			}
+			else
+			{
+				e1 = CModeTournamentE.SelectEngine();
+				e2 = CModeTournamentE.SelectOpponent(e1);
+				p1 = new CPlayer(e1.name);
+				p2 = new CPlayer(e2.name);
+				p1.engine = e1.name;
+				p2.engine = e2.name;
+				p1.elo = e1.elo;
+				p2.elo = e2.elo;
+			}
+			p1.book = CModeTournamentE.book;
+			p1.modeValue.mode = CModeTournamentE.modeValue.mode;
+			p1.modeValue.value = CModeTournamentE.modeValue.value;
+			p2.book = CModeTournamentE.book;
+			p2.modeValue.mode = CModeTournamentE.modeValue.mode;
+			p2.modeValue.value = CModeTournamentE.modeValue.value;
+			GamerList.gamer[0].SetPlayer(p1);
+			GamerList.gamer[1].SetPlayer(p2);
+			foreach (ListViewItem lvi in lvEngine.Items)
+				if (lvi.Text == CModeTournamentE.engine)
+				{
+					int top = lvi.Index - ((lvEngine.ClientRectangle.Height / lvi.Bounds.Height) >> 1);
+					if (top < 0)
+						top = 0;
+					lvi.Selected = true;
+					lvEngine.TopItem = lvEngine.Items[top];
+					lvEngine.Sort();
+					lvEngine.Focus();
+					ShowHistoryTourE();
+					break;
+				}
+			Clear();
+		}
+
+		void TournamentPReset()
+		{
+			lvPlayer.Items.Clear();
+			CModeTournamentP.FillList();
+			foreach (CPlayer p in CModeTournamentP.playerList.list)
+				if (p.engine != "Human")
+				{
+					int del = p.GetDeltaElo();
+					ListViewItem lvi = new ListViewItem(new[] { p.name, p.elo, del.ToString().ToString() });
+					if (del > 0)
+						lvi.BackColor = Color.FromArgb(0xe0, 0xff, 0xe0);
+					if (del < 0)
+						lvi.BackColor = Color.FromArgb(0xff, 0xe0, 0xe0);
+					if (del == 0)
+						lvi.BackColor = Color.FromArgb(0xff, 0xff, 0xff);
+					lvPlayer.Items.Add(lvi);
+				}
+		}
+
+		void TournamentPUpdate(CPlayer p)
+		{
+			foreach (ListViewItem lvi in lvPlayer.Items)
+				if (lvi.Text == p.name)
+				{
+					int del = p.GetDeltaElo();
+					lvi.SubItems[1].Text = p.elo;
+					lvi.SubItems[2].Text = del.ToString();
+					if (del > 0)
+						lvi.BackColor = Color.FromArgb(0xe0, 0xff, 0xe0);
+					if (del < 0)
+						lvi.BackColor = Color.FromArgb(0xff, 0xe0, 0xe0);
+					if (del == 0)
+						lvi.BackColor = Color.FromArgb(0xff, 0xff, 0xff);
+				}
+		}
+
+		void TournamentPStart()
+		{
+			TournamentPUpdate(GamerList.gamer[0].player);
+			TournamentPUpdate(GamerList.gamer[1].player);
+			CData.fen = CChess.defFen;
+			SetMode(CMode.tourP);
+			CPlayer p1;
+			CPlayer p2;
+			if (CModeTournamentP.rotate)
+			{
+				p1 = GamerList.gamer[1].player;
+				p2 = GamerList.gamer[0].player;
+			}
+			else
+			{
+				p1 = CModeTournamentP.SelectPlayer();
+				p2 = CModeTournamentP.SelectOpponent(p1);
+			}
+			GamerList.gamer[0].SetPlayer(p1);
+			GamerList.gamer[1].SetPlayer(p2);
+			foreach (ListViewItem lvi in lvPlayer.Items)
+				if (lvi.Text == CModeTournamentP.player)
+				{
+					int top = lvi.Index - ((lvPlayer.ClientRectangle.Height / lvi.Bounds.Height) >> 1);
+					if (top < 0)
+						top = 0;
+					lvi.Selected = true;
+					lvPlayer.TopItem = lvPlayer.Items[top];
+					lvPlayer.Sort();
+					lvPlayer.Focus();
+					ShowHistoryTourP();
+					break;
+				}
+			Clear();
+		}
+
+		void TrainingShow()
+		{
+			double procent = CModeTraining.games > 0 ? (CModeTraining.errors * 100.0) / CModeTraining.games : 0;
+			labGames.Text = $"Games {CModeTraining.games}";
+			labErrors.Text = string.Format("Errors {0} ({1:N2}%)", CModeTraining.errors, procent);
+			cbTeacherEngine.SelectedIndex = cbTeacherEngine.FindStringExact(CModeTraining.teacher);
+			cbTrainedEngine.SelectedIndex = cbTrainedEngine.FindStringExact(CModeTraining.trained);
+			cbTeacherMode.SelectedIndex = cbTeacherMode.FindStringExact(CModeTraining.modeValueTeacher.mode);
+			cbTrainedMode.SelectedIndex = cbTrainedMode.FindStringExact(CModeTraining.modeValueTrained.mode);
+			cbTeacherBook.SelectedIndex = cbTeacherBook.FindStringExact(CModeTraining.teacherBook);
+			cbTrainedBook.SelectedIndex = cbTrainedBook.FindStringExact(CModeTraining.trainedBook);
+			nudTeacher.Value = CModeTraining.modeValueTeacher.GetValue();
+			nudTeacher.Increment = CModeTraining.modeValueTeacher.GetIncrement();
+			nudTrained.Value = CModeTraining.modeValueTrained.GetValue();
+			nudTrained.Increment = CModeTraining.modeValueTrained.GetIncrement();
+			label12.Text = CModeTraining.win.ToString();
+			label13.Text = CModeTraining.loose.ToString();
+			label14.Text = CModeTraining.draw.ToString();
+			label15.Text = $"{CModeTraining.Result(false)}%";
+			label7.Text = CModeTraining.loose.ToString();
+			label8.Text = CModeTraining.win.ToString();
+			label9.Text = CModeTraining.draw.ToString();
+			label10.Text = $"{CModeTraining.Result(true)}%";
+		}
+
+		void TraingStart()
+		{
+			CData.fen = CChess.defFen;
+			CModeTraining.teacher = cbTeacherEngine.Text;
+			CModeTraining.trained = cbTrainedEngine.Text;
+			CModeTraining.modeValueTeacher.mode = cbTeacherMode.Text;
+			CModeTraining.modeValueTrained.mode = cbTrainedMode.Text;
+			CModeTraining.teacherBook = cbTeacherBook.Text;
+			CModeTraining.trainedBook = cbTrainedBook.Text;
+			CModeTraining.modeValueTeacher.SetValue((int)nudTeacher.Value);
+			CModeTraining.modeValueTrained.SetValue((int)nudTrained.Value);
+			SetMode(CMode.training);
+			CPlayer pw = new CPlayer("Trained");
+			pw.engine = CModeTraining.trained;
+			pw.book = CModeTraining.trainedBook;
+			pw.modeValue.mode = CModeTraining.modeValueTrained.mode;
+			pw.modeValue.value = CModeTraining.modeValueTrained.value;
+			CPlayer pb = new CPlayer("Teacher");
+			pb.engine = CModeTraining.teacher;
+			pb.book = CModeTraining.teacherBook;
+			pb.modeValue.mode = CModeTraining.modeValueTeacher.mode;
+			pb.modeValue.value = CModeTraining.modeValueTeacher.value;
+			GamerList.gamer[0].SetPlayer(pw);
+			GamerList.gamer[1].SetPlayer(pb);
+			pw.elo = GamerList.gamer[0].engine.elo;
+			pb.elo = GamerList.gamer[1].engine.elo;
+			if (CModeTraining.rotate)
+				GamerList.Rotate();
+			CModeTraining.rotate = !CModeTraining.rotate;
+			Clear();
+			CModeTraining.SaveToIni();
+		}
+
+		void EditShow()
+		{
+			List<RadioButton> list = gbToMove.Controls.OfType<RadioButton>().ToList();
+			int i = CChess.whiteTurn ? 1 : 0;
+			list[i].Select();
+			int cr = Chess.g_castleRights;
+			clbCastling.SetItemChecked(0, (Chess.g_castleRights & 1) > 0);
+			clbCastling.SetItemChecked(1, (Chess.g_castleRights & 2) > 0);
+			clbCastling.SetItemChecked(2, (Chess.g_castleRights & 4) > 0);
+			clbCastling.SetItemChecked(3, (Chess.g_castleRights & 8) > 0);
+			Chess.g_castleRights = cr;
+		}
+
+		#endregion
 
 		#region events
 
@@ -1933,6 +1925,7 @@ namespace RapChessGui
 		private void ButTraining_Click(object sender, EventArgs e)
 		{
 			CModeTraining.Reset();
+			chartTraining.Series[0].Points.Clear();
 			TraingStart();
 		}
 
@@ -2287,7 +2280,7 @@ namespace RapChessGui
 
 		private void butResignation_Click(object sender, EventArgs e)
 		{
-			CPlayer hu = CData.playerList.GetPlayerAuto("Human");
+			CPlayer hu = CData.playerList.GetPlayer("Human");
 			hu.eloNew = hu.GetEloLess();
 			GameStart();
 		}
@@ -2376,6 +2369,17 @@ namespace RapChessGui
 			LinesResize(lvMovesB);
 		}
 
+		private void nudValue_Click(object sender, EventArgs e)
+		{
+			cbComputer.Text = "Custom";
+		}
+
+		private void cbEngine_Click(object sender, EventArgs e)
+		{
+			cbComputer.Text = "Custom";
+		}
+
 		#endregion
+
 	}
 }

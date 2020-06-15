@@ -134,7 +134,7 @@ namespace RapChessGui
 				list[n] = new CField();
 		}
 
-		public static void ColorClear()
+		public void ColorClear()
 		{
 			for (int n = 0; n < 64; n++)
 				list[n].color = Color.Empty;
@@ -374,7 +374,7 @@ namespace RapChessGui
 			list[sou].piece = null;
 		}
 
-		public static void MakeMove(int gm)
+		public void MakeMove(int gm)
 		{
 			animated = true;
 			int flags = gm & 0xFF0000;

@@ -416,7 +416,7 @@ namespace RapChessGui
 
 		public void SetPlayer(string name)
 		{
-			CPlayer p = CData.playerList.GetPlayerAuto(name);
+			CPlayer p = CData.playerList.GetPlayer(name);
 			SetPlayer(p);
 		}
 

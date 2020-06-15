@@ -8,15 +8,16 @@ namespace RapChessGui
 	public class CPlayer
 	{
 		public bool tournament = true;
+		public int eloNew = 1000;
+		public int distance = 0;
+		public int position = 0;
+		public double eloOld = 1000;
 		public string name = "";
 		public string engine = "Human";
 		public string book = "None";
 		public string elo = "1000";
-		public double eloOld = 1000;
-		public int eloNew = 1000;
-		public int distance = 0;
-		public int position = 0;
 		public CModeValue modeValue = new CModeValue();
+		public CHisElo hisElo = new CHisElo();
 
 		public CPlayer()
 		{
@@ -54,12 +55,15 @@ namespace RapChessGui
 
 		public void SetPlayer(string name)
 		{
-			CPlayer p = CData.playerList.GetPlayerAuto(name);
-			engine = p.engine;
-			modeValue.mode = p.modeValue.mode;
-			modeValue.value = p.modeValue.value;
-			book = p.book;
-			elo = p.elo;
+			CPlayer p = CData.playerList.GetPlayer(name);
+			if (p != null)
+			{
+				engine = p.engine;
+				modeValue.mode = p.modeValue.mode;
+				modeValue.value = p.modeValue.value;
+				book = p.book;
+				elo = p.elo;
+			}
 		}
 
 		public void LoadFromIni()
@@ -72,6 +76,7 @@ namespace RapChessGui
 			elo = CRapIni.This.Read($"player>{name}>elo",elo);
 			eloNew = CRapIni.This.ReadInt($"player>{name}>eloNew", eloNew);
 			eloOld = CRapIni.This.ReadDouble($"player>{name}>eloOld", eloOld);
+			hisElo.LoadFromStr(CRapIni.This.Read($"player>{name}>history", ""));
 		}
 
 		public void SaveToIni()
@@ -86,6 +91,7 @@ namespace RapChessGui
 			CRapIni.This.Write($"player>{name}>elo", elo);
 			CRapIni.This.Write($"player>{name}>eloNew", eloNew);
 			CRapIni.This.Write($"player>{name}>eloOld", eloOld);
+			CRapIni.This.Write($"player>{name}>history", hisElo.SaveToStr());
 		}
 
 		string MakeShort(string name)
@@ -157,14 +163,6 @@ namespace RapChessGui
 			CPlayer pc = new CPlayer(pe.name);
 			pc.SetPlayer(pe.name);
 			return pc;
-		}
-
-		public CPlayer GetPlayerAuto(string name)
-		{
-			foreach (CPlayer p in list)
-				if (p.name == name)
-					return p;
-			return GetPlayerAuto();
 		}
 
 		CPlayer GetPlayerElo(CPlayer player)

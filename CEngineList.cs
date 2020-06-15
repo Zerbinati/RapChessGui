@@ -9,13 +9,14 @@ namespace RapChessGui
 		public bool tournament = true;
 		public int distance = 0;
 		public int position = 0;
+		public double eloOld = 1000;
 		public string name = "Human";
 		public string file = "";
 		public string protocol = "Uci";
 		public string parameters = "";
 		public string elo = "1000";
-		public double eloOld = 1000;
 		public List<string> options = new List<string>();
+		public CHisElo hisElo = new CHisElo();
 
 		public CEngine(string n)
 		{
@@ -31,6 +32,7 @@ namespace RapChessGui
 			options = CRapIni.This.ReadList($"engine>{name}>options");
 			elo = CRapIni.This.Read($"engine>{name}>elo", "1000");
 			eloOld = CRapIni.This.ReadDouble($"engine>{name}>eloOld",eloOld);
+			hisElo.LoadFromStr(CRapIni.This.Read($"engine>{name}>history", ""));
 		}
 
 		public void SaveToIni()
@@ -42,6 +44,7 @@ namespace RapChessGui
 			CRapIni.This.WriteList($"engine>{name}>options", options);
 			CRapIni.This.Write($"engine>{name}>elo", elo);
 			CRapIni.This.Write($"engine>{name}>eloOld", eloOld);
+			CRapIni.This.Write($"engine>{name}>history", hisElo.SaveToStr());
 		}
 
 		public int GetDeltaElo()

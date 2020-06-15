@@ -2,6 +2,7 @@
 using System.IO;
 using System.Collections.Generic;
 using System.Windows.Forms;
+using System.Windows.Forms.DataVisualization.Charting;
 
 namespace RapChessGui
 {
@@ -39,6 +40,29 @@ namespace RapChessGui
 		public static CEngineList engineList = new CEngineList();
 		public static CPlayerList playerList = new CPlayerList();
 
+		public static string ChartToStr(Chart chart)
+		{
+			string elo = "";
+			int x2 = chart.Series[0].Points.Count;
+			int x1 = x2 > 100 ? x2 - 100 : 0;
+			for (int n = x1; n < x2; n++)
+			{
+				DataPoint p = chart.Series[0].Points[n];
+				double e = p.YValues[0];
+				elo += $",{e}";
+			}
+			elo = elo.Trim(',');
+			return elo;
+		}
+
+		public static void StrToChart(string elo,Chart chart)
+		{
+			chart.Series[0].Points.Clear();
+			string[] his = elo.Split(new[] { ',', '\t' }, StringSplitOptions.RemoveEmptyEntries);
+			foreach (string e in his)
+				chart.Series[0].Points.Add(Convert.ToInt32(e));
+		}
+
 		public static void UpdateFileBook()
 		{
 			fileBook.Clear();
@@ -59,6 +83,44 @@ namespace RapChessGui
 				string fn = Path.GetFileName(filePaths[n]);
 				fileEngine.Add(fn);
 			}
+		}
+
+	}
+
+	public class CHisElo
+	{
+		readonly List<int> list = new List<int>(100);
+
+		public void LoadFromStr(string elo)
+		{
+			list.Clear();
+			string[] his = elo.Split(new[] { ',', '\t' }, StringSplitOptions.RemoveEmptyEntries);
+			foreach (string e in his)
+				Add(Convert.ToInt32(e));
+		}
+
+		public string SaveToStr()
+		{
+			string elo = "";
+			foreach (int e in list)
+				elo += $",{e}";
+			return elo.Trim(',');
+		}
+
+		public void Add(int value)
+		{
+			list.Add(value);
+			int c = list.Count - 100;
+			if (c > 0)
+				list.RemoveRange(0,c);
+		}
+
+		public int Last()
+		{
+			if (list.Count > 0)
+				return list[list.Count - 1];
+			else
+				return 0;
 		}
 
 	}

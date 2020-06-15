@@ -33,7 +33,9 @@
 			System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
 			System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
 			System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+			System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
 			System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
+			System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormChess));
 			this.timer1 = new System.Windows.Forms.Timer(this.components);
 			this.tabControl1 = new System.Windows.Forms.TabControl();
@@ -117,6 +119,7 @@
 			this.labPlayer = new System.Windows.Forms.Label();
 			this.butStartTournament = new System.Windows.Forms.Button();
 			this.tabPageTraining = new System.Windows.Forms.TabPage();
+			this.chartTraining = new System.Windows.Forms.DataVisualization.Charting.Chart();
 			this.tlpTraining = new System.Windows.Forms.TableLayoutPanel();
 			this.label15 = new System.Windows.Forms.Label();
 			this.label14 = new System.Windows.Forms.Label();
@@ -280,6 +283,7 @@
 			this.splitContainerTourP.Panel2.SuspendLayout();
 			this.splitContainerTourP.SuspendLayout();
 			this.tabPageTraining.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.chartTraining)).BeginInit();
 			this.tlpTraining.SuspendLayout();
 			this.tableLayoutPanel3.SuspendLayout();
 			this.groupBox4.SuspendLayout();
@@ -512,6 +516,7 @@
             0,
             0});
 			this.nudValue.ValueChanged += new System.EventHandler(this.nudValue_ValueChanged);
+			this.nudValue.Click += new System.EventHandler(this.nudValue_Click);
 			// 
 			// cbBook
 			// 
@@ -525,6 +530,7 @@
 			this.cbBook.Sorted = true;
 			this.cbBook.TabIndex = 49;
 			this.toolTip1.SetToolTip(this.cbBook, "Select engine book");
+			this.cbBook.Click += new System.EventHandler(this.cbEngine_Click);
 			// 
 			// cbMode
 			// 
@@ -545,6 +551,7 @@
 			this.cbMode.TabIndex = 47;
 			this.toolTip1.SetToolTip(this.cbMode, "Select engine mode");
 			this.cbMode.SelectedIndexChanged += new System.EventHandler(this.cbMode_SelectedIndexChanged);
+			this.cbMode.Click += new System.EventHandler(this.cbEngine_Click);
 			// 
 			// cbEngine
 			// 
@@ -558,6 +565,7 @@
 			this.cbEngine.Sorted = true;
 			this.cbEngine.TabIndex = 46;
 			this.toolTip1.SetToolTip(this.cbEngine, "Select engine");
+			this.cbEngine.Click += new System.EventHandler(this.cbEngine_Click);
 			// 
 			// cbComputer
 			// 
@@ -1412,6 +1420,7 @@
 			// 
 			// tabPageTraining
 			// 
+			this.tabPageTraining.Controls.Add(this.chartTraining);
 			this.tabPageTraining.Controls.Add(this.tlpTraining);
 			this.tabPageTraining.Controls.Add(this.tableLayoutPanel3);
 			this.tabPageTraining.Controls.Add(this.butTraining);
@@ -1424,6 +1433,35 @@
 			this.tabPageTraining.TabIndex = 1;
 			this.tabPageTraining.Text = "Training";
 			this.tabPageTraining.UseVisualStyleBackColor = true;
+			// 
+			// chartTraining
+			// 
+			this.chartTraining.BackColor = System.Drawing.Color.WhiteSmoke;
+			chartArea2.AxisX.LabelStyle.Enabled = false;
+			chartArea2.AxisX.MajorGrid.Enabled = false;
+			chartArea2.AxisX.MajorTickMark.Enabled = false;
+			chartArea2.AxisY.MajorGrid.Enabled = false;
+			chartArea2.AxisY.MajorTickMark.Enabled = false;
+			chartArea2.BackColor = System.Drawing.Color.WhiteSmoke;
+			chartArea2.BorderDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Solid;
+			chartArea2.Name = "ChartArea1";
+			this.chartTraining.ChartAreas.Add(chartArea2);
+			this.chartTraining.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.chartTraining.Location = new System.Drawing.Point(3, 373);
+			this.chartTraining.Name = "chartTraining";
+			this.chartTraining.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.None;
+			this.chartTraining.PaletteCustomColors = new System.Drawing.Color[] {
+        System.Drawing.Color.Olive};
+			series2.BorderWidth = 4;
+			series2.ChartArea = "ChartArea1";
+			series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+			series2.IsVisibleInLegend = false;
+			series2.Name = "Series1";
+			this.chartTraining.Series.Add(series2);
+			this.chartTraining.Size = new System.Drawing.Size(352, 72);
+			this.chartTraining.TabIndex = 29;
+			this.chartTraining.Text = "chart1";
+			this.toolTip1.SetToolTip(this.chartTraining, "Training history");
 			// 
 			// tlpTraining
 			// 
@@ -2705,33 +2743,33 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.chartMain.BackColor = System.Drawing.Color.WhiteSmoke;
 			this.chartMain.BorderlineColor = System.Drawing.Color.Silver;
-			chartArea2.AxisX.IsLabelAutoFit = false;
-			chartArea2.AxisX.MajorGrid.Enabled = false;
-			chartArea2.AxisX.MajorTickMark.Enabled = false;
-			chartArea2.AxisY.IsLabelAutoFit = false;
-			chartArea2.AxisY.MajorGrid.Interval = 5D;
-			chartArea2.AxisY.MajorTickMark.Enabled = false;
-			chartArea2.AxisY.Maximum = 5D;
-			chartArea2.AxisY.Minimum = -5D;
-			chartArea2.BackColor = System.Drawing.Color.WhiteSmoke;
-			chartArea2.BorderDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Solid;
-			chartArea2.Name = "ChartArea1";
-			this.chartMain.ChartAreas.Add(chartArea2);
+			chartArea3.AxisX.IsLabelAutoFit = false;
+			chartArea3.AxisX.MajorGrid.Enabled = false;
+			chartArea3.AxisX.MajorTickMark.Enabled = false;
+			chartArea3.AxisY.IsLabelAutoFit = false;
+			chartArea3.AxisY.MajorGrid.Interval = 5D;
+			chartArea3.AxisY.MajorTickMark.Enabled = false;
+			chartArea3.AxisY.Maximum = 5D;
+			chartArea3.AxisY.Minimum = -5D;
+			chartArea3.BackColor = System.Drawing.Color.WhiteSmoke;
+			chartArea3.BorderDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Solid;
+			chartArea3.Name = "ChartArea1";
+			this.chartMain.ChartAreas.Add(chartArea3);
 			this.chartMain.Location = new System.Drawing.Point(0, 0);
 			this.chartMain.Name = "chartMain";
 			this.chartMain.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.None;
 			this.chartMain.PaletteCustomColors = new System.Drawing.Color[] {
         System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(0))))),
         System.Drawing.Color.Olive};
-			series2.ChartArea = "ChartArea1";
-			series2.CustomProperties = "PointWidth=1";
-			series2.IsVisibleInLegend = false;
-			series2.Name = "Series1";
 			series3.ChartArea = "ChartArea1";
 			series3.CustomProperties = "PointWidth=1";
-			series3.Name = "Series2";
-			this.chartMain.Series.Add(series2);
+			series3.IsVisibleInLegend = false;
+			series3.Name = "Series1";
+			series4.ChartArea = "ChartArea1";
+			series4.CustomProperties = "PointWidth=1";
+			series4.Name = "Series2";
 			this.chartMain.Series.Add(series3);
+			this.chartMain.Series.Add(series4);
 			this.chartMain.Size = new System.Drawing.Size(388, 177);
 			this.chartMain.TabIndex = 0;
 			this.chartMain.Text = "chart1";
@@ -3377,6 +3415,7 @@
 			((System.ComponentModel.ISupportInitialize)(this.splitContainerTourP)).EndInit();
 			this.splitContainerTourP.ResumeLayout(false);
 			this.tabPageTraining.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this.chartTraining)).EndInit();
 			this.tlpTraining.ResumeLayout(false);
 			this.tableLayoutPanel3.ResumeLayout(false);
 			this.groupBox4.ResumeLayout(false);
@@ -3650,6 +3689,7 @@
 		private System.Windows.Forms.ToolStripMenuItem enginesToolStripMenuItem1;
 		private System.Windows.Forms.ToolStripMenuItem gamesToolStripMenuItem;
 		public System.Windows.Forms.DataVisualization.Charting.Chart chartGame;
+		public System.Windows.Forms.DataVisualization.Charting.Chart chartTraining;
 	}
 }
 

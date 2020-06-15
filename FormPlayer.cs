@@ -23,7 +23,7 @@ namespace RapChessGui
 
 		void SelectPlayer(string name)
 		{
-			CPlayer p = CData.playerList.GetPlayerAuto(name);
+			CPlayer p = CData.playerList.GetPlayer(name);
 			if (p == null)
 				return;
 			tbPlayerName.Text = p.name;
