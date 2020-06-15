@@ -291,7 +291,6 @@ namespace RapChessGui
 					CRapLog.Add($"Training time {pl.name} {CChess.whiteTurn}");
 				if ((gl.player.name == "Trained") && ((CData.gameState == CGameState.time) || (CData.gameState == CGameState.error) || gl.timeOut))
 					CModeTraining.errors++;
-				This.chartTraining.Series[0].Points.Add((double)This.nudTeacher.Value);
 				This.TrainingShow();
 			}
 			This.timerStart.Start();
@@ -1864,6 +1863,7 @@ namespace RapChessGui
 				GamerList.Rotate();
 			CModeTraining.rotate = !CModeTraining.rotate;
 			Clear();
+			chartTraining.Series[0].Points.Add((double)nudTeacher.Value);
 			CModeTraining.SaveToIni();
 		}
 
