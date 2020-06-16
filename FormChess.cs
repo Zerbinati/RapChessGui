@@ -167,7 +167,6 @@ namespace RapChessGui
 				else
 					CModeMatch.draw++;
 				CModeMatch.SaveToIni();
-				This.MatchShow();
 			}
 			if (CData.gameMode == CMode.tourE)
 			{
@@ -285,7 +284,6 @@ namespace RapChessGui
 					CRapLog.Add($"Training time {pl.name} {CChess.whiteTurn}");
 				if ((gl.player.name == "Trained") && ((CData.gameState == CGameState.time) || (CData.gameState == CGameState.error) || gl.timeOut))
 					CModeTraining.errors++;
-				This.TrainingShow();
 			}
 			This.timerStart.Start();
 		}
@@ -1540,11 +1538,10 @@ namespace RapChessGui
 
 		void GameStart()
 		{
+			GameShow();
 			CData.fen = CChess.defFen;
 			CModeGame.color = cbColor.Text;
 			CModeGame.computer = cbComputer.Text;
-			CModeGame.ranked = IsAutoElo();
-			ShowAutoElo();
 			ShowAuto();
 			SetMode(CMode.game);
 			GamePrepare();
@@ -1573,6 +1570,7 @@ namespace RapChessGui
 
 		void GameShow()
 		{
+			CModeGame.ranked = IsAutoElo();
 			ShowAutoElo();
 		}
 
@@ -1841,6 +1839,7 @@ namespace RapChessGui
 
 		void TraingStart()
 		{
+			TrainingShow();
 			CData.fen = CChess.defFen;
 			CModeTraining.teacher = cbTeacherEngine.Text;
 			CModeTraining.trained = cbTrainedEngine.Text;
@@ -1906,6 +1905,26 @@ namespace RapChessGui
 			}
 		}
 
+		private void TimerStart_Tick(object sender, EventArgs e)
+		{
+			timerStart.Stop();
+			switch (CData.gameMode)
+			{
+				case CMode.match:
+					MatchStart();
+					break;
+				case CMode.tourE:
+					TournamentEStart();
+					break;
+				case CMode.tourP:
+					TournamentPStart();
+					break;
+				case CMode.training:
+					TraingStart();
+					break;
+			}
+		}
+
 		private void ButStart_Click(object sender, EventArgs e)
 		{
 			GameStart();
@@ -1933,26 +1952,6 @@ namespace RapChessGui
 			CModeTraining.Reset();
 			chartTraining.Series[0].Points.Clear();
 			TraingStart();
-		}
-
-		private void TimerStart_Tick(object sender, EventArgs e)
-		{
-			timerStart.Stop();
-			switch (CData.gameMode)
-			{
-				case CMode.match:
-					MatchStart();
-					break;
-				case CMode.tourE:
-					TournamentEStart();
-					break;
-				case CMode.tourP:
-					TournamentPStart();
-					break;
-				case CMode.training:
-					TraingStart();
-					break;
-			}
 		}
 
 		private void saveToClipboardToolStripMenuItem_Click(object sender, EventArgs e)
