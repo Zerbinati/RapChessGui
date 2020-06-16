@@ -54,11 +54,18 @@ namespace RapChessGui
 			return moveList[moveList.Count - 1];
 		}
 
-		public static string LastMove()
+		public static string LastNotation()
 		{
 			if (moveList.Count == 0)
 				return "";
 			return moveList[moveList.Count - 1].GetNotation();
+		}
+
+		public static string LastUci()
+		{
+			if (moveList.Count == 0)
+				return "";
+			return moveList[moveList.Count - 1].emo;
 		}
 
 		public static void NewGame(string f = CChess.defFen)

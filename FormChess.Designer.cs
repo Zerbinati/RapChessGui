@@ -31,14 +31,14 @@
 			this.components = new System.ComponentModel.Container();
 			System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
 			System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+			System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+			System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+			System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
 			System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
 			System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
 			System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
 			System.Windows.Forms.DataVisualization.Charting.Series series5 = new System.Windows.Forms.DataVisualization.Charting.Series();
 			System.Windows.Forms.DataVisualization.Charting.Series series6 = new System.Windows.Forms.DataVisualization.Charting.Series();
-			System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-			System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
-			System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormChess));
 			this.timer1 = new System.Windows.Forms.Timer(this.components);
 			this.tabControl1 = new System.Windows.Forms.TabControl();
@@ -61,6 +61,7 @@
 			this.labBack = new System.Windows.Forms.Label();
 			this.cbColor = new System.Windows.Forms.ComboBox();
 			this.tabPageMatch = new System.Windows.Forms.TabPage();
+			this.chartMatch = new System.Windows.Forms.DataVisualization.Charting.Chart();
 			this.tlpMatch = new System.Windows.Forms.TableLayoutPanel();
 			this.labMatch24 = new System.Windows.Forms.Label();
 			this.labMatch23 = new System.Windows.Forms.Label();
@@ -260,7 +261,6 @@
 			this.columnHeader21 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeader22 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.tlpBlack = new System.Windows.Forms.TableLayoutPanel();
-			this.chartMatch = new System.Windows.Forms.DataVisualization.Charting.Chart();
 			this.tabControl1.SuspendLayout();
 			this.tabPageGame.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.chartGame)).BeginInit();
@@ -268,6 +268,7 @@
 			((System.ComponentModel.ISupportInitialize)(this.nudValue)).BeginInit();
 			this.groupBox1.SuspendLayout();
 			this.tabPageMatch.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.chartMatch)).BeginInit();
 			this.tlpMatch.SuspendLayout();
 			this.groupBox6.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.nudValue2)).BeginInit();
@@ -332,7 +333,6 @@
 			this.splitContainerMoves.SuspendLayout();
 			this.tlpWhite.SuspendLayout();
 			this.tlpBlack.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.chartMatch)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// timer1
@@ -659,6 +659,42 @@
 			this.tabPageMatch.TabIndex = 2;
 			this.tabPageMatch.Text = "Match";
 			this.tabPageMatch.UseVisualStyleBackColor = true;
+			// 
+			// chartMatch
+			// 
+			this.chartMatch.BackColor = System.Drawing.Color.WhiteSmoke;
+			chartArea2.AxisX.LabelStyle.Enabled = false;
+			chartArea2.AxisX.MajorGrid.Enabled = false;
+			chartArea2.AxisX.MajorTickMark.Enabled = false;
+			chartArea2.AxisY.MajorGrid.Enabled = false;
+			chartArea2.AxisY.MajorTickMark.Enabled = false;
+			chartArea2.BackColor = System.Drawing.Color.WhiteSmoke;
+			chartArea2.BorderDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Solid;
+			chartArea2.Name = "ChartArea1";
+			this.chartMatch.ChartAreas.Add(chartArea2);
+			this.chartMatch.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.chartMatch.Location = new System.Drawing.Point(0, 386);
+			this.chartMatch.Name = "chartMatch";
+			this.chartMatch.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.None;
+			this.chartMatch.PaletteCustomColors = new System.Drawing.Color[] {
+        System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(0))))),
+        System.Drawing.Color.Olive};
+			series2.BorderWidth = 4;
+			series2.ChartArea = "ChartArea1";
+			series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+			series2.IsVisibleInLegend = false;
+			series2.Name = "Series1";
+			series3.BorderWidth = 4;
+			series3.ChartArea = "ChartArea1";
+			series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+			series3.IsVisibleInLegend = false;
+			series3.Name = "Series2";
+			this.chartMatch.Series.Add(series2);
+			this.chartMatch.Series.Add(series3);
+			this.chartMatch.Size = new System.Drawing.Size(358, 62);
+			this.chartMatch.TabIndex = 29;
+			this.chartMatch.Text = "chart1";
+			this.toolTip1.SetToolTip(this.chartMatch, "User progress history");
 			// 
 			// tlpMatch
 			// 
@@ -3377,42 +3413,6 @@
 			this.tlpBlack.Size = new System.Drawing.Size(1180, 24);
 			this.tlpBlack.TabIndex = 35;
 			// 
-			// chartMatch
-			// 
-			this.chartMatch.BackColor = System.Drawing.Color.WhiteSmoke;
-			chartArea2.AxisX.LabelStyle.Enabled = false;
-			chartArea2.AxisX.MajorGrid.Enabled = false;
-			chartArea2.AxisX.MajorTickMark.Enabled = false;
-			chartArea2.AxisY.MajorGrid.Enabled = false;
-			chartArea2.AxisY.MajorTickMark.Enabled = false;
-			chartArea2.BackColor = System.Drawing.Color.WhiteSmoke;
-			chartArea2.BorderDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Solid;
-			chartArea2.Name = "ChartArea1";
-			this.chartMatch.ChartAreas.Add(chartArea2);
-			this.chartMatch.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.chartMatch.Location = new System.Drawing.Point(0, 386);
-			this.chartMatch.Name = "chartMatch";
-			this.chartMatch.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.None;
-			this.chartMatch.PaletteCustomColors = new System.Drawing.Color[] {
-        System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(0))))),
-        System.Drawing.Color.Olive};
-			series2.BorderWidth = 4;
-			series2.ChartArea = "ChartArea1";
-			series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-			series2.IsVisibleInLegend = false;
-			series2.Name = "Series1";
-			series3.BorderWidth = 4;
-			series3.ChartArea = "ChartArea1";
-			series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-			series3.IsVisibleInLegend = false;
-			series3.Name = "Series2";
-			this.chartMatch.Series.Add(series2);
-			this.chartMatch.Series.Add(series3);
-			this.chartMatch.Size = new System.Drawing.Size(358, 62);
-			this.chartMatch.TabIndex = 29;
-			this.chartMatch.Text = "chart1";
-			this.toolTip1.SetToolTip(this.chartMatch, "User progress history");
-			// 
 			// FormChess
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -3437,6 +3437,7 @@
 			((System.ComponentModel.ISupportInitialize)(this.nudValue)).EndInit();
 			this.groupBox1.ResumeLayout(false);
 			this.tabPageMatch.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this.chartMatch)).EndInit();
 			this.tlpMatch.ResumeLayout(false);
 			this.groupBox6.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.nudValue2)).EndInit();
@@ -3505,7 +3506,6 @@
 			this.splitContainerMoves.ResumeLayout(false);
 			this.tlpWhite.ResumeLayout(false);
 			this.tlpBlack.ResumeLayout(false);
-			((System.ComponentModel.ISupportInitialize)(this.chartMatch)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 

@@ -40,29 +40,6 @@ namespace RapChessGui
 		public static CEngineList engineList = new CEngineList();
 		public static CPlayerList playerList = new CPlayerList();
 
-		public static string ChartToStr(Chart chart)
-		{
-			string elo = "";
-			int x2 = chart.Series[0].Points.Count;
-			int x1 = x2 > 100 ? x2 - 100 : 0;
-			for (int n = x1; n < x2; n++)
-			{
-				DataPoint p = chart.Series[0].Points[n];
-				double e = p.YValues[0];
-				elo += $",{e}";
-			}
-			elo = elo.Trim(',');
-			return elo;
-		}
-
-		public static void StrToChart(string elo,Chart chart)
-		{
-			chart.Series[0].Points.Clear();
-			string[] his = elo.Split(new[] { ',', '\t' }, StringSplitOptions.RemoveEmptyEntries);
-			foreach (string e in his)
-				chart.Series[0].Points.Add(Convert.ToInt32(e));
-		}
-
 		public static void HisToPoints(CHisElo he, DataPointCollection po)
 		{
 			po.Clear();

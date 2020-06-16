@@ -466,7 +466,7 @@ namespace RapChessGui
 			CModeTournamentP.LoadFromIni();
 			CModeTraining.LoadFromIni();
 			CPlayer player = CData.playerList.GetPlayer("Human");
-			CData.StrToChart(player.hisElo.SaveToStr(), chartGame);
+			CData.HisToPoints(player.hisElo,chartGame.Series[0].Points);
 		}
 
 		public void BoardPrepare()
@@ -856,8 +856,8 @@ namespace RapChessGui
 			}
 			if (result)
 			{
+				hu.hisElo.Add(hu.eloNew);
 				chartGame.Series[0].Points.Add(hu.eloNew);
-				hu.hisElo.LoadFromStr(CData.ChartToStr(chartGame));
 			}
 			hu.elo = hu.eloNew.ToString();
 			hu.SaveToIni();
@@ -1044,7 +1044,7 @@ namespace RapChessGui
 			Board.MakeMove(gmo);
 			Chess.MakeMove(emo, out int piece);
 			CHistory.AddMove(piece, gmo, emo, san);
-			MoveToLvMoves(CHistory.moveList.Count - 1, piece, CHistory.LastMove());
+			MoveToLvMoves(CHistory.moveList.Count - 1, piece, CHistory.LastNotation());
 			CEco eco = EcoList.GetEco(Chess.GetEpd());
 			if (eco != null)
 			{
@@ -1389,7 +1389,7 @@ namespace RapChessGui
 			Chess.InitializeFromFen(CHistory.fen);
 			foreach (CHisMove m in CHistory.moveList)
 				Chess.MakeMove(m.emo);
-			CChess.EmoToSD(CHistory.LastMove(), out CDrag.lastSou, out CDrag.lastDes);
+			CChess.EmoToSD(CHistory.LastUci(), out CDrag.lastSou, out CDrag.lastDes);
 			CBoard.Fill();
 			ShowHistory();
 		}
