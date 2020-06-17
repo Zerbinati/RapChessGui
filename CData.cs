@@ -43,8 +43,9 @@ namespace RapChessGui
 		public static void HisToPoints(CHisElo he, DataPointCollection po)
 		{
 			po.Clear();
+			int x = 100 - he.list.Count;
 			foreach (int i in he.list)
-				po.Add(i);
+				po.AddXY(x++,i);
 		}
 
 		public static void UpdateFileBook()
