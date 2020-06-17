@@ -59,10 +59,11 @@ namespace RapChessGui
 			if (p != null)
 			{
 				engine = p.engine;
-				modeValue.mode = p.modeValue.mode;
-				modeValue.value = p.modeValue.value;
 				book = p.book;
 				elo = p.elo;
+				modeValue.mode = p.modeValue.mode;
+				modeValue.value = p.modeValue.value;
+				hisElo.Assign(p.hisElo);
 			}
 		}
 
@@ -77,6 +78,8 @@ namespace RapChessGui
 			eloNew = CRapIni.This.ReadInt($"player>{name}>eloNew", eloNew);
 			eloOld = CRapIni.This.ReadDouble($"player>{name}>eloOld", eloOld);
 			hisElo.LoadFromStr(CRapIni.This.Read($"player>{name}>history", ""));
+			if (hisElo.list.Count == 0)
+				hisElo.Add(Convert.ToDouble(elo));
 		}
 
 		public void SaveToIni()

@@ -6,14 +6,14 @@ namespace RapChessGui
 	{
 		public int piece;
 		public int gmo;
-		public string emo;
+		public string umo;
 		public string san;
 
-		public CHisMove(int piece, int gmo, string emo, string san)
+		public CHisMove(int piece, int gmo, string umo, string san)
 		{
 			this.piece = piece;
 			this.gmo = gmo;
-			this.emo = emo;
+			this.umo = umo;
 			this.san = san;
 		}
 
@@ -22,7 +22,7 @@ namespace RapChessGui
 			if (FormOptions.This.rbSan.Checked)
 				return san;
 			else
-				return emo;
+				return umo;
 		}
 
 	}
@@ -61,11 +61,11 @@ namespace RapChessGui
 			return moveList[moveList.Count - 1].GetNotation();
 		}
 
-		public static string LastUci()
+		public static string LastUmo()
 		{
 			if (moveList.Count == 0)
 				return "";
-			return moveList[moveList.Count - 1].emo;
+			return moveList[moveList.Count - 1].umo;
 		}
 
 		public static void NewGame(string f = CChess.defFen)
@@ -78,7 +78,7 @@ namespace RapChessGui
 		{
 			string result = "";
 			foreach (CHisMove m in moveList)
-				result += $" {m.emo}";
+				result += $" {m.umo}";
 			return result.Trim();
 		}
 

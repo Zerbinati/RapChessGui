@@ -73,7 +73,12 @@ namespace RapChessGui
 
 	public class CHisElo
 	{
-		readonly public List<double> list = new List<double>(100);
+		public List<double> list = new List<double>(100);
+
+		public void Assign(CHisElo he)
+		{
+			list = new List<double>(he.list);
+		}
 
 		public void LoadFromStr(string elo)
 		{

@@ -36,9 +36,15 @@
 			System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
 			System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
 			System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
-			System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
 			System.Windows.Forms.DataVisualization.Charting.Series series5 = new System.Windows.Forms.DataVisualization.Charting.Series();
+			System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
 			System.Windows.Forms.DataVisualization.Charting.Series series6 = new System.Windows.Forms.DataVisualization.Charting.Series();
+			System.Windows.Forms.DataVisualization.Charting.Series series7 = new System.Windows.Forms.DataVisualization.Charting.Series();
+			System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea5 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+			System.Windows.Forms.DataVisualization.Charting.Series series8 = new System.Windows.Forms.DataVisualization.Charting.Series();
+			System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea6 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+			System.Windows.Forms.DataVisualization.Charting.Series series9 = new System.Windows.Forms.DataVisualization.Charting.Series();
+			System.Windows.Forms.DataVisualization.Charting.Series series10 = new System.Windows.Forms.DataVisualization.Charting.Series();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormChess));
 			this.timer1 = new System.Windows.Forms.Timer(this.components);
 			this.tabControl1 = new System.Windows.Forms.TabControl();
@@ -93,6 +99,7 @@
 			this.cbEngine1 = new System.Windows.Forms.ComboBox();
 			this.tabPageTourE = new System.Windows.Forms.TabPage();
 			this.splitContainerTourE = new System.Windows.Forms.SplitContainer();
+			this.scTournemnetEList = new System.Windows.Forms.SplitContainer();
 			this.lvEngine = new System.Windows.Forms.ListView();
 			this.columnHeader23 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeader24 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -103,6 +110,7 @@
 			this.columnHeader28 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeader29 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.labEngine = new System.Windows.Forms.Label();
+			this.chartTournamentE = new System.Windows.Forms.DataVisualization.Charting.Chart();
 			this.groupBox9 = new System.Windows.Forms.GroupBox();
 			this.cbTourEBook = new System.Windows.Forms.ComboBox();
 			this.groupBox8 = new System.Windows.Forms.GroupBox();
@@ -111,6 +119,7 @@
 			this.button1 = new System.Windows.Forms.Button();
 			this.tabPageTourP = new System.Windows.Forms.TabPage();
 			this.splitContainerTourP = new System.Windows.Forms.SplitContainer();
+			this.scTournamentPList = new System.Windows.Forms.SplitContainer();
 			this.lvPlayer = new System.Windows.Forms.ListView();
 			this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -121,6 +130,7 @@
 			this.columnHeader8 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeader10 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.labPlayer = new System.Windows.Forms.Label();
+			this.chartTournamentP = new System.Windows.Forms.DataVisualization.Charting.Chart();
 			this.butStartTournament = new System.Windows.Forms.Button();
 			this.tabPageTraining = new System.Windows.Forms.TabPage();
 			this.chartTraining = new System.Windows.Forms.DataVisualization.Charting.Chart();
@@ -279,6 +289,11 @@
 			this.splitContainerTourE.Panel1.SuspendLayout();
 			this.splitContainerTourE.Panel2.SuspendLayout();
 			this.splitContainerTourE.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.scTournemnetEList)).BeginInit();
+			this.scTournemnetEList.Panel1.SuspendLayout();
+			this.scTournemnetEList.Panel2.SuspendLayout();
+			this.scTournemnetEList.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.chartTournamentE)).BeginInit();
 			this.groupBox9.SuspendLayout();
 			this.groupBox8.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.nudTourE)).BeginInit();
@@ -287,6 +302,11 @@
 			this.splitContainerTourP.Panel1.SuspendLayout();
 			this.splitContainerTourP.Panel2.SuspendLayout();
 			this.splitContainerTourP.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.scTournamentPList)).BeginInit();
+			this.scTournamentPList.Panel1.SuspendLayout();
+			this.scTournamentPList.Panel2.SuspendLayout();
+			this.scTournamentPList.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.chartTournamentP)).BeginInit();
 			this.tabPageTraining.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.chartTraining)).BeginInit();
 			this.tlpTraining.SuspendLayout();
@@ -1130,15 +1150,34 @@
 			// 
 			// splitContainerTourE.Panel1
 			// 
-			this.splitContainerTourE.Panel1.Controls.Add(this.lvEngine);
+			this.splitContainerTourE.Panel1.Controls.Add(this.scTournemnetEList);
 			// 
 			// splitContainerTourE.Panel2
 			// 
-			this.splitContainerTourE.Panel2.Controls.Add(this.lvEngineH);
-			this.splitContainerTourE.Panel2.Controls.Add(this.labEngine);
+			this.splitContainerTourE.Panel2.Controls.Add(this.chartTournamentE);
 			this.splitContainerTourE.Size = new System.Drawing.Size(352, 314);
 			this.splitContainerTourE.SplitterDistance = 197;
 			this.splitContainerTourE.TabIndex = 27;
+			// 
+			// scTournemnetEList
+			// 
+			this.scTournemnetEList.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+			this.scTournemnetEList.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.scTournemnetEList.Location = new System.Drawing.Point(0, 0);
+			this.scTournemnetEList.Name = "scTournemnetEList";
+			this.scTournemnetEList.Orientation = System.Windows.Forms.Orientation.Horizontal;
+			// 
+			// scTournemnetEList.Panel1
+			// 
+			this.scTournemnetEList.Panel1.Controls.Add(this.lvEngine);
+			// 
+			// scTournemnetEList.Panel2
+			// 
+			this.scTournemnetEList.Panel2.Controls.Add(this.lvEngineH);
+			this.scTournemnetEList.Panel2.Controls.Add(this.labEngine);
+			this.scTournemnetEList.Size = new System.Drawing.Size(352, 197);
+			this.scTournemnetEList.SplitterDistance = 98;
+			this.scTournemnetEList.TabIndex = 24;
 			// 
 			// lvEngine
 			// 
@@ -1154,14 +1193,14 @@
 			this.lvEngine.MultiSelect = false;
 			this.lvEngine.Name = "lvEngine";
 			this.lvEngine.ShowGroups = false;
-			this.lvEngine.Size = new System.Drawing.Size(348, 193);
+			this.lvEngine.Size = new System.Drawing.Size(348, 94);
 			this.lvEngine.Sorting = System.Windows.Forms.SortOrder.Descending;
-			this.lvEngine.TabIndex = 23;
+			this.lvEngine.TabIndex = 24;
 			this.lvEngine.UseCompatibleStateImageBehavior = false;
 			this.lvEngine.View = System.Windows.Forms.View.Details;
 			this.lvEngine.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.lv_ColumnClick);
 			this.lvEngine.SelectedIndexChanged += new System.EventHandler(this.lvEngine_SelectedIndexChanged);
-			this.lvEngine.Resize += new System.EventHandler(this.listView1_Resize);
+			this.lvEngine.Resize += new System.EventHandler(this.lvEngine_Resize);
 			// 
 			// columnHeader23
 			// 
@@ -1196,12 +1235,12 @@
 			this.lvEngineH.MultiSelect = false;
 			this.lvEngineH.Name = "lvEngineH";
 			this.lvEngineH.ShowGroups = false;
-			this.lvEngineH.Size = new System.Drawing.Size(348, 96);
-			this.lvEngineH.TabIndex = 27;
+			this.lvEngineH.Size = new System.Drawing.Size(348, 78);
+			this.lvEngineH.TabIndex = 28;
 			this.lvEngineH.UseCompatibleStateImageBehavior = false;
 			this.lvEngineH.View = System.Windows.Forms.View.Details;
 			this.lvEngineH.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.lv_ColumnClick);
-			this.lvEngineH.Resize += new System.EventHandler(this.listView2_Resize);
+			this.lvEngineH.Resize += new System.EventHandler(this.lvEngineH_Resize);
 			// 
 			// columnHeader26
 			// 
@@ -1233,8 +1272,45 @@
 			this.labEngine.Location = new System.Drawing.Point(0, 0);
 			this.labEngine.Name = "labEngine";
 			this.labEngine.Size = new System.Drawing.Size(348, 13);
-			this.labEngine.TabIndex = 26;
+			this.labEngine.TabIndex = 29;
 			this.labEngine.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			// 
+			// chartTournamentE
+			// 
+			this.chartTournamentE.BackColor = System.Drawing.Color.WhiteSmoke;
+			chartArea3.AxisX.LabelStyle.Enabled = false;
+			chartArea3.AxisX.MajorGrid.Enabled = false;
+			chartArea3.AxisX.MajorTickMark.Enabled = false;
+			chartArea3.AxisY.IsStartedFromZero = false;
+			chartArea3.AxisY.MajorGrid.Enabled = false;
+			chartArea3.AxisY.MajorTickMark.Enabled = false;
+			chartArea3.BackColor = System.Drawing.Color.WhiteSmoke;
+			chartArea3.BorderDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Solid;
+			chartArea3.Name = "ChartArea1";
+			this.chartTournamentE.ChartAreas.Add(chartArea3);
+			this.chartTournamentE.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.chartTournamentE.Location = new System.Drawing.Point(0, 0);
+			this.chartTournamentE.Name = "chartTournamentE";
+			this.chartTournamentE.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.None;
+			this.chartTournamentE.PaletteCustomColors = new System.Drawing.Color[] {
+        System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(0))))),
+        System.Drawing.Color.Olive};
+			series4.BorderWidth = 4;
+			series4.ChartArea = "ChartArea1";
+			series4.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+			series4.IsVisibleInLegend = false;
+			series4.Name = "Series1";
+			series5.BorderWidth = 4;
+			series5.ChartArea = "ChartArea1";
+			series5.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+			series5.IsVisibleInLegend = false;
+			series5.Name = "Series2";
+			this.chartTournamentE.Series.Add(series4);
+			this.chartTournamentE.Series.Add(series5);
+			this.chartTournamentE.Size = new System.Drawing.Size(348, 109);
+			this.chartTournamentE.TabIndex = 30;
+			this.chartTournamentE.Text = "chart1";
+			this.toolTip1.SetToolTip(this.chartTournamentE, "User progress history");
 			// 
 			// groupBox9
 			// 
@@ -1342,15 +1418,34 @@
 			// 
 			// splitContainerTourP.Panel1
 			// 
-			this.splitContainerTourP.Panel1.Controls.Add(this.lvPlayer);
+			this.splitContainerTourP.Panel1.Controls.Add(this.scTournamentPList);
 			// 
 			// splitContainerTourP.Panel2
 			// 
-			this.splitContainerTourP.Panel2.Controls.Add(this.lvPlayerH);
-			this.splitContainerTourP.Panel2.Controls.Add(this.labPlayer);
+			this.splitContainerTourP.Panel2.Controls.Add(this.chartTournamentP);
 			this.splitContainerTourP.Size = new System.Drawing.Size(358, 425);
 			this.splitContainerTourP.SplitterDistance = 279;
 			this.splitContainerTourP.TabIndex = 26;
+			// 
+			// scTournamentPList
+			// 
+			this.scTournamentPList.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+			this.scTournamentPList.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.scTournamentPList.Location = new System.Drawing.Point(0, 0);
+			this.scTournamentPList.Name = "scTournamentPList";
+			this.scTournamentPList.Orientation = System.Windows.Forms.Orientation.Horizontal;
+			// 
+			// scTournamentPList.Panel1
+			// 
+			this.scTournamentPList.Panel1.Controls.Add(this.lvPlayer);
+			// 
+			// scTournamentPList.Panel2
+			// 
+			this.scTournamentPList.Panel2.Controls.Add(this.lvPlayerH);
+			this.scTournamentPList.Panel2.Controls.Add(this.labPlayer);
+			this.scTournamentPList.Size = new System.Drawing.Size(358, 279);
+			this.scTournamentPList.SplitterDistance = 166;
+			this.scTournamentPList.TabIndex = 24;
 			// 
 			// lvPlayer
 			// 
@@ -1366,14 +1461,14 @@
 			this.lvPlayer.MultiSelect = false;
 			this.lvPlayer.Name = "lvPlayer";
 			this.lvPlayer.ShowGroups = false;
-			this.lvPlayer.Size = new System.Drawing.Size(354, 275);
+			this.lvPlayer.Size = new System.Drawing.Size(354, 162);
 			this.lvPlayer.Sorting = System.Windows.Forms.SortOrder.Ascending;
-			this.lvPlayer.TabIndex = 23;
+			this.lvPlayer.TabIndex = 24;
 			this.lvPlayer.UseCompatibleStateImageBehavior = false;
 			this.lvPlayer.View = System.Windows.Forms.View.Details;
 			this.lvPlayer.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.lv_ColumnClick);
-			this.lvPlayer.SelectedIndexChanged += new System.EventHandler(this.listView1_SelectedIndexChanged);
-			this.lvPlayer.Resize += new System.EventHandler(this.listView1_Resize);
+			this.lvPlayer.SelectedIndexChanged += new System.EventHandler(this.lvPlayer_SelectedIndexChanged);
+			this.lvPlayer.Resize += new System.EventHandler(this.lvEngine_Resize);
 			// 
 			// columnHeader1
 			// 
@@ -1408,12 +1503,12 @@
 			this.lvPlayerH.MultiSelect = false;
 			this.lvPlayerH.Name = "lvPlayerH";
 			this.lvPlayerH.ShowGroups = false;
-			this.lvPlayerH.Size = new System.Drawing.Size(354, 125);
-			this.lvPlayerH.TabIndex = 27;
+			this.lvPlayerH.Size = new System.Drawing.Size(354, 92);
+			this.lvPlayerH.TabIndex = 28;
 			this.lvPlayerH.UseCompatibleStateImageBehavior = false;
 			this.lvPlayerH.View = System.Windows.Forms.View.Details;
 			this.lvPlayerH.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.lv_ColumnClick);
-			this.lvPlayerH.Resize += new System.EventHandler(this.listView2_Resize);
+			this.lvPlayerH.Resize += new System.EventHandler(this.lvEngineH_Resize);
 			// 
 			// columnHeader7
 			// 
@@ -1445,8 +1540,45 @@
 			this.labPlayer.Location = new System.Drawing.Point(0, 0);
 			this.labPlayer.Name = "labPlayer";
 			this.labPlayer.Size = new System.Drawing.Size(354, 13);
-			this.labPlayer.TabIndex = 26;
+			this.labPlayer.TabIndex = 27;
 			this.labPlayer.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			// 
+			// chartTournamentP
+			// 
+			this.chartTournamentP.BackColor = System.Drawing.Color.WhiteSmoke;
+			chartArea4.AxisX.LabelStyle.Enabled = false;
+			chartArea4.AxisX.MajorGrid.Enabled = false;
+			chartArea4.AxisX.MajorTickMark.Enabled = false;
+			chartArea4.AxisY.IsStartedFromZero = false;
+			chartArea4.AxisY.MajorGrid.Enabled = false;
+			chartArea4.AxisY.MajorTickMark.Enabled = false;
+			chartArea4.BackColor = System.Drawing.Color.WhiteSmoke;
+			chartArea4.BorderDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Solid;
+			chartArea4.Name = "ChartArea1";
+			this.chartTournamentP.ChartAreas.Add(chartArea4);
+			this.chartTournamentP.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.chartTournamentP.Location = new System.Drawing.Point(0, 0);
+			this.chartTournamentP.Name = "chartTournamentP";
+			this.chartTournamentP.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.None;
+			this.chartTournamentP.PaletteCustomColors = new System.Drawing.Color[] {
+        System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(0))))),
+        System.Drawing.Color.Olive};
+			series6.BorderWidth = 4;
+			series6.ChartArea = "ChartArea1";
+			series6.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+			series6.IsVisibleInLegend = false;
+			series6.Name = "Series1";
+			series7.BorderWidth = 4;
+			series7.ChartArea = "ChartArea1";
+			series7.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+			series7.IsVisibleInLegend = false;
+			series7.Name = "Series2";
+			this.chartTournamentP.Series.Add(series6);
+			this.chartTournamentP.Series.Add(series7);
+			this.chartTournamentP.Size = new System.Drawing.Size(354, 138);
+			this.chartTournamentP.TabIndex = 31;
+			this.chartTournamentP.Text = "chart1";
+			this.toolTip1.SetToolTip(this.chartTournamentP, "User progress history");
 			// 
 			// butStartTournament
 			// 
@@ -1479,27 +1611,27 @@
 			// chartTraining
 			// 
 			this.chartTraining.BackColor = System.Drawing.Color.WhiteSmoke;
-			chartArea3.AxisX.LabelStyle.Enabled = false;
-			chartArea3.AxisX.MajorGrid.Enabled = false;
-			chartArea3.AxisX.MajorTickMark.Enabled = false;
-			chartArea3.AxisY.MajorGrid.Enabled = false;
-			chartArea3.AxisY.MajorTickMark.Enabled = false;
-			chartArea3.BackColor = System.Drawing.Color.WhiteSmoke;
-			chartArea3.BorderDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Solid;
-			chartArea3.Name = "ChartArea1";
-			this.chartTraining.ChartAreas.Add(chartArea3);
+			chartArea5.AxisX.LabelStyle.Enabled = false;
+			chartArea5.AxisX.MajorGrid.Enabled = false;
+			chartArea5.AxisX.MajorTickMark.Enabled = false;
+			chartArea5.AxisY.MajorGrid.Enabled = false;
+			chartArea5.AxisY.MajorTickMark.Enabled = false;
+			chartArea5.BackColor = System.Drawing.Color.WhiteSmoke;
+			chartArea5.BorderDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Solid;
+			chartArea5.Name = "ChartArea1";
+			this.chartTraining.ChartAreas.Add(chartArea5);
 			this.chartTraining.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.chartTraining.Location = new System.Drawing.Point(3, 373);
 			this.chartTraining.Name = "chartTraining";
 			this.chartTraining.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.None;
 			this.chartTraining.PaletteCustomColors = new System.Drawing.Color[] {
         System.Drawing.Color.Olive};
-			series4.BorderWidth = 4;
-			series4.ChartArea = "ChartArea1";
-			series4.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-			series4.IsVisibleInLegend = false;
-			series4.Name = "Series1";
-			this.chartTraining.Series.Add(series4);
+			series8.BorderWidth = 4;
+			series8.ChartArea = "ChartArea1";
+			series8.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+			series8.IsVisibleInLegend = false;
+			series8.Name = "Series1";
+			this.chartTraining.Series.Add(series8);
 			this.chartTraining.Size = new System.Drawing.Size(352, 72);
 			this.chartTraining.TabIndex = 29;
 			this.chartTraining.Text = "chart1";
@@ -2784,33 +2916,33 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.chartMain.BackColor = System.Drawing.Color.WhiteSmoke;
-			chartArea4.AxisX.IsLabelAutoFit = false;
-			chartArea4.AxisX.MajorGrid.Enabled = false;
-			chartArea4.AxisX.MajorTickMark.Enabled = false;
-			chartArea4.AxisY.IsLabelAutoFit = false;
-			chartArea4.AxisY.MajorGrid.Interval = 5D;
-			chartArea4.AxisY.MajorTickMark.Enabled = false;
-			chartArea4.AxisY.Maximum = 5D;
-			chartArea4.AxisY.Minimum = -5D;
-			chartArea4.BackColor = System.Drawing.Color.WhiteSmoke;
-			chartArea4.BorderDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Solid;
-			chartArea4.Name = "ChartArea1";
-			this.chartMain.ChartAreas.Add(chartArea4);
+			chartArea6.AxisX.IsLabelAutoFit = false;
+			chartArea6.AxisX.MajorGrid.Enabled = false;
+			chartArea6.AxisX.MajorTickMark.Enabled = false;
+			chartArea6.AxisY.IsLabelAutoFit = false;
+			chartArea6.AxisY.MajorGrid.Interval = 5D;
+			chartArea6.AxisY.MajorTickMark.Enabled = false;
+			chartArea6.AxisY.Maximum = 5D;
+			chartArea6.AxisY.Minimum = -5D;
+			chartArea6.BackColor = System.Drawing.Color.WhiteSmoke;
+			chartArea6.BorderDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Solid;
+			chartArea6.Name = "ChartArea1";
+			this.chartMain.ChartAreas.Add(chartArea6);
 			this.chartMain.Location = new System.Drawing.Point(0, 0);
 			this.chartMain.Name = "chartMain";
 			this.chartMain.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.None;
 			this.chartMain.PaletteCustomColors = new System.Drawing.Color[] {
         System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(0))))),
         System.Drawing.Color.Olive};
-			series5.ChartArea = "ChartArea1";
-			series5.CustomProperties = "PointWidth=1";
-			series5.IsVisibleInLegend = false;
-			series5.Name = "Series1";
-			series6.ChartArea = "ChartArea1";
-			series6.CustomProperties = "PointWidth=1";
-			series6.Name = "Series2";
-			this.chartMain.Series.Add(series5);
-			this.chartMain.Series.Add(series6);
+			series9.ChartArea = "ChartArea1";
+			series9.CustomProperties = "PointWidth=1";
+			series9.IsVisibleInLegend = false;
+			series9.Name = "Series1";
+			series10.ChartArea = "ChartArea1";
+			series10.CustomProperties = "PointWidth=1";
+			series10.Name = "Series2";
+			this.chartMain.Series.Add(series9);
+			this.chartMain.Series.Add(series10);
 			this.chartMain.Size = new System.Drawing.Size(388, 177);
 			this.chartMain.TabIndex = 0;
 			this.chartMain.Text = "chart1";
@@ -3448,6 +3580,11 @@
 			this.splitContainerTourE.Panel2.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.splitContainerTourE)).EndInit();
 			this.splitContainerTourE.ResumeLayout(false);
+			this.scTournemnetEList.Panel1.ResumeLayout(false);
+			this.scTournemnetEList.Panel2.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this.scTournemnetEList)).EndInit();
+			this.scTournemnetEList.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this.chartTournamentE)).EndInit();
 			this.groupBox9.ResumeLayout(false);
 			this.groupBox8.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.nudTourE)).EndInit();
@@ -3456,6 +3593,11 @@
 			this.splitContainerTourP.Panel2.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.splitContainerTourP)).EndInit();
 			this.splitContainerTourP.ResumeLayout(false);
+			this.scTournamentPList.Panel1.ResumeLayout(false);
+			this.scTournamentPList.Panel2.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this.scTournamentPList)).EndInit();
+			this.scTournamentPList.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this.chartTournamentP)).EndInit();
 			this.tabPageTraining.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.chartTraining)).EndInit();
 			this.tlpTraining.ResumeLayout(false);
@@ -3569,9 +3711,6 @@
 		private System.Windows.Forms.ComboBox cbTeacherBook;
 		private System.Windows.Forms.TabPage tabPageTourP;
 		private System.Windows.Forms.Button butStartTournament;
-		private System.Windows.Forms.ListView lvPlayer;
-		private System.Windows.Forms.ColumnHeader columnHeader1;
-		private System.Windows.Forms.ColumnHeader columnHeader2;
 		private System.Windows.Forms.TabPage tabPageEdit;
 		private System.Windows.Forms.Button butClearBoard;
 		private System.Windows.Forms.GroupBox gbToMove;
@@ -3580,7 +3719,6 @@
 		private System.Windows.Forms.Button butStop;
 		private System.Windows.Forms.Button butContinueGame;
 		private System.Windows.Forms.Label labBack;
-		private System.Windows.Forms.ColumnHeader columnHeader6;
 		private System.Windows.Forms.GroupBox groupBox7;
 		private System.Windows.Forms.CheckedListBox clbCastling;
 		private System.Windows.Forms.Button butContinueMatch;
@@ -3661,12 +3799,6 @@
 		private System.Windows.Forms.Label labDepthD;
 		private System.Windows.Forms.Label labNodesD;
 		private System.Windows.Forms.SplitContainer splitContainerTourP;
-		private System.Windows.Forms.ListView lvPlayerH;
-		private System.Windows.Forms.ColumnHeader columnHeader7;
-		private System.Windows.Forms.ColumnHeader columnHeader9;
-		private System.Windows.Forms.ColumnHeader columnHeader8;
-		private System.Windows.Forms.ColumnHeader columnHeader10;
-		private System.Windows.Forms.Label labPlayer;
 		private System.Windows.Forms.SplitContainer splitContainerMode;
 		private System.Windows.Forms.SplitContainer splitContainerChart;
 		private System.Windows.Forms.ListView lvMoves;
@@ -3703,16 +3835,6 @@
 		private System.Windows.Forms.Button butResignation;
 		private System.Windows.Forms.TabPage tabPageTourE;
 		private System.Windows.Forms.SplitContainer splitContainerTourE;
-		private System.Windows.Forms.ListView lvEngine;
-		private System.Windows.Forms.ColumnHeader columnHeader23;
-		private System.Windows.Forms.ColumnHeader columnHeader24;
-		private System.Windows.Forms.ColumnHeader columnHeader25;
-		private System.Windows.Forms.ListView lvEngineH;
-		private System.Windows.Forms.ColumnHeader columnHeader26;
-		private System.Windows.Forms.ColumnHeader columnHeader27;
-		private System.Windows.Forms.ColumnHeader columnHeader28;
-		private System.Windows.Forms.ColumnHeader columnHeader29;
-		private System.Windows.Forms.Label labEngine;
 		private System.Windows.Forms.GroupBox groupBox8;
 		private System.Windows.Forms.NumericUpDown nudTourE;
 		private System.Windows.Forms.ComboBox cbTourEMode;
@@ -3733,6 +3855,30 @@
 		public System.Windows.Forms.DataVisualization.Charting.Chart chartGame;
 		public System.Windows.Forms.DataVisualization.Charting.Chart chartTraining;
 		public System.Windows.Forms.DataVisualization.Charting.Chart chartMatch;
+		private System.Windows.Forms.SplitContainer scTournemnetEList;
+		private System.Windows.Forms.ListView lvEngine;
+		private System.Windows.Forms.ColumnHeader columnHeader23;
+		private System.Windows.Forms.ColumnHeader columnHeader24;
+		private System.Windows.Forms.ColumnHeader columnHeader25;
+		private System.Windows.Forms.ListView lvEngineH;
+		private System.Windows.Forms.ColumnHeader columnHeader26;
+		private System.Windows.Forms.ColumnHeader columnHeader27;
+		private System.Windows.Forms.ColumnHeader columnHeader28;
+		private System.Windows.Forms.ColumnHeader columnHeader29;
+		private System.Windows.Forms.Label labEngine;
+		public System.Windows.Forms.DataVisualization.Charting.Chart chartTournamentE;
+		private System.Windows.Forms.SplitContainer scTournamentPList;
+		private System.Windows.Forms.ListView lvPlayer;
+		private System.Windows.Forms.ColumnHeader columnHeader1;
+		private System.Windows.Forms.ColumnHeader columnHeader2;
+		private System.Windows.Forms.ColumnHeader columnHeader6;
+		private System.Windows.Forms.Label labPlayer;
+		private System.Windows.Forms.ListView lvPlayerH;
+		private System.Windows.Forms.ColumnHeader columnHeader7;
+		private System.Windows.Forms.ColumnHeader columnHeader9;
+		private System.Windows.Forms.ColumnHeader columnHeader8;
+		private System.Windows.Forms.ColumnHeader columnHeader10;
+		public System.Windows.Forms.DataVisualization.Charting.Chart chartTournamentP;
 	}
 }
 

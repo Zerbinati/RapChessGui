@@ -9,7 +9,7 @@ using System.Windows.Forms;
 using System.Linq;
 using RapIni;
 using RapLog;
-
+using System.Windows.Forms.DataVisualization.Charting;
 
 namespace RapChessGui
 {
@@ -63,10 +63,6 @@ namespace RapChessGui
 			labPromoB.Font = fontChessPromo;
 			labPromoN.Font = fontChessPromo;
 			Chess.Initialize();
-			listView1_Resize(lvPlayer, null);
-			listView2_Resize(lvPlayerH, null);
-			listView1_Resize(lvEngine, null);
-			listView2_Resize(lvEngineH, null);
 			lvMoves_Resize(lvMoves, null);
 			cbMainMode.SelectedIndex = 0;
 			BoardPrepare();
@@ -160,7 +156,7 @@ namespace RapChessGui
 				if (!isDraw)
 				{
 					if (pw.name == This.labMatch10.Text)
-					CModeMatch.win++;
+						CModeMatch.win++;
 					else
 						CModeMatch.loose++;
 				}
@@ -464,7 +460,7 @@ namespace RapChessGui
 			CModeTournamentP.LoadFromIni();
 			CModeTraining.LoadFromIni();
 			CPlayer player = CData.playerList.GetPlayer("Human");
-			CData.HisToPoints(player.hisElo,chartGame.Series[0].Points);
+			CData.HisToPoints(player.hisElo, chartGame.Series[0].Points);
 		}
 
 		public void BoardPrepare()
@@ -1333,7 +1329,7 @@ namespace RapChessGui
 			GamePrepare();
 			GamerList.gamer[0].Init(true);
 			GamerList.gamer[1].Init(false);
-			string emo = CHistory.Last().emo;
+			string emo = CHistory.LastUmo();
 			CChess.EmoToSD(emo, out CDrag.lastSou, out CDrag.lastDes);
 			ShowHistory();
 			SetBoardRotate();
@@ -1386,8 +1382,8 @@ namespace RapChessGui
 		{
 			Chess.InitializeFromFen(CHistory.fen);
 			foreach (CHisMove m in CHistory.moveList)
-				Chess.MakeMove(m.emo);
-			CChess.EmoToSD(CHistory.LastUci(), out CDrag.lastSou, out CDrag.lastDes);
+				Chess.MakeMove(m.umo);
+			CChess.EmoToSD(CHistory.LastUmo(), out CDrag.lastSou, out CDrag.lastDes);
 			CBoard.Fill();
 			ShowHistory();
 		}
@@ -1737,6 +1733,10 @@ namespace RapChessGui
 					ShowHistoryTourE();
 					break;
 				}
+			e1 = CData.engineList.GetEngine(p1.engine);
+			e2 = CData.engineList.GetEngine(p2.engine);
+			CData.HisToPoints(e1.hisElo, chartTournamentE.Series[0].Points);
+			CData.HisToPoints(e2.hisElo, chartTournamentE.Series[1].Points);
 			Clear();
 		}
 
@@ -1809,6 +1809,8 @@ namespace RapChessGui
 					ShowHistoryTourP();
 					break;
 				}
+			CData.HisToPoints(p1.hisElo, chartTournamentP.Series[0].Points);
+			CData.HisToPoints(p2.hisElo, chartTournamentP.Series[1].Points);
 			Clear();
 		}
 
@@ -2153,11 +2155,6 @@ namespace RapChessGui
 			Reset();
 		}
 
-		private void listView1_SelectedIndexChanged(object sender, EventArgs e)
-		{
-			ShowHistoryTourP();
-		}
-
 		private void nudValue_ValueChanged(object sender, EventArgs e)
 		{
 			CModeGame.modeValue.SetValue((int)nudValue.Value);
@@ -2175,27 +2172,6 @@ namespace RapChessGui
 			for (int n = 0; n < lv.Columns.Count - 1; n++)
 				lv.Columns[n].Width = w;
 			lv.Columns[lv.Columns.Count - 1].Width = lv.Width - 32 - w * (lv.Columns.Count - 1);
-		}
-
-		private void listView1_Resize(object sender, EventArgs e)
-		{
-			ListView lv = (ListView)sender;
-			int w = lv.Width - 32;
-			w = Convert.ToInt32(w / 4);
-			lv.Columns[0].Width = w * 2;
-			lv.Columns[1].Width = w;
-			lv.Columns[2].Width = w;
-		}
-
-		private void listView2_Resize(object sender, EventArgs e)
-		{
-			ListView lv = (ListView)sender;
-			int w = lv.Width - 32;
-			w = Convert.ToInt32(w / 6);
-			lv.Columns[0].Width = w * 3;
-			lv.Columns[1].Width = w;
-			lv.Columns[2].Width = w;
-			lv.Columns[3].Width = w;
 		}
 
 		private void lvMoves_Resize(object sender, EventArgs e)
@@ -2382,6 +2358,32 @@ namespace RapChessGui
 		private void cbEngine_Click(object sender, EventArgs e)
 		{
 			cbComputer.Text = "Custom";
+		}
+
+		private void lvEngine_Resize(object sender, EventArgs e)
+		{
+			ListView lv = (ListView)sender;
+			int w = lv.Width - 32;
+			w = Convert.ToInt32(w / 4);
+			lv.Columns[0].Width = w * 2;
+			lv.Columns[1].Width = w;
+			lv.Columns[2].Width = w;
+		}
+
+		private void lvEngineH_Resize(object sender, EventArgs e)
+		{
+			ListView lv = (ListView)sender;
+			int w = lv.Width - 32;
+			w = Convert.ToInt32(w / 6);
+			lv.Columns[0].Width = w * 3;
+			lv.Columns[1].Width = w;
+			lv.Columns[2].Width = w;
+			lv.Columns[3].Width = w;
+		}
+
+		private void lvPlayer_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			ShowHistoryTourP();
 		}
 
 		#endregion

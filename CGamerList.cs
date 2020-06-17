@@ -217,7 +217,7 @@ namespace RapChessGui
 				SendMessage($"time {t / 10}");
 				SendMessage($"otim {t / 10}");
 			}
-			SendMessage(CHistory.Last().emo);
+			SendMessage(CHistory.LastUmo());
 		}
 
 		public void CompMakeMove()
@@ -250,7 +250,7 @@ namespace RapChessGui
 					SendMessage("easy");
 					SendMessage("force");
 					foreach (CHisMove m in CHistory.moveList)
-						SendMessage(m.emo);
+						SendMessage(m.umo);
 					if ((CHistory.moveList.Count & 1) == 0)
 						SendMessage("white");
 					else
