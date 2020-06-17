@@ -9,7 +9,6 @@ using System.Windows.Forms;
 using System.Linq;
 using RapIni;
 using RapLog;
-using System.Windows.Forms.DataVisualization.Charting;
 
 namespace RapChessGui
 {
@@ -851,7 +850,7 @@ namespace RapChessGui
 			if (result)
 			{
 				hu.hisElo.Add(hu.eloNew);
-				chartGame.Series[0].Points.Add(hu.eloNew);
+				CData.HisToPoints(hu.hisElo, chartGame.Series[0].Points);
 			}
 			hu.elo = hu.eloNew.ToString();
 			hu.SaveToIni();

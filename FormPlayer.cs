@@ -109,7 +109,7 @@ namespace RapChessGui
 		private void ButDelete_Click(object sender, EventArgs e)
 		{
 			string playerName = tbPlayerName.Text;
-			DialogResult dr = MessageBox.Show($"Are you sure to delete player {playerName}?","Confirm Delete",MessageBoxButtons.YesNo);
+			DialogResult dr = MessageBox.Show($"Are you sure to delete player {playerName}?", "Confirm Delete", MessageBoxButtons.YesNo);
 			if (dr == DialogResult.Yes)
 			{
 				CData.playerList.DeletePlayer(playerName);
@@ -121,9 +121,14 @@ namespace RapChessGui
 
 		private void butClearHistory_Click(object sender, EventArgs e)
 		{
-			string playerName = tbPlayerName.Text;
-			int count=CModeTournamentP.tourList.DeletePlayer(playerName);
-			MessageBox.Show($"{count} records have been deleted");
+			CPlayer player = CData.playerList.GetPlayer(curPlayerName);
+			if (player != null)
+			{
+				player.hisElo.list.Clear();
+				player.SaveToIni();
+				int count = CModeTournamentP.tourList.DeletePlayer(curPlayerName);
+				MessageBox.Show($"{count} records have been deleted");
+			}
 		}
 
 		private void FormPlayer_Shown(object sender, EventArgs e)

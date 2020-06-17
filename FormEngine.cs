@@ -101,5 +101,17 @@ namespace RapChessGui
 			if (listBox1.Items.Count > 0)
 				listBox1.SetSelected(0, true);
 		}
+
+		private void butClearHistory_Click(object sender, EventArgs e)
+		{
+			CEngine engine = CData.engineList.GetEngine(curEngineName);
+			if (engine != null)
+			{
+				engine.hisElo.list.Clear();
+				engine.SaveToIni();
+				int count = CModeTournamentE.tourList.DeletePlayer(curEngineName);
+				MessageBox.Show($"{count} records have been deleted");
+			}
+		}
 	}
 }
