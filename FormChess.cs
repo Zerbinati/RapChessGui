@@ -1602,6 +1602,8 @@ namespace RapChessGui
 		}
 		void MatchStart()
 		{
+			CModeMatch.his1.Add(CModeMatch.Point(false));
+			CModeMatch.his2.Add(CModeMatch.Point(true));
 			MatchShow();
 			CData.fen = CChess.defFen;
 			CModeMatch.engine1 = cbEngine1.Text;
@@ -1632,8 +1634,6 @@ namespace RapChessGui
 			CModeMatch.rotate = !CModeMatch.rotate;
 			Clear();
 			moves = Chess.GenerateValidMoves();
-			CModeMatch.his1.Add(CModeMatch.Result(false));
-			CModeMatch.his2.Add(CModeMatch.Result(true));
 			CModeMatch.SaveToIni();
 		}
 

@@ -44,8 +44,8 @@ namespace RapChessGui
 		{
 			po.Clear();
 			int x = 100 - he.list.Count;
-			foreach (int i in he.list)
-				po.AddXY(x++,i);
+			foreach (double v in he.list)
+				po.AddXY(x++,v);
 		}
 
 		public static void UpdateFileBook()

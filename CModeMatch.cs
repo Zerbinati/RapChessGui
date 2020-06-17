@@ -34,6 +34,14 @@ namespace RapChessGui
 			return win + draw + loose;
 		}
 
+		public static double Point(bool rev)
+		{
+			if (rev)
+				return loose + draw * .5;
+			else
+				return win + draw * .5;
+		}
+
 		public static int Result(bool rev)
 		{
 			int t = Total();
