@@ -1310,7 +1310,7 @@
 			this.chartTournamentE.Size = new System.Drawing.Size(348, 109);
 			this.chartTournamentE.TabIndex = 30;
 			this.chartTournamentE.Text = "chart1";
-			this.toolTip1.SetToolTip(this.chartTournamentE, "User progress history");
+			this.toolTip1.SetToolTip(this.chartTournamentE, "Tournament history");
 			// 
 			// groupBox9
 			// 
@@ -1578,7 +1578,7 @@
 			this.chartTournamentP.Size = new System.Drawing.Size(354, 138);
 			this.chartTournamentP.TabIndex = 31;
 			this.chartTournamentP.Text = "chart1";
-			this.toolTip1.SetToolTip(this.chartTournamentP, "User progress history");
+			this.toolTip1.SetToolTip(this.chartTournamentP, "Tournament history");
 			// 
 			// butStartTournament
 			// 
