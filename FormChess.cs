@@ -1600,10 +1600,13 @@ namespace RapChessGui
 			CData.HisToPoints(his1, chartMatch.Series[0].Points);
 			CData.HisToPoints(his2, chartMatch.Series[1].Points);
 		}
-		void MatchStart()
+		void MatchStart(bool add)
 		{
-			CModeMatch.his1.Add(CModeMatch.Point(false));
-			CModeMatch.his2.Add(CModeMatch.Point(true));
+			if (add)
+			{
+				CModeMatch.his1.Add(CModeMatch.Point(false));
+				CModeMatch.his2.Add(CModeMatch.Point(true));
+			}
 			MatchShow();
 			CData.fen = CChess.defFen;
 			CModeMatch.engine1 = cbEngine1.Text;
@@ -1912,7 +1915,7 @@ namespace RapChessGui
 			switch (CData.gameMode)
 			{
 				case CMode.match:
-					MatchStart();
+					MatchStart(true);
 					break;
 				case CMode.tourE:
 					TournamentEStart();
@@ -1973,7 +1976,7 @@ namespace RapChessGui
 		private void bStartMatch_Click(object sender, EventArgs e)
 		{
 			CModeMatch.Reset();
-			MatchStart();
+			MatchStart(true);
 		}
 
 		private void butStartTournament_Click(object sender, EventArgs e)
@@ -2119,7 +2122,7 @@ namespace RapChessGui
 		private void butContinueMatch_Click(object sender, EventArgs e)
 		{
 			CModeMatch.SaveToIni();
-			MatchStart();
+			MatchStart(false);
 		}
 
 		private void butDefault_Click(object sender, EventArgs e)
