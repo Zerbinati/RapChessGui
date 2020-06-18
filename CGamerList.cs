@@ -267,7 +267,10 @@ namespace RapChessGui
 		{
 			if (bookPro.process != null)
 			{
-				FormLog.AppendText($"book {player.name} < {msg}\n", Color.Brown);
+				Color col = white ? Color.DimGray : Color.Black;
+				FormLog.AppendText($"{FormChess.GetTimeElapsed()} ", Color.Green);
+				FormLog.AppendText($"book {player.name}",col);
+				FormLog.AppendText($" < {msg}\n", Color.Brown);
 				bookPro.process.StandardInput.WriteLine(msg);
 			}
 		}
@@ -276,7 +279,10 @@ namespace RapChessGui
 		{
 			if (enginePro.process != null)
 			{
-				FormLog.AppendText($"{player.name} < {msg}\n", Color.Brown);
+				Color col = white ? Color.DimGray : Color.Black;
+				FormLog.AppendText($"{FormChess.GetTimeElapsed()} ", Color.Green);
+				FormLog.AppendText($"{player.name}", col);
+				FormLog.AppendText($" < {msg}\n", Color.Brown);
 				enginePro.process.StandardInput.WriteLine(msg);
 			}
 		}
@@ -373,13 +379,6 @@ namespace RapChessGui
 			else
 				dt = dt.AddMilliseconds(ms);
 			return dt.ToString("HH:mm:ss");
-		}
-
-		public string GetTimeElapsed()
-		{
-			DateTime dt = new DateTime();
-			dt = dt.AddMilliseconds(timer.Elapsed.TotalMilliseconds - timerStart);
-			return dt.ToString("HH:mm:ss.fff");
 		}
 
 		public string GetElo()
@@ -481,17 +480,20 @@ namespace RapChessGui
 
 		public CGamer GetGamerPid(int pid, out string protocol)
 		{
-			protocol = "Uci";
 			foreach (CGamer g in gamer)
 			{
 				if (g.bookPro.GetPid() == pid)
+				{
+					protocol = "Book";
 					return g;
+				}
 				if (g.enginePro.GetPid() == pid)
 				{
 					protocol = g.engine.protocol;
 					return g;
 				}
 			}
+			protocol = "";
 			return null;
 		}
 

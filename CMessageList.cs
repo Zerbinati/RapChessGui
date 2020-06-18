@@ -65,7 +65,7 @@ namespace RapChessGui
 					CGamer gamer = CGamerList.This.GetGamerPid(m.pid,out string protocol);
 					if (gamer != null)
 					{
-						if (protocol == "Uci")
+						if ((protocol == "Uci")||(protocol == "Book"))
 						{
 							if (m.msg.Contains("bestmove"))
 								gamer.timer.Stop();

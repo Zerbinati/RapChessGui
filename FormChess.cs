@@ -693,7 +693,7 @@ namespace RapChessGui
 			}
 		}
 
-		public string GetTimeElapsed()
+		public static string GetTimeElapsed()
 		{
 			DateTime dt = new DateTime();
 			dt = dt.AddMilliseconds(timer.Elapsed.TotalMilliseconds);
@@ -706,18 +706,15 @@ namespace RapChessGui
 			{
 				CGamer gamer = GamerList.GetGamerPid(m.pid, out string protocol);
 				if (gamer == null)
-					CRapLog.Add($"Unknown pid ({m.msg})");
+					CRapLog.Add($"Unknown pid ({GamerList.GamerCur().player.name} - {GamerList.GamerSec().player.name}) ({m.pid}) ({m.msg})");
 				else
 				{
+					string book = protocol == "Book" ? "book " : "";
+					Color col = gamer.white ? Color.DimGray: Color.Black;
 					FormLog.AppendText($"{GetTimeElapsed()} ", Color.Green);
-					if (gamer.white)
-					{
-						FormLog.AppendText($"{gamer.player.name}", Color.DimGray);
-						FormLog.AppendText($" > {m.msg}\n", Color.Black);
-					}
-					else
-						FormLog.AppendText($"{gamer.player.name} > {m.msg}\n", Color.Black);
-					if (protocol == "Uci")
+					FormLog.AppendText($"{book}{gamer.player.name}", col);
+					FormLog.AppendText($" > {m.msg}\n", Color.DarkBlue);
+					if ((protocol == "Uci")||(protocol == "Book"))
 						GetMessageUci(gamer, m.msg);
 					if (protocol == "Winboard")
 						GetMessageXb(gamer, m.msg);
