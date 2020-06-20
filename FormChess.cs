@@ -33,6 +33,8 @@ namespace RapChessGui
 		readonly FormHisP formHisP = new FormHisP();
 		readonly FormHisE formHisE = new FormHisE();
 
+		#region main
+
 		public FormChess()
 		{
 			This = this;
@@ -1516,6 +1518,8 @@ namespace RapChessGui
 				lv.Columns[n].Width = w;
 			lv.Columns[lv.Columns.Count - 1].Width = lv.Width - 32 - w * (lv.Columns.Count - 1);
 		}
+
+		#endregion
 
 		#region mode
 
