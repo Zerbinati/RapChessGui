@@ -39,10 +39,14 @@
 			// 
 			chartArea1.AxisX.LabelStyle.Enabled = false;
 			chartArea1.AxisX.MajorGrid.Enabled = false;
+			chartArea1.AxisX.MajorGrid.LineColor = System.Drawing.Color.LightGray;
 			chartArea1.AxisX.MajorTickMark.Enabled = false;
+			chartArea1.AxisX2.MajorGrid.Enabled = false;
 			chartArea1.AxisY.IsStartedFromZero = false;
-			chartArea1.AxisY.MajorGrid.Enabled = false;
+			chartArea1.AxisY.MajorGrid.LineColor = System.Drawing.Color.LightGray;
 			chartArea1.AxisY.MajorTickMark.Enabled = false;
+			chartArea1.AxisY2.MajorGrid.Enabled = false;
+			chartArea1.BorderDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Solid;
 			chartArea1.Name = "ChartArea1";
 			this.chart1.ChartAreas.Add(chartArea1);
 			this.chart1.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -66,6 +70,7 @@
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(800, 450);
 			this.Controls.Add(this.chart1);
+			this.MinimizeBox = false;
 			this.Name = "FormHisP";
 			this.ShowIcon = false;
 			this.ShowInTaskbar = false;

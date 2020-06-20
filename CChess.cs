@@ -172,7 +172,7 @@ namespace RapChessGui
 
 		public CGameState GetGameState()
 		{
-			return GetGameState(out bool check);
+			return GetGameState(out _);
 		}
 
 		public string EmoToSan(string emo)

@@ -448,8 +448,8 @@ namespace RapChessGui
 			Height = RapIni.ReadInt("position>height", Height);
 			if (Width < 600)
 				Width = 600;
-			if (Height < 400)
-				Height = 400;
+			if (Height < 600)
+				Height = 600;
 			int x = RapIni.ReadInt("position>x", Location.X);
 			int y = RapIni.ReadInt("position>y", Location.Y);
 			if (x < 0)

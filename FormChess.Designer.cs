@@ -2174,7 +2174,7 @@
 			this.menuStrip1.Location = new System.Drawing.Point(0, 2);
 			this.menuStrip1.Name = "menuStrip1";
 			this.menuStrip1.ShowItemToolTips = true;
-			this.menuStrip1.Size = new System.Drawing.Size(429, 24);
+			this.menuStrip1.Size = new System.Drawing.Size(309, 24);
 			this.menuStrip1.TabIndex = 1;
 			this.menuStrip1.Text = "menuStrip1";
 			// 
@@ -2297,14 +2297,14 @@
 			// enginesToolStripMenuItem2
 			// 
 			this.enginesToolStripMenuItem2.Name = "enginesToolStripMenuItem2";
-			this.enginesToolStripMenuItem2.Size = new System.Drawing.Size(180, 22);
+			this.enginesToolStripMenuItem2.Size = new System.Drawing.Size(115, 22);
 			this.enginesToolStripMenuItem2.Text = "Engines";
 			this.enginesToolStripMenuItem2.Click += new System.EventHandler(this.enginesToolStripMenuItem2_Click);
 			// 
 			// playersToolStripMenuItem
 			// 
 			this.playersToolStripMenuItem.Name = "playersToolStripMenuItem";
-			this.playersToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+			this.playersToolStripMenuItem.Size = new System.Drawing.Size(115, 22);
 			this.playersToolStripMenuItem.Text = "Players";
 			this.playersToolStripMenuItem.Click += new System.EventHandler(this.playersToolStripMenuItem_Click);
 			// 
@@ -3333,6 +3333,7 @@
 			this.splitContainerMain.Panel1.Controls.Add(this.splitContainerBoard);
 			this.splitContainerMain.Panel1.Controls.Add(this.tlpEngineT);
 			this.splitContainerMain.Panel1.Controls.Add(this.tlpEngineB);
+			this.splitContainerMain.Panel1MinSize = 500;
 			// 
 			// splitContainerMain.Panel2
 			// 
