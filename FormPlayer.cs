@@ -139,7 +139,7 @@ namespace RapChessGui
 				cbEngineList.Items.Add(engine.name);
 			cbBookList.Items.Clear();
 			cbBookList.Items.Add("None");
-			foreach (CBook book in CBookList.list)
+			foreach (CBook book in CData.bookList.list)
 				cbBookList.Items.Add(book.name);
 			UpdateListBox();
 			if (listBox1.Items.Count > 0)

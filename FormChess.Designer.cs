@@ -188,6 +188,9 @@
 			this.logToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.enginesToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
 			this.gamesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.historyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.enginesToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
+			this.playersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.labFPS = new System.Windows.Forms.Label();
 			this.panMenu = new System.Windows.Forms.Panel();
 			this.labEco = new System.Windows.Forms.Label();
@@ -2166,11 +2169,12 @@
             this.pgnToolStripMenuItem,
             this.manageToolStripMenuItem,
             this.optionsToolStripMenuItem,
-            this.logToolStripMenuItem});
+            this.logToolStripMenuItem,
+            this.historyToolStripMenuItem});
 			this.menuStrip1.Location = new System.Drawing.Point(0, 2);
 			this.menuStrip1.Name = "menuStrip1";
 			this.menuStrip1.ShowItemToolTips = true;
-			this.menuStrip1.Size = new System.Drawing.Size(252, 24);
+			this.menuStrip1.Size = new System.Drawing.Size(429, 24);
 			this.menuStrip1.TabIndex = 1;
 			this.menuStrip1.Text = "menuStrip1";
 			// 
@@ -2280,6 +2284,29 @@
 			this.gamesToolStripMenuItem.Size = new System.Drawing.Size(115, 22);
 			this.gamesToolStripMenuItem.Text = "Games";
 			this.gamesToolStripMenuItem.Click += new System.EventHandler(this.gamesToolStripMenuItem_Click);
+			// 
+			// historyToolStripMenuItem
+			// 
+			this.historyToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.enginesToolStripMenuItem2,
+            this.playersToolStripMenuItem});
+			this.historyToolStripMenuItem.Name = "historyToolStripMenuItem";
+			this.historyToolStripMenuItem.Size = new System.Drawing.Size(57, 20);
+			this.historyToolStripMenuItem.Text = "History";
+			// 
+			// enginesToolStripMenuItem2
+			// 
+			this.enginesToolStripMenuItem2.Name = "enginesToolStripMenuItem2";
+			this.enginesToolStripMenuItem2.Size = new System.Drawing.Size(180, 22);
+			this.enginesToolStripMenuItem2.Text = "Engines";
+			this.enginesToolStripMenuItem2.Click += new System.EventHandler(this.enginesToolStripMenuItem2_Click);
+			// 
+			// playersToolStripMenuItem
+			// 
+			this.playersToolStripMenuItem.Name = "playersToolStripMenuItem";
+			this.playersToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+			this.playersToolStripMenuItem.Text = "Players";
+			this.playersToolStripMenuItem.Click += new System.EventHandler(this.playersToolStripMenuItem_Click);
 			// 
 			// labFPS
 			// 
@@ -3879,6 +3906,9 @@
 		private System.Windows.Forms.ColumnHeader columnHeader8;
 		private System.Windows.Forms.ColumnHeader columnHeader10;
 		public System.Windows.Forms.DataVisualization.Charting.Chart chartTournamentP;
+		private System.Windows.Forms.ToolStripMenuItem historyToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem enginesToolStripMenuItem2;
+		private System.Windows.Forms.ToolStripMenuItem playersToolStripMenuItem;
 	}
 }
 

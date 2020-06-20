@@ -30,6 +30,8 @@ namespace RapChessGui
 		public static Stopwatch timer = new Stopwatch();
 		readonly FormLog formLog = new FormLog();
 		readonly FormPgn formPgn = new FormPgn();
+		readonly FormHisP formHisP = new FormHisP();
+		readonly FormHisE formHisE = new FormHisE();
 
 		public FormChess()
 		{
@@ -43,9 +45,8 @@ namespace RapChessGui
 			pfc.AddMemoryFont(data, fontLength);
 			Marshal.FreeCoTaskMem(data);
 			InitializeComponent();
+			IniCreate();
 			IniLoad();
-			if (CData.playerList.list.Count == 0)
-				CreateIni();
 			FormOptions.This = new FormOptions();
 			FormEngine.This = new FormEngine();
 			FormBook.This = new FormBook();
@@ -319,113 +320,124 @@ namespace RapChessGui
 			GamerList.Terminate();
 		}
 
-		void CreateIni()
+		void IniCreate()
 		{
 			CData.engineList.LoadFromIni();
-			CEngine e;
-			e = new CEngine(CEngineList.def);
-			e.file = "RapChessCs.exe";
-			e.elo = "1100";
-			CData.engineList.Add(e);
-			e = new CEngine("RapSimple CS");
-			e.file = "RapSimpleCs.exe";
-			e.elo = "1000";
-			CData.engineList.Add(e);
-			e = new CEngine("RapShort CS");
-			e.file = "RapShortCs.exe";
-			e.elo = "900";
-			CData.engineList.Add(e);
-			CData.engineList.SaveToIni();
-			CBookList.LoadFromIni();
-			CBook b;
-			b = new CBook("Eco");
-			b.file = "BookReaderUci.exe";
-			b.parameters = "eco.uci";
-			CBookList.Add(b);
-			b = new CBook("Tiny");
-			b.file = "BookReaderUci.exe";
-			b.parameters = "tiny.uci";
-			CBookList.Add(b);
-			b = new CBook("Random1");
-			b.file = "BookReaderUci.exe";
-			b.parameters = "random1.uci";
-			CBookList.Add(b);
-			b = new CBook("Random2");
-			b.file = "BookReaderUci.exe";
-			b.parameters = "random2.uci";
-			CBookList.Add(b);
-			for (int n = 1; n < 10; n++)
+			if (CData.engineList.list.Count == 0)
 			{
-				int v = n * 10;
-				b = new CBook($"Rand{v}");
-				b.file = "BookReaderRnd.exe";
-				b.parameters = v.ToString();
-				CBookList.Add(b);
+				CEngine e;
+				e = new CEngine(CEngineList.def);
+				e.file = "RapChessCs.exe";
+				e.elo = "1100";
+				CData.engineList.Add(e);
+				e = new CEngine("RapSimple CS");
+				e.file = "RapSimpleCs.exe";
+				e.elo = "1000";
+				CData.engineList.Add(e);
+				e = new CEngine("RapShort CS");
+				e.file = "RapShortCs.exe";
+				e.elo = "900";
+				CData.engineList.Add(e);
+				CData.engineList.SaveToIni();
 			}
-			CBookList.SaveToIni();
-			CPlayer p;
-			p = new CPlayer("Human");
-			p.tournament = false;
-			p.modeValue.value = 0;
-			p.elo = "500";
-			CData.playerList.Add(p);
-			p = new CPlayer();
-			p.engine = "RapChess CS";
-			p.book = "Rand90";
-			p.modeValue.mode = "Time";
-			p.modeValue.value = 10;
-			p.elo = "200";
-			CData.playerList.Add(p);
-			p = new CPlayer();
-			p.engine = "RapChess CS";
-			p.book = "Rand70";
-			p.modeValue.mode = "Time";
-			p.modeValue.value = 10;
-			p.elo = "400";
-			CData.playerList.Add(p);
-			p = new CPlayer();
-			p.engine = "RapChess CS";
-			p.book = "Rand50";
-			p.modeValue.mode = "Time";
-			p.modeValue.value = 10;
-			p.elo = "600";
-			CData.playerList.Add(p);
-			p = new CPlayer();
-			p.engine = "RapChess CS";
-			p.book = "Rand30";
-			p.modeValue.mode = "Time";
-			p.modeValue.value = 10;
-			p.elo = "800";
-			CData.playerList.Add(p);
-			p = new CPlayer();
-			p.engine = "RapChess CS";
-			p.book = "Rand10";
-			p.modeValue.mode = "Time";
-			p.modeValue.value = 10;
-			p.elo = "1000";
-			CData.playerList.Add(p);
-			p = new CPlayer();
-			p.engine = "RapShort CS";
-			p.book = "Eco";
-			p.modeValue.mode = "Time";
-			p.modeValue.value = 10;
-			p.elo = "500";
-			CData.playerList.Add(p);
-			p = new CPlayer();
-			p.engine = "RapSimple CS";
-			p.book = "Eco";
-			p.modeValue.mode = "Time";
-			p.modeValue.value = 10;
-			p.elo = "1000";
-			CData.playerList.Add(p);
-			p = new CPlayer();
-			p.engine = "RapChess CS";
-			p.book = "Eco";
-			p.modeValue.mode = "Time";
-			p.modeValue.value = 10;
-			p.elo = "1200";
-			CData.playerList.Add(p);
-			CData.playerList.SaveToIni();
+			CData.bookList.LoadFromIni();
+			if (CData.bookList.list.Count == 0)
+			{
+				CBook b;
+				b = new CBook("Eco");
+				b.file = "BookReaderUci.exe";
+				b.parameters = "eco.uci";
+				CData.bookList.Add(b);
+				b = new CBook("Tiny");
+				b.file = "BookReaderUci.exe";
+				b.parameters = "tiny.uci";
+				CData.bookList.Add(b);
+				b = new CBook("Random1");
+				b.file = "BookReaderUci.exe";
+				b.parameters = "random1.uci";
+				CData.bookList.Add(b);
+				b = new CBook("Random2");
+				b.file = "BookReaderUci.exe";
+				b.parameters = "random2.uci";
+				CData.bookList.Add(b);
+				for (int n = 1; n < 10; n++)
+				{
+					int v = n * 10;
+					b = new CBook($"Rand{v}");
+					b.file = "BookReaderRnd.exe";
+					b.parameters = v.ToString();
+					CData.bookList.Add(b);
+				}
+				CData.bookList.SaveToIni();
+			}
+			CData.playerList.LoadFromIni();
+			if (CData.playerList.list.Count == 0)
+			{
+				CPlayer p;
+				p = new CPlayer("Human");
+				p.tournament = false;
+				p.modeValue.value = 0;
+				p.eloNew = 500;
+				p.elo = p.eloNew.ToString();
+				CData.playerList.Add(p);
+				p = new CPlayer();
+				p.engine = "RapChess CS";
+				p.book = "Rand90";
+				p.modeValue.mode = "Time";
+				p.modeValue.value = 10;
+				p.elo = "200";
+				CData.playerList.Add(p);
+				p = new CPlayer();
+				p.engine = "RapChess CS";
+				p.book = "Rand70";
+				p.modeValue.mode = "Time";
+				p.modeValue.value = 10;
+				p.elo = "400";
+				CData.playerList.Add(p);
+				p = new CPlayer();
+				p.engine = "RapChess CS";
+				p.book = "Rand50";
+				p.modeValue.mode = "Time";
+				p.modeValue.value = 10;
+				p.elo = "600";
+				CData.playerList.Add(p);
+				p = new CPlayer();
+				p.engine = "RapChess CS";
+				p.book = "Rand30";
+				p.modeValue.mode = "Time";
+				p.modeValue.value = 10;
+				p.elo = "800";
+				CData.playerList.Add(p);
+				p = new CPlayer();
+				p.engine = "RapChess CS";
+				p.book = "Rand10";
+				p.modeValue.mode = "Time";
+				p.modeValue.value = 10;
+				p.elo = "1000";
+				CData.playerList.Add(p);
+				p = new CPlayer();
+				p.engine = "RapShort CS";
+				p.book = "Eco";
+				p.modeValue.mode = "Time";
+				p.modeValue.value = 10;
+				p.elo = "500";
+				CData.playerList.Add(p);
+				p = new CPlayer();
+				p.engine = "RapSimple CS";
+				p.book = "Eco";
+				p.modeValue.mode = "Time";
+				p.modeValue.value = 10;
+				p.elo = "1000";
+				CData.playerList.Add(p);
+				p = new CPlayer();
+				p.engine = "RapChess CS";
+				p.book = "Eco";
+				p.modeValue.mode = "Time";
+				p.modeValue.value = 10;
+				p.elo = "1200";
+				CData.playerList.Add(p);
+				CData.playerList.SaveToIni();
+			}
 		}
 
 		void IniLoad()
@@ -450,7 +462,7 @@ namespace RapChessGui
 			SplitLoadFromIni(splitContainerChart);
 			SplitLoadFromIni(splitContainerTourE);
 			SplitLoadFromIni(splitContainerTourP);
-			CBookList.LoadFromIni();
+			CData.bookList.LoadFromIni();
 			CData.engineList.LoadFromIni();
 			CData.playerList.LoadFromIni();
 			CModeGame.LoadFromIni();
@@ -967,7 +979,7 @@ namespace RapChessGui
 			cbBook.Items.Add("None");
 			cbBook1.Items.Add("None");
 			cbBook2.Items.Add("None");
-			foreach (CBook b in CBookList.list)
+			foreach (CBook b in CData.bookList.list)
 			{
 				cbTourEBook.Items.Add(b.name);
 				cbTeacherBook.Items.Add(b.name);
@@ -2327,22 +2339,6 @@ namespace RapChessGui
 			tlpPromotion.Hide();
 		}
 
-		private void enginesToolStripMenuItem1_Click(object sender, EventArgs e)
-		{
-			if (formLog.Visible)
-				formLog.Focus();
-			else
-				formLog.Show(this);
-		}
-
-		private void gamesToolStripMenuItem_Click(object sender, EventArgs e)
-		{
-			if (formPgn.Visible)
-				formPgn.Focus();
-			else
-				formPgn.Show(this);
-		}
-
 		private void FormChess_Resize(object sender, EventArgs e)
 		{
 			LinesResize(lvMovesW);
@@ -2383,6 +2379,38 @@ namespace RapChessGui
 		private void lvPlayer_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			ShowHistoryTourP();
+		}
+
+		private void enginesToolStripMenuItem2_Click(object sender, EventArgs e)
+		{
+			if (formHisE.Visible)
+				formHisE.Focus();
+			else
+				formHisE.ShowDialog(this);
+		}
+
+		private void playersToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			if (formHisP.Visible)
+				formHisP.Focus();
+			else
+				formHisP.ShowDialog(this);
+		}
+
+		private void enginesToolStripMenuItem1_Click(object sender, EventArgs e)
+		{
+			if (formLog.Visible)
+				formLog.Focus();
+			else
+				formLog.Show(this);
+		}
+
+		private void gamesToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			if (formPgn.Visible)
+				formPgn.Focus();
+			else
+				formPgn.Show(this);
 		}
 
 		#endregion

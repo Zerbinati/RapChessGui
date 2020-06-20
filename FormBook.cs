@@ -25,20 +25,20 @@ namespace RapChessGui
 
 		void SelectReader(string name)
 		{
-			CBook reader = CBookList.GetBook(name);
-			if (reader == null)
+			CBook book = CData.bookList.GetBook(name);
+			if (book == null)
 				return;
-			tbReaderName.Text = reader.name;
-			cbBookReaderList.Text = reader.file;
-			tbParameters.Text = reader.parameters;
-			curBookName = reader.name;
+			tbReaderName.Text = book.name;
+			cbBookReaderList.Text = book.file;
+			tbParameters.Text = book.parameters;
+			curBookName = book.name;
 		}
 
 		void UpdateListBox()
 		{
 			listBox1.Items.Clear();
-			foreach (CBook br in CBookList.list)
-				listBox1.Items.Add(br.name);
+			foreach (CBook b in CData.bookList.list)
+				listBox1.Items.Add(b.name);
 		}
 
 		private void ListBox1_SelectedValueChanged(object sender, EventArgs e)
@@ -61,12 +61,12 @@ namespace RapChessGui
 
 		private void ButUpdate_Click(object sender, EventArgs e)
 		{
-			CBook reader = CBookList.GetBook(curBookName);
-			if (reader == null)
+			CBook book = CData.bookList.GetBook(curBookName);
+			if (book == null)
 				return;
-			CRapIni.This.DeleteKey($"book>{reader.name}");
-			SaveToIni(reader);
-			MessageBox.Show($"Reader {reader.name} has been modified");
+			CRapIni.This.DeleteKey($"book>{book.name}");
+			SaveToIni(book);
+			MessageBox.Show($"Reader {book.name} has been modified");
 		}
 
 		private void ButCreate_Click(object sender, EventArgs e)
@@ -74,7 +74,7 @@ namespace RapChessGui
 			string name = tbReaderName.Text;
 			CBook reader = new CBook(name);
 			reader.file = cbBookReaderList.Text;
-			CBookList.list.Add(reader);
+			CData.bookList.list.Add(reader);
 			SaveToIni(reader);
 			MessageBox.Show($"Book reader {reader.name} has been created");
 		}

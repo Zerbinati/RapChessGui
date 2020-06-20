@@ -34,7 +34,10 @@ namespace RapChessGui
 			eloOld = CRapIni.This.ReadDouble($"engine>{name}>eloOld",eloOld);
 			hisElo.LoadFromStr(CRapIni.This.Read($"engine>{name}>history", ""));
 			if (hisElo.list.Count == 0)
+			{
 				hisElo.Add(Convert.ToDouble(elo));
+				hisElo.Add(Convert.ToDouble(elo));
+			}
 		}
 
 		public void SaveToIni()

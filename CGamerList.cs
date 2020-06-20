@@ -400,7 +400,7 @@ namespace RapChessGui
 		public void SetPlayer(CPlayer p)
 		{
 			player = p;
-			book = CBookList.GetBook(p.book);
+			book = CData.bookList.GetBook(p.book);
 			engine = CData.engineList.GetEngine(p.engine);
 			if (book != null)
 				bookPro.SetProgram("Books\\" + book.file, book.parameters);

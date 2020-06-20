@@ -30,17 +30,17 @@ namespace RapChessGui
 
 	}
 
-	public static class CBookList
+	public class CBookList
 	{
-		public static List<CBook> list = new List<CBook>();
+		public List<CBook> list = new List<CBook>();
 
-		public static void Add(CBook br)
+		public void Add(CBook br)
 		{
 			if (GetIndex(br.name) < 0)
 				list.Add(br);
 		}
 
-		public static int GetIndex(string name)
+		public int GetIndex(string name)
 		{
 			for (int n = 0; n < list.Count; n++)
 			{
@@ -51,7 +51,7 @@ namespace RapChessGui
 			return -1;
 		}
 
-		public static void LoadFromIni()
+		public void LoadFromIni()
 		{
 			list.Clear();
 			List<string> pn = CRapIni.This.ReadList("book");
@@ -63,7 +63,7 @@ namespace RapChessGui
 			}
 		}
 
-		public static CBook GetBook(string name)
+		public CBook GetBook(string name)
 		{
 			foreach (CBook br in list)
 			if (br.name == name)
@@ -71,7 +71,7 @@ namespace RapChessGui
 			return null;
 		}
 
-		public static void SaveToIni()
+		public void SaveToIni()
 		{
 			CRapIni.This.DeleteKey("book");
 			foreach (CBook br in list)

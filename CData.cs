@@ -37,6 +37,7 @@ namespace RapChessGui
 		public static string fen = CChess.defFen;
 		public static List<string> fileBook = new List<string>();
 		public static List<string> fileEngine = new List<string>();
+		public static CBookList bookList = new CBookList();
 		public static CEngineList engineList = new CEngineList();
 		public static CPlayerList playerList = new CPlayerList();
 
