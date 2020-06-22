@@ -26,7 +26,7 @@ namespace RapChessGui
 			chart1.Series.Clear();
 			CData.playerList.Sort();
 			foreach (CPlayer player in CData.playerList.list)
-				if (player.hisElo.list.Count > 1)
+				if (player.tournament)
 				{
 					string pn = $"{player.name} ({player.elo})";
 					chart1.Series.Add(pn);
@@ -34,6 +34,15 @@ namespace RapChessGui
 					chart1.Series[pn].BorderWidth = 2;
 					CData.HisToPoints(player.hisElo, chart1.Series[pn].Points);
 				}
+		}
+
+		private void FormHisP_FormClosing(object sender, FormClosingEventArgs e)
+		{
+			if (e.CloseReason != CloseReason.FormOwnerClosing)
+			{
+				Hide();
+				e.Cancel = true;
+			}
 		}
 	}
 }

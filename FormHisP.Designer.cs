@@ -76,6 +76,7 @@
 			this.ShowInTaskbar = false;
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
 			this.Text = "Player tournament history";
+			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormHisP_FormClosing);
 			this.Shown += new System.EventHandler(this.FormHisP_Shown);
 			((System.ComponentModel.ISupportInitialize)(this.chart1)).EndInit();
 			this.ResumeLayout(false);

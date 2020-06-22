@@ -512,8 +512,8 @@
 			// groupBox2
 			// 
 			this.groupBox2.Controls.Add(this.nudValue);
-			this.groupBox2.Controls.Add(this.cbBook);
 			this.groupBox2.Controls.Add(this.cbMode);
+			this.groupBox2.Controls.Add(this.cbBook);
 			this.groupBox2.Controls.Add(this.cbEngine);
 			this.groupBox2.Controls.Add(this.cbComputer);
 			this.groupBox2.Dock = System.Windows.Forms.DockStyle.Top;
@@ -552,7 +552,7 @@
 			this.cbBook.Dock = System.Windows.Forms.DockStyle.Top;
 			this.cbBook.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.cbBook.FormattingEnabled = true;
-			this.cbBook.Location = new System.Drawing.Point(3, 79);
+			this.cbBook.Location = new System.Drawing.Point(3, 58);
 			this.cbBook.Name = "cbBook";
 			this.cbBook.Size = new System.Drawing.Size(346, 21);
 			this.cbBook.Sorted = true;
@@ -572,7 +572,7 @@
             "Nodes",
             "Standard",
             "Time"});
-			this.cbMode.Location = new System.Drawing.Point(3, 58);
+			this.cbMode.Location = new System.Drawing.Point(3, 79);
 			this.cbMode.Name = "cbMode";
 			this.cbMode.Size = new System.Drawing.Size(346, 21);
 			this.cbMode.Sorted = true;
@@ -980,8 +980,8 @@
 			// groupBox6
 			// 
 			this.groupBox6.Controls.Add(this.nudValue2);
-			this.groupBox6.Controls.Add(this.cbBook2);
 			this.groupBox6.Controls.Add(this.cbMode2);
+			this.groupBox6.Controls.Add(this.cbBook2);
 			this.groupBox6.Controls.Add(this.cbEngine2);
 			this.groupBox6.Dock = System.Windows.Forms.DockStyle.Top;
 			this.groupBox6.Location = new System.Drawing.Point(0, 108);
@@ -1016,7 +1016,7 @@
 			this.cbBook2.Dock = System.Windows.Forms.DockStyle.Top;
 			this.cbBook2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.cbBook2.FormattingEnabled = true;
-			this.cbBook2.Location = new System.Drawing.Point(3, 58);
+			this.cbBook2.Location = new System.Drawing.Point(3, 37);
 			this.cbBook2.Name = "cbBook2";
 			this.cbBook2.Size = new System.Drawing.Size(352, 21);
 			this.cbBook2.Sorted = true;
@@ -1033,7 +1033,7 @@
             "Nodes",
             "Standard",
             "Time"});
-			this.cbMode2.Location = new System.Drawing.Point(3, 37);
+			this.cbMode2.Location = new System.Drawing.Point(3, 58);
 			this.cbMode2.Name = "cbMode2";
 			this.cbMode2.Size = new System.Drawing.Size(352, 21);
 			this.cbMode2.Sorted = true;
@@ -1056,8 +1056,8 @@
 			// groupBox5
 			// 
 			this.groupBox5.Controls.Add(this.nudValue1);
-			this.groupBox5.Controls.Add(this.cbBook1);
 			this.groupBox5.Controls.Add(this.cbMode1);
+			this.groupBox5.Controls.Add(this.cbBook1);
 			this.groupBox5.Controls.Add(this.cbEngine1);
 			this.groupBox5.Dock = System.Windows.Forms.DockStyle.Top;
 			this.groupBox5.Location = new System.Drawing.Point(0, 0);
@@ -1092,7 +1092,7 @@
 			this.cbBook1.Dock = System.Windows.Forms.DockStyle.Top;
 			this.cbBook1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.cbBook1.FormattingEnabled = true;
-			this.cbBook1.Location = new System.Drawing.Point(3, 58);
+			this.cbBook1.Location = new System.Drawing.Point(3, 37);
 			this.cbBook1.Name = "cbBook1";
 			this.cbBook1.Size = new System.Drawing.Size(352, 21);
 			this.cbBook1.Sorted = true;
@@ -1109,7 +1109,7 @@
             "Nodes",
             "Standard",
             "Time"});
-			this.cbMode1.Location = new System.Drawing.Point(3, 37);
+			this.cbMode1.Location = new System.Drawing.Point(3, 58);
 			this.cbMode1.Name = "cbMode1";
 			this.cbMode1.Size = new System.Drawing.Size(352, 21);
 			this.cbMode1.Sorted = true;
@@ -1902,8 +1902,8 @@
 			// groupBox4
 			// 
 			this.groupBox4.Controls.Add(this.nudTeacher);
-			this.groupBox4.Controls.Add(this.cbTeacherBook);
 			this.groupBox4.Controls.Add(this.cbTeacherMode);
+			this.groupBox4.Controls.Add(this.cbTeacherBook);
 			this.groupBox4.Controls.Add(this.cbTeacherEngine);
 			this.groupBox4.Dock = System.Windows.Forms.DockStyle.Top;
 			this.groupBox4.Location = new System.Drawing.Point(3, 108);
@@ -1939,7 +1939,7 @@
 			this.cbTeacherBook.Dock = System.Windows.Forms.DockStyle.Top;
 			this.cbTeacherBook.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.cbTeacherBook.FormattingEnabled = true;
-			this.cbTeacherBook.Location = new System.Drawing.Point(3, 58);
+			this.cbTeacherBook.Location = new System.Drawing.Point(3, 37);
 			this.cbTeacherBook.Name = "cbTeacherBook";
 			this.cbTeacherBook.Size = new System.Drawing.Size(346, 21);
 			this.cbTeacherBook.Sorted = true;
@@ -1957,7 +1957,7 @@
             "Nodes",
             "Standard",
             "Time"});
-			this.cbTeacherMode.Location = new System.Drawing.Point(3, 37);
+			this.cbTeacherMode.Location = new System.Drawing.Point(3, 58);
 			this.cbTeacherMode.Name = "cbTeacherMode";
 			this.cbTeacherMode.Size = new System.Drawing.Size(346, 21);
 			this.cbTeacherMode.Sorted = true;
@@ -1980,8 +1980,8 @@
 			// groupBox3
 			// 
 			this.groupBox3.Controls.Add(this.nudTrained);
-			this.groupBox3.Controls.Add(this.cbTrainedBook);
 			this.groupBox3.Controls.Add(this.cbTrainedMode);
+			this.groupBox3.Controls.Add(this.cbTrainedBook);
 			this.groupBox3.Controls.Add(this.cbTrainedEngine);
 			this.groupBox3.Dock = System.Windows.Forms.DockStyle.Top;
 			this.groupBox3.Location = new System.Drawing.Point(3, 3);
@@ -2017,7 +2017,7 @@
 			this.cbTrainedBook.Dock = System.Windows.Forms.DockStyle.Top;
 			this.cbTrainedBook.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.cbTrainedBook.FormattingEnabled = true;
-			this.cbTrainedBook.Location = new System.Drawing.Point(3, 58);
+			this.cbTrainedBook.Location = new System.Drawing.Point(3, 37);
 			this.cbTrainedBook.Name = "cbTrainedBook";
 			this.cbTrainedBook.Size = new System.Drawing.Size(346, 21);
 			this.cbTrainedBook.Sorted = true;
@@ -2035,7 +2035,7 @@
             "Nodes",
             "Standard",
             "Time"});
-			this.cbTrainedMode.Location = new System.Drawing.Point(3, 37);
+			this.cbTrainedMode.Location = new System.Drawing.Point(3, 58);
 			this.cbTrainedMode.Name = "cbTrainedMode";
 			this.cbTrainedMode.Size = new System.Drawing.Size(346, 21);
 			this.cbTrainedMode.Sorted = true;
@@ -2237,21 +2237,21 @@
 			// booksToolStripMenuItem1
 			// 
 			this.booksToolStripMenuItem1.Name = "booksToolStripMenuItem1";
-			this.booksToolStripMenuItem1.Size = new System.Drawing.Size(115, 22);
+			this.booksToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
 			this.booksToolStripMenuItem1.Text = "Books";
 			this.booksToolStripMenuItem1.Click += new System.EventHandler(this.booksToolStripMenuItem1_Click);
 			// 
 			// enginesToolStripMenuItem
 			// 
 			this.enginesToolStripMenuItem.Name = "enginesToolStripMenuItem";
-			this.enginesToolStripMenuItem.Size = new System.Drawing.Size(115, 22);
+			this.enginesToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
 			this.enginesToolStripMenuItem.Text = "Engines";
 			this.enginesToolStripMenuItem.Click += new System.EventHandler(this.enginesToolStripMenuItem_Click);
 			// 
 			// playersToolStripMenuItem1
 			// 
 			this.playersToolStripMenuItem1.Name = "playersToolStripMenuItem1";
-			this.playersToolStripMenuItem1.Size = new System.Drawing.Size(115, 22);
+			this.playersToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
 			this.playersToolStripMenuItem1.Text = "Players";
 			this.playersToolStripMenuItem1.Click += new System.EventHandler(this.playersToolStripMenuItem1_Click);
 			// 

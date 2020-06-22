@@ -26,7 +26,7 @@ namespace RapChessGui
 			chart1.Series.Clear();
 			CData.engineList.Sort();
 			foreach (CEngine engine in CData.engineList.list)
-				if (engine.hisElo.list.Count > 1)
+				if (engine.tournament)
 				{
 					string en = $"{engine.name} ({engine.elo}) {engine.hisElo.Last()}";
 					chart1.Series.Add(en);
@@ -35,5 +35,15 @@ namespace RapChessGui
 					CData.HisToPoints(engine.hisElo, chart1.Series[en].Points);
 				}
 		}
+
+		private void FormHisE_FormClosing(object sender, FormClosingEventArgs e)
+		{
+			if (e.CloseReason != CloseReason.FormOwnerClosing)
+			{
+				Hide();
+				e.Cancel = true;
+			}
+		}
+
 	}
 }

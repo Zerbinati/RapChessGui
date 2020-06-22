@@ -1904,6 +1904,60 @@ namespace RapChessGui
 
 		#endregion
 
+		#region show
+
+		private void enginesToolStripMenuItem2_Click(object sender, EventArgs e)
+		{
+			if (formHisE.Visible)
+				formHisE.Focus();
+			else
+				formHisE.Show(this);
+		}
+
+		private void playersToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			if (formHisP.Visible)
+				formHisP.Focus();
+			else
+				formHisP.Show(this);
+		}
+
+		private void enginesToolStripMenuItem1_Click(object sender, EventArgs e)
+		{
+			if (formLog.Visible)
+				formLog.Focus();
+			else
+				formLog.Show(this);
+		}
+
+		private void gamesToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			if (formPgn.Visible)
+				formPgn.Focus();
+			else
+				formPgn.Show(this);
+		}
+
+		private void booksToolStripMenuItem1_Click(object sender, EventArgs e)
+		{
+			FormBook.This.ShowDialog(this);
+			Reset();
+		}
+
+		private void playersToolStripMenuItem1_Click(object sender, EventArgs e)
+		{
+			FormPlayer.This.ShowDialog(this);
+			Reset();
+		}
+
+		private void enginesToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			FormEngine.This.ShowDialog(this);
+			Reset();
+		}
+
+		#endregion
+
 		#region events
 
 		private void Timer1_Tick_1(object sender, EventArgs e)
@@ -2152,24 +2206,6 @@ namespace RapChessGui
 			ShowAuto();
 		}
 
-		private void booksToolStripMenuItem1_Click(object sender, EventArgs e)
-		{
-			FormBook.This.ShowDialog(this);
-			Reset();
-		}
-
-		private void playersToolStripMenuItem1_Click(object sender, EventArgs e)
-		{
-			FormPlayer.This.ShowDialog(this);
-			Reset();
-		}
-
-		private void enginesToolStripMenuItem_Click(object sender, EventArgs e)
-		{
-			FormEngine.This.ShowDialog(this);
-			Reset();
-		}
-
 		private void nudValue_ValueChanged(object sender, EventArgs e)
 		{
 			CModeGame.modeValue.SetValue((int)nudValue.Value);
@@ -2383,38 +2419,6 @@ namespace RapChessGui
 		private void lvPlayer_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			ShowHistoryTourP();
-		}
-
-		private void enginesToolStripMenuItem2_Click(object sender, EventArgs e)
-		{
-			if (formHisE.Visible)
-				formHisE.Focus();
-			else
-				formHisE.ShowDialog(this);
-		}
-
-		private void playersToolStripMenuItem_Click(object sender, EventArgs e)
-		{
-			if (formHisP.Visible)
-				formHisP.Focus();
-			else
-				formHisP.ShowDialog(this);
-		}
-
-		private void enginesToolStripMenuItem1_Click(object sender, EventArgs e)
-		{
-			if (formLog.Visible)
-				formLog.Focus();
-			else
-				formLog.Show(this);
-		}
-
-		private void gamesToolStripMenuItem_Click(object sender, EventArgs e)
-		{
-			if (formPgn.Visible)
-				formPgn.Focus();
-			else
-				formPgn.Show(this);
 		}
 
 		#endregion
