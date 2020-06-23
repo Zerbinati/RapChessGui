@@ -21,27 +21,30 @@ namespace RapChessGui
 			This = this;
 		}
 
-		private void FormHisP_Shown(object sender, EventArgs e)
-		{
-			chart1.Series.Clear();
-			CData.playerList.Sort();
-			foreach (CPlayer player in CData.playerList.list)
-				if (player.tournament)
-				{
-					string pn = $"{player.name} ({player.elo})";
-					chart1.Series.Add(pn);
-					chart1.Series[pn].ChartType = SeriesChartType.Line;
-					chart1.Series[pn].BorderWidth = 2;
-					CData.HisToPoints(player.hisElo, chart1.Series[pn].Points);
-				}
-		}
-
 		private void FormHisP_FormClosing(object sender, FormClosingEventArgs e)
 		{
 			if (e.CloseReason != CloseReason.FormOwnerClosing)
 			{
 				Hide();
 				e.Cancel = true;
+			}
+		}
+
+		private void FormHisP_VisibleChanged(object sender, EventArgs e)
+		{
+			if (Visible == true)
+			{
+				chart1.Series.Clear();
+				CData.playerList.Sort();
+				foreach (CPlayer player in CData.playerList.list)
+					if (player.tournament)
+					{
+						string pn = $"{player.name} ({player.elo})";
+						chart1.Series.Add(pn);
+						chart1.Series[pn].ChartType = SeriesChartType.Line;
+						chart1.Series[pn].BorderWidth = 2;
+						CData.HisToPoints(player.hisElo, chart1.Series[pn].Points);
+					}
 			}
 		}
 	}

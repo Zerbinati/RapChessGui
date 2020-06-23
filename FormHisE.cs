@@ -23,17 +23,7 @@ namespace RapChessGui
 
 		private void FormHisE_Shown(object sender, EventArgs e)
 		{
-			chart1.Series.Clear();
-			CData.engineList.Sort();
-			foreach (CEngine engine in CData.engineList.list)
-				if (engine.tournament)
-				{
-					string en = $"{engine.name} ({engine.elo}) {engine.hisElo.Last()}";
-					chart1.Series.Add(en);
-					chart1.Series[en].ChartType = SeriesChartType.Line;
-					chart1.Series[en].BorderWidth = 2;
-					CData.HisToPoints(engine.hisElo, chart1.Series[en].Points);
-				}
+			
 		}
 
 		private void FormHisE_FormClosing(object sender, FormClosingEventArgs e)
@@ -45,5 +35,22 @@ namespace RapChessGui
 			}
 		}
 
+		private void FormHisE_VisibleChanged(object sender, EventArgs e)
+		{
+			if (Visible == true)
+			{
+				chart1.Series.Clear();
+				CData.engineList.Sort();
+				foreach (CEngine engine in CData.engineList.list)
+					if (engine.tournament)
+					{
+						string en = $"{engine.name} ({engine.elo})";
+						chart1.Series.Add(en);
+						chart1.Series[en].ChartType = SeriesChartType.Line;
+						chart1.Series[en].BorderWidth = 2;
+						CData.HisToPoints(engine.hisElo, chart1.Series[en].Points);
+					}
+			}
+		}
 	}
 }

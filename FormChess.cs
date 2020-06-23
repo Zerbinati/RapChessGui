@@ -16,7 +16,7 @@ namespace RapChessGui
 	{
 		[DllImport("gdi32.dll")]
 		private static extern IntPtr AddFontMemResourceEx(IntPtr pbFont, uint cbFont, IntPtr pdv, [In] ref uint pcFonts);
-
+		bool showInfo = false;
 		public static FormChess This;
 		public static bool boardRotate;
 		List<int> moves = new List<int>();
@@ -33,7 +33,7 @@ namespace RapChessGui
 		readonly FormHisP formHisP = new FormHisP();
 		readonly FormHisE formHisE = new FormHisE();
 
-		#region main
+		#region initiation
 
 		public FormChess()
 		{
@@ -71,6 +71,164 @@ namespace RapChessGui
 			GameStart();
 			toolTip1.Active = FormOptions.ShowTips();
 		}
+
+		void IniCreate()
+		{
+			CData.engineList.LoadFromIni();
+			if (CData.engineList.list.Count == 0)
+			{
+				CEngine e;
+				e = new CEngine(CEngineList.def);
+				e.file = "RapChessCs.exe";
+				e.elo = "1100";
+				CData.engineList.Add(e);
+				e = new CEngine("RapSimple CS");
+				e.file = "RapSimpleCs.exe";
+				e.elo = "1000";
+				CData.engineList.Add(e);
+				e = new CEngine("RapShort CS");
+				e.file = "RapShortCs.exe";
+				e.elo = "900";
+				CData.engineList.Add(e);
+				CData.engineList.SaveToIni();
+			}
+			CData.bookList.LoadFromIni();
+			if (CData.bookList.list.Count == 0)
+			{
+				CBook b;
+				b = new CBook("Eco");
+				b.file = "BookReaderUci.exe";
+				b.parameters = "eco.uci";
+				CData.bookList.Add(b);
+				b = new CBook("Tiny");
+				b.file = "BookReaderUci.exe";
+				b.parameters = "tiny.uci";
+				CData.bookList.Add(b);
+				b = new CBook("Random1");
+				b.file = "BookReaderUci.exe";
+				b.parameters = "random1.uci";
+				CData.bookList.Add(b);
+				b = new CBook("Random2");
+				b.file = "BookReaderUci.exe";
+				b.parameters = "random2.uci";
+				CData.bookList.Add(b);
+				for (int n = 1; n < 10; n++)
+				{
+					int v = n * 10;
+					b = new CBook($"Rand{v}");
+					b.file = "BookReaderRnd.exe";
+					b.parameters = v.ToString();
+					CData.bookList.Add(b);
+				}
+				CData.bookList.SaveToIni();
+			}
+			CData.playerList.LoadFromIni();
+			if (CData.playerList.list.Count == 0)
+			{
+				CPlayer p;
+				p = new CPlayer("Human");
+				p.tournament = false;
+				p.modeValue.value = 0;
+				p.eloNew = 500;
+				p.elo = p.eloNew.ToString();
+				CData.playerList.Add(p);
+				p = new CPlayer();
+				p.engine = "RapChess CS";
+				p.book = "Rand90";
+				p.modeValue.mode = "Time";
+				p.modeValue.value = 10;
+				p.elo = "200";
+				CData.playerList.Add(p);
+				p = new CPlayer();
+				p.engine = "RapChess CS";
+				p.book = "Rand70";
+				p.modeValue.mode = "Time";
+				p.modeValue.value = 10;
+				p.elo = "400";
+				CData.playerList.Add(p);
+				p = new CPlayer();
+				p.engine = "RapChess CS";
+				p.book = "Rand50";
+				p.modeValue.mode = "Time";
+				p.modeValue.value = 10;
+				p.elo = "600";
+				CData.playerList.Add(p);
+				p = new CPlayer();
+				p.engine = "RapChess CS";
+				p.book = "Rand30";
+				p.modeValue.mode = "Time";
+				p.modeValue.value = 10;
+				p.elo = "800";
+				CData.playerList.Add(p);
+				p = new CPlayer();
+				p.engine = "RapChess CS";
+				p.book = "Rand10";
+				p.modeValue.mode = "Time";
+				p.modeValue.value = 10;
+				p.elo = "1000";
+				CData.playerList.Add(p);
+				p = new CPlayer();
+				p.engine = "RapShort CS";
+				p.book = "Eco";
+				p.modeValue.mode = "Time";
+				p.modeValue.value = 10;
+				p.elo = "500";
+				CData.playerList.Add(p);
+				p = new CPlayer();
+				p.engine = "RapSimple CS";
+				p.book = "Eco";
+				p.modeValue.mode = "Time";
+				p.modeValue.value = 10;
+				p.elo = "1000";
+				CData.playerList.Add(p);
+				p = new CPlayer();
+				p.engine = "RapChess CS";
+				p.book = "Eco";
+				p.modeValue.mode = "Time";
+				p.modeValue.value = 10;
+				p.elo = "1200";
+				CData.playerList.Add(p);
+				CData.playerList.SaveToIni();
+			}
+		}
+
+		void IniLoad()
+		{
+			Width = RapIni.ReadInt("position>width", Width);
+			Height = RapIni.ReadInt("position>height", Height);
+			if (Width < 600)
+				Width = 600;
+			if (Height < 600)
+				Height = 600;
+			int x = RapIni.ReadInt("position>x", Location.X);
+			int y = RapIni.ReadInt("position>y", Location.Y);
+			if (x < 0)
+				x = 0;
+			if (y < 0)
+				y = 0;
+			Location = new Point(x, y);
+			if (RapIni.ReadBool("position>maximized", false))
+				WindowState = FormWindowState.Maximized;
+			SplitLoadFromIni(splitContainerMain);
+			SplitLoadFromIni(splitContainerBoard);
+			SplitLoadFromIni(splitContainerChart);
+			SplitLoadFromIni(splitContainerTourE);
+			SplitLoadFromIni(splitContainerTourP);
+			//CData.bookList.LoadFromIni();
+			///CData.engineList.LoadFromIni();
+			//CData.playerList.LoadFromIni();
+			CModeGame.LoadFromIni();
+			CModeMatch.LoadFromIni();
+			CModeTournamentE.LoadFromIni();
+			CModeTournamentP.LoadFromIni();
+			CModeTraining.LoadFromIni();
+			CPlayer player = CData.playerList.GetPlayer("Human");
+			CData.HisToPoints(player.hisElo, chartGame.Series[0].Points);
+		}
+
+		#endregion
+
+		#region main
 
 		public static void SetGameState(CGameState gs)
 		{
@@ -302,180 +460,6 @@ namespace RapChessGui
 				sc.SplitterDistance = Convert.ToInt32(p);
 		}
 
-		private void FormChess_FormClosed(object sender, FormClosedEventArgs e)
-		{
-			bool maximized = WindowState == FormWindowState.Maximized;
-			int width = maximized ? RestoreBounds.Width : Width;
-			int height = maximized ? RestoreBounds.Height : Height;
-			int x = maximized ? RestoreBounds.X : Location.X;
-			int y = maximized ? RestoreBounds.Y : Location.Y;
-			RapIni.Write("position>maximized", maximized.ToString());
-			RapIni.Write("position>width", width.ToString());
-			RapIni.Write("position>height", height.ToString());
-			RapIni.Write("position>x", x.ToString());
-			RapIni.Write("position>y", y.ToString());
-			SplitSaveToIni(splitContainerMain);
-			SplitSaveToIni(splitContainerBoard);
-			SplitSaveToIni(splitContainerChart);
-			SplitSaveToIni(splitContainerTourE);
-			SplitSaveToIni(splitContainerTourP);
-			GamerList.Terminate();
-		}
-
-		void IniCreate()
-		{
-			CData.engineList.LoadFromIni();
-			if (CData.engineList.list.Count == 0)
-			{
-				CEngine e;
-				e = new CEngine(CEngineList.def);
-				e.file = "RapChessCs.exe";
-				e.elo = "1100";
-				CData.engineList.Add(e);
-				e = new CEngine("RapSimple CS");
-				e.file = "RapSimpleCs.exe";
-				e.elo = "1000";
-				CData.engineList.Add(e);
-				e = new CEngine("RapShort CS");
-				e.file = "RapShortCs.exe";
-				e.elo = "900";
-				CData.engineList.Add(e);
-				CData.engineList.SaveToIni();
-			}
-			CData.bookList.LoadFromIni();
-			if (CData.bookList.list.Count == 0)
-			{
-				CBook b;
-				b = new CBook("Eco");
-				b.file = "BookReaderUci.exe";
-				b.parameters = "eco.uci";
-				CData.bookList.Add(b);
-				b = new CBook("Tiny");
-				b.file = "BookReaderUci.exe";
-				b.parameters = "tiny.uci";
-				CData.bookList.Add(b);
-				b = new CBook("Random1");
-				b.file = "BookReaderUci.exe";
-				b.parameters = "random1.uci";
-				CData.bookList.Add(b);
-				b = new CBook("Random2");
-				b.file = "BookReaderUci.exe";
-				b.parameters = "random2.uci";
-				CData.bookList.Add(b);
-				for (int n = 1; n < 10; n++)
-				{
-					int v = n * 10;
-					b = new CBook($"Rand{v}");
-					b.file = "BookReaderRnd.exe";
-					b.parameters = v.ToString();
-					CData.bookList.Add(b);
-				}
-				CData.bookList.SaveToIni();
-			}
-			CData.playerList.LoadFromIni();
-			if (CData.playerList.list.Count == 0)
-			{
-				CPlayer p;
-				p = new CPlayer("Human");
-				p.tournament = false;
-				p.modeValue.value = 0;
-				p.eloNew = 500;
-				p.elo = p.eloNew.ToString();
-				CData.playerList.Add(p);
-				p = new CPlayer();
-				p.engine = "RapChess CS";
-				p.book = "Rand90";
-				p.modeValue.mode = "Time";
-				p.modeValue.value = 10;
-				p.elo = "200";
-				CData.playerList.Add(p);
-				p = new CPlayer();
-				p.engine = "RapChess CS";
-				p.book = "Rand70";
-				p.modeValue.mode = "Time";
-				p.modeValue.value = 10;
-				p.elo = "400";
-				CData.playerList.Add(p);
-				p = new CPlayer();
-				p.engine = "RapChess CS";
-				p.book = "Rand50";
-				p.modeValue.mode = "Time";
-				p.modeValue.value = 10;
-				p.elo = "600";
-				CData.playerList.Add(p);
-				p = new CPlayer();
-				p.engine = "RapChess CS";
-				p.book = "Rand30";
-				p.modeValue.mode = "Time";
-				p.modeValue.value = 10;
-				p.elo = "800";
-				CData.playerList.Add(p);
-				p = new CPlayer();
-				p.engine = "RapChess CS";
-				p.book = "Rand10";
-				p.modeValue.mode = "Time";
-				p.modeValue.value = 10;
-				p.elo = "1000";
-				CData.playerList.Add(p);
-				p = new CPlayer();
-				p.engine = "RapShort CS";
-				p.book = "Eco";
-				p.modeValue.mode = "Time";
-				p.modeValue.value = 10;
-				p.elo = "500";
-				CData.playerList.Add(p);
-				p = new CPlayer();
-				p.engine = "RapSimple CS";
-				p.book = "Eco";
-				p.modeValue.mode = "Time";
-				p.modeValue.value = 10;
-				p.elo = "1000";
-				CData.playerList.Add(p);
-				p = new CPlayer();
-				p.engine = "RapChess CS";
-				p.book = "Eco";
-				p.modeValue.mode = "Time";
-				p.modeValue.value = 10;
-				p.elo = "1200";
-				CData.playerList.Add(p);
-				CData.playerList.SaveToIni();
-			}
-		}
-
-		void IniLoad()
-		{
-			Width = RapIni.ReadInt("position>width", Width);
-			Height = RapIni.ReadInt("position>height", Height);
-			if (Width < 600)
-				Width = 600;
-			if (Height < 600)
-				Height = 600;
-			int x = RapIni.ReadInt("position>x", Location.X);
-			int y = RapIni.ReadInt("position>y", Location.Y);
-			if (x < 0)
-				x = 0;
-			if (y < 0)
-				y = 0;
-			Location = new Point(x, y);
-			if (RapIni.ReadBool("position>maximized", false))
-				WindowState = FormWindowState.Maximized;
-			SplitLoadFromIni(splitContainerMain);
-			SplitLoadFromIni(splitContainerBoard);
-			SplitLoadFromIni(splitContainerChart);
-			SplitLoadFromIni(splitContainerTourE);
-			SplitLoadFromIni(splitContainerTourP);
-			CData.bookList.LoadFromIni();
-			CData.engineList.LoadFromIni();
-			CData.playerList.LoadFromIni();
-			CModeGame.LoadFromIni();
-			CModeMatch.LoadFromIni();
-			CModeTournamentE.LoadFromIni();
-			CModeTournamentP.LoadFromIni();
-			CModeTraining.LoadFromIni();
-			CPlayer player = CData.playerList.GetPlayer("Human");
-			CData.HisToPoints(player.hisElo, chartGame.Series[0].Points);
-		}
-
 		public void BoardPrepare()
 		{
 			SetBoardRotate();
@@ -525,8 +509,11 @@ namespace RapChessGui
 				Chess.UnmakeMove(moves[n]);
 			if (pv != "")
 				g.pv = pv;
-			tssMoves.ForeColor = Color.Gainsboro;
-			tssMoves.Text = pv;
+			if (!showInfo)
+			{
+				tssMoves.ForeColor = Color.Gainsboro;
+				tssMoves.Text = pv;
+			}
 			AddLines(g);
 		}
 
@@ -724,11 +711,11 @@ namespace RapChessGui
 				else
 				{
 					string book = protocol == "Book" ? "book " : "";
-					Color col = gamer.white ? Color.DimGray: Color.Black;
+					Color col = gamer.white ? Color.DimGray : Color.Black;
 					FormLog.AppendText($"{GetTimeElapsed()} ", Color.Green);
 					FormLog.AppendText($"{book}{gamer.player.name}", col);
 					FormLog.AppendText($" > {m.msg}\n", Color.DarkBlue);
-					if ((protocol == "Uci")||(protocol == "Book"))
+					if ((protocol == "Uci") || (protocol == "Book"))
 						GetMessageUci(gamer, m.msg);
 					if (protocol == "Winboard")
 						GetMessageXb(gamer, m.msg);
@@ -776,8 +763,11 @@ namespace RapChessGui
 		public void AddBook(string emo)
 		{
 			GamerList.GamerCur().usedBook++;
-			tssMoves.ForeColor = Color.Aquamarine;
-			tssMoves.Text = $"book {emo}";
+			if (!showInfo)
+			{
+				tssMoves.ForeColor = Color.Aquamarine;
+				tssMoves.Text = $"book {emo}";
+			}
 		}
 
 		void SetMode(CMode mode)
@@ -1050,10 +1040,17 @@ namespace RapChessGui
 			CHistory.AddMove(piece, gmo, emo, san);
 			MoveToLvMoves(CHistory.moveList.Count - 1, piece, CHistory.LastNotation());
 			CEco eco = EcoList.GetEco(Chess.GetEpd());
+			showInfo = false;
 			if (eco != null)
 			{
 				labEco.Text = eco.name;
 				labEco.ForeColor = Color.Brown;
+				if (cg.IsHuman())
+				{
+					showInfo = true;
+					tssMoves.ForeColor = Color.Lime;
+					tssMoves.Text = eco.name;
+				}
 			}
 			else
 				labEco.ForeColor = Color.Black;
@@ -1959,6 +1956,26 @@ namespace RapChessGui
 		#endregion
 
 		#region events
+
+		private void FormChess_FormClosed(object sender, FormClosedEventArgs e)
+		{
+			bool maximized = WindowState == FormWindowState.Maximized;
+			int width = maximized ? RestoreBounds.Width : Width;
+			int height = maximized ? RestoreBounds.Height : Height;
+			int x = maximized ? RestoreBounds.X : Location.X;
+			int y = maximized ? RestoreBounds.Y : Location.Y;
+			RapIni.Write("position>maximized", maximized.ToString());
+			RapIni.Write("position>width", width.ToString());
+			RapIni.Write("position>height", height.ToString());
+			RapIni.Write("position>x", x.ToString());
+			RapIni.Write("position>y", y.ToString());
+			SplitSaveToIni(splitContainerMain);
+			SplitSaveToIni(splitContainerBoard);
+			SplitSaveToIni(splitContainerChart);
+			SplitSaveToIni(splitContainerTourE);
+			SplitSaveToIni(splitContainerTourP);
+			GamerList.Terminate();
+		}
 
 		private void Timer1_Tick_1(object sender, EventArgs e)
 		{
