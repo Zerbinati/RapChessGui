@@ -13,6 +13,7 @@ namespace RapChessGui
 		public string name;
 		public string fen;
 		public string moves;
+		public string continuations;
 	}
 
 	class CEcoList
@@ -52,12 +53,21 @@ namespace RapChessGui
 			return null;
 		}
 
-		public void SaveToFile()
+		public void SaveToUci()
 		{
-			string path = AppDomain.CurrentDomain.BaseDirectory + "Books\\eco.rap";
+			string path = AppDomain.CurrentDomain.BaseDirectory + "Books\\eco.uci";
 			List<string> moves = new List<string>();
 			foreach (CEco eco in list)
 				moves.Add(eco.moves);
+			File.WriteAllLines(path, moves);
+		}
+
+		public void SaveToFile()
+		{
+			string path = AppDomain.CurrentDomain.BaseDirectory + "Books\\eco.tsv";
+			List<string> moves = new List<string>();
+			foreach (CEco eco in list)
+				moves.Add($"{eco.eco}\t{eco.name}\t{eco.fen}\t{eco.moves}\t{eco.continuations}");
 			File.WriteAllLines(path, moves);
 		}
 

@@ -21,11 +21,6 @@ namespace RapChessGui
 			This = this;
 		}
 
-		private void FormHisE_Shown(object sender, EventArgs e)
-		{
-			
-		}
-
 		private void FormHisE_FormClosing(object sender, FormClosingEventArgs e)
 		{
 			if (e.CloseReason != CloseReason.FormOwnerClosing)

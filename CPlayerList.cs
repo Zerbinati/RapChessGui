@@ -53,6 +53,16 @@ namespace RapChessGui
 			return Convert.ToInt32(elo) - Convert.ToInt32(eloOld);
 		}
 
+		public bool IsComputer()
+		{
+			return engine != "Human";
+		}
+
+		public bool IsHuman()
+		{
+			return engine == "Human";
+		}
+
 		public void SetPlayer(string name)
 		{
 			CPlayer p = CData.playerList.GetPlayer(name);
@@ -162,13 +172,26 @@ namespace RapChessGui
 
 		public CPlayer GetPlayerAuto()
 		{
-			CPlayer ph = GetPlayer("Human");
-			if(ph == null)
-				ph = new CPlayer("Human");
-			CPlayer pe = GetPlayerElo(ph);
-			CPlayer pc = new CPlayer(pe.name);
-			pc.SetPlayer(pe.name);
-			return pc;
+			CPlayer ph = GetPlayerHuman();
+			return GetPlayerElo(ph);
+		}
+
+		public CPlayer GetPlayerComputer()
+		{
+			Sort();
+			foreach (CPlayer p in list)
+				if (p.IsComputer())
+					return p;
+			return null;
+		}
+
+		public CPlayer GetPlayerHuman()
+		{
+			Sort();
+			foreach (CPlayer p in list)
+				if (p.IsHuman())
+					return p;
+			return null;
 		}
 
 		CPlayer GetPlayerElo(CPlayer player)

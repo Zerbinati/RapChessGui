@@ -123,16 +123,18 @@ namespace RapChessGui
 				CData.bookList.SaveToIni();
 			}
 			CData.playerList.LoadFromIni();
-			if (CData.playerList.list.Count == 0)
+			if (CData.playerList.GetPlayerHuman() == null)
 			{
-				CPlayer p;
-				p = new CPlayer("Human");
+				CPlayer p = new CPlayer("Human");
 				p.tournament = false;
 				p.modeValue.value = 0;
 				p.eloNew = 500;
 				p.elo = p.eloNew.ToString();
 				CData.playerList.Add(p);
-				p = new CPlayer();
+			}
+			if (CData.playerList.GetPlayerComputer() == null)
+			{
+				CPlayer p = new CPlayer();
 				p.engine = "RapChess CS";
 				p.book = "Rand90";
 				p.modeValue.mode = "Time";
@@ -214,15 +216,12 @@ namespace RapChessGui
 			SplitLoadFromIni(splitContainerChart);
 			SplitLoadFromIni(splitContainerTourE);
 			SplitLoadFromIni(splitContainerTourP);
-			//CData.bookList.LoadFromIni();
-			///CData.engineList.LoadFromIni();
-			//CData.playerList.LoadFromIni();
 			CModeGame.LoadFromIni();
 			CModeMatch.LoadFromIni();
 			CModeTournamentE.LoadFromIni();
 			CModeTournamentP.LoadFromIni();
 			CModeTraining.LoadFromIni();
-			CPlayer player = CData.playerList.GetPlayer("Human");
+			CPlayer player = CData.playerList.GetPlayerHuman();
 			CData.HisToPoints(player.hisElo, chartGame.Series[0].Points);
 		}
 
@@ -831,7 +830,7 @@ namespace RapChessGui
 		bool ShowLastGame()
 		{
 			bool result = false;
-			CPlayer hu = CData.playerList.GetPlayer("Human");
+			CPlayer hu = CData.playerList.GetPlayerHuman();
 			int eloCur = Convert.ToInt32(hu.elo);
 			int eloDel = hu.eloNew - eloCur;
 			if (hu.eloNew > eloCur)
@@ -1525,7 +1524,7 @@ namespace RapChessGui
 			lvMoves.Items.Clear();
 			lvMovesW.Items.Clear();
 			lvMovesB.Items.Clear();
-			GamerList.gamer[0].SetPlayer("Human");
+			GamerList.gamer[0].SetPlayer(CData.playerList.GetPlayerHuman());
 			CPlayer pc = new CPlayer(cbComputer.Text);
 			if (cbComputer.Text == "Custom")
 			{
@@ -1559,9 +1558,9 @@ namespace RapChessGui
 			}
 			else
 				CModeGame.rotate = true;
-			if (GamerList.GamerCur().player.engine == "Human")
+			if (GamerList.GamerCur().player.IsHuman())
 				moves = Chess.GenerateValidMoves();
-			CPlayer ph = CData.playerList.GetPlayer("Human");
+			CPlayer ph = CData.playerList.GetPlayerHuman();
 			int elo = Convert.ToInt32(ph.elo);
 			ph.eloNew = elo;
 			ph.eloOld = elo;
@@ -1757,7 +1756,7 @@ namespace RapChessGui
 			lvPlayer.Items.Clear();
 			CModeTournamentP.FillList();
 			foreach (CPlayer p in CModeTournamentP.playerList.list)
-				if (p.engine != "Human")
+				if (p.IsComputer())
 				{
 					int del = p.GetDeltaElo();
 					ListViewItem lvi = new ListViewItem(new[] { p.name, p.elo, del.ToString().ToString() });
@@ -2329,7 +2328,7 @@ namespace RapChessGui
 
 		private void butResignation_Click(object sender, EventArgs e)
 		{
-			CPlayer hu = CData.playerList.GetPlayer("Human");
+			CPlayer hu = CData.playerList.GetPlayerHuman();
 			hu.eloNew = hu.GetEloLess();
 			GameStart();
 		}
