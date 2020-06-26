@@ -25,7 +25,7 @@ namespace RapChessGui
 
 		void SelectReader(string name)
 		{
-			CBook book = CData.bookList.GetBook(name);
+			CBook book = FormChess.bookList.GetBook(name);
 			if (book == null)
 				return;
 			tbReaderName.Text = book.name;
@@ -37,7 +37,7 @@ namespace RapChessGui
 		void UpdateListBox()
 		{
 			listBox1.Items.Clear();
-			foreach (CBook b in CData.bookList.list)
+			foreach (CBook b in FormChess.bookList.list)
 				listBox1.Items.Add(b.name);
 		}
 
@@ -61,7 +61,7 @@ namespace RapChessGui
 
 		private void ButUpdate_Click(object sender, EventArgs e)
 		{
-			CBook book = CData.bookList.GetBook(curBookName);
+			CBook book = FormChess.bookList.GetBook(curBookName);
 			if (book == null)
 				return;
 			CRapIni.This.DeleteKey($"book>{book.name}");
@@ -74,7 +74,7 @@ namespace RapChessGui
 			string name = tbReaderName.Text;
 			CBook reader = new CBook(name);
 			reader.file = cbBookReaderList.Text;
-			CData.bookList.list.Add(reader);
+			FormChess.bookList.list.Add(reader);
 			SaveToIni(reader);
 			MessageBox.Show($"Book reader {reader.name} has been created");
 		}
@@ -82,7 +82,7 @@ namespace RapChessGui
 		private void ButDelete_Click(object sender, EventArgs e)
 		{
 			string userName = tbReaderName.Text;
-			CData.playerList.DeletePlayer(userName);
+			FormChess.playerList.DeletePlayer(userName);
 			UpdateListBox();
 			MessageBox.Show($"Player {userName} has been removed");
 		}

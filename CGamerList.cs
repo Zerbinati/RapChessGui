@@ -48,7 +48,7 @@ namespace RapChessGui
 		public CProcess enginePro = new CProcess();
 		public CBook book = null;
 		public CEngine engine = null;
-		public CPlayer player = null;
+		public CPlayer player = new CPlayer();
 
 		public CGamer()
 		{
@@ -137,16 +137,6 @@ namespace RapChessGui
 		{
 			timer.Start();
 			timerStart = timer.Elapsed.TotalMilliseconds;
-		}
-
-		public bool IsComputer()
-		{
-			return engine != null;
-		}
-
-		public bool IsHuman()
-		{
-			return engine == null;
 		}
 
 		public void Undo()
@@ -400,8 +390,8 @@ namespace RapChessGui
 		public void SetPlayer(CPlayer p)
 		{
 			player = p;
-			book = CData.bookList.GetBook(p.book);
-			engine = CData.engineList.GetEngine(p.engine);
+			book = FormChess.bookList.GetBook(p.book);
+			engine = FormChess.engineList.GetEngine(p.engine);
 			if (book != null)
 				bookPro.SetProgram("Books\\" + book.file, book.parameters);
 			if (engine != null)
@@ -415,7 +405,7 @@ namespace RapChessGui
 
 		public void SetPlayer(string name)
 		{
-			CPlayer p = CData.playerList.GetPlayer(name);
+			CPlayer p = FormChess.playerList.GetPlayer(name);
 			SetPlayer(p);
 		}
 
@@ -443,7 +433,7 @@ namespace RapChessGui
 			cg.isRunning = false;
 			curIndex ^= 1;
 			cg = GamerCur();
-			if (cg.IsHuman())
+			if (cg.player.IsHuman())
 				cg.TimerStart();
 		}
 
@@ -509,9 +499,9 @@ namespace RapChessGui
 
 		public CGamer PlayerHum()
 		{
-			if (gamer[0].IsHuman())
+			if (gamer[0].player.IsHuman())
 				return gamer[0];
-			if (gamer[1].IsHuman())
+			if (gamer[1].player.IsHuman())
 				return gamer[1];
 			return null;
 		}

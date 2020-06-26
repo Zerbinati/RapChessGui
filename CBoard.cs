@@ -77,42 +77,6 @@ namespace RapChessGui
 		public CPiece piece = null;
 	}
 
-	static class CArrow
-	{
-		public static bool visible = false;
-		public static Point a;
-		public static Point b;
-
-		public static void Hide()
-		{
-			visible = false;
-		}
-
-		public static void SetAB(int ax, int ay, int bx, int by)
-		{
-			visible = true;
-			a.X = ax;
-			a.Y = ay;
-			b.X = bx;
-			b.Y = by;
-		}
-
-		public static void SetAB(int a, int b)
-		{
-			int ax = a & 7;
-			int ay = a >> 3;
-			int bx = b & 7;
-			int by = b >> 3;
-			SetAB(ax, ay, bx, by);
-		}
-
-		public static bool Visible()
-		{
-			return visible && ((a.X != b.X) || (a.Y != b.Y));
-		}
-
-	}
-
 	class CBoard
 	{
 		public static bool animated = false;
@@ -125,13 +89,21 @@ namespace RapChessGui
 		public static int sizeW = field * 8 + marginW * 2;
 		public static int sizeH = field * 8 + marginH * 2;
 		public static Bitmap[] background = new Bitmap[2];
-		static Bitmap bmpBoard;
+		public Bitmap bmpBoard;
 		public static Color color;
+		public CArrowList arrowCur = new CArrowList(Color.FromArgb(0x90, 0x10, 0xff, 0x10));
+		public CArrowList arrowEco = new CArrowList(Color.FromArgb(0x90, 0xff, 0x10, 0x10));
 
 		public CBoard()
 		{
 			for (int n = 0; n < 64; n++)
 				list[n] = new CField();
+		}
+
+		public void Clear()
+		{
+			arrowCur.Clear();
+			arrowEco.Clear();
 		}
 
 		public void ColorClear()
@@ -154,19 +126,18 @@ namespace RapChessGui
 			return GetMiddle(p.X, p.Y);
 		}
 
-		public static void RenderArrow(Graphics g)
+		void RenderArrow(CArrow arrow, Graphics g)
 		{
-			if (showArrow && (CArrow.visible))
-			{
-				Bitmap bmpArrow = new Bitmap(bmpBoard);
-				Graphics ga = Graphics.FromImage(bmpArrow);
-				Pen pen = new Pen(Color.FromArgb(0x90, 0x10, 0xff, 0x10), 8);
+				Pen pen = new Pen(arrow.color, 8);
 				pen.StartCap = LineCap.RoundAnchor;
 				pen.EndCap = LineCap.ArrowAnchor;
-				ga.DrawLine(pen, GetMiddle(CArrow.a), GetMiddle(CArrow.b));
-				g.DrawImage(bmpArrow, 0, 0);
-			}
-			else g.DrawImage(bmpBoard, 0, 0);
+				g.DrawLine(pen, GetMiddle(arrow.a), GetMiddle(arrow.b));
+		}
+
+		public void RenderArrow(CArrowList al,Graphics g)
+		{
+			foreach (CArrow a in al.list)
+				RenderArrow(a, g);
 		}
 
 		public static void UpdateField(int index)
@@ -183,7 +154,7 @@ namespace RapChessGui
 			}
 		}
 
-		public static void Fill()
+		public void Fill()
 		{
 			for (int n = 0; n < 64; n++)
 				UpdateField(n);
@@ -265,7 +236,7 @@ namespace RapChessGui
 			outline.Dispose();
 		}
 
-		public static void Resize(int w, int h)
+		public void Resize(int w, int h)
 		{
 			if (w < 0xf) w = 0xf;
 			if (h < 0xf) h = 0xf;
@@ -281,7 +252,7 @@ namespace RapChessGui
 			RenderBoard();
 		}
 
-		public static void RenderBoard()
+		public void RenderBoard()
 		{
 			bmpBoard = new Bitmap(background[FormChess.boardRotate ? 1 : 0]);
 			Graphics g = Graphics.FromImage(bmpBoard);
@@ -366,6 +337,15 @@ namespace RapChessGui
 			brushBlack.Dispose();
 			fontPiece.Dispose();
 			g.Dispose();
+		}
+
+		public void Render(Graphics g)
+		{
+			Bitmap bmpArrow = new Bitmap(bmpBoard);
+			Graphics ga = Graphics.FromImage(bmpArrow);
+			RenderArrow(arrowCur, ga);
+			RenderArrow(arrowEco, ga);
+			g.DrawImage(bmpArrow, 0, 0);
 		}
 
 		public static void MakeMove(int sou, int des)

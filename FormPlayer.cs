@@ -23,11 +23,11 @@ namespace RapChessGui
 
 		void SelectPlayer(string name)
 		{
-			CPlayer p = CData.playerList.GetPlayer(name);
+			CPlayer p = FormChess.playerList.GetPlayer(name);
 			if (p == null)
 				return;
 			tbPlayerName.Text = p.name;
-			if (CData.engineList.GetIndex(p.engine) >= 0)
+			if (FormChess.engineList.GetIndex(p.engine) >= 0)
 				cbEngineList.Text = p.engine;
 			else
 				cbEngineList.Text = "Human";
@@ -47,7 +47,7 @@ namespace RapChessGui
 		void UpdateListBox()
 		{
 			listBox1.Items.Clear();
-			foreach (CPlayer u in CData.playerList.list)
+			foreach (CPlayer u in FormChess.playerList.list)
 				listBox1.Items.Add(u.name);
 		}
 
@@ -79,7 +79,7 @@ namespace RapChessGui
 		{
 			modeValue.mode = cbMode.Text;
 			modeValue.SetValue((int)nudValue.Value);
-			CPlayer player = CData.playerList.GetPlayer(curPlayerName);
+			CPlayer player = FormChess.playerList.GetPlayer(curPlayerName);
 			if (player == null)
 				return;
 			CRapIni.This.DeleteKey($"player>{player.name}");
@@ -91,13 +91,13 @@ namespace RapChessGui
 		private void ButCreate_Click(object sender, EventArgs e)
 		{
 			string name = tbPlayerName.Text;
-			if (CData.playerList.GetPlayer(name) == null)
+			if (FormChess.playerList.GetPlayer(name) == null)
 			{
 				modeValue.mode = cbMode.Text;
 				modeValue.SetValue((int)nudValue.Value);
 				CPlayer player = new CPlayer(name);
 				player.engine = cbEngineList.Text;
-				CData.playerList.list.Add(player);
+				FormChess.playerList.list.Add(player);
 				SaveToIni(player);
 				MessageBox.Show($"Player {player.name} has been created");
 				CData.reset = true;
@@ -112,7 +112,7 @@ namespace RapChessGui
 			DialogResult dr = MessageBox.Show($"Are you sure to delete player {playerName}?", "Confirm Delete", MessageBoxButtons.YesNo);
 			if (dr == DialogResult.Yes)
 			{
-				CData.playerList.DeletePlayer(playerName);
+				FormChess.playerList.DeletePlayer(playerName);
 				UpdateListBox();
 				MessageBox.Show($"Player {playerName} has been removed");
 				CData.reset = true;
@@ -121,7 +121,7 @@ namespace RapChessGui
 
 		private void butClearHistory_Click(object sender, EventArgs e)
 		{
-			CPlayer player = CData.playerList.GetPlayer(curPlayerName);
+			CPlayer player = FormChess.playerList.GetPlayer(curPlayerName);
 			if (player != null)
 			{
 				player.hisElo.list.Clear();
@@ -135,11 +135,11 @@ namespace RapChessGui
 		{
 			cbEngineList.Items.Clear();
 			cbEngineList.Items.Add("Human");
-			foreach (CEngine engine in CData.engineList.list)
+			foreach (CEngine engine in FormChess.engineList.list)
 				cbEngineList.Items.Add(engine.name);
 			cbBookList.Items.Clear();
 			cbBookList.Items.Add("None");
-			foreach (CBook book in CData.bookList.list)
+			foreach (CBook book in FormChess.bookList.list)
 				cbBookList.Items.Add(book.name);
 			UpdateListBox();
 			if (listBox1.Items.Count > 0)

@@ -14,6 +14,7 @@ namespace RapChessGui
 	public partial class FormHisP : Form
 	{
 		public static FormHisP This;
+		Series lastSeries = null;
 
 		public FormHisP()
 		{
@@ -35,16 +36,33 @@ namespace RapChessGui
 			if (Visible == true)
 			{
 				chart1.Series.Clear();
-				CData.playerList.Sort();
-				foreach (CPlayer player in CData.playerList.list)
+				FormChess.playerList.Sort();
+				foreach (CPlayer player in FormChess.playerList.list)
 					if (player.tournament)
 					{
-						string pn = $"{player.name} ({player.elo})";
+						string pn = player.name;
 						chart1.Series.Add(pn);
 						chart1.Series[pn].ChartType = SeriesChartType.Line;
 						chart1.Series[pn].BorderWidth = 2;
 						CData.HisToPoints(player.hisElo, chart1.Series[pn].Points);
 					}
+			}
+		}
+
+		private void chart1_MouseDown(object sender, MouseEventArgs e)
+		{
+			if (lastSeries != null)
+			{
+				lastSeries.BorderWidth = 2;
+				lastSeries = null;
+			}
+			Chart plot = sender as Chart;
+			HitTestResult result = plot.HitTest(e.X, e.Y);
+			if (result != null && result.Object != null && result.ChartElementType == ChartElementType.LegendItem)
+			{
+				string name = result.Series.Name;
+				lastSeries = plot.Series[name];
+				lastSeries.BorderWidth = 4;
 			}
 		}
 	}

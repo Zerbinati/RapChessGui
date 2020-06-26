@@ -32,7 +32,7 @@ namespace RapChessGui
 		public static void FillList()
 		{
 			engineList.list.Clear();
-			foreach (CEngine e in CData.engineList.list)
+			foreach (CEngine e in FormChess.engineList.list)
 				if (e.tournament)
 					engineList.Add(e);
 		}

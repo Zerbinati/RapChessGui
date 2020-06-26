@@ -30,7 +30,7 @@ namespace RapChessGui
 
 		public int GetEloLess()
 		{
-			int levelDif = 2000 / CData.playerList.list.Count;
+			int levelDif = 2000 / FormChess.playerList.list.Count;
 			if (levelDif < 10)
 				levelDif = 10;
 			int result = Convert.ToInt32(elo) - levelDif;
@@ -41,7 +41,7 @@ namespace RapChessGui
 
 		public int GetEloMore()
 		{
-			int levelDif = 2000 / CData.playerList.list.Count;
+			int levelDif = 2000 / FormChess.playerList.list.Count;
 			if (levelDif < 10)
 				levelDif = 10;
 			return Convert.ToInt32(elo) + levelDif;
@@ -65,9 +65,10 @@ namespace RapChessGui
 
 		public void SetPlayer(string name)
 		{
-			CPlayer p = CData.playerList.GetPlayer(name);
+			CPlayer p = FormChess.playerList.GetPlayer(name);
 			if (p != null)
 			{
+				tournament = p.tournament;
 				engine = p.engine;
 				book = p.book;
 				elo = p.elo;
@@ -170,8 +171,10 @@ namespace RapChessGui
 			return null;
 		}
 
-		public CPlayer GetPlayerAuto()
+		public CPlayer GetPlayerAuto(string name="")
 		{
+			if (name == "Human")
+				return GetPlayerHuman();
 			CPlayer ph = GetPlayerHuman();
 			return GetPlayerElo(ph);
 		}

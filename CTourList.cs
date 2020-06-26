@@ -129,7 +129,7 @@ namespace RapChessGui
 			string n = "";
 			if (list.Count > 0)
 				n = list[list.Count - 1].w;
-			return CData.engineList.GetEngine(n);
+			return FormChess.engineList.GetEngine(n);
 		}
 
 		public CPlayer LastPlayer()
@@ -137,7 +137,7 @@ namespace RapChessGui
 			string n = "";
 			if (list.Count > 0)
 				n = list[list.Count - 1].w;
-			return CData.playerList.GetPlayer(n);
+			return FormChess.playerList.GetPlayer(n);
 		}
 
 		public void Write(string w, string b, string r)

@@ -66,7 +66,7 @@ namespace RapChessGui
 		public static void FillList()
 		{
 			playerList.list.Clear();
-			foreach (CPlayer p in CData.playerList.list)
+			foreach (CPlayer p in FormChess.playerList.list)
 				if (p.tournament)
 					playerList.Add(p);
 		}

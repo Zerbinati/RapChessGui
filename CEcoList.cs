@@ -2,8 +2,6 @@
 using System.IO;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RapChessGui
 {
@@ -11,44 +9,53 @@ namespace RapChessGui
 	{
 		public string eco;
 		public string name;
-		public string fen;
 		public string moves;
+		public string fen;
 		public string continuations;
 	}
 
 	class CEcoList
 	{
 		public List<CEco> list = new List<CEco>();
+		readonly string path = AppDomain.CurrentDomain.BaseDirectory + "Books\\eco.tsv";
 
 		public CEcoList()
 		{
-			LoadFromFile("a.tsv");
-			LoadFromFile("b.tsv");
-			LoadFromFile("c.tsv");
-			LoadFromFile("d.tsv");
-			LoadFromFile("e.tsv");
+			LoadFromFile(path);
 		}
 
-		void LoadFromFile(string fn)
+		void LoadFromFile(string path)
 		{
-			string path = AppDomain.CurrentDomain.BaseDirectory + "Eco\\" + fn;
-			String[] content = File.ReadAllLines(path);
-			for (int n = 1; n < content.Length; n++)
+			list.Clear();
+			if (File.Exists(path))
 			{
-				List<string> r = content[n].Split('\t').ToList();
-				CEco eco = new CEco();
-				eco.eco = r[0];
-				eco.name = r[1];
-				eco.fen = r[2];
-				eco.moves = r[3];
-				list.Add(eco);
+				String[] content = File.ReadAllLines(path);
+				for (int n = 1; n < content.Length; n++)
+				{
+					List<string> r = content[n].Split('\t').ToList();
+					CEco eco = new CEco();
+					eco.eco = r[0];
+					eco.name = r[1];
+					eco.moves = r[2];
+					eco.fen = r[3];
+					eco.continuations = r[4];
+					list.Add(eco);
+				}
 			}
 		}
 
-		public CEco GetEco(string fen)
+		public CEco GetEcoFen(string fen)
 		{
 			foreach (CEco e in list)
 				if (e.fen == fen)
+					return e;
+			return null;
+		}
+
+		public CEco GetEcoMoves(string moves)
+		{
+			foreach (CEco e in list)
+				if(e.moves.IndexOf(moves) == 0)
 					return e;
 			return null;
 		}
@@ -62,12 +69,12 @@ namespace RapChessGui
 			File.WriteAllLines(path, moves);
 		}
 
-		public void SaveToFile()
+		public void SaveToFile(string path)
 		{
-			string path = AppDomain.CurrentDomain.BaseDirectory + "Books\\eco.tsv";
 			List<string> moves = new List<string>();
+			moves.Add($"eco\tname\tmoves\tfen\tcontinuations");
 			foreach (CEco eco in list)
-				moves.Add($"{eco.eco}\t{eco.name}\t{eco.fen}\t{eco.moves}\t{eco.continuations}");
+				moves.Add($"{eco.eco}\t{eco.name}\t{eco.moves}\t{eco.fen}\t{eco.continuations}");
 			File.WriteAllLines(path, moves);
 		}
 

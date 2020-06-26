@@ -18,7 +18,7 @@ namespace RapChessGui
 
 		void SelectEngine(string name)
 		{
-			CEngine e = CData.engineList.GetEngine(name);
+			CEngine e = FormChess.engineList.GetEngine(name);
 			if (e == null)
 				return;
 			tbEngineName.Text = e.name;
@@ -34,7 +34,7 @@ namespace RapChessGui
 		void UpdateListBox()
 		{
 			listBox1.Items.Clear();
-			foreach(CEngine e in CData.engineList.list)
+			foreach(CEngine e in FormChess.engineList.list)
 				listBox1.Items.Add(e.name);
 		}
 
@@ -65,7 +65,7 @@ namespace RapChessGui
 		{
 			string name = tbEngineName.Text;
 			CEngine engine = new CEngine(name);
-			CData.engineList.list.Add(engine);
+			FormChess.engineList.list.Add(engine);
 			SaveToIni(engine);
 			MessageBox.Show($"Chess {engine.name} has been created");
 			CData.reset = true;
@@ -73,7 +73,7 @@ namespace RapChessGui
 
 		private void ButUpdate_Click(object sender, EventArgs e)
 		{
-			CEngine engine = CData.engineList.GetEngine(curEngineName);
+			CEngine engine = FormChess.engineList.GetEngine(curEngineName);
 			if (engine == null)
 				return;
 			CRapIni.This.DeleteKey($"engine>{engine.name}");
@@ -85,7 +85,7 @@ namespace RapChessGui
 		private void ButDelete_Click(object sender, EventArgs e)
 		{
 			string engineName = tbEngineName.Text;
-			CData.engineList.DeleteEngine(engineName);
+			FormChess.engineList.DeleteEngine(engineName);
 			UpdateListBox();
 			MessageBox.Show($"Chess {engineName} has been removed");
 			CData.reset = true;
@@ -104,7 +104,7 @@ namespace RapChessGui
 
 		private void butClearHistory_Click(object sender, EventArgs e)
 		{
-			CEngine engine = CData.engineList.GetEngine(curEngineName);
+			CEngine engine = FormChess.engineList.GetEngine(curEngineName);
 			if (engine != null)
 			{
 				engine.hisElo.list.Clear();

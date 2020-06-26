@@ -627,10 +627,10 @@ namespace RapChessGui
 			}
 		}
 
-		public bool InitializeFromFen(string fen = defFen)
+		public bool SetFen(string fen = defFen)
 		{
 			string[] chunks = fen.Split(' ');
-			if (chunks.Length != 6)
+			if (chunks.Length < 4)
 				return false;
 			g_phase = 0;
 			for (int n = 0; n < 64; n++)
@@ -678,12 +678,19 @@ namespace RapChessGui
 						case 'k':
 							piece |= pieceKing;
 							break;
+						default:
+							return false;
 					}
 					g_board[index] = piece;
 					col++;
 				}
 			}
-			whiteTurn = chunks[1] == "w";
+			if (chunks[1] == "w")
+				whiteTurn = true;
+			else if (chunks[1] == "b")
+				whiteTurn = false;
+			else
+				return false;
 			g_castleRights = 0;
 			if (chunks[2].IndexOf('K') != -1)
 				g_castleRights |= 1;
@@ -694,8 +701,8 @@ namespace RapChessGui
 			if (chunks[2].IndexOf('q') != -1)
 				g_castleRights |= 8;
 			g_passing = StrToSquare(chunks[3]);
-			g_move50 = Int32.Parse(chunks[4]);
-			g_moveNumber = Int32.Parse(chunks[5]);
+			g_move50 = chunks.Length < 5 ? 0 : Int32.Parse(chunks[4]);
+			g_moveNumber = chunks.Length < 6 ? 1 : Int32.Parse(chunks[5]);
 			if (g_moveNumber > 0)
 				g_moveNumber--;
 			g_moveNumber <<= 1;
