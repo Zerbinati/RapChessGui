@@ -233,7 +233,7 @@ namespace RapChessGui
 
 		#region main
 
-		public static void SetGameState(CGameState gs)
+		public void SetGameState(CGameState gs)
 		{
 			if (gs == CGameState.normal)
 			{
@@ -243,208 +243,56 @@ namespace RapChessGui
 			if (CData.gameState != CGameState.normal)
 				return;
 			CData.gameState = gs;
-			CGamer gw = This.GamerList.GamerWinner();
-			CGamer gl = This.GamerList.GamerLoser();
+			CGamer gw = GamerList.GamerWinner();
+			CGamer gl = GamerList.GamerLoser();
 			CPlayer pw = gw.player;
 			CPlayer pl = gl.player;
-			int eloW = Convert.ToInt32(pw.elo);
-			int eloL = Convert.ToInt32(pl.elo);
 			bool isDraw = false;
 			switch (CData.gameState)
 			{
 				case CGameState.mate:
-					This.tssInfo.ForeColor = Color.Lime;
-					This.tssInfo.Text = pw.name + " win";
+					ShowInfo(pw.name + " win", Color.Lime);
 					break;
 				case CGameState.stalemate:
 					isDraw = true;
-					This.tssInfo.ForeColor = Color.Yellow;
-					This.tssInfo.Text = "Stalemate";
+					ShowInfo("Stalemate", Color.Yellow);
 					break;
 				case CGameState.repetition:
 					isDraw = true;
-					This.tssInfo.ForeColor = Color.Yellow;
-					This.tssInfo.Text = "Threefold repetition";
+					ShowInfo("Threefold repetition", Color.Yellow);
 					break;
 				case CGameState.move50:
 					isDraw = true;
-					This.tssInfo.ForeColor = Color.Yellow;
-					This.tssInfo.Text = "Fifty-move rule";
+					ShowInfo("Fifty-move rule", Color.Yellow);
 					break;
 				case CGameState.material:
 					isDraw = true;
-					This.tssInfo.ForeColor = Color.Yellow;
-					This.tssInfo.Text = "Insufficient material";
+					ShowInfo("Insufficient material", Color.Yellow);
 					break;
 				case CGameState.resignation:
-					This.tssInfo.ForeColor = Color.Yellow;
-					This.tssInfo.Text = $"{pl.name} resign";
+					ShowInfo($"{pl.name} resign", Color.Red);
 					break;
 				case CGameState.time:
-					This.tssInfo.ForeColor = Color.Red;
-					This.tssInfo.Text = $"{pl.name} time out";
+					ShowInfo($"{pl.name} time out", Color.Red);
 					break;
 				case CGameState.error:
-					This.tssInfo.ForeColor = Color.Red;
-					This.tssInfo.Text = $"{pl.name} make Wrong move";
+					ShowInfo($"{pl.name} make wrong move", Color.Red);
 					break;
 			}
-			FormLog.AppendText($"Finish {This.tssInfo.Text}\n", Color.Gray);
-			This.CreateRtf();
-			This.CreatePgn();
+			FormLog.AppendText($"Finish {tssInfo.Text}\n", Color.Gray);
+			CreateRtf();
+			CreatePgn();
 			if (CData.gameMode == CMode.game)
-			{
-				if (This.IsAutoElo())
-				{
-					if (pw.IsHuman())
-					{
-						if (!isDraw)
-							pw.eloNew = pw.GetEloMore();
-						else
-							pw.eloNew = Convert.ToInt32(pw.eloOld);
-					}
-					else
-					{
-						if (!isDraw)
-							pl.eloNew = pl.GetEloLess();
-						else
-							pl.eloNew = Convert.ToInt32(pl.eloOld);
-					}
-				}
-				This.ShowLastGame();
-			}
+				GaemEnd(pw, pl, isDraw);
 			if (CData.gameMode == CMode.match)
-			{
-				CModeMatch.games++;
-				if (!isDraw)
-				{
-					if (pw.name == This.labMatch10.Text)
-						CModeMatch.win++;
-					else
-						CModeMatch.loose++;
-				}
-				else
-					CModeMatch.draw++;
-				CModeMatch.SaveToIni();
-			}
+				MatchEnd(pw, isDraw);
 			if (CData.gameMode == CMode.tourE)
-			{
-				CEngine ew = gw.engine;
-				CEngine el = gl.engine;
-				eloW = Convert.ToInt32(gw.engine.elo);
-				eloL = Convert.ToInt32(gl.engine.elo);
-				int indexW = engineList.GetIndexElo(eloW);
-				int indexL = engineList.GetIndexElo(eloL);
-				int optW = engineList.GetOptElo(indexW);
-				int optL = engineList.GetOptElo(indexL);
-				int OW = optW;
-				int OL = optL;
-				if (!isDraw)
-				{
-					if (eloW <= eloL)
-					{
-						OW = optL;
-						OL = optW;
-					}
-					if (OW < eloW)
-						OW = eloW;
-					if (OL > eloL)
-						OL = eloL;
-					if (OW == OL)
-						OW = engineList.GetOptElo(indexW + 1);
-					string r = pw == This.GamerList.gamer[0].player ? "w" : "b";
-					CModeTournamentE.tourList.Write(This.GamerList.gamer[0].engine.name, This.GamerList.gamer[1].engine.name, r);
-				}
-				else
-				{
-					int opt = (OW + OL) >> 1;
-					OW = opt;
-					OL = opt;
-					CModeTournamentE.tourList.Write(This.GamerList.gamer[0].engine.name, This.GamerList.gamer[1].engine.name, "d");
-				}
-				int newW = Convert.ToInt32(eloW * 0.9 + Math.Max(OW, eloL) * 0.1);
-				int newL = Convert.ToInt32(eloL * 0.9 + Math.Min(OL, eloW) * 0.1);
-				ew.hisElo.Add(newW);
-				el.hisElo.Add(newL);
-				ew.elo = newW.ToString();
-				el.elo = newL.ToString();
-				ew.eloOld = ew.eloOld * .9 + newW * .1;
-				el.eloOld = el.eloOld * .9 + newL * .1;
-				ew.SaveToIni();
-				el.SaveToIni();
-				CModeTournamentE.rotate = (OW != OL) && (newW < newL);
-			}
+				TournamentEEnd(gw, gl, isDraw);
 			if (CData.gameMode == CMode.tourP)
-			{
-				int indexW = playerList.GetIndexElo(eloW);
-				int indexL = playerList.GetIndexElo(eloL);
-				int optW = playerList.GetOptElo(indexW);
-				int optL = playerList.GetOptElo(indexL);
-				int OW = optW;
-				int OL = optL;
-				if (!isDraw)
-				{
-					if (eloW <= eloL)
-					{
-						OW = optL;
-						OL = optW;
-					}
-					if (OW < eloW)
-						OW = eloW;
-					if (OL > eloL)
-						OL = eloL;
-					if (OW == OL)
-						OW = engineList.GetOptElo(indexW + 1);
-					string r = pw == This.GamerList.gamer[0].player ? "w" : "b";
-					CModeTournamentP.tourList.Write(This.GamerList.gamer[0].player.name, This.GamerList.gamer[1].player.name, r);
-				}
-				else
-				{
-					int opt = (OW + OL) >> 1;
-					OW = opt;
-					OL = opt;
-					CModeTournamentP.tourList.Write(This.GamerList.gamer[0].player.name, This.GamerList.gamer[1].player.name, "d");
-				}
-				int newW = Convert.ToInt32(eloW * 0.9 + Math.Max(OW, eloL) * 0.1);
-				int newL = Convert.ToInt32(eloL * 0.9 + Math.Min(OL, eloW) * 0.1);
-				pw.hisElo.Add(newW);
-				pl.hisElo.Add(newL);
-				pw.elo = newW.ToString();
-				pl.elo = newL.ToString();
-				pw.eloOld = pw.eloOld * .9 + newW * .1;
-				pl.eloOld = pl.eloOld * .9 + newL * .1; ;
-				pw.SaveToIni();
-				pl.SaveToIni();
-				CModeTournamentP.rotate = (OW != OL) && (newW < newL);
-			}
+				TournamentPEnd(pw, pl, isDraw);
 			if (CData.gameMode == CMode.training)
-			{
-				CModeTraining.games++;
-				if (!isDraw)
-				{
-					if (pw.name == "Teacher")
-					{
-						CModeTraining.win++;
-						if (--CModeTraining.modeValueTeacher.value < 1)
-							CModeTraining.modeValueTeacher.value = 1;
-					}
-					else
-					{
-						CModeTraining.loose++;
-						CModeTraining.modeValueTeacher.value++;
-					}
-				}
-				else
-				{
-					CModeTraining.draw++;
-					CModeTraining.modeValueTeacher.value++;
-				}
-				if (CData.gameState == CGameState.time)
-					CRapLog.Add($"Training time {pl.name} {CChess.whiteTurn}");
-				if ((gl.player.name == "Trained") && ((CData.gameState == CGameState.time) || (CData.gameState == CGameState.error) || gl.timeOut))
-					CModeTraining.errors++;
-			}
-			This.timerStart.Start();
+				TrainingEnd(gw, gl, isDraw);
+			timerStart.Start();
 		}
 
 		void SplitSaveToIni(SplitContainer sc)
@@ -497,7 +345,7 @@ namespace RapChessGui
 						Board.arrowCur.AddMoves(emo);
 						RenderBoard();
 					}
-					string san = Chess.EmoToSan(emo);
+					string san = Chess.UmoToSan(emo);
 					Chess.MakeMove(gmo);
 					moves.Add(gmo);
 					if (FormOptions.This.rbSan.Checked)
@@ -550,7 +398,7 @@ namespace RapChessGui
 						}
 						MakeMove(emo);
 						if ((g.ponder != "") && FormOptions.This.rbSan.Checked)
-							g.ponder = Chess.EmoToSan(g.ponder);
+							g.ponder = Chess.UmoToSan(g.ponder);
 					}
 					break;
 				case "info":
@@ -766,10 +614,7 @@ namespace RapChessGui
 		{
 			GamerList.GamerCur().usedBook++;
 			if (!showInfo)
-			{
-				tssInfo.ForeColor = Color.Aquamarine;
-				tssInfo.Text = $"book {emo}";
-			}
+				ShowInfo($"book {emo}", Color.Aquamarine);
 		}
 
 		void SetMode(CMode mode)
@@ -830,7 +675,7 @@ namespace RapChessGui
 			}
 		}
 
-		void ShowInfo(string info,Color color,bool si = false)
+		void ShowInfo(string info, Color color, bool si = false)
 		{
 			tssInfo.Text = info;
 			tssInfo.ForeColor = color;
@@ -846,12 +691,12 @@ namespace RapChessGui
 			if (hu.eloNew > eloCur)
 			{
 				result = true;
-				ShowInfo($"Last game you win new elo is {hu.eloNew} (+{eloDel})", Color.FromArgb(0, 0xff, 0),true);
+				ShowInfo($"Last game you win new elo is {hu.eloNew} (+{eloDel})", Color.FromArgb(0, 0xff, 0), true);
 			}
 			if (hu.eloNew < eloCur)
 			{
 				result = true;
-				ShowInfo($"Last game you loose new elo is {hu.eloNew} ({eloDel})", Color.FromArgb(0xff, 0, 0),true);
+				ShowInfo($"Last game you loose new elo is {hu.eloNew} ({eloDel})", Color.FromArgb(0xff, 0, 0), true);
 			}
 			if (result)
 			{
@@ -1059,7 +904,7 @@ namespace RapChessGui
 				SetGameState(CGameState.error);
 				return false;
 			}
-			string san = Chess.EmoToSan(emo);
+			string san = Chess.UmoToSan(emo);
 			CChess.EmoToSD(emo, out CDrag.lastSou, out CDrag.lastDes);
 			Board.MakeMove(gmo);
 			Chess.MakeMove(emo, out int piece);
@@ -1080,9 +925,7 @@ namespace RapChessGui
 				}
 				else if ((lastEco != "") && (!lastEco.Contains(emo)))
 				{
-					showInfo = true;
-					tssInfo.ForeColor = Color.Pink;
-					tssInfo.Text = "You missed the opening moves";
+					ShowInfo("You missed the opening moves", Color.Pink,true);
 					Board.arrowEco.AddMoves(lastEco);
 				}
 			}
@@ -1119,7 +962,7 @@ namespace RapChessGui
 		{
 			labEco.Text = "";
 			tssMove.Text = "Move 1 0";
-			ShowInfo("Good luck", Color.Gainsboro,true);
+			ShowInfo("Good luck", Color.Gainsboro, true);
 			chartMain.Series[0].Points.Clear();
 			chartMain.Series[1].Points.Clear();
 			SetBoardRotate();
@@ -1368,7 +1211,7 @@ namespace RapChessGui
 				if (Char.IsDigit(san, 0))
 					continue;
 				string emo2 = Chess.SanToEmo(san);
-				string san2 = Chess.EmoToSan(emo2);
+				string san2 = Chess.UmoToSan(emo2);
 				int gmo = Chess.MakeMove(emo2, out int piece);
 				if (gmo > 0)
 					CHistory.AddMove(piece, gmo, emo2, san2);
@@ -1393,8 +1236,7 @@ namespace RapChessGui
 			FormLog.AppendText($"Pgn {CHistory.GetPgn()}\n", Color.Gray);
 			FormLog.AppendText($"White {pw.player.name} {pw.player.engine}\n", Color.Gray);
 			FormLog.AppendText($"Black {pb.player.name} {pb.player.engine}\n", Color.Gray);
-			tssInfo.ForeColor = Color.Gainsboro;
-			tssInfo.Text = $"Load pgn {CHistory.GetPgn()}";
+			ShowInfo($"Load pgn {CHistory.GetPgn()}", Color.Gainsboro);
 			labBack.Text = $"Back {CData.back}";
 			CData.gameState = Chess.GetGameState();
 			RenderInfo(pw);
@@ -1617,6 +1459,28 @@ namespace RapChessGui
 			ShowAutoElo();
 		}
 
+		void GaemEnd(CPlayer pw, CPlayer pl, bool isDraw)
+		{
+			if (This.IsAutoElo())
+			{
+				if (pw.IsHuman())
+				{
+					if (!isDraw)
+						pw.eloNew = pw.GetEloMore();
+					else
+						pw.eloNew = Convert.ToInt32(pw.eloOld);
+				}
+				else
+				{
+					if (!isDraw)
+						pl.eloNew = pl.GetEloLess();
+					else
+						pl.eloNew = Convert.ToInt32(pl.eloOld);
+				}
+			}
+			ShowLastGame();
+		}
+
 		void MatchShow()
 		{
 			cbEngine1.SelectedIndex = cbEngine1.FindStringExact(CModeMatch.engine1);
@@ -1685,6 +1549,21 @@ namespace RapChessGui
 			CModeMatch.rotate = !CModeMatch.rotate;
 			Clear();
 			moves = Chess.GenerateValidMoves();
+			CModeMatch.SaveToIni();
+		}
+
+		void MatchEnd(CPlayer pw, bool isDraw)
+		{
+			CModeMatch.games++;
+			if (!isDraw)
+			{
+				if (pw.name == labMatch10.Text)
+					CModeMatch.win++;
+				else
+					CModeMatch.loose++;
+			}
+			else
+				CModeMatch.draw++;
 			CModeMatch.SaveToIni();
 		}
 
@@ -1791,6 +1670,54 @@ namespace RapChessGui
 			Clear();
 		}
 
+		void TournamentEEnd(CGamer gw, CGamer gl, bool isDraw)
+		{
+			CEngine ew = gw.engine;
+			CEngine el = gl.engine;
+			int eloW = Convert.ToInt32(gw.engine.elo);
+			int eloL = Convert.ToInt32(gl.engine.elo);
+			int indexW = engineList.GetIndexElo(eloW);
+			int indexL = engineList.GetIndexElo(eloL);
+			int optW = engineList.GetOptElo(indexW);
+			int optL = engineList.GetOptElo(indexL);
+			int OW = optW;
+			int OL = optL;
+			if (!isDraw)
+			{
+				if (eloW <= eloL)
+				{
+					OW = optL;
+					OL = optW;
+				}
+				if (OW < eloW)
+					OW = eloW;
+				if (OL > eloL)
+					OL = eloL;
+				if (OW == OL)
+					OW = engineList.GetOptElo(indexW + 1);
+				string r = gw == This.GamerList.gamer[0] ? "w" : "b";
+				CModeTournamentE.tourList.Write(This.GamerList.gamer[0].engine.name, This.GamerList.gamer[1].engine.name, r);
+			}
+			else
+			{
+				int opt = (OW + OL) >> 1;
+				OW = opt;
+				OL = opt;
+				CModeTournamentE.tourList.Write(This.GamerList.gamer[0].engine.name, This.GamerList.gamer[1].engine.name, "d");
+			}
+			int newW = Convert.ToInt32(eloW * 0.9 + Math.Max(OW, eloL) * 0.1);
+			int newL = Convert.ToInt32(eloL * 0.9 + Math.Min(OL, eloW) * 0.1);
+			ew.hisElo.Add(newW);
+			el.hisElo.Add(newL);
+			ew.elo = newW.ToString();
+			el.elo = newL.ToString();
+			ew.eloOld = ew.eloOld * .9 + newW * .1;
+			el.eloOld = el.eloOld * .9 + newL * .1;
+			ew.SaveToIni();
+			el.SaveToIni();
+			CModeTournamentE.rotate = (OW != OL) && (newW < newL);
+		}
+
 		void TournamentPReset()
 		{
 			lvPlayer.Items.Clear();
@@ -1866,6 +1793,52 @@ namespace RapChessGui
 			Clear();
 		}
 
+		void TournamentPEnd(CPlayer pw, CPlayer pl, bool isDraw)
+		{
+			int eloW = Convert.ToInt32(pw.elo);
+			int eloL = Convert.ToInt32(pl.elo);
+			int indexW = playerList.GetIndexElo(eloW);
+			int indexL = playerList.GetIndexElo(eloL);
+			int optW = playerList.GetOptElo(indexW);
+			int optL = playerList.GetOptElo(indexL);
+			int OW = optW;
+			int OL = optL;
+			if (!isDraw)
+			{
+				if (eloW <= eloL)
+				{
+					OW = optL;
+					OL = optW;
+				}
+				if (OW < eloW)
+					OW = eloW;
+				if (OL > eloL)
+					OL = eloL;
+				if (OW == OL)
+					OW = engineList.GetOptElo(indexW + 1);
+				string r = pw == This.GamerList.gamer[0].player ? "w" : "b";
+				CModeTournamentP.tourList.Write(This.GamerList.gamer[0].player.name, This.GamerList.gamer[1].player.name, r);
+			}
+			else
+			{
+				int opt = (OW + OL) >> 1;
+				OW = opt;
+				OL = opt;
+				CModeTournamentP.tourList.Write(This.GamerList.gamer[0].player.name, This.GamerList.gamer[1].player.name, "d");
+			}
+			int newW = Convert.ToInt32(eloW * 0.9 + Math.Max(OW, eloL) * 0.1);
+			int newL = Convert.ToInt32(eloL * 0.9 + Math.Min(OL, eloW) * 0.1);
+			pw.hisElo.Add(newW);
+			pl.hisElo.Add(newL);
+			pw.elo = newW.ToString();
+			pl.elo = newL.ToString();
+			pw.eloOld = pw.eloOld * .9 + newW * .1;
+			pl.eloOld = pl.eloOld * .9 + newL * .1; ;
+			pw.SaveToIni();
+			pl.SaveToIni();
+			CModeTournamentP.rotate = (OW != OL) && (newW < newL);
+		}
+
 		void TrainingShow()
 		{
 			double procent = CModeTraining.games > 0 ? (CModeTraining.errors * 100.0) / CModeTraining.games : 0;
@@ -1924,6 +1897,34 @@ namespace RapChessGui
 			Clear();
 			chartTraining.Series[0].Points.Add((double)nudTeacher.Value);
 			CModeTraining.SaveToIni();
+		}
+
+		void TrainingEnd(CGamer gw, CGamer gl, bool isDraw)
+		{
+			CModeTraining.games++;
+			if (!isDraw)
+			{
+				if (gw.player.name == "Teacher")
+				{
+					CModeTraining.win++;
+					if (--CModeTraining.modeValueTeacher.value < 1)
+						CModeTraining.modeValueTeacher.value = 1;
+				}
+				else
+				{
+					CModeTraining.loose++;
+					CModeTraining.modeValueTeacher.value++;
+				}
+			}
+			else
+			{
+				CModeTraining.draw++;
+				CModeTraining.modeValueTeacher.value++;
+			}
+			if (CData.gameState == CGameState.time)
+				CRapLog.Add($"Training time {gl.player.name} {CChess.whiteTurn}");
+			if ((gl.player.name == "Trained") && ((CData.gameState == CGameState.time) || (CData.gameState == CGameState.error) || gl.timeOut))
+				CModeTraining.errors++;
 		}
 
 		void EditShow()

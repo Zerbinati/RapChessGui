@@ -319,7 +319,7 @@ namespace RapChessGui
 
 		string SetTimeOut()
 		{
-			FormChess.SetGameState(CGameState.time);
+			FormChess.This.SetGameState(CGameState.time);
 			if (engine != null)
 				CRapLog.Add($"Time out {engine.name}");
 			return "Time out";

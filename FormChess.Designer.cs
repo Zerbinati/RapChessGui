@@ -118,7 +118,7 @@
 			this.groupBox8 = new System.Windows.Forms.GroupBox();
 			this.nudTourE = new System.Windows.Forms.NumericUpDown();
 			this.cbTourEMode = new System.Windows.Forms.ComboBox();
-			this.button1 = new System.Windows.Forms.Button();
+			this.butTourEStart = new System.Windows.Forms.Button();
 			this.tabPageTourP = new System.Windows.Forms.TabPage();
 			this.splitContainerTourP = new System.Windows.Forms.SplitContainer();
 			this.scTournamentPList = new System.Windows.Forms.SplitContainer();
@@ -1136,7 +1136,7 @@
 			this.tabPageTourE.Controls.Add(this.splitContainerTourE);
 			this.tabPageTourE.Controls.Add(this.groupBox9);
 			this.tabPageTourE.Controls.Add(this.groupBox8);
-			this.tabPageTourE.Controls.Add(this.button1);
+			this.tabPageTourE.Controls.Add(this.butTourEStart);
 			this.tabPageTourE.Location = new System.Drawing.Point(4, 5);
 			this.tabPageTourE.Name = "tabPageTourE";
 			this.tabPageTourE.Padding = new System.Windows.Forms.Padding(3);
@@ -1396,17 +1396,17 @@
 			this.toolTip1.SetToolTip(this.cbTourEMode, "Select engine mode");
 			this.cbTourEMode.SelectedIndexChanged += new System.EventHandler(this.cbTourEMode_SelectedIndexChanged);
 			// 
-			// button1
+			// butTourEStart
 			// 
-			this.button1.Dock = System.Windows.Forms.DockStyle.Top;
-			this.button1.Location = new System.Drawing.Point(3, 3);
-			this.button1.Name = "button1";
-			this.button1.Size = new System.Drawing.Size(352, 23);
-			this.button1.TabIndex = 22;
-			this.button1.Text = "Start";
-			this.toolTip1.SetToolTip(this.button1, "Start tournament");
-			this.button1.UseVisualStyleBackColor = true;
-			this.button1.Click += new System.EventHandler(this.button1_Click);
+			this.butTourEStart.Dock = System.Windows.Forms.DockStyle.Top;
+			this.butTourEStart.Location = new System.Drawing.Point(3, 3);
+			this.butTourEStart.Name = "butTourEStart";
+			this.butTourEStart.Size = new System.Drawing.Size(352, 23);
+			this.butTourEStart.TabIndex = 22;
+			this.butTourEStart.Text = "Start";
+			this.toolTip1.SetToolTip(this.butTourEStart, "Start tournament");
+			this.butTourEStart.UseVisualStyleBackColor = true;
+			this.butTourEStart.Click += new System.EventHandler(this.button1_Click);
 			// 
 			// tabPageTourP
 			// 
@@ -3881,7 +3881,7 @@
 		private System.Windows.Forms.GroupBox groupBox8;
 		private System.Windows.Forms.NumericUpDown nudTourE;
 		private System.Windows.Forms.ComboBox cbTourEMode;
-		private System.Windows.Forms.Button button1;
+		private System.Windows.Forms.Button butTourEStart;
 		private System.Windows.Forms.Label labPlayerW;
 		private System.Windows.Forms.Label labPlayerB;
 		private System.Windows.Forms.Button butBack;
