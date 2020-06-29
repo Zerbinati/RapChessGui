@@ -1210,11 +1210,11 @@ namespace RapChessGui
 			{
 				if (Char.IsDigit(san, 0))
 					continue;
-				string emo2 = Chess.SanToEmo(san);
-				string san2 = Chess.UmoToSan(emo2);
-				int gmo = Chess.MakeMove(emo2, out int piece);
+				string umo = Chess.SanToUmo(san);
+				string san2 = Chess.UmoToSan(umo);
+				int gmo = Chess.MakeMove(umo, out int piece);
 				if (gmo > 0)
-					CHistory.AddMove(piece, gmo, emo2, san2);
+					CHistory.AddMove(piece, gmo, umo, san2);
 				else break;
 			}
 			GamerList.curIndex = CChess.g_moveNumber & 1;
@@ -1512,6 +1512,7 @@ namespace RapChessGui
 			CData.HisToPoints(his1, chartMatch.Series[0].Points);
 			CData.HisToPoints(his2, chartMatch.Series[1].Points);
 		}
+
 		void MatchStart(bool add)
 		{
 			if (add)
@@ -1519,7 +1520,6 @@ namespace RapChessGui
 				CModeMatch.his1.Add(CModeMatch.Point(false));
 				CModeMatch.his2.Add(CModeMatch.Point(true));
 			}
-			MatchShow();
 			CData.fen = CChess.defFen;
 			CModeMatch.engine1 = cbEngine1.Text;
 			CModeMatch.engine2 = cbEngine2.Text;

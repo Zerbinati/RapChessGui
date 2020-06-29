@@ -99,31 +99,19 @@ namespace RapChessGui
 		int g_lastCastle = 0;
 		bool adjInsufficient = false;
 		int undoIndex = 0;
-		int[,] g_hashBoard = new int[256, 16];
-		int[] boardCheck = new int[256];
-		int[] boardCastle = new int[256];
+		readonly int[,] g_hashBoard = new int[256, 16];
+		readonly int[] boardCheck = new int[256];
+		readonly int[] boardCastle = new int[256];
 		public static bool whiteTurn = true;
 		int usColor = 0;
 		int enColor = 0;
 		public static int[] arrField = new int[64];
 		public static int[] g_board = new int[256];
-		int[,] tmpMaterial = new int[7, 2] { { 0, 0 }, { 171, 240 }, { 764, 848 }, { 826, 891 }, { 1282, 1373 }, { 2526, 2646 }, { 0xffff, 0xffff } };
-		int[,] arrMaterial = new int[33, 7];
-		int[,,] tmpMobility = new int[7, 28, 2] {
-			{ { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 } },
-			{ { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 } },
-			{ {-75,-76 }, {-57,-54 }, {-9,-28 }, {-2,-10 }, {6,5 }, {14,12 }, {22, 26 }, { 29,29 }, { 36, 29 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 } },
-			{ { -48,-59 }, {-20,-23 }, {16, -3 }, {26, 13 }, {38, 24 }, {51, 42 }, {55, 54 }, {63, 57 }, {63, 65 }, {68, 73 }, {81, 78 }, {81, 86 }, {91, 88 }, {98, 97 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 } },
-			{ {-58,-76 }, {-27,-18 }, {-15, 28 }, { -10, 55 }, {-5, 69 }, { -2, 82 }, { 9,112 }, {16,118 }, { 30,132 }, {29,142 }, {32,155 }, {38,165 }, { 46,166 }, { 48,169 }, {58,171 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 } },
-			{{ -39, -36 },{-21, -15 },{3, 8 },{3, 18 },{14, 34 },{22, 54 },{28, 61 },{41, 73 },{43, 79 },{48, 92 },{56, 94 },{60, 104 },{60, 113 },{66, 120 },{67, 123 },{70, 126 },{71, 133 },{73, 136 },{79, 140 },{88, 143 },{88, 148 },{99, 166 },{102, 170 },{102, 175 },{106, 184 },{109, 191 },{113, 206 },{116, 212} },
-			{ { 90,9 }, { 80,8 }, { 70, 7 }, { 60, 6 }, { 50, 5 }, { 40, 4 }, { 30, 3 }, { 20, 2 }, { 10, 1 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 } }
-			};
-		int[,,] arrMobility = new int[33, 7, 28];
-		int[] arrDirKinght = { 14, -14, 18, -18, 31, -31, 33, -33 };
-		int[] arrDirBishop = { 15, -15, 17, -17 };
-		int[] arrDirRock = { 1, -1, 16, -16 };
-		int[] arrDirQueen = { 1, -1, 15, -15, 16, -16, 17, -17 };
-		CUndo[] undoStack = new CUndo[0xfff];
+		readonly int[] arrDirKinght = { 14, -14, 18, -18, 31, -31, 33, -33 };
+		readonly int[] arrDirBishop = { 15, -15, 17, -17 };
+		readonly int[] arrDirRock = { 1, -1, 16, -16 };
+		readonly int[] arrDirQueen = { 1, -1, 15, -15, 16, -16, 17, -17 };
+		readonly CUndo[] undoStack = new CUndo[0xfff];
 
 		public CChess()
 		{
@@ -200,6 +188,26 @@ namespace RapChessGui
 			return $"{arrPiece[pieceFr]}{faf}{far}{attack}{fb}{promo}{fin}";
 		}
 
+		/// <summary>
+		/// SAN move TO Uci MOve
+		/// </summary>
+
+		public string SanToUmo(string san)
+		{
+			char[] charsToTrim = { '+', '#' };
+			san = san.Trim(charsToTrim);
+			List<int> moves = GenerateValidMoves();
+			foreach (int imo in moves)
+			{
+				string umo = GmoToEmo(imo);
+				if (umo == san)
+					return umo;
+				if (UmoToSan(umo).Trim(charsToTrim) == san)
+					return umo;
+			}
+			return "";
+		}
+
 		#endregion
 
 		public CGameState GetGameState(out bool check)
@@ -224,22 +232,6 @@ namespace RapChessGui
 		public CGameState GetGameState()
 		{
 			return GetGameState(out _);
-		}
-
-		public string SanToEmo(string san)
-		{
-			char[] charsToTrim = { '+', '#' };
-			san = san.Trim(charsToTrim);
-			List<int> moves = GenerateValidMoves();
-			foreach (int gmo in moves)
-			{
-				string emo = GmoToEmo(gmo);
-				if (emo == san)
-					return emo;
-				if (UmoToSan(emo).Trim(charsToTrim) == san)
-					return emo;
-			}
-			return "";
 		}
 
 		public int MakeSquare(int row, int column)
@@ -596,16 +588,6 @@ namespace RapChessGui
 			{
 				boardCastle[arrCastleI[n]] = arrCasteleV[n];
 				boardCheck[arrCheckI[n]] = arrCheckV[n];
-			}
-			for (int ph = 2; ph < 33; ph++)
-			{
-				double f = ph / 32.0;
-				for (int p = 1; p < 7; p++)
-				{
-					arrMaterial[ph, p] = Convert.ToInt32(tmpMaterial[p, 0] * f + tmpMaterial[p, 1] * (1 - f));
-					for (int n = 0; n < 28; n++)
-						arrMobility[ph, p, n] = Convert.ToInt32(tmpMobility[p, n, 0] * f + tmpMobility[p, n, 1] * (1 - f));
-				}
 			}
 		}
 
