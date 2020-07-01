@@ -6,19 +6,23 @@ namespace RapChessGui
 {
 	static class CModeTournamentP
 	{
-		public static string player;
 		public static bool rotate = false;
+		public static int records = 10000;
+		public static string player = "";
 		public static CTourList tourList = new CTourList("Tour-players");
 		public static CPlayerList playerList = new CPlayerList();
 
 		public static void SaveToIni()
 		{
 			CRapIni.This.Write("mode>tournamentP>player", player);
+			CRapIni.This.Write("mode>tournamentP>records", records);
 		}
 
 		public static void LoadFromIni()
 		{
-			player = CRapIni.This.Read("mode>tournamentP>player","");
+			player = CRapIni.This.Read("mode>tournamentP>player",player);
+			records = CRapIni.This.ReadInt("mode>tournamentP>records",records);
+			tourList.SetLimit(records);
 		}
 
 		public static CPlayer ChooseOpponent(CPlayer player, CPlayer player1, CPlayer player2)

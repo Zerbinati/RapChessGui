@@ -44,7 +44,6 @@ namespace RapChessGui
 	{
 		readonly string path;
 		public List<CTour> list = new List<CTour>();
-		public int maxRecords = 10000;
 
 		public CTourList(string name)
 		{
@@ -107,9 +106,13 @@ namespace RapChessGui
 							list.Add(t);
 					}
 				}
-			if (list.Count > maxRecords)
+		}
+
+		public void SetLimit(int limit)
+		{
+			if (list.Count > limit)
 			{
-				int remove = Math.Max(0, list.Count - maxRecords);
+				int remove = Math.Max(0, list.Count - limit);
 				list.RemoveRange(0, remove);
 				SaveToFile();
 			}
@@ -146,7 +149,6 @@ namespace RapChessGui
 			list.Add(t);
 			using (StreamWriter file = new StreamWriter(path, true))
 				file.WriteLine(t.SaveToString());
-			SaveToFile();
 		}
 
 	}

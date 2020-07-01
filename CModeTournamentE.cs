@@ -9,6 +9,7 @@ namespace RapChessGui
 		public static string engine;
 		public static string book = "Eco";
 		public static bool rotate = false;
+		public static int records = 10000;
 		public static CTourList tourList = new CTourList("Tour-engines");
 		public static CModeValue modeValue = new CModeValue();
 		public static CEngineList engineList = new CEngineList();
@@ -19,6 +20,7 @@ namespace RapChessGui
 			CRapIni.This.Write("mode>tournamentE>engine", engine);
 			CRapIni.This.Write("mode>tournamentE>mode", modeValue.mode);
 			CRapIni.This.Write("mode>tournamentE>value", modeValue.value);
+			CRapIni.This.Write("mode>tournamentE>records", records);
 		}
 
 		public static void LoadFromIni()
@@ -27,6 +29,8 @@ namespace RapChessGui
 			engine = CRapIni.This.Read("mode>tournamentE>engine","");
 			modeValue.mode = CRapIni.This.Read("mode>tournamentE>mode",modeValue.mode);
 			modeValue.value = CRapIni.This.ReadInt("mode>tournamentE>value",modeValue.value);
+			records = CRapIni.This.ReadInt("mode>tournamentE>records", records);
+			tourList.SetLimit(records);
 		}
 
 		public static void FillList()

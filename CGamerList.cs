@@ -57,7 +57,8 @@ namespace RapChessGui
 
 		public void EngineReset()
 		{
-			SetPlayer();
+			isPrepared = false;
+			enginePro.SetProgram("Engines\\" + engine.file, engine.parameters);
 		}
 
 		public void EngineStop()
@@ -115,22 +116,11 @@ namespace RapChessGui
 					isBookStarted = true;
 				}
 			}
-			else
-				TryEngine();
-		}
-
-		public void TryEngine()
-		{
-			if (engine != null)
-			{
+			else if (engine != null)
 				if (!isPrepared)
-				{
-					SetPlayer();
 					Prepare();
-				}
 				else if (readyok && !isRunning)
 					CompMakeMove();
-			}
 		}
 
 		public void TimerStart()
@@ -258,9 +248,9 @@ namespace RapChessGui
 			if (bookPro.process != null)
 			{
 				Color col = white ? Color.DimGray : Color.Black;
-				FormLog.AppendText($"{FormChess.GetTimeElapsed()} ", Color.Green);
-				FormLog.AppendText($"book {player.name}",col);
-				FormLog.AppendText($" < {msg}\n", Color.Brown);
+				FormLogEngines.AppendText($"{FormChess.GetTimeElapsed()} ", Color.Green);
+				FormLogEngines.AppendText($"book {player.name}", col);
+				FormLogEngines.AppendText($" < {msg}\n", Color.Brown);
 				bookPro.process.StandardInput.WriteLine(msg);
 			}
 		}
@@ -270,9 +260,9 @@ namespace RapChessGui
 			if (enginePro.process != null)
 			{
 				Color col = white ? Color.DimGray : Color.Black;
-				FormLog.AppendText($"{FormChess.GetTimeElapsed()} ", Color.Green);
-				FormLog.AppendText($"{player.name}", col);
-				FormLog.AppendText($" < {msg}\n", Color.Brown);
+				FormLogEngines.AppendText($"{FormChess.GetTimeElapsed()} ", Color.Green);
+				FormLogEngines.AppendText($"{player.name}", col);
+				FormLogEngines.AppendText($" < {msg}\n", Color.Brown);
 				enginePro.process.StandardInput.WriteLine(msg);
 			}
 		}
@@ -355,10 +345,10 @@ namespace RapChessGui
 				{
 					if (CChess.This.IsValidMove(lastMove) > 0)
 					{
-						isPrepared = false;
-						enginePro.Terminate();
+						EngineReset();
 						FormChess.This.MakeMove(lastMove);
-						FormLog.AppendText($"{player.name} forced move {lastMove}\n", Color.Orange);
+						FormLogEngines.AppendText($"{player.name} forced move {lastMove}\n", Color.Orange);
+
 					}
 					else
 						return SetTimeOut();
@@ -442,13 +432,13 @@ namespace RapChessGui
 			gamer[0].Init(true);
 			gamer[1].Init(false);
 			curIndex = 0;
-			FormLog.This.cbPlayerList.Items.Clear();
+			FormLogEngines.This.cbPlayerList.Items.Clear();
 			if (gamer[0].engine != null)
-				FormLog.This.cbPlayerList.Items.Add(gamer[0].player.name);
+				FormLogEngines.This.cbPlayerList.Items.Add(gamer[0].player.name);
 			if (gamer[1].engine != null)
-				FormLog.This.cbPlayerList.Items.Add(gamer[1].player.name);
-			if (FormLog.This.cbPlayerList.Items.Count > 0)
-				FormLog.This.cbPlayerList.SelectedIndex = 0;
+				FormLogEngines.This.cbPlayerList.Items.Add(gamer[1].player.name);
+			if (FormLogEngines.This.cbPlayerList.Items.Count > 0)
+				FormLogEngines.This.cbPlayerList.SelectedIndex = 0;
 		}
 
 		public void Rotate()
@@ -523,6 +513,7 @@ namespace RapChessGui
 				g.bookPro.Terminate();
 				g.enginePro.Terminate();
 			}
+			CMessageList.Clear();
 		}
 
 	}

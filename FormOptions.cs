@@ -32,12 +32,8 @@ namespace RapChessGui
 			nudSpeed.Value = CRapIni.This.ReadInt("options>interface>speed", 200);
 			CBoard.color = ColorTranslator.FromHtml(CRapIni.This.Read("options>interface>color", "#400000"));
 			cbGameAutoElo.Checked = CRapIni.This.ReadBool("options>game>autoelo",cbGameAutoElo.Checked);
-			nudTourE.Value = CRapIni.This.ReadInt("options>tournamentE>records",10000);
-			nudTourP.Value = CRapIni.This.ReadInt("options>tournamentP>records", 10000);
 			cbModeStandard.SelectedIndex = CRapIni.This.ReadInt("options>margin>standard", 1);
 			cbModeTime.SelectedIndex = CRapIni.This.ReadInt("options>margin>time", 4);
-			CModeTournamentE.tourList.maxRecords = (int)nudTourE.Value;
-			CModeTournamentP.tourList.maxRecords = (int)nudTourP.Value;
 			CBoard.showArrow = cbArrow.Checked;
 			marginStandard = CbToMargin(cbModeStandard.SelectedIndex);
 			marginTime = CbToMargin(cbModeTime.SelectedIndex);		
@@ -54,12 +50,8 @@ namespace RapChessGui
 			CRapIni.This.Write("options>interface>speed", nudSpeed.Value);
 			CRapIni.This.Write("options>interface>color", ColorTranslator.ToHtml(CBoard.color));
 			CRapIni.This.Write("options>game>autoelo", cbGameAutoElo.Checked);
-			CRapIni.This.Write("options>tournamentE>records", nudTourE.Value);
-			CRapIni.This.Write("options>tournamentP>records", nudTourP.Value);
 			CRapIni.This.Write("options>margin>standard", cbModeStandard.SelectedIndex);
 			CRapIni.This.Write("options>margin>time", cbModeTime.SelectedIndex);
-			CModeTournamentE.tourList.maxRecords = (int)nudTourE.Value;
-			CModeTournamentP.tourList.maxRecords = (int)nudTourP.Value;
 			CBoard.showArrow = cbArrow.Checked;
 			marginStandard = CbToMargin(cbModeStandard.SelectedIndex);
 			marginTime = CbToMargin(cbModeTime.SelectedIndex);
@@ -81,17 +73,6 @@ namespace RapChessGui
 			FormChess.This.RenderBoard();
 		}
 
-		private void butDefault_Click(object sender, EventArgs e)
-		{
-			colorDialog1.Color = Color.FromArgb(64, 8, 8);
-			cbShowPonder.Checked = true;
-			cbArrow.Checked = true;
-			cbTips.Checked = true;
-			CData.rotateBoard = cbRotateBoard.Checked = false;
-			CBoard.color = colorDialog1.Color;
-			FormChess.This.RenderBoard();
-		}
-
 		private void butColor_Click(object sender, EventArgs e)
 		{
 			colorDialog1.Color = CBoard.color;
@@ -102,17 +83,40 @@ namespace RapChessGui
 			}
 		}
 
-		private void button1_Click(object sender, EventArgs e)
+		private void butDefault_Click(object sender, EventArgs e)
 		{
+			colorDialog1.Color = Color.FromArgb(64, 8, 8);
+			cbShowPonder.Checked = true;
+			cbArrow.Checked = true;
+			cbTips.Checked = true;
+			CData.rotateBoard = cbRotateBoard.Checked = false;
+			CBoard.color = colorDialog1.Color;
+			CModeTournamentE.records = 10000;
+			CModeTournamentP.records = 10000;
+			CModeTournamentE.SaveToIni();
+			CModeTournamentP.SaveToIni();
+			SaveToIni();
+		}
+
+		private void butOk_Click(object sender, EventArgs e)
+		{
+			CModeTournamentE.records = (int)nudTourE.Value;
+			CModeTournamentP.records = (int)nudTourP.Value;
+			CModeTournamentE.SaveToIni();
+			CModeTournamentP.SaveToIni();
 			SaveToIni();
 		}
 
 		private void FormOptions_Shown(object sender, EventArgs e)
 		{
-			CModeTournamentE.SelectEngine();
-			CModeTournamentP.SelectPlayer();
-			labTourE.Text = $"Fill {(CModeTournamentE.tourList.list.Count * 100) / CModeTournamentE.tourList.maxRecords}%";
-			labTourP.Text = $"Fill {(CModeTournamentP.tourList.list.Count * 100) / CModeTournamentP.tourList.maxRecords}%";
+			LoadFromIni();
+			CModeTournamentE.LoadFromIni();
+			CModeTournamentP.LoadFromIni();
+			nudTourE.Value = CModeTournamentE.records;
+			nudTourP.Value = CModeTournamentP.records;
+			labTourE.Text = $"Fill {(CModeTournamentE.tourList.list.Count * 100) / CModeTournamentE.records}%";
+			labTourP.Text = $"Fill {(CModeTournamentP.tourList.list.Count * 100) / CModeTournamentP.records}%";
 		}
+
 	}
 }

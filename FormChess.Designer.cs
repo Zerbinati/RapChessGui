@@ -75,7 +75,7 @@
 			this.labMatch23 = new System.Windows.Forms.Label();
 			this.labMatch22 = new System.Windows.Forms.Label();
 			this.labMatch21 = new System.Windows.Forms.Label();
-			this.labMatch20 = new System.Windows.Forms.Label();
+			this.labMatchPlayer2 = new System.Windows.Forms.Label();
 			this.labMatch14 = new System.Windows.Forms.Label();
 			this.labMatch13 = new System.Windows.Forms.Label();
 			this.labMatch12 = new System.Windows.Forms.Label();
@@ -84,8 +84,8 @@
 			this.label27 = new System.Windows.Forms.Label();
 			this.label28 = new System.Windows.Forms.Label();
 			this.label29 = new System.Windows.Forms.Label();
-			this.label30 = new System.Windows.Forms.Label();
-			this.labMatch10 = new System.Windows.Forms.Label();
+			this.labMatchPlayer = new System.Windows.Forms.Label();
+			this.labMatchPlayer1 = new System.Windows.Forms.Label();
 			this.labMatchGames = new System.Windows.Forms.Label();
 			this.butContinueMatch = new System.Windows.Forms.Button();
 			this.butNewMatch = new System.Windows.Forms.Button();
@@ -188,8 +188,9 @@
 			this.playersToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
 			this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.logToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.enginesToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+			this.programLogToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.gamesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.enginesToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
 			this.historyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.enginesToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
 			this.playersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -276,6 +277,8 @@
 			this.columnHeader21 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeader22 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.tlpBlack = new System.Windows.Forms.TableLayoutPanel();
+			this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
+			this.lastGameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.tabControl1.SuspendLayout();
 			this.tabPageGame.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.chartGame)).BeginInit();
@@ -735,7 +738,7 @@
 			this.tlpMatch.Controls.Add(this.labMatch23, 3, 2);
 			this.tlpMatch.Controls.Add(this.labMatch22, 2, 2);
 			this.tlpMatch.Controls.Add(this.labMatch21, 1, 2);
-			this.tlpMatch.Controls.Add(this.labMatch20, 0, 2);
+			this.tlpMatch.Controls.Add(this.labMatchPlayer2, 0, 2);
 			this.tlpMatch.Controls.Add(this.labMatch14, 4, 1);
 			this.tlpMatch.Controls.Add(this.labMatch13, 3, 1);
 			this.tlpMatch.Controls.Add(this.labMatch12, 2, 1);
@@ -744,8 +747,8 @@
 			this.tlpMatch.Controls.Add(this.label27, 3, 0);
 			this.tlpMatch.Controls.Add(this.label28, 2, 0);
 			this.tlpMatch.Controls.Add(this.label29, 1, 0);
-			this.tlpMatch.Controls.Add(this.label30, 0, 0);
-			this.tlpMatch.Controls.Add(this.labMatch10, 0, 1);
+			this.tlpMatch.Controls.Add(this.labMatchPlayer, 0, 0);
+			this.tlpMatch.Controls.Add(this.labMatchPlayer1, 0, 1);
 			this.tlpMatch.Dock = System.Windows.Forms.DockStyle.Top;
 			this.tlpMatch.Location = new System.Drawing.Point(0, 286);
 			this.tlpMatch.Name = "tlpMatch";
@@ -805,18 +808,18 @@
 			this.labMatch21.TabIndex = 11;
 			this.labMatch21.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
-			// labMatch20
+			// labMatchPlayer2
 			// 
-			this.labMatch20.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+			this.labMatchPlayer2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.labMatch20.BackColor = System.Drawing.Color.Transparent;
-			this.labMatch20.Location = new System.Drawing.Point(4, 63);
-			this.labMatch20.Name = "labMatch20";
-			this.labMatch20.Size = new System.Drawing.Size(64, 36);
-			this.labMatch20.TabIndex = 10;
-			this.labMatch20.Text = "Player 2";
-			this.labMatch20.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.labMatchPlayer2.BackColor = System.Drawing.Color.Transparent;
+			this.labMatchPlayer2.Location = new System.Drawing.Point(4, 63);
+			this.labMatchPlayer2.Name = "labMatchPlayer2";
+			this.labMatchPlayer2.Size = new System.Drawing.Size(64, 36);
+			this.labMatchPlayer2.TabIndex = 10;
+			this.labMatchPlayer2.Text = "Player 2";
+			this.labMatchPlayer2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
 			// labMatch14
 			// 
@@ -918,31 +921,31 @@
 			this.label29.Text = "Win";
 			this.label29.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
-			// label30
+			// labMatchPlayer
 			// 
-			this.label30.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+			this.labMatchPlayer.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.label30.BackColor = System.Drawing.Color.Transparent;
-			this.label30.Location = new System.Drawing.Point(4, 1);
-			this.label30.Name = "label30";
-			this.label30.Size = new System.Drawing.Size(64, 31);
-			this.label30.TabIndex = 0;
-			this.label30.Text = "Player";
-			this.label30.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.labMatchPlayer.BackColor = System.Drawing.Color.Transparent;
+			this.labMatchPlayer.Location = new System.Drawing.Point(4, 1);
+			this.labMatchPlayer.Name = "labMatchPlayer";
+			this.labMatchPlayer.Size = new System.Drawing.Size(64, 31);
+			this.labMatchPlayer.TabIndex = 0;
+			this.labMatchPlayer.Text = "Player";
+			this.labMatchPlayer.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
-			// labMatch10
+			// labMatchPlayer1
 			// 
-			this.labMatch10.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+			this.labMatchPlayer1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.labMatch10.BackColor = System.Drawing.Color.Transparent;
-			this.labMatch10.Location = new System.Drawing.Point(4, 33);
-			this.labMatch10.Name = "labMatch10";
-			this.labMatch10.Size = new System.Drawing.Size(64, 29);
-			this.labMatch10.TabIndex = 5;
-			this.labMatch10.Text = "Player 1";
-			this.labMatch10.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.labMatchPlayer1.BackColor = System.Drawing.Color.Transparent;
+			this.labMatchPlayer1.Location = new System.Drawing.Point(4, 33);
+			this.labMatchPlayer1.Name = "labMatchPlayer1";
+			this.labMatchPlayer1.Size = new System.Drawing.Size(64, 29);
+			this.labMatchPlayer1.TabIndex = 5;
+			this.labMatchPlayer1.Text = "Player 1";
+			this.labMatchPlayer1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
 			// labMatchGames
 			// 
@@ -2188,7 +2191,7 @@
 			this.menuStrip1.Location = new System.Drawing.Point(0, 2);
 			this.menuStrip1.Name = "menuStrip1";
 			this.menuStrip1.ShowItemToolTips = true;
-			this.menuStrip1.Size = new System.Drawing.Size(305, 24);
+			this.menuStrip1.Size = new System.Drawing.Size(430, 24);
 			this.menuStrip1.TabIndex = 1;
 			this.menuStrip1.Text = "menuStrip1";
 			// 
@@ -2279,25 +2282,35 @@
 			// logToolStripMenuItem
 			// 
 			this.logToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.programLogToolStripMenuItem,
+            this.gamesToolStripMenuItem,
             this.enginesToolStripMenuItem1,
-            this.gamesToolStripMenuItem});
+            this.toolStripMenuItem1,
+            this.lastGameToolStripMenuItem});
 			this.logToolStripMenuItem.Name = "logToolStripMenuItem";
-			this.logToolStripMenuItem.Size = new System.Drawing.Size(39, 20);
-			this.logToolStripMenuItem.Text = "Log";
+			this.logToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
+			this.logToolStripMenuItem.Text = "Logs";
 			// 
-			// enginesToolStripMenuItem1
+			// programLogToolStripMenuItem
 			// 
-			this.enginesToolStripMenuItem1.Name = "enginesToolStripMenuItem1";
-			this.enginesToolStripMenuItem1.Size = new System.Drawing.Size(115, 22);
-			this.enginesToolStripMenuItem1.Text = "Engines";
-			this.enginesToolStripMenuItem1.Click += new System.EventHandler(this.enginesToolStripMenuItem1_Click);
+			this.programLogToolStripMenuItem.Name = "programLogToolStripMenuItem";
+			this.programLogToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+			this.programLogToolStripMenuItem.Text = "Program log";
+			this.programLogToolStripMenuItem.Click += new System.EventHandler(this.programLogToolStripMenuItem_Click);
 			// 
 			// gamesToolStripMenuItem
 			// 
 			this.gamesToolStripMenuItem.Name = "gamesToolStripMenuItem";
-			this.gamesToolStripMenuItem.Size = new System.Drawing.Size(115, 22);
-			this.gamesToolStripMenuItem.Text = "Games";
+			this.gamesToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+			this.gamesToolStripMenuItem.Text = "Games log";
 			this.gamesToolStripMenuItem.Click += new System.EventHandler(this.gamesToolStripMenuItem_Click);
+			// 
+			// enginesToolStripMenuItem1
+			// 
+			this.enginesToolStripMenuItem1.Name = "enginesToolStripMenuItem1";
+			this.enginesToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
+			this.enginesToolStripMenuItem1.Text = "Engines log";
+			this.enginesToolStripMenuItem1.Click += new System.EventHandler(this.enginesToolStripMenuItem1_Click);
 			// 
 			// historyToolStripMenuItem
 			// 
@@ -3588,6 +3601,18 @@
 			this.tlpBlack.Size = new System.Drawing.Size(1180, 24);
 			this.tlpBlack.TabIndex = 35;
 			// 
+			// toolStripMenuItem1
+			// 
+			this.toolStripMenuItem1.Name = "toolStripMenuItem1";
+			this.toolStripMenuItem1.Size = new System.Drawing.Size(177, 6);
+			// 
+			// lastGameToolStripMenuItem
+			// 
+			this.lastGameToolStripMenuItem.Name = "lastGameToolStripMenuItem";
+			this.lastGameToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+			this.lastGameToolStripMenuItem.Text = "Last game";
+			this.lastGameToolStripMenuItem.Click += new System.EventHandler(this.lastGameToolStripMenuItem_Click);
+			// 
 			// FormChess
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -3734,7 +3759,7 @@
 		private System.Windows.Forms.Label labMatch23;
 		private System.Windows.Forms.Label labMatch22;
 		private System.Windows.Forms.Label labMatch21;
-		private System.Windows.Forms.Label labMatch20;
+		private System.Windows.Forms.Label labMatchPlayer2;
 		private System.Windows.Forms.Label labMatch14;
 		private System.Windows.Forms.Label labMatch13;
 		private System.Windows.Forms.Label labMatch12;
@@ -3743,8 +3768,8 @@
 		private System.Windows.Forms.Label label27;
 		private System.Windows.Forms.Label label28;
 		private System.Windows.Forms.Label label29;
-		private System.Windows.Forms.Label label30;
-		private System.Windows.Forms.Label labMatch10;
+		private System.Windows.Forms.Label labMatchPlayer;
+		private System.Windows.Forms.Label labMatchPlayer1;
 		private System.Windows.Forms.Label labMatchGames;
 		private System.Windows.Forms.Button butNewMatch;
 		private System.Windows.Forms.GroupBox groupBox6;
@@ -3925,6 +3950,9 @@
 		private System.Windows.Forms.ToolStripMenuItem historyToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem enginesToolStripMenuItem2;
 		private System.Windows.Forms.ToolStripMenuItem playersToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem programLogToolStripMenuItem;
+		private System.Windows.Forms.ToolStripSeparator toolStripMenuItem1;
+		private System.Windows.Forms.ToolStripMenuItem lastGameToolStripMenuItem;
 	}
 }
 

@@ -31,6 +31,7 @@
 			this.colorDialog1 = new System.Windows.Forms.ColorDialog();
 			this.butDefault = new System.Windows.Forms.Button();
 			this.gbInterface = new System.Windows.Forms.GroupBox();
+			this.butColor = new System.Windows.Forms.Button();
 			this.cbTips = new System.Windows.Forms.CheckBox();
 			this.cbArrow = new System.Windows.Forms.CheckBox();
 			this.label1 = new System.Windows.Forms.Label();
@@ -38,8 +39,7 @@
 			this.cbAttack = new System.Windows.Forms.CheckBox();
 			this.cbShowPonder = new System.Windows.Forms.CheckBox();
 			this.cbRotateBoard = new System.Windows.Forms.CheckBox();
-			this.butColor = new System.Windows.Forms.Button();
-			this.button1 = new System.Windows.Forms.Button();
+			this.butOk = new System.Windows.Forms.Button();
 			this.gbGame = new System.Windows.Forms.GroupBox();
 			this.cbGameAutoElo = new System.Windows.Forms.CheckBox();
 			this.gbTournament = new System.Windows.Forms.GroupBox();
@@ -56,8 +56,8 @@
 			this.label6 = new System.Windows.Forms.Label();
 			this.nudTourE = new System.Windows.Forms.NumericUpDown();
 			this.gbNotation = new System.Windows.Forms.GroupBox();
-			this.rbSan = new System.Windows.Forms.RadioButton();
 			this.rbUci = new System.Windows.Forms.RadioButton();
+			this.rbSan = new System.Windows.Forms.RadioButton();
 			this.gbInterface.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.nudSpeed)).BeginInit();
 			this.gbGame.SuspendLayout();
@@ -71,6 +71,7 @@
 			// 
 			// butDefault
 			// 
+			this.butDefault.DialogResult = System.Windows.Forms.DialogResult.OK;
 			this.butDefault.Dock = System.Windows.Forms.DockStyle.Top;
 			this.butDefault.Location = new System.Drawing.Point(0, 442);
 			this.butDefault.Name = "butDefault";
@@ -97,6 +98,17 @@
 			this.gbInterface.TabIndex = 4;
 			this.gbInterface.TabStop = false;
 			this.gbInterface.Text = "Interface";
+			// 
+			// butColor
+			// 
+			this.butColor.Dock = System.Windows.Forms.DockStyle.Bottom;
+			this.butColor.Location = new System.Drawing.Point(3, 141);
+			this.butColor.Name = "butColor";
+			this.butColor.Size = new System.Drawing.Size(280, 24);
+			this.butColor.TabIndex = 4;
+			this.butColor.Text = "Board color";
+			this.butColor.UseVisualStyleBackColor = true;
+			this.butColor.Click += new System.EventHandler(this.butColor_Click);
 			// 
 			// cbTips
 			// 
@@ -194,28 +206,17 @@
 			this.cbRotateBoard.UseVisualStyleBackColor = true;
 			this.cbRotateBoard.CheckedChanged += new System.EventHandler(this.CbRotateBoard_CheckedChanged);
 			// 
-			// butColor
+			// butOk
 			// 
-			this.butColor.Dock = System.Windows.Forms.DockStyle.Bottom;
-			this.butColor.Location = new System.Drawing.Point(3, 141);
-			this.butColor.Name = "butColor";
-			this.butColor.Size = new System.Drawing.Size(280, 24);
-			this.butColor.TabIndex = 4;
-			this.butColor.Text = "Board color";
-			this.butColor.UseVisualStyleBackColor = true;
-			this.butColor.Click += new System.EventHandler(this.butColor_Click);
-			// 
-			// button1
-			// 
-			this.button1.DialogResult = System.Windows.Forms.DialogResult.OK;
-			this.button1.Dock = System.Windows.Forms.DockStyle.Top;
-			this.button1.Location = new System.Drawing.Point(0, 466);
-			this.button1.Name = "button1";
-			this.button1.Size = new System.Drawing.Size(286, 24);
-			this.button1.TabIndex = 1;
-			this.button1.Text = "Ok";
-			this.button1.UseVisualStyleBackColor = true;
-			this.button1.Click += new System.EventHandler(this.button1_Click);
+			this.butOk.DialogResult = System.Windows.Forms.DialogResult.OK;
+			this.butOk.Dock = System.Windows.Forms.DockStyle.Top;
+			this.butOk.Location = new System.Drawing.Point(0, 466);
+			this.butOk.Name = "butOk";
+			this.butOk.Size = new System.Drawing.Size(286, 24);
+			this.butOk.TabIndex = 1;
+			this.butOk.Text = "Ok";
+			this.butOk.UseVisualStyleBackColor = true;
+			this.butOk.Click += new System.EventHandler(this.butOk_Click);
 			// 
 			// gbGame
 			// 
@@ -441,6 +442,17 @@
 			this.gbNotation.TabStop = false;
 			this.gbNotation.Text = "Notation";
 			// 
+			// rbUci
+			// 
+			this.rbUci.AutoSize = true;
+			this.rbUci.Dock = System.Windows.Forms.DockStyle.Top;
+			this.rbUci.Location = new System.Drawing.Point(3, 33);
+			this.rbUci.Name = "rbUci";
+			this.rbUci.Size = new System.Drawing.Size(280, 17);
+			this.rbUci.TabIndex = 1;
+			this.rbUci.Text = "Uci";
+			this.rbUci.UseVisualStyleBackColor = true;
+			// 
 			// rbSan
 			// 
 			this.rbSan.AutoSize = true;
@@ -454,23 +466,12 @@
 			this.rbSan.Text = "San";
 			this.rbSan.UseVisualStyleBackColor = true;
 			// 
-			// rbUci
-			// 
-			this.rbUci.AutoSize = true;
-			this.rbUci.Dock = System.Windows.Forms.DockStyle.Top;
-			this.rbUci.Location = new System.Drawing.Point(3, 33);
-			this.rbUci.Name = "rbUci";
-			this.rbUci.Size = new System.Drawing.Size(280, 17);
-			this.rbUci.TabIndex = 1;
-			this.rbUci.Text = "Uci";
-			this.rbUci.UseVisualStyleBackColor = true;
-			// 
 			// FormOptions
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(286, 496);
-			this.Controls.Add(this.button1);
+			this.Controls.Add(this.butOk);
 			this.Controls.Add(this.butDefault);
 			this.Controls.Add(this.gbNotation);
 			this.Controls.Add(this.gbInterface);
@@ -511,7 +512,7 @@
 		private System.Windows.Forms.Button butColor;
 		public System.Windows.Forms.CheckBox cbShowPonder;
 		public System.Windows.Forms.CheckBox cbRotateBoard;
-		private System.Windows.Forms.Button button1;
+		private System.Windows.Forms.Button butOk;
 		private System.Windows.Forms.GroupBox gbGame;
 		public System.Windows.Forms.CheckBox cbGameAutoElo;
 		public System.Windows.Forms.CheckBox cbAttack;

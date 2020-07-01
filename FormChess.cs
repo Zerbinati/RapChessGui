@@ -32,8 +32,10 @@ namespace RapChessGui
 		public static CBookList bookList = new CBookList();
 		public static CEngineList engineList = new CEngineList();
 		public static CPlayerList playerList = new CPlayerList();
-		readonly FormLog formLog = new FormLog();
-		readonly FormPgn formPgn = new FormPgn();
+		readonly FormLogProgram formLogProgram = new FormLogProgram();
+		readonly FormLogGames formLogGames = new FormLogGames();
+		readonly FormLogEngines formLogEngines = new FormLogEngines();
+		readonly FormLogLast formLogLast= new FormLogLast();
 		readonly FormHisP formHisP = new FormHisP();
 		readonly FormHisE formHisE = new FormHisE();
 
@@ -279,7 +281,7 @@ namespace RapChessGui
 					ShowInfo($"{pl.name} make wrong move", Color.Red);
 					break;
 			}
-			FormLog.AppendText($"Finish {tssInfo.Text}\n", Color.Gray);
+			FormLogEngines.AppendText($"Finish {tssInfo.Text}\n", Color.Gray);
 			CreateRtf();
 			CreatePgn();
 			if (CData.gameMode == CMode.game)
@@ -557,14 +559,14 @@ namespace RapChessGui
 			{
 				CGamer gamer = GamerList.GetGamerPid(m.pid, out string protocol);
 				if (gamer == null)
-					CRapLog.Add($"Unknown pid ({GamerList.GamerCur().player.name} - {GamerList.GamerSec().player.name}) ({m.pid}) ({m.msg})");
+					CRapLog.Add($"Unknown pid ({GamerList.GamerCur().player.name} - {GamerList.GamerSec().player.name}) ({m.pid})-({GamerList.GamerCur().bookPro.GetPid()} {GamerList.GamerCur().enginePro.GetPid()})-({GamerList.GamerSec().bookPro.GetPid()} {GamerList.GamerSec().enginePro.GetPid()}) ({m.msg})");
 				else
 				{
 					string book = protocol == "Book" ? "book " : "";
 					Color col = gamer.white ? Color.DimGray : Color.Black;
-					FormLog.AppendText($"{GetTimeElapsed()} ", Color.Green);
-					FormLog.AppendText($"{book}{gamer.player.name}", col);
-					FormLog.AppendText($" > {m.msg}\n", Color.DarkBlue);
+					FormLogEngines.AppendText($"{GetTimeElapsed()} ", Color.Green);
+					FormLogEngines.AppendText($"{book}{gamer.player.name}", col);
+					FormLogEngines.AppendText($" > {m.msg}\n", Color.DarkBlue);
 					if ((protocol == "Uci") || (protocol == "Book"))
 						GetMessageUci(gamer, m.msg);
 					if (protocol == "Winboard")
@@ -578,7 +580,7 @@ namespace RapChessGui
 			string fn = $"{cbMainMode.Text}.rtf";
 			try
 			{
-				FormLog.This.richTextBox1.SaveFile(fn);
+				FormLogEngines.This.richTextBox1.SaveFile(fn);
 			}
 			catch
 			{
@@ -605,9 +607,9 @@ namespace RapChessGui
 			list.Add("");
 			list.Add(CHistory.GetPgn());
 			foreach (String s in list)
-				formPgn.textBox1.Text += $"{s}\r\n";
-			formPgn.textBox1.Select(0, 0);
-			File.WriteAllText($"{cbMainMode.Text}.pgn", formPgn.textBox1.Text);
+				formLogGames.textBox1.Text += $"{s}\r\n";
+			formLogGames.textBox1.Select(0, 0);
+			File.WriteAllText($"{cbMainMode.Text}.pgn", formLogGames.textBox1.Text);
 		}
 
 		public void AddBook(string emo)
@@ -896,10 +898,10 @@ namespace RapChessGui
 				List<string> eMoves = new List<string>();
 				foreach (int gm in gMoves)
 					eMoves.Add(Chess.GmoToEmo(gm));
-				FormLog.AppendText($"Wrong move {emo}\n", Color.Red);
-				FormLog.AppendText($"{Chess.GetFen()}\n", Color.Black);
-				FormLog.AppendText($"{string.Join(" ", eMoves)}\n", Color.Black);
-				FormLog.This.richTextBox1.SaveFile("Error.rtf");
+				FormLogEngines.AppendText($"Wrong move {emo}\n", Color.Red);
+				FormLogEngines.AppendText($"{Chess.GetFen()}\n", Color.Black);
+				FormLogEngines.AppendText($"{string.Join(" ", eMoves)}\n", Color.Black);
+				FormLogEngines.This.richTextBox1.SaveFile("Error.rtf");
 				CRapLog.Add($"Wrong move {cp.engine} {emo} {Chess.GetFen()}");
 				SetGameState(CGameState.error);
 				return false;
@@ -979,12 +981,12 @@ namespace RapChessGui
 			CData.back = 0;
 			CGamer pw = GamerList.gamer[0];
 			CGamer pb = GamerList.gamer[1];
-			FormLog.This.richTextBox1.Clear();
-			FormLog.AppendText($"Time {DateTime.Now.ToString("yyyy-MM-dd HH:mm")}\n", Color.Gray);
+			FormLogEngines.This.richTextBox1.Clear();
+			FormLogEngines.AppendText($"Time {DateTime.Now.ToString("yyyy-MM-dd HH:mm")}\n", Color.Gray);
 			if (pw.engine != null)
-				FormLog.AppendText($"White {pw.player.name} {pw.player.engine} {pw.engine.parameters}\n", Color.Gray);
+				FormLogEngines.AppendText($"White {pw.player.name} {pw.player.engine} {pw.engine.parameters}\n", Color.Gray);
 			if (pb.engine != null)
-				FormLog.AppendText($"Black {pb.player.name} {pb.player.engine} {pb.engine.parameters}\n", Color.Gray);
+				FormLogEngines.AppendText($"Black {pb.player.name} {pb.player.engine} {pb.engine.parameters}\n", Color.Gray);
 			labBack.Text = $"Back {CData.back}";
 			CData.gameState = (int)CGameState.normal;
 			RenderInfo(pw);
@@ -1179,16 +1181,16 @@ namespace RapChessGui
 			RenderBoard();
 			CGamer pw = GamerList.gamer[0];
 			CGamer pb = GamerList.gamer[1];
-			FormLog.This.richTextBox1.Clear();
-			FormLog.AppendText($"Fen {Chess.GetFen()}\n", Color.Gray);
+			FormLogEngines.This.richTextBox1.Clear();
+			FormLogEngines.AppendText($"Fen {Chess.GetFen()}\n", Color.Gray);
 			if (pw.engine == null)
-				FormLog.AppendText($"White {pw.player.name}\n", Color.Gray);
+				FormLogEngines.AppendText($"White {pw.player.name}\n", Color.Gray);
 			else
-				FormLog.AppendText($"White {pw.player.name} {pw.player.engine} {pw.engine.parameters}\n", Color.Gray);
+				FormLogEngines.AppendText($"White {pw.player.name} {pw.player.engine} {pw.engine.parameters}\n", Color.Gray);
 			if (pb.engine == null)
-				FormLog.AppendText($"White {pb.player.name}\n", Color.Gray);
+				FormLogEngines.AppendText($"White {pb.player.name}\n", Color.Gray);
 			else
-				FormLog.AppendText($"Black {pb.player.name} {pb.player.engine} {pb.engine.parameters}\n", Color.Gray);
+				FormLogEngines.AppendText($"Black {pb.player.name} {pb.player.engine} {pb.engine.parameters}\n", Color.Gray);
 			tssInfo.ForeColor = Color.Lime;
 			tssInfo.Text = $"Load fen {Chess.GetFen()}";
 			labBack.Text = $"Back {CData.back}";
@@ -1232,10 +1234,10 @@ namespace RapChessGui
 			RenderBoard();
 			CGamer pw = GamerList.gamer[0];
 			CGamer pb = GamerList.gamer[1];
-			FormLog.This.richTextBox1.Clear();
-			FormLog.AppendText($"Pgn {CHistory.GetPgn()}\n", Color.Gray);
-			FormLog.AppendText($"White {pw.player.name} {pw.player.engine}\n", Color.Gray);
-			FormLog.AppendText($"Black {pb.player.name} {pb.player.engine}\n", Color.Gray);
+			FormLogEngines.This.richTextBox1.Clear();
+			FormLogEngines.AppendText($"Pgn {CHistory.GetPgn()}\n", Color.Gray);
+			FormLogEngines.AppendText($"White {pw.player.name} {pw.player.engine}\n", Color.Gray);
+			FormLogEngines.AppendText($"Black {pb.player.name} {pb.player.engine}\n", Color.Gray);
 			ShowInfo($"Load pgn {CHistory.GetPgn()}", Color.Gainsboro);
 			labBack.Text = $"Back {CData.back}";
 			CData.gameState = Chess.GetGameState();
@@ -1557,7 +1559,7 @@ namespace RapChessGui
 			CModeMatch.games++;
 			if (!isDraw)
 			{
-				if (pw.name == labMatch10.Text)
+				if (pw.name == labMatchPlayer1.Text)
 					CModeMatch.win++;
 				else
 					CModeMatch.loose++;
@@ -1960,20 +1962,36 @@ namespace RapChessGui
 				formHisP.Show(this);
 		}
 
-		private void enginesToolStripMenuItem1_Click(object sender, EventArgs e)
+		private void programLogToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			if (formLog.Visible)
-				formLog.Focus();
+			if (formLogProgram.Visible)
+				formLogProgram.Focus();
 			else
-				formLog.Show(this);
+				formLogProgram.Show(this);
 		}
 
 		private void gamesToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			if (formPgn.Visible)
-				formPgn.Focus();
+			if (formLogGames.Visible)
+				formLogGames.Focus();
 			else
-				formPgn.Show(this);
+				formLogGames.Show(this);
+		}
+
+		private void enginesToolStripMenuItem1_Click(object sender, EventArgs e)
+		{
+			if (formLogEngines.Visible)
+				formLogEngines.Focus();
+			else
+				formLogEngines.Show(this);
+		}
+
+		private void lastGameToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			if (formLogLast.Visible)
+				formLogLast.Focus();
+			else
+				formLogLast.Show(this);
 		}
 
 		private void booksToolStripMenuItem1_Click(object sender, EventArgs e)
@@ -2351,7 +2369,7 @@ namespace RapChessGui
 
 		private void cbMainMode_SelectedIndexChanged(object sender, EventArgs e)
 		{
-			FormPgn.This.textBox1.Text = "";
+			FormLogGames.This.textBox1.Text = "";
 			tabControl1.SelectedIndex = cbMainMode.SelectedIndex;
 			CData.fen = Chess.GetFen();
 			Board.Fill();
@@ -2481,5 +2499,6 @@ namespace RapChessGui
 		}
 
 		#endregion
+
 	}
 }
