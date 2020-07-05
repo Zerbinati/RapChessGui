@@ -222,6 +222,8 @@ namespace RapChessGui
 			SplitLoadFromIni(splitContainerChart);
 			SplitLoadFromIni(splitContainerTourE);
 			SplitLoadFromIni(splitContainerTourP);
+			SplitLoadFromIni(scTournamentEList);
+			SplitLoadFromIni(scTournamentPList);
 			CModeGame.LoadFromIni();
 			CModeMatch.LoadFromIni();
 			CModeTournamentE.LoadFromIni();
@@ -816,6 +818,7 @@ namespace RapChessGui
 
 		void Reset()
 		{
+			BackColor = CBoard.color;
 			if (!CData.reset)
 				return;
 			CData.reset = false;
@@ -2033,6 +2036,8 @@ namespace RapChessGui
 			SplitSaveToIni(splitContainerChart);
 			SplitSaveToIni(splitContainerTourE);
 			SplitSaveToIni(splitContainerTourP);
+			SplitSaveToIni(scTournamentEList);
+			SplitSaveToIni(scTournamentPList);
 			GamerList.Terminate();
 		}
 

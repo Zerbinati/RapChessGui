@@ -101,7 +101,7 @@
 			this.cbEngine1 = new System.Windows.Forms.ComboBox();
 			this.tabPageTourE = new System.Windows.Forms.TabPage();
 			this.splitContainerTourE = new System.Windows.Forms.SplitContainer();
-			this.scTournemnetEList = new System.Windows.Forms.SplitContainer();
+			this.scTournamentEList = new System.Windows.Forms.SplitContainer();
 			this.lvEngine = new System.Windows.Forms.ListView();
 			this.columnHeader23 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeader24 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -191,6 +191,8 @@
 			this.programLogToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.gamesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.enginesToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+			this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
+			this.lastGameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.historyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.enginesToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
 			this.playersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -277,8 +279,6 @@
 			this.columnHeader21 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeader22 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.tlpBlack = new System.Windows.Forms.TableLayoutPanel();
-			this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
-			this.lastGameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.tabControl1.SuspendLayout();
 			this.tabPageGame.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.chartGame)).BeginInit();
@@ -297,10 +297,10 @@
 			this.splitContainerTourE.Panel1.SuspendLayout();
 			this.splitContainerTourE.Panel2.SuspendLayout();
 			this.splitContainerTourE.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.scTournemnetEList)).BeginInit();
-			this.scTournemnetEList.Panel1.SuspendLayout();
-			this.scTournemnetEList.Panel2.SuspendLayout();
-			this.scTournemnetEList.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.scTournamentEList)).BeginInit();
+			this.scTournamentEList.Panel1.SuspendLayout();
+			this.scTournamentEList.Panel2.SuspendLayout();
+			this.scTournamentEList.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.chartTournamentE)).BeginInit();
 			this.groupBox9.SuspendLayout();
 			this.groupBox8.SuspendLayout();
@@ -379,10 +379,10 @@
 			this.tabControl1.Controls.Add(this.tabPageEdit);
 			this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.tabControl1.ItemSize = new System.Drawing.Size(0, 1);
-			this.tabControl1.Location = new System.Drawing.Point(0, 35);
+			this.tabControl1.Location = new System.Drawing.Point(0, 39);
 			this.tabControl1.Name = "tabControl1";
 			this.tabControl1.SelectedIndex = 0;
-			this.tabControl1.Size = new System.Drawing.Size(366, 457);
+			this.tabControl1.Size = new System.Drawing.Size(366, 453);
 			this.tabControl1.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
 			this.tabControl1.TabIndex = 9;
 			this.tabControl1.SelectedIndexChanged += new System.EventHandler(this.tabControl1_SelectedIndexChanged);
@@ -1143,7 +1143,7 @@
 			this.tabPageTourE.Location = new System.Drawing.Point(4, 5);
 			this.tabPageTourE.Name = "tabPageTourE";
 			this.tabPageTourE.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPageTourE.Size = new System.Drawing.Size(358, 448);
+			this.tabPageTourE.Size = new System.Drawing.Size(358, 444);
 			this.tabPageTourE.TabIndex = 5;
 			this.tabPageTourE.Text = "TourE";
 			this.tabPageTourE.UseVisualStyleBackColor = true;
@@ -1158,34 +1158,34 @@
 			// 
 			// splitContainerTourE.Panel1
 			// 
-			this.splitContainerTourE.Panel1.Controls.Add(this.scTournemnetEList);
+			this.splitContainerTourE.Panel1.Controls.Add(this.scTournamentEList);
 			// 
 			// splitContainerTourE.Panel2
 			// 
 			this.splitContainerTourE.Panel2.Controls.Add(this.chartTournamentE);
-			this.splitContainerTourE.Size = new System.Drawing.Size(352, 314);
-			this.splitContainerTourE.SplitterDistance = 197;
+			this.splitContainerTourE.Size = new System.Drawing.Size(352, 310);
+			this.splitContainerTourE.SplitterDistance = 194;
 			this.splitContainerTourE.TabIndex = 27;
 			// 
-			// scTournemnetEList
+			// scTournamentEList
 			// 
-			this.scTournemnetEList.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-			this.scTournemnetEList.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.scTournemnetEList.Location = new System.Drawing.Point(0, 0);
-			this.scTournemnetEList.Name = "scTournemnetEList";
-			this.scTournemnetEList.Orientation = System.Windows.Forms.Orientation.Horizontal;
+			this.scTournamentEList.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+			this.scTournamentEList.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.scTournamentEList.Location = new System.Drawing.Point(0, 0);
+			this.scTournamentEList.Name = "scTournamentEList";
+			this.scTournamentEList.Orientation = System.Windows.Forms.Orientation.Horizontal;
 			// 
-			// scTournemnetEList.Panel1
+			// scTournamentEList.Panel1
 			// 
-			this.scTournemnetEList.Panel1.Controls.Add(this.lvEngine);
+			this.scTournamentEList.Panel1.Controls.Add(this.lvEngine);
 			// 
-			// scTournemnetEList.Panel2
+			// scTournamentEList.Panel2
 			// 
-			this.scTournemnetEList.Panel2.Controls.Add(this.lvEngineH);
-			this.scTournemnetEList.Panel2.Controls.Add(this.labEngine);
-			this.scTournemnetEList.Size = new System.Drawing.Size(352, 197);
-			this.scTournemnetEList.SplitterDistance = 98;
-			this.scTournemnetEList.TabIndex = 24;
+			this.scTournamentEList.Panel2.Controls.Add(this.lvEngineH);
+			this.scTournamentEList.Panel2.Controls.Add(this.labEngine);
+			this.scTournamentEList.Size = new System.Drawing.Size(352, 194);
+			this.scTournamentEList.SplitterDistance = 96;
+			this.scTournamentEList.TabIndex = 24;
 			// 
 			// lvEngine
 			// 
@@ -1201,7 +1201,7 @@
 			this.lvEngine.MultiSelect = false;
 			this.lvEngine.Name = "lvEngine";
 			this.lvEngine.ShowGroups = false;
-			this.lvEngine.Size = new System.Drawing.Size(348, 94);
+			this.lvEngine.Size = new System.Drawing.Size(348, 92);
 			this.lvEngine.Sorting = System.Windows.Forms.SortOrder.Descending;
 			this.lvEngine.TabIndex = 24;
 			this.lvEngine.UseCompatibleStateImageBehavior = false;
@@ -1243,7 +1243,7 @@
 			this.lvEngineH.MultiSelect = false;
 			this.lvEngineH.Name = "lvEngineH";
 			this.lvEngineH.ShowGroups = false;
-			this.lvEngineH.Size = new System.Drawing.Size(348, 78);
+			this.lvEngineH.Size = new System.Drawing.Size(348, 77);
 			this.lvEngineH.TabIndex = 28;
 			this.lvEngineH.UseCompatibleStateImageBehavior = false;
 			this.lvEngineH.View = System.Windows.Forms.View.Details;
@@ -1321,7 +1321,7 @@
 			this.chartTournamentE.Series.Add(series4);
 			this.chartTournamentE.Series.Add(series5);
 			this.chartTournamentE.Series.Add(series6);
-			this.chartTournamentE.Size = new System.Drawing.Size(348, 109);
+			this.chartTournamentE.Size = new System.Drawing.Size(348, 108);
 			this.chartTournamentE.TabIndex = 30;
 			this.chartTournamentE.Text = "chart1";
 			this.toolTip1.SetToolTip(this.chartTournamentE, "Tournament history");
@@ -1417,7 +1417,7 @@
 			this.tabPageTourP.Controls.Add(this.butStartTournament);
 			this.tabPageTourP.Location = new System.Drawing.Point(4, 5);
 			this.tabPageTourP.Name = "tabPageTourP";
-			this.tabPageTourP.Size = new System.Drawing.Size(358, 448);
+			this.tabPageTourP.Size = new System.Drawing.Size(358, 444);
 			this.tabPageTourP.TabIndex = 3;
 			this.tabPageTourP.Text = "TourP";
 			this.tabPageTourP.UseVisualStyleBackColor = true;
@@ -1437,8 +1437,8 @@
 			// splitContainerTourP.Panel2
 			// 
 			this.splitContainerTourP.Panel2.Controls.Add(this.chartTournamentP);
-			this.splitContainerTourP.Size = new System.Drawing.Size(358, 425);
-			this.splitContainerTourP.SplitterDistance = 279;
+			this.splitContainerTourP.Size = new System.Drawing.Size(358, 421);
+			this.splitContainerTourP.SplitterDistance = 276;
 			this.splitContainerTourP.TabIndex = 26;
 			// 
 			// scTournamentPList
@@ -1457,8 +1457,8 @@
 			// 
 			this.scTournamentPList.Panel2.Controls.Add(this.lvPlayerH);
 			this.scTournamentPList.Panel2.Controls.Add(this.labPlayer);
-			this.scTournamentPList.Size = new System.Drawing.Size(358, 279);
-			this.scTournamentPList.SplitterDistance = 166;
+			this.scTournamentPList.Size = new System.Drawing.Size(358, 276);
+			this.scTournamentPList.SplitterDistance = 164;
 			this.scTournamentPList.TabIndex = 24;
 			// 
 			// lvPlayer
@@ -1475,7 +1475,7 @@
 			this.lvPlayer.MultiSelect = false;
 			this.lvPlayer.Name = "lvPlayer";
 			this.lvPlayer.ShowGroups = false;
-			this.lvPlayer.Size = new System.Drawing.Size(354, 162);
+			this.lvPlayer.Size = new System.Drawing.Size(354, 160);
 			this.lvPlayer.Sorting = System.Windows.Forms.SortOrder.Ascending;
 			this.lvPlayer.TabIndex = 24;
 			this.lvPlayer.UseCompatibleStateImageBehavior = false;
@@ -1517,7 +1517,7 @@
 			this.lvPlayerH.MultiSelect = false;
 			this.lvPlayerH.Name = "lvPlayerH";
 			this.lvPlayerH.ShowGroups = false;
-			this.lvPlayerH.Size = new System.Drawing.Size(354, 92);
+			this.lvPlayerH.Size = new System.Drawing.Size(354, 91);
 			this.lvPlayerH.TabIndex = 28;
 			this.lvPlayerH.UseCompatibleStateImageBehavior = false;
 			this.lvPlayerH.View = System.Windows.Forms.View.Details;
@@ -1595,7 +1595,7 @@
 			this.chartTournamentP.Series.Add(series7);
 			this.chartTournamentP.Series.Add(series8);
 			this.chartTournamentP.Series.Add(series9);
-			this.chartTournamentP.Size = new System.Drawing.Size(354, 138);
+			this.chartTournamentP.Size = new System.Drawing.Size(354, 137);
 			this.chartTournamentP.TabIndex = 31;
 			this.chartTournamentP.Text = "chart1";
 			this.toolTip1.SetToolTip(this.chartTournamentP, "Tournament history");
@@ -2074,16 +2074,16 @@
 			// 
 			// tabPageEdit
 			// 
+			this.tabPageEdit.BackColor = System.Drawing.Color.Transparent;
 			this.tabPageEdit.Controls.Add(this.groupBox7);
 			this.tabPageEdit.Controls.Add(this.gbToMove);
 			this.tabPageEdit.Controls.Add(this.butDefault);
 			this.tabPageEdit.Controls.Add(this.butClearBoard);
 			this.tabPageEdit.Location = new System.Drawing.Point(4, 5);
 			this.tabPageEdit.Name = "tabPageEdit";
-			this.tabPageEdit.Size = new System.Drawing.Size(358, 448);
+			this.tabPageEdit.Size = new System.Drawing.Size(358, 444);
 			this.tabPageEdit.TabIndex = 4;
 			this.tabPageEdit.Text = "Edit";
-			this.tabPageEdit.UseVisualStyleBackColor = true;
 			// 
 			// groupBox7
 			// 
@@ -2191,7 +2191,7 @@
 			this.menuStrip1.Location = new System.Drawing.Point(0, 2);
 			this.menuStrip1.Name = "menuStrip1";
 			this.menuStrip1.ShowItemToolTips = true;
-			this.menuStrip1.Size = new System.Drawing.Size(430, 24);
+			this.menuStrip1.Size = new System.Drawing.Size(310, 24);
 			this.menuStrip1.TabIndex = 1;
 			this.menuStrip1.Text = "menuStrip1";
 			// 
@@ -2294,23 +2294,35 @@
 			// programLogToolStripMenuItem
 			// 
 			this.programLogToolStripMenuItem.Name = "programLogToolStripMenuItem";
-			this.programLogToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+			this.programLogToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
 			this.programLogToolStripMenuItem.Text = "Program log";
 			this.programLogToolStripMenuItem.Click += new System.EventHandler(this.programLogToolStripMenuItem_Click);
 			// 
 			// gamesToolStripMenuItem
 			// 
 			this.gamesToolStripMenuItem.Name = "gamesToolStripMenuItem";
-			this.gamesToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+			this.gamesToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
 			this.gamesToolStripMenuItem.Text = "Games log";
 			this.gamesToolStripMenuItem.Click += new System.EventHandler(this.gamesToolStripMenuItem_Click);
 			// 
 			// enginesToolStripMenuItem1
 			// 
 			this.enginesToolStripMenuItem1.Name = "enginesToolStripMenuItem1";
-			this.enginesToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
+			this.enginesToolStripMenuItem1.Size = new System.Drawing.Size(140, 22);
 			this.enginesToolStripMenuItem1.Text = "Engines log";
 			this.enginesToolStripMenuItem1.Click += new System.EventHandler(this.enginesToolStripMenuItem1_Click);
+			// 
+			// toolStripMenuItem1
+			// 
+			this.toolStripMenuItem1.Name = "toolStripMenuItem1";
+			this.toolStripMenuItem1.Size = new System.Drawing.Size(137, 6);
+			// 
+			// lastGameToolStripMenuItem
+			// 
+			this.lastGameToolStripMenuItem.Name = "lastGameToolStripMenuItem";
+			this.lastGameToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
+			this.lastGameToolStripMenuItem.Text = "Last game";
+			this.lastGameToolStripMenuItem.Click += new System.EventHandler(this.lastGameToolStripMenuItem_Click);
 			// 
 			// historyToolStripMenuItem
 			// 
@@ -3345,11 +3357,12 @@
 			this.panel1.Location = new System.Drawing.Point(0, 0);
 			this.panel1.Name = "panel1";
 			this.panel1.Padding = new System.Windows.Forms.Padding(8);
-			this.panel1.Size = new System.Drawing.Size(366, 35);
+			this.panel1.Size = new System.Drawing.Size(366, 39);
 			this.panel1.TabIndex = 11;
 			// 
 			// splitContainerMain
 			// 
+			this.splitContainerMain.BackColor = System.Drawing.Color.Transparent;
 			this.splitContainerMain.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
 			this.splitContainerMain.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.splitContainerMain.Location = new System.Drawing.Point(0, 26);
@@ -3601,18 +3614,6 @@
 			this.tlpBlack.Size = new System.Drawing.Size(1180, 24);
 			this.tlpBlack.TabIndex = 35;
 			// 
-			// toolStripMenuItem1
-			// 
-			this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-			this.toolStripMenuItem1.Size = new System.Drawing.Size(177, 6);
-			// 
-			// lastGameToolStripMenuItem
-			// 
-			this.lastGameToolStripMenuItem.Name = "lastGameToolStripMenuItem";
-			this.lastGameToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-			this.lastGameToolStripMenuItem.Text = "Last game";
-			this.lastGameToolStripMenuItem.Click += new System.EventHandler(this.lastGameToolStripMenuItem_Click);
-			// 
 			// FormChess
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -3648,10 +3649,10 @@
 			this.splitContainerTourE.Panel2.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.splitContainerTourE)).EndInit();
 			this.splitContainerTourE.ResumeLayout(false);
-			this.scTournemnetEList.Panel1.ResumeLayout(false);
-			this.scTournemnetEList.Panel2.ResumeLayout(false);
-			((System.ComponentModel.ISupportInitialize)(this.scTournemnetEList)).EndInit();
-			this.scTournemnetEList.ResumeLayout(false);
+			this.scTournamentEList.Panel1.ResumeLayout(false);
+			this.scTournamentEList.Panel2.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this.scTournamentEList)).EndInit();
+			this.scTournamentEList.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.chartTournamentE)).EndInit();
 			this.groupBox9.ResumeLayout(false);
 			this.groupBox8.ResumeLayout(false);
@@ -3923,7 +3924,7 @@
 		public System.Windows.Forms.DataVisualization.Charting.Chart chartGame;
 		public System.Windows.Forms.DataVisualization.Charting.Chart chartTraining;
 		public System.Windows.Forms.DataVisualization.Charting.Chart chartMatch;
-		private System.Windows.Forms.SplitContainer scTournemnetEList;
+		private System.Windows.Forms.SplitContainer scTournamentEList;
 		private System.Windows.Forms.ListView lvEngine;
 		private System.Windows.Forms.ColumnHeader columnHeader23;
 		private System.Windows.Forms.ColumnHeader columnHeader24;
