@@ -627,22 +627,26 @@ namespace RapChessGui
 			timerStart.Enabled = false;
 			GamerList.Terminate();
 			CData.gameMode = mode;
-			Clear();
 			switch (mode)
 			{
 				case CMode.game:
+					Clear();
 					GameShow();
 					break;
 				case CMode.match:
+					Clear();
 					MatchShow();
 					break;
 				case CMode.tourE:
+					Clear();
 					TournamentEShow();
 					break;
 				case CMode.training:
+					Clear();
 					TrainingShow();
 					break;
 				case CMode.edit:
+					Clear(Chess.GetFen());
 					EditShow();
 					break;
 			}
@@ -963,7 +967,7 @@ namespace RapChessGui
 			return true;
 		}
 
-		void Clear()
+		void Clear(string fen = CChess.defFen)
 		{
 			labEco.Text = "";
 			tssMove.Text = "Move 1 0";
@@ -973,8 +977,8 @@ namespace RapChessGui
 			SetBoardRotate();
 			CDrag.lastSou = -1;
 			CDrag.lastDes = -1;
-			Chess.SetFen(CChess.defFen);
-			CHistory.NewGame(Chess.GetFen());
+			Chess.SetFen(fen);
+			CHistory.NewGame(fen);
 			Board.ColorClear();
 			Board.Fill();
 			GamerList.Init();
@@ -1008,10 +1012,8 @@ namespace RapChessGui
 				boardRotate = !CChess.whiteTurn;
 		}
 
-		public void RenderBoard()
+		public void RenderBoard(bool forced = false)
 		{
-			if ((GamerList.gamer[0].player == null) || (GamerList.gamer[1].player == null))
-				return;
 			Stopwatch stopwatch = new Stopwatch();
 			stopwatch.Start();
 			CGamer gt, gd;
@@ -1041,7 +1043,7 @@ namespace RapChessGui
 				labMaterialT.ForeColor = Color.Black;
 				labMaterialD.ForeColor = Color.White;
 			}
-			if (CBoard.animated || CDrag.dragged)
+			if (CBoard.animated || CDrag.dragged || forced)
 				Board.RenderBoard();
 			if (CBoard.animated)
 				CBoard.finished = false;
@@ -1232,7 +1234,7 @@ namespace RapChessGui
 			ShowHistory();
 			SetBoardRotate();
 			Board.Fill();
-			CBoard.SetPosition();
+			Board.SetPosition();
 			Board.RenderBoard();
 			RenderBoard();
 			CGamer pw = GamerList.gamer[0];
@@ -1453,7 +1455,7 @@ namespace RapChessGui
 			CModeGame.SaveToIni();
 			SetBoardRotate();
 			Board.Fill();
-			CBoard.SetPosition();
+			Board.SetPosition();
 			Board.RenderBoard();
 			RenderBoard();
 		}
@@ -2137,8 +2139,7 @@ namespace RapChessGui
 		{
 			CDrag.mouseX = e.X;
 			CDrag.mouseY = e.Y;
-			int x = (e.X - CBoard.marginW) / CBoard.field;
-			int y = (e.Y - CBoard.marginH) / CBoard.field;
+			Board.GetFieldXY(e.X,e.Y,out int x,out int y);
 			if (boardRotate)
 			{
 				x = 7 - x;
@@ -2184,8 +2185,8 @@ namespace RapChessGui
 				{
 					CChess.g_board[i] = CChess.colorEmpty;
 				}
-				CBoard.UpdateField(CDrag.mouseIndex);
-				RenderBoard();
+				Board.Fill();
+				RenderBoard(true);
 			}
 			if (CData.gameMode == (int)CMode.game)
 			{
@@ -2228,7 +2229,7 @@ namespace RapChessGui
 				CChess.g_board[i] = CChess.colorEmpty;
 				CBoard.UpdateField(n);
 			}
-			RenderBoard();
+			RenderBoard(true);
 		}
 
 		private void rbColorChanged(object sender, EventArgs e)
@@ -2237,6 +2238,9 @@ namespace RapChessGui
 			List<RadioButton> list = gbToMove.Controls.OfType<RadioButton>().ToList();
 			int i = list.IndexOf(checkedButton);
 			CChess.whiteTurn = i == 1;
+			boardRotate = !CChess.whiteTurn;
+			Board.Fill();
+			RenderBoard(true);
 		}
 
 		private void butContinueGame_Click(object sender, EventArgs e)
@@ -2278,7 +2282,7 @@ namespace RapChessGui
 		{
 			Chess.SetFen();
 			Board.Fill();
-			RenderBoard();
+			RenderBoard(true);
 		}
 
 		private void cbComputer_SelectedValueChanged(object sender, EventArgs e)
@@ -2295,6 +2299,7 @@ namespace RapChessGui
 
 		private void panBoard_Resize(object sender, EventArgs e)
 		{
+			panBoard.Invalidate();
 			BoardPrepare();
 		}
 
@@ -2501,6 +2506,11 @@ namespace RapChessGui
 		private void lvPlayer_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			ShowHistoryTourP();
+		}
+
+		private void butEditStart_Click(object sender, EventArgs e)
+		{
+			LoadFen(Chess.GetFen());
 		}
 
 		#endregion

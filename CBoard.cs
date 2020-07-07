@@ -83,11 +83,11 @@ namespace RapChessGui
 		public static bool finished = true;
 		public static bool showArrow = false;
 		public static CField[] list = new CField[64];
-		public static int field = 64;
-		public static int marginW = 32;
-		public static int marginH = 32;
-		public static int sizeW = field * 8 + marginW * 2;
-		public static int sizeH = field * 8 + marginH * 2;
+		int bmpX = 0;
+		int bmpY = 0;
+		int bmpSize = 64 * 8 + 32 * 2;
+		int frame = 32;
+		int field = 64;
 		public static Bitmap[] background = new Bitmap[2];
 		public Bitmap bmpBoard;
 		public static Color color;
@@ -112,16 +112,30 @@ namespace RapChessGui
 				list[n].color = Color.Empty;
 		}
 
-		public static Point GetMiddle(int x, int y)
+		public Point GetMiddle(int x, int y)
 		{
 			int xr = FormChess.boardRotate ? 7 - x : x;
 			int yr = FormChess.boardRotate ? 7 - y : y;
-			x = marginW + xr * field + (field >> 1);
-			y = marginH + yr * field + (field >> 1);
+			x = frame + xr * field + (field >> 1);
+			y = frame + yr * field + (field >> 1);
 			return new Point(x, y);
 		}
 
-		static Point GetMiddle(Point p)
+		public void GetFieldXY(int x,int y,out int ox,out int oy)
+		{
+			ox = (x - frame - bmpX) / field;
+			oy = (y - frame - bmpY) / field;
+			if (ox < 0)
+				ox = 0;
+			if (oy < 0)
+				oy = 0;
+			if (ox > 7)
+				ox = 7;
+			if (oy > 7)
+				oy = 7;
+		}
+
+		Point GetMiddle(Point p)
 		{
 			return GetMiddle(p.X, p.Y);
 		}
@@ -163,11 +177,12 @@ namespace RapChessGui
 			RenderBoard();
 		}
 
-		public static void CreateBackground(int index)
+		public void CreateBackground(int index)
 		{
+			int size = field * 8 + frame * 2;
 			string abc = "ABCDEFGH";
 			Rectangle rec = new Rectangle();
-			Bitmap bmp = new Bitmap(sizeW, sizeH);
+			Bitmap bmp = new Bitmap(size, size);
 			Graphics g = Graphics.FromImage(bmp);
 			SolidBrush brush1 = new SolidBrush(color);
 			SolidBrush brush2 = new SolidBrush(Color.FromArgb(0x60, 0x00, 0x00, 0x00));
@@ -180,13 +195,13 @@ namespace RapChessGui
 			sf.Alignment = StringAlignment.Center;
 			sf.LineAlignment = StringAlignment.Center;
 			g.SmoothingMode = SmoothingMode.HighQuality;
-			g.FillRectangle(brush1, 0, 0, sizeW, sizeH);
+			g.FillRectangle(brush1, 0, 0, size, size);
 			for (int y = 0; y < 8; y++)
 			{
-				int y2 = marginH + y * field;
+				int y2 = frame + y * field;
 				for (int x = 0; x < 8; x++)
 				{
-					int x2 = marginW + x * field;
+					int x2 = frame + x * field;
 					bool bgColor = ((y ^ x) & 1) == 1;
 					if (bgColor)
 					{
@@ -202,23 +217,23 @@ namespace RapChessGui
 			{
 				int xr = index == 1 ? 7 - n : n;
 				int yr = index == 1 ? 7 - n : n;
-				int x2 = marginW + xr * field;
-				int y2 = marginH + yr * field;
+				int x2 = frame + xr * field;
+				int y2 =  frame + yr * field;
 				rec.X = 0;
 				rec.Y = y2;
-				rec.Width = marginW;
+				rec.Width = frame;
 				rec.Height = field;
 				string letter = (8 - n).ToString();
 				gp.AddString(letter, font.FontFamily, (int)font.Style, font.Size, rec, sf);
-				rec.X = bmp.Width - marginW;
+				rec.X = bmp.Width - frame;
 				gp.AddString(letter, font.FontFamily, (int)font.Style, font.Size, rec, sf);
 				rec.X = x2;
 				rec.Y = 0;
 				rec.Width = field;
-				rec.Height = marginH;
+				rec.Height = frame;
 				letter = abc[n].ToString();
 				gp.AddString(letter, font.FontFamily, (int)font.Style, font.Size, rec, sf);
-				rec.Y = bmp.Height - marginH;
+				rec.Y = bmp.Height - frame;
 				gp.AddString(letter, font.FontFamily, (int)font.Style, font.Size, rec, sf);
 			}
 			g.DrawPath(outline, gp);
@@ -242,10 +257,10 @@ namespace RapChessGui
 			if (h < 0xf) h = 0xf;
 			int min = Math.Min(w, h);
 			field = min / 9;
-			marginW = (w - (field * 8)) >> 1;
-			marginH = (h - (field * 8)) >> 1;
-			sizeW = w;
-			sizeH = h;
+			frame = field >> 1;
+			bmpSize = 8 * field + 2 * frame;
+			bmpX = (w - bmpSize) >> 1;
+			bmpY = (h - bmpSize) >> 1;
 			CreateBackground(0);
 			CreateBackground(1);
 			SetPosition();
@@ -273,12 +288,12 @@ namespace RapChessGui
 			for (int y = 0; y < 8; y++)
 			{
 				int yr = FormChess.boardRotate ? 7 - y : y;
-				int y2 = marginH + yr * field;
+				int y2 = frame + yr * field;
 				for (int x = 0; x < 8; x++)
 				{
 					int i = y * 8 + x;
 					int xr = FormChess.boardRotate ? 7 - x : x;
-					int x2 = marginW + xr * field;
+					int x2 = frame + xr * field;
 					rec.X = x2;
 					rec.Y = y2;
 					rec.Width = field;
@@ -304,7 +319,7 @@ namespace RapChessGui
 					list[i].y = y2;
 					piece.SetPositionAni(x2, y2);
 					if ((i == CDrag.lastDes) && CDrag.dragged)
-						piece.SetPositionSta(CDrag.mouseX - (field >> 1), CDrag.mouseY - (field >> 1));
+						piece.SetPositionSta(CDrag.mouseX - frame - bmpX, CDrag.mouseY - frame - bmpY);
 					rec.X = piece.curXY.X;
 					rec.Y = piece.curXY.Y;
 					gp1 = piece.image > 5 ? gpB : gpW;
@@ -345,7 +360,7 @@ namespace RapChessGui
 			Graphics ga = Graphics.FromImage(bmpArrow);
 			RenderArrow(arrowCur, ga);
 			RenderArrow(arrowEco, ga);
-			g.DrawImage(bmpArrow, 0, 0);
+			g.DrawImage(bmpArrow,bmpX,bmpY);
 		}
 
 		public static void MakeMove(int sou, int des)
@@ -393,17 +408,17 @@ namespace RapChessGui
 			}
 		}
 
-		public static void SetPosition()
+		public void SetPosition()
 		{
 			for (int y = 0; y < 8; y++)
 			{
 				int yr = FormChess.boardRotate ? 7 - y : y;
-				int y2 = marginH + yr * field;
+				int y2 = frame + yr * field;
 				for (int x = 0; x < 8; x++)
 				{
 					int i = y * 8 + x;
 					int xr = FormChess.boardRotate ? 7 - x : x;
-					int x2 = marginW + xr * field;
+					int x2 = frame + xr * field;
 					list[i].x = x2;
 					list[i].y = y2;
 					CPiece piece = list[i].piece;

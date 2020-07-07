@@ -279,6 +279,7 @@
 			this.columnHeader21 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeader22 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.tlpBlack = new System.Windows.Forms.TableLayoutPanel();
+			this.butEditStart = new System.Windows.Forms.Button();
 			this.tabControl1.SuspendLayout();
 			this.tabPageGame.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.chartGame)).BeginInit();
@@ -401,7 +402,7 @@
 			this.tabPageGame.Location = new System.Drawing.Point(4, 5);
 			this.tabPageGame.Name = "tabPageGame";
 			this.tabPageGame.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPageGame.Size = new System.Drawing.Size(358, 448);
+			this.tabPageGame.Size = new System.Drawing.Size(358, 444);
 			this.tabPageGame.TabIndex = 0;
 			this.tabPageGame.Text = "Game";
 			// 
@@ -431,7 +432,7 @@
 			series1.IsVisibleInLegend = false;
 			series1.Name = "Series1";
 			this.chartGame.Series.Add(series1);
-			this.chartGame.Size = new System.Drawing.Size(352, 86);
+			this.chartGame.Size = new System.Drawing.Size(352, 82);
 			this.chartGame.TabIndex = 28;
 			this.chartGame.Text = "chart1";
 			this.toolTip1.SetToolTip(this.chartGame, "User progress history");
@@ -683,7 +684,7 @@
 			this.tabPageMatch.Controls.Add(this.groupBox5);
 			this.tabPageMatch.Location = new System.Drawing.Point(4, 5);
 			this.tabPageMatch.Name = "tabPageMatch";
-			this.tabPageMatch.Size = new System.Drawing.Size(358, 448);
+			this.tabPageMatch.Size = new System.Drawing.Size(358, 444);
 			this.tabPageMatch.TabIndex = 2;
 			this.tabPageMatch.Text = "Match";
 			this.tabPageMatch.UseVisualStyleBackColor = true;
@@ -719,7 +720,7 @@
 			series3.Name = "Series2";
 			this.chartMatch.Series.Add(series2);
 			this.chartMatch.Series.Add(series3);
-			this.chartMatch.Size = new System.Drawing.Size(358, 62);
+			this.chartMatch.Size = new System.Drawing.Size(358, 58);
 			this.chartMatch.TabIndex = 29;
 			this.chartMatch.Text = "chart1";
 			this.toolTip1.SetToolTip(this.chartMatch, "User progress history");
@@ -1623,7 +1624,7 @@
 			this.tabPageTraining.Location = new System.Drawing.Point(4, 5);
 			this.tabPageTraining.Name = "tabPageTraining";
 			this.tabPageTraining.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPageTraining.Size = new System.Drawing.Size(358, 448);
+			this.tabPageTraining.Size = new System.Drawing.Size(358, 444);
 			this.tabPageTraining.TabIndex = 1;
 			this.tabPageTraining.Text = "Training";
 			this.tabPageTraining.UseVisualStyleBackColor = true;
@@ -1652,7 +1653,7 @@
 			series10.IsVisibleInLegend = false;
 			series10.Name = "Series1";
 			this.chartTraining.Series.Add(series10);
-			this.chartTraining.Size = new System.Drawing.Size(352, 72);
+			this.chartTraining.Size = new System.Drawing.Size(352, 68);
 			this.chartTraining.TabIndex = 29;
 			this.chartTraining.Text = "chart1";
 			this.toolTip1.SetToolTip(this.chartTraining, "Training history");
@@ -2077,6 +2078,7 @@
 			this.tabPageEdit.BackColor = System.Drawing.Color.Transparent;
 			this.tabPageEdit.Controls.Add(this.groupBox7);
 			this.tabPageEdit.Controls.Add(this.gbToMove);
+			this.tabPageEdit.Controls.Add(this.butEditStart);
 			this.tabPageEdit.Controls.Add(this.butDefault);
 			this.tabPageEdit.Controls.Add(this.butClearBoard);
 			this.tabPageEdit.Location = new System.Drawing.Point(4, 5);
@@ -2089,7 +2091,7 @@
 			// 
 			this.groupBox7.Controls.Add(this.clbCastling);
 			this.groupBox7.Dock = System.Windows.Forms.DockStyle.Top;
-			this.groupBox7.Location = new System.Drawing.Point(0, 103);
+			this.groupBox7.Location = new System.Drawing.Point(0, 128);
 			this.groupBox7.Name = "groupBox7";
 			this.groupBox7.Size = new System.Drawing.Size(358, 84);
 			this.groupBox7.TabIndex = 2;
@@ -2116,7 +2118,7 @@
 			this.gbToMove.Controls.Add(this.rbBlack);
 			this.gbToMove.Controls.Add(this.rbWhite);
 			this.gbToMove.Dock = System.Windows.Forms.DockStyle.Top;
-			this.gbToMove.Location = new System.Drawing.Point(0, 50);
+			this.gbToMove.Location = new System.Drawing.Point(0, 75);
 			this.gbToMove.Name = "gbToMove";
 			this.gbToMove.Size = new System.Drawing.Size(358, 53);
 			this.gbToMove.TabIndex = 1;
@@ -2596,9 +2598,11 @@
 			// 
 			// labTimeD
 			// 
+			this.labTimeD.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.labTimeD.BackColor = System.Drawing.Color.LightGray;
 			this.labTimeD.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-			this.labTimeD.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.labTimeD.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
 			this.labTimeD.ForeColor = System.Drawing.Color.Black;
 			this.labTimeD.Location = new System.Drawing.Point(189, 0);
@@ -2611,9 +2615,11 @@
 			// 
 			// labEloD
 			// 
+			this.labEloD.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.labEloD.BackColor = System.Drawing.Color.LightGray;
 			this.labEloD.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-			this.labEloD.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.labEloD.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
 			this.labEloD.ForeColor = System.Drawing.Color.Black;
 			this.labEloD.Location = new System.Drawing.Point(299, 0);
@@ -2641,9 +2647,11 @@
 			// 
 			// labNameD
 			// 
+			this.labNameD.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.labNameD.BackColor = System.Drawing.Color.LightGray;
 			this.labNameD.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-			this.labNameD.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.labNameD.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
 			this.labNameD.ForeColor = System.Drawing.Color.Black;
 			this.labNameD.Location = new System.Drawing.Point(24, 0);
@@ -2656,9 +2664,11 @@
 			// 
 			// labEloT
 			// 
+			this.labEloT.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.labEloT.BackColor = System.Drawing.Color.LightGray;
 			this.labEloT.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-			this.labEloT.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.labEloT.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
 			this.labEloT.ForeColor = System.Drawing.Color.Black;
 			this.labEloT.Location = new System.Drawing.Point(299, 0);
@@ -2686,9 +2696,11 @@
 			// 
 			// labNameT
 			// 
+			this.labNameT.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.labNameT.BackColor = System.Drawing.Color.LightGray;
 			this.labNameT.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-			this.labNameT.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.labNameT.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
 			this.labNameT.ForeColor = System.Drawing.Color.Black;
 			this.labNameT.Location = new System.Drawing.Point(24, 0);
@@ -2769,9 +2781,11 @@
 			// 
 			// labTimeT
 			// 
+			this.labTimeT.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.labTimeT.BackColor = System.Drawing.Color.LightGray;
 			this.labTimeT.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-			this.labTimeT.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.labTimeT.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
 			this.labTimeT.ForeColor = System.Drawing.Color.Black;
 			this.labTimeT.Location = new System.Drawing.Point(189, 0);
@@ -3161,6 +3175,7 @@
 			// 
 			// panBoard
 			// 
+			this.panBoard.BackColor = System.Drawing.Color.Transparent;
 			this.panBoard.Controls.Add(this.tlpPromotion);
 			this.panBoard.Cursor = System.Windows.Forms.Cursors.Default;
 			this.panBoard.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -3614,6 +3629,18 @@
 			this.tlpBlack.Size = new System.Drawing.Size(1180, 24);
 			this.tlpBlack.TabIndex = 35;
 			// 
+			// butEditStart
+			// 
+			this.butEditStart.Dock = System.Windows.Forms.DockStyle.Top;
+			this.butEditStart.Location = new System.Drawing.Point(0, 50);
+			this.butEditStart.Name = "butEditStart";
+			this.butEditStart.Size = new System.Drawing.Size(358, 25);
+			this.butEditStart.TabIndex = 4;
+			this.butEditStart.Text = "Start";
+			this.toolTip1.SetToolTip(this.butEditStart, "Start new game from current position");
+			this.butEditStart.UseVisualStyleBackColor = true;
+			this.butEditStart.Click += new System.EventHandler(this.butEditStart_Click);
+			// 
 			// FormChess
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -3954,6 +3981,7 @@
 		private System.Windows.Forms.ToolStripMenuItem programLogToolStripMenuItem;
 		private System.Windows.Forms.ToolStripSeparator toolStripMenuItem1;
 		private System.Windows.Forms.ToolStripMenuItem lastGameToolStripMenuItem;
+		private System.Windows.Forms.Button butEditStart;
 	}
 }
 
