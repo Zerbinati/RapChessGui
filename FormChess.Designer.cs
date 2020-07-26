@@ -172,6 +172,7 @@
 			this.gbToMove = new System.Windows.Forms.GroupBox();
 			this.rbBlack = new System.Windows.Forms.RadioButton();
 			this.rbWhite = new System.Windows.Forms.RadioButton();
+			this.butEditStart = new System.Windows.Forms.Button();
 			this.butDefault = new System.Windows.Forms.Button();
 			this.butClearBoard = new System.Windows.Forms.Button();
 			this.timerStart = new System.Windows.Forms.Timer(this.components);
@@ -279,7 +280,7 @@
 			this.columnHeader21 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeader22 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.tlpBlack = new System.Windows.Forms.TableLayoutPanel();
-			this.butEditStart = new System.Windows.Forms.Button();
+			this.labResult = new System.Windows.Forms.Label();
 			this.tabControl1.SuspendLayout();
 			this.tabPageGame.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.chartGame)).BeginInit();
@@ -2150,6 +2151,18 @@
 			this.rbWhite.UseVisualStyleBackColor = true;
 			this.rbWhite.CheckedChanged += new System.EventHandler(this.rbColorChanged);
 			// 
+			// butEditStart
+			// 
+			this.butEditStart.Dock = System.Windows.Forms.DockStyle.Top;
+			this.butEditStart.Location = new System.Drawing.Point(0, 50);
+			this.butEditStart.Name = "butEditStart";
+			this.butEditStart.Size = new System.Drawing.Size(358, 25);
+			this.butEditStart.TabIndex = 4;
+			this.butEditStart.Text = "Start";
+			this.toolTip1.SetToolTip(this.butEditStart, "Start new game from current position");
+			this.butEditStart.UseVisualStyleBackColor = true;
+			this.butEditStart.Click += new System.EventHandler(this.butEditStart_Click);
+			// 
 			// butDefault
 			// 
 			this.butDefault.Dock = System.Windows.Forms.DockStyle.Top;
@@ -2992,9 +3005,6 @@
 			// 
 			// chartMain
 			// 
-			this.chartMain.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
 			this.chartMain.BackColor = System.Drawing.Color.WhiteSmoke;
 			chartArea6.AxisX.IsLabelAutoFit = false;
 			chartArea6.AxisX.MajorGrid.Enabled = false;
@@ -3008,7 +3018,8 @@
 			chartArea6.BorderDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Solid;
 			chartArea6.Name = "ChartArea1";
 			this.chartMain.ChartAreas.Add(chartArea6);
-			this.chartMain.Location = new System.Drawing.Point(0, 0);
+			this.chartMain.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.chartMain.Location = new System.Drawing.Point(0, 34);
 			this.chartMain.Name = "chartMain";
 			this.chartMain.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.None;
 			this.chartMain.PaletteCustomColors = new System.Drawing.Color[] {
@@ -3023,7 +3034,7 @@
 			series12.Name = "Series2";
 			this.chartMain.Series.Add(series11);
 			this.chartMain.Series.Add(series12);
-			this.chartMain.Size = new System.Drawing.Size(388, 177);
+			this.chartMain.Size = new System.Drawing.Size(388, 143);
 			this.chartMain.TabIndex = 0;
 			this.chartMain.Text = "chart1";
 			this.toolTip1.SetToolTip(this.chartMain, "Graphic representation of the game scores white player is  represent by light bar" +
@@ -3288,6 +3299,7 @@
 			// splitContainerChart.Panel2
 			// 
 			this.splitContainerChart.Panel2.Controls.Add(this.chartMain);
+			this.splitContainerChart.Panel2.Controls.Add(this.labResult);
 			this.splitContainerChart.Size = new System.Drawing.Size(392, 436);
 			this.splitContainerChart.SplitterDistance = 251;
 			this.splitContainerChart.TabIndex = 27;
@@ -3629,17 +3641,17 @@
 			this.tlpBlack.Size = new System.Drawing.Size(1180, 24);
 			this.tlpBlack.TabIndex = 35;
 			// 
-			// butEditStart
+			// labResult
 			// 
-			this.butEditStart.Dock = System.Windows.Forms.DockStyle.Top;
-			this.butEditStart.Location = new System.Drawing.Point(0, 50);
-			this.butEditStart.Name = "butEditStart";
-			this.butEditStart.Size = new System.Drawing.Size(358, 25);
-			this.butEditStart.TabIndex = 4;
-			this.butEditStart.Text = "Start";
-			this.toolTip1.SetToolTip(this.butEditStart, "Start new game from current position");
-			this.butEditStart.UseVisualStyleBackColor = true;
-			this.butEditStart.Click += new System.EventHandler(this.butEditStart_Click);
+			this.labResult.BackColor = System.Drawing.Color.Black;
+			this.labResult.Dock = System.Windows.Forms.DockStyle.Top;
+			this.labResult.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+			this.labResult.Location = new System.Drawing.Point(0, 0);
+			this.labResult.Name = "labResult";
+			this.labResult.Size = new System.Drawing.Size(388, 34);
+			this.labResult.TabIndex = 1;
+			this.labResult.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.labResult.Visible = false;
 			// 
 			// FormChess
 			// 
@@ -3982,6 +3994,7 @@
 		private System.Windows.Forms.ToolStripSeparator toolStripMenuItem1;
 		private System.Windows.Forms.ToolStripMenuItem lastGameToolStripMenuItem;
 		private System.Windows.Forms.Button butEditStart;
+		private System.Windows.Forms.Label labResult;
 	}
 }
 

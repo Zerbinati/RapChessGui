@@ -283,6 +283,9 @@ namespace RapChessGui
 					ShowInfo($"{pl.name} make wrong move", Color.Red);
 					break;
 			}
+			labResult.Text = tssInfo.Text;
+			labResult.ForeColor = tssInfo.ForeColor;
+			labResult.Show();
 			FormLogEngines.AppendText($"Finish {tssInfo.Text}\n", Color.Gray);
 			CreateRtf();
 			CreatePgn();
@@ -690,7 +693,7 @@ namespace RapChessGui
 			showInfo = si;
 		}
 
-		bool ShowLastGame()
+		bool ShowLastGame(bool changeProgress = false)
 		{
 			bool result = false;
 			CPlayer hu = playerList.GetPlayerHuman();
@@ -706,11 +709,11 @@ namespace RapChessGui
 				result = true;
 				ShowInfo($"Last game you loose new elo is {hu.eloNew} ({eloDel})", Color.FromArgb(0xff, 0, 0), true);
 			}
-			if (result)
+			if (result || changeProgress)
 			{
 				hu.hisElo.Add(hu.eloNew);
 				CData.HisToPoints(hu.hisElo, chartGame.Series[0].Points);
-				CRapLog.Add(tssInfo.Text);
+				CRapLog.Add($"Your new elo {hu.eloNew}");
 			}
 			hu.elo = hu.eloNew.ToString();
 			hu.SaveToIni();
@@ -972,6 +975,7 @@ namespace RapChessGui
 			labEco.Text = "";
 			tssMove.Text = "Move 1 0";
 			ShowInfo("Good luck", Color.Gainsboro, true);
+			labResult.Hide();
 			chartMain.Series[0].Points.Clear();
 			chartMain.Series[1].Points.Clear();
 			SetBoardRotate();
@@ -1441,7 +1445,6 @@ namespace RapChessGui
 			ShowAuto();
 			SetMode(CMode.game);
 			GamePrepare();
-			Clear();
 			CPlayer ph = playerList.GetPlayerHuman();
 			if (ShowLastGame())
 				CModeGame.rotate = !CModeGame.rotate;
@@ -1449,6 +1452,7 @@ namespace RapChessGui
 				GamerList.Rotate();
 			if (GamerList.GamerCur().player.IsHuman())
 				moves = Chess.GenerateValidMoves();
+			Clear();
 			int elo = Convert.ToInt32(ph.elo);
 			ph.eloNew = elo;
 			ph.eloOld = elo;
@@ -1485,7 +1489,7 @@ namespace RapChessGui
 						pl.eloNew = Convert.ToInt32(pl.eloOld);
 				}
 			}
-			ShowLastGame();
+			ShowLastGame(true);
 		}
 
 		void MatchShow()
