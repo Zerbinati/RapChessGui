@@ -57,6 +57,11 @@ namespace RapChessGui
 			return Convert.ToInt32(elo) - Convert.ToInt32(eloOld);
 		}
 
+		public bool IsXb()
+		{
+			return protocol == "Winboard";
+		}
+
 	}
 
 	public class CEngineList

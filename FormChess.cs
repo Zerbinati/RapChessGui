@@ -401,7 +401,8 @@ namespace RapChessGui
 						if (g.isBookStarted && !g.isBookFinished)
 						{
 							AddBook(emo);
-							g.isPrepared = false;
+							if(g.engine.IsXb())
+								g.isPrepared = false;
 						}
 						MakeMove(emo);
 						if ((g.ponder != "") && FormOptions.This.rbSan.Checked)
@@ -875,6 +876,11 @@ namespace RapChessGui
 			lvPlayer.ListViewItemSorter = new ListViewComparer(1, SortOrder.Descending);
 			lvEngine.ListViewItemSorter = new ListViewComparer(1, SortOrder.Descending);
 			ShowAuto(true);
+		}
+
+		bool IsGameLong()
+		{
+			return (CChess.g_moveNumber >> 1) > 4;
 		}
 
 		public bool MakeMove(string emo)
@@ -1472,7 +1478,7 @@ namespace RapChessGui
 
 		void GaemEnd(CPlayer pw, CPlayer pl, bool isDraw)
 		{
-			if (This.IsAutoElo())
+			if (IsAutoElo())
 			{
 				if (pw.IsHuman())
 				{
@@ -1489,7 +1495,7 @@ namespace RapChessGui
 						pl.eloNew = Convert.ToInt32(pl.eloOld);
 				}
 			}
-			ShowLastGame(true);
+			ShowLastGame(IsAutoElo());
 		}
 
 		void MatchShow()
@@ -2403,9 +2409,12 @@ namespace RapChessGui
 
 		private void butResignation_Click(object sender, EventArgs e)
 		{
-			CPlayer hu = playerList.GetPlayerHuman();
-			hu.eloNew = hu.GetEloLess();
-			GameStart();
+			if (IsAutoElo() && IsGameLong() && (CData.gameState == CGameState.normal))
+			{
+				CPlayer hu = playerList.GetPlayerHuman();
+				hu.eloNew = hu.GetEloLess();
+			}
+			SetGameState(CGameState.resignation);
 		}
 
 		private void button1_Click(object sender, EventArgs e)
