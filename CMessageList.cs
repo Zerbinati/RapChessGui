@@ -19,19 +19,20 @@ namespace RapChessGui
 
 	static class CMessageList
 	{
+		private readonly static object locker = new object();
 		readonly static List<CMessage> list = new List<CMessage>();
 		readonly static List<CMessage> buffer = new List<CMessage>();
 
 		static void MsgSet(CMessage m)
 		{
-			lock (list)
+			lock (locker)
 				list.Add(m);
 		}
 
 		static List<CMessage> MsgGet()
 		{
 			List<CMessage> result;
-			lock (list)
+			lock (locker)
 			{
 				result = list.GetRange(0, list.Count);
 				list.Clear();
@@ -41,7 +42,7 @@ namespace RapChessGui
 
 		public static void Clear()
 		{
-			lock (list)
+			lock (locker)
 			{
 				list.Clear();
 				buffer.Clear();

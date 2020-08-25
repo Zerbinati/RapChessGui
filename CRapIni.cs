@@ -142,14 +142,15 @@ namespace RapIni
 		public double ReadDouble(string key, double def = 0)
 		{
 			string s = Read(key, Convert.ToString(def));
-			Double.TryParse(s, out def);
-			return def;
+			double.TryParse(s, out double result);
+			return result;
 		}
 
 		public int ReadInt(string key, int def = 0)
 		{
 			string s = Read(key, Convert.ToString(def));
-			return Convert.ToInt32(s);
+			int.TryParse(s, out int result);
+			return result;
 		}
 
 		public bool ReadBool(string key, bool def = false)

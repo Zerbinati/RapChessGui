@@ -61,6 +61,9 @@ namespace RapChessGui
 			FormPlayer.This = new FormPlayer();
 			Reset();
 			cbColor.SelectedIndex = cbColor.FindStringExact(CModeGame.color);
+			cbEngine.SelectedIndex = cbEngine.FindStringExact(CModeGame.engine);
+			if ((cbEngine.SelectedIndex == -1) || (cbBook.SelectedIndex == -1) || (cbMode.SelectedIndex == -1))
+				CModeGame.computer = "Auto";
 			cbComputer.SelectedIndex = cbComputer.FindStringExact(CModeGame.computer);
 			Font fontChess = new Font(pfc.Families[0], 16);
 			Font fontChessPromo = new Font(pfc.Families[0], 32);
@@ -229,8 +232,42 @@ namespace RapChessGui
 			CModeTournamentE.LoadFromIni();
 			CModeTournamentP.LoadFromIni();
 			CModeTraining.LoadFromIni();
-			CPlayer player = playerList.GetPlayerHuman();
-			CData.HisToPoints(player.hisElo, chartGame.Series[0].Points);
+		}
+
+		void IniSave()
+		{
+			bool maximized = WindowState == FormWindowState.Maximized;
+			int width = maximized ? RestoreBounds.Width : Width;
+			int height = maximized ? RestoreBounds.Height : Height;
+			int x = maximized ? RestoreBounds.X : Location.X;
+			int y = maximized ? RestoreBounds.Y : Location.Y;
+			RapIni.Write("position>maximized", maximized.ToString());
+			RapIni.Write("position>width", width.ToString());
+			RapIni.Write("position>height", height.ToString());
+			RapIni.Write("position>x", x.ToString());
+			RapIni.Write("position>y", y.ToString());
+			SplitSaveToIni(splitContainerMain);
+			SplitSaveToIni(splitContainerBoard);
+			SplitSaveToIni(splitContainerChart);
+			SplitSaveToIni(splitContainerTourE);
+			SplitSaveToIni(splitContainerTourP);
+			SplitSaveToIni(scTournamentEList);
+			SplitSaveToIni(scTournamentPList);
+		}
+
+		void SplitSaveToIni(SplitContainer sc)
+		{
+			int size = sc.Orientation == Orientation.Horizontal ? sc.Size.Height : sc.Size.Width;
+			double p = (double)sc.SplitterDistance / size;
+			RapIni.Write($"position>split>{sc.Name}", p.ToString());
+		}
+
+		void SplitLoadFromIni(SplitContainer sc)
+		{
+			int size = sc.Orientation == Orientation.Horizontal ? sc.Size.Height : sc.Size.Width;
+			double p = (double)sc.SplitterDistance / size;
+			p = RapIni.ReadDouble($"position>split>{sc.Name}", p) * size;
+			if (p > 0)sc.SplitterDistance = Convert.ToInt32(p);
 		}
 
 		#endregion
@@ -300,22 +337,6 @@ namespace RapChessGui
 			if (CData.gameMode == CMode.training)
 				TrainingEnd(gw, gl, isDraw);
 			timerStart.Start();
-		}
-
-		void SplitSaveToIni(SplitContainer sc)
-		{
-			int size = sc.Orientation == Orientation.Horizontal ? sc.ClientSize.Height : sc.ClientSize.Width;
-			double p = (double)sc.SplitterDistance / size;
-			RapIni.Write($"position>split>{sc.Name}", p.ToString());
-		}
-
-		void SplitLoadFromIni(SplitContainer sc)
-		{
-			int size = sc.Orientation == Orientation.Horizontal ? sc.ClientSize.Height : sc.ClientSize.Width;
-			double p = (double)sc.SplitterDistance / size;
-			p = RapIni.ReadDouble($"position>split>{sc.Name}", p) * size;
-			if (p > 0)
-				sc.SplitterDistance = Convert.ToInt32(p);
 		}
 
 		public void BoardPrepare()
@@ -656,7 +677,17 @@ namespace RapChessGui
 			}
 		}
 
-		bool IsAutoElo()
+		bool IsGameLong()
+		{
+			return (CChess.g_moveNumber >> 1) > 4;
+		}
+
+		bool IsGameProgress()
+		{
+			return CData.gameState == CGameState.normal;
+		}
+
+		bool IsGameRanked()
 		{
 			return (cbComputer.Text == "Auto") && FormOptions.This.cbGameAutoElo.Checked && (CData.gameMode == CMode.game);
 		}
@@ -675,7 +706,7 @@ namespace RapChessGui
 
 		void ShowAutoElo()
 		{
-			if (IsAutoElo() && CModeGame.ranked)
+			if (IsGameRanked() && CModeGame.ranked)
 			{
 				labAutoElo.Text = $"Auto Elo On";
 				labAutoElo.BackColor = Color.FromArgb(0, 0x80, 0);
@@ -878,11 +909,6 @@ namespace RapChessGui
 			ShowAuto(true);
 		}
 
-		bool IsGameLong()
-		{
-			return (CChess.g_moveNumber >> 1) > 4;
-		}
-
 		public bool MakeMove(string emo)
 		{
 			if (CData.gameState != CGameState.normal)
@@ -895,7 +921,7 @@ namespace RapChessGui
 			double m = GamerList.curIndex == 0 ? 0.01 : -0.01;
 			chartMain.Series[GamerList.curIndex].Points.Add(cg.iScore * m);
 			cg.iScore = 0;
-			if (IsAutoElo() && CModeGame.ranked && (cg.engine == null) && ((CChess.g_moveNumber >> 1) == 4))
+			if (IsGameRanked() && CModeGame.ranked && (cg.engine == null) && ((CChess.g_moveNumber >> 1) == 4))
 			{
 				cg.player.eloOld = Convert.ToDouble(cg.player.elo);
 				cg.player.eloNew = cg.player.GetEloLess();
@@ -1448,6 +1474,7 @@ namespace RapChessGui
 			CData.fen = CChess.defFen;
 			CModeGame.color = cbColor.Text;
 			CModeGame.computer = cbComputer.Text;
+			CModeGame.engine = cbEngine.Text;
 			ShowAuto();
 			SetMode(CMode.game);
 			GamePrepare();
@@ -1472,13 +1499,15 @@ namespace RapChessGui
 
 		void GameShow()
 		{
-			CModeGame.ranked = IsAutoElo();
+			CPlayer hu = playerList.GetPlayerHuman();
+			CData.HisToPoints(hu.hisElo, chartGame.Series[0].Points);
+			CModeGame.ranked = IsGameRanked();
 			ShowAutoElo();
 		}
 
 		void GaemEnd(CPlayer pw, CPlayer pl, bool isDraw)
 		{
-			if (IsAutoElo())
+			if (IsGameRanked())
 			{
 				if (pw.IsHuman())
 				{
@@ -1495,7 +1524,7 @@ namespace RapChessGui
 						pl.eloNew = Convert.ToInt32(pl.eloOld);
 				}
 			}
-			ShowLastGame(IsAutoElo());
+			ShowLastGame(IsGameRanked());
 		}
 
 		void MatchShow()
@@ -2033,23 +2062,7 @@ namespace RapChessGui
 
 		private void FormChess_FormClosed(object sender, FormClosedEventArgs e)
 		{
-			bool maximized = WindowState == FormWindowState.Maximized;
-			int width = maximized ? RestoreBounds.Width : Width;
-			int height = maximized ? RestoreBounds.Height : Height;
-			int x = maximized ? RestoreBounds.X : Location.X;
-			int y = maximized ? RestoreBounds.Y : Location.Y;
-			RapIni.Write("position>maximized", maximized.ToString());
-			RapIni.Write("position>width", width.ToString());
-			RapIni.Write("position>height", height.ToString());
-			RapIni.Write("position>x", x.ToString());
-			RapIni.Write("position>y", y.ToString());
-			SplitSaveToIni(splitContainerMain);
-			SplitSaveToIni(splitContainerBoard);
-			SplitSaveToIni(splitContainerChart);
-			SplitSaveToIni(splitContainerTourE);
-			SplitSaveToIni(splitContainerTourP);
-			SplitSaveToIni(scTournamentEList);
-			SplitSaveToIni(scTournamentPList);
+			IniSave();
 			GamerList.Terminate();
 		}
 
@@ -2409,7 +2422,7 @@ namespace RapChessGui
 
 		private void butResignation_Click(object sender, EventArgs e)
 		{
-			if (IsAutoElo() && IsGameLong() && (CData.gameState == CGameState.normal))
+			if (IsGameRanked() && IsGameLong() && IsGameProgress())
 			{
 				CPlayer hu = playerList.GetPlayerHuman();
 				hu.eloNew = hu.GetEloLess();
