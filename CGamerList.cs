@@ -103,6 +103,20 @@ namespace RapChessGui
 		}
 
 		/// <summary>
+		/// Get emgome memory usage.
+		/// </summary>
+		public string GetMemory()
+		{
+			string result = "Memory";
+			if (enginePro.process != null)
+			{
+				enginePro.process.Refresh();
+				result = enginePro.process.WorkingSet64.ToString("N0");
+			}
+			return result;
+		}
+
+		/// <summary>
 		/// The engine starts if needed.
 		/// </summary>
 		public void TryStart()

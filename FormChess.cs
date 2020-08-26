@@ -907,6 +907,7 @@ namespace RapChessGui
 			lvPlayer.ListViewItemSorter = new ListViewComparer(1, SortOrder.Descending);
 			lvEngine.ListViewItemSorter = new ListViewComparer(1, SortOrder.Descending);
 			ShowAuto(true);
+			MatchShow();
 		}
 
 		public bool MakeMove(string emo)
@@ -969,10 +970,14 @@ namespace RapChessGui
 				}
 				else if ((lastEco != "") && (!lastEco.Contains(emo)))
 				{
-					ShowInfo("You missed the opening moves", Color.Pink,true);
+					ShowInfo("You missed the opening moves", Color.Pink, true);
 					Board.arrowEco.AddMoves(lastEco);
 				}
 			}
+			if (cg.white)
+				labMemoryW.Text = cg.GetMemory();
+			else
+				labMemoryB.Text = cg.GetMemory();
 			if (eco != null)
 			{
 				labEco.ForeColor = Color.Brown;
@@ -1390,6 +1395,8 @@ namespace RapChessGui
 			labModeB.Text = gb.GetMode();
 			labProtocolW.Text = gw.GetProtocol();
 			labProtocolB.Text = gb.GetProtocol();
+			labMemoryW.Text = gw.GetMemory();
+			labMemoryB.Text = gb.GetMemory();
 			splitContainerMoves.Panel1Collapsed = gw.player.IsHuman();
 			splitContainerMoves.Panel2Collapsed = gb.player.IsHuman();
 		}
