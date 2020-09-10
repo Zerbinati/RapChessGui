@@ -111,7 +111,7 @@ namespace RapChessGui
 			if (enginePro.process != null)
 			{
 				enginePro.process.Refresh();
-				result = enginePro.process.WorkingSet64.ToString("N0");
+				result = enginePro.process.PrivateMemorySize64.ToString("N0");
 			}
 			return result;
 		}

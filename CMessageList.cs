@@ -26,7 +26,9 @@ namespace RapChessGui
 		static void MsgSet(CMessage m)
 		{
 			lock (locker)
+			{
 				list.Add(m);
+			}
 		}
 
 		static List<CMessage> MsgGet()
@@ -40,13 +42,18 @@ namespace RapChessGui
 			return result;
 		}
 
-		public static void Clear()
+		static void MsgClear()
 		{
 			lock (locker)
 			{
 				list.Clear();
-				buffer.Clear();
 			}
+		}
+
+		public static void Clear()
+		{
+			MsgClear();
+			buffer.Clear();
 		}
 
 

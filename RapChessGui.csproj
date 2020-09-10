@@ -37,6 +37,9 @@
   <PropertyGroup>
     <ApplicationIcon>Resources\q.ico</ApplicationIcon>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>RapChessGui.Program</StartupObject>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
