@@ -52,7 +52,7 @@ namespace RapChessGui
 		{
 			CArrow arrow = new CArrow();
 			arrow.color = color;
-			CChess.EmoToSD(umo, out int sou, out int des);
+			CChess.UmoToSD(umo, out int sou, out int des);
 			arrow.SetAB(sou, des);
 			list.Add(arrow);
 		}

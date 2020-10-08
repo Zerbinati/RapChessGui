@@ -71,7 +71,7 @@ namespace RapChessGui
 		{
 			playerList.list.Clear();
 			foreach (CPlayer p in FormChess.playerList.list)
-				if (p.tournament)
+				if (p.tournament && p.IsComputer())
 					playerList.Add(p);
 		}
 

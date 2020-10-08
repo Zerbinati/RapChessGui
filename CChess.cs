@@ -199,7 +199,7 @@ namespace RapChessGui
 			List<int> moves = GenerateValidMoves();
 			foreach (int imo in moves)
 			{
-				string umo = GmoToEmo(imo);
+				string umo = GmoToUmo(imo);
 				if (umo == san)
 					return umo;
 				if (UmoToSan(umo).Trim(charsToTrim) == san)
@@ -270,20 +270,20 @@ namespace RapChessGui
 			return 0;
 		}
 
-		public int IsValidMove(string emo)
+		public int IsValidMove(string umo)
 		{
 			List<int> moves = GenerateValidMoves();
 			foreach (int m in moves)
-				if (GmoToEmo(m) == emo)
+				if (GmoToUmo(m) == umo)
 					return m;
 			return 0;
 		}
 
-		public int EmoToGmo(string emo)
+		public int UmoToGmo(string umo)
 		{
 			List<int> moves = GenerateAllMoves(whiteTurn, false);
 			foreach (int m in moves)
-				if (GmoToEmo(m) == emo)
+				if (GmoToUmo(m) == umo)
 					return m;
 			return 0;
 		}
@@ -303,21 +303,21 @@ namespace RapChessGui
 			return y * 8 + x;
 		}
 
-		public static void EmoToSD(string emo, out int s, out int d)
+		public static void UmoToSD(string umo, out int s, out int d)
 		{
-			if (emo == "")
+			if (umo == "")
 			{
 				s = -1;
 				d = -1;
 			}
 			else
 			{
-				s = EmoToIndex(emo.Substring(0, 2));
-				d = EmoToIndex(emo.Substring(2, 2));
+				s = EmoToIndex(umo.Substring(0, 2));
+				d = EmoToIndex(umo.Substring(2, 2));
 			}
 		}
 
-		public string GmoToEmo(int move)
+		public string GmoToUmo(int move)
 		{
 			string result = FormatSquare(move & 0xFF) + FormatSquare((move >> 8) & 0xFF);
 			if ((move & moveflagPromotion) > 0)
@@ -424,11 +424,11 @@ namespace RapChessGui
 
 		bool IsRepetition()
 		{
+			int r = 1;
 			for (int n = undoIndex - 6; n >= undoIndex - g_move50; n -= 2)
 				if (undoStack[n].hash == g_hash)
-				{
+					if(++r > 2)
 					return true;
-				}
 			return false;
 		}
 
@@ -677,7 +677,7 @@ namespace RapChessGui
 		public int MakeMove(string emo, out int piece)
 		{
 			piece = 0;
-			int m = EmoToGmo(emo);
+			int m = UmoToGmo(emo);
 			if (m > 0)
 			{
 				piece = g_board[m & 0xff] & 7;
@@ -688,7 +688,7 @@ namespace RapChessGui
 
 		public int MakeMove(string umo)
 		{
-			int m = EmoToGmo(umo);
+			int m = UmoToGmo(umo);
 			if (m > 0)
 				MakeMove(m);
 			return m;
@@ -750,7 +750,7 @@ namespace RapChessGui
 				else
 					newPiece |= pieceRook;
 				g_board[to] = newPiece;
-				g_hash ^= g_hashBoard[to, newPiece & 7];
+				g_hash ^= g_hashBoard[to, newPiece & 0xf];
 			}
 			else
 			{
