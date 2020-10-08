@@ -1979,6 +1979,7 @@ namespace RapChessGui
 				CRapLog.Add($"Training time {gl.player.name} {CChess.whiteTurn}");
 			if ((gl.player.name == "Trained") && ((CData.gameState == CGameState.time) || (CData.gameState == CGameState.error) || gl.timeOut))
 				CModeTraining.errors++;
+			TrainingShow();
 		}
 
 		void EditShow()
