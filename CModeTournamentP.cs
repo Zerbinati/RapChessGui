@@ -82,7 +82,7 @@ namespace RapChessGui
 				p = tourList.LastPlayer();
 			if (p == null)
 				p = playerList.list[0];
-			CPlayer n = playerList.NextPlayer(p);
+			CPlayer n = playerList.NextTournament(p);
 			int rw = 0;
 			int rl = 0;
 			int rd = 0;

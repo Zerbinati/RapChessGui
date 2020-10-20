@@ -537,7 +537,7 @@ namespace RapChessGui
 				case "0-1":
 				case "1-0":
 				case "1/2-1/2":
-					SetGameState(CGameState.resignation);
+					SetGameState(CGameState.resignation, GamerList.GamerCur() == g);
 					break;
 				case "move":
 					g.ponder = Uci.GetValue("ponder");
@@ -633,7 +633,7 @@ namespace RapChessGui
 			list.Add($"[BlackElo \"{GamerList.gamer[1].player.elo}\"]");
 			list.Add($"[Result \"{result}\"]");
 			list.Add("");
-			list.Add(CHistory.GetPgn());
+			list.Add($"{CHistory.GetPgn()} {result}");
 			foreach (String s in list)
 				formLogGames.textBox1.Text += $"{s}\r\n";
 			formLogGames.textBox1.Select(0, 0);
@@ -792,14 +792,15 @@ namespace RapChessGui
 			}
 			if (top2 != null)
 				lvEngineH.TopItem = top2;
-			int index = engineList.GetIndex(engine.name);
 			CData.HisToPoints(engine.hisElo, chartTournamentE.Series[1].Points);
-			if (index > 0)
-				CData.HisToPoints(engineList.list[index - 1].hisElo, chartTournamentE.Series[0].Points);
+			CEngine eb = engineList.NextTournament(engine, false, true);
+			if (eb != null)
+				CData.HisToPoints(eb.hisElo, chartTournamentE.Series[0].Points);
 			else
 				chartTournamentE.Series[0].Points.Clear();
-			if (index < engineList.list.Count - 1)
-				CData.HisToPoints(engineList.list[index + 1].hisElo, chartTournamentE.Series[2].Points);
+			CEngine en = engineList.NextTournament(engine, false, false);
+			if (en != null)
+				CData.HisToPoints(en.hisElo, chartTournamentE.Series[2].Points);
 			else
 				chartTournamentE.Series[2].Points.Clear();
 		}
@@ -844,14 +845,15 @@ namespace RapChessGui
 				}
 			if (top2 != null)
 				lvPlayerH.TopItem = top2;
-			int index = playerList.GetIndex(player.name);
 			CData.HisToPoints(player.hisElo, chartTournamentP.Series[1].Points);
-			if (index > 0)
-				CData.HisToPoints(playerList.list[index - 1].hisElo, chartTournamentP.Series[0].Points);
+			CPlayer pb = playerList.NextTournament(player, false, true);
+			if (pb != null)
+				CData.HisToPoints(pb.hisElo, chartTournamentP.Series[0].Points);
 			else
 				chartTournamentP.Series[0].Points.Clear();
-			if (index < playerList.list.Count - 1)
-				CData.HisToPoints(playerList.list[index + 1].hisElo, chartTournamentP.Series[2].Points);
+			CPlayer pn = playerList.NextTournament(player, false, false);
+			if (pn != null)
+				CData.HisToPoints(pn.hisElo, chartTournamentP.Series[2].Points);
 			else
 				chartTournamentP.Series[2].Points.Clear();
 		}
@@ -1552,11 +1554,11 @@ namespace RapChessGui
 			labMatch11.Text = CModeMatch.win.ToString();
 			labMatch12.Text = CModeMatch.loose.ToString();
 			labMatch13.Text = CModeMatch.draw.ToString();
-			labMatch14.Text = $"{CModeMatch.Result(false)}%";
+			labMatch14.Text = $"{Math.Round(CModeMatch.Result(false))}%";
 			labMatch21.Text = CModeMatch.loose.ToString();
 			labMatch22.Text = CModeMatch.win.ToString();
 			labMatch23.Text = CModeMatch.draw.ToString();
-			labMatch24.Text = $"{CModeMatch.Result(true)}%";
+			labMatch24.Text = $"{Math.Round(CModeMatch.Result(true))}%";
 			CHisElo his1 = CModeMatch.his1;
 			CHisElo his2 = CModeMatch.his2;
 			if (CModeMatch.rotate)
@@ -1572,8 +1574,8 @@ namespace RapChessGui
 		{
 			if (add)
 			{
-				CModeMatch.his1.Add(CModeMatch.Point(false));
-				CModeMatch.his2.Add(CModeMatch.Point(true));
+				CModeMatch.his1.Add(CModeMatch.Result(false));
+				CModeMatch.his2.Add(CModeMatch.Result(true));
 			}
 			CData.fen = CChess.defFen;
 			CModeMatch.engine1 = cbEngine1.Text;
@@ -1680,10 +1682,8 @@ namespace RapChessGui
 			CEngine e2;
 			if (CModeTournamentE.rotate)
 			{
-				CGamer g1 = GamerList.gamer[1];
-				CGamer g2 = GamerList.gamer[0];
-				p1 = g1.player;
-				p2 = g2.player;
+				p1 = GamerList.gamer[1].player;
+				p2 = GamerList.gamer[0].player;
 			}
 			else
 			{
@@ -1717,11 +1717,6 @@ namespace RapChessGui
 					ShowHistoryTourE();
 					break;
 				}
-			e1 = engineList.GetEngine(p1.engine);
-			e2 = engineList.GetEngine(p2.engine);
-			CData.HisToPoints(e1.hisElo, chartTournamentE.Series[0].Points);
-			CData.HisToPoints(e2.hisElo, chartTournamentE.Series[1].Points);
-			chartTournamentE.Series[2].Points.Clear();
 			Clear();
 		}
 
@@ -1842,9 +1837,6 @@ namespace RapChessGui
 					ShowHistoryTourP();
 					break;
 				}
-			CData.HisToPoints(p1.hisElo, chartTournamentP.Series[0].Points);
-			CData.HisToPoints(p2.hisElo, chartTournamentP.Series[1].Points);
-			chartTournamentP.Series[2].Points.Clear();
 			Clear();
 		}
 
@@ -2549,6 +2541,5 @@ namespace RapChessGui
 		}
 
 		#endregion
-
 	}
 }

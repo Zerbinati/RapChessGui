@@ -90,7 +90,7 @@ namespace RapChessGui
 				e = tourList.LastEngine();
 			if (e == null)
 				e = engineList.list[0];
-			CEngine n = engineList.NextEngine(e);
+			CEngine n = engineList.NextTournament(e);
 			int rw = 0;
 			int rl = 0;
 			int rd = 0;

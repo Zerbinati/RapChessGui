@@ -283,16 +283,24 @@ namespace RapChessGui
 			return Convert.ToInt32((3000 * (index + 1)) / list.Count);
 		}
 
-		public CPlayer NextPlayer(CPlayer p)
+		public CPlayer NextTournament(CPlayer p, bool rotate = true, bool back = false)
 		{
 			Sort();
 			int i = GetIndex(p.name);
-			for (int n = 0; n < list.Count; n++)
+			for (int n = 0; n < list.Count - 1; n++)
 			{
-				i = ++i % list.Count;
-				CPlayer cp = list[i];
-				if (cp.name != "Human")
-					return cp;
+				if (back)
+					i--;
+				else
+					i++;
+				if (rotate)
+					i = (i + list.Count) % list.Count;
+				else
+					if ((i < 0) || (i >= list.Count))
+					return null;
+				p = list[i];
+				if (p.tournament)
+					break;
 			}
 			return p;
 		}

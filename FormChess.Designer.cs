@@ -418,6 +418,7 @@
 			chartArea1.AxisX.LabelStyle.Enabled = false;
 			chartArea1.AxisX.MajorGrid.Enabled = false;
 			chartArea1.AxisX.MajorTickMark.Enabled = false;
+			chartArea1.AxisY.IsStartedFromZero = false;
 			chartArea1.AxisY.MajorGrid.Enabled = false;
 			chartArea1.AxisY.MajorTickMark.Enabled = false;
 			chartArea1.BackColor = System.Drawing.Color.WhiteSmoke;
@@ -698,6 +699,7 @@
 			chartArea2.AxisX.LabelStyle.Enabled = false;
 			chartArea2.AxisX.MajorGrid.Enabled = false;
 			chartArea2.AxisX.MajorTickMark.Enabled = false;
+			chartArea2.AxisY.IsStartedFromZero = false;
 			chartArea2.AxisY.MajorGrid.Enabled = false;
 			chartArea2.AxisY.MajorTickMark.Enabled = false;
 			chartArea2.BackColor = System.Drawing.Color.WhiteSmoke;

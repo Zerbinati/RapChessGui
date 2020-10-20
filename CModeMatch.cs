@@ -42,15 +42,15 @@ namespace RapChessGui
 				return win + draw * .5;
 		}
 
-		public static int Result(bool rev)
+		public static double Result(bool rev)
 		{
 			int t = Total();
 			if (t == 0)
 				return 50;
 			if (rev)
-				return ((loose * 2 + draw) * 100) / (t * 2);
+				return ((loose * 2 + draw) * 100.0) / (t * 2);
 			else
-				return ((win * 2 + draw) * 100) / (t * 2);
+				return ((win * 2 + draw) * 100.0) / (t * 2);
 		}
 
 		public static void LoadFromIni()

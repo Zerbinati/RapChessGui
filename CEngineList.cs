@@ -132,11 +132,26 @@ namespace RapChessGui
 			}
 		}
 
-		public CEngine NextEngine(CEngine e)
+		public CEngine NextTournament(CEngine e, bool rotate = true,bool back = false)
 		{
 			Sort();
-			int i =( GetIndex(e.name) + 1) % list.Count;
-			return list[i];
+			int i = GetIndex(e.name);
+			for (int n = 0; n < list.Count - 1; n++)
+			{
+				if (back)
+					i--;
+				else
+					i++;
+				if (rotate)
+					i = (i + list.Count) % list.Count;
+				else
+					if ((i < 0) || (i >= list.Count))
+						return null;
+				e = list[i];
+				if (e.tournament)
+					break;
+			}
+			return e;
 		}
 
 		public void SaveToIni()

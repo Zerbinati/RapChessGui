@@ -8,11 +8,11 @@ namespace RapChessGui
 	class CUndo
 	{
 		public int captured;
-		public int hash;
 		public int passing;
 		public int castle;
 		public int move50;
 		public int lastCastle;
+		public ulong hash;
 	}
 
 	class CUci
@@ -91,7 +91,7 @@ namespace RapChessGui
 		const int maskCastle = moveflagCastleKing | moveflagCastleQueen;
 		const int maskColor = colorBlack | colorWhite;
 		public int g_castleRights = 0xf;
-		int g_hash = 0;
+		ulong g_hash = 0;
 		int g_passing = 0;
 		public int g_move50 = 0;
 		public static int g_moveNumber = 0;
@@ -99,7 +99,7 @@ namespace RapChessGui
 		int g_lastCastle = 0;
 		bool adjInsufficient = false;
 		int undoIndex = 0;
-		readonly int[,] g_hashBoard = new int[256, 16];
+		readonly ulong[,] g_hashBoard = new ulong[256, 16];
 		readonly int[] boardCheck = new int[256];
 		readonly int[] boardCastle = new int[256];
 		public static bool whiteTurn = true;
@@ -145,6 +145,7 @@ namespace RapChessGui
 			int flags = gmo & 0xff0000;
 			int pieceFr = g_board[fr] & 7;
 			int pieceTo = g_board[to] & 7;
+			bool isAttack = (pieceTo > 0) || ((flags & moveflagPassing) > 0);
 			if ((flags & moveflagCastleKing) > 0)
 				return "O-O";
 			if ((flags & moveflagCastleQueen) > 0)
@@ -167,12 +168,12 @@ namespace RapChessGui
 					}
 				}
 			}
-			if ((pieceTo > 0) && (pieceFr == piecePawn))
+			if (isAttack && (pieceFr == piecePawn))
 				uniFile = false;
 			string faf = uniFile ? "" : umo.Substring(0, 1);
 			string far = uniRank ? "" : umo.Substring(1, 1);
 			string fb = umo.Substring(2, 2);
-			string attack = pieceTo > 0 ? "x" : "";
+			string attack = isAttack ? "x" : "";
 			string promo = "";
 			if ((flags & moveflagPromoteKnight) > 0)
 				promo = "=N";
@@ -288,9 +289,9 @@ namespace RapChessGui
 			return 0;
 		}
 
-		int RAND_32()
+		ulong RAND_32()
 		{
-			return random.Next();
+			return ((ulong)random.Next() << 32) | ((ulong)random.Next() << 0);
 		}
 
 		public static int EmoToIndex(string emo)
@@ -616,11 +617,9 @@ namespace RapChessGui
 				}
 				else
 				{
-					char b = Char.ToLower(c);
-					bool isWhite = b != c;
-					int piece = isWhite ? colorWhite : colorBlack;
+					int piece = Char.IsUpper(c) ? colorWhite : colorBlack;
 					int index = (row + 4) * 16 + col + 4;
-					switch (b)
+					switch (Char.ToLower(c))
 					{
 						case 'p':
 							piece |= piecePawn;
