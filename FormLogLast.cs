@@ -42,5 +42,12 @@ namespace RapChessGui
 		{
 			System.Diagnostics.Process.Start(e.LinkText);
 		}
+
+		private void saveToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			string fn = $"{FormChess.This.cbMainMode.Text} {DateTime.Now.ToString("yyyy-MM-dd hh-mm-ss")}.rtf";
+			richTextBox1.SaveFile(fn);
+			MessageBox.Show($"File {fn} has been saved");
+		}
 	}
 }

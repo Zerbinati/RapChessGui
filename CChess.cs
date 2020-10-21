@@ -426,7 +426,7 @@ namespace RapChessGui
 		bool IsRepetition()
 		{
 			int r = 1;
-			for (int n = undoIndex - 6; n >= undoIndex - g_move50; n -= 2)
+			for (int n = undoIndex - 4; n >= undoIndex - g_move50; n -= 2)
 				if (undoStack[n].hash == g_hash)
 					if(++r > 2)
 					return true;

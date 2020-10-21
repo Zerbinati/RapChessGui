@@ -2210,7 +2210,7 @@
 			this.menuStrip1.Location = new System.Drawing.Point(0, 2);
 			this.menuStrip1.Name = "menuStrip1";
 			this.menuStrip1.ShowItemToolTips = true;
-			this.menuStrip1.Size = new System.Drawing.Size(310, 24);
+			this.menuStrip1.Size = new System.Drawing.Size(430, 24);
 			this.menuStrip1.TabIndex = 1;
 			this.menuStrip1.Text = "menuStrip1";
 			// 
@@ -2313,33 +2313,33 @@
 			// programLogToolStripMenuItem
 			// 
 			this.programLogToolStripMenuItem.Name = "programLogToolStripMenuItem";
-			this.programLogToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
+			this.programLogToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
 			this.programLogToolStripMenuItem.Text = "Program log";
 			this.programLogToolStripMenuItem.Click += new System.EventHandler(this.programLogToolStripMenuItem_Click);
 			// 
 			// gamesToolStripMenuItem
 			// 
 			this.gamesToolStripMenuItem.Name = "gamesToolStripMenuItem";
-			this.gamesToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
+			this.gamesToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
 			this.gamesToolStripMenuItem.Text = "Games log";
 			this.gamesToolStripMenuItem.Click += new System.EventHandler(this.gamesToolStripMenuItem_Click);
 			// 
 			// enginesToolStripMenuItem1
 			// 
 			this.enginesToolStripMenuItem1.Name = "enginesToolStripMenuItem1";
-			this.enginesToolStripMenuItem1.Size = new System.Drawing.Size(140, 22);
+			this.enginesToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
 			this.enginesToolStripMenuItem1.Text = "Engines log";
 			this.enginesToolStripMenuItem1.Click += new System.EventHandler(this.enginesToolStripMenuItem1_Click);
 			// 
 			// toolStripMenuItem1
 			// 
 			this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-			this.toolStripMenuItem1.Size = new System.Drawing.Size(137, 6);
+			this.toolStripMenuItem1.Size = new System.Drawing.Size(177, 6);
 			// 
 			// lastGameToolStripMenuItem
 			// 
 			this.lastGameToolStripMenuItem.Name = "lastGameToolStripMenuItem";
-			this.lastGameToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
+			this.lastGameToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
 			this.lastGameToolStripMenuItem.Text = "Last game";
 			this.lastGameToolStripMenuItem.Click += new System.EventHandler(this.lastGameToolStripMenuItem_Click);
 			// 

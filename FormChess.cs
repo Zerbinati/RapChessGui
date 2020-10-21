@@ -274,7 +274,7 @@ namespace RapChessGui
 
 		#region main
 
-		public void SetGameState(CGameState gs, bool rotate = false)
+		public void SetGameState(CGameState gs, CGamer gamer = null)
 		{
 			if (gs == CGameState.normal)
 			{
@@ -284,8 +284,13 @@ namespace RapChessGui
 			if (CData.gameState != CGameState.normal)
 				return;
 			CData.gameState = gs;
-			CGamer gw = rotate ? GamerList.GamerLoser() : GamerList.GamerWinner();
-			CGamer gl = rotate ? GamerList.GamerWinner() : GamerList.GamerLoser();
+			CGamer gw = GamerList.GamerWinner();
+			CGamer gl = GamerList.GamerLoser();
+			if (gamer == gw)
+			{
+				gw = gl;
+				gl = gamer;
+			}
 			CPlayer pw = gw.player;
 			CPlayer pl = gl.player;
 			bool isDraw = false;
@@ -537,7 +542,7 @@ namespace RapChessGui
 				case "0-1":
 				case "1-0":
 				case "1/2-1/2":
-					SetGameState(CGameState.resignation, GamerList.GamerCur() == g);
+						SetGameState(CGameState.resignation, g);
 					break;
 				case "move":
 					g.ponder = Uci.GetValue("ponder");
@@ -552,7 +557,7 @@ namespace RapChessGui
 							MakeMove(umo);
 					}
 					else if (s.Contains("resign") || s.Contains("illegal"))
-						SetGameState(CGameState.resignation, GamerList.GamerCur() == g);
+						SetGameState(CGameState.resignation, g);
 					else if (g.wbok && Char.IsDigit(Uci.tokens[0][0]) && (Uci.tokens.Length > 4))
 					{
 						try
@@ -760,11 +765,12 @@ namespace RapChessGui
 			ListViewItem top2 = null;
 			ListViewItem item = lvEngine.SelectedItems[0];
 			string name = item.SubItems[0].Text;
+			CEngineList engineList = CModeTournamentE.engineList;
 			CEngine engine = engineList.GetEngine(name);
-			labEngine.Text = $"{engine.name} - {engine.elo}";
 			lvEngineH.Items.Clear();
 			engineList.Sort();
 			engineList.FillPosition();
+			int countGames = 0;
 			foreach (CEngine e in engineList.list)
 			{
 				int rw = 0;
@@ -789,7 +795,9 @@ namespace RapChessGui
 					if (del >= up)
 						top2 = lvi;
 				}
+				countGames += count;
 			}
+			labEngine.Text = $"{engine.name} games {countGames}";
 			if (top2 != null)
 				lvEngineH.TopItem = top2;
 			CData.HisToPoints(engine.hisElo, chartTournamentE.Series[1].Points);
@@ -812,11 +820,12 @@ namespace RapChessGui
 			ListViewItem top2 = null;
 			ListViewItem item = lvPlayer.SelectedItems[0];
 			string name = item.SubItems[0].Text;
+			CPlayerList playerList = CModeTournamentP.playerList;
 			CPlayer player = playerList.GetPlayer(name);
-			labPlayer.Text = $"{player.name} - {player.elo}";
 			lvPlayerH.Items.Clear();
 			playerList.Sort();
 			playerList.FillPosition();
+			int countGames = 0;
 			foreach (CPlayer p in playerList.list)
 				if (p.engine != "Human")
 				{
@@ -842,7 +851,9 @@ namespace RapChessGui
 						if (del >= up)
 							top2 = lvi;
 					}
+					countGames += count;
 				}
+			labPlayer.Text = $"{player.name} games {countGames}";
 			if (top2 != null)
 				lvPlayerH.TopItem = top2;
 			CData.HisToPoints(player.hisElo, chartTournamentP.Series[1].Points);
