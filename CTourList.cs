@@ -51,7 +51,16 @@ namespace RapChessGui
 			LoadFromFile();
 		}
 
-		public void CountGames(string p1, string p2, ref int rw, ref int rl, ref int rd)
+		public int CountGames(string p)
+		{
+			int result = 0;
+			foreach (CTour t in list)
+				if ((t.w == p) || (t.b == p))
+					result++;
+			return result;
+		}
+
+		public void CountGames(string p1, string p2, out int rw, out int rl, out int rd)
 		{
 			rw = 0;
 			rl = 0;

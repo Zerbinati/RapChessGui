@@ -47,6 +47,10 @@ namespace RapChessGui
 			return Convert.ToInt32(elo) + levelDif;
 		}
 
+		public int GetElo()
+		{
+			return Convert.ToInt32(elo);
+		}
 
 		public int GetDeltaElo()
 		{

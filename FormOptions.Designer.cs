@@ -38,9 +38,9 @@
 			this.nudSpeed = new System.Windows.Forms.NumericUpDown();
 			this.cbAttack = new System.Windows.Forms.CheckBox();
 			this.cbShowPonder = new System.Windows.Forms.CheckBox();
-			this.cbRotateBoard = new System.Windows.Forms.CheckBox();
 			this.butOk = new System.Windows.Forms.Button();
 			this.gbGame = new System.Windows.Forms.GroupBox();
+			this.cbRotateBoard = new System.Windows.Forms.CheckBox();
 			this.cbGameAutoElo = new System.Windows.Forms.CheckBox();
 			this.gbTournament = new System.Windows.Forms.GroupBox();
 			this.labTourP = new System.Windows.Forms.Label();
@@ -58,6 +58,8 @@
 			this.gbNotation = new System.Windows.Forms.GroupBox();
 			this.rbUci = new System.Windows.Forms.RadioButton();
 			this.rbSan = new System.Windows.Forms.RadioButton();
+			this.groupBox3 = new System.Windows.Forms.GroupBox();
+			this.cbPriority = new System.Windows.Forms.ComboBox();
 			this.gbInterface.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.nudSpeed)).BeginInit();
 			this.gbGame.SuspendLayout();
@@ -67,13 +69,14 @@
 			this.groupBox2.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.nudTourE)).BeginInit();
 			this.gbNotation.SuspendLayout();
+			this.groupBox3.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// butDefault
 			// 
 			this.butDefault.DialogResult = System.Windows.Forms.DialogResult.OK;
 			this.butDefault.Dock = System.Windows.Forms.DockStyle.Top;
-			this.butDefault.Location = new System.Drawing.Point(0, 442);
+			this.butDefault.Location = new System.Drawing.Point(0, 453);
 			this.butDefault.Name = "butDefault";
 			this.butDefault.Size = new System.Drawing.Size(286, 24);
 			this.butDefault.TabIndex = 2;
@@ -90,11 +93,10 @@
 			this.gbInterface.Controls.Add(this.nudSpeed);
 			this.gbInterface.Controls.Add(this.cbAttack);
 			this.gbInterface.Controls.Add(this.cbShowPonder);
-			this.gbInterface.Controls.Add(this.cbRotateBoard);
 			this.gbInterface.Dock = System.Windows.Forms.DockStyle.Top;
-			this.gbInterface.Location = new System.Drawing.Point(0, 221);
+			this.gbInterface.Location = new System.Drawing.Point(0, 234);
 			this.gbInterface.Name = "gbInterface";
-			this.gbInterface.Size = new System.Drawing.Size(286, 168);
+			this.gbInterface.Size = new System.Drawing.Size(286, 116);
 			this.gbInterface.TabIndex = 4;
 			this.gbInterface.TabStop = false;
 			this.gbInterface.Text = "Interface";
@@ -102,7 +104,7 @@
 			// butColor
 			// 
 			this.butColor.Dock = System.Windows.Forms.DockStyle.Bottom;
-			this.butColor.Location = new System.Drawing.Point(3, 141);
+			this.butColor.Location = new System.Drawing.Point(3, 89);
 			this.butColor.Name = "butColor";
 			this.butColor.Size = new System.Drawing.Size(280, 24);
 			this.butColor.TabIndex = 4;
@@ -116,7 +118,7 @@
 			this.cbTips.Checked = true;
 			this.cbTips.CheckState = System.Windows.Forms.CheckState.Checked;
 			this.cbTips.Dock = System.Windows.Forms.DockStyle.Top;
-			this.cbTips.Location = new System.Drawing.Point(3, 84);
+			this.cbTips.Location = new System.Drawing.Point(3, 67);
 			this.cbTips.Name = "cbTips";
 			this.cbTips.Size = new System.Drawing.Size(280, 17);
 			this.cbTips.TabIndex = 12;
@@ -129,7 +131,7 @@
 			this.cbArrow.Checked = true;
 			this.cbArrow.CheckState = System.Windows.Forms.CheckState.Checked;
 			this.cbArrow.Dock = System.Windows.Forms.DockStyle.Top;
-			this.cbArrow.Location = new System.Drawing.Point(3, 67);
+			this.cbArrow.Location = new System.Drawing.Point(3, 50);
 			this.cbArrow.Name = "cbArrow";
 			this.cbArrow.Size = new System.Drawing.Size(280, 17);
 			this.cbArrow.TabIndex = 10;
@@ -174,7 +176,7 @@
 			this.cbAttack.Checked = true;
 			this.cbAttack.CheckState = System.Windows.Forms.CheckState.Checked;
 			this.cbAttack.Dock = System.Windows.Forms.DockStyle.Top;
-			this.cbAttack.Location = new System.Drawing.Point(3, 50);
+			this.cbAttack.Location = new System.Drawing.Point(3, 33);
 			this.cbAttack.Name = "cbAttack";
 			this.cbAttack.Size = new System.Drawing.Size(280, 17);
 			this.cbAttack.TabIndex = 7;
@@ -187,30 +189,18 @@
 			this.cbShowPonder.Checked = true;
 			this.cbShowPonder.CheckState = System.Windows.Forms.CheckState.Checked;
 			this.cbShowPonder.Dock = System.Windows.Forms.DockStyle.Top;
-			this.cbShowPonder.Location = new System.Drawing.Point(3, 33);
+			this.cbShowPonder.Location = new System.Drawing.Point(3, 16);
 			this.cbShowPonder.Name = "cbShowPonder";
 			this.cbShowPonder.Size = new System.Drawing.Size(280, 17);
 			this.cbShowPonder.TabIndex = 6;
 			this.cbShowPonder.Text = "Show ponder";
 			this.cbShowPonder.UseVisualStyleBackColor = true;
 			// 
-			// cbRotateBoard
-			// 
-			this.cbRotateBoard.AutoSize = true;
-			this.cbRotateBoard.Dock = System.Windows.Forms.DockStyle.Top;
-			this.cbRotateBoard.Location = new System.Drawing.Point(3, 16);
-			this.cbRotateBoard.Name = "cbRotateBoard";
-			this.cbRotateBoard.Size = new System.Drawing.Size(280, 17);
-			this.cbRotateBoard.TabIndex = 5;
-			this.cbRotateBoard.Text = "Rotate board";
-			this.cbRotateBoard.UseVisualStyleBackColor = true;
-			this.cbRotateBoard.CheckedChanged += new System.EventHandler(this.CbRotateBoard_CheckedChanged);
-			// 
 			// butOk
 			// 
 			this.butOk.DialogResult = System.Windows.Forms.DialogResult.OK;
 			this.butOk.Dock = System.Windows.Forms.DockStyle.Top;
-			this.butOk.Location = new System.Drawing.Point(0, 466);
+			this.butOk.Location = new System.Drawing.Point(0, 477);
 			this.butOk.Name = "butOk";
 			this.butOk.Size = new System.Drawing.Size(286, 24);
 			this.butOk.TabIndex = 1;
@@ -220,14 +210,27 @@
 			// 
 			// gbGame
 			// 
+			this.gbGame.Controls.Add(this.cbRotateBoard);
 			this.gbGame.Controls.Add(this.cbGameAutoElo);
 			this.gbGame.Dock = System.Windows.Forms.DockStyle.Top;
 			this.gbGame.Location = new System.Drawing.Point(0, 0);
 			this.gbGame.Name = "gbGame";
-			this.gbGame.Size = new System.Drawing.Size(286, 39);
+			this.gbGame.Size = new System.Drawing.Size(286, 52);
 			this.gbGame.TabIndex = 6;
 			this.gbGame.TabStop = false;
 			this.gbGame.Text = "Game";
+			// 
+			// cbRotateBoard
+			// 
+			this.cbRotateBoard.AutoSize = true;
+			this.cbRotateBoard.Dock = System.Windows.Forms.DockStyle.Top;
+			this.cbRotateBoard.Location = new System.Drawing.Point(3, 33);
+			this.cbRotateBoard.Name = "cbRotateBoard";
+			this.cbRotateBoard.Size = new System.Drawing.Size(280, 17);
+			this.cbRotateBoard.TabIndex = 6;
+			this.cbRotateBoard.Text = "Rotate board";
+			this.cbRotateBoard.UseVisualStyleBackColor = true;
+			this.cbRotateBoard.CheckedChanged += new System.EventHandler(this.CbRotateBoard_CheckedChanged);
 			// 
 			// cbGameAutoElo
 			// 
@@ -248,7 +251,7 @@
 			this.gbTournament.Controls.Add(this.label2);
 			this.gbTournament.Controls.Add(this.nudTourP);
 			this.gbTournament.Dock = System.Windows.Forms.DockStyle.Top;
-			this.gbTournament.Location = new System.Drawing.Point(0, 91);
+			this.gbTournament.Location = new System.Drawing.Point(0, 104);
 			this.gbTournament.Name = "gbTournament";
 			this.gbTournament.Size = new System.Drawing.Size(286, 52);
 			this.gbTournament.TabIndex = 7;
@@ -309,7 +312,7 @@
 			this.groupBox1.Controls.Add(this.cbModeTime);
 			this.groupBox1.Controls.Add(this.cbModeStandard);
 			this.groupBox1.Dock = System.Windows.Forms.DockStyle.Top;
-			this.groupBox1.Location = new System.Drawing.Point(0, 143);
+			this.groupBox1.Location = new System.Drawing.Point(0, 156);
 			this.groupBox1.Name = "groupBox1";
 			this.groupBox1.Size = new System.Drawing.Size(286, 78);
 			this.groupBox1.TabIndex = 8;
@@ -376,7 +379,7 @@
 			this.groupBox2.Controls.Add(this.label6);
 			this.groupBox2.Controls.Add(this.nudTourE);
 			this.groupBox2.Dock = System.Windows.Forms.DockStyle.Top;
-			this.groupBox2.Location = new System.Drawing.Point(0, 39);
+			this.groupBox2.Location = new System.Drawing.Point(0, 52);
 			this.groupBox2.Name = "groupBox2";
 			this.groupBox2.Size = new System.Drawing.Size(286, 52);
 			this.groupBox2.TabIndex = 9;
@@ -435,7 +438,7 @@
 			this.gbNotation.Controls.Add(this.rbUci);
 			this.gbNotation.Controls.Add(this.rbSan);
 			this.gbNotation.Dock = System.Windows.Forms.DockStyle.Top;
-			this.gbNotation.Location = new System.Drawing.Point(0, 389);
+			this.gbNotation.Location = new System.Drawing.Point(0, 350);
 			this.gbNotation.Name = "gbNotation";
 			this.gbNotation.Size = new System.Drawing.Size(286, 53);
 			this.gbNotation.TabIndex = 10;
@@ -466,13 +469,40 @@
 			this.rbSan.Text = "San";
 			this.rbSan.UseVisualStyleBackColor = true;
 			// 
+			// groupBox3
+			// 
+			this.groupBox3.Controls.Add(this.cbPriority);
+			this.groupBox3.Dock = System.Windows.Forms.DockStyle.Top;
+			this.groupBox3.Location = new System.Drawing.Point(0, 403);
+			this.groupBox3.Name = "groupBox3";
+			this.groupBox3.Size = new System.Drawing.Size(286, 50);
+			this.groupBox3.TabIndex = 11;
+			this.groupBox3.TabStop = false;
+			this.groupBox3.Text = "Priority";
+			// 
+			// cbPriority
+			// 
+			this.cbPriority.Dock = System.Windows.Forms.DockStyle.Top;
+			this.cbPriority.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.cbPriority.FormattingEnabled = true;
+			this.cbPriority.Items.AddRange(new object[] {
+            "Idle",
+            "Normal",
+            "High"});
+			this.cbPriority.Location = new System.Drawing.Point(3, 16);
+			this.cbPriority.Name = "cbPriority";
+			this.cbPriority.Size = new System.Drawing.Size(280, 21);
+			this.cbPriority.TabIndex = 49;
+			this.cbPriority.SelectedIndexChanged += new System.EventHandler(this.cbPriority_SelectedIndexChanged);
+			// 
 			// FormOptions
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(286, 496);
+			this.ClientSize = new System.Drawing.Size(286, 509);
 			this.Controls.Add(this.butOk);
 			this.Controls.Add(this.butDefault);
+			this.Controls.Add(this.groupBox3);
 			this.Controls.Add(this.gbNotation);
 			this.Controls.Add(this.gbInterface);
 			this.Controls.Add(this.groupBox1);
@@ -501,6 +531,7 @@
 			((System.ComponentModel.ISupportInitialize)(this.nudTourE)).EndInit();
 			this.gbNotation.ResumeLayout(false);
 			this.gbNotation.PerformLayout();
+			this.groupBox3.ResumeLayout(false);
 			this.ResumeLayout(false);
 
 		}
@@ -511,7 +542,6 @@
 		private System.Windows.Forms.GroupBox gbInterface;
 		private System.Windows.Forms.Button butColor;
 		public System.Windows.Forms.CheckBox cbShowPonder;
-		public System.Windows.Forms.CheckBox cbRotateBoard;
 		private System.Windows.Forms.Button butOk;
 		private System.Windows.Forms.GroupBox gbGame;
 		public System.Windows.Forms.CheckBox cbGameAutoElo;
@@ -536,5 +566,8 @@
 		private System.Windows.Forms.GroupBox gbNotation;
 		private System.Windows.Forms.RadioButton rbUci;
 		public System.Windows.Forms.RadioButton rbSan;
+		public System.Windows.Forms.CheckBox cbRotateBoard;
+		private System.Windows.Forms.GroupBox groupBox3;
+		private System.Windows.Forms.ComboBox cbPriority;
 	}
 }

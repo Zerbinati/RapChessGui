@@ -403,7 +403,7 @@ namespace RapChessGui
 
 		public void GetMessageUci(CGamer g, string msg)
 		{
-			string emo;
+			string umo;
 			Uci.SetMsg(msg);
 			switch (Uci.command)
 			{
@@ -421,17 +421,17 @@ namespace RapChessGui
 					g.isBookFinished = true;
 					break;
 				case "bestmove":
-					if (GamerList.GamerCur() == g)
+					if ((GamerList.GamerCur() == g) && (Uci.tokens.Length > 1))
 					{
 						g.ponder = Uci.GetValue("ponder");
-						emo = (Uci.tokens[1]).ToLower();
+						umo = (Uci.tokens[1]).ToLower();
 						if (g.isBookStarted && !g.isBookFinished)
 						{
-							AddBook(emo);
+							AddBook(umo);
 							if (g.engine.IsXb())
 								g.isPrepared = false;
 						}
-						MakeMove(emo);
+						MakeMove(umo);
 						if ((g.ponder != "") && FormOptions.This.rbSan.Checked)
 							g.ponder = Chess.UmoToSan(g.ponder);
 					}
@@ -542,7 +542,7 @@ namespace RapChessGui
 				case "0-1":
 				case "1-0":
 				case "1/2-1/2":
-						SetGameState(CGameState.resignation, g);
+					SetGameState(CGameState.resignation, g);
 					break;
 				case "move":
 					g.ponder = Uci.GetValue("ponder");
@@ -773,10 +773,7 @@ namespace RapChessGui
 			int countGames = 0;
 			foreach (CEngine e in engineList.list)
 			{
-				int rw = 0;
-				int rl = 0;
-				int rd = 0;
-				CModeTournamentE.tourList.CountGames(name, e.name, ref rw, ref rl, ref rd);
+				CModeTournamentE.tourList.CountGames(name, e.name, out int rw, out int rl, out int rd);
 				int count = rw + rl + rd;
 				if (count > 0)
 				{
@@ -797,7 +794,7 @@ namespace RapChessGui
 				}
 				countGames += count;
 			}
-			labEngine.Text = $"{engine.name} games {countGames}";
+			labEngine.Text = $"{engine.name} games {countGames} players {CModeTournamentE.engineList.list.Count}";
 			if (top2 != null)
 				lvEngineH.TopItem = top2;
 			CData.HisToPoints(engine.hisElo, chartTournamentE.Series[1].Points);
@@ -829,10 +826,7 @@ namespace RapChessGui
 			foreach (CPlayer p in playerList.list)
 				if (p.engine != "Human")
 				{
-					int rw = 0;
-					int rl = 0;
-					int rd = 0;
-					CModeTournamentP.tourList.CountGames(name, p.name, ref rw, ref rl, ref rd);
+					CModeTournamentP.tourList.CountGames(name, p.name, out int rw, out int rl, out int rd);
 					int count = rw + rl + rd;
 					if (count > 0)
 					{
@@ -853,7 +847,7 @@ namespace RapChessGui
 					}
 					countGames += count;
 				}
-			labPlayer.Text = $"{player.name} games {countGames}";
+			labPlayer.Text = $"{player.name} games {countGames} players {CModeTournamentP.playerList.list.Count}";
 			if (top2 != null)
 				lvPlayerH.TopItem = top2;
 			CData.HisToPoints(player.hisElo, chartTournamentP.Series[1].Points);

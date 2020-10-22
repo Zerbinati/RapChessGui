@@ -1,8 +1,6 @@
 ﻿using System;
 using System.IO;
 using System.Diagnostics;
-using System.Management;
-using RapLog;
 
 namespace RapChessGui
 {
@@ -23,6 +21,23 @@ namespace RapChessGui
 				CMessageList.MessageAdd(process.Id, e.Data);
 		}
 
+		public void SetPriority(string priority)
+		{
+			switch (priority)
+			{
+				case "Idle":
+					process.PriorityClass = ProcessPriorityClass.Idle;
+					break;
+				case "Normal":
+					process.PriorityClass = ProcessPriorityClass.Normal;
+					break;
+				case "High":
+					process.PriorityClass = ProcessPriorityClass.High;
+					break;
+
+			}
+		}
+
 		public void SetProgram(string program, string param)
 		{
 			Terminate();
@@ -40,6 +55,7 @@ namespace RapChessGui
 			process.OutputDataReceived += ProEvent;
 			process.Start();
 			process.BeginOutputReadLine();
+			SetPriority(FormOptions.priority);
 		}
 
 		public void Terminate()

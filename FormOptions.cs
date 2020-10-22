@@ -10,6 +10,7 @@ namespace RapChessGui
 		public static FormOptions This;
 		public static int marginStandard = 0;
 		public static int marginTime = 5000;
+		public static string priority;
 
 		public FormOptions()
 		{
@@ -34,6 +35,8 @@ namespace RapChessGui
 			cbGameAutoElo.Checked = CRapIni.This.ReadBool("options>game>autoelo",cbGameAutoElo.Checked);
 			cbModeStandard.SelectedIndex = CRapIni.This.ReadInt("options>margin>standard", 1);
 			cbModeTime.SelectedIndex = CRapIni.This.ReadInt("options>margin>time", 4);
+			priority = CRapIni.This.Read("options>priority", "Normal");
+			cbPriority.SelectedIndex = cbPriority.FindStringExact(priority);
 			CBoard.showArrow = cbArrow.Checked;
 			marginStandard = CbToMargin(cbModeStandard.SelectedIndex);
 			marginTime = CbToMargin(cbModeTime.SelectedIndex);		
@@ -52,6 +55,7 @@ namespace RapChessGui
 			CRapIni.This.Write("options>game>autoelo", cbGameAutoElo.Checked);
 			CRapIni.This.Write("options>margin>standard", cbModeStandard.SelectedIndex);
 			CRapIni.This.Write("options>margin>time", cbModeTime.SelectedIndex);
+			CRapIni.This.Write("options>priority", priority);
 			CBoard.showArrow = cbArrow.Checked;
 			marginStandard = CbToMargin(cbModeStandard.SelectedIndex);
 			marginTime = CbToMargin(cbModeTime.SelectedIndex);
@@ -118,5 +122,9 @@ namespace RapChessGui
 			labTourP.Text = $"Fill {(CModeTournamentP.tourList.list.Count * 100) / CModeTournamentP.records}%";
 		}
 
+		private void cbPriority_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			priority = cbPriority.Text;
+		}
 	}
 }
