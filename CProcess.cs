@@ -17,11 +17,11 @@ namespace RapChessGui
 
 		private void ProEvent(object sender, DataReceivedEventArgs e)
 		{
-			if (!String.IsNullOrEmpty(e.Data))
+			if ((process != null) && !String.IsNullOrEmpty(e.Data))
 				CMessageList.MessageAdd(process.Id, e.Data);
 		}
 
-		public void SetPriority(string priority)
+		void SetPriority(string priority)
 		{
 			switch (priority)
 			{

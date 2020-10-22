@@ -44,17 +44,23 @@ namespace RapChessGui
 			return def;
 		}
 
-		public string GetValue(string name)
+		public bool GetValue(string name, out string value)
 		{
 			int i = GetIndex(name, tokens.Length);
 			if (i < tokens.Length)
-				return tokens[i];
-			return "";
+			{
+				value = tokens[i];
+				return true;
+			}
+			value = "";
+			return false;
 		}
 
 		public string Last()
 		{
-			return tokens[tokens.Length - 1];
+			if (tokens.Length > 0)
+				return tokens[tokens.Length - 1];
+			return "";
 		}
 
 		public void SetMsg(string msg)
@@ -428,8 +434,8 @@ namespace RapChessGui
 			int r = 1;
 			for (int n = undoIndex - 4; n >= undoIndex - g_move50; n -= 2)
 				if (undoStack[n].hash == g_hash)
-					if(++r > 2)
-					return true;
+					if (++r > 2)
+						return true;
 			return false;
 		}
 

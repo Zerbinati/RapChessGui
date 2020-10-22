@@ -423,7 +423,7 @@ namespace RapChessGui
 				case "bestmove":
 					if ((GamerList.GamerCur() == g) && (Uci.tokens.Length > 1))
 					{
-						g.ponder = Uci.GetValue("ponder");
+						Uci.GetValue("ponder",out g.ponder);
 						umo = (Uci.tokens[1]).ToLower();
 						if (g.isBookStarted && !g.isBookFinished)
 						{
@@ -438,14 +438,12 @@ namespace RapChessGui
 					break;
 				case "info":
 					ulong nps = 0;
-					string s = Uci.GetValue("cp");
-					if (s != "")
+					if (Uci.GetValue("cp",out string s))
 					{
 						g.score = s;
 						g.iScore = Int32.Parse(s);
 					}
-					s = Uci.GetValue("mate");
-					if (s != "")
+					if (Uci.GetValue("mate",out s))
 					{
 						int ip = Int32.Parse(s);
 						if (ip > 0)
@@ -459,14 +457,11 @@ namespace RapChessGui
 							g.iScore = -0xffff + ip;
 						}
 					}
-					s = Uci.GetValue("depth");
-					if (s != "")
+					if (Uci.GetValue("depth",out s))
 						g.depth = s;
-					s = Uci.GetValue("seldepth");
-					if (s != "")
+					if (Uci.GetValue("seldepth",out s))
 						g.seldepth = s;
-					s = Uci.GetValue("nodes");
-					if (s != "")
+					if (Uci.GetValue("nodes",out s))
 					{
 						try
 						{
@@ -477,8 +472,7 @@ namespace RapChessGui
 							g.nodes = 0;
 						}
 					}
-					s = Uci.GetValue("nps");
-					if (s != "")
+					if (Uci.GetValue("nps",out s))
 					{
 						try
 						{
@@ -490,8 +484,7 @@ namespace RapChessGui
 						}
 						nps = g.nps;
 					}
-					s = Uci.GetValue("time");
-					if (s != "")
+					if (Uci.GetValue("time",out s))
 					{
 						try
 						{
@@ -545,7 +538,7 @@ namespace RapChessGui
 					SetGameState(CGameState.resignation, g);
 					break;
 				case "move":
-					g.ponder = Uci.GetValue("ponder");
+					 Uci.GetValue("ponder",out g.ponder);
 					GetMoveXb(Uci.tokens[1], out umo);
 					MakeMove(umo);
 					break;
