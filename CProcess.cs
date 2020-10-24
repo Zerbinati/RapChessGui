@@ -28,8 +28,14 @@ namespace RapChessGui
 				case "Idle":
 					process.PriorityClass = ProcessPriorityClass.Idle;
 					break;
+				case "Below normal":
+					process.PriorityClass = ProcessPriorityClass.BelowNormal;
+					break;
 				case "Normal":
 					process.PriorityClass = ProcessPriorityClass.Normal;
+					break;
+				case "Above normal":
+					process.PriorityClass = ProcessPriorityClass.AboveNormal;
 					break;
 				case "High":
 					process.PriorityClass = ProcessPriorityClass.High;
@@ -42,20 +48,21 @@ namespace RapChessGui
 		{
 			Terminate();
 			string path = AppDomain.CurrentDomain.BaseDirectory + program;
-			if (!File.Exists(path))
-				throw new ArgumentException("Missing file ", program);
-			process = new Process();
-			process.StartInfo.FileName = path;
-			process.StartInfo.Arguments = param;
-			process.StartInfo.WorkingDirectory = Path.GetDirectoryName(path);
-			process.StartInfo.UseShellExecute = false;
-			process.StartInfo.CreateNoWindow = true;
-			process.StartInfo.RedirectStandardInput = true;
-			process.StartInfo.RedirectStandardOutput = true;
-			process.OutputDataReceived += ProEvent;
-			process.Start();
-			process.BeginOutputReadLine();
-			SetPriority(FormOptions.priority);
+			if (File.Exists(path))
+			{
+				process = new Process();
+				process.StartInfo.FileName = path;
+				process.StartInfo.Arguments = param;
+				process.StartInfo.WorkingDirectory = Path.GetDirectoryName(path);
+				process.StartInfo.UseShellExecute = false;
+				process.StartInfo.CreateNoWindow = true;
+				process.StartInfo.RedirectStandardInput = true;
+				process.StartInfo.RedirectStandardOutput = true;
+				process.OutputDataReceived += ProEvent;
+				process.Start();
+				process.BeginOutputReadLine();
+				SetPriority(FormOptions.priority);
+			}
 		}
 
 		public void Terminate()

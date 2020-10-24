@@ -35,7 +35,7 @@ namespace RapChessGui
 		readonly FormLogProgram formLogProgram = new FormLogProgram();
 		readonly FormLogGames formLogGames = new FormLogGames();
 		readonly FormLogEngines formLogEngines = new FormLogEngines();
-		readonly FormLogLast formLogLast = new FormLogLast();
+		readonly FormLastGame formLastGame = new FormLastGame();
 		readonly FormHisP formHisP = new FormHisP();
 		readonly FormHisE formHisE = new FormHisE();
 
@@ -44,6 +44,9 @@ namespace RapChessGui
 		public FormChess()
 		{
 			This = this;
+			CreateDir("Books");
+			CreateDir("Engines");
+			CreateDir("History");
 			int fontLength = Properties.Resources.ChessPiece.Length;
 			byte[] fontData = Properties.Resources.ChessPiece;
 			IntPtr data = Marshal.AllocCoTaskMem(fontLength);
@@ -79,6 +82,12 @@ namespace RapChessGui
 			BoardPrepare();
 			cbMainMode.SelectedIndex = 0;
 			GameStart();
+		}
+
+		void CreateDir(string dir)
+		{
+			if (!Directory.Exists(dir))
+				Directory.CreateDirectory(dir);
 		}
 
 		void IniCreate()
@@ -322,6 +331,7 @@ namespace RapChessGui
 					ShowInfo($"{pl.name} time out", Color.Red);
 					break;
 				case CGameState.error:
+					labError.Show();
 					ShowInfo($"{pl.name} make wrong move", Color.Red);
 					break;
 			}
@@ -603,7 +613,8 @@ namespace RapChessGui
 
 		void CreateRtf()
 		{
-			string fn = $"{cbMainMode.Text}.rtf";
+			string fn = CData.gameState == CGameState.error ? "Error" : cbMainMode.Text;
+			fn = $"History\\{fn}.rtf";
 			try
 			{
 				FormLogEngines.This.richTextBox1.SaveFile(fn);
@@ -635,7 +646,9 @@ namespace RapChessGui
 			foreach (String s in list)
 				formLogGames.textBox1.Text += $"{s}\r\n";
 			formLogGames.textBox1.Select(0, 0);
-			File.WriteAllText($"{cbMainMode.Text}.pgn", formLogGames.textBox1.Text);
+			string fn = CData.gameState == CGameState.error ? "Error" : cbMainMode.Text;
+			fn = $"History\\{fn}.pgn";
+			File.WriteAllText(fn, formLogGames.textBox1.Text);
 		}
 
 		public void AddBook(string emo)
@@ -856,6 +869,15 @@ namespace RapChessGui
 				chartTournamentP.Series[2].Points.Clear();
 		}
 
+		void ShowFormLastGame(string name)
+		{
+			FormLastGame.lastName = name;
+			if (formLastGame.Visible)
+				formLastGame.Focus();
+			else
+				formLastGame.Show(this);
+		}
+
 		void Reset()
 		{
 			BackColor = CBoard.color;
@@ -945,7 +967,6 @@ namespace RapChessGui
 				FormLogEngines.AppendText($"Wrong move {emo}\n", Color.Red);
 				FormLogEngines.AppendText($"{Chess.GetFen()}\n", Color.Black);
 				FormLogEngines.AppendText($"{string.Join(" ", eMoves)}\n", Color.Black);
-				FormLogEngines.This.richTextBox1.SaveFile("Error.rtf");
 				CRapLog.Add($"Wrong move {cp.engine} {emo} {Chess.GetFen()}");
 				SetGameState(CGameState.error);
 				return false;
@@ -2031,10 +2052,28 @@ namespace RapChessGui
 
 		private void lastGameToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			if (formLogLast.Visible)
-				formLogLast.Focus();
-			else
-				formLogLast.Show(this);
+			ShowFormLastGame("game");
+		}
+
+		private void lastMatchToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			ShowFormLastGame("match");
+		}
+
+		private void lasstTournamentenginesToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			ShowFormLastGame("tournament-engines");
+		}
+
+		private void lastTournamentplayersToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			ShowFormLastGame("tournament-players");
+		}
+
+		private void lastErrorToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			labError.Hide();
+			ShowFormLastGame("error");
 		}
 
 		private void booksToolStripMenuItem1_Click(object sender, EventArgs e)
@@ -2053,6 +2092,11 @@ namespace RapChessGui
 		{
 			FormEngine.This.ShowDialog(this);
 			Reset();
+		}
+
+		private void labError_Click(object sender, EventArgs e)
+		{
+			labError.Hide();
 		}
 
 		#endregion
@@ -2538,6 +2582,8 @@ namespace RapChessGui
 			LoadFen(Chess.GetFen());
 		}
 
+
 		#endregion
+
 	}
 }

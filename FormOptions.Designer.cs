@@ -487,7 +487,9 @@
 			this.cbPriority.FormattingEnabled = true;
 			this.cbPriority.Items.AddRange(new object[] {
             "Idle",
+            "Below normal",
             "Normal",
+            "Above normal",
             "High"});
 			this.cbPriority.Location = new System.Drawing.Point(3, 16);
 			this.cbPriority.Name = "cbPriority";

@@ -1,6 +1,6 @@
 ﻿namespace RapChessGui
 {
-	partial class FormLogLast
+	partial class FormLastGame
 	{
 		/// <summary>
 		/// Required designer variable.
@@ -61,7 +61,7 @@
 			this.saveToolStripMenuItem.Text = "Save";
 			this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
 			// 
-			// FormLogLast
+			// FormLastGame
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -70,11 +70,10 @@
 			this.Controls.Add(this.menuStrip1);
 			this.MainMenuStrip = this.menuStrip1;
 			this.MinimizeBox = false;
-			this.Name = "FormLogLast";
+			this.Name = "FormLastGame";
 			this.ShowIcon = false;
 			this.ShowInTaskbar = false;
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-			this.Text = "Last game";
 			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormLogLast_FormClosing);
 			this.VisibleChanged += new System.EventHandler(this.FormLogLast_VisibleChanged);
 			this.menuStrip1.ResumeLayout(false);

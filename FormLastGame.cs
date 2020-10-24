@@ -4,12 +4,13 @@ using System.Windows.Forms;
 
 namespace RapChessGui
 {
-	public partial class FormLogLast : Form
+	public partial class FormLastGame : Form
 	{
 
-		public static FormLogLast This;
+		public static FormLastGame This;
+		public static string lastName = "";
 
-		public FormLogLast()
+		public FormLastGame()
 		{
 			This = this;
 			InitializeComponent();
@@ -28,9 +29,9 @@ namespace RapChessGui
 		{
 			if (Visible == true)
 			{
-				string name = FormChess.This.cbMainMode.Text;
-				string path = $"{name}.rtf";
-				Text = $"Last {name}";
+				Text = $"Last {lastName}";
+				string path = $"History\\{lastName}.rtf";
+				Text = $"Last {lastName}";
 				if (File.Exists(path))
 					richTextBox1.LoadFile(path);
 				else
@@ -45,7 +46,7 @@ namespace RapChessGui
 
 		private void saveToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			string fn = $"{FormChess.This.cbMainMode.Text} {DateTime.Now.ToString("yyyy-MM-dd hh-mm-ss")}.rtf";
+			string fn = $"History\\{lastName} {DateTime.Now.ToString("yyyy-MM-dd hh-mm-ss")}.rtf";
 			richTextBox1.SaveFile(fn);
 			MessageBox.Show($"File {fn} has been saved");
 		}

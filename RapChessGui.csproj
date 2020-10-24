@@ -103,17 +103,17 @@
     <Compile Include="FormHisP.Designer.cs">
       <DependentUpon>FormHisP.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormLastGame.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormLastGame.Designer.cs">
+      <DependentUpon>FormLastGame.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormLogEngines.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="FormLogEngines.Designer.cs">
       <DependentUpon>FormLogEngines.cs</DependentUpon>
-    </Compile>
-    <Compile Include="FormLogLast.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FormLogLast.Designer.cs">
-      <DependentUpon>FormLogLast.cs</DependentUpon>
     </Compile>
     <Compile Include="FormLogProgram.cs">
       <SubType>Form</SubType>
@@ -159,11 +159,11 @@
     <EmbeddedResource Include="FormHisP.resx">
       <DependentUpon>FormHisP.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FormLastGame.resx">
+      <DependentUpon>FormLastGame.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormLogEngines.resx">
       <DependentUpon>FormLogEngines.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="FormLogLast.resx">
-      <DependentUpon>FormLogLast.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormLogProgram.resx">
       <DependentUpon>FormLogProgram.cs</DependentUpon>
