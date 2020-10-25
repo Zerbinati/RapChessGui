@@ -149,7 +149,7 @@ namespace RapChessGui
 		private void cbMode_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			modeValue.mode = cbMode.Text;
-			nudValue.Increment = modeValue.GetIncrement();
+			nudValue.Increment = modeValue.GetValueInc();
 			nudValue.Value = modeValue.GetValue();
 			toolTip1.SetToolTip(nudValue, modeValue.GetTip());
 		}

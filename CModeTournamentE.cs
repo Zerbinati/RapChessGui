@@ -37,7 +37,7 @@ namespace RapChessGui
 		{
 			engineList.list.Clear();
 			foreach (CEngine e in FormChess.engineList.list)
-				if (e.tournament)
+				if (e.tournament && ((modeValue.mode != "Standard")||e.modeStandard))
 					engineList.Add(e);
 		}
 

@@ -29,6 +29,7 @@
 		private void InitializeComponent()
 		{
 			this.panel1 = new System.Windows.Forms.Panel();
+			this.butClearHistory = new System.Windows.Forms.Button();
 			this.bDelete = new System.Windows.Forms.Button();
 			this.bCreate = new System.Windows.Forms.Button();
 			this.bUpdate = new System.Windows.Forms.Button();
@@ -48,7 +49,7 @@
 			this.tbEngineName = new System.Windows.Forms.TextBox();
 			this.groupBox2 = new System.Windows.Forms.GroupBox();
 			this.listBox1 = new System.Windows.Forms.ListBox();
-			this.butClearHistory = new System.Windows.Forms.Button();
+			this.cbModeStandard = new System.Windows.Forms.CheckBox();
 			this.panel1.SuspendLayout();
 			this.gbTournament.SuspendLayout();
 			this.gbElo.SuspendLayout();
@@ -80,10 +81,21 @@
 			this.panel1.Size = new System.Drawing.Size(311, 591);
 			this.panel1.TabIndex = 0;
 			// 
+			// butClearHistory
+			// 
+			this.butClearHistory.Dock = System.Windows.Forms.DockStyle.Top;
+			this.butClearHistory.Location = new System.Drawing.Point(0, 542);
+			this.butClearHistory.Name = "butClearHistory";
+			this.butClearHistory.Size = new System.Drawing.Size(311, 33);
+			this.butClearHistory.TabIndex = 32;
+			this.butClearHistory.Text = "Clear tournament history";
+			this.butClearHistory.UseVisualStyleBackColor = true;
+			this.butClearHistory.Click += new System.EventHandler(this.butClearHistory_Click);
+			// 
 			// bDelete
 			// 
 			this.bDelete.Dock = System.Windows.Forms.DockStyle.Top;
-			this.bDelete.Location = new System.Drawing.Point(0, 488);
+			this.bDelete.Location = new System.Drawing.Point(0, 509);
 			this.bDelete.Name = "bDelete";
 			this.bDelete.Size = new System.Drawing.Size(311, 33);
 			this.bDelete.TabIndex = 27;
@@ -94,7 +106,7 @@
 			// bCreate
 			// 
 			this.bCreate.Dock = System.Windows.Forms.DockStyle.Top;
-			this.bCreate.Location = new System.Drawing.Point(0, 455);
+			this.bCreate.Location = new System.Drawing.Point(0, 476);
 			this.bCreate.Name = "bCreate";
 			this.bCreate.Size = new System.Drawing.Size(311, 33);
 			this.bCreate.TabIndex = 26;
@@ -105,7 +117,7 @@
 			// bUpdate
 			// 
 			this.bUpdate.Dock = System.Windows.Forms.DockStyle.Top;
-			this.bUpdate.Location = new System.Drawing.Point(0, 428);
+			this.bUpdate.Location = new System.Drawing.Point(0, 449);
 			this.bUpdate.Name = "bUpdate";
 			this.bUpdate.Size = new System.Drawing.Size(311, 27);
 			this.bUpdate.TabIndex = 25;
@@ -115,11 +127,12 @@
 			// 
 			// gbTournament
 			// 
+			this.gbTournament.Controls.Add(this.cbModeStandard);
 			this.gbTournament.Controls.Add(this.cbTournament);
 			this.gbTournament.Dock = System.Windows.Forms.DockStyle.Top;
 			this.gbTournament.Location = new System.Drawing.Point(0, 383);
 			this.gbTournament.Name = "gbTournament";
-			this.gbTournament.Size = new System.Drawing.Size(311, 45);
+			this.gbTournament.Size = new System.Drawing.Size(311, 66);
 			this.gbTournament.TabIndex = 31;
 			this.gbTournament.TabStop = false;
 			this.gbTournament.Text = "Options";
@@ -295,16 +308,16 @@
 			this.listBox1.TabIndex = 1;
 			this.listBox1.SelectedValueChanged += new System.EventHandler(this.ListBox1_SelectedValueChanged);
 			// 
-			// butClearHistory
+			// cbModeStandard
 			// 
-			this.butClearHistory.Dock = System.Windows.Forms.DockStyle.Top;
-			this.butClearHistory.Location = new System.Drawing.Point(0, 521);
-			this.butClearHistory.Name = "butClearHistory";
-			this.butClearHistory.Size = new System.Drawing.Size(311, 33);
-			this.butClearHistory.TabIndex = 32;
-			this.butClearHistory.Text = "Clear tournament history";
-			this.butClearHistory.UseVisualStyleBackColor = true;
-			this.butClearHistory.Click += new System.EventHandler(this.butClearHistory_Click);
+			this.cbModeStandard.AutoSize = true;
+			this.cbModeStandard.Dock = System.Windows.Forms.DockStyle.Top;
+			this.cbModeStandard.Location = new System.Drawing.Point(3, 33);
+			this.cbModeStandard.Name = "cbModeStandard";
+			this.cbModeStandard.Size = new System.Drawing.Size(305, 17);
+			this.cbModeStandard.TabIndex = 1;
+			this.cbModeStandard.Text = "Mode standard";
+			this.cbModeStandard.UseVisualStyleBackColor = true;
 			// 
 			// FormEngine
 			// 
@@ -360,5 +373,6 @@
 		private System.Windows.Forms.GroupBox gbTournament;
 		private System.Windows.Forms.CheckBox cbTournament;
 		private System.Windows.Forms.Button butClearHistory;
+		private System.Windows.Forms.CheckBox cbModeStandard;
 	}
 }

@@ -37,8 +37,7 @@ namespace RapChessGui
 			{
 				chart1.Series.Clear();
 				FormChess.playerList.Sort();
-				foreach (CPlayer player in FormChess.playerList.list)
-					if (player.tournament)
+				foreach (CPlayer player in CModeTournamentP.playerList.list)
 					{
 						string pn = player.name;
 						chart1.Series.Add(pn);

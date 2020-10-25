@@ -17,19 +17,29 @@ namespace RapChessGui
 		/// </summary>
 		public bool isBookStarted = false;
 		/// <summary>
-		/// The book is already finished.
+		/// Is no move int the open book.
 		/// </summary>
-		public bool isBookFinished = false;
+		public bool isBookFail = false;
 		/// <summary>
 		/// The engine is already prepared.
 		/// </summary>
-		public bool isPrepared = false;
+		public bool isEngPrepared = false;
 		/// <summary>
 		/// The engine is already running.
 		/// </summary>
-		public bool isRunning = false;
-		public bool white = true;
-		public int usedBook;
+		public bool isEngRunning = false;
+		/// <summary>
+		/// The gamer is white.
+		/// </summary>
+		public bool isWhite = true;
+		/// <summary>
+		/// Count moves maked by book.
+		/// </summary>
+		public int countMovesBook;
+		/// <summary>
+		/// Count moves makes by engine or book.
+		/// </summary>
+		public int countMoves;
 		public int iScore;
 		public ulong infMs;
 		public ulong nodes;
@@ -57,7 +67,7 @@ namespace RapChessGui
 
 		public void EngineReset()
 		{
-			isPrepared = false;
+			isEngPrepared = false;
 			enginePro.SetProgram("Engines\\" + engine.file, engine.parameters);
 		}
 
@@ -82,13 +92,14 @@ namespace RapChessGui
 		public void Init(bool w)
 		{
 			timeOut = false;
-			white = w;
+			isWhite = w;
 			isBookStarted = false;
-			isBookFinished = false;
-			isPrepared = false;
-			isRunning = false;
+			isBookFail = false;
+			isEngPrepared = false;
+			isEngRunning = false;
 			infMs = 0;
-			usedBook = 0;
+			countMovesBook = 0;
+			countMoves = 0;
 			nodes = 0;
 			nps = 0;
 			score = "0";
@@ -117,11 +128,11 @@ namespace RapChessGui
 		}
 
 		/// <summary>
-		/// The engine starts if needed.
+		/// Start or prepare engine or book.
 		/// </summary>
 		public void TryStart()
 		{
-			if ((book != null) && (!isBookFinished))
+			if ((book != null) && (!isBookFail))
 			{
 				if (!isBookStarted)
 				{
@@ -131,10 +142,10 @@ namespace RapChessGui
 				}
 			}
 			else if (engine != null)
-				if (!isPrepared)
-					Prepare();
-				else if (readyok && !isRunning)
-					CompMakeMove();
+				if (!isEngPrepared)
+					EngPrepare();
+				else if (readyok && !isEngRunning)
+					EngMakeMove();
 		}
 
 		public void TimerStart()
@@ -149,7 +160,10 @@ namespace RapChessGui
 				wbok = false;
 		}
 
-		void Prepare()
+		/// <summary>
+		/// Prepare engine.
+		/// </summary>
+		void EngPrepare()
 		{
 			lastMove = "";
 			mode = player.modeValue.GetUci();
@@ -181,7 +195,7 @@ namespace RapChessGui
 						break;
 				}
 			}
-			isPrepared = true;
+			isEngPrepared = true;
 		}
 
 		void UciGo()
@@ -214,7 +228,10 @@ namespace RapChessGui
 			SendMessage(CHistory.LastUmo());
 		}
 
-		public void CompMakeMove()
+		/// <summary>
+		/// Prepare or start engine.
+		/// </summary>
+		public void EngMakeMove()
 		{
 			if (engine.protocol == "Uci")
 				UciGo();
@@ -254,14 +271,14 @@ namespace RapChessGui
 				}
 				TimerStart();
 			}
-			isRunning = true;
+			isEngRunning = true;
 		}
 
 		public void SendMessageBook(string msg)
 		{
 			if (bookPro.process != null)
 			{
-				Color col = white ? Color.DimGray : Color.Black;
+				Color col = isWhite ? Color.DimGray : Color.Black;
 				FormLogEngines.AppendText($"{FormChess.GetTimeElapsed()} ", Color.Green);
 				FormLogEngines.AppendText($"book {player.name}", col);
 				FormLogEngines.AppendText($" < {msg}\n", Color.Brown);
@@ -273,7 +290,7 @@ namespace RapChessGui
 		{
 			if (enginePro.process != null)
 			{
-				Color col = white ? Color.DimGray : Color.Black;
+				Color col = isWhite ? Color.DimGray : Color.Black;
 				FormLogEngines.AppendText($"{FormChess.GetTimeElapsed()} ", Color.Green);
 				FormLogEngines.AppendText($"{player.name}", col);
 				FormLogEngines.AppendText($" < {msg}\n", Color.Brown);
@@ -346,9 +363,8 @@ namespace RapChessGui
 				double t = v - ms;
 				if ((t < -FormOptions.marginStandard) && (FormOptions.marginStandard >= 0) && timer.IsRunning)
 					return SetTimeOut();
-				if (t < 0)
-					t = 0;
-				dt = dt.AddMilliseconds(t);
+				if (t > 0)
+					dt = dt.AddMilliseconds(t);
 				if (t < 10000)
 					return dt.ToString("ss.ff");
 			}
@@ -368,9 +384,11 @@ namespace RapChessGui
 						return SetTimeOut();
 					timeOut = true;
 				}
-				dt = dt.AddMilliseconds(ms);
+				if (ms > 0)
+					dt = dt.AddMilliseconds(ms);
 			}
 			else
+				if (ms > 0)
 				dt = dt.AddMilliseconds(ms);
 			return dt.ToString("HH:mm:ss");
 		}
@@ -433,8 +451,8 @@ namespace RapChessGui
 			CGamer cg = GamerCur();
 			cg.timer.Stop();
 			cg.isBookStarted = false;
-			cg.isBookFinished = false;
-			cg.isRunning = false;
+			cg.isBookFail = false;
+			cg.isEngRunning = false;
 			curIndex ^= 1;
 			cg = GamerCur();
 			if (cg.player.IsHuman())
@@ -491,6 +509,16 @@ namespace RapChessGui
 			return null;
 		}
 
+		public CGamer GamerWhite()
+		{
+			return gamer[0];
+		}
+
+		public CGamer GamerBlack()
+		{
+			return gamer[1];
+		}
+
 		public CGamer GamerWinner()
 		{
 			return gamer[(CChess.g_moveNumber & 1) ^ 1];
@@ -501,7 +529,7 @@ namespace RapChessGui
 			return gamer[CChess.g_moveNumber & 1];
 		}
 
-		public CGamer PlayerHum()
+		public CGamer GamerHuman()
 		{
 			if (gamer[0].player.IsHuman())
 				return gamer[0];

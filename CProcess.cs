@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Diagnostics;
+using System.Windows.Forms;
 
 namespace RapChessGui
 {
@@ -62,7 +63,8 @@ namespace RapChessGui
 				process.Start();
 				process.BeginOutputReadLine();
 				SetPriority(FormOptions.priority);
-			}
+			}else
+				MessageBox.Show($"Missing engine {program}");
 		}
 
 		public void Terminate()

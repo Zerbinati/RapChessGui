@@ -6,7 +6,7 @@ using System.Windows.Forms.DataVisualization.Charting;
 
 namespace RapChessGui
 {
-	public enum CMode { game, match,tourE, tourP, training, edit }
+	public enum CGameMode { game, match,tourE, tourP, training, edit }
 
 	public static class CPromotion
 	{
@@ -31,7 +31,7 @@ namespace RapChessGui
 		public static bool reset = true;
 		public static bool rotateBoard = false;
 		public static CGameState gameState = CGameState.normal;
-		public static CMode gameMode = CMode.game;
+		public static CGameMode gameMode = CGameMode.game;
 		public static int back = 0;
 		public static double fps = 0;
 		public static string fen = CChess.defFen;
@@ -117,29 +117,29 @@ namespace RapChessGui
 	{
 		public string mode = "Time";
 		public int value = 10;
-		public int increment = 100;
+		public int increment = 0;
 
 		public void SetValue(int v)
 		{
-			int increment = GetIncrement();
+			int increment = GetValueInc();
 			if (increment > 0)
 				value = v / increment;
 		}
 
 		public int GetValue()
 		{
-			return value * GetIncrement();
+			return value * GetValueInc();
 		}
 
 		public int GetUciValue()
 		{
-			int result = value * GetIncrement();
+			int result = value * GetValueInc();
 			if (mode == "Standard")
 				result *= 1000;
 			return result;
 		}
 
-		public int GetIncrement()
+		public int GetValueInc()
 		{
 			switch (mode)
 			{

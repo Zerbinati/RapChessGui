@@ -300,7 +300,7 @@ namespace RapChessGui
 					rec.Height = field;
 					if ((i == CDrag.lastSou) || (i == CDrag.lastDes) || (list[i].color != Color.Empty))
 						g.FillRectangle(brushYellow, rec);
-					else if (list[i].attacked && (CData.gameMode != CMode.edit))
+					else if (list[i].attacked && (CData.gameMode != CGameMode.edit))
 						g.FillRectangle(brushRed, rec);
 					CPiece piece = list[i].piece;
 					if (piece == null)

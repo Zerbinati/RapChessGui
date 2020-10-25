@@ -9,7 +9,7 @@ namespace RapChessGui
 		public int pid = 0;
 		public string msg = "";
 
-		public CMessage(int p,string m)
+		public CMessage(int p, string m)
 		{
 			pid = p;
 			msg = m;
@@ -57,35 +57,43 @@ namespace RapChessGui
 		}
 
 
-		public static void MessageAdd(int pid,string msg)
+		public static void MessageAdd(int pid, string msg)
 		{
-			MsgSet(new CMessage(pid,msg));
+			MsgSet(new CMessage(pid, msg));
 		}
 
-		public static bool MessageGet(out CMessage message,bool addNew)
+		public static bool MessageGet(out CMessage message)
 		{
 			message = null;
-			if (addNew || (buffer.Count == 0))
+			if (buffer.Count == 0)
 			{
 				List<CMessage> last = MsgGet();
+				buffer.AddRange(last);
 				foreach (CMessage m in last)
 				{
-					CGamer gamer = CGamerList.This.GetGamerPid(m.pid,out string protocol);
+					CGamer gamer = CGamerList.This.GetGamerPid(m.pid, out string protocol);
 					if (gamer != null)
 					{
-						if ((protocol == "Uci")||(protocol == "Book"))
+						if ((protocol == "Uci") || (protocol == "Book"))
 						{
 							if (m.msg.Contains("bestmove"))
+							{
 								gamer.timer.Stop();
+								buffer.Clear();
+								buffer.Add(m);
+							}
 						}
 						else
 							if (m.msg.Contains("move"))
+						{
 							gamer.timer.Stop();
+							buffer.Clear();
+							buffer.Add(m);
+						}
 					}
 				}
-				buffer.AddRange(last);
 			}
-			if(buffer.Count >0)
+			if (buffer.Count > 0)
 			{
 				message = buffer[0];
 				buffer.RemoveAt(0);

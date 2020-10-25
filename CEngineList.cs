@@ -7,6 +7,7 @@ namespace RapChessGui
 	public class CEngine
 	{
 		public bool tournament = true;
+		public bool modeStandard = true;
 		public int distance = 0;
 		public int position = 0;
 		public double eloOld = 1000;
@@ -26,6 +27,7 @@ namespace RapChessGui
 		public void LoadFromIni()
 		{
 			tournament = CRapIni.This.ReadBool($"engine>{name}>tournament", tournament);
+			modeStandard = CRapIni.This.ReadBool($"engine>{name}>modeStandard", modeStandard);
 			file = CRapIni.This.Read($"engine>{name}>file", "Human");
 			protocol = CRapIni.This.Read($"engine>{name}>protocol", "Uci");
 			parameters = CRapIni.This.Read($"engine>{name}>parameters", "");
@@ -43,6 +45,7 @@ namespace RapChessGui
 		public void SaveToIni()
 		{
 			CRapIni.This.Write($"engine>{name}>tournament", tournament);
+			CRapIni.This.Write($"engine>{name}>modeStandard", modeStandard);
 			CRapIni.This.Write($"engine>{name}>file", file);
 			CRapIni.This.Write($"engine>{name}>protocol", protocol);
 			CRapIni.This.Write($"engine>{name}>parameters", parameters);

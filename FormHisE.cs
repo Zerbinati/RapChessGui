@@ -30,8 +30,7 @@ namespace RapChessGui
 			{
 				chart1.Series.Clear();
 				FormChess.engineList.Sort();
-				foreach (CEngine engine in FormChess.engineList.list)
-					if (engine.tournament)
+				foreach (CEngine engine in CModeTournamentE.engineList.list)
 					{
 						string en = engine.name;
 						chart1.Series.Add(en);
