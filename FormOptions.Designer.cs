@@ -59,7 +59,7 @@
 			this.rbUci = new System.Windows.Forms.RadioButton();
 			this.rbSan = new System.Windows.Forms.RadioButton();
 			this.groupBox3 = new System.Windows.Forms.GroupBox();
-			this.cbPriority = new System.Windows.Forms.ComboBox();
+			this.combPriority = new System.Windows.Forms.ComboBox();
 			this.gbInterface.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.nudSpeed)).BeginInit();
 			this.gbGame.SuspendLayout();
@@ -470,7 +470,7 @@
 			// 
 			// groupBox3
 			// 
-			this.groupBox3.Controls.Add(this.cbPriority);
+			this.groupBox3.Controls.Add(this.combPriority);
 			this.groupBox3.Dock = System.Windows.Forms.DockStyle.Top;
 			this.groupBox3.Location = new System.Drawing.Point(0, 403);
 			this.groupBox3.Name = "groupBox3";
@@ -479,22 +479,22 @@
 			this.groupBox3.TabStop = false;
 			this.groupBox3.Text = "Priority";
 			// 
-			// cbPriority
+			// combPriority
 			// 
-			this.cbPriority.Dock = System.Windows.Forms.DockStyle.Top;
-			this.cbPriority.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.cbPriority.FormattingEnabled = true;
-			this.cbPriority.Items.AddRange(new object[] {
+			this.combPriority.Dock = System.Windows.Forms.DockStyle.Top;
+			this.combPriority.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.combPriority.FormattingEnabled = true;
+			this.combPriority.Items.AddRange(new object[] {
             "Idle",
             "Below normal",
             "Normal",
             "Above normal",
             "High"});
-			this.cbPriority.Location = new System.Drawing.Point(3, 16);
-			this.cbPriority.Name = "cbPriority";
-			this.cbPriority.Size = new System.Drawing.Size(280, 21);
-			this.cbPriority.TabIndex = 49;
-			this.cbPriority.SelectedIndexChanged += new System.EventHandler(this.cbPriority_SelectedIndexChanged);
+			this.combPriority.Location = new System.Drawing.Point(3, 16);
+			this.combPriority.Name = "combPriority";
+			this.combPriority.Size = new System.Drawing.Size(280, 21);
+			this.combPriority.TabIndex = 49;
+			this.combPriority.SelectedIndexChanged += new System.EventHandler(this.cbPriority_SelectedIndexChanged);
 			// 
 			// FormOptions
 			// 
@@ -569,6 +569,6 @@
 		public System.Windows.Forms.RadioButton rbSan;
 		public System.Windows.Forms.CheckBox cbRotateBoard;
 		private System.Windows.Forms.GroupBox groupBox3;
-		private System.Windows.Forms.ComboBox cbPriority;
+		private System.Windows.Forms.ComboBox combPriority;
 	}
 }

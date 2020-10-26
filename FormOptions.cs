@@ -36,7 +36,7 @@ namespace RapChessGui
 			combModeStandard.SelectedIndex = CRapIni.This.ReadInt("options>margin>standard", 1);
 			combModeTime.SelectedIndex = CRapIni.This.ReadInt("options>margin>time", 4);
 			priority = CRapIni.This.Read("options>priority", "Normal");
-			cbPriority.SelectedIndex = cbPriority.FindStringExact(priority);
+			combPriority.SelectedIndex = combPriority.FindStringExact(priority);
 			CBoard.showArrow = cbArrow.Checked;
 			marginStandard = CbToMargin(combModeStandard.SelectedIndex);
 			marginTime = CbToMargin(combModeTime.SelectedIndex);		
@@ -98,6 +98,7 @@ namespace RapChessGui
 			rbSan.Checked = true;
 			combModeStandard.SelectedIndex = 1;
 			combModeTime.SelectedIndex = 2;
+			combPriority.SelectedIndex = 2;
 			nudTourE.Value = 10000;
 			nudTourP.Value = 10000;
 			FormChess.This.BackColor = CBoard.color = colorDialog1.Color = Color.FromArgb(64, 8, 8);
@@ -126,7 +127,7 @@ namespace RapChessGui
 
 		private void cbPriority_SelectedIndexChanged(object sender, EventArgs e)
 		{
-			priority = cbPriority.Text;
+			priority = combPriority.Text;
 		}
 	}
 }
