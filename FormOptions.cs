@@ -33,13 +33,13 @@ namespace RapChessGui
 			nudSpeed.Value = CRapIni.This.ReadInt("options>interface>speed", 200);
 			CBoard.color = ColorTranslator.FromHtml(CRapIni.This.Read("options>interface>color", "#400000"));
 			cbGameAutoElo.Checked = CRapIni.This.ReadBool("options>game>autoelo",cbGameAutoElo.Checked);
-			cbModeStandard.SelectedIndex = CRapIni.This.ReadInt("options>margin>standard", 1);
-			cbModeTime.SelectedIndex = CRapIni.This.ReadInt("options>margin>time", 4);
+			combModeStandard.SelectedIndex = CRapIni.This.ReadInt("options>margin>standard", 1);
+			combModeTime.SelectedIndex = CRapIni.This.ReadInt("options>margin>time", 4);
 			priority = CRapIni.This.Read("options>priority", "Normal");
 			cbPriority.SelectedIndex = cbPriority.FindStringExact(priority);
 			CBoard.showArrow = cbArrow.Checked;
-			marginStandard = CbToMargin(cbModeStandard.SelectedIndex);
-			marginTime = CbToMargin(cbModeTime.SelectedIndex);		
+			marginStandard = CbToMargin(combModeStandard.SelectedIndex);
+			marginTime = CbToMargin(combModeTime.SelectedIndex);		
 		}
 
 		public void SaveToIni()
@@ -53,12 +53,12 @@ namespace RapChessGui
 			CRapIni.This.Write("options>interface>speed", nudSpeed.Value);
 			CRapIni.This.Write("options>interface>color", ColorTranslator.ToHtml(CBoard.color));
 			CRapIni.This.Write("options>game>autoelo", cbGameAutoElo.Checked);
-			CRapIni.This.Write("options>margin>standard", cbModeStandard.SelectedIndex);
-			CRapIni.This.Write("options>margin>time", cbModeTime.SelectedIndex);
+			CRapIni.This.Write("options>margin>standard", combModeStandard.SelectedIndex);
+			CRapIni.This.Write("options>margin>time", combModeTime.SelectedIndex);
 			CRapIni.This.Write("options>priority", priority);
 			CBoard.showArrow = cbArrow.Checked;
-			marginStandard = CbToMargin(cbModeStandard.SelectedIndex);
-			marginTime = CbToMargin(cbModeTime.SelectedIndex);
+			marginStandard = CbToMargin(combModeStandard.SelectedIndex);
+			marginTime = CbToMargin(combModeTime.SelectedIndex);
 		}
 
 		int CbToMargin(int i)
@@ -82,24 +82,26 @@ namespace RapChessGui
 			colorDialog1.Color = CBoard.color;
 			if (colorDialog1.ShowDialog() != DialogResult.Cancel)
 			{
-				CBoard.color = colorDialog1.Color;
+				FormChess.This.BackColor = CBoard.color = colorDialog1.Color;
 				FormChess.This.BoardPrepare();
 			}
 		}
 
 		private void butDefault_Click(object sender, EventArgs e)
 		{
-			colorDialog1.Color = Color.FromArgb(64, 8, 8);
 			cbShowPonder.Checked = true;
+			cbAttack.Checked = true;
 			cbArrow.Checked = true;
 			cbTips.Checked = true;
-			CData.rotateBoard = cbRotateBoard.Checked = false;
-			CBoard.color = colorDialog1.Color;
-			CModeTournamentE.records = 10000;
-			CModeTournamentP.records = 10000;
-			CModeTournamentE.SaveToIni();
-			CModeTournamentP.SaveToIni();
-			SaveToIni();
+			cbGameAutoElo.Checked = true;
+			cbRotateBoard.Checked = false;
+			rbSan.Checked = true;
+			combModeStandard.SelectedIndex = 1;
+			combModeTime.SelectedIndex = 2;
+			nudTourE.Value = 10000;
+			nudTourP.Value = 10000;
+			FormChess.This.BackColor = CBoard.color = colorDialog1.Color = Color.FromArgb(64, 8, 8);
+			FormChess.This.BoardPrepare();
 		}
 
 		private void butOk_Click(object sender, EventArgs e)

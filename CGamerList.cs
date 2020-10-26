@@ -346,6 +346,14 @@ namespace RapChessGui
 			return "Time out";
 		}
 
+		public Color GetScoreColor() {
+			if (iScore > 300)
+				return Color.Green;
+			else if (iScore < -300)
+				return Color.Red;
+			return Color.Yellow;
+		}
+
 		public string GetTime()
 		{
 			double ms = timer.Elapsed.TotalMilliseconds;
