@@ -437,7 +437,7 @@ namespace RapChessGui
 				case "bestmove":
 					if ((GamerList.GamerCur() == g) && (Uci.tokens.Length > 1))
 					{
-						Uci.GetValue("ponder",out g.ponder);
+						Uci.GetValue("ponder", out g.ponder);
 						umo = (Uci.tokens[1]).ToLower();
 						if (g.isBookStarted && !g.isBookFail)
 						{
@@ -452,12 +452,12 @@ namespace RapChessGui
 					break;
 				case "info":
 					ulong nps = 0;
-					if (Uci.GetValue("cp",out string s))
+					if (Uci.GetValue("cp", out string s))
 					{
 						g.score = s;
 						g.iScore = Int32.Parse(s);
 					}
-					if (Uci.GetValue("mate",out s))
+					if (Uci.GetValue("mate", out s))
 					{
 						int ip = Int32.Parse(s);
 						if (ip > 0)
@@ -471,11 +471,11 @@ namespace RapChessGui
 							g.iScore = -0xffff + ip;
 						}
 					}
-					if (Uci.GetValue("depth",out s))
+					if (Uci.GetValue("depth", out s))
 						g.depth = s;
-					if (Uci.GetValue("seldepth",out s))
+					if (Uci.GetValue("seldepth", out s))
 						g.seldepth = s;
-					if (Uci.GetValue("nodes",out s))
+					if (Uci.GetValue("nodes", out s))
 					{
 						try
 						{
@@ -486,7 +486,7 @@ namespace RapChessGui
 							g.nodes = 0;
 						}
 					}
-					if (Uci.GetValue("nps",out s))
+					if (Uci.GetValue("nps", out s))
 					{
 						try
 						{
@@ -498,7 +498,7 @@ namespace RapChessGui
 						}
 						nps = g.nps;
 					}
-					if (Uci.GetValue("time",out s))
+					if (Uci.GetValue("time", out s))
 					{
 						try
 						{
@@ -552,7 +552,7 @@ namespace RapChessGui
 					SetGameState(CGameState.resignation, g);
 					break;
 				case "move":
-					 Uci.GetValue("ponder",out g.ponder);
+					Uci.GetValue("ponder", out g.ponder);
 					GetMoveXb(Uci.tokens[1], out umo);
 					MakeMove(umo);
 					break;
@@ -948,7 +948,6 @@ namespace RapChessGui
 			emo = emo.ToLower();
 			double m = GamerList.curIndex == 0 ? 0.01 : -0.01;
 			chartMain.Series[GamerList.curIndex].Points.Add(cg.iScore * m);
-			cg.iScore = 0;
 			if (IsGameRanked() && CModeGame.ranked && (cg.engine == null) && ((CChess.g_moveNumber >> 1) == 4))
 			{
 				cg.player.eloOld = Convert.ToDouble(cg.player.elo);
@@ -1137,6 +1136,26 @@ namespace RapChessGui
 		{
 			if (!FormOptions.This.cbShowPonder.Checked)
 				g.ponder = "";
+			if (g.isWhite)
+			{
+				labScoreW.Text = $"Score {g.score}";
+				labNodesW.Text = $"Nodes {g.nodes.ToString("N0")}";
+				labNpsW.Text = $"Nps {g.nps.ToString("N0")}";
+				labPonderW.Text = $"Ponder {g.ponder}";
+				labBookCW.Text = $"Book {g.countMovesBook}";
+				labDepthW.Text = $"Depth {g.GetDepth()}";
+				labColW.BackColor = g.GetScoreColor();
+			}
+			else
+			{
+				labScoreB.Text = $"Score {g.score}";
+				labNodesB.Text = $"Nodes {g.nodes.ToString("N0")}";
+				labNpsB.Text = $"Nps {g.nps.ToString("N0")}";
+				labPonderB.Text = $"Ponder {g.ponder}";
+				labBookCB.Text = $"Book {g.countMovesBook}";
+				labDepthB.Text = $"Depth {g.GetDepth()}";
+				labColB.BackColor = g.GetScoreColor();
+			}
 			if (boardRotate ^ g.isWhite)
 			{
 				if (CData.gameState == CGameState.normal)
@@ -1148,12 +1167,6 @@ namespace RapChessGui
 						labTimeD.BackColor = Color.LightGray;
 				}
 				labEloD.Text = g.GetElo();
-				labScoreD.Text = $"Score {g.score}";
-				labNodesD.Text = $"Nodes {g.nodes.ToString("N0")}";
-				labNpsD.Text = $"Nps {g.nps.ToString("N0")}";
-				labPonderD.Text = $"Ponder {g.ponder}";
-				labBookD.Text = $"Book {g.countMovesBook}";
-				labDepthD.Text = $"Depth {g.GetDepth()}";
 			}
 			else
 			{
@@ -1166,12 +1179,6 @@ namespace RapChessGui
 						labTimeT.BackColor = Color.LightGray;
 				}
 				labEloT.Text = g.GetElo();
-				labScoreT.Text = $"Score {g.score}";
-				labNodesT.Text = $"Nodes {g.nodes.ToString("N0")}";
-				labNpsT.Text = $"Nps {g.nps.ToString("N0")}";
-				labPonderT.Text = $"Ponder {g.ponder}";
-				labBookT.Text = $"Book {g.countMovesBook}";
-				labDepthT.Text = $"Depth {g.GetDepth()}";
 			}
 		}
 
@@ -1417,8 +1424,8 @@ namespace RapChessGui
 			labPlayerB.Text = gb.GetPlayerName();
 			labEngineW.Text = gw.GetEngine();
 			labEngineB.Text = gb.GetEngine();
-			labBookW.Text = gw.GetBook();
-			labBookB.Text = gb.GetBook();
+			labBookNW.Text = gw.GetBook();
+			labBookNB.Text = gb.GetBook();
 			labModeW.Text = gw.GetMode();
 			labModeB.Text = gb.GetMode();
 			labProtocolW.Text = gw.GetProtocol();
@@ -2589,6 +2596,5 @@ namespace RapChessGui
 
 
 		#endregion
-
 	}
 }

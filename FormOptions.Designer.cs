@@ -49,8 +49,8 @@
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
 			this.label4 = new System.Windows.Forms.Label();
 			this.label3 = new System.Windows.Forms.Label();
-			this.cbModeTime = new System.Windows.Forms.ComboBox();
-			this.cbModeStandard = new System.Windows.Forms.ComboBox();
+			this.combModeTime = new System.Windows.Forms.ComboBox();
+			this.combModeStandard = new System.Windows.Forms.ComboBox();
 			this.groupBox2 = new System.Windows.Forms.GroupBox();
 			this.labTourE = new System.Windows.Forms.Label();
 			this.label6 = new System.Windows.Forms.Label();
@@ -74,7 +74,6 @@
 			// 
 			// butDefault
 			// 
-			this.butDefault.DialogResult = System.Windows.Forms.DialogResult.OK;
 			this.butDefault.Dock = System.Windows.Forms.DockStyle.Top;
 			this.butDefault.Location = new System.Drawing.Point(0, 453);
 			this.butDefault.Name = "butDefault";
@@ -309,8 +308,8 @@
 			// 
 			this.groupBox1.Controls.Add(this.label4);
 			this.groupBox1.Controls.Add(this.label3);
-			this.groupBox1.Controls.Add(this.cbModeTime);
-			this.groupBox1.Controls.Add(this.cbModeStandard);
+			this.groupBox1.Controls.Add(this.combModeTime);
+			this.groupBox1.Controls.Add(this.combModeStandard);
 			this.groupBox1.Dock = System.Windows.Forms.DockStyle.Top;
 			this.groupBox1.Location = new System.Drawing.Point(0, 156);
 			this.groupBox1.Name = "groupBox1";
@@ -337,41 +336,41 @@
 			this.label3.TabIndex = 11;
 			this.label3.Text = "Mode standard";
 			// 
-			// cbModeTime
+			// combModeTime
 			// 
-			this.cbModeTime.AutoCompleteCustomSource.AddRange(new string[] {
+			this.combModeTime.AutoCompleteCustomSource.AddRange(new string[] {
             "White",
             "Black"});
-			this.cbModeTime.Cursor = System.Windows.Forms.Cursors.Hand;
-			this.cbModeTime.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.cbModeTime.Items.AddRange(new object[] {
+			this.combModeTime.Cursor = System.Windows.Forms.Cursors.Hand;
+			this.combModeTime.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.combModeTime.Items.AddRange(new object[] {
             "Off",
             "0 sec",
             "1 sec",
             "2 sec",
             "5 sec"});
-			this.cbModeTime.Location = new System.Drawing.Point(6, 46);
-			this.cbModeTime.Name = "cbModeTime";
-			this.cbModeTime.Size = new System.Drawing.Size(153, 21);
-			this.cbModeTime.TabIndex = 4;
+			this.combModeTime.Location = new System.Drawing.Point(6, 46);
+			this.combModeTime.Name = "combModeTime";
+			this.combModeTime.Size = new System.Drawing.Size(153, 21);
+			this.combModeTime.TabIndex = 4;
 			// 
-			// cbModeStandard
+			// combModeStandard
 			// 
-			this.cbModeStandard.AutoCompleteCustomSource.AddRange(new string[] {
+			this.combModeStandard.AutoCompleteCustomSource.AddRange(new string[] {
             "White",
             "Black"});
-			this.cbModeStandard.Cursor = System.Windows.Forms.Cursors.Hand;
-			this.cbModeStandard.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.cbModeStandard.Items.AddRange(new object[] {
+			this.combModeStandard.Cursor = System.Windows.Forms.Cursors.Hand;
+			this.combModeStandard.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.combModeStandard.Items.AddRange(new object[] {
             "Off",
             "0 sec",
             "1 sec",
             "2 sec",
             "5 sec"});
-			this.cbModeStandard.Location = new System.Drawing.Point(6, 19);
-			this.cbModeStandard.Name = "cbModeStandard";
-			this.cbModeStandard.Size = new System.Drawing.Size(153, 21);
-			this.cbModeStandard.TabIndex = 3;
+			this.combModeStandard.Location = new System.Drawing.Point(6, 19);
+			this.combModeStandard.Name = "combModeStandard";
+			this.combModeStandard.Size = new System.Drawing.Size(153, 21);
+			this.combModeStandard.TabIndex = 3;
 			// 
 			// groupBox2
 			// 
@@ -559,8 +558,8 @@
 		private System.Windows.Forms.GroupBox groupBox1;
 		private System.Windows.Forms.Label label4;
 		private System.Windows.Forms.Label label3;
-		private System.Windows.Forms.ComboBox cbModeTime;
-		private System.Windows.Forms.ComboBox cbModeStandard;
+		private System.Windows.Forms.ComboBox combModeTime;
+		private System.Windows.Forms.ComboBox combModeStandard;
 		private System.Windows.Forms.GroupBox groupBox2;
 		private System.Windows.Forms.Label labTourE;
 		private System.Windows.Forms.Label label6;
