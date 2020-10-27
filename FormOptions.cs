@@ -101,6 +101,7 @@ namespace RapChessGui
 			combPriority.SelectedIndex = 2;
 			nudTourE.Value = 10000;
 			nudTourP.Value = 10000;
+			nudSpeed.Value = 200;
 			FormChess.This.BackColor = CBoard.color = colorDialog1.Color = Color.FromArgb(64, 8, 8);
 			FormChess.This.BoardPrepare();
 		}

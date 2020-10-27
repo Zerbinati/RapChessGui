@@ -75,7 +75,7 @@
 			// butDefault
 			// 
 			this.butDefault.Dock = System.Windows.Forms.DockStyle.Top;
-			this.butDefault.Location = new System.Drawing.Point(0, 453);
+			this.butDefault.Location = new System.Drawing.Point(0, 485);
 			this.butDefault.Name = "butDefault";
 			this.butDefault.Size = new System.Drawing.Size(286, 24);
 			this.butDefault.TabIndex = 2;
@@ -95,7 +95,7 @@
 			this.gbInterface.Dock = System.Windows.Forms.DockStyle.Top;
 			this.gbInterface.Location = new System.Drawing.Point(0, 234);
 			this.gbInterface.Name = "gbInterface";
-			this.gbInterface.Size = new System.Drawing.Size(286, 116);
+			this.gbInterface.Size = new System.Drawing.Size(286, 148);
 			this.gbInterface.TabIndex = 4;
 			this.gbInterface.TabStop = false;
 			this.gbInterface.Text = "Interface";
@@ -103,7 +103,7 @@
 			// butColor
 			// 
 			this.butColor.Dock = System.Windows.Forms.DockStyle.Bottom;
-			this.butColor.Location = new System.Drawing.Point(3, 89);
+			this.butColor.Location = new System.Drawing.Point(3, 121);
 			this.butColor.Name = "butColor";
 			this.butColor.Size = new System.Drawing.Size(280, 24);
 			this.butColor.TabIndex = 4;
@@ -140,7 +140,7 @@
 			// label1
 			// 
 			this.label1.AutoSize = true;
-			this.label1.Location = new System.Drawing.Point(168, 117);
+			this.label1.Location = new System.Drawing.Point(168, 97);
 			this.label1.Name = "label1";
 			this.label1.Size = new System.Drawing.Size(85, 13);
 			this.label1.TabIndex = 9;
@@ -148,7 +148,7 @@
 			// 
 			// nudSpeed
 			// 
-			this.nudSpeed.Location = new System.Drawing.Point(3, 115);
+			this.nudSpeed.Location = new System.Drawing.Point(6, 90);
 			this.nudSpeed.Maximum = new decimal(new int[] {
             1000,
             0,
@@ -160,7 +160,7 @@
             0,
             0});
 			this.nudSpeed.Name = "nudSpeed";
-			this.nudSpeed.Size = new System.Drawing.Size(156, 20);
+			this.nudSpeed.Size = new System.Drawing.Size(153, 20);
 			this.nudSpeed.TabIndex = 8;
 			this.nudSpeed.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
 			this.nudSpeed.Value = new decimal(new int[] {
@@ -197,7 +197,7 @@
 			// 
 			this.butOk.DialogResult = System.Windows.Forms.DialogResult.OK;
 			this.butOk.Dock = System.Windows.Forms.DockStyle.Top;
-			this.butOk.Location = new System.Drawing.Point(0, 477);
+			this.butOk.Location = new System.Drawing.Point(0, 509);
 			this.butOk.Name = "butOk";
 			this.butOk.Size = new System.Drawing.Size(286, 24);
 			this.butOk.TabIndex = 1;
@@ -435,7 +435,7 @@
 			this.gbNotation.Controls.Add(this.rbUci);
 			this.gbNotation.Controls.Add(this.rbSan);
 			this.gbNotation.Dock = System.Windows.Forms.DockStyle.Top;
-			this.gbNotation.Location = new System.Drawing.Point(0, 350);
+			this.gbNotation.Location = new System.Drawing.Point(0, 382);
 			this.gbNotation.Name = "gbNotation";
 			this.gbNotation.Size = new System.Drawing.Size(286, 53);
 			this.gbNotation.TabIndex = 10;
@@ -470,7 +470,7 @@
 			// 
 			this.groupBox3.Controls.Add(this.combPriority);
 			this.groupBox3.Dock = System.Windows.Forms.DockStyle.Top;
-			this.groupBox3.Location = new System.Drawing.Point(0, 403);
+			this.groupBox3.Location = new System.Drawing.Point(0, 435);
 			this.groupBox3.Name = "groupBox3";
 			this.groupBox3.Size = new System.Drawing.Size(286, 50);
 			this.groupBox3.TabIndex = 11;
@@ -498,7 +498,7 @@
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(286, 509);
+			this.ClientSize = new System.Drawing.Size(286, 548);
 			this.Controls.Add(this.butOk);
 			this.Controls.Add(this.butDefault);
 			this.Controls.Add(this.groupBox3);

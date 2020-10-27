@@ -341,8 +341,8 @@ namespace RapChessGui
 			FormLogEngines.AppendText($"Finish {tssInfo.Text}\n", Color.Gray);
 			CGamer gWhi = GamerList.GamerWhite();
 			CGamer gBla = GamerList.GamerBlack();
-			FormLogEngines.AppendText($"White {gWhi.player.name} time {gWhi.GetTime()} moves {gWhi.countMoves} ({gWhi.countMoves - gWhi.countMovesBook})\n", Color.Gray);
-			FormLogEngines.AppendText($"Black {gBla.player.name} time {gBla.GetTime()} moves {gBla.countMoves} ({gBla.countMoves - gWhi.countMovesBook})\n", Color.Gray);
+			FormLogEngines.AppendText($"White {gWhi.player.name} clock: {gWhi.GetTime()} moves: {gWhi.countMoves} book: {gWhi.countMovesBook}\n", Color.Gray);
+			FormLogEngines.AppendText($"Black {gBla.player.name} clock: {gBla.GetTime()} moves: {gBla.countMoves} book: {gWhi.countMovesBook}\n", Color.Gray);
 			CreateRtf();
 			CreatePgn();
 			if (CData.gameMode == CGameMode.game)
@@ -967,9 +967,9 @@ namespace RapChessGui
 				List<string> eMoves = new List<string>();
 				foreach (int gm in gMoves)
 					eMoves.Add(Chess.GmoToUmo(gm));
-				FormLogEngines.AppendText($"Wrong move {emo}\n", Color.Red);
-				FormLogEngines.AppendText($"{Chess.GetFen()}\n", Color.Black);
-				FormLogEngines.AppendText($"{string.Join(" ", eMoves)}\n", Color.Black);
+				FormLogEngines.AppendText($"Wrong move: {emo}\n", Color.Red);
+				FormLogEngines.AppendText($"Fen: {Chess.GetFen()}\n", Color.Black);
+				FormLogEngines.AppendText($"Legal moves: {string.Join(" ", eMoves)}\n", Color.Black);
 				CRapLog.Add($"Wrong move {cp.engine} {emo} {Chess.GetFen()}");
 				SetGameState(CGameState.error);
 				return false;
