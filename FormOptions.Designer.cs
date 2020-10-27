@@ -172,8 +172,6 @@
 			// cbAttack
 			// 
 			this.cbAttack.AutoSize = true;
-			this.cbAttack.Checked = true;
-			this.cbAttack.CheckState = System.Windows.Forms.CheckState.Checked;
 			this.cbAttack.Dock = System.Windows.Forms.DockStyle.Top;
 			this.cbAttack.Location = new System.Drawing.Point(3, 33);
 			this.cbAttack.Name = "cbAttack";

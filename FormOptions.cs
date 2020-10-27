@@ -90,7 +90,7 @@ namespace RapChessGui
 		private void butDefault_Click(object sender, EventArgs e)
 		{
 			cbShowPonder.Checked = true;
-			cbAttack.Checked = true;
+			cbAttack.Checked = false;
 			cbArrow.Checked = true;
 			cbTips.Checked = true;
 			cbGameAutoElo.Checked = true;

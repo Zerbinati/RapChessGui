@@ -350,8 +350,8 @@ namespace RapChessGui
 			if (iScore > 300)
 				return Color.Green;
 			else if (iScore < -300)
-				return Color.Red;
-			return Color.Yellow;
+				return Color.Brown;
+			return Color.DarkGray;
 		}
 
 		public string GetTime()
