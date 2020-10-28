@@ -36,7 +36,7 @@ namespace RapChessGui
 			if (Visible == true)
 			{
 				chart1.Series.Clear();
-				FormChess.playerList.Sort();
+				CModeTournamentP.playerList.Sort();
 				foreach (CPlayer player in CModeTournamentP.playerList.list)
 					{
 						string pn = player.name;

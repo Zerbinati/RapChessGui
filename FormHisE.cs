@@ -29,7 +29,7 @@ namespace RapChessGui
 			if (Visible == true)
 			{
 				chart1.Series.Clear();
-				FormChess.engineList.Sort();
+				CModeTournamentE.engineList.Sort();
 				foreach (CEngine engine in CModeTournamentE.engineList.list)
 					{
 						string en = engine.name;
