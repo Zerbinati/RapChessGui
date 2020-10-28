@@ -560,6 +560,7 @@ namespace RapChessGui
 		{
 			foreach (CGamer g in gamer)
 			{
+				g.timer.Stop();
 				g.bookPro.Terminate();
 				g.enginePro.Terminate();
 			}

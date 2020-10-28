@@ -2751,7 +2751,7 @@
 			this.labModeW.Size = new System.Drawing.Size(192, 20);
 			this.labModeW.TabIndex = 17;
 			this.labModeW.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			this.toolTip1.SetToolTip(this.labModeW, "Chess mode");
+			this.toolTip1.SetToolTip(this.labModeW, "Control time");
 			// 
 			// labModeB
 			// 
@@ -2768,7 +2768,7 @@
 			this.labModeB.Size = new System.Drawing.Size(192, 20);
 			this.labModeB.TabIndex = 17;
 			this.labModeB.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			this.toolTip1.SetToolTip(this.labModeB, "Chess mode");
+			this.toolTip1.SetToolTip(this.labModeB, "Control time");
 			// 
 			// labProtocolB
 			// 

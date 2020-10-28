@@ -342,7 +342,7 @@ namespace RapChessGui
 			CGamer gWhi = GamerList.GamerWhite();
 			CGamer gBla = GamerList.GamerBlack();
 			FormLogEngines.AppendText($"White {gWhi.player.name} clock: {gWhi.GetTime()} moves: {gWhi.countMoves} book: {gWhi.countMovesBook}\n", Color.Gray);
-			FormLogEngines.AppendText($"Black {gBla.player.name} clock: {gBla.GetTime()} moves: {gBla.countMoves} book: {gWhi.countMovesBook}\n", Color.Gray);
+			FormLogEngines.AppendText($"Black {gBla.player.name} clock: {gBla.GetTime()} moves: {gBla.countMoves} book: {gBla.countMovesBook}\n", Color.Gray);
 			CreateRtf();
 			CreatePgn();
 			if (CData.gameMode == CGameMode.game)
@@ -407,11 +407,7 @@ namespace RapChessGui
 				Chess.UnmakeMove(moves[n]);
 			if (pv != "")
 				g.pv = pv;
-			if (!showInfo)
-			{
-				tssInfo.ForeColor = Color.Gainsboro;
-				tssInfo.Text = pv;
-			}
+			ShowInfo(pv, Color.Gainsboro);
 			AddLines(g);
 		}
 
@@ -441,7 +437,8 @@ namespace RapChessGui
 						umo = (Uci.tokens[1]).ToLower();
 						if (g.isBookStarted && !g.isBookFail)
 						{
-							AddBook(umo);
+							g.countMovesBook++;
+							ShowInfo($"book {umo}", Color.Aquamarine);
 							if (g.engine.IsXb())
 								g.isEngPrepared = false;
 						}
@@ -655,13 +652,6 @@ namespace RapChessGui
 			File.WriteAllText(fn, formLogGames.textBox1.Text);
 		}
 
-		public void AddBook(string emo)
-		{
-			GamerList.GamerCur().countMovesBook++;
-			if (!showInfo)
-				ShowInfo($"book {emo}", Color.Aquamarine);
-		}
-
 		void SetMode(CGameMode mode)
 		{
 			timer1.Enabled = false;
@@ -736,9 +726,12 @@ namespace RapChessGui
 
 		void ShowInfo(string info, Color color, bool si = false)
 		{
-			tssInfo.Text = info;
-			tssInfo.ForeColor = color;
-			showInfo = si;
+			if (si || !showInfo)
+			{
+				tssInfo.Text = info;
+				tssInfo.ForeColor = color;
+				showInfo = si;
+			}
 		}
 
 		bool ShowLastGame(bool changeProgress = false)
@@ -985,15 +978,10 @@ namespace RapChessGui
 			showInfo = false;
 			if (cg.player.IsHuman())
 			{
-				showInfo = false;
 				tssInfo.Text = "";
 				Board.Clear();
 				if (eco != null)
-				{
-					showInfo = true;
-					tssInfo.ForeColor = Color.Lime;
-					tssInfo.Text = eco.name;
-				}
+					ShowInfo(eco.name, Color.Lime, true);
 				else if ((lastEco != "") && (!lastEco.Contains(emo)))
 				{
 					ShowInfo("You missed the opening moves", Color.Pink, true);
