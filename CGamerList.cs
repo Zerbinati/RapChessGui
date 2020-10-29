@@ -91,8 +91,8 @@ namespace RapChessGui
 
 		public void Init(bool w)
 		{
-			timeOut = false;
 			isWhite = w;
+			timeOut = false;
 			isBookStarted = false;
 			isBookFail = false;
 			isEngPrepared = false;
@@ -279,7 +279,7 @@ namespace RapChessGui
 			if (bookPro.process != null)
 			{
 				Color col = isWhite ? Color.DimGray : Color.Black;
-				FormLogEngines.AppendText($"{FormChess.GetTimeElapsed()} ", Color.Green);
+				FormLogEngines.AppendTime();
 				FormLogEngines.AppendText($"book {player.name}", col);
 				FormLogEngines.AppendText($" < {msg}\n", Color.Brown);
 				bookPro.process.StandardInput.WriteLine(msg);
@@ -291,7 +291,7 @@ namespace RapChessGui
 			if (enginePro.process != null)
 			{
 				Color col = isWhite ? Color.DimGray : Color.Black;
-				FormLogEngines.AppendText($"{FormChess.GetTimeElapsed()} ", Color.Green);
+				FormLogEngines.AppendTime();
 				FormLogEngines.AppendText($"{player.name}", col);
 				FormLogEngines.AppendText($" < {msg}\n", Color.Brown);
 				enginePro.process.StandardInput.WriteLine(msg);
@@ -385,6 +385,7 @@ namespace RapChessGui
 					{
 						EngineReset();
 						FormChess.This.MakeMove(lastMove);
+						FormLogEngines.AppendTime();
 						FormLogEngines.AppendText($"{player.name} forced move {lastMove}\n", Color.Orange);
 
 					}
@@ -472,13 +473,6 @@ namespace RapChessGui
 			gamer[0].Init(true);
 			gamer[1].Init(false);
 			curIndex = 0;
-			FormLogEngines.This.cbPlayerList.Items.Clear();
-			if (gamer[0].engine != null)
-				FormLogEngines.This.cbPlayerList.Items.Add(gamer[0].player.name);
-			if (gamer[1].engine != null)
-				FormLogEngines.This.cbPlayerList.Items.Add(gamer[1].player.name);
-			if (FormLogEngines.This.cbPlayerList.Items.Count > 0)
-				FormLogEngines.This.cbPlayerList.SelectedIndex = 0;
 		}
 
 		public void Rotate()

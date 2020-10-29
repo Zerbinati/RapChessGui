@@ -48,7 +48,7 @@
 			System.Windows.Forms.DataVisualization.Charting.Series series11 = new System.Windows.Forms.DataVisualization.Charting.Series();
 			System.Windows.Forms.DataVisualization.Charting.Series series12 = new System.Windows.Forms.DataVisualization.Charting.Series();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormChess));
-			this.timer1 = new System.Windows.Forms.Timer(this.components);
+			this.timerMessages = new System.Windows.Forms.Timer(this.components);
 			this.tabControl1 = new System.Windows.Forms.TabControl();
 			this.tabPageGame = new System.Windows.Forms.TabPage();
 			this.chartGame = new System.Windows.Forms.DataVisualization.Charting.Chart();
@@ -229,7 +229,7 @@
 			this.labBookNB = new System.Windows.Forms.Label();
 			this.labBlack = new System.Windows.Forms.Label();
 			this.labEngineB = new System.Windows.Forms.Label();
-			this.cbMainMode = new System.Windows.Forms.ComboBox();
+			this.combMainMode = new System.Windows.Forms.ComboBox();
 			this.chartMain = new System.Windows.Forms.DataVisualization.Charting.Chart();
 			this.labPlayerW = new System.Windows.Forms.Label();
 			this.labPlayerB = new System.Windows.Forms.Label();
@@ -371,10 +371,10 @@
 			this.tlpBlack.SuspendLayout();
 			this.SuspendLayout();
 			// 
-			// timer1
+			// timerMessages
 			// 
-			this.timer1.Interval = 10;
-			this.timer1.Tick += new System.EventHandler(this.Timer1_Tick_1);
+			this.timerMessages.Interval = 10;
+			this.timerMessages.Tick += new System.EventHandler(this.Timer1_Tick_1);
 			// 
 			// tabControl1
 			// 
@@ -2838,29 +2838,29 @@
 			this.labEngineB.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			this.toolTip1.SetToolTip(this.labEngineB, "Chess engine name");
 			// 
-			// cbMainMode
+			// combMainMode
 			// 
-			this.cbMainMode.AutoCompleteCustomSource.AddRange(new string[] {
+			this.combMainMode.AutoCompleteCustomSource.AddRange(new string[] {
             "White",
             "Black"});
-			this.cbMainMode.BackColor = System.Drawing.SystemColors.Window;
-			this.cbMainMode.Cursor = System.Windows.Forms.Cursors.Hand;
-			this.cbMainMode.Dock = System.Windows.Forms.DockStyle.Top;
-			this.cbMainMode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.cbMainMode.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-			this.cbMainMode.Items.AddRange(new object[] {
+			this.combMainMode.BackColor = System.Drawing.SystemColors.Window;
+			this.combMainMode.Cursor = System.Windows.Forms.Cursors.Hand;
+			this.combMainMode.Dock = System.Windows.Forms.DockStyle.Top;
+			this.combMainMode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.combMainMode.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+			this.combMainMode.Items.AddRange(new object[] {
             "Game",
             "Match",
             "Tournament-engines",
             "Tournament-players",
             "Training",
             "Edit"});
-			this.cbMainMode.Location = new System.Drawing.Point(8, 8);
-			this.cbMainMode.Name = "cbMainMode";
-			this.cbMainMode.Size = new System.Drawing.Size(350, 24);
-			this.cbMainMode.TabIndex = 11;
-			this.toolTip1.SetToolTip(this.cbMainMode, "Select game mode");
-			this.cbMainMode.SelectedIndexChanged += new System.EventHandler(this.cbMainMode_SelectedIndexChanged);
+			this.combMainMode.Location = new System.Drawing.Point(8, 8);
+			this.combMainMode.Name = "combMainMode";
+			this.combMainMode.Size = new System.Drawing.Size(350, 24);
+			this.combMainMode.TabIndex = 11;
+			this.toolTip1.SetToolTip(this.combMainMode, "Select game mode");
+			this.combMainMode.SelectedIndexChanged += new System.EventHandler(this.cbMainMode_SelectedIndexChanged);
 			// 
 			// chartMain
 			// 
@@ -3522,7 +3522,7 @@
 			// 
 			// panel1
 			// 
-			this.panel1.Controls.Add(this.cbMainMode);
+			this.panel1.Controls.Add(this.combMainMode);
 			this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
 			this.panel1.Location = new System.Drawing.Point(0, 0);
 			this.panel1.Name = "panel1";
@@ -3862,7 +3862,7 @@
 		}
 
 		#endregion
-		private System.Windows.Forms.Timer timer1;
+		private System.Windows.Forms.Timer timerMessages;
 		private System.Windows.Forms.TabControl tabControl1;
 		private System.Windows.Forms.TabPage tabPageGame;
 		private System.Windows.Forms.TabPage tabPageTraining;
@@ -4022,7 +4022,7 @@
 		private System.Windows.Forms.Label labBlack;
 		private System.Windows.Forms.Label labEngineB;
 		private System.Windows.Forms.Panel panel1;
-		public System.Windows.Forms.ComboBox cbMainMode;
+		public System.Windows.Forms.ComboBox combMainMode;
 		private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
 		private System.Windows.Forms.Label labErrors;
 		private System.Windows.Forms.Label labGames;

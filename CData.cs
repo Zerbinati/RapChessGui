@@ -34,7 +34,6 @@ namespace RapChessGui
 		public static CGameMode gameMode = CGameMode.game;
 		public static int back = 0;
 		public static double fps = 0;
-		public static string fen = CChess.defFen;
 		public static List<string> fileBook = new List<string>();
 		public static List<string> fileEngine = new List<string>();
 

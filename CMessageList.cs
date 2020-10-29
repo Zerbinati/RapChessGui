@@ -66,28 +66,28 @@ namespace RapChessGui
 		{
 			message = null;
 			List<CMessage> last = MsgGet();
-			buffer.AddRange(last);
 			foreach (CMessage m in last)
 			{
 				CGamer gamer = CGamerList.This.GetGamerPid(m.pid, out string protocol);
 				if (gamer != null)
 				{
-					if ((protocol == "Uci") || (protocol == "Book"))
+					bool bm = false;
+					if (protocol == "Uci")
 					{
-						if (m.msg.Contains("bestmove"))
-						{
-							gamer.timer.Stop();
-							buffer.Clear();
+						bm = m.msg.Contains("bestmove");
+						if (bm || (buffer.Count < 0x1f) || !gamer.isEngRunning)
 							buffer.Add(m);
-						}
+					}
+					else if(protocol == "Winboard")
+					{
+						bm = m.msg.Contains("move");
+						if (bm || (buffer.Count < 0x1f) || !gamer.isEngRunning)
+							buffer.Add(m);
 					}
 					else
-						if (m.msg.Contains("move"))
-					{
-						gamer.timer.Stop();
-						buffer.Clear();
 						buffer.Add(m);
-					}
+					if (bm)
+						gamer.timer.Stop();
 				}
 			}
 			if (buffer.Count > 0)

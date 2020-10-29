@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -8,6 +9,7 @@ namespace RapChessGui
 	public partial class FormLogEngines : Form
 	{
 		public static FormLogEngines This;
+		static Stopwatch timer = new Stopwatch();
 
 		public FormLogEngines()
 		{
@@ -21,6 +23,44 @@ namespace RapChessGui
 			This.richTextBox1.SelectionColor = col;
 			This.richTextBox1.SelectedText = txt;
 		}
+
+		public static void AppendTime()
+		{
+			This.richTextBox1.SelectionColor = Color.Green;
+			This.richTextBox1.SelectedText = GetTimeElapsed();
+		}
+
+		public void NewGame(CGamer gw,CGamer gb)
+		{
+			cbPlayerList.Items.Clear();
+			richTextBox1.Clear();
+			timer.Restart();
+			AppendTime();
+			AppendText($"Date {DateTime.Now.ToString("yyyy-MM-dd HH:mm")}\n", Color.Gray);
+			if (gw.engine != null)
+			{
+				cbPlayerList.Items.Add(gw.player.name);
+				AppendTime();
+				AppendText($"White {gw.player.name} {gw.player.engine} {gw.engine.parameters}\n", Color.Gray);
+			}
+			if (gb.engine != null)
+			{
+				cbPlayerList.Items.Add(gb.player.name);
+				AppendTime();
+				AppendText($"Black {gb.player.name} {gb.player.engine} {gb.engine.parameters}\n", Color.Gray);
+			}
+			if (cbPlayerList.Items.Count > 0)
+				cbPlayerList.SelectedIndex = 0;
+		}
+
+		static string GetTimeElapsed()
+		{
+			DateTime dt = new DateTime();
+			dt = dt.AddMilliseconds(timer.Elapsed.TotalMilliseconds);
+			return dt.ToString("HH:mm:ss.fff ");
+		}
+
+		#region events
 
 		private void FormLog_FormClosing(object sender, FormClosingEventArgs e)
 		{
@@ -41,7 +81,7 @@ namespace RapChessGui
 
 		private void saveToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			string fn = $"{FormChess.This.cbMainMode.Text} {DateTime.Now.ToString("yyyy-MM-dd hh-mm-ss")}.rtf";
+			string fn = $"{FormChess.This.combMainMode.Text} {DateTime.Now.ToString("yyyy-MM-dd hh-mm-ss")}.rtf";
 			richTextBox1.SaveFile(fn);
 			MessageBox.Show($"File {fn} has been saved");
 		}
@@ -78,6 +118,8 @@ namespace RapChessGui
 			if (g != null)
 				g.EngineClose();
 		}
+
+		#endregion
 	}
 
 }

@@ -100,13 +100,13 @@ namespace RapChessGui
 				list[n] = new CField();
 		}
 
-		public void Clear()
+		public void ClearArrows()
 		{
 			arrowCur.Clear();
 			arrowEco.Clear();
 		}
 
-		public void ColorClear()
+		public void ClearColors()
 		{
 			for (int n = 0; n < 64; n++)
 				list[n].color = Color.Empty;
@@ -393,7 +393,7 @@ namespace RapChessGui
 			{
 				MakeMove(sou - 4, sou - 1);
 			}
-			ColorClear();
+			ClearColors();
 		}
 
 		public static void UpdatePosition()

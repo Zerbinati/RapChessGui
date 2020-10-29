@@ -68,7 +68,7 @@ namespace RapChessGui
 			return moveList[moveList.Count - 1].umo;
 		}
 
-		public static void NewGame(string f = CChess.defFen)
+		public static void SetFen(string f = CChess.defFen)
 		{
 			fen = f;
 			moveList.Clear();

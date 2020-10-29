@@ -26,7 +26,7 @@ namespace RapChessGui
 		{
 			if ((Visible == true) && (textBox1.Text == ""))
 			{
-				string name = FormChess.This.cbMainMode.Text;
+				string name = FormChess.This.combMainMode.Text;
 				string path = $"{name}.pgn";
 				Text = $"Log {name}";
 				if (File.Exists(path))
