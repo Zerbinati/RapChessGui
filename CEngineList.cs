@@ -10,7 +10,6 @@ namespace RapChessGui
 		public int distance = 0;
 		public int position = 0;
 		public int tournament = 1;
-		public double eloOld = 1000;
 		public string name = "Human";
 		public string file = "";
 		public string protocol = "Uci";
@@ -33,7 +32,6 @@ namespace RapChessGui
 			parameters = CRapIni.This.Read($"engine>{name}>parameters", "");
 			options = CRapIni.This.ReadList($"engine>{name}>options");
 			elo = CRapIni.This.Read($"engine>{name}>elo", "1000");
-			eloOld = CRapIni.This.ReadDouble($"engine>{name}>eloOld",eloOld);
 			hisElo.LoadFromStr(CRapIni.This.Read($"engine>{name}>history", ""));
 			if (hisElo.list.Count == 0)
 			{
@@ -51,13 +49,12 @@ namespace RapChessGui
 			CRapIni.This.Write($"engine>{name}>parameters", parameters);
 			CRapIni.This.WriteList($"engine>{name}>options", options);
 			CRapIni.This.Write($"engine>{name}>elo", elo);
-			CRapIni.This.Write($"engine>{name}>eloOld", eloOld);
 			CRapIni.This.Write($"engine>{name}>history", hisElo.SaveToStr());
 		}
 
 		public int GetDeltaElo()
 		{
-			return Convert.ToInt32(elo) - Convert.ToInt32(eloOld);
+			return Convert.ToInt32(elo) - hisElo.EloAvg();
 		}
 
 		public int GetElo()
@@ -175,7 +172,7 @@ namespace RapChessGui
 			{
 				int result = Convert.ToInt32(e2.elo) - Convert.ToInt32(e1.elo);
 				if (result == 0)
-					result = Convert.ToInt32(e2.eloOld) - Convert.ToInt32(e1.eloOld);
+					result = e2.hisElo.EloAvg() - e1.hisElo.EloAvg();
 				return result;
 			});
 		}

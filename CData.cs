@@ -78,6 +78,13 @@ namespace RapChessGui
 			list = new List<double>(he.list);
 		}
 
+		public int EloAvg() {
+			int sum = 0;
+			foreach (int i in list)
+				sum += i;
+			return list.Count == 0 ? 0 : sum / list.Count;
+		}
+
 		public void LoadFromStr(string elo)
 		{
 			list.Clear();

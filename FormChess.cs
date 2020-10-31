@@ -145,8 +145,8 @@ namespace RapChessGui
 				CPlayer p = new CPlayer("Human");
 				p.tournament = 0;
 				p.modeValue.value = 0;
-				p.eloNew = 500;
-				p.elo = p.eloNew.ToString();
+				p.elo = "500";
+				p.eloOrg = "500";
 				playerList.Add(p);
 			}
 			if (playerList.GetPlayerComputer() == null)
@@ -816,6 +816,16 @@ namespace RapChessGui
 			}
 		}
 
+		void ShowInfo(string info, Color color, bool si = false)
+		{
+			if (si || !showInfo)
+			{
+				tssInfo.Text = info;
+				tssInfo.ForeColor = color;
+				showInfo = si;
+			}
+		}
+
 		void ShowAutoElo()
 		{
 			if (IsGameRanked() && CModeGame.ranked)
@@ -830,39 +840,30 @@ namespace RapChessGui
 			}
 		}
 
-		void ShowInfo(string info, Color color, bool si = false)
-		{
-			if (si || !showInfo)
-			{
-				tssInfo.Text = info;
-				tssInfo.ForeColor = color;
-				showInfo = si;
-			}
-		}
-
 		bool ShowLastGame(bool changeProgress = false)
 		{
 			bool result = false;
 			CPlayer hu = playerList.GetPlayerHuman();
 			int eloCur = Convert.ToInt32(hu.elo);
-			int eloDel = hu.eloNew - eloCur;
-			if (hu.eloNew > eloCur)
+			int eloOld = Convert.ToInt32(hu.eloOrg);
+			int eloDel = eloCur - eloOld;
+			if (eloDel >0)
 			{
 				result = true;
-				ShowInfo($"Last game you win new elo is {hu.eloNew} (+{eloDel})", Color.FromArgb(0, 0xff, 0), true);
+				ShowInfo($"Last game you win new elo is {hu.elo} (+{eloDel})", Color.FromArgb(0, 0xff, 0), true);
 			}
-			if (hu.eloNew < eloCur)
+			if (eloDel < 0)
 			{
 				result = true;
-				ShowInfo($"Last game you loose new elo is {hu.eloNew} ({eloDel})", Color.FromArgb(0xff, 0, 0), true);
+				ShowInfo($"Last game you loose new elo is {hu.elo} ({eloDel})", Color.FromArgb(0xff, 0, 0), true);
 			}
 			if (result || changeProgress)
 			{
-				hu.hisElo.Add(hu.eloNew);
+				hu.hisElo.Add(Convert.ToDouble(hu.elo));
 				CData.HisToPoints(hu.hisElo, chartGame.Series[0].Points);
-				CRapLog.Add($"Your new elo {hu.eloNew}");
+				CRapLog.Add($"Your new elo {hu.elo}");
 			}
-			hu.elo = hu.eloNew.ToString();
+			hu.eloOrg = hu.elo;
 			hu.SaveToIni();
 			return result;
 		}
@@ -1049,8 +1050,8 @@ namespace RapChessGui
 			chartMain.Series[GamerList.curIndex].Points.Add(cg.iScore * m);
 			if (IsGameRanked() && CModeGame.ranked && (cg.engine == null) && ((CChess.g_moveNumber >> 1) == 4))
 			{
-				cg.player.eloOld = Convert.ToDouble(cg.player.elo);
-				cg.player.eloNew = cg.player.GetEloLess();
+				cg.player.eloOrg = cg.player.elo;
+				cg.player.elo = cg.player.GetEloLess().ToString();
 				cg.player.SaveToIni();
 			}
 			int gmo = Chess.IsValidMove(emo);
@@ -1243,6 +1244,8 @@ namespace RapChessGui
 
 		void LoadFen(string fen)
 		{
+			CPlayer hu = playerList.GetPlayerHuman();
+			hu.elo = hu.eloOrg;
 			combMainMode.SelectedIndex = 0;
 			SetMode(CGameMode.game);
 			CModeGame.ranked = false;
@@ -1505,7 +1508,6 @@ namespace RapChessGui
 			ShowAuto();
 			SetMode(CGameMode.game);
 			GamePrepare();
-			CPlayer ph = playerList.GetPlayerHuman();
 			if (ShowLastGame())
 				CModeGame.rotate = !CModeGame.rotate;
 			if ((CModeGame.rotate && (cbColor.Text == "Auto")) || (cbColor.Text == "Black"))
@@ -1513,9 +1515,6 @@ namespace RapChessGui
 			if (GamerList.GamerCur().player.IsHuman())
 				moves = Chess.GenerateValidMoves();
 			Clear();
-			int elo = Convert.ToInt32(ph.elo);
-			ph.eloNew = elo;
-			ph.eloOld = elo;
 			CModeGame.SaveToIni();
 			SetBoardRotate();
 			Board.Fill();
@@ -1539,17 +1538,17 @@ namespace RapChessGui
 			{
 				if (pw.IsHuman())
 				{
-					if (!isDraw)
-						pw.eloNew = pw.GetEloMore();
+					if (isDraw)
+						pw.elo = pw.eloOrg;
 					else
-						pw.eloNew = Convert.ToInt32(pw.eloOld);
+						pw.elo = pw.GetEloMore().ToString();
 				}
 				else
 				{
-					if (!isDraw)
-						pl.eloNew = pl.GetEloLess();
+					if (isDraw)
+						pl.elo = pl.eloOrg;
 					else
-						pl.eloNew = Convert.ToInt32(pl.eloOld);
+						pl.elo = pl.GetEloLess().ToString();
 				}
 			}
 			ShowLastGame(IsGameRanked());
@@ -1778,8 +1777,6 @@ namespace RapChessGui
 			el.hisElo.Add(newL);
 			ew.elo = newW.ToString();
 			el.elo = newL.ToString();
-			ew.eloOld = ew.eloOld * .9 + newW * .1;
-			el.eloOld = el.eloOld * .9 + newL * .1;
 			ew.SaveToIni();
 			el.SaveToIni();
 			CModeTournamentE.rotate = (OW != OL) && (newW < newL);
@@ -1896,8 +1893,6 @@ namespace RapChessGui
 			pl.hisElo.Add(newL);
 			pw.elo = newW.ToString();
 			pl.elo = newL.ToString();
-			pw.eloOld = pw.eloOld * .9 + newW * .1;
-			pl.eloOld = pl.eloOld * .9 + newL * .1; ;
 			pw.SaveToIni();
 			pl.SaveToIni();
 			CModeTournamentP.rotate = (OW != OL) && (newW < newL);
@@ -2461,7 +2456,7 @@ namespace RapChessGui
 			if (IsGameRanked() && IsGameLong() && IsGameProgress())
 			{
 				CPlayer hu = playerList.GetPlayerHuman();
-				hu.eloNew = hu.GetEloLess();
+				hu.elo = hu.GetEloLess().ToString();
 			}
 			SetGameState(CGameState.resignation);
 		}

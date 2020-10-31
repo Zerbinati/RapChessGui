@@ -52,7 +52,6 @@ namespace RapChessGui
 			e.parameters = tbParameters.Text;
 			e.modeStandard = cbModeStandard.Checked;
 			e.elo = nudElo.Value.ToString();
-			e.eloOld = Convert.ToDouble(e.elo);
 			e.tournament = (int)nudTournament.Value;
 			e.options = rtbOptions.Lines.Cast<String>().ToList();
 			e.SaveToIni();

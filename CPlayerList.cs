@@ -8,14 +8,13 @@ namespace RapChessGui
 	public class CPlayer
 	{
 		public int tournament = 1;
-		public int eloNew = 1000;
 		public int distance = 0;
 		public int position = 0;
-		public double eloOld = 1000;
 		public string name = "";
 		public string engine = "Human";
 		public string book = "None";
 		public string elo = "1000";
+		public string eloOrg = "1000";
 		public CModeValue modeValue = new CModeValue();
 		public CHisElo hisElo = new CHisElo();
 
@@ -33,7 +32,7 @@ namespace RapChessGui
 			int levelDif = 2000 / FormChess.playerList.list.Count;
 			if (levelDif < 10)
 				levelDif = 10;
-			int result = Convert.ToInt32(elo) - levelDif;
+			int result = Convert.ToInt32(eloOrg) - levelDif;
 			if (result < 0)
 				result = 0;
 			return result;
@@ -44,7 +43,7 @@ namespace RapChessGui
 			int levelDif = 2000 / FormChess.playerList.list.Count;
 			if (levelDif < 10)
 				levelDif = 10;
-			return Convert.ToInt32(elo) + levelDif;
+			return Convert.ToInt32(eloOrg) + levelDif;
 		}
 
 		public int GetElo()
@@ -54,7 +53,7 @@ namespace RapChessGui
 
 		public int GetDeltaElo()
 		{
-			return Convert.ToInt32(elo) - Convert.ToInt32(eloOld);
+			return Convert.ToInt32(elo) - hisElo.EloAvg();
 		}
 
 		public bool IsComputer()
@@ -90,8 +89,7 @@ namespace RapChessGui
 			modeValue.value = CRapIni.This.ReadInt($"player>{name}>value", modeValue.value);
 			book = CRapIni.This.Read($"player>{name}>book", "None");
 			elo = CRapIni.This.Read($"player>{name}>elo",elo);
-			eloNew = CRapIni.This.ReadInt($"player>{name}>eloNew", eloNew);
-			eloOld = CRapIni.This.ReadDouble($"player>{name}>eloOld", eloOld);
+			eloOrg = CRapIni.This.Read($"player>{name}>eloOrg", eloOrg);
 			hisElo.LoadFromStr(CRapIni.This.Read($"player>{name}>history", ""));
 			if (hisElo.list.Count == 0)
 			{
@@ -110,8 +108,7 @@ namespace RapChessGui
 			CRapIni.This.Write($"player>{name}>value", modeValue.value);
 			CRapIni.This.Write($"player>{name}>book", book);
 			CRapIni.This.Write($"player>{name}>elo", elo);
-			CRapIni.This.Write($"player>{name}>eloNew", eloNew);
-			CRapIni.This.Write($"player>{name}>eloOld", eloOld);
+			CRapIni.This.Write($"player>{name}>eloOrg", eloOrg);
 			CRapIni.This.Write($"player>{name}>history", hisElo.SaveToStr());
 		}
 
@@ -225,11 +222,11 @@ namespace RapChessGui
 
 		public void Sort()
 		{
-			list.Sort(delegate (CPlayer u1, CPlayer u2)
+			list.Sort(delegate (CPlayer p1, CPlayer p2)
 			{
-				int result = Convert.ToInt32(u2.elo) - Convert.ToInt32(u1.elo);
+				int result = Convert.ToInt32(p2.elo) - Convert.ToInt32(p1.elo);
 				if (result == 0)
-					result = Convert.ToInt32(u2.eloOld) - Convert.ToInt32(u1.eloOld);
+					result = p2.hisElo.EloAvg() - p1.hisElo.EloAvg();
 				return result;
 			});
 		}

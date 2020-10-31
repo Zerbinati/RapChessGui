@@ -675,7 +675,7 @@ namespace RapChessGui
 			g_moveNumber <<= 1;
 			if (!whiteTurn)
 				g_moveNumber++;
-			undoIndex = 0;
+			undoIndex = g_move50;
 			return true;
 		}
 

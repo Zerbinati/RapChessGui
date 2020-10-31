@@ -63,8 +63,7 @@ namespace RapChessGui
 			p.book = cbBookList.Text;
 			p.tournament = (int)nudTournament.Value;
 			p.elo = nudElo.Value.ToString();
-			p.eloOld = Convert.ToDouble(p.elo);
-			p.eloNew = Convert.ToInt32(p.elo);
+			p.eloOrg = p.elo;
 			p.modeValue.mode = modeValue.mode;
 			p.modeValue.value = modeValue.value;
 			p.SaveToIni();
