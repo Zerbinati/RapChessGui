@@ -36,7 +36,7 @@ namespace RapChessGui
 			else
 				cbBookList.Text = "None";
 			curPlayerName = p.name;
-			cbTournament.Checked = p.tournament;
+			nudTournament.Value = p.tournament;
 			nudElo.Value = Convert.ToInt32(p.elo);
 			nudValue.Value = p.modeValue.GetValue();
 			modeValue.mode = p.modeValue.mode;
@@ -61,7 +61,7 @@ namespace RapChessGui
 			p.name = tbPlayerName.Text;
 			p.engine = cbEngineList.Text;
 			p.book = cbBookList.Text;
-			p.tournament = cbTournament.Checked;
+			p.tournament = (int)nudTournament.Value;
 			p.elo = nudElo.Value.ToString();
 			p.eloOld = Convert.ToDouble(p.elo);
 			p.eloNew = Convert.ToInt32(p.elo);

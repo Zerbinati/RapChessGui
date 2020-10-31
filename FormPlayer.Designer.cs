@@ -48,8 +48,8 @@
 			this.groupBox2 = new System.Windows.Forms.GroupBox();
 			this.listBox1 = new System.Windows.Forms.ListBox();
 			this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-			this.gbTournament = new System.Windows.Forms.GroupBox();
-			this.cbTournament = new System.Windows.Forms.CheckBox();
+			this.groupBox5 = new System.Windows.Forms.GroupBox();
+			this.nudTournament = new System.Windows.Forms.NumericUpDown();
 			this.panel1.SuspendLayout();
 			this.gbElo.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.nudElo)).BeginInit();
@@ -59,7 +59,8 @@
 			this.gbEngine.SuspendLayout();
 			this.groupBox1.SuspendLayout();
 			this.groupBox2.SuspendLayout();
-			this.gbTournament.SuspendLayout();
+			this.groupBox5.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.nudTournament)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// panel1
@@ -68,7 +69,7 @@
 			this.panel1.Controls.Add(this.bDelete);
 			this.panel1.Controls.Add(this.bCreate);
 			this.panel1.Controls.Add(this.bUpdate);
-			this.panel1.Controls.Add(this.gbTournament);
+			this.panel1.Controls.Add(this.groupBox5);
 			this.panel1.Controls.Add(this.gbElo);
 			this.panel1.Controls.Add(this.gbMode);
 			this.panel1.Controls.Add(this.gbBook);
@@ -291,27 +292,31 @@
 			this.listBox1.TabIndex = 1;
 			this.listBox1.SelectedValueChanged += new System.EventHandler(this.ListBox1_SelectedValueChanged);
 			// 
-			// gbTournament
+			// groupBox5
 			// 
-			this.gbTournament.Controls.Add(this.cbTournament);
-			this.gbTournament.Dock = System.Windows.Forms.DockStyle.Top;
-			this.gbTournament.Location = new System.Drawing.Point(0, 247);
-			this.gbTournament.Name = "gbTournament";
-			this.gbTournament.Size = new System.Drawing.Size(311, 45);
-			this.gbTournament.TabIndex = 32;
-			this.gbTournament.TabStop = false;
-			this.gbTournament.Text = "Options";
+			this.groupBox5.Controls.Add(this.nudTournament);
+			this.groupBox5.Dock = System.Windows.Forms.DockStyle.Top;
+			this.groupBox5.Location = new System.Drawing.Point(0, 247);
+			this.groupBox5.Name = "groupBox5";
+			this.groupBox5.Size = new System.Drawing.Size(311, 45);
+			this.groupBox5.TabIndex = 34;
+			this.groupBox5.TabStop = false;
+			this.groupBox5.Text = "Tournament priority";
 			// 
-			// cbTournament
+			// nudTournament
 			// 
-			this.cbTournament.AutoSize = true;
-			this.cbTournament.Dock = System.Windows.Forms.DockStyle.Top;
-			this.cbTournament.Location = new System.Drawing.Point(3, 16);
-			this.cbTournament.Name = "cbTournament";
-			this.cbTournament.Size = new System.Drawing.Size(305, 17);
-			this.cbTournament.TabIndex = 0;
-			this.cbTournament.Text = "Tournament";
-			this.cbTournament.UseVisualStyleBackColor = true;
+			this.nudTournament.Dock = System.Windows.Forms.DockStyle.Top;
+			this.nudTournament.Location = new System.Drawing.Point(3, 16);
+			this.nudTournament.Name = "nudTournament";
+			this.nudTournament.Size = new System.Drawing.Size(305, 20);
+			this.nudTournament.TabIndex = 0;
+			this.nudTournament.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			this.nudTournament.ThousandsSeparator = true;
+			this.nudTournament.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
 			// 
 			// FormPlayer
 			// 
@@ -338,8 +343,8 @@
 			this.groupBox1.ResumeLayout(false);
 			this.groupBox1.PerformLayout();
 			this.groupBox2.ResumeLayout(false);
-			this.gbTournament.ResumeLayout(false);
-			this.gbTournament.PerformLayout();
+			this.groupBox5.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this.nudTournament)).EndInit();
 			this.ResumeLayout(false);
 
 		}
@@ -364,7 +369,7 @@
 		private System.Windows.Forms.ComboBox cbMode;
 		private System.Windows.Forms.NumericUpDown nudValue;
 		private System.Windows.Forms.ToolTip toolTip1;
-		private System.Windows.Forms.GroupBox gbTournament;
-		private System.Windows.Forms.CheckBox cbTournament;
+		private System.Windows.Forms.GroupBox groupBox5;
+		private System.Windows.Forms.NumericUpDown nudTournament;
 	}
 }

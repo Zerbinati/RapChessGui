@@ -7,7 +7,7 @@ namespace RapChessGui
 
 	public class CPlayer
 	{
-		public bool tournament = true;
+		public int tournament = 1;
 		public int eloNew = 1000;
 		public int distance = 0;
 		public int position = 0;
@@ -84,7 +84,7 @@ namespace RapChessGui
 
 		public void LoadFromIni()
 		{
-			tournament = CRapIni.This.ReadBool($"player>{name}>tournament",tournament);
+			tournament = CRapIni.This.ReadInt($"player>{name}>tournament",tournament);
 			engine = CRapIni.This.Read($"player>{name}>engine", "Human");
 			modeValue.mode = CRapIni.This.Read($"player>{name}>mode", modeValue.mode);
 			modeValue.value = CRapIni.This.ReadInt($"player>{name}>value", modeValue.value);
@@ -303,7 +303,7 @@ namespace RapChessGui
 					if ((i < 0) || (i >= list.Count))
 					return null;
 				p = list[i];
-				if (p.tournament)
+				if (p.tournament > 0)
 					break;
 			}
 			return p;

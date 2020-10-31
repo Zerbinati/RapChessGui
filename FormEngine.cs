@@ -26,9 +26,9 @@ namespace RapChessGui
 			cbFileList.Text = e.file;
 			cbProtocol.Text = e.protocol;
 			curEngineName = e.name;
-			cbTournament.Checked = e.tournament;
 			cbModeStandard.Checked = e.modeStandard;
 			nudElo.Value = Convert.ToInt32(e.elo);
+			nudTournament.Value = e.tournament;
 			rtbOptions.Lines = e.options.ToArray();
 		}
 
@@ -50,10 +50,10 @@ namespace RapChessGui
 			e.file = cbFileList.Text;
 			e.protocol = cbProtocol.Text;
 			e.parameters = tbParameters.Text;
-			e.tournament = cbTournament.Checked;
 			e.modeStandard = cbModeStandard.Checked;
 			e.elo = nudElo.Value.ToString();
 			e.eloOld = Convert.ToDouble(e.elo);
+			e.tournament = (int)nudTournament.Value;
 			e.options = rtbOptions.Lines.Cast<String>().ToList();
 			e.SaveToIni();
 			curEngineName = e.name;

@@ -6,10 +6,12 @@ namespace RapChessGui
 {
 	static class CModeTournamentE
 	{
+		static bool next = false;
+		public static bool rotate = false;
+		public static int repetition = 1;
+		public static int records = 10000;
 		public static string engine;
 		public static string book = "Eco";
-		public static bool rotate = false;
-		public static int records = 10000;
 		public static CTourList tourList = new CTourList("Tour-engines");
 		public static CModeValue modeValue = new CModeValue();
 		public static CEngineList engineList = new CEngineList();
@@ -33,11 +35,16 @@ namespace RapChessGui
 			tourList.SetLimit(records);
 		}
 
+		public static void NewGame()
+		{
+			next = false;
+		}
+
 		public static void FillList()
 		{
 			engineList.list.Clear();
 			foreach (CEngine e in FormChess.engineList.list)
-				if (e.tournament && ((modeValue.mode != "Standard")||e.modeStandard))
+				if ((e.tournament > 0) && ((modeValue.mode != "Standard")||e.modeStandard))
 					engineList.Add(e);
 		}
 
@@ -83,11 +90,13 @@ namespace RapChessGui
 			CEngine e = engineList.GetEngine(engine);
 			if (e == null)
 				e = SelectRare();
-			CEngine n = engineList.NextTournament(e);
-			CEngine result = rotate ? e : n;
-			engine = result.name;
+			if(next)
+				e = engineList.NextTournament(e);
+			next = true;
+			repetition = e.tournament;
+			engine = e.name;
 			SaveToIni();
-			return result;
+			return e;
 		}
 
 		public static CEngine SelectOpponent(CEngine engine)

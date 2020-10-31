@@ -6,7 +6,9 @@ namespace RapChessGui
 {
 	static class CModeTournamentP
 	{
+		static bool next = false;
 		public static bool rotate = false;
+		public static int repetition = 1;
 		public static int records = 10000;
 		public static string player = "";
 		public static CTourList tourList = new CTourList("Tour-players");
@@ -23,6 +25,11 @@ namespace RapChessGui
 			player = CRapIni.This.Read("mode>tournamentP>player",player);
 			records = CRapIni.This.ReadInt("mode>tournamentP>records",records);
 			tourList.SetLimit(records);
+		}
+
+		public static void NewGame()
+		{
+			next = false;
 		}
 
 		public static CPlayer ChooseOpponent(CPlayer player, CPlayer player1, CPlayer player2)
@@ -50,7 +57,7 @@ namespace RapChessGui
 		{
 			playerList.list.Clear();
 			foreach (CPlayer p in FormChess.playerList.list)
-				if (p.tournament && p.IsComputer())
+				if ((p.tournament > 0) && p.IsComputer())
 					playerList.Add(p);
 		}
 
@@ -75,11 +82,12 @@ namespace RapChessGui
 			CPlayer p = playerList.GetPlayer(player);
 			if (p == null)
 				p = SelectRare();
-			CPlayer n = playerList.NextTournament(p);
-			CPlayer result = rotate ? p : n;
-			player = result.name;
+			if(next)
+			p = playerList.NextTournament(p);
+			repetition = p.tournament;
+			player = p.name;
 			SaveToIni();
-			return result;
+			return p;
 		}
 
 		public static CPlayer SelectOpponent(CPlayer player)

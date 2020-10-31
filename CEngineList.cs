@@ -6,10 +6,10 @@ namespace RapChessGui
 {
 	public class CEngine
 	{
-		public bool tournament = true;
 		public bool modeStandard = true;
 		public int distance = 0;
 		public int position = 0;
+		public int tournament = 1;
 		public double eloOld = 1000;
 		public string name = "Human";
 		public string file = "";
@@ -26,7 +26,7 @@ namespace RapChessGui
 
 		public void LoadFromIni()
 		{
-			tournament = CRapIni.This.ReadBool($"engine>{name}>tournament", tournament);
+			tournament = CRapIni.This.ReadInt($"engine>{name}>tournament", tournament);
 			modeStandard = CRapIni.This.ReadBool($"engine>{name}>modeStandard", modeStandard);
 			file = CRapIni.This.Read($"engine>{name}>file", "Human");
 			protocol = CRapIni.This.Read($"engine>{name}>protocol", "Uci");
@@ -156,7 +156,7 @@ namespace RapChessGui
 					if ((i < 0) || (i >= list.Count))
 						return null;
 				e = list[i];
-				if (e.tournament)
+				if (e.tournament > 0)
 					break;
 			}
 			return e;

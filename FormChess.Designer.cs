@@ -1311,8 +1311,9 @@
 			this.chartTournamentE.Name = "chartTournamentE";
 			this.chartTournamentE.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.None;
 			this.chartTournamentE.PaletteCustomColors = new System.Drawing.Color[] {
-        System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(0))))),
-        System.Drawing.Color.Olive};
+        System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(128)))), ((int)(((byte)(0))))),
+        System.Drawing.Color.Olive,
+        System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))))};
 			series4.BorderWidth = 4;
 			series4.ChartArea = "ChartArea1";
 			series4.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
@@ -1419,7 +1420,7 @@
 			this.butTourEStart.Text = "Start";
 			this.toolTip1.SetToolTip(this.butTourEStart, "Start tournament");
 			this.butTourEStart.UseVisualStyleBackColor = true;
-			this.butTourEStart.Click += new System.EventHandler(this.button1_Click);
+			this.butTourEStart.Click += new System.EventHandler(this.butStartTournamentE_Click);
 			// 
 			// tabPageTourP
 			// 
@@ -1585,8 +1586,9 @@
 			this.chartTournamentP.Name = "chartTournamentP";
 			this.chartTournamentP.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.None;
 			this.chartTournamentP.PaletteCustomColors = new System.Drawing.Color[] {
-        System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(0))))),
-        System.Drawing.Color.Olive};
+        System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(128)))), ((int)(((byte)(0))))),
+        System.Drawing.Color.Olive,
+        System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))))};
 			series7.BorderWidth = 4;
 			series7.ChartArea = "ChartArea1";
 			series7.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
@@ -1620,7 +1622,7 @@
 			this.butStartTournament.Text = "Start";
 			this.toolTip1.SetToolTip(this.butStartTournament, "Start tournament");
 			this.butStartTournament.UseVisualStyleBackColor = true;
-			this.butStartTournament.Click += new System.EventHandler(this.butStartTournament_Click);
+			this.butStartTournament.Click += new System.EventHandler(this.butStartTournamentP_Click);
 			// 
 			// tabPageTraining
 			// 

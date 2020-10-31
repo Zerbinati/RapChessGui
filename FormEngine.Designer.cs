@@ -34,7 +34,7 @@
 			this.bCreate = new System.Windows.Forms.Button();
 			this.bUpdate = new System.Windows.Forms.Button();
 			this.gbTournament = new System.Windows.Forms.GroupBox();
-			this.cbTournament = new System.Windows.Forms.CheckBox();
+			this.cbModeStandard = new System.Windows.Forms.CheckBox();
 			this.gbElo = new System.Windows.Forms.GroupBox();
 			this.nudElo = new System.Windows.Forms.NumericUpDown();
 			this.gbOptions = new System.Windows.Forms.GroupBox();
@@ -49,7 +49,8 @@
 			this.tbEngineName = new System.Windows.Forms.TextBox();
 			this.groupBox2 = new System.Windows.Forms.GroupBox();
 			this.listBox1 = new System.Windows.Forms.ListBox();
-			this.cbModeStandard = new System.Windows.Forms.CheckBox();
+			this.groupBox5 = new System.Windows.Forms.GroupBox();
+			this.nudTournament = new System.Windows.Forms.NumericUpDown();
 			this.panel1.SuspendLayout();
 			this.gbTournament.SuspendLayout();
 			this.gbElo.SuspendLayout();
@@ -60,6 +61,8 @@
 			this.groupBox4.SuspendLayout();
 			this.groupBox1.SuspendLayout();
 			this.groupBox2.SuspendLayout();
+			this.groupBox5.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.nudTournament)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// panel1
@@ -69,6 +72,7 @@
 			this.panel1.Controls.Add(this.bCreate);
 			this.panel1.Controls.Add(this.bUpdate);
 			this.panel1.Controls.Add(this.gbTournament);
+			this.panel1.Controls.Add(this.groupBox5);
 			this.panel1.Controls.Add(this.gbElo);
 			this.panel1.Controls.Add(this.gbOptions);
 			this.panel1.Controls.Add(this.groupBox3);
@@ -78,13 +82,13 @@
 			this.panel1.Dock = System.Windows.Forms.DockStyle.Right;
 			this.panel1.Location = new System.Drawing.Point(489, 0);
 			this.panel1.Name = "panel1";
-			this.panel1.Size = new System.Drawing.Size(311, 591);
+			this.panel1.Size = new System.Drawing.Size(311, 624);
 			this.panel1.TabIndex = 0;
 			// 
 			// butClearHistory
 			// 
 			this.butClearHistory.Dock = System.Windows.Forms.DockStyle.Top;
-			this.butClearHistory.Location = new System.Drawing.Point(0, 542);
+			this.butClearHistory.Location = new System.Drawing.Point(0, 558);
 			this.butClearHistory.Name = "butClearHistory";
 			this.butClearHistory.Size = new System.Drawing.Size(311, 33);
 			this.butClearHistory.TabIndex = 32;
@@ -95,7 +99,7 @@
 			// bDelete
 			// 
 			this.bDelete.Dock = System.Windows.Forms.DockStyle.Top;
-			this.bDelete.Location = new System.Drawing.Point(0, 509);
+			this.bDelete.Location = new System.Drawing.Point(0, 525);
 			this.bDelete.Name = "bDelete";
 			this.bDelete.Size = new System.Drawing.Size(311, 33);
 			this.bDelete.TabIndex = 27;
@@ -106,7 +110,7 @@
 			// bCreate
 			// 
 			this.bCreate.Dock = System.Windows.Forms.DockStyle.Top;
-			this.bCreate.Location = new System.Drawing.Point(0, 476);
+			this.bCreate.Location = new System.Drawing.Point(0, 492);
 			this.bCreate.Name = "bCreate";
 			this.bCreate.Size = new System.Drawing.Size(311, 33);
 			this.bCreate.TabIndex = 26;
@@ -117,7 +121,7 @@
 			// bUpdate
 			// 
 			this.bUpdate.Dock = System.Windows.Forms.DockStyle.Top;
-			this.bUpdate.Location = new System.Drawing.Point(0, 449);
+			this.bUpdate.Location = new System.Drawing.Point(0, 465);
 			this.bUpdate.Name = "bUpdate";
 			this.bUpdate.Size = new System.Drawing.Size(311, 27);
 			this.bUpdate.TabIndex = 25;
@@ -128,25 +132,24 @@
 			// gbTournament
 			// 
 			this.gbTournament.Controls.Add(this.cbModeStandard);
-			this.gbTournament.Controls.Add(this.cbTournament);
 			this.gbTournament.Dock = System.Windows.Forms.DockStyle.Top;
-			this.gbTournament.Location = new System.Drawing.Point(0, 383);
+			this.gbTournament.Location = new System.Drawing.Point(0, 428);
 			this.gbTournament.Name = "gbTournament";
-			this.gbTournament.Size = new System.Drawing.Size(311, 66);
+			this.gbTournament.Size = new System.Drawing.Size(311, 37);
 			this.gbTournament.TabIndex = 31;
 			this.gbTournament.TabStop = false;
 			this.gbTournament.Text = "Options";
 			// 
-			// cbTournament
+			// cbModeStandard
 			// 
-			this.cbTournament.AutoSize = true;
-			this.cbTournament.Dock = System.Windows.Forms.DockStyle.Top;
-			this.cbTournament.Location = new System.Drawing.Point(3, 16);
-			this.cbTournament.Name = "cbTournament";
-			this.cbTournament.Size = new System.Drawing.Size(305, 17);
-			this.cbTournament.TabIndex = 0;
-			this.cbTournament.Text = "Tournament";
-			this.cbTournament.UseVisualStyleBackColor = true;
+			this.cbModeStandard.AutoSize = true;
+			this.cbModeStandard.Dock = System.Windows.Forms.DockStyle.Top;
+			this.cbModeStandard.Location = new System.Drawing.Point(3, 16);
+			this.cbModeStandard.Name = "cbModeStandard";
+			this.cbModeStandard.Size = new System.Drawing.Size(305, 17);
+			this.cbModeStandard.TabIndex = 1;
+			this.cbModeStandard.Text = "Mode standard";
+			this.cbModeStandard.UseVisualStyleBackColor = true;
 			// 
 			// gbElo
 			// 
@@ -292,7 +295,7 @@
 			this.groupBox2.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.groupBox2.Location = new System.Drawing.Point(0, 0);
 			this.groupBox2.Name = "groupBox2";
-			this.groupBox2.Size = new System.Drawing.Size(489, 591);
+			this.groupBox2.Size = new System.Drawing.Size(489, 624);
 			this.groupBox2.TabIndex = 5;
 			this.groupBox2.TabStop = false;
 			this.groupBox2.Text = "Engines List";
@@ -303,27 +306,42 @@
 			this.listBox1.FormattingEnabled = true;
 			this.listBox1.Location = new System.Drawing.Point(3, 16);
 			this.listBox1.Name = "listBox1";
-			this.listBox1.Size = new System.Drawing.Size(483, 572);
+			this.listBox1.Size = new System.Drawing.Size(483, 605);
 			this.listBox1.Sorted = true;
 			this.listBox1.TabIndex = 1;
 			this.listBox1.SelectedValueChanged += new System.EventHandler(this.ListBox1_SelectedValueChanged);
 			// 
-			// cbModeStandard
+			// groupBox5
 			// 
-			this.cbModeStandard.AutoSize = true;
-			this.cbModeStandard.Dock = System.Windows.Forms.DockStyle.Top;
-			this.cbModeStandard.Location = new System.Drawing.Point(3, 33);
-			this.cbModeStandard.Name = "cbModeStandard";
-			this.cbModeStandard.Size = new System.Drawing.Size(305, 17);
-			this.cbModeStandard.TabIndex = 1;
-			this.cbModeStandard.Text = "Mode standard";
-			this.cbModeStandard.UseVisualStyleBackColor = true;
+			this.groupBox5.Controls.Add(this.nudTournament);
+			this.groupBox5.Dock = System.Windows.Forms.DockStyle.Top;
+			this.groupBox5.Location = new System.Drawing.Point(0, 383);
+			this.groupBox5.Name = "groupBox5";
+			this.groupBox5.Size = new System.Drawing.Size(311, 45);
+			this.groupBox5.TabIndex = 33;
+			this.groupBox5.TabStop = false;
+			this.groupBox5.Text = "Tournament priority";
+			// 
+			// nudTournament
+			// 
+			this.nudTournament.Dock = System.Windows.Forms.DockStyle.Top;
+			this.nudTournament.Location = new System.Drawing.Point(3, 16);
+			this.nudTournament.Name = "nudTournament";
+			this.nudTournament.Size = new System.Drawing.Size(305, 20);
+			this.nudTournament.TabIndex = 0;
+			this.nudTournament.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			this.nudTournament.ThousandsSeparator = true;
+			this.nudTournament.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
 			// 
 			// FormEngine
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(800, 591);
+			this.ClientSize = new System.Drawing.Size(800, 624);
 			this.Controls.Add(this.groupBox2);
 			this.Controls.Add(this.panel1);
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
@@ -347,6 +365,8 @@
 			this.groupBox1.ResumeLayout(false);
 			this.groupBox1.PerformLayout();
 			this.groupBox2.ResumeLayout(false);
+			this.groupBox5.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this.nudTournament)).EndInit();
 			this.ResumeLayout(false);
 
 		}
@@ -371,8 +391,9 @@
 		private System.Windows.Forms.GroupBox gbElo;
 		private System.Windows.Forms.NumericUpDown nudElo;
 		private System.Windows.Forms.GroupBox gbTournament;
-		private System.Windows.Forms.CheckBox cbTournament;
 		private System.Windows.Forms.Button butClearHistory;
 		private System.Windows.Forms.CheckBox cbModeStandard;
+		private System.Windows.Forms.GroupBox groupBox5;
+		private System.Windows.Forms.NumericUpDown nudTournament;
 	}
 }

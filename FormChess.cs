@@ -143,7 +143,7 @@ namespace RapChessGui
 			if (playerList.GetPlayerHuman() == null)
 			{
 				CPlayer p = new CPlayer("Human");
-				p.tournament = false;
+				p.tournament = 0;
 				p.modeValue.value = 0;
 				p.eloNew = 500;
 				p.elo = p.eloNew.ToString();
@@ -1696,7 +1696,7 @@ namespace RapChessGui
 			CPlayer p2;
 			CEngine e1;
 			CEngine e2;
-			if (CModeTournamentE.rotate)
+			if (CModeTournamentE.rotate || (--CModeTournamentE.repetition > 0))
 			{
 				p1 = GamerList.gamer[1].player;
 				p2 = GamerList.gamer[0].player;
@@ -1828,7 +1828,7 @@ namespace RapChessGui
 			SetMode(CGameMode.tourP);
 			CPlayer p1;
 			CPlayer p2;
-			if (CModeTournamentP.rotate)
+			if (CModeTournamentP.rotate || (--CModeTournamentP.repetition > 0))
 			{
 				p1 = GamerList.gamer[1].player;
 				p2 = GamerList.gamer[0].player;
@@ -2195,11 +2195,6 @@ namespace RapChessGui
 			MatchStart(true);
 		}
 
-		private void butStartTournament_Click(object sender, EventArgs e)
-		{
-			TournamentPStart();
-		}
-
 		private void pictureBox1_MouseMove(object sender, MouseEventArgs e)
 		{
 			CDrag.mouseX = e.X;
@@ -2471,9 +2466,16 @@ namespace RapChessGui
 			SetGameState(CGameState.resignation);
 		}
 
-		private void button1_Click(object sender, EventArgs e)
+		private void butStartTournamentE_Click(object sender, EventArgs e)
 		{
+			CModeTournamentE.NewGame();
 			TournamentEStart();
+		}
+
+		private void butStartTournamentP_Click(object sender, EventArgs e)
+		{
+			CModeTournamentP.NewGame();
+			TournamentPStart();
 		}
 
 		private void cbTourEMode_SelectedIndexChanged(object sender, EventArgs e)
