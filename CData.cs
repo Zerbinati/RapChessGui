@@ -117,6 +117,19 @@ namespace RapChessGui
 				return 0;
 		}
 
+		public void MinMax(out double min,out double max)
+		{
+			min = list.Count > 0 ? list[0] : 0;
+			max = min;
+			foreach(double d in list)
+			{
+				if (min > d)
+					min = d;
+				if (max < d)
+					max = d;
+			}
+		}
+
 	}
 
 	public class CModeValue

@@ -93,7 +93,6 @@ namespace RapChessGui
 			if(next)
 				e = engineList.NextTournament(e);
 			next = true;
-			repetition = e.tournament;
 			engine = e.name;
 			SaveToIni();
 			return e;
@@ -120,6 +119,14 @@ namespace RapChessGui
 					return e;
 			}
 			return el[0];
+		}
+
+		public static void SetRepeition(CEngine e,CEngine o)
+		{
+			tourList.CountGames(e.name, o.name, out int rw, out int rl, out _);
+			repetition = e.tournament;
+			if ((e.GetElo() > o.GetElo()) != (rw>rl))
+				repetition++;
 		}
 
 	}

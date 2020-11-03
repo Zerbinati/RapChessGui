@@ -84,7 +84,6 @@ namespace RapChessGui
 				p = SelectRare();
 			if(next)
 			p = playerList.NextTournament(p);
-			repetition = p.tournament;
 			player = p.name;
 			SaveToIni();
 			return p;
@@ -111,6 +110,14 @@ namespace RapChessGui
 					return p;
 			}
 			return pl[0];
+		}
+
+		public static void SetRepeition(CPlayer p, CPlayer o)
+		{
+			tourList.CountGames(p.name, o.name, out int rw, out int rl, out _);
+			repetition = p.tournament;
+			if ((p.GetElo() > o.GetElo()) != (rw > rl))
+				repetition++;
 		}
 
 	}

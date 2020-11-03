@@ -105,5 +105,6 @@ namespace RapChessGui
 			else
 				return result;
 		}
+
 	}
 }

@@ -52,7 +52,7 @@
 			this.tabControl1 = new System.Windows.Forms.TabControl();
 			this.tabPageGame = new System.Windows.Forms.TabPage();
 			this.chartGame = new System.Windows.Forms.DataVisualization.Charting.Chart();
-			this.butBack = new System.Windows.Forms.Button();
+			this.butBackward = new System.Windows.Forms.Button();
 			this.butForward = new System.Windows.Forms.Button();
 			this.butResignation = new System.Windows.Forms.Button();
 			this.butStop = new System.Windows.Forms.Button();
@@ -398,7 +398,7 @@
 			// tabPageGame
 			// 
 			this.tabPageGame.Controls.Add(this.chartGame);
-			this.tabPageGame.Controls.Add(this.butBack);
+			this.tabPageGame.Controls.Add(this.butBackward);
 			this.tabPageGame.Controls.Add(this.butForward);
 			this.tabPageGame.Controls.Add(this.butResignation);
 			this.tabPageGame.Controls.Add(this.butStop);
@@ -445,18 +445,18 @@
 			this.chartGame.Text = "chart1";
 			this.toolTip1.SetToolTip(this.chartGame, "User progress history");
 			// 
-			// butBack
+			// butBackward
 			// 
-			this.butBack.Cursor = System.Windows.Forms.Cursors.Hand;
-			this.butBack.Dock = System.Windows.Forms.DockStyle.Top;
-			this.butBack.Location = new System.Drawing.Point(3, 330);
-			this.butBack.Name = "butBack";
-			this.butBack.Size = new System.Drawing.Size(352, 23);
-			this.butBack.TabIndex = 27;
-			this.butBack.Text = "Back move";
-			this.toolTip1.SetToolTip(this.butBack, "Resignation from further play");
-			this.butBack.UseVisualStyleBackColor = true;
-			this.butBack.Click += new System.EventHandler(this.button3_Click);
+			this.butBackward.Cursor = System.Windows.Forms.Cursors.Hand;
+			this.butBackward.Dock = System.Windows.Forms.DockStyle.Top;
+			this.butBackward.Location = new System.Drawing.Point(3, 330);
+			this.butBackward.Name = "butBackward";
+			this.butBackward.Size = new System.Drawing.Size(352, 23);
+			this.butBackward.TabIndex = 27;
+			this.butBackward.Text = "Back move";
+			this.toolTip1.SetToolTip(this.butBackward, "Resignation from further play");
+			this.butBackward.UseVisualStyleBackColor = true;
+			this.butBackward.Click += new System.EventHandler(this.butBackward_Click);
 			// 
 			// butForward
 			// 
@@ -469,7 +469,7 @@
 			this.butForward.Text = "Make move";
 			this.toolTip1.SetToolTip(this.butForward, "Resignation from further play");
 			this.butForward.UseVisualStyleBackColor = true;
-			this.butForward.Click += new System.EventHandler(this.button2_Click);
+			this.butForward.Click += new System.EventHandler(this.butForward_Click);
 			// 
 			// butResignation
 			// 
@@ -2634,7 +2634,7 @@
 			this.labBookNW.Size = new System.Drawing.Size(192, 20);
 			this.labBookNW.TabIndex = 15;
 			this.labBookNW.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			this.toolTip1.SetToolTip(this.labBookNW, "Chess open book name");
+			this.toolTip1.SetToolTip(this.labBookNW, "Chess opening book name");
 			// 
 			// labProtocolW
 			// 
@@ -2804,7 +2804,7 @@
 			this.labBookNB.Size = new System.Drawing.Size(192, 20);
 			this.labBookNB.TabIndex = 15;
 			this.labBookNB.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			this.toolTip1.SetToolTip(this.labBookNB, "Chess open book name");
+			this.toolTip1.SetToolTip(this.labBookNB, "Chess opening book name");
 			// 
 			// labBlack
 			// 
@@ -4037,7 +4037,7 @@
 		private System.Windows.Forms.Button butTourEStart;
 		private System.Windows.Forms.Label labPlayerW;
 		private System.Windows.Forms.Label labPlayerB;
-		private System.Windows.Forms.Button butBack;
+		private System.Windows.Forms.Button butBackward;
 		private System.Windows.Forms.Button butForward;
 		private System.Windows.Forms.TableLayoutPanel tlpPromotion;
 		private System.Windows.Forms.Label labPromoB;

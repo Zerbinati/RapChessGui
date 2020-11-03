@@ -118,8 +118,6 @@ namespace RapChessGui
 		private void FormOptions_Shown(object sender, EventArgs e)
 		{
 			LoadFromIni();
-			CModeTournamentE.LoadFromIni();
-			CModeTournamentP.LoadFromIni();
 			nudTourE.Value = CModeTournamentE.records;
 			nudTourP.Value = CModeTournamentP.records;
 			labTourE.Text = $"Fill {(CModeTournamentE.tourList.list.Count * 100) / CModeTournamentE.records}%";
