@@ -231,11 +231,15 @@ namespace RapChessGui
 			});
 		}
 
-		public void SortDistance()
+		public void SortDistance(CPlayer player)
 		{
-			list.Sort(delegate (CPlayer u1, CPlayer u2)
+			Sort();
+			FillPosition();
+			foreach (CPlayer p in list)
+				p.distance = Math.Abs(player.position - p.position);
+			list.Sort(delegate (CPlayer p1, CPlayer p2)
 			{
-				return u1.distance - u2.distance;
+				return p1.distance - p2.distance;
 			});
 		}
 

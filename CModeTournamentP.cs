@@ -40,16 +40,12 @@ namespace RapChessGui
 				return player1;
 			if ((player.GetElo() > player2.GetElo()) != (rw2 > rl2))
 				return player2;
-			int count1 = (rw1 + rl1 + rd1) << Math.Abs(player1.position - player.position);
-			int count2 = (rw2 + rl2 + rd2) << Math.Abs(player2.position - player.position);
-			if (count1 == 0)
+			int count1 = (rw1 + rl1 + rd1);
+			int count2 = (rw2 + rl2 + rd2);
+			if (count1 * 1.1 <= count2 << 1)
 				return player1;
-			if (count2 == 0)
+			if (count2 * 1.1 <= count1 >> 1)
 				return player2;
-			if (count1 > count2)
-				return player2;
-			if (count2 > count1)
-				return player1;
 			return null;
 		}
 
@@ -91,18 +87,13 @@ namespace RapChessGui
 
 		public static CPlayer SelectOpponent(CPlayer player)
 		{
-			playerList.Sort();
-			playerList.FillPosition();
-			foreach (CPlayer p in playerList.list)
-				p.distance = Math.Abs(player.position - p.position);
-			playerList.SortDistance();
+			playerList.SortDistance(player);
 			List<CPlayer> pl = new List<CPlayer>();
 			foreach (CPlayer p in playerList.list)
 				if ((p != player) && (p.engine != "Human"))
 					pl.Add(p);
 			if (pl.Count == 0)
 				return player;
-			playerList.Sort();
 			for (int n = 0; n < pl.Count - 1; n++)
 			{
 				CPlayer p = ChooseOpponent(player, pl[n], pl[n + 1]);

@@ -177,8 +177,12 @@ namespace RapChessGui
 			});
 		}
 
-		public void SortDistance()
+		public void SortDistance(CEngine engine)
 		{
+			Sort();
+			FillPosition();
+			foreach (CEngine e in list)
+				e.distance = Math.Abs(engine.position - e.position);
 			list.Sort(delegate (CEngine e1, CEngine e2)
 			{
 				return e1.distance - e2.distance;

@@ -56,16 +56,12 @@ namespace RapChessGui
 				return engine1;
 			if ((engine.GetElo() > engine2.GetElo()) != (rw2 > rl2))
 				return engine2;
-			int count1 = (rw1 + rl1 + rd1) << Math.Abs(engine1.position - engine.position);
-			int count2 = (rw2 + rl2 + rd2) << Math.Abs(engine2.position - engine.position);
-			if (count1 == 0)
+			int count1 = (rw1 + rl1 + rd1);
+			int count2 = (rw2 + rl2 + rd2);
+			if (count1 * 1.1 <= count2 << 1)
 				return engine1;
-			if (count2 == 0)
+			if (count2  * 1.1 <= count1 >> 1)
 				return engine2;
-			if (count1 > count2)
-				return engine2;
-			if (count2 > count1)
-				return engine1;
 			return null;
 		}
 
@@ -100,18 +96,13 @@ namespace RapChessGui
 
 		public static CEngine SelectOpponent(CEngine engine)
 		{
-			engineList.Sort();
-			engineList.FillPosition();
-			foreach (CEngine e in engineList.list)
-				e.distance = Math.Abs(engine.position - e.position);
-			engineList.SortDistance();
+			engineList.SortDistance(engine);
 			List<CEngine> el = new List<CEngine>();
 			foreach (CEngine e in engineList.list)
 				if (e != engine)
 					el.Add(e);
 			if (el.Count == 0)
 				return engine;
-			engineList.Sort();
 			for (int n = 0; n < el.Count - 1; n++)
 			{
 				CEngine e = ChooseOpponent(engine, el[n], el[n + 1]);

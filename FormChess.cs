@@ -1678,7 +1678,7 @@ namespace RapChessGui
 				int elo = e.GetElo();
 				int del = e.GetDeltaElo();
 				e.hisElo.MinMax(out double min,out double max);
-				double q = (max - min) / 4;
+				double q = (max - min) / 10;
 				ListViewItem lvi = new ListViewItem(new[] { e.name, e.elo, del.ToString() });
 				if (elo > max - q)
 					lvi.BackColor = Color.FromArgb(0xe0, 0xff, 0xe0);
@@ -1699,7 +1699,7 @@ namespace RapChessGui
 						int elo = e.GetElo();
 						int del = e.GetDeltaElo();
 						e.hisElo.MinMax(out double min, out double max);
-						double q = (max - min) / 4;
+						double q = (max - min) / 10;
 						lvi.SubItems[1].Text = e.elo;
 						lvi.SubItems[2].Text = del.ToString();
 						if (elo > max - q)
@@ -1824,7 +1824,7 @@ namespace RapChessGui
 					int elo = p.GetElo();
 					int del = p.GetDeltaElo();
 					p.hisElo.MinMax(out double min, out double max);
-					double q = (max - min) / 4;
+					double q = (max - min) / 10;
 					ListViewItem lvi = new ListViewItem(new[] { p.name, p.elo, del.ToString().ToString() });
 					if (elo > max - q)
 						lvi.BackColor = Color.FromArgb(0xe0, 0xff, 0xe0);
@@ -1844,7 +1844,7 @@ namespace RapChessGui
 					int elo = p.GetElo();
 					int del = p.GetDeltaElo();
 					p.hisElo.MinMax(out double min, out double max);
-					double q = (max - min) / 4;
+					double q = (max - min) / 10;
 					lvi.SubItems[1].Text = p.elo;
 					lvi.SubItems[2].Text = del.ToString();
 					if (elo > max - q)
