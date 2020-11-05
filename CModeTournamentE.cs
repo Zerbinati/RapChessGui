@@ -6,11 +6,11 @@ namespace RapChessGui
 {
 	static class CModeTournamentE
 	{
-		static bool next = false;
-		public static bool rotate = false;
+		public static bool rotate = true;
 		public static int repetition = 1;
 		public static int records = 10000;
-		public static string engine;
+		public static string engine = "";
+		public static string opponent = "";
 		public static string book = "Eco";
 		public static CTourList tourList = new CTourList("Tour-engines");
 		public static CModeValue modeValue = new CModeValue();
@@ -37,8 +37,10 @@ namespace RapChessGui
 
 		public static void NewGame()
 		{
-			next = false;
-		}
+			rotate = true;
+			repetition = 1;
+			opponent = "";
+	}
 
 		public static void FillList()
 		{
@@ -86,11 +88,8 @@ namespace RapChessGui
 			CEngine e = engineList.GetEngine(engine);
 			if (e == null)
 				e = SelectRare();
-			if(next)
+			if (repetition <= 0)
 				e = engineList.NextTournament(e);
-			next = true;
-			engine = e.name;
-			SaveToIni();
 			return e;
 		}
 
@@ -114,10 +113,18 @@ namespace RapChessGui
 
 		public static void SetRepeition(CEngine e,CEngine o)
 		{
-			tourList.CountGames(e.name, o.name, out int rw, out int rl, out _);
-			repetition = e.tournament;
-			if ((e.GetElo() > o.GetElo()) != (rw>rl))
-				repetition++;
+			if( (engine != e.name)||(opponent != o.name))
+			{
+				engine = e.name;
+				opponent = o.name;
+				SaveToIni();
+				tourList.CountGames(e.name, o.name, out int rw, out int rl, out _);
+				repetition = e.tournament;
+				if ((e.GetElo() > o.GetElo()) != (rw > rl))
+					repetition++;
+				rotate = true;
+			}
+			rotate ^= true;
 		}
 
 	}

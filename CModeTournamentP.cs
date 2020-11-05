@@ -6,11 +6,11 @@ namespace RapChessGui
 {
 	static class CModeTournamentP
 	{
-		static bool next = false;
 		public static bool rotate = false;
 		public static int repetition = 1;
 		public static int records = 10000;
 		public static string player = "";
+		public static string opponent = "";
 		public static CTourList tourList = new CTourList("Tour-players");
 		public static CPlayerList playerList = new CPlayerList();
 
@@ -22,14 +22,16 @@ namespace RapChessGui
 
 		public static void LoadFromIni()
 		{
-			player = CRapIni.This.Read("mode>tournamentP>player",player);
-			records = CRapIni.This.ReadInt("mode>tournamentP>records",records);
+			player = CRapIni.This.Read("mode>tournamentP>player", player);
+			records = CRapIni.This.ReadInt("mode>tournamentP>records", records);
 			tourList.SetLimit(records);
 		}
 
 		public static void NewGame()
 		{
-			next = false;
+			rotate = true;
+			repetition = 1;
+			opponent = "";
 		}
 
 		public static CPlayer ChooseOpponent(CPlayer player, CPlayer player1, CPlayer player2)
@@ -78,10 +80,8 @@ namespace RapChessGui
 			CPlayer p = playerList.GetPlayer(player);
 			if (p == null)
 				p = SelectRare();
-			if(next)
-			p = playerList.NextTournament(p);
-			player = p.name;
-			SaveToIni();
+			if (repetition <= 0)
+				p = playerList.NextTournament(p);
 			return p;
 		}
 
@@ -105,12 +105,19 @@ namespace RapChessGui
 
 		public static void SetRepeition(CPlayer p, CPlayer o)
 		{
-			tourList.CountGames(p.name, o.name, out int rw, out int rl, out _);
-			repetition = p.tournament;
-			if ((p.GetElo() > o.GetElo()) != (rw > rl))
-				repetition++;
+			if ((player != p.name) || (opponent != o.name))
+			{
+				player = p.name;
+				opponent = o.name;
+				SaveToIni();
+				tourList.CountGames(p.name, o.name, out int rw, out int rl, out _);
+				repetition = p.tournament;
+				if ((p.GetElo() > o.GetElo()) != (rw > rl))
+					repetition++;
+				rotate = true;
+			}
+			rotate ^= true;
 		}
-
 	}
 
 }

@@ -1311,9 +1311,9 @@
 			this.chartTournamentE.Name = "chartTournamentE";
 			this.chartTournamentE.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.None;
 			this.chartTournamentE.PaletteCustomColors = new System.Drawing.Color[] {
-        System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(128)))), ((int)(((byte)(0))))),
+        System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(192)))), ((int)(((byte)(0))))),
         System.Drawing.Color.Olive,
-        System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))))};
+        System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))))};
 			series4.BorderWidth = 4;
 			series4.ChartArea = "ChartArea1";
 			series4.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
