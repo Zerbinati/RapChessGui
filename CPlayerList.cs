@@ -53,7 +53,8 @@ namespace RapChessGui
 
 		public int GetDeltaElo()
 		{
-			return Convert.ToInt32(elo) - hisElo.EloAvg();
+			int e = GetElo();
+			return e - hisElo.EloAvg(e);
 		}
 
 		public bool IsComputer()
@@ -91,17 +92,17 @@ namespace RapChessGui
 			elo = CRapIni.This.Read($"player>{name}>elo",elo);
 			eloOrg = CRapIni.This.Read($"player>{name}>eloOrg", eloOrg);
 			hisElo.LoadFromStr(CRapIni.This.Read($"player>{name}>history", ""));
-			if (hisElo.list.Count == 0)
-			{
-				hisElo.Add(Convert.ToDouble(elo));
-				hisElo.Add(Convert.ToDouble(elo));
-			}
 		}
 
 		public void SaveToIni()
 		{
-			if (name == "")
-				name = GetName();
+			name = GetName();
+			if (hisElo.list.Count == 0)
+			{
+				int e = GetElo();
+				hisElo.Add(e);
+				hisElo.Add(e);
+			}
 			CRapIni.This.Write($"player>{name}>tournament", tournament);
 			CRapIni.This.Write($"player>{name}>engine", engine);
 			CRapIni.This.Write($"player>{name}>mode", modeValue.mode);
@@ -126,7 +127,9 @@ namespace RapChessGui
 
 		public string GetName()
 		{
-			string n = "Human";
+			if (name != "")
+				return name;
+				string n = "Human";
 			string b = "";
 			string m = "";
 			if (engine != "Human")
@@ -147,8 +150,7 @@ namespace RapChessGui
 
 		public void Add(CPlayer p)
 		{
-			if (p.name == "")
-				p.name = p.GetName();
+			p.name = p.GetName();
 			if (GetIndex(p.name) < 0)
 				list.Add(p);
 		}

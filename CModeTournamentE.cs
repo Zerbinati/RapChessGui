@@ -7,6 +7,7 @@ namespace RapChessGui
 	static class CModeTournamentE
 	{
 		public static bool rotate = true;
+		public static int games = 0;
 		public static int repetition = 1;
 		public static int records = 10000;
 		public static string engine = "";
@@ -113,6 +114,7 @@ namespace RapChessGui
 
 		public static void SetRepeition(CEngine e,CEngine o)
 		{
+			games = engine == e.name ? ++games : 1;
 			if( (engine != e.name)||(opponent != o.name))
 			{
 				engine = e.name;

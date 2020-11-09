@@ -60,32 +60,33 @@ namespace RapChessGui
 			return result;
 		}
 
-		public void CountGames(string p1, string p2, out int rw, out int rl, out int rd)
+		public int CountGames(string p1, string p2, out int gw, out int gl, out int gd)
 		{
-			rw = 0;
-			rl = 0;
-			rd = 0;
+			gw = 0;
+			gl = 0;
+			gd = 0;
 			foreach (CTour t in list)
 			{
 				if ((t.w == p1) && (t.b == p2))
 				{
 					if (t.r == "d")
-						rd++;
+						gd++;
 					if (t.r == "w")
-						rw++;
+						gw++;
 					if (t.r == "b")
-						rl++;
+						gl++;
 				}
 				if ((t.w == p2) && (t.b == p1))
 				{
 					if (t.r == "d")
-						rd++;
+						gd++;
 					if (t.r == "b")
-						rw++;
+						gw++;
 					if (t.r == "w")
-						rl++;
+						gl++;
 				}
 			}
+			return gw + gl + gd;
 		}
 
 		public int DeletePlayer(string p)

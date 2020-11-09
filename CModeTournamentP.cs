@@ -7,6 +7,7 @@ namespace RapChessGui
 	static class CModeTournamentP
 	{
 		public static bool rotate = false;
+		public static int games = 0;
 		public static int repetition = 1;
 		public static int records = 10000;
 		public static string player = "";
@@ -105,6 +106,7 @@ namespace RapChessGui
 
 		public static void SetRepeition(CPlayer p, CPlayer o)
 		{
+			games = player == p.name ? ++games : 1;
 			if ((player != p.name) || (opponent != o.name))
 			{
 				player = p.name;

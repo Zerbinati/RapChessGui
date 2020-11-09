@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using System.IO;
 using System.Collections.Generic;
 using System.Windows.Forms;
@@ -78,11 +79,23 @@ namespace RapChessGui
 			list = new List<double>(he.list);
 		}
 
-		public int EloAvg() {
+		public int EloAvg(int def = 0) {
 			int sum = 0;
 			foreach (int i in list)
 				sum += i;
-			return list.Count == 0 ? 0 : sum / list.Count;
+			return list.Count == 0 ? def : sum / list.Count;
+		}
+
+		public Color GetColor()
+		{
+			double elo =Last();
+			MinMax(out double min, out double max);
+			double q = (max - min) / 10;
+			if (elo > max - q)
+				return Color.FromArgb(0xe0, 0xff, 0xe0);
+			if (elo < min + q)
+				return Color.FromArgb(0xff, 0xe0, 0xe0);
+			return Color.White;
 		}
 
 		public void LoadFromStr(string elo)
@@ -107,6 +120,15 @@ namespace RapChessGui
 			int c = list.Count - 100;
 			if (c > 0)
 				list.RemoveRange(0,c);
+		}
+
+		public void Add(int value,int min,int max)
+		{
+			if (value < min)
+				value = min;
+			if (value > max)
+				value = max;
+			Add(value);
 		}
 
 		public double Last()

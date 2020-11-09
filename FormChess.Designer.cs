@@ -33,20 +33,19 @@
 			System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
 			System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
 			System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
-			System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
 			System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+			System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
 			System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
 			System.Windows.Forms.DataVisualization.Charting.Series series5 = new System.Windows.Forms.DataVisualization.Charting.Series();
-			System.Windows.Forms.DataVisualization.Charting.Series series6 = new System.Windows.Forms.DataVisualization.Charting.Series();
 			System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+			System.Windows.Forms.DataVisualization.Charting.Series series6 = new System.Windows.Forms.DataVisualization.Charting.Series();
 			System.Windows.Forms.DataVisualization.Charting.Series series7 = new System.Windows.Forms.DataVisualization.Charting.Series();
 			System.Windows.Forms.DataVisualization.Charting.Series series8 = new System.Windows.Forms.DataVisualization.Charting.Series();
-			System.Windows.Forms.DataVisualization.Charting.Series series9 = new System.Windows.Forms.DataVisualization.Charting.Series();
 			System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea5 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-			System.Windows.Forms.DataVisualization.Charting.Series series10 = new System.Windows.Forms.DataVisualization.Charting.Series();
+			System.Windows.Forms.DataVisualization.Charting.Series series9 = new System.Windows.Forms.DataVisualization.Charting.Series();
 			System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea6 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+			System.Windows.Forms.DataVisualization.Charting.Series series10 = new System.Windows.Forms.DataVisualization.Charting.Series();
 			System.Windows.Forms.DataVisualization.Charting.Series series11 = new System.Windows.Forms.DataVisualization.Charting.Series();
-			System.Windows.Forms.DataVisualization.Charting.Series series12 = new System.Windows.Forms.DataVisualization.Charting.Series();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormChess));
 			this.timerMessages = new System.Windows.Forms.Timer(this.components);
 			this.tabControl1 = new System.Windows.Forms.TabControl();
@@ -715,20 +714,13 @@
 			this.chartMatch.Name = "chartMatch";
 			this.chartMatch.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.None;
 			this.chartMatch.PaletteCustomColors = new System.Drawing.Color[] {
-        System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(0))))),
         System.Drawing.Color.Olive};
 			series2.BorderWidth = 4;
 			series2.ChartArea = "ChartArea1";
 			series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
 			series2.IsVisibleInLegend = false;
 			series2.Name = "Series1";
-			series3.BorderWidth = 4;
-			series3.ChartArea = "ChartArea1";
-			series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-			series3.IsVisibleInLegend = false;
-			series3.Name = "Series2";
 			this.chartMatch.Series.Add(series2);
-			this.chartMatch.Series.Add(series3);
 			this.chartMatch.Size = new System.Drawing.Size(358, 79);
 			this.chartMatch.TabIndex = 29;
 			this.chartMatch.Text = "chart1";
@@ -1286,12 +1278,15 @@
 			// 
 			// labEngine
 			// 
+			this.labEngine.Cursor = System.Windows.Forms.Cursors.Hand;
 			this.labEngine.Dock = System.Windows.Forms.DockStyle.Top;
 			this.labEngine.Location = new System.Drawing.Point(0, 0);
 			this.labEngine.Name = "labEngine";
 			this.labEngine.Size = new System.Drawing.Size(348, 13);
 			this.labEngine.TabIndex = 29;
 			this.labEngine.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.toolTip1.SetToolTip(this.labEngine, "Select current engine");
+			this.labEngine.Click += new System.EventHandler(this.labEngine_Click);
 			// 
 			// chartTournamentE
 			// 
@@ -1314,24 +1309,24 @@
         System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(192)))), ((int)(((byte)(0))))),
         System.Drawing.Color.Olive,
         System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))))};
+			series3.BorderWidth = 4;
+			series3.ChartArea = "ChartArea1";
+			series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+			series3.IsVisibleInLegend = false;
+			series3.Name = "Series1";
 			series4.BorderWidth = 4;
 			series4.ChartArea = "ChartArea1";
 			series4.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
 			series4.IsVisibleInLegend = false;
-			series4.Name = "Series1";
+			series4.Name = "Series2";
 			series5.BorderWidth = 4;
 			series5.ChartArea = "ChartArea1";
 			series5.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
 			series5.IsVisibleInLegend = false;
-			series5.Name = "Series2";
-			series6.BorderWidth = 4;
-			series6.ChartArea = "ChartArea1";
-			series6.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-			series6.IsVisibleInLegend = false;
-			series6.Name = "Series3";
+			series5.Name = "Series3";
+			this.chartTournamentE.Series.Add(series3);
 			this.chartTournamentE.Series.Add(series4);
 			this.chartTournamentE.Series.Add(series5);
-			this.chartTournamentE.Series.Add(series6);
 			this.chartTournamentE.Size = new System.Drawing.Size(348, 116);
 			this.chartTournamentE.TabIndex = 30;
 			this.chartTournamentE.Text = "chart1";
@@ -1350,6 +1345,7 @@
 			// 
 			// cbTourEBook
 			// 
+			this.cbTourEBook.Cursor = System.Windows.Forms.Cursors.Hand;
 			this.cbTourEBook.Dock = System.Windows.Forms.DockStyle.Top;
 			this.cbTourEBook.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.cbTourEBook.FormattingEnabled = true;
@@ -1394,6 +1390,7 @@
 			// 
 			// cbTourEMode
 			// 
+			this.cbTourEMode.Cursor = System.Windows.Forms.Cursors.Hand;
 			this.cbTourEMode.Dock = System.Windows.Forms.DockStyle.Top;
 			this.cbTourEMode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.cbTourEMode.FormattingEnabled = true;
@@ -1412,6 +1409,7 @@
 			// 
 			// butTourEStart
 			// 
+			this.butTourEStart.Cursor = System.Windows.Forms.Cursors.Hand;
 			this.butTourEStart.Dock = System.Windows.Forms.DockStyle.Top;
 			this.butTourEStart.Location = new System.Drawing.Point(3, 3);
 			this.butTourEStart.Name = "butTourEStart";
@@ -1561,12 +1559,15 @@
 			// 
 			// labPlayer
 			// 
+			this.labPlayer.Cursor = System.Windows.Forms.Cursors.Hand;
 			this.labPlayer.Dock = System.Windows.Forms.DockStyle.Top;
 			this.labPlayer.Location = new System.Drawing.Point(0, 0);
 			this.labPlayer.Name = "labPlayer";
 			this.labPlayer.Size = new System.Drawing.Size(354, 13);
 			this.labPlayer.TabIndex = 27;
 			this.labPlayer.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.toolTip1.SetToolTip(this.labPlayer, "Select current player");
+			this.labPlayer.Click += new System.EventHandler(this.labPlayer_Click);
 			// 
 			// chartTournamentP
 			// 
@@ -1586,27 +1587,27 @@
 			this.chartTournamentP.Name = "chartTournamentP";
 			this.chartTournamentP.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.None;
 			this.chartTournamentP.PaletteCustomColors = new System.Drawing.Color[] {
-        System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(128)))), ((int)(((byte)(0))))),
+        System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(192)))), ((int)(((byte)(0))))),
         System.Drawing.Color.Olive,
-        System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))))};
+        System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))))};
+			series6.BorderWidth = 4;
+			series6.ChartArea = "ChartArea1";
+			series6.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+			series6.IsVisibleInLegend = false;
+			series6.Name = "Series1";
 			series7.BorderWidth = 4;
 			series7.ChartArea = "ChartArea1";
 			series7.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
 			series7.IsVisibleInLegend = false;
-			series7.Name = "Series1";
+			series7.Name = "Series2";
 			series8.BorderWidth = 4;
 			series8.ChartArea = "ChartArea1";
 			series8.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
 			series8.IsVisibleInLegend = false;
-			series8.Name = "Series2";
-			series9.BorderWidth = 4;
-			series9.ChartArea = "ChartArea1";
-			series9.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-			series9.IsVisibleInLegend = false;
-			series9.Name = "Series3";
+			series8.Name = "Series3";
+			this.chartTournamentP.Series.Add(series6);
 			this.chartTournamentP.Series.Add(series7);
 			this.chartTournamentP.Series.Add(series8);
-			this.chartTournamentP.Series.Add(series9);
 			this.chartTournamentP.Size = new System.Drawing.Size(354, 145);
 			this.chartTournamentP.TabIndex = 31;
 			this.chartTournamentP.Text = "chart1";
@@ -1614,6 +1615,7 @@
 			// 
 			// butStartTournament
 			// 
+			this.butStartTournament.Cursor = System.Windows.Forms.Cursors.Hand;
 			this.butStartTournament.Dock = System.Windows.Forms.DockStyle.Top;
 			this.butStartTournament.Location = new System.Drawing.Point(0, 0);
 			this.butStartTournament.Name = "butStartTournament";
@@ -1658,12 +1660,12 @@
 			this.chartTraining.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.None;
 			this.chartTraining.PaletteCustomColors = new System.Drawing.Color[] {
         System.Drawing.Color.Olive};
-			series10.BorderWidth = 4;
-			series10.ChartArea = "ChartArea1";
-			series10.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-			series10.IsVisibleInLegend = false;
-			series10.Name = "Series1";
-			this.chartTraining.Series.Add(series10);
+			series9.BorderWidth = 4;
+			series9.ChartArea = "ChartArea1";
+			series9.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+			series9.IsVisibleInLegend = false;
+			series9.Name = "Series1";
+			this.chartTraining.Series.Add(series9);
 			this.chartTraining.Size = new System.Drawing.Size(352, 89);
 			this.chartTraining.TabIndex = 29;
 			this.chartTraining.Text = "chart1";
@@ -2886,15 +2888,15 @@
 			this.chartMain.PaletteCustomColors = new System.Drawing.Color[] {
         System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(0))))),
         System.Drawing.Color.Olive};
+			series10.ChartArea = "ChartArea1";
+			series10.CustomProperties = "PointWidth=1";
+			series10.IsVisibleInLegend = false;
+			series10.Name = "Series1";
 			series11.ChartArea = "ChartArea1";
 			series11.CustomProperties = "PointWidth=1";
-			series11.IsVisibleInLegend = false;
-			series11.Name = "Series1";
-			series12.ChartArea = "ChartArea1";
-			series12.CustomProperties = "PointWidth=1";
-			series12.Name = "Series2";
+			series11.Name = "Series2";
+			this.chartMain.Series.Add(series10);
 			this.chartMain.Series.Add(series11);
-			this.chartMain.Series.Add(series12);
 			this.chartMain.Size = new System.Drawing.Size(388, 153);
 			this.chartMain.TabIndex = 0;
 			this.chartMain.Text = "chart1";
@@ -4050,7 +4052,6 @@
 		private System.Windows.Forms.ToolStripMenuItem gamesToolStripMenuItem;
 		public System.Windows.Forms.DataVisualization.Charting.Chart chartGame;
 		public System.Windows.Forms.DataVisualization.Charting.Chart chartTraining;
-		public System.Windows.Forms.DataVisualization.Charting.Chart chartMatch;
 		private System.Windows.Forms.SplitContainer scTournamentEList;
 		private System.Windows.Forms.ListView lvEngine;
 		private System.Windows.Forms.ColumnHeader columnHeader23;
@@ -4105,6 +4106,7 @@
 		private System.Windows.Forms.Label labScoreB;
 		private System.Windows.Forms.Label labColB;
 		private System.Windows.Forms.Label labPonderB;
+		private System.Windows.Forms.DataVisualization.Charting.Chart chartMatch;
 	}
 }
 

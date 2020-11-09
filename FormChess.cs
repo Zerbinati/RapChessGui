@@ -95,15 +95,15 @@ namespace RapChessGui
 			if (engineList.list.Count == 0)
 			{
 				CEngine e;
-				e = new CEngine(CEngineList.def);
+				e = new CEngine();
 				e.file = "RapChessCs.exe";
 				e.elo = "1100";
 				engineList.Add(e);
-				e = new CEngine("RapSimple CS");
+				e = new CEngine();
 				e.file = "RapSimpleCs.exe";
 				e.elo = "1000";
 				engineList.Add(e);
-				e = new CEngine("RapShort CS");
+				e = new CEngine();
 				e.file = "RapShortCs.exe";
 				e.elo = "900";
 				engineList.Add(e);
@@ -152,56 +152,56 @@ namespace RapChessGui
 			if (playerList.GetPlayerComputer() == null)
 			{
 				CPlayer p = new CPlayer();
-				p.engine = "RapChess CS";
+				p.engine = "RapChessCs";
 				p.book = "Rand90";
 				p.modeValue.mode = "Time";
 				p.modeValue.value = 10;
 				p.elo = "200";
 				playerList.Add(p);
 				p = new CPlayer();
-				p.engine = "RapChess CS";
+				p.engine = "RapChessCs";
 				p.book = "Rand70";
 				p.modeValue.mode = "Time";
 				p.modeValue.value = 10;
 				p.elo = "400";
 				playerList.Add(p);
 				p = new CPlayer();
-				p.engine = "RapChess CS";
+				p.engine = "RapChessCs";
 				p.book = "Rand50";
 				p.modeValue.mode = "Time";
 				p.modeValue.value = 10;
 				p.elo = "600";
 				playerList.Add(p);
 				p = new CPlayer();
-				p.engine = "RapChess CS";
+				p.engine = "RapChessCs";
 				p.book = "Rand30";
 				p.modeValue.mode = "Time";
 				p.modeValue.value = 10;
 				p.elo = "800";
 				playerList.Add(p);
 				p = new CPlayer();
-				p.engine = "RapChess CS";
+				p.engine = "RapChessCs";
 				p.book = "Rand10";
 				p.modeValue.mode = "Time";
 				p.modeValue.value = 10;
 				p.elo = "1000";
 				playerList.Add(p);
 				p = new CPlayer();
-				p.engine = "RapShort CS";
+				p.engine = "RapShortCs";
 				p.book = "Eco";
 				p.modeValue.mode = "Time";
 				p.modeValue.value = 10;
 				p.elo = "500";
 				playerList.Add(p);
 				p = new CPlayer();
-				p.engine = "RapSimple CS";
+				p.engine = "RapSimpleCs";
 				p.book = "Eco";
 				p.modeValue.mode = "Time";
 				p.modeValue.value = 10;
 				p.elo = "1000";
 				playerList.Add(p);
 				p = new CPlayer();
-				p.engine = "RapChess CS";
+				p.engine = "RapChessCs";
 				p.book = "Eco";
 				p.modeValue.mode = "Time";
 				p.modeValue.value = 10;
@@ -879,115 +879,6 @@ namespace RapChessGui
 			return result;
 		}
 
-		void ShowHistoryTourE()
-		{
-			if (lvEngine.SelectedItems.Count == 0)
-				return;
-			ListViewItem top2 = null;
-			ListViewItem item = lvEngine.SelectedItems[0];
-			string name = item.SubItems[0].Text;
-			CEngineList engineList = CModeTournamentE.engineList;
-			CEngine engine = engineList.GetEngine(name);
-			lvEngineH.Items.Clear();
-			engineList.Sort();
-			engineList.FillPosition();
-			int countGames = 0;
-			int opponents = 0;
-			foreach (CEngine e in engineList.list)
-			{
-				CModeTournamentE.tourList.CountGames(name, e.name, out int rw, out int rl, out int rd);
-				int count = rw + rl + rd;
-				if (count > 0)
-				{
-					opponents++;
-					int pro = (rw * 200 + rd * 100) / count - 100;
-					int elo = Convert.ToInt32(engine.elo) - Convert.ToInt32(e.elo);
-					ListViewItem lvi = new ListViewItem(new[] { e.name, elo.ToString(), count.ToString(), pro.ToString() });
-					if (elo > 0)
-						lvi.BackColor = Color.FromArgb(0xff, 0xe0, 0xe0);
-					if (elo < 0)
-						lvi.BackColor = Color.FromArgb(0xe0, 0xff, 0xe0);
-					if (elo == 0)
-						lvi.BackColor = Color.FromArgb(0xff, 0xff, 0xff);
-					lvEngineH.Items.Add(lvi);
-					int up = (lvEngineH.ClientRectangle.Height / lvi.Bounds.Height) >> 1;
-					int del = engine.position - e.position;
-					if (del >= up)
-						top2 = lvi;
-				}
-				countGames += count;
-			}
-			labEngine.Text = $"{engine.name} games {countGames} opponents {opponents}/{CModeTournamentE.engineList.list.Count}";
-			if (top2 != null)
-				lvEngineH.TopItem = top2;
-			CData.HisToPoints(engine.hisElo, chartTournamentE.Series[1].Points);
-			CEngine eb = engineList.NextTournament(engine, false, true);
-			if (eb != null)
-				CData.HisToPoints(eb.hisElo, chartTournamentE.Series[0].Points);
-			else
-				chartTournamentE.Series[0].Points.Clear();
-			CEngine en = engineList.NextTournament(engine, false, false);
-			if (en != null)
-				CData.HisToPoints(en.hisElo, chartTournamentE.Series[2].Points);
-			else
-				chartTournamentE.Series[2].Points.Clear();
-		}
-
-		void ShowHistoryTourP()
-		{
-			if (lvPlayer.SelectedItems.Count == 0)
-				return;
-			ListViewItem top2 = null;
-			ListViewItem item = lvPlayer.SelectedItems[0];
-			string name = item.SubItems[0].Text;
-			CPlayerList playerList = CModeTournamentP.playerList;
-			CPlayer player = playerList.GetPlayer(name);
-			lvPlayerH.Items.Clear();
-			playerList.Sort();
-			playerList.FillPosition();
-			int countGames = 0;
-			int opponents = 0;
-			foreach (CPlayer p in playerList.list)
-				if (p.engine != "Human")
-				{
-					CModeTournamentP.tourList.CountGames(name, p.name, out int rw, out int rl, out int rd);
-					int count = rw + rl + rd;
-					if (count > 0)
-					{
-						opponents++;
-						int pro = (rw * 200 + rd * 100) / count - 100;
-						int elo = Convert.ToInt32(player.elo) - Convert.ToInt32(p.elo);
-						ListViewItem lvi = new ListViewItem(new[] { p.name, elo.ToString(), count.ToString(), pro.ToString() });
-						if (elo > 0)
-							lvi.BackColor = Color.FromArgb(0xff, 0xe0, 0xe0);
-						if (elo < 0)
-							lvi.BackColor = Color.FromArgb(0xe0, 0xff, 0xe0);
-						if (elo == 0)
-							lvi.BackColor = Color.FromArgb(0xff, 0xff, 0xff);
-						lvPlayerH.Items.Add(lvi);
-						int up = (lvPlayerH.ClientRectangle.Height / lvi.Bounds.Height) >> 1;
-						int del = player.position - p.position;
-						if (del >= up)
-							top2 = lvi;
-					}
-					countGames += count;
-				}
-			labPlayer.Text = $"{player.name} games {countGames} opponents {opponents}/{CModeTournamentP.playerList.list.Count}";
-			if (top2 != null)
-				lvPlayerH.TopItem = top2;
-			CData.HisToPoints(player.hisElo, chartTournamentP.Series[1].Points);
-			CPlayer pb = playerList.NextTournament(player, false, true);
-			if (pb != null)
-				CData.HisToPoints(pb.hisElo, chartTournamentP.Series[0].Points);
-			else
-				chartTournamentP.Series[0].Points.Clear();
-			CPlayer pn = playerList.NextTournament(player, false, false);
-			if (pn != null)
-				CData.HisToPoints(pn.hisElo, chartTournamentP.Series[2].Points);
-			else
-				chartTournamentP.Series[2].Points.Clear();
-		}
-
 		void ShowFormLastGame(string name)
 		{
 			FormLastGame.lastName = name;
@@ -1591,24 +1482,11 @@ namespace RapChessGui
 			labMatch22.Text = CModeMatch.win.ToString();
 			labMatch23.Text = CModeMatch.draw.ToString();
 			labMatch24.Text = $"{Math.Round(CModeMatch.Result(true))}%";
-			CHisElo his1 = CModeMatch.his1;
-			CHisElo his2 = CModeMatch.his2;
-			if (CModeMatch.rotate)
-			{
-				his1 = CModeMatch.his2;
-				his2 = CModeMatch.his1;
-			}
-			CData.HisToPoints(his1, chartMatch.Series[0].Points);
-			CData.HisToPoints(his2, chartMatch.Series[1].Points);
+			CData.HisToPoints(CModeMatch.his, chartMatch.Series[0].Points);
 		}
 
-		void MatchStart(bool add)
+		void MatchStart()
 		{
-			if (add)
-			{
-				CModeMatch.his1.Add(CModeMatch.Result(false));
-				CModeMatch.his2.Add(CModeMatch.Result(true));
-			}
 			CModeMatch.engine1 = cbEngine1.Text;
 			CModeMatch.engine2 = cbEngine2.Text;
 			CModeMatch.modeValue1.mode = cbMode1.Text;
@@ -1661,6 +1539,7 @@ namespace RapChessGui
 				CModeMatch.draw++;
 
 			}
+			CModeMatch.his.Add(CModeMatch.win - CModeMatch.loose);
 			if (ranked)
 				CModeTournamentE.tourList.Write(plw.engine, plb.engine, r);
 			CModeMatch.SaveToIni();
@@ -1678,17 +1557,9 @@ namespace RapChessGui
 			CModeTournamentE.FillList();
 			foreach (CEngine e in CModeTournamentE.engineList.list)
 			{
-				int elo = e.GetElo();
 				int del = e.GetDeltaElo();
-				e.hisElo.MinMax(out double min, out double max);
-				double q = (max - min) / 10;
 				ListViewItem lvi = new ListViewItem(new[] { e.name, e.elo, del.ToString() });
-				if (elo > max - q)
-					lvi.BackColor = Color.FromArgb(0xe0, 0xff, 0xe0);
-				else if (elo < min + q)
-					lvi.BackColor = Color.FromArgb(0xff, 0xe0, 0xe0);
-				else
-					lvi.BackColor = Color.FromArgb(0xff, 0xff, 0xff);
+				lvi.BackColor = e.hisElo.GetColor();
 				lvEngine.Items.Add(lvi);
 			}
 		}
@@ -1699,19 +1570,84 @@ namespace RapChessGui
 				foreach (ListViewItem lvi in lvEngine.Items)
 					if (lvi.Text == e.name)
 					{
-						int elo = e.GetElo();
 						int del = e.GetDeltaElo();
-						e.hisElo.MinMax(out double min, out double max);
-						double q = (max - min) / 10;
 						lvi.SubItems[1].Text = e.elo;
 						lvi.SubItems[2].Text = del.ToString();
-						if (elo > max - q)
-							lvi.BackColor = Color.FromArgb(0xe0, 0xff, 0xe0);
-						else if (elo < min + q)
-							lvi.BackColor = Color.FromArgb(0xff, 0xe0, 0xe0);
-						else
-							lvi.BackColor = Color.FromArgb(0xff, 0xff, 0xff);
+						lvi.BackColor = e.hisElo.GetColor();
 					}
+		}
+
+		void TournamentEShowHistory()
+		{
+			if (lvEngine.SelectedItems.Count == 0)
+				return;
+			ListViewItem top2 = null;
+			ListViewItem item = lvEngine.SelectedItems[0];
+			string name = item.SubItems[0].Text;
+			CEngineList engineList = CModeTournamentE.engineList;
+			CEngine engine = engineList.GetEngine(name);
+			lvEngineH.Items.Clear();
+			engineList.Sort();
+			engineList.FillPosition();
+			int countGames = 0;
+			int opponents = 0;
+			foreach (CEngine e in engineList.list)
+			{
+				int count = CModeTournamentE.tourList.CountGames(name, e.name, out int gw, out int gl, out int gd);
+				if (count > 0)
+				{
+					opponents++;
+					int pro = (gw * 200 + gd * 100) / count - 100;
+					int elo = Convert.ToInt32(engine.elo) - Convert.ToInt32(e.elo);
+					ListViewItem lvi = new ListViewItem(new[] { e.name, elo.ToString(), count.ToString(), pro.ToString() });
+					if (elo > 0)
+						lvi.BackColor = Color.FromArgb(0xff, 0xe0, 0xe0);
+					if (elo < 0)
+						lvi.BackColor = Color.FromArgb(0xe0, 0xff, 0xe0);
+					if (elo == 0)
+						lvi.BackColor = Color.FromArgb(0xff, 0xff, 0xff);
+					lvEngineH.Items.Add(lvi);
+					int up = (lvEngineH.ClientRectangle.Height / lvi.Bounds.Height) >> 1;
+					int del = engine.position - e.position;
+					if (del >= up)
+						top2 = lvi;
+				}
+				countGames += count;
+			}
+			int rep1 = engine.name == CModeTournamentE.engine ? CModeTournamentE.games : 0;
+			int rep2 = engine.name == CModeTournamentE.engine ? CModeTournamentE.repetition : engine.tournament - 1;
+			labEngine.BackColor = engine.hisElo.GetColor();
+			labEngine.Text = $"{engine.name} games {countGames} opponents {opponents}/{CModeTournamentE.engineList.list.Count} repetitions {rep1}/{rep2}";
+			if (top2 != null)
+				lvEngineH.TopItem = top2;
+			CData.HisToPoints(engine.hisElo, chartTournamentE.Series[1].Points);
+			CEngine eb = engineList.NextTournament(engine, false, true);
+			if (eb != null)
+				CData.HisToPoints(eb.hisElo, chartTournamentE.Series[0].Points);
+			else
+				chartTournamentE.Series[0].Points.Clear();
+			CEngine en = engineList.NextTournament(engine, false, false);
+			if (en != null)
+				CData.HisToPoints(en.hisElo, chartTournamentE.Series[2].Points);
+			else
+				chartTournamentE.Series[2].Points.Clear();
+		}
+
+		void TournamentESelect()
+		{
+			foreach (ListViewItem lvi in lvEngine.Items)
+				if (lvi.Text == CModeTournamentE.engine)
+				{
+					int top = lvi.Index - ((lvEngine.ClientRectangle.Height / lvi.Bounds.Height) >> 1);
+					if (top < 0)
+						top = 0;
+					lvi.Selected = true;
+					lvEngine.TopItem = lvEngine.Items[top];
+					lvEngine.Sort();
+					lvEngine.Focus();
+					TournamentEShowHistory();
+					break;
+				}
 		}
 
 		void TournamentEStart()
@@ -1740,19 +1676,7 @@ namespace RapChessGui
 			CModeTournamentE.SetRepeition(e1, e2);
 			GamerList.gamer[CModeTournamentE.rotate ? 1 : 0].SetPlayer(p1);
 			GamerList.gamer[CModeTournamentE.rotate ? 0 : 1].SetPlayer(p2);
-			foreach (ListViewItem lvi in lvEngine.Items)
-				if (lvi.Text == CModeTournamentE.engine)
-				{
-					int top = lvi.Index - ((lvEngine.ClientRectangle.Height / lvi.Bounds.Height) >> 1);
-					if (top < 0)
-						top = 0;
-					lvi.Selected = true;
-					lvEngine.TopItem = lvEngine.Items[top];
-					lvEngine.Sort();
-					lvEngine.Focus();
-					ShowHistoryTourE();
-					break;
-				}
+			TournamentESelect();
 			Clear();
 			PrepareGamers();
 		}
@@ -1771,6 +1695,7 @@ namespace RapChessGui
 			int optL = engineList.GetOptElo(indexL);
 			int OW = optW;
 			int OL = optL;
+			int mod = 0;
 			if (!isDraw)
 			{
 				if (eloW <= eloL)
@@ -1786,6 +1711,10 @@ namespace RapChessGui
 					OW = engineList.GetOptElo(indexW + 1);
 				string r = gw.player == plw ? "w" : "b";
 				CModeTournamentE.tourList.Write(plw.engine, plb.engine, r);
+				int cg = CModeTournamentE.tourList.CountGames(CModeTournamentE.engine,CModeTournamentE.opponent,out _,out _,out _);
+				mod = ((100 - cg) * 10) / 100;
+				if (mod < 1)
+					mod = 1;
 			}
 			else
 			{
@@ -1794,10 +1723,10 @@ namespace RapChessGui
 				OL = opt;
 				CModeTournamentE.tourList.Write(plw.engine, plb.engine, "d");
 			}
-			int newW = Convert.ToInt32(eloW * 0.9 + Math.Max(OW, eloL) * 0.1);
-			int newL = Convert.ToInt32(eloL * 0.9 + Math.Min(OL, eloW) * 0.1);
-			ew.hisElo.Add(newW);
-			el.hisElo.Add(newL);
+			int newW = Convert.ToInt32(eloW * 0.9 + Math.Max(OW, eloL) * 0.1 + mod);
+			int newL = Convert.ToInt32(eloL * 0.9 + Math.Min(OL, eloW) * 0.1 - mod);
+			ew.hisElo.Add(newW,1,2999);
+			el.hisElo.Add(newL,1,2999);
 			ew.elo = newW.ToString();
 			el.elo = newL.ToString();
 			ew.SaveToIni();
@@ -1813,17 +1742,9 @@ namespace RapChessGui
 			foreach (CPlayer p in CModeTournamentP.playerList.list)
 				if (p.IsComputer())
 				{
-					int elo = p.GetElo();
 					int del = p.GetDeltaElo();
-					p.hisElo.MinMax(out double min, out double max);
-					double q = (max - min) / 10;
 					ListViewItem lvi = new ListViewItem(new[] { p.name, p.elo, del.ToString().ToString() });
-					if (elo > max - q)
-						lvi.BackColor = Color.FromArgb(0xe0, 0xff, 0xe0);
-					else if (elo < min + q)
-						lvi.BackColor = Color.FromArgb(0xff, 0xe0, 0xe0);
-					else
-						lvi.BackColor = Color.FromArgb(0xff, 0xff, 0xff);
+					lvi.BackColor = p.hisElo.GetColor();
 					lvPlayer.Items.Add(lvi);
 				}
 		}
@@ -1833,18 +1754,84 @@ namespace RapChessGui
 			foreach (ListViewItem lvi in lvPlayer.Items)
 				if (lvi.Text == p.name)
 				{
-					int elo = p.GetElo();
 					int del = p.GetDeltaElo();
-					p.hisElo.MinMax(out double min, out double max);
-					double q = (max - min) / 10;
 					lvi.SubItems[1].Text = p.elo;
 					lvi.SubItems[2].Text = del.ToString();
-					if (elo > max - q)
-						lvi.BackColor = Color.FromArgb(0xe0, 0xff, 0xe0);
-					else if (elo < min + q)
-						lvi.BackColor = Color.FromArgb(0xff, 0xe0, 0xe0);
-					else
-						lvi.BackColor = Color.FromArgb(0xff, 0xff, 0xff);
+					lvi.BackColor = p.hisElo.GetColor();
+				}
+		}
+
+		void TournamentPShowHistory()
+		{
+			if (lvPlayer.SelectedItems.Count == 0)
+				return;
+			ListViewItem top2 = null;
+			ListViewItem item = lvPlayer.SelectedItems[0];
+			string name = item.SubItems[0].Text;
+			CPlayerList playerList = CModeTournamentP.playerList;
+			CPlayer player = playerList.GetPlayer(name);
+			lvPlayerH.Items.Clear();
+			playerList.Sort();
+			playerList.FillPosition();
+			int countGames = 0;
+			int opponents = 0;
+			foreach (CPlayer p in playerList.list)
+				if (p.engine != "Human")
+				{
+					int count = CModeTournamentP.tourList.CountGames(name, p.name, out int gw, out int gl, out int gd);
+					if (count > 0)
+					{
+						opponents++;
+						int pro = (gw * 200 + gd * 100) / count - 100;
+						int elo = Convert.ToInt32(player.elo) - Convert.ToInt32(p.elo);
+						ListViewItem lvi = new ListViewItem(new[] { p.name, elo.ToString(), count.ToString(), pro.ToString() });
+						if (elo > 0)
+							lvi.BackColor = Color.FromArgb(0xff, 0xe0, 0xe0);
+						if (elo < 0)
+							lvi.BackColor = Color.FromArgb(0xe0, 0xff, 0xe0);
+						if (elo == 0)
+							lvi.BackColor = Color.FromArgb(0xff, 0xff, 0xff);
+						lvPlayerH.Items.Add(lvi);
+						int up = (lvPlayerH.ClientRectangle.Height / lvi.Bounds.Height) >> 1;
+						int del = player.position - p.position;
+						if (del >= up)
+							top2 = lvi;
+					}
+					countGames += count;
+				}
+			int rep1 = player.name == CModeTournamentP.player ? CModeTournamentP.games : 0;
+			int rep2 = player.name == CModeTournamentP.player ? CModeTournamentP.repetition : player.tournament - 1;
+			labPlayer.BackColor = player.hisElo.GetColor();
+			labPlayer.Text = $"{player.name} games {countGames} opponents {opponents}/{CModeTournamentP.playerList.list.Count} repetitions {rep1}/{rep2}";
+			if (top2 != null)
+				lvPlayerH.TopItem = top2;
+			CData.HisToPoints(player.hisElo, chartTournamentP.Series[1].Points);
+			CPlayer pb = playerList.NextTournament(player, false, true);
+			if (pb != null)
+				CData.HisToPoints(pb.hisElo, chartTournamentP.Series[0].Points);
+			else
+				chartTournamentP.Series[0].Points.Clear();
+			CPlayer pn = playerList.NextTournament(player, false, false);
+			if (pn != null)
+				CData.HisToPoints(pn.hisElo, chartTournamentP.Series[2].Points);
+			else
+				chartTournamentP.Series[2].Points.Clear();
+		}
+
+		void TournamentPSelect()
+		{
+			foreach (ListViewItem lvi in lvPlayer.Items)
+				if (lvi.Text == CModeTournamentP.player)
+				{
+					int top = lvi.Index - ((lvPlayer.ClientRectangle.Height / lvi.Bounds.Height) >> 1);
+					if (top < 0)
+						top = 0;
+					lvi.Selected = true;
+					lvPlayer.TopItem = lvPlayer.Items[top];
+					lvPlayer.Sort();
+					lvPlayer.Focus();
+					TournamentPShowHistory();
+					break;
 				}
 		}
 
@@ -1858,19 +1845,7 @@ namespace RapChessGui
 			CModeTournamentP.SetRepeition(p1, p2);
 			GamerList.gamer[CModeTournamentP.rotate ? 1 : 0].SetPlayer(p1);
 			GamerList.gamer[CModeTournamentP.rotate ? 0 : 1].SetPlayer(p2);
-			foreach (ListViewItem lvi in lvPlayer.Items)
-				if (lvi.Text == CModeTournamentP.player)
-				{
-					int top = lvi.Index - ((lvPlayer.ClientRectangle.Height / lvi.Bounds.Height) >> 1);
-					if (top < 0)
-						top = 0;
-					lvi.Selected = true;
-					lvPlayer.TopItem = lvPlayer.Items[top];
-					lvPlayer.Sort();
-					lvPlayer.Focus();
-					ShowHistoryTourP();
-					break;
-				}
+			TournamentPSelect();
 			Clear();
 			PrepareGamers();
 		}
@@ -1887,6 +1862,7 @@ namespace RapChessGui
 			int optL = playerList.GetOptElo(indexL);
 			int OW = optW;
 			int OL = optL;
+			int mod = 0;
 			if (!isDraw)
 			{
 				if (eloW <= eloL)
@@ -1902,6 +1878,10 @@ namespace RapChessGui
 					OW = engineList.GetOptElo(indexW + 1);
 				string r = pw == plw ? "w" : "b";
 				CModeTournamentP.tourList.Write(plw.name, plb.name, r);
+				int cg = CModeTournamentP.tourList.CountGames(CModeTournamentE.engine, CModeTournamentE.opponent, out _, out _, out _);
+				mod = ((100 - cg) * 10) / 100;
+				if (mod < 1)
+					mod = 1;
 			}
 			else
 			{
@@ -1910,10 +1890,10 @@ namespace RapChessGui
 				OL = opt;
 				CModeTournamentP.tourList.Write(plw.name, plb.name, "d");
 			}
-			int newW = Convert.ToInt32(eloW * 0.9 + Math.Max(OW, eloL) * 0.1);
-			int newL = Convert.ToInt32(eloL * 0.9 + Math.Min(OL, eloW) * 0.1);
-			pw.hisElo.Add(newW);
-			pl.hisElo.Add(newL);
+			int newW = Convert.ToInt32(eloW * 0.9 + Math.Max(OW, eloL) * 0.1 + mod);
+			int newL = Convert.ToInt32(eloL * 0.9 + Math.Min(OL, eloW) * 0.1 - mod);
+			pw.hisElo.Add(newW,1,2999);
+			pl.hisElo.Add(newL,1,2999);
 			pw.elo = newW.ToString();
 			pl.elo = newL.ToString();
 			pw.SaveToIni();
@@ -2149,7 +2129,7 @@ namespace RapChessGui
 			switch (CData.gameMode)
 			{
 				case CGameMode.match:
-					MatchStart(true);
+					MatchStart();
 					break;
 				case CGameMode.tourE:
 					TournamentEStart();
@@ -2211,7 +2191,7 @@ namespace RapChessGui
 		private void bStartMatch_Click(object sender, EventArgs e)
 		{
 			CModeMatch.Reset();
-			MatchStart(true);
+			MatchStart();
 		}
 
 		private void pictureBox1_MouseMove(object sender, MouseEventArgs e)
@@ -2354,7 +2334,7 @@ namespace RapChessGui
 		private void butContinueMatch_Click(object sender, EventArgs e)
 		{
 			CModeMatch.SaveToIni();
-			MatchStart(false);
+			MatchStart();
 		}
 
 		private void butDefault_Click(object sender, EventArgs e)
@@ -2513,7 +2493,7 @@ namespace RapChessGui
 
 		private void lvEngine_SelectedIndexChanged(object sender, EventArgs e)
 		{
-			ShowHistoryTourE();
+			TournamentEShowHistory();
 		}
 
 		private void lv_ColumnClick(object sender, ColumnClickEventArgs e)
@@ -2591,7 +2571,7 @@ namespace RapChessGui
 
 		private void lvPlayer_SelectedIndexChanged(object sender, EventArgs e)
 		{
-			ShowHistoryTourP();
+			TournamentPShowHistory();
 		}
 
 		private void butEditStart_Click(object sender, EventArgs e)
@@ -2599,7 +2579,17 @@ namespace RapChessGui
 			LoadFen(Chess.GetFen());
 		}
 
+		private void labEngine_Click(object sender, EventArgs e)
+		{
+			TournamentESelect();
+		}
+
+		private void labPlayer_Click(object sender, EventArgs e)
+		{
+			TournamentPSelect();
+		}
 
 		#endregion
+
 	}
 }

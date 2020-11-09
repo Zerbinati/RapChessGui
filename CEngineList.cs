@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using RapIni;
 
 namespace RapChessGui
@@ -10,13 +11,17 @@ namespace RapChessGui
 		public int distance = 0;
 		public int position = 0;
 		public int tournament = 1;
-		public string name = "Human";
+		public string name = "";
 		public string file = "";
 		public string protocol = "Uci";
 		public string parameters = "";
 		public string elo = "1000";
 		public List<string> options = new List<string>();
 		public CHisElo hisElo = new CHisElo();
+
+		public CEngine()
+		{
+		}
 
 		public CEngine(string n)
 		{
@@ -33,15 +38,17 @@ namespace RapChessGui
 			options = CRapIni.This.ReadList($"engine>{name}>options");
 			elo = CRapIni.This.Read($"engine>{name}>elo", "1000");
 			hisElo.LoadFromStr(CRapIni.This.Read($"engine>{name}>history", ""));
-			if (hisElo.list.Count == 0)
-			{
-				hisElo.Add(Convert.ToDouble(elo));
-				hisElo.Add(Convert.ToDouble(elo));
-			}
 		}
 
 		public void SaveToIni()
 		{
+			name = GetName();
+			if (hisElo.list.Count == 0)
+			{
+				int e = GetElo();
+				hisElo.Add(e);
+				hisElo.Add(e);
+			}
 			CRapIni.This.Write($"engine>{name}>tournament", tournament);
 			CRapIni.This.Write($"engine>{name}>modeStandard", modeStandard);
 			CRapIni.This.Write($"engine>{name}>file", file);
@@ -54,12 +61,20 @@ namespace RapChessGui
 
 		public int GetDeltaElo()
 		{
-			return Convert.ToInt32(elo) - hisElo.EloAvg();
+			int e = GetElo();
+			return e - hisElo.EloAvg(e);
 		}
 
 		public int GetElo()
 		{
 			return Convert.ToInt32(elo);
+		}
+
+		public string GetName()
+		{
+			if (name != "")
+				return name;
+			return Path.GetFileNameWithoutExtension(file);
 		}
 
 		public bool IsXb()
@@ -71,11 +86,12 @@ namespace RapChessGui
 
 	public class CEngineList
 	{
-		public const string def = "RapChess CS";
+		public const string def = "RapChessCs";
 		public List<CEngine> list = new List<CEngine>();
 
 		public void Add(CEngine e)
 		{
+			e.name = e.GetName();
 			if (GetIndex(e.name) < 0)
 				list.Add(e);
 		}
