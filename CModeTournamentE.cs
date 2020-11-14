@@ -41,13 +41,13 @@ namespace RapChessGui
 			rotate = true;
 			repetition = 1;
 			opponent = "";
-	}
+		}
 
 		public static void FillList()
 		{
 			engineList.list.Clear();
 			foreach (CEngine e in FormChess.engineList.list)
-				if ((e.tournament > 0) && ((modeValue.mode != "Standard")||e.modeStandard))
+				if ((e.tournament > 0) && ((modeValue.mode != "Standard") || e.modeStandard))
 					engineList.Add(e);
 		}
 
@@ -63,7 +63,7 @@ namespace RapChessGui
 			int count2 = (rw2 + rl2 + rd2);
 			if (count1 * 1.1 <= count2 << 1)
 				return engine1;
-			if (count2  * 1.1 <= count1 >> 1)
+			if (count2 * 1.1 <= count1 >> 1)
 				return engine2;
 			return null;
 		}
@@ -112,10 +112,10 @@ namespace RapChessGui
 			return el[0];
 		}
 
-		public static void SetRepeition(CEngine e,CEngine o)
+		public static void SetRepeition(CEngine e, CEngine o)
 		{
 			games = engine == e.name ? ++games : 1;
-			if( (engine != e.name)||(opponent != o.name))
+			if ((engine != e.name) || (opponent == ""))
 			{
 				engine = e.name;
 				opponent = o.name;

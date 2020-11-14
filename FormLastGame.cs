@@ -46,7 +46,7 @@ namespace RapChessGui
 
 		private void saveToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			string fn = $"History\\{lastName} {DateTime.Now.ToString("yyyy-MM-dd hh-mm-ss")}.rtf";
+			string fn = $"History\\{lastName} {DateTime.Now:yyyy-MM-dd hh-mm-ss}.rtf";
 			richTextBox1.SaveFile(fn);
 			MessageBox.Show($"File {fn} has been saved");
 		}

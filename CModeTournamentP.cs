@@ -107,7 +107,7 @@ namespace RapChessGui
 		public static void SetRepeition(CPlayer p, CPlayer o)
 		{
 			games = player == p.name ? ++games : 1;
-			if ((player != p.name) || (opponent != o.name))
+			if ((player != p.name) || (opponent == ""))
 			{
 				player = p.name;
 				opponent = o.name;

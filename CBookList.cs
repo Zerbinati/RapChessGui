@@ -1,5 +1,6 @@
 ﻿
 using System.Collections.Generic;
+using System.IO;
 using RapIni;
 
 namespace RapChessGui
@@ -10,6 +11,10 @@ namespace RapChessGui
 		public string name = "";
 		public string file = "";
 		public string parameters = "";
+
+		public CBook()
+		{
+		}
 
 		public CBook(string n)
 		{
@@ -24,8 +29,19 @@ namespace RapChessGui
 
 		public void SaveToIni()
 		{
+			name = GetName();
 			CRapIni.This.Write($"book>{name}>file", file);
 			CRapIni.This.Write($"book>{name}>parameters", parameters);
+		}
+
+		public string GetName()
+		{
+			if (name != "")
+				return name;
+			string n = CData.MakeShort(Path.GetFileNameWithoutExtension(file));
+			if (parameters.Length < 0xf)
+				n = $"{n} {parameters}";
+			return n;
 		}
 
 	}
@@ -36,6 +52,7 @@ namespace RapChessGui
 
 		public void Add(CBook br)
 		{
+			br.name = br.GetName();
 			if (GetIndex(br.name) < 0)
 				list.Add(br);
 		}

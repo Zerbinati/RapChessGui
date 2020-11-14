@@ -423,9 +423,13 @@ namespace RapChessGui
 			player = p;
 			book = FormChess.bookList.GetBook(p.book);
 			engine = FormChess.engineList.GetEngine(p.engine);
-			if (book != null)
+			if (book == null)
+				p.book = "None";
+			else
 				bookPro.SetProgram("Books\\" + book.file, book.parameters);
-			if (engine != null)
+			if (engine == null)
+				p.engine = "Human";
+			else
 				enginePro.SetProgram("Engines\\" + engine.file, engine.parameters);
 		}
 
@@ -536,6 +540,15 @@ namespace RapChessGui
 			if (gamer[0].player.IsHuman())
 				return gamer[0];
 			if (gamer[1].player.IsHuman())
+				return gamer[1];
+			return null;
+		}
+
+		public CGamer GamerComputer()
+		{
+			if (gamer[0].player.IsComputer())
+				return gamer[0];
+			if (gamer[1].player.IsComputer())
 				return gamer[1];
 			return null;
 		}

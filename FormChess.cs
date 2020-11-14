@@ -113,26 +113,26 @@ namespace RapChessGui
 			if (bookList.list.Count == 0)
 			{
 				CBook b;
-				b = new CBook("Eco");
+				b = new CBook();
 				b.file = "BookReaderUci.exe";
-				b.parameters = "eco.uci";
+				b.parameters = "Eco";
 				bookList.Add(b);
-				b = new CBook("Tiny");
+				b = new CBook();
 				b.file = "BookReaderUci.exe";
-				b.parameters = "tiny.uci";
+				b.parameters = "Tiny";
 				bookList.Add(b);
-				b = new CBook("Random1");
+				b = new CBook();
 				b.file = "BookReaderUci.exe";
-				b.parameters = "random1.uci";
+				b.parameters = "Random1";
 				bookList.Add(b);
-				b = new CBook("Random2");
+				b = new CBook();
 				b.file = "BookReaderUci.exe";
-				b.parameters = "random2.uci";
+				b.parameters = "Random2";
 				bookList.Add(b);
 				for (int n = 1; n < 10; n++)
 				{
 					int v = n * 10;
-					b = new CBook($"Rand{v}");
+					b = new CBook();
 					b.file = "BookReaderRnd.exe";
 					b.parameters = v.ToString();
 					bookList.Add(b);
@@ -144,7 +144,6 @@ namespace RapChessGui
 			{
 				CPlayer p = new CPlayer("Human");
 				p.tournament = 0;
-				p.modeValue.value = 0;
 				p.elo = "500";
 				p.eloOrg = "500";
 				playerList.Add(p);
@@ -153,56 +152,56 @@ namespace RapChessGui
 			{
 				CPlayer p = new CPlayer();
 				p.engine = "RapChessCs";
-				p.book = "Rand90";
+				p.book = "BRR 90";
 				p.modeValue.mode = "Time";
 				p.modeValue.value = 10;
 				p.elo = "200";
 				playerList.Add(p);
 				p = new CPlayer();
 				p.engine = "RapChessCs";
-				p.book = "Rand70";
+				p.book = "BRR 70";
 				p.modeValue.mode = "Time";
 				p.modeValue.value = 10;
 				p.elo = "400";
 				playerList.Add(p);
 				p = new CPlayer();
 				p.engine = "RapChessCs";
-				p.book = "Rand50";
+				p.book = "BRR 50";
 				p.modeValue.mode = "Time";
 				p.modeValue.value = 10;
 				p.elo = "600";
 				playerList.Add(p);
 				p = new CPlayer();
 				p.engine = "RapChessCs";
-				p.book = "Rand30";
+				p.book = "BRR 30";
 				p.modeValue.mode = "Time";
 				p.modeValue.value = 10;
 				p.elo = "800";
 				playerList.Add(p);
 				p = new CPlayer();
 				p.engine = "RapChessCs";
-				p.book = "Rand10";
+				p.book = "BRR 10";
 				p.modeValue.mode = "Time";
 				p.modeValue.value = 10;
 				p.elo = "1000";
 				playerList.Add(p);
 				p = new CPlayer();
 				p.engine = "RapShortCs";
-				p.book = "Eco";
+				p.book = "BRU Eco";
 				p.modeValue.mode = "Time";
 				p.modeValue.value = 10;
 				p.elo = "500";
 				playerList.Add(p);
 				p = new CPlayer();
 				p.engine = "RapSimpleCs";
-				p.book = "Eco";
+				p.book = "BRU Eco";
 				p.modeValue.mode = "Time";
 				p.modeValue.value = 10;
 				p.elo = "1000";
 				playerList.Add(p);
 				p = new CPlayer();
 				p.engine = "RapChessCs";
-				p.book = "Eco";
+				p.book = "BRU Eco";
 				p.modeValue.mode = "Time";
 				p.modeValue.value = 10;
 				p.elo = "1200";
@@ -528,7 +527,6 @@ namespace RapChessGui
 
 		public void GetMessageUci(CGamer g, string msg)
 		{
-			string umo;
 			Uci.SetMsg(msg);
 			switch (Uci.command)
 			{
@@ -546,10 +544,10 @@ namespace RapChessGui
 					g.isBookFail = true;
 					break;
 				case "bestmove":
-					if ((GamerList.GamerCur() == g) && (Uci.tokens.Length > 1))
+					if (GamerList.GamerCur() == g)
 					{
+						Uci.GetValue("bestmove", out string umo);
 						Uci.GetValue("ponder", out g.ponder);
-						umo = (Uci.tokens[1]).ToLower();
 						if (g.isBookStarted && !g.isBookFail)
 						{
 							g.countMovesBook++;
@@ -808,9 +806,9 @@ namespace RapChessGui
 			if (CModeGame.ranked == true)
 			{
 				CModeGame.ranked = false;
-				CPlayer hu = playerList.GetPlayerHuman();
-				hu.elo = hu.eloOrg;
-				hu.SaveToIni();
+				CPlayer ph = playerList.GetPlayerHuman();
+				ph.elo = ph.eloOrg;
+				ph.SaveToIni();
 			}
 			ShowAutoElo();
 		}
@@ -974,7 +972,7 @@ namespace RapChessGui
 				List<string> eMoves = new List<string>();
 				foreach (int gm in gMoves)
 					eMoves.Add(Chess.GmoToUmo(gm));
-				FormLogEngines.AppendText($"Wrong move: {emo}\n", Color.Red);
+				FormLogEngines.AppendText($"Wrong move: ({emo})\n", Color.Red);
 				FormLogEngines.AppendText($"Fen: {Chess.GetFen()}\n", Color.Black);
 				FormLogEngines.AppendText($"Legal moves: {string.Join(" ", eMoves)}\n", Color.Black);
 				CRapLog.Add($"Wrong move {cp.engine} {emo} {Chess.GetFen()}");
@@ -1163,8 +1161,6 @@ namespace RapChessGui
 			GamePrepare();
 			if (GamerList.GamerCur().player.IsComputer())
 				GamerList.Rotate();
-			GamerList.gamer[0].Init(true);
-			GamerList.gamer[1].Init(false);
 			SetBoardRotate();
 			CDrag.lastSou = -1;
 			CDrag.lastDes = -1;
@@ -1435,6 +1431,12 @@ namespace RapChessGui
 			CData.HisToPoints(hu.hisElo, chartGame.Series[0].Points);
 			CModeGame.ranked = GetRanked();
 			ShowAutoElo();
+			GamePrepare();
+			CGamer go = GamerList.GamerComputer();
+			if (go == null)
+				go = GamerList.GamerHuman();
+			cbEngine.Text = go.player.engine;
+			cbBook.Text = go.player.book;
 		}
 
 		void GaemEnd(CPlayer pw, CPlayer pl, bool isDraw)
@@ -1473,7 +1475,9 @@ namespace RapChessGui
 			nudValue1.Increment = CModeMatch.modeValue1.GetValueInc();
 			nudValue2.Value = CModeMatch.modeValue2.GetValue();
 			nudValue2.Increment = CModeMatch.modeValue2.GetValueInc();
-			labMatchGames.Text = $"Games {CModeMatch.games}";
+			CModeMatch.his.MinMax(out double min,out double max);
+			double last = CModeMatch.his.Last();
+			labMatchGames.Text = $"Games {CModeMatch.games} result {last} min {min} max {max}";
 			labMatch11.Text = CModeMatch.win.ToString();
 			labMatch12.Text = CModeMatch.loose.ToString();
 			labMatch13.Text = CModeMatch.draw.ToString();
@@ -1521,10 +1525,6 @@ namespace RapChessGui
 
 		void MatchEnd(CPlayer pw, bool isDraw)
 		{
-			string r = "d";
-			CPlayer plw = GamerList.gamer[0].player;
-			CPlayer plb = GamerList.gamer[1].player;
-			bool ranked = (plw.book == plb.book) && (plw.modeValue.mode == plb.modeValue.mode) && (plw.modeValue.value == plb.modeValue.value) && (plw.tournament > 0) && (plb.tournament > 0);
 			CModeMatch.games++;
 			if (!isDraw)
 			{
@@ -1532,16 +1532,10 @@ namespace RapChessGui
 					CModeMatch.win++;
 				else
 					CModeMatch.loose++;
-				r = pw == plw ? "w" : "b";
 			}
 			else
-			{
 				CModeMatch.draw++;
-
-			}
 			CModeMatch.his.Add(CModeMatch.win - CModeMatch.loose);
-			if (ranked)
-				CModeTournamentE.tourList.Write(plw.engine, plb.engine, r);
 			CModeMatch.SaveToIni();
 		}
 

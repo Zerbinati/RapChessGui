@@ -35,6 +35,8 @@
 			this.bUpdate = new System.Windows.Forms.Button();
 			this.gbTournament = new System.Windows.Forms.GroupBox();
 			this.cbModeStandard = new System.Windows.Forms.CheckBox();
+			this.groupBox5 = new System.Windows.Forms.GroupBox();
+			this.nudTournament = new System.Windows.Forms.NumericUpDown();
 			this.gbElo = new System.Windows.Forms.GroupBox();
 			this.nudElo = new System.Windows.Forms.NumericUpDown();
 			this.gbOptions = new System.Windows.Forms.GroupBox();
@@ -49,10 +51,10 @@
 			this.tbEngineName = new System.Windows.Forms.TextBox();
 			this.groupBox2 = new System.Windows.Forms.GroupBox();
 			this.listBox1 = new System.Windows.Forms.ListBox();
-			this.groupBox5 = new System.Windows.Forms.GroupBox();
-			this.nudTournament = new System.Windows.Forms.NumericUpDown();
 			this.panel1.SuspendLayout();
 			this.gbTournament.SuspendLayout();
+			this.groupBox5.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.nudTournament)).BeginInit();
 			this.gbElo.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.nudElo)).BeginInit();
 			this.gbOptions.SuspendLayout();
@@ -61,8 +63,6 @@
 			this.groupBox4.SuspendLayout();
 			this.groupBox1.SuspendLayout();
 			this.groupBox2.SuspendLayout();
-			this.groupBox5.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.nudTournament)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// panel1
@@ -150,6 +150,32 @@
 			this.cbModeStandard.TabIndex = 1;
 			this.cbModeStandard.Text = "Mode standard";
 			this.cbModeStandard.UseVisualStyleBackColor = true;
+			// 
+			// groupBox5
+			// 
+			this.groupBox5.Controls.Add(this.nudTournament);
+			this.groupBox5.Dock = System.Windows.Forms.DockStyle.Top;
+			this.groupBox5.Location = new System.Drawing.Point(0, 383);
+			this.groupBox5.Name = "groupBox5";
+			this.groupBox5.Size = new System.Drawing.Size(311, 45);
+			this.groupBox5.TabIndex = 33;
+			this.groupBox5.TabStop = false;
+			this.groupBox5.Text = "Tournament priority";
+			// 
+			// nudTournament
+			// 
+			this.nudTournament.Dock = System.Windows.Forms.DockStyle.Top;
+			this.nudTournament.Location = new System.Drawing.Point(3, 16);
+			this.nudTournament.Name = "nudTournament";
+			this.nudTournament.Size = new System.Drawing.Size(305, 20);
+			this.nudTournament.TabIndex = 0;
+			this.nudTournament.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			this.nudTournament.ThousandsSeparator = true;
+			this.nudTournament.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
 			// 
 			// gbElo
 			// 
@@ -303,39 +329,15 @@
 			// listBox1
 			// 
 			this.listBox1.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.listBox1.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
 			this.listBox1.FormattingEnabled = true;
 			this.listBox1.Location = new System.Drawing.Point(3, 16);
 			this.listBox1.Name = "listBox1";
 			this.listBox1.Size = new System.Drawing.Size(483, 605);
 			this.listBox1.Sorted = true;
 			this.listBox1.TabIndex = 1;
+			this.listBox1.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.listBox1_DrawItem);
 			this.listBox1.SelectedValueChanged += new System.EventHandler(this.ListBox1_SelectedValueChanged);
-			// 
-			// groupBox5
-			// 
-			this.groupBox5.Controls.Add(this.nudTournament);
-			this.groupBox5.Dock = System.Windows.Forms.DockStyle.Top;
-			this.groupBox5.Location = new System.Drawing.Point(0, 383);
-			this.groupBox5.Name = "groupBox5";
-			this.groupBox5.Size = new System.Drawing.Size(311, 45);
-			this.groupBox5.TabIndex = 33;
-			this.groupBox5.TabStop = false;
-			this.groupBox5.Text = "Tournament priority";
-			// 
-			// nudTournament
-			// 
-			this.nudTournament.Dock = System.Windows.Forms.DockStyle.Top;
-			this.nudTournament.Location = new System.Drawing.Point(3, 16);
-			this.nudTournament.Name = "nudTournament";
-			this.nudTournament.Size = new System.Drawing.Size(305, 20);
-			this.nudTournament.TabIndex = 0;
-			this.nudTournament.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-			this.nudTournament.ThousandsSeparator = true;
-			this.nudTournament.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
 			// 
 			// FormEngine
 			// 
@@ -355,6 +357,8 @@
 			this.panel1.ResumeLayout(false);
 			this.gbTournament.ResumeLayout(false);
 			this.gbTournament.PerformLayout();
+			this.groupBox5.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this.nudTournament)).EndInit();
 			this.gbElo.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.nudElo)).EndInit();
 			this.gbOptions.ResumeLayout(false);
@@ -365,8 +369,6 @@
 			this.groupBox1.ResumeLayout(false);
 			this.groupBox1.PerformLayout();
 			this.groupBox2.ResumeLayout(false);
-			this.groupBox5.ResumeLayout(false);
-			((System.ComponentModel.ISupportInitialize)(this.nudTournament)).EndInit();
 			this.ResumeLayout(false);
 
 		}

@@ -34,11 +34,13 @@
 			this.bDelete = new System.Windows.Forms.Button();
 			this.bCreate = new System.Windows.Forms.Button();
 			this.bUpdate = new System.Windows.Forms.Button();
+			this.groupBox5 = new System.Windows.Forms.GroupBox();
+			this.nudTournament = new System.Windows.Forms.NumericUpDown();
 			this.gbElo = new System.Windows.Forms.GroupBox();
 			this.nudElo = new System.Windows.Forms.NumericUpDown();
 			this.gbMode = new System.Windows.Forms.GroupBox();
 			this.nudValue = new System.Windows.Forms.NumericUpDown();
-			this.cbMode = new System.Windows.Forms.ComboBox();
+			this.combMode = new System.Windows.Forms.ComboBox();
 			this.gbBook = new System.Windows.Forms.GroupBox();
 			this.cbBookList = new System.Windows.Forms.ComboBox();
 			this.gbEngine = new System.Windows.Forms.GroupBox();
@@ -48,9 +50,9 @@
 			this.groupBox2 = new System.Windows.Forms.GroupBox();
 			this.listBox1 = new System.Windows.Forms.ListBox();
 			this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-			this.groupBox5 = new System.Windows.Forms.GroupBox();
-			this.nudTournament = new System.Windows.Forms.NumericUpDown();
 			this.panel1.SuspendLayout();
+			this.groupBox5.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.nudTournament)).BeginInit();
 			this.gbElo.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.nudElo)).BeginInit();
 			this.gbMode.SuspendLayout();
@@ -59,8 +61,6 @@
 			this.gbEngine.SuspendLayout();
 			this.groupBox1.SuspendLayout();
 			this.groupBox2.SuspendLayout();
-			this.groupBox5.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.nudTournament)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// panel1
@@ -125,6 +125,32 @@
 			this.bUpdate.UseVisualStyleBackColor = true;
 			this.bUpdate.Click += new System.EventHandler(this.ButUpdate_Click);
 			// 
+			// groupBox5
+			// 
+			this.groupBox5.Controls.Add(this.nudTournament);
+			this.groupBox5.Dock = System.Windows.Forms.DockStyle.Top;
+			this.groupBox5.Location = new System.Drawing.Point(0, 247);
+			this.groupBox5.Name = "groupBox5";
+			this.groupBox5.Size = new System.Drawing.Size(311, 45);
+			this.groupBox5.TabIndex = 34;
+			this.groupBox5.TabStop = false;
+			this.groupBox5.Text = "Tournament priority";
+			// 
+			// nudTournament
+			// 
+			this.nudTournament.Dock = System.Windows.Forms.DockStyle.Top;
+			this.nudTournament.Location = new System.Drawing.Point(3, 16);
+			this.nudTournament.Name = "nudTournament";
+			this.nudTournament.Size = new System.Drawing.Size(305, 20);
+			this.nudTournament.TabIndex = 0;
+			this.nudTournament.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			this.nudTournament.ThousandsSeparator = true;
+			this.nudTournament.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+			// 
 			// gbElo
 			// 
 			this.gbElo.Controls.Add(this.nudElo);
@@ -159,7 +185,7 @@
 			// gbMode
 			// 
 			this.gbMode.Controls.Add(this.nudValue);
-			this.gbMode.Controls.Add(this.cbMode);
+			this.gbMode.Controls.Add(this.combMode);
 			this.gbMode.Dock = System.Windows.Forms.DockStyle.Top;
 			this.gbMode.Location = new System.Drawing.Point(0, 135);
 			this.gbMode.Name = "gbMode";
@@ -188,22 +214,23 @@
             0,
             0});
 			// 
-			// cbMode
+			// combMode
 			// 
-			this.cbMode.Dock = System.Windows.Forms.DockStyle.Top;
-			this.cbMode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.cbMode.FormattingEnabled = true;
-			this.cbMode.Items.AddRange(new object[] {
+			this.combMode.Dock = System.Windows.Forms.DockStyle.Top;
+			this.combMode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.combMode.FormattingEnabled = true;
+			this.combMode.Items.AddRange(new object[] {
             "Depth",
+            "Infinite",
             "Nodes",
             "Standard",
             "Time"});
-			this.cbMode.Location = new System.Drawing.Point(3, 16);
-			this.cbMode.Name = "cbMode";
-			this.cbMode.Size = new System.Drawing.Size(305, 21);
-			this.cbMode.Sorted = true;
-			this.cbMode.TabIndex = 48;
-			this.cbMode.SelectedIndexChanged += new System.EventHandler(this.cbMode_SelectedIndexChanged);
+			this.combMode.Location = new System.Drawing.Point(3, 16);
+			this.combMode.Name = "combMode";
+			this.combMode.Size = new System.Drawing.Size(305, 21);
+			this.combMode.Sorted = true;
+			this.combMode.TabIndex = 48;
+			this.combMode.SelectedIndexChanged += new System.EventHandler(this.combMode_SelectedIndexChanged);
 			// 
 			// gbBook
 			// 
@@ -292,32 +319,6 @@
 			this.listBox1.TabIndex = 1;
 			this.listBox1.SelectedValueChanged += new System.EventHandler(this.ListBox1_SelectedValueChanged);
 			// 
-			// groupBox5
-			// 
-			this.groupBox5.Controls.Add(this.nudTournament);
-			this.groupBox5.Dock = System.Windows.Forms.DockStyle.Top;
-			this.groupBox5.Location = new System.Drawing.Point(0, 247);
-			this.groupBox5.Name = "groupBox5";
-			this.groupBox5.Size = new System.Drawing.Size(311, 45);
-			this.groupBox5.TabIndex = 34;
-			this.groupBox5.TabStop = false;
-			this.groupBox5.Text = "Tournament priority";
-			// 
-			// nudTournament
-			// 
-			this.nudTournament.Dock = System.Windows.Forms.DockStyle.Top;
-			this.nudTournament.Location = new System.Drawing.Point(3, 16);
-			this.nudTournament.Name = "nudTournament";
-			this.nudTournament.Size = new System.Drawing.Size(305, 20);
-			this.nudTournament.TabIndex = 0;
-			this.nudTournament.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-			this.nudTournament.ThousandsSeparator = true;
-			this.nudTournament.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-			// 
 			// FormPlayer
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -334,6 +335,8 @@
 			this.TopMost = true;
 			this.Shown += new System.EventHandler(this.FormPlayer_Shown);
 			this.panel1.ResumeLayout(false);
+			this.groupBox5.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this.nudTournament)).EndInit();
 			this.gbElo.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.nudElo)).EndInit();
 			this.gbMode.ResumeLayout(false);
@@ -343,8 +346,6 @@
 			this.groupBox1.ResumeLayout(false);
 			this.groupBox1.PerformLayout();
 			this.groupBox2.ResumeLayout(false);
-			this.groupBox5.ResumeLayout(false);
-			((System.ComponentModel.ISupportInitialize)(this.nudTournament)).EndInit();
 			this.ResumeLayout(false);
 
 		}
@@ -366,7 +367,7 @@
 		private System.Windows.Forms.GroupBox gbElo;
 		private System.Windows.Forms.NumericUpDown nudElo;
 		private System.Windows.Forms.Button butClearHistory;
-		private System.Windows.Forms.ComboBox cbMode;
+		private System.Windows.Forms.ComboBox combMode;
 		private System.Windows.Forms.NumericUpDown nudValue;
 		private System.Windows.Forms.ToolTip toolTip1;
 		private System.Windows.Forms.GroupBox groupBox5;

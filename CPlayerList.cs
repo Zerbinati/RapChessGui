@@ -113,18 +113,6 @@ namespace RapChessGui
 			CRapIni.This.Write($"player>{name}>history", hisElo.SaveToStr());
 		}
 
-		string MakeShort(string name)
-		{
-			string result = "";
-			for (int n = 0; n < name.Length; n++)
-			{
-				char c = name[n];
-				if ((n == 0) || char.IsUpper(c) || char.IsNumber(c))
-					result += c;
-			}
-			return result;
-		}
-
 		public string GetName()
 		{
 			if (name != "")
@@ -138,7 +126,7 @@ namespace RapChessGui
 				m = modeValue.ShortName();
 			}
 			if (book != "None")
-				b = $" {MakeShort(book)}";
+				b = $" {CData.MakeShort(book)}";
 			return $"{n}{b}{m}";
 		}
 

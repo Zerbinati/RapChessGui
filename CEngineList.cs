@@ -59,6 +59,11 @@ namespace RapChessGui
 			CRapIni.This.Write($"engine>{name}>history", hisElo.SaveToStr());
 		}
 
+		public bool FileExists()
+		{
+			return File.Exists("Engines\\" + file);
+		}
+
 		public int GetDeltaElo()
 		{
 			int e = GetElo();

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using RapIni;
@@ -35,7 +36,7 @@ namespace RapChessGui
 		void UpdateListBox()
 		{
 			listBox1.Items.Clear();
-			foreach(CEngine e in FormChess.engineList.list)
+			foreach (CEngine e in FormChess.engineList.list)
 				listBox1.Items.Add(e.name);
 		}
 
@@ -114,5 +115,22 @@ namespace RapChessGui
 				MessageBox.Show($"{count} records have been deleted");
 			}
 		}
+
+		private void listBox1_DrawItem(object sender, DrawItemEventArgs e)
+		{
+			if ((e.State & DrawItemState.Selected) == DrawItemState.Selected)
+				e = new DrawItemEventArgs(e.Graphics, e.Font, e.Bounds, e.Index, e.State ^ DrawItemState.Selected, e.ForeColor, Color.Yellow);
+			e.DrawBackground();
+			string name = listBox1.Items[e.Index].ToString();
+			CEngine eng = FormChess.engineList.GetEngine(name);
+			Brush b = Brushes.Black;
+			if (eng.tournament < 1)
+				b = Brushes.Brown;
+			if (!eng.FileExists())
+				b = Brushes.Red;
+			e.Graphics.DrawString(name, e.Font, b, e.Bounds, StringFormat.GenericDefault);
+			e.DrawFocusRectangle();
+		}
+
 	}
 }

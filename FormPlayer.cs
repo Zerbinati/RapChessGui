@@ -41,7 +41,7 @@ namespace RapChessGui
 			nudValue.Value = p.modeValue.GetValue();
 			modeValue.mode = p.modeValue.mode;
 			modeValue.value = p.modeValue.value;
-			cbMode.SelectedIndex = cbMode.FindStringExact(modeValue.mode);
+			combMode.SelectedIndex = combMode.FindStringExact(modeValue.mode);
 		}
 
 		void UpdateListBox()
@@ -76,7 +76,7 @@ namespace RapChessGui
 
 		private void ButUpdate_Click(object sender, EventArgs e)
 		{
-			modeValue.mode = cbMode.Text;
+			modeValue.mode = combMode.Text;
 			modeValue.SetValue((int)nudValue.Value);
 			CPlayer player = FormChess.playerList.GetPlayer(curPlayerName);
 			if (player == null)
@@ -92,7 +92,7 @@ namespace RapChessGui
 			string name = tbPlayerName.Text;
 			if (FormChess.playerList.GetPlayer(name) == null)
 			{
-				modeValue.mode = cbMode.Text;
+				modeValue.mode = combMode.Text;
 				modeValue.SetValue((int)nudValue.Value);
 				CPlayer player = new CPlayer(name);
 				player.engine = cbEngineList.Text;
@@ -145,9 +145,9 @@ namespace RapChessGui
 				listBox1.SetSelected(0, true);
 		}
 
-		private void cbMode_SelectedIndexChanged(object sender, EventArgs e)
+		private void combMode_SelectedIndexChanged(object sender, EventArgs e)
 		{
-			modeValue.mode = cbMode.Text;
+			modeValue.mode = combMode.Text;
 			nudValue.Increment = modeValue.GetValueInc();
 			nudValue.Value = modeValue.GetValue();
 			toolTip1.SetToolTip(nudValue, modeValue.GetTip());

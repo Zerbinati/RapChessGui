@@ -46,6 +46,18 @@ namespace RapChessGui
 				po.AddXY(x++,v);
 		}
 
+		public static string MakeShort(string name)
+		{
+			string result = "";
+			for (int n = 0; n < name.Length; n++)
+			{
+				char c = name[n];
+				if ((n == 0) || Char.IsUpper(c) || Char.IsNumber(c))
+					result += Char.ToUpper(c);
+			}
+			return result;
+		}
+
 		public static void UpdateFileBook()
 		{
 			fileBook.Clear();
@@ -156,8 +168,8 @@ namespace RapChessGui
 
 	public class CModeValue
 	{
-		public string mode = "Time";
-		public int value = 10;
+		public string mode = "Infinite";
+		public int value = 0;
 		public int increment = 0;
 
 		public void SetValue(int v)
