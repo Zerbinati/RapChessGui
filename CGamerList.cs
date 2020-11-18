@@ -198,16 +198,21 @@ namespace RapChessGui
 			isEngPrepared = true;
 		}
 
+		public Int64 GetIntTime()
+		{
+			Int64 v = Convert.ToInt64(player.modeValue.GetUciValue());
+			Int64 t = Convert.ToInt64(v - timer.Elapsed.TotalMilliseconds);
+			return t < 1 ? 1 : t;
+		}
+
 		void UciGo()
 		{
 			SendMessage(CHistory.GetPosition());
 			if (player.modeValue.mode == "Standard")
 			{
-				Int64 v = Convert.ToInt64(player.modeValue.GetUciValue());
-				Int64 t = Convert.ToInt64(v - timer.Elapsed.TotalMilliseconds);
-				if (t < 1)
-					t = 1;
-				SendMessage($"go wtime {t} btime {t} winc 0 binc 0");
+				CGamer gw = CGamerList.This.GamerWhite();
+				CGamer gb = CGamerList.This.GamerBlack();
+				SendMessage($"go wtime {gw.GetIntTime()} btime {gb.GetIntTime()} winc 0 binc 0");
 			}
 			else
 				SendMessage($"go {player.modeValue.GetUci()} {player.modeValue.GetUciValue()}");
@@ -218,12 +223,10 @@ namespace RapChessGui
 		{
 			if (player.modeValue.mode == "Standard")
 			{
-				int v = Convert.ToInt32(player.modeValue.GetUciValue());
-				int t = Convert.ToInt32(v - timer.Elapsed.TotalMilliseconds);
-				if (t < 1)
-					t = 1;
-				SendMessage($"time {t / 10}");
-				SendMessage($"otim {t / 10}");
+				CGamer gc = CGamerList.This.GamerCur();
+				CGamer gs = CGamerList.This.GamerSec();
+				SendMessage($"time {gc.GetIntTime() / 10}");
+				SendMessage($"otim {gs.GetIntTime() / 10}");
 			}
 			SendMessage(CHistory.LastUmo());
 		}

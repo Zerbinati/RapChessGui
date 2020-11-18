@@ -274,7 +274,11 @@ namespace RapChessGui
 			int size = sc.Orientation == Orientation.Horizontal ? sc.Size.Height : sc.Size.Width;
 			double p = (double)sc.SplitterDistance / size;
 			p = RapIni.ReadDouble($"position>split>{sc.Name}", p) * size;
-			if (p > 0) sc.SplitterDistance = Convert.ToInt32(p);
+			try
+			{
+				if (p > 0) sc.SplitterDistance = Convert.ToInt32(p);
+			}
+			catch { }
 		}
 
 		#endregion
