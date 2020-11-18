@@ -2589,5 +2589,9 @@ namespace RapChessGui
 
 		#endregion
 
+		private void chartGame_Resize(object sender, EventArgs e)
+		{
+
+		}
 	}
 }
