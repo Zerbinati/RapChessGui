@@ -556,7 +556,7 @@ namespace RapChessGui
 						{
 							g.countMovesBook++;
 							ShowInfo($"book {umo}", Color.Aquamarine);
-							if (g.engine.IsXb())
+							if ((g.engine != null) && g.engine.IsXb())
 								g.isEngPrepared = false;
 						}
 						MakeMove(umo);
@@ -1479,7 +1479,7 @@ namespace RapChessGui
 			nudValue1.Increment = CModeMatch.modeValue1.GetValueInc();
 			nudValue2.Value = CModeMatch.modeValue2.GetValue();
 			nudValue2.Increment = CModeMatch.modeValue2.GetValueInc();
-			CModeMatch.his.MinMax(out double min,out double max);
+			CModeMatch.his.MinMax(out double min, out double max);
 			double last = CModeMatch.his.Last();
 			labMatchGames.Text = $"Games {CModeMatch.games} result {last} min {min} max {max}";
 			labMatch11.Text = CModeMatch.win.ToString();
@@ -1709,7 +1709,7 @@ namespace RapChessGui
 					OW = engineList.GetOptElo(indexW + 1);
 				string r = gw.player == plw ? "w" : "b";
 				CModeTournamentE.tourList.Write(plw.engine, plb.engine, r);
-				int cg = CModeTournamentE.tourList.CountGames(CModeTournamentE.engine,CModeTournamentE.opponent,out _,out _,out _);
+				int cg = CModeTournamentE.tourList.CountGames(CModeTournamentE.engine, CModeTournamentE.opponent, out _, out _, out _);
 				mod = ((100 - cg) * 10) / 100;
 				if (mod < 1)
 					mod = 1;
@@ -1723,8 +1723,8 @@ namespace RapChessGui
 			}
 			int newW = Convert.ToInt32(eloW * 0.9 + Math.Max(OW, eloL) * 0.1 + mod);
 			int newL = Convert.ToInt32(eloL * 0.9 + Math.Min(OL, eloW) * 0.1 - mod);
-			ew.hisElo.Add(newW,1,2999);
-			el.hisElo.Add(newL,1,2999);
+			ew.hisElo.Add(newW, 1, 2999);
+			el.hisElo.Add(newL, 1, 2999);
 			ew.elo = newW.ToString();
 			el.elo = newL.ToString();
 			ew.SaveToIni();
@@ -1890,8 +1890,8 @@ namespace RapChessGui
 			}
 			int newW = Convert.ToInt32(eloW * 0.9 + Math.Max(OW, eloL) * 0.1 + mod);
 			int newL = Convert.ToInt32(eloL * 0.9 + Math.Min(OL, eloW) * 0.1 - mod);
-			pw.hisElo.Add(newW,1,2999);
-			pl.hisElo.Add(newL,1,2999);
+			pw.hisElo.Add(newW, 1, 2999);
+			pl.hisElo.Add(newL, 1, 2999);
 			pw.elo = newW.ToString();
 			pl.elo = newL.ToString();
 			pw.SaveToIni();
