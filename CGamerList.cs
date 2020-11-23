@@ -122,7 +122,8 @@ namespace RapChessGui
 			if (enginePro.process != null)
 			{
 				enginePro.process.Refresh();
-				result = enginePro.process.PrivateMemorySize64.ToString("N0");
+				if (!enginePro.process.HasExited)
+					result = enginePro.process.PrivateMemorySize64.ToString("N0");
 			}
 			return result;
 		}
@@ -349,7 +350,8 @@ namespace RapChessGui
 			return "Time out";
 		}
 
-		public Color GetScoreColor() {
+		public Color GetScoreColor()
+		{
 			if (iScore > 300)
 				return Color.Green;
 			else if (iScore < -300)
