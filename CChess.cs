@@ -265,25 +265,29 @@ namespace RapChessGui
 				promo = true;
 				move += 'q';
 			}
-			return IsValidMove(move) > 0;
+			return IsValidMove(move,out _);
 		}
 
-		public int IsValidMove(int gmo)
+		public bool IsValidMove(int gmo)
 		{
 			List<int> moves = GenerateValidMoves();
 			foreach (int m in moves)
 				if (m == gmo)
-					return m;
-			return 0;
+					return true;
+			return false;
 		}
 
-		public int IsValidMove(string umo)
+		public bool IsValidMove(string umo, out int emo)
 		{
+			emo = 0;
 			List<int> moves = GenerateValidMoves();
 			foreach (int m in moves)
 				if (GmoToUmo(m) == umo)
-					return m;
-			return 0;
+				{
+					emo = m;
+					return true;
+				}
+			return false;
 		}
 
 		public int UmoToGmo(string umo)

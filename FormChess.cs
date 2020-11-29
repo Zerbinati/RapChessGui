@@ -356,7 +356,7 @@ namespace RapChessGui
 			{
 				labScoreW.Text = $"Score {g.score}";
 				labNodesW.Text = $"Nodes {g.nodes:N0}";
-				labNpsW.Text = $"Nps {g.nps:N0}";
+				labNpsW.Text = $"Nps {g.GetNps():N0}";
 				labPonderW.Text = $"Ponder {g.ponder}";
 				labBookCW.Text = $"Book {g.countMovesBook}";
 				labDepthW.Text = $"Depth {g.GetDepth()}";
@@ -366,7 +366,7 @@ namespace RapChessGui
 			{
 				labScoreB.Text = $"Score {g.score}";
 				labNodesB.Text = $"Nodes {g.nodes:N0}";
-				labNpsB.Text = $"Nps {g.nps:N0}";
+				labNpsB.Text = $"Nps {g.GetNps():N0}";
 				labPonderB.Text = $"Ponder {g.ponder}";
 				labBookCB.Text = $"Book {g.countMovesBook}";
 				labDepthB.Text = $"Depth {g.GetDepth()}";
@@ -497,27 +497,28 @@ namespace RapChessGui
 
 		void SetPv(int i, CGamer g)
 		{
+			int selfdepth = 0;
 			string pv = "";
 			List<int> moves = new List<int>();
 			for (int n = i; n < Uci.tokens.Length; n++)
 			{
-				string emo = Uci.tokens[n];
-				int gmo = Chess.IsValidMove(emo);
-				if (gmo > 0)
+				string umo = Uci.tokens[n];
+				if (Chess.IsValidMove(umo, out int gmo))
 				{
+					selfdepth++;
 					if (moves.Count == 0)
 					{
-						g.lastMove = emo;
-						Board.arrowCur.AddMoves(emo);
+						g.lastMove = umo;
+						Board.arrowCur.AddMoves(umo);
 						RenderBoard();
 					}
-					string san = Chess.UmoToSan(emo);
+					string san = Chess.UmoToSan(umo);
 					Chess.MakeMove(gmo);
 					moves.Add(gmo);
 					if (FormOptions.This.rbSan.Checked)
 						pv += $" {san}";
 					else
-						pv += $" {emo}";
+						pv += $" {umo}";
 				}
 				else break;
 			}
@@ -525,6 +526,7 @@ namespace RapChessGui
 				Chess.UnmakeMove(moves[n]);
 			if (pv != "")
 				g.pv = pv;
+			g.seldepth = selfdepth;
 			ShowInfo(pv, Color.Gainsboro);
 			AddLines(g);
 		}
@@ -586,9 +588,9 @@ namespace RapChessGui
 						}
 					}
 					if (Uci.GetValue("depth", out s))
-						g.depth = s;
+						g.depth = Int32.Parse(s);
 					if (Uci.GetValue("seldepth", out s))
-						g.seldepth = s;
+						g.seldepth = Int32.Parse(s);
 					if (Uci.GetValue("nodes", out s))
 					{
 						try
@@ -623,8 +625,10 @@ namespace RapChessGui
 							g.infMs = 0;
 						}
 						if (nps == 0)
-							g.nps = g.infMs > 0 ? (g.nodes * 1000) / g.infMs : 0;
+							nps = g.infMs > 0 ? (g.nodes * 1000) / g.infMs : 0;
 					}
+					if (nps > 0)
+						g.SetNps(nps);
 					int i = Uci.GetIndex("pv", 0);
 					if (i > 0)
 						SetPv(i, g);
@@ -639,12 +643,12 @@ namespace RapChessGui
 				umo = CChess.whiteTurn ? "e1g1" : "e8g8";
 			if (xmo == "o-o-o")
 				umo = CChess.whiteTurn ? "e1c1" : "e8c8";
-			if (Chess.IsValidMove(umo) > 0)
+			if (Chess.IsValidMove(umo, out _))
 				return true;
 			else
 			{
 				umo += "q";
-				if (Chess.IsValidMove(umo) > 0)
+				if (Chess.IsValidMove(umo, out _))
 					return true;
 				else
 				{
@@ -683,12 +687,14 @@ namespace RapChessGui
 					{
 						try
 						{
-							g.depth = Uci.tokens[0];
+							g.depth = Int32.Parse(Uci.tokens[0]);
 							g.score = Uci.tokens[1];
 							g.iScore = Convert.ToInt32(g.score);
 							g.infMs = (ulong)Convert.ToInt64(Uci.tokens[2]) * 10;
 							g.nodes = (ulong)Convert.ToInt64(Uci.tokens[3]);
 							g.nps = g.infMs > 0 ? (g.nodes * 1000) / g.infMs : 0;
+							if (g.nps > 0)
+								g.SetNps(g.nps);
 							SetPv(4, g);
 						}
 						catch
@@ -963,13 +969,9 @@ namespace RapChessGui
 				cg.player.elo = cg.player.GetEloLess().ToString();
 				cg.player.SaveToIni();
 			}
-			int gmo = Chess.IsValidMove(emo);
-			if (gmo == 0)
-			{
-				gmo = Chess.IsValidMove($"{emo}q");
-				if (gmo != 0)
+			if (!Chess.IsValidMove(emo, out int gmo))
+				if (Chess.IsValidMove($"{emo}q", out gmo))
 					emo = $"{emo}q";
-			}
 			if (gmo == 0)
 			{
 				List<int> gMoves = Chess.GenerateValidMoves();

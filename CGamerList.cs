@@ -44,9 +44,11 @@ namespace RapChessGui
 		public ulong infMs;
 		public ulong nodes;
 		public ulong nps;
+		public ulong npsSum;
+		public ulong npsCount;
 		public string score;
-		public string depth;
-		public string seldepth;
+		public int depth;
+		public int seldepth;
 		public string ponder;
 		public string mode;
 		public string value;
@@ -102,15 +104,37 @@ namespace RapChessGui
 			countMoves = 0;
 			nodes = 0;
 			nps = 0;
+			npsSum = 0;
+			npsCount = 0;
 			score = "0";
-			depth = "0";
-			seldepth = "0";
+			depth = 0;
+			seldepth = 0;
 			ponder = "";
 			pv = "";
 			iScore = 0;
 			timerStart = 0;
 			lastMove = "";
 			timer.Reset();
+		}
+
+		public void SetNps(ulong n)
+		{
+			nps = n;
+			npsSum += n;
+			npsCount++;
+			if((npsSum > (ulong.MaxValue >> 1)) &&((npsCount & 1) == 0))
+			{
+				npsSum >>= 1;
+				npsCount >>= 1;
+			}
+		}
+
+		public ulong GetNps()
+		{
+			if (npsCount > 0)
+				return npsSum / npsCount;
+			else
+				return 0;
 		}
 
 		/// <summary>
@@ -336,10 +360,11 @@ namespace RapChessGui
 
 		public string GetDepth()
 		{
-			if (seldepth != "0")
+			if (seldepth > 0)
 				return $"{depth} / {seldepth}";
-			else
-				return depth;
+			else if (depth > 0)
+				return $"{depth}";
+			else return "";
 		}
 
 		string SetTimeOut()
@@ -386,7 +411,7 @@ namespace RapChessGui
 				double v = Convert.ToDouble(value);
 				if (((ms - timerStart) > (v + FormOptions.marginTime)) && (FormOptions.marginTime >= 0) && (value > 0) && timer.IsRunning)
 				{
-					if (CChess.This.IsValidMove(lastMove) > 0)
+					if (CChess.This.IsValidMove(lastMove,out _))
 					{
 						EngineReset();
 						FormChess.This.MakeMove(lastMove);
