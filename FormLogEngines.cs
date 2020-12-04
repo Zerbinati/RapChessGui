@@ -30,23 +30,45 @@ namespace RapChessGui
 			This.richTextBox1.SelectedText = GetTimeElapsed();
 		}
 
+		public static void AppendTimeText(string txt, Color col)
+		{
+			AppendTime();
+			AppendText(txt, col);
+		}
+
+		public static void WriteHeaderGamer(CGamer g)
+		{
+			Color color = g.isWhite ? Color.DimGray : Color.Black;
+			string colorS = g.isWhite ? "White" : "Black";
+			AppendTimeText($"{colorS}: {g.player.name}\n", color);
+			if (g.engine == null)
+				return;
+			AppendTimeText($"Engine: {g.player.engine}\n", color);
+			AppendTimeText($"File: {g.engine.file}\n", color);
+			string parameters = g.engine.parameters;
+			if(parameters != "")
+				AppendTimeText($"Parameters: {g.engine.parameters}\n", color);
+		}
+
+		public static void WriteHeader(CGamer gw, CGamer gb)
+		{
+			This.richTextBox1.Clear();
+			timer.Restart();
+			AppendTimeText($"Start {DateTime.Now:yyyy-MM-dd HH:mm}\n", Color.Olive);
+			WriteHeaderGamer(gw);
+			WriteHeaderGamer(gb);
+		}
+
 		public void NewGame(CGamer gw,CGamer gb)
 		{
 			cbPlayerList.Items.Clear();
-			richTextBox1.Clear();
-			timer.Restart();
-			AppendTime();
-			AppendText($"Date {DateTime.Now:yyyy-MM-dd HH:mm}\n", Color.Gray);
-			AppendTime();
-			AppendText($"White {gw.player.name} {gw.player.engine}\n", Color.Gray);
-			AppendTime();
-			AppendText($"Black {gb.player.name} {gb.player.engine}\n", Color.Gray);
 			if (gw.engine != null)
 				cbPlayerList.Items.Add(gw.player.name);
 			if (gb.engine != null)
 				cbPlayerList.Items.Add(gb.player.name);
 			if (cbPlayerList.Items.Count > 0)
 				cbPlayerList.SelectedIndex = 0;
+			WriteHeader(gw,gb);
 		}
 
 		static string GetTimeElapsed()

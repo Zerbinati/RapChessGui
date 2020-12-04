@@ -288,6 +288,7 @@
 			this.columnHeader21 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeader22 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.tlpBlack = new System.Windows.Forms.TableLayoutPanel();
+			this.lastTrainingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.tabControl1.SuspendLayout();
 			this.tabPageGame.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.chartGame)).BeginInit();
@@ -443,7 +444,6 @@
 			this.chartGame.TabIndex = 28;
 			this.chartGame.Text = "chart1";
 			this.toolTip1.SetToolTip(this.chartGame, "User progress history");
-			this.chartGame.Resize += new System.EventHandler(this.chartGame_Resize);
 			// 
 			// butBackward
 			// 
@@ -2318,6 +2318,7 @@
             this.lastMatchToolStripMenuItem,
             this.lasstTournamentenginesToolStripMenuItem,
             this.lastTournamentplayersToolStripMenuItem,
+            this.lastTrainingToolStripMenuItem,
             this.toolStripMenuItem2,
             this.lastErrorToolStripMenuItem});
 			this.logToolStripMenuItem.Name = "logToolStripMenuItem";
@@ -3761,6 +3762,13 @@
 			this.tlpBlack.Size = new System.Drawing.Size(1180, 40);
 			this.tlpBlack.TabIndex = 35;
 			// 
+			// lastTrainingToolStripMenuItem
+			// 
+			this.lastTrainingToolStripMenuItem.Name = "lastTrainingToolStripMenuItem";
+			this.lastTrainingToolStripMenuItem.Size = new System.Drawing.Size(212, 22);
+			this.lastTrainingToolStripMenuItem.Text = "Last training";
+			this.lastTrainingToolStripMenuItem.Click += new System.EventHandler(this.lastTrainingToolStripMenuItem_Click);
+			// 
 			// FormChess
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -4109,6 +4117,7 @@
 		private System.Windows.Forms.Label labColB;
 		private System.Windows.Forms.Label labPonderB;
 		private System.Windows.Forms.DataVisualization.Charting.Chart chartMatch;
+		private System.Windows.Forms.ToolStripMenuItem lastTrainingToolStripMenuItem;
 	}
 }
 

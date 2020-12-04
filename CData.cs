@@ -134,13 +134,14 @@ namespace RapChessGui
 				list.RemoveRange(0,c);
 		}
 
-		public void Add(int value,int min,int max)
+		public int Add(int value,int min,int max)
 		{
 			if (value < min)
 				value = min;
 			if (value > max)
 				value = max;
 			Add(value);
+			return value;
 		}
 
 		public double Last()
@@ -168,20 +169,23 @@ namespace RapChessGui
 
 	public class CModeValue
 	{
-		public string mode = "Infinite";
-		public int value = 0;
-		public int increment = 0;
+		public string mode = "Time";
+		public int value = 10;
+		public int increment = 100;
 
 		public void SetValue(int v)
 		{
-			int increment = GetValueInc();
-			if (increment > 0)
-				value = v / increment;
+			int inc = GetValueInc();
+			if (inc > 0)
+				value = v / inc;
+			else
+				value = 0;
 		}
 
 		public int GetValue()
 		{
-			return value * GetValueInc();
+			int inc = GetValueInc();
+			return value > 0 ? value * inc : inc;
 		}
 
 		public int GetUciValue()

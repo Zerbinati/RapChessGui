@@ -12,8 +12,8 @@ namespace RapChessGui
 		public static int loose = 0;
 		public static string engine1;
 		public static string engine2;
-		public static string book1 = "Eco";
-		public static string book2 = "Eco";
+		public static string book1 = "BRU Eco";
+		public static string book2 = "BRU Eco";
 		public static CModeValue modeValue1 = new CModeValue();
 		public static CModeValue modeValue2 = new CModeValue();
 		public static CHisElo his = new CHisElo();

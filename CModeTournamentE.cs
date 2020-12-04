@@ -12,7 +12,7 @@ namespace RapChessGui
 		public static int records = 10000;
 		public static string engine = "";
 		public static string opponent = "";
-		public static string book = "Eco";
+		public static string book = "BRU Eco";
 		public static CTourList tourList = new CTourList("Tour-engines");
 		public static CModeValue modeValue = new CModeValue();
 		public static CEngineList engineList = new CEngineList();

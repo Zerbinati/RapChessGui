@@ -241,21 +241,16 @@ namespace RapChessGui
 			return GetGameState(out _);
 		}
 
-		public int MakeSquare(int row, int column)
-		{
-			return ((row + 4) << 4) | (column + 4);
-		}
-
 		public bool IsValidMove(int s, int d, out string fm, out bool promo)
 		{
 			int max = s & 7;
 			int mbx = d & 7;
 			int may = s >> 3;
 			int mby = d >> 3;
-			int sa = MakeSquare(may, max);
-			int sb = MakeSquare(mby, mbx);
-			string fa = FormatSquare(sa);
-			string fb = FormatSquare(sb);
+			int sa = MakeSquare(max, may);
+			int sb = MakeSquare(mbx, mby);
+			string fa = SquareToStr(sa);
+			string fb = SquareToStr(sb);
 			string move = fa + fb;
 			int piece = g_board[sa] & 0xf;
 			fm = move;
@@ -330,7 +325,7 @@ namespace RapChessGui
 
 		public string GmoToUmo(int move)
 		{
-			string result = FormatSquare(move & 0xFF) + FormatSquare((move >> 8) & 0xFF);
+			string result = SquareToStr(move & 0xFF) + SquareToStr((move >> 8) & 0xFF);
 			if ((move & moveflagPromotion) > 0)
 			{
 				if ((move & moveflagPromoteQueen) > 0) result += 'q';
@@ -341,10 +336,29 @@ namespace RapChessGui
 			return result;
 		}
 
-		string FormatSquare(int square)
+		public int MakeSquare(int x,int y)
 		{
-			char[] arr = { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h' };
-			return arr[(square & 0xf) - 4] + (12 - (square >> 4)).ToString();
+			return ((y + 4) << 4) | (x + 4);
+		}
+
+		string SquareToStr(int square)
+		{
+			int x = (square & 0xf) - 4;
+			int y = (square >> 4) - 4;
+			string xs = "abcdefgh";
+			string ys = "87654321";
+			return $"{xs[x]}{ys[y]}";
+		}
+
+		int StrToSquare(string s)
+		{
+			if (s.Length < 2)
+				return 0;
+			string xs = "abcdefgh";
+			string ys = "87654321";
+			int x = xs.IndexOf(s[0]);
+			int y = ys.IndexOf(s[1]);
+			return ((y + 4) << 4) | (x + 4);
 		}
 
 		public string GetFenBase()
@@ -403,14 +417,14 @@ namespace RapChessGui
 				if (whiteTurn)
 				{
 					if ((g_board[g_passing + 15] == (piecePawn | colorWhite)) || (g_board[g_passing + 17] == (piecePawn | colorWhite)))
-						result += FormatSquare(g_passing);
+						result += SquareToStr(g_passing);
 					else
 						result += '-';
 				}
 				else
 				{
 					if ((g_board[g_passing - 15] == (piecePawn | colorBlack)) || (g_board[g_passing - 17] == (piecePawn | colorBlack)))
-						result += FormatSquare(g_passing);
+						result += SquareToStr(g_passing);
 					else
 						result += '-';
 				}
@@ -421,16 +435,6 @@ namespace RapChessGui
 		public string GetFen()
 		{
 			return GetEpd() + ' ' + g_move50 + ' ' + ((g_moveNumber >> 1) + 1);
-		}
-
-		int StrToSquare(string s)
-		{
-			if (s.Length < 2)
-				return 0;
-			string fl = "abcdefgh";
-			int x = fl.IndexOf(s[0]);
-			int y = 12 - Int32.Parse(s[1].ToString());
-			return (x + 4) | (y << 4);
 		}
 
 		bool IsRepetition()

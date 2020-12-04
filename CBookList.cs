@@ -48,6 +48,7 @@ namespace RapChessGui
 
 	public class CBookList
 	{
+		public static string def = "BRU Eco";
 		public List<CBook> list = new List<CBook>();
 
 		public void Add(CBook br)

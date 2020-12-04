@@ -12,8 +12,8 @@ namespace RapChessGui
 		public static int errors;
 		public static string teacher = "";
 		public static string trained = "";
-		public static string teacherBook = "Eco";
-		public static string trainedBook = "Eco";
+		public static string teacherBook = CBookList.def;
+		public static string trainedBook = CBookList.def;
 		public static CModeValue modeValueTeacher = new CModeValue();
 		public static CModeValue modeValueTrained = new CModeValue();
 

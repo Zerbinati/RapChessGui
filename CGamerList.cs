@@ -342,6 +342,14 @@ namespace RapChessGui
 				return engine.name;
 		}
 
+		public string GetEngineFile()
+		{
+			if (engine == null)
+				return "";
+			else
+				return engine.file;
+		}
+
 		public string GetMode()
 		{
 			if (player == null)
