@@ -196,6 +196,7 @@
 			this.lastMatchToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.lasstTournamentenginesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.lastTournamentplayersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.lastTrainingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
 			this.lastErrorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.historyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -288,7 +289,6 @@
 			this.columnHeader21 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeader22 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.tlpBlack = new System.Windows.Forms.TableLayoutPanel();
-			this.lastTrainingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.tabControl1.SuspendLayout();
 			this.tabPageGame.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.chartGame)).BeginInit();
@@ -2379,6 +2379,13 @@
 			this.lastTournamentplayersToolStripMenuItem.Text = "Last tournament-players";
 			this.lastTournamentplayersToolStripMenuItem.Click += new System.EventHandler(this.lastTournamentplayersToolStripMenuItem_Click);
 			// 
+			// lastTrainingToolStripMenuItem
+			// 
+			this.lastTrainingToolStripMenuItem.Name = "lastTrainingToolStripMenuItem";
+			this.lastTrainingToolStripMenuItem.Size = new System.Drawing.Size(212, 22);
+			this.lastTrainingToolStripMenuItem.Text = "Last training";
+			this.lastTrainingToolStripMenuItem.Click += new System.EventHandler(this.lastTrainingToolStripMenuItem_Click);
+			// 
 			// toolStripMenuItem2
 			// 
 			this.toolStripMenuItem2.Name = "toolStripMenuItem2";
@@ -3762,13 +3769,6 @@
 			this.tlpBlack.Size = new System.Drawing.Size(1180, 40);
 			this.tlpBlack.TabIndex = 35;
 			// 
-			// lastTrainingToolStripMenuItem
-			// 
-			this.lastTrainingToolStripMenuItem.Name = "lastTrainingToolStripMenuItem";
-			this.lastTrainingToolStripMenuItem.Size = new System.Drawing.Size(212, 22);
-			this.lastTrainingToolStripMenuItem.Text = "Last training";
-			this.lastTrainingToolStripMenuItem.Click += new System.EventHandler(this.lastTrainingToolStripMenuItem_Click);
-			// 
 			// FormChess
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -3784,7 +3784,7 @@
 			this.Name = "FormChess";
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
 			this.Text = "RapChessGui";
-			this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FormChess_FormClosed);
+			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormChess_FormClosing);
 			this.Resize += new System.EventHandler(this.FormChess_Resize);
 			this.tabControl1.ResumeLayout(false);
 			this.tabPageGame.ResumeLayout(false);

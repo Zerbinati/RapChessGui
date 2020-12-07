@@ -229,13 +229,6 @@ namespace RapChessGui
 			Location = new Point(x, y);
 			if (RapIni.ReadBool("position>maximized", false))
 				WindowState = FormWindowState.Maximized;
-			SplitLoadFromIni(splitContainerMain);
-			SplitLoadFromIni(splitContainerBoard);
-			SplitLoadFromIni(splitContainerChart);
-			SplitLoadFromIni(splitContainerTourE);
-			SplitLoadFromIni(splitContainerTourP);
-			SplitLoadFromIni(scTournamentEList);
-			SplitLoadFromIni(scTournamentPList);
 			CModeGame.LoadFromIni();
 			CModeMatch.LoadFromIni();
 			CModeTournamentE.LoadFromIni();
@@ -274,13 +267,24 @@ namespace RapChessGui
 		void SplitLoadFromIni(SplitContainer sc)
 		{
 			int size = sc.Orientation == Orientation.Horizontal ? sc.Size.Height : sc.Size.Width;
-			double p = (double)sc.SplitterDistance / size;
+			double p = (double)sc.SplitterDistance /size;
 			p = RapIni.ReadDouble($"position>split>{sc.Name}", p) * size;
 			try
 			{
 				if (p > 0) sc.SplitterDistance = Convert.ToInt32(p);
 			}
 			catch { }
+		}
+
+		void SplitLoadFromIni()
+		{
+			SplitLoadFromIni(splitContainerMain);
+			SplitLoadFromIni(splitContainerBoard);
+			SplitLoadFromIni(splitContainerChart);
+			SplitLoadFromIni(splitContainerTourE);
+			SplitLoadFromIni(splitContainerTourP);
+			SplitLoadFromIni(scTournamentEList);
+			SplitLoadFromIni(scTournamentPList);
 		}
 
 		#endregion
@@ -1605,7 +1609,7 @@ namespace RapChessGui
 				countGames += count;
 			}
 			int rep1 = engine.name == CModeTournamentE.engine ? CModeTournamentE.games : 0;
-			int rep2 = engine.name == CModeTournamentE.engine ? CModeTournamentE.repetition : engine.tournament;
+			int rep2 = engine.name == CModeTournamentE.engine ? CModeTournamentE.repetition - 1: engine.tournament;
 			labEngine.BackColor = engine.hisElo.GetColor();
 			labEngine.Text = $"{engine.name} games {countGames} opponents {opponents}/{CModeTournamentE.engineList.list.Count} repetitions {rep1}/{rep2}";
 			if (top2 != null)
@@ -2099,10 +2103,15 @@ namespace RapChessGui
 
 		#region events
 
-		private void FormChess_FormClosed(object sender, FormClosedEventArgs e)
+		private void FormChess_FormClosing(object sender, FormClosingEventArgs e)
 		{
 			IniSave();
 			GamerList.Terminate();
+		}
+
+		private void FormChess_FormClosed(object sender, FormClosedEventArgs e)
+		{
+			
 		}
 
 		private void Timer1_Tick_1(object sender, EventArgs e)
@@ -2534,6 +2543,7 @@ namespace RapChessGui
 		{
 			LinesResize(lvMovesW);
 			LinesResize(lvMovesB);
+			SplitLoadFromIni();
 		}
 
 		private void nudValue_Click(object sender, EventArgs e)
