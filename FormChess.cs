@@ -243,11 +243,11 @@ namespace RapChessGui
 			int height = maximized ? RestoreBounds.Height : Height;
 			int x = maximized ? RestoreBounds.X : Location.X;
 			int y = maximized ? RestoreBounds.Y : Location.Y;
-			RapIni.Write("position>maximized", maximized.ToString());
-			RapIni.Write("position>width", width.ToString());
-			RapIni.Write("position>height", height.ToString());
-			RapIni.Write("position>x", x.ToString());
-			RapIni.Write("position>y", y.ToString());
+			RapIni.Write("position>maximized", maximized);
+			RapIni.Write("position>width", width);
+			RapIni.Write("position>height", height);
+			RapIni.Write("position>x", x);
+			RapIni.Write("position>y", y);
 			SplitSaveToIni(splitContainerMain);
 			SplitSaveToIni(splitContainerBoard);
 			SplitSaveToIni(splitContainerChart);
@@ -261,7 +261,7 @@ namespace RapChessGui
 		{
 			int size = sc.Orientation == Orientation.Horizontal ? sc.Size.Height : sc.Size.Width;
 			double p = (double)sc.SplitterDistance / size;
-			RapIni.Write($"position>split>{sc.Name}", p.ToString());
+			RapIni.Write($"position>split>{sc.Name}", p);
 		}
 
 		void SplitLoadFromIni(SplitContainer sc)
@@ -450,10 +450,12 @@ namespace RapChessGui
 					break;
 				case CGameState.time:
 					ShowInfo($"{pl.name} time out", Color.Red);
+					CRapLog.Add($"Time out {pl.name}");
 					break;
 				case CGameState.error:
 					labError.Show();
 					ShowInfo($"{pl.name} make wrong move", Color.Red);
+					CRapLog.Add($"Wrong move {pl.name}");
 					break;
 			}
 			labResult.Text = tssInfo.Text;
@@ -1472,9 +1474,9 @@ namespace RapChessGui
 			cbBook1.SelectedIndex = cbBook1.FindStringExact(CModeMatch.book1);
 			cbBook2.SelectedIndex = cbBook2.FindStringExact(CModeMatch.book2);
 			nudValue1.Value = CModeMatch.modeValue1.GetValue();
-			nudValue1.Increment = CModeMatch.modeValue1.GetValueInc();
+			nudValue1.Increment = CModeMatch.modeValue1.GetValueIncrement();
 			nudValue2.Value = CModeMatch.modeValue2.GetValue();
-			nudValue2.Increment = CModeMatch.modeValue2.GetValueInc();
+			nudValue2.Increment = CModeMatch.modeValue2.GetValueIncrement();
 			CModeMatch.his.MinMax(out double min, out double max);
 			double last = CModeMatch.his.Last();
 			labMatchGames.Text = $"Games {CModeMatch.games} result {last} min {min} max {max}";
@@ -1910,9 +1912,9 @@ namespace RapChessGui
 			cbTeacherBook.SelectedIndex = cbTeacherBook.FindStringExact(CModeTraining.teacherBook);
 			cbTrainedBook.SelectedIndex = cbTrainedBook.FindStringExact(CModeTraining.trainedBook);
 			nudTeacher.Value = CModeTraining.modeValueTeacher.GetValue();
-			nudTeacher.Increment = CModeTraining.modeValueTeacher.GetValueInc();
+			nudTeacher.Increment = CModeTraining.modeValueTeacher.GetValueIncrement();
 			nudTrained.Value = CModeTraining.modeValueTrained.GetValue();
-			nudTrained.Increment = CModeTraining.modeValueTrained.GetValueInc();
+			nudTrained.Increment = CModeTraining.modeValueTrained.GetValueIncrement();
 			label12.Text = CModeTraining.win.ToString();
 			label13.Text = CModeTraining.loose.ToString();
 			label14.Text = CModeTraining.draw.ToString();
@@ -1979,8 +1981,6 @@ namespace RapChessGui
 				CModeTraining.draw++;
 				CModeTraining.modeValueTeacher.value++;
 			}
-			if (CData.gameState == CGameState.time)
-				CRapLog.Add($"Training time {gl.player.name} {CChess.whiteTurn}");
 			if ((gl.player.name == "Trained") && ((CData.gameState == CGameState.time) || (CData.gameState == CGameState.error) || gl.timeOut))
 				CModeTraining.errors++;
 			TrainingShow();
@@ -2396,7 +2396,7 @@ namespace RapChessGui
 		private void cbMode_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			CModeGame.modeValue.mode = cbMode.Text;
-			nudValue.Increment = CModeGame.modeValue.GetValueInc();
+			nudValue.Increment = CModeGame.modeValue.GetValueIncrement();
 			nudValue.Minimum = nudValue.Increment;
 			nudValue.Value = CModeGame.modeValue.GetValue();
 			toolTip1.SetToolTip(nudValue, CModeGame.modeValue.GetTip());
@@ -2405,7 +2405,7 @@ namespace RapChessGui
 		private void cbMode1_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			CModeMatch.modeValue1.mode = cbMode1.Text;
-			nudValue1.Increment = CModeMatch.modeValue1.GetValueInc();
+			nudValue1.Increment = CModeMatch.modeValue1.GetValueIncrement();
 			nudValue1.Minimum = nudValue1.Increment;
 			nudValue1.Value = CModeMatch.modeValue1.GetValue();
 			toolTip1.SetToolTip(nudValue1, CModeMatch.modeValue1.GetTip());
@@ -2414,7 +2414,7 @@ namespace RapChessGui
 		private void cbMode2_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			CModeMatch.modeValue2.mode = cbMode2.Text;
-			nudValue2.Increment = CModeMatch.modeValue2.GetValueInc();
+			nudValue2.Increment = CModeMatch.modeValue2.GetValueIncrement();
 			nudValue2.Minimum = nudValue2.Increment;
 			nudValue2.Value = CModeMatch.modeValue2.GetValue();
 			toolTip1.SetToolTip(nudValue2, CModeMatch.modeValue2.GetTip());
@@ -2423,7 +2423,7 @@ namespace RapChessGui
 		private void cbTrainedMode_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			CModeTraining.modeValueTrained.mode = cbTrainedMode.Text;
-			nudTrained.Increment = CModeTraining.modeValueTrained.GetValueInc();
+			nudTrained.Increment = CModeTraining.modeValueTrained.GetValueIncrement();
 			nudTrained.Minimum = nudTrained.Increment;
 			nudTrained.Value = CModeTraining.modeValueTrained.GetValue();
 			toolTip1.SetToolTip(nudTrained, CModeTraining.modeValueTrained.GetTip());
@@ -2432,7 +2432,7 @@ namespace RapChessGui
 		private void cbTeacherMode_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			CModeTraining.modeValueTeacher.mode = cbTeacherMode.Text;
-			nudTeacher.Increment = CModeTraining.modeValueTeacher.GetValueInc();
+			nudTeacher.Increment = CModeTraining.modeValueTeacher.GetValueIncrement();
 			nudTeacher.Minimum = nudTeacher.Increment;
 			nudTeacher.Value = Math.Max(CModeTraining.modeValueTeacher.GetValue(), nudTeacher.Minimum);
 			toolTip1.SetToolTip(nudTeacher, CModeTraining.modeValueTeacher.GetTip());
@@ -2487,7 +2487,7 @@ namespace RapChessGui
 		private void cbTourEMode_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			CModeTournamentE.modeValue.mode = (sender as ComboBox).Text;
-			nudTourE.Increment = CModeTournamentE.modeValue.GetValueInc();
+			nudTourE.Increment = CModeTournamentE.modeValue.GetValueIncrement();
 			nudTourE.Minimum = nudTourE.Increment;
 			nudTourE.Value = Math.Max(CModeTournamentE.modeValue.GetValue(), nudTourE.Minimum);
 			toolTip1.SetToolTip(nudTourE, CModeTournamentE.modeValue.GetTip());

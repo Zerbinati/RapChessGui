@@ -172,10 +172,11 @@ namespace RapChessGui
 		public string mode = "Time";
 		public int value = 10;
 		public int increment = 100;
+		public int inc = 0;
 
 		public void SetValue(int v)
 		{
-			int inc = GetValueInc();
+			int inc = GetValueIncrement();
 			if (inc > 0)
 				value = v / inc;
 			else
@@ -184,19 +185,19 @@ namespace RapChessGui
 
 		public int GetValue()
 		{
-			int inc = GetValueInc();
+			int inc = GetValueIncrement();
 			return value > 0 ? value * inc : inc;
 		}
 
 		public int GetUciValue()
 		{
-			int result = value * GetValueInc();
+			int result = value * GetValueIncrement();
 			if (mode == "Standard")
 				result *= 1000;
 			return result;
 		}
 
-		public int GetValueInc()
+		public int GetValueIncrement()
 		{
 			switch (mode)
 			{
@@ -281,11 +282,11 @@ namespace RapChessGui
 		{
 			if(mode == "Standard")
 			{
-				int t = value * 15 + increment * 60;
+				int t = value * 15 + inc * 60;
 				int m = value / 4;
 				string min = m > 0 ? m.ToString() : "";
 				string sec = new string[4] {"", "¼", "½", "¾"}[value % 4];
-				string tim = $"{min}{sec}+{increment}";
+				string tim = $"{min}{sec}+{inc}";
 				if (t > 21600)
 					return $"Mail {tim}";
 				if(t > 1800)

@@ -148,7 +148,7 @@ namespace RapChessGui
 		private void combMode_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			modeValue.mode = combMode.Text;
-			nudValue.Increment = modeValue.GetValueInc();
+			nudValue.Increment = modeValue.GetValueIncrement();
 			nudValue.Value = modeValue.GetValue();
 			toolTip1.SetToolTip(nudValue, modeValue.GetTip());
 		}
