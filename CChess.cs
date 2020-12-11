@@ -345,6 +345,8 @@ namespace RapChessGui
 		{
 			int x = (square & 0xf) - 4;
 			int y = (square >> 4) - 4;
+			if ((x < 0) || (y < 0) || (x > 7) || (y > 7))
+				return "";
 			string xs = "abcdefgh";
 			string ys = "87654321";
 			return $"{xs[x]}{ys[y]}";
