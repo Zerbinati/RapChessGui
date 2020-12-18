@@ -16,6 +16,10 @@ namespace RapChessGui
 	{
 		[DllImport("gdi32.dll")]
 		private static extern IntPtr AddFontMemResourceEx(IntPtr pbFont, uint cbFont, IntPtr pdv, [In] ref uint pcFonts);
+
+		[DllImport("user32")]
+		private static extern bool ShowScrollBar(IntPtr hwnd, int wBar, [System.Runtime.InteropServices.MarshalAs(System.Runtime.InteropServices.UnmanagedType.Bool)] bool bShow);
+
 		bool showInfo = false;
 		public static FormChess This;
 		public static bool boardRotate;
@@ -2375,17 +2379,19 @@ namespace RapChessGui
 			int w = 100;
 			for (int n = 0; n < lv.Columns.Count - 1; n++)
 				lv.Columns[n].Width = w;
-			lv.Columns[lv.Columns.Count - 1].Width = lv.Width - 32 - w * (lv.Columns.Count - 1);
+			lv.Columns[lv.Columns.Count - 1].Width = lv.Width - w * (lv.Columns.Count - 1);
+			ShowScrollBar(lv.Handle, 0, false);
 		}
 
 		private void lvMoves_Resize(object sender, EventArgs e)
 		{
 			ListView lv = (ListView)sender;
-			int w = lv.Width - 32;
+			int w = lv.Width;
 			w = Convert.ToInt32(w / 5);
 			lv.Columns[0].Width = w;
 			lv.Columns[1].Width = w * 2;
 			lv.Columns[2].Width = w * 2;
+			ShowScrollBar(lv.Handle, 0,false);
 		}
 
 		private void panBoard_Paint(object sender, PaintEventArgs e)
@@ -2599,5 +2605,9 @@ namespace RapChessGui
 
 		#endregion
 
+		private void splitContainerBoard_SizeChanged(object sender, EventArgs e)
+		{
+			splitContainerBoard.SplitterDistance = panBoard.Height;
+		}
 	}
 }

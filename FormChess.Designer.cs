@@ -3312,6 +3312,7 @@
 			// 
 			this.splitContainerBoard.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
 			this.splitContainerBoard.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.splitContainerBoard.IsSplitterFixed = true;
 			this.splitContainerBoard.Location = new System.Drawing.Point(0, 0);
 			this.splitContainerBoard.Name = "splitContainerBoard";
 			// 
@@ -3327,6 +3328,7 @@
 			this.splitContainerBoard.Size = new System.Drawing.Size(1184, 517);
 			this.splitContainerBoard.SplitterDistance = 414;
 			this.splitContainerBoard.TabIndex = 37;
+			this.splitContainerBoard.SizeChanged += new System.EventHandler(this.splitContainerBoard_SizeChanged);
 			// 
 			// panBoard
 			// 
