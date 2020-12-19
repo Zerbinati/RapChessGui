@@ -91,6 +91,14 @@ namespace RapChessGui
 			SendMessage("quit");
 		}
 
+		void Clear()
+		{
+			lastMove = "";
+			ponder = "";
+			pv = "";
+			score = "";
+		}
+
 		public void Init(bool w)
 		{
 			isWhite = w;
@@ -106,15 +114,12 @@ namespace RapChessGui
 			nps = 0;
 			npsSum = 0;
 			npsCount = 0;
-			score = "0";
 			depth = 0;
 			seldepth = 0;
-			ponder = "";
-			pv = "";
 			iScore = 0;
 			timerStart = 0;
-			lastMove = "";
 			timer.Reset();
+			Clear();
 		}
 
 		public void SetNps(ulong n)
@@ -261,6 +266,7 @@ namespace RapChessGui
 		/// </summary>
 		public void EngMakeMove()
 		{
+			Clear();
 			if (engine.protocol == "Uci")
 				UciGo();
 			else

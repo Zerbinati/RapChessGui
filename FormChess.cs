@@ -259,6 +259,7 @@ namespace RapChessGui
 			SplitSaveToIni(splitContainerTourP);
 			SplitSaveToIni(scTournamentEList);
 			SplitSaveToIni(scTournamentPList);
+			Board.SaveToIni();
 		}
 
 		void SplitSaveToIni(SplitContainer sc)
@@ -490,6 +491,7 @@ namespace RapChessGui
 
 		public void BoardPrepare()
 		{
+			CBoard.SetColor();
 			SetBoardRotate();
 			Board.Resize(panBoard.Width, panBoard.Height);
 			RenderBoard();
@@ -908,7 +910,7 @@ namespace RapChessGui
 
 		void Reset()
 		{
-			BackColor = CBoard.color;
+			BackColor = CBoard.colors[3];
 			if (!CData.reset)
 				return;
 			CData.reset = false;
@@ -1711,7 +1713,7 @@ namespace RapChessGui
 				if (OW == OL)
 					OW = engineList.GetOptElo(indexW + 1);
 				double cg = CModeTournamentE.tourList.CountGames(CModeTournamentE.engine, CModeTournamentE.opponent, out _, out _, out _);
-				double mod = cg / 0xf;
+				double mod = 0.5 + cg / 0xf;
 				if (mod > 0.9)
 					mod = 0.9;
 				newW = Convert.ToInt32(eloW * mod + Math.Max(OW, eloL) * (1.0 - mod));
@@ -1879,7 +1881,7 @@ namespace RapChessGui
 				if (OW == OL)
 					OW = engineList.GetOptElo(indexW + 1);
 				double cg = CModeTournamentP.tourList.CountGames(CModeTournamentE.engine, CModeTournamentE.opponent, out _, out _, out _);
-				double mod = cg / 0xf;
+				double mod = 0.5 + cg / 0xf;
 				if (mod > 0.9)
 					mod = 0.9;
 				newW = Convert.ToInt32(eloW * mod + Math.Max(OW, eloL) * (1.0 - mod));
