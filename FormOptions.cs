@@ -31,7 +31,6 @@ namespace RapChessGui
 			cbArrow.Checked = CRapIni.This.ReadBool("options>interface>arrow", cbArrow.Checked);
 			cbTips.Checked = CRapIni.This.ReadBool("options>interface>tips", cbTips.Checked);
 			nudSpeed.Value = CRapIni.This.ReadInt("options>interface>speed", 200);
-			//CBoard.color = ColorTranslator.FromHtml(CRapIni.This.Read("options>interface>color", ColorTranslator.ToHtml(CBoard.defColor)));
 			cbGameAutoElo.Checked = CRapIni.This.ReadBool("options>game>autoelo",cbGameAutoElo.Checked);
 			combModeStandard.SelectedIndex = CRapIni.This.ReadInt("options>margin>standard", 1);
 			combModeTime.SelectedIndex = CRapIni.This.ReadInt("options>margin>time", 4);
@@ -51,7 +50,6 @@ namespace RapChessGui
 			CRapIni.This.Write("options>interface>arrow", cbArrow.Checked);
 			CRapIni.This.Write("options>interface>tips", cbTips.Checked);
 			CRapIni.This.Write("options>interface>speed", nudSpeed.Value);
-			//CRapIni.This.Write("options>interface>color", ColorTranslator.ToHtml(CBoard.color));
 			CRapIni.This.Write("options>game>autoelo", cbGameAutoElo.Checked);
 			CRapIni.This.Write("options>margin>standard", combModeStandard.SelectedIndex);
 			CRapIni.This.Write("options>margin>time", combModeTime.SelectedIndex);
@@ -83,7 +81,7 @@ namespace RapChessGui
 			if (colorDialog1.ShowDialog() != DialogResult.Cancel)
 			{
 				CBoard.SetColor(colorDialog1.Color);
-				FormChess.This.BackColor = CBoard.colors[3];
+				FormChess.This.BackColor = CBoard.dark;
 				FormChess.This.BoardPrepare();
 			}
 		}
@@ -105,7 +103,7 @@ namespace RapChessGui
 			nudSpeed.Value = 200;
 			CBoard.SetColor(CBoard.defColor);
 			colorDialog1.Color = CBoard.defColor;
-			FormChess.This.BackColor = CBoard.colors[3];
+			FormChess.This.BackColor = CBoard.dark;
 			FormChess.This.BoardPrepare();
 		}
 

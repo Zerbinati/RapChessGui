@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Collections.Generic;
+using System.Windows.Forms;
 using RapIni;
 
 namespace RapChessGui
@@ -81,6 +82,9 @@ namespace RapChessGui
 	class CBoard
 	{
 		public static Color defColor = Color.FromArgb(64, 8, 8);
+		public static Color dark;
+		public static Color light1;
+		public static Color light2;
 		public static bool animated = false;
 		public static bool finished = true;
 		public static bool showArrow = false;
@@ -93,7 +97,6 @@ namespace RapChessGui
 		public static Bitmap[] background = new Bitmap[2];
 		public Bitmap bmpBoard;
 		public static Color color;
-		public static Color[] colors = new Color[9];
 		public CArrowList arrowCur = new CArrowList(Color.FromArgb(0x90, 0x10, 0xff, 0x10));
 		public CArrowList arrowEco = new CArrowList(Color.FromArgb(0x90, 0xff, 0x10, 0x10));
 
@@ -199,7 +202,7 @@ namespace RapChessGui
 			Rectangle rec = new Rectangle();
 			Bitmap bmp = new Bitmap(size, size);
 			Graphics g = Graphics.FromImage(bmp);
-			SolidBrush brush1 = new SolidBrush(colors[3]);
+			SolidBrush brush1 = new SolidBrush(dark);
 			SolidBrush brush2 = new SolidBrush(Color.FromArgb(0x60, 0x00, 0x00, 0x00));
 			SolidBrush brush3 = new SolidBrush(Color.FromArgb(0x60, 0xff, 0xff, 0xff));
 			Font font = new Font(FontFamily.GenericSansSerif, 16, FontStyle.Bold);
@@ -411,29 +414,35 @@ namespace RapChessGui
 			ClearColors();
 		}
 
-		static Color GetColor(Color color,double brightness)
+		static Color GetColor(Color color, double brightness)
 		{
 			int r = color.R;
 			int g = color.G;
 			int b = color.B;
 			double br = color.GetBrightness();
-			int del = Convert.ToInt32((brightness - br) * 0xff);
-			r += del;
-			g += del;
-			b += del;
-			if (r < 0)
-				r = 0;
-			if (g < 0)
-				g = 0;
-			if (b < 0)
-				b = 0;
-			if (r > 0xff)
-				r = 0xff;
-			if (g > 0xff)
-				g = 0xff;
-			if (b > 0xff)
-				b = 0xff;
-			return Color.FromArgb(r,g,b);
+			if (brightness < br)
+			{
+				double del = br - brightness;
+				r -= Convert.ToInt32(r * del);
+				g -= Convert.ToInt32(g * del);
+				b -= Convert.ToInt32(b * del);
+			}
+			if (brightness > br)
+			{
+				double del = brightness - br;
+				r += Convert.ToInt32((0xff - r) * del);
+				g += Convert.ToInt32((0xff - g) * del);
+				b += Convert.ToInt32((0xff - b) * del);
+			}
+			return Color.FromArgb(r, g, b);
+		}
+
+		static Color GetColor(Color color, Color mix, double strength)
+		{
+			int r = Convert.ToInt32(color.R * (1.0 - strength) + mix.R * strength);
+			int g = Convert.ToInt32(color.G * (1.0 - strength) + mix.G * strength);
+			int b = Convert.ToInt32(color.B * (1.0 - strength) + mix.B * strength);
+			return Color.FromArgb(r, g, b);
 		}
 
 		public static void SetColor(Color c)
@@ -444,8 +453,9 @@ namespace RapChessGui
 
 		public static void SetColor()
 		{
-			for (int n = 0; n < colors.Length; n++)
-				colors[n] = GetColor(color, 0.1 * n);
+			dark = GetColor(color,0.02);
+			light1 = GetColor(color,Color.White, 0.8);
+			light2 = GetColor(color,Color.White, 0.92);
 		}
 
 		public static void UpdatePosition()

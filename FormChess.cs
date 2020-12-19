@@ -314,6 +314,37 @@ namespace RapChessGui
 			PrepareGamers();
 		}
 
+		public static void SetColor()
+		{
+			Color c = CBoard.dark;
+			This.BackColor = c;
+			This.labPlayerW.BackColor = c;
+			This.labPlayerB.BackColor = c;
+			This.labEngineW.BackColor = c;
+			This.labEngineB.BackColor = c;
+			This.labBookNW.BackColor = c;
+			This.labBookNB.BackColor = c;
+			This.labModeW.BackColor = c;
+			This.labModeB.BackColor = c;
+			This.labProtocolW.BackColor = c;
+			This.labProtocolB.BackColor = c; 
+			This.labMemoryW.BackColor = c;
+			This.labMemoryB.BackColor = c;
+			c = CBoard.light1;
+			This.labScoreW.BackColor = c;
+			This.labScoreB.BackColor = c;
+			This.labDepthW.BackColor = c;
+			This.labDepthB.BackColor = c;
+			This.labNodesW.BackColor = c;
+			This.labNodesB.BackColor = c;
+			This.labNpsW.BackColor = c;
+			This.labNpsB.BackColor = c;
+			This.labBookCW.BackColor = c;
+			This.labBookCB.BackColor = c;
+			This.labPonderW.BackColor = c;
+			This.labPonderB.BackColor = c;
+		}
+
 		void PrepareFen(string fen = CChess.defFen)
 		{
 			CDrag.lastSou = -1;
@@ -492,6 +523,7 @@ namespace RapChessGui
 		public void BoardPrepare()
 		{
 			CBoard.SetColor();
+			SetColor();
 			SetBoardRotate();
 			Board.Resize(panBoard.Width, panBoard.Height);
 			RenderBoard();
@@ -504,7 +536,7 @@ namespace RapChessGui
 			ListViewItem lvi = new ListViewItem(new[] { dt.ToString("mm:ss.ff"), g.score, g.GetDepth(), g.nodes.ToString("N0"), g.nps.ToString("N0"), g.pv });
 			ListView lv = g.isWhite ? lvMovesW : lvMovesB;
 			if ((lv.Items.Count & 1) > 0)
-				lvi.BackColor = Color.LemonChiffon;
+				lvi.BackColor = CBoard.light2;
 			lv.Items.Insert(0, lvi);
 		}
 
@@ -910,7 +942,7 @@ namespace RapChessGui
 
 		void Reset()
 		{
-			BackColor = CBoard.colors[3];
+			BackColor = CBoard.dark;
 			if (!CData.reset)
 				return;
 			CData.reset = false;
