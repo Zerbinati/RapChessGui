@@ -314,35 +314,39 @@ namespace RapChessGui
 			PrepareGamers();
 		}
 
-		public static void SetColor()
+		public void SetColor()
 		{
-			Color c = CBoard.dark;
-			This.BackColor = c;
-			This.labPlayerW.BackColor = c;
-			This.labPlayerB.BackColor = c;
-			This.labEngineW.BackColor = c;
-			This.labEngineB.BackColor = c;
-			This.labBookNW.BackColor = c;
-			This.labBookNB.BackColor = c;
-			This.labModeW.BackColor = c;
-			This.labModeB.BackColor = c;
-			This.labProtocolW.BackColor = c;
-			This.labProtocolB.BackColor = c; 
-			This.labMemoryW.BackColor = c;
-			This.labMemoryB.BackColor = c;
-			c = CBoard.light1;
-			This.labScoreW.BackColor = c;
-			This.labScoreB.BackColor = c;
-			This.labDepthW.BackColor = c;
-			This.labDepthB.BackColor = c;
-			This.labNodesW.BackColor = c;
-			This.labNodesB.BackColor = c;
-			This.labNpsW.BackColor = c;
-			This.labNpsB.BackColor = c;
-			This.labBookCW.BackColor = c;
-			This.labBookCB.BackColor = c;
-			This.labPonderW.BackColor = c;
-			This.labPonderB.BackColor = c;
+			Color l = CBoard.GetColor(CBoard.medium, Color.White, 0.5);
+			Color d = CBoard.GetColor(CBoard.medium, Color.Black, 0.5);
+			Color cl = CBoard.GetColor(CBoard.medium, Color.White, 0.3);
+			Color cd = CBoard.GetColor(CBoard.medium, Color.Black, 0.3);
+			labPlayerW.BackColor = d;
+			labPlayerB.BackColor = d;
+			labEngineW.BackColor = d;
+			labEngineB.BackColor = d;
+			labBookNW.BackColor = d;
+			labBookNB.BackColor = d;
+			labModeW.BackColor = d;
+			labModeB.BackColor = d;
+			labProtocolW.BackColor = d;
+			labProtocolB.BackColor = d; 
+			labMemoryW.BackColor = d;
+			labMemoryB.BackColor = d;
+			labScoreW.BackColor = l;
+			labScoreB.BackColor = l;
+			labDepthW.BackColor = l;
+			labDepthB.BackColor = l;
+			labNodesW.BackColor = l;
+			labNodesB.BackColor = l;
+			labNpsW.BackColor = l;
+			labNpsB.BackColor = l;
+			labBookCW.BackColor = l;
+			labBookCB.BackColor = l;
+			labPonderW.BackColor = l;
+			labPonderB.BackColor = l;
+			Color[] pcc = new Color[2] {cl,cd};
+			chartMain.PaletteCustomColors = pcc;
+			BackColor = CBoard.dark;
 		}
 
 		void PrepareFen(string fen = CChess.defFen)
@@ -420,7 +424,7 @@ namespace RapChessGui
 				{
 					labTimeD.Text = g.GetTime();
 					if ((g.timer.IsRunning) || (CData.gameState != CGameState.normal))
-						labTimeD.BackColor = labTimeD.Text.Contains('.') ? Color.Pink : Color.Yellow;
+						labTimeD.BackColor = labTimeD.Text.Contains('.') ? Color.Pink : CBoard.light;
 					else
 						labTimeD.BackColor = Color.LightGray;
 				}
@@ -432,7 +436,7 @@ namespace RapChessGui
 				{
 					labTimeT.Text = g.GetTime();
 					if ((g.timer.IsRunning) || (CData.gameState != CGameState.normal))
-						labTimeT.BackColor = labTimeT.Text.Contains('.') ? Color.Pink : Color.Yellow;
+						labTimeT.BackColor = labTimeT.Text.Contains('.') ? Color.Pink : CBoard.light;
 					else if (CData.gameState == CGameState.normal)
 						labTimeT.BackColor = Color.LightGray;
 				}

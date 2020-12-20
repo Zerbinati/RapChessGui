@@ -3,7 +3,6 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Collections.Generic;
-using System.Windows.Forms;
 using RapIni;
 
 namespace RapChessGui
@@ -81,9 +80,10 @@ namespace RapChessGui
 
 	class CBoard
 	{
-		public static Color defColor = Color.FromArgb(64, 8, 8);
+		public static Color defColor = Color.FromArgb(0x80,0x40,0x20);
+		public static Color medium;
 		public static Color dark;
-		public static Color light1;
+		public static Color light;
 		public static Color light2;
 		public static bool animated = false;
 		public static bool finished = true;
@@ -290,7 +290,7 @@ namespace RapChessGui
 			bmpBoard = new Bitmap(background[FormChess.boardRotate ? 1 : 0]);
 			Graphics g = Graphics.FromImage(bmpBoard);
 			Brush brushRed = new SolidBrush(Color.FromArgb(0x80, 0xff, 0x00, 0x00));
-			Brush brushYellow = new SolidBrush(Color.FromArgb(0x80, 0xff, 0xff, 0x00));
+			Brush brushYellow = new SolidBrush(Color.FromArgb(0xa0, 0xff, 0xff, 0xff));
 			Brush brushWhite = new SolidBrush(Color.White);
 			Brush brushBlack = new SolidBrush(Color.Black);
 			Font fontPiece = new Font(FormChess.pfc.Families[0], field);
@@ -414,8 +414,23 @@ namespace RapChessGui
 			ClearColors();
 		}
 
-		static Color GetColor(Color color, double brightness)
+		static Color GetColor(Color color)
 		{
+			int r = color.R;
+			int g = color.G;
+			int b = color.B;
+			int max = Math.Max(r,g);
+			max = Math.Max(max,b);
+			int del = 0xff - max;
+			r += del;
+			g+= del;
+			b += del;
+			return Color.FromArgb(r, g, b);
+		}
+
+		public static Color GetColor(Color color, double brightness)
+		{
+			color = GetColor(color);
 			int r = color.R;
 			int g = color.G;
 			int b = color.B;
@@ -437,7 +452,7 @@ namespace RapChessGui
 			return Color.FromArgb(r, g, b);
 		}
 
-		static Color GetColor(Color color, Color mix, double strength)
+		public static Color GetColor(Color color, Color mix, double strength)
 		{
 			int r = Convert.ToInt32(color.R * (1.0 - strength) + mix.R * strength);
 			int g = Convert.ToInt32(color.G * (1.0 - strength) + mix.G * strength);
@@ -453,9 +468,10 @@ namespace RapChessGui
 
 		public static void SetColor()
 		{
+			medium = GetColor(color, 0.5);
 			dark = GetColor(color,0.02);
-			light1 = GetColor(color,Color.White, 0.8);
-			light2 = GetColor(color,Color.White, 0.92);
+			light = GetColor(color, 0.80);
+			light2 = GetColor(medium,Color.White, 0.84);
 		}
 
 		public static void UpdatePosition()
