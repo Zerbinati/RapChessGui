@@ -80,7 +80,7 @@ namespace RapChessGui
 
 	class CBoard
 	{
-		public static Color defColor = Color.FromArgb(0x80,0x40,0x20);
+		public static Color defColor = Color.FromArgb(0x80, 0x40, 0x20);
 		public static Color medium;
 		public static Color dark;
 		public static Color light;
@@ -419,12 +419,14 @@ namespace RapChessGui
 			int r = color.R;
 			int g = color.G;
 			int b = color.B;
-			int max = Math.Max(r,g);
-			max = Math.Max(max,b);
-			int del = 0xff - max;
-			r += del;
-			g+= del;
-			b += del;
+			int min = Math.Min(r, g);
+			min = Math.Min(min, b);
+			int max = Math.Max(r, g);
+			max = Math.Max(max, b);
+			double del = max > min ? max - min : 1;
+			r = 0x70 + Convert.ToInt32(0x70 * (r - min) / del);
+			g = 0x70 + Convert.ToInt32(0x70 * (g - min) / del);
+			b = 0x70 + Convert.ToInt32(0x70 * (b - min) / del);
 			return Color.FromArgb(r, g, b);
 		}
 
@@ -469,9 +471,9 @@ namespace RapChessGui
 		public static void SetColor()
 		{
 			medium = GetColor(color, 0.5);
-			dark = GetColor(color,0.02);
+			dark = GetColor(color, 0.02);
 			light = GetColor(color, 0.80);
-			light2 = GetColor(medium,Color.White, 0.84);
+			light2 = GetColor(medium, Color.White, 0.84);
 		}
 
 		public static void UpdatePosition()
