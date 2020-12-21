@@ -424,7 +424,7 @@ namespace RapChessGui
 				{
 					labTimeD.Text = g.GetTime();
 					if ((g.timer.IsRunning) || (CData.gameState != CGameState.normal))
-						labTimeD.BackColor = labTimeD.Text.Contains('.') ? Color.Pink : CBoard.light;
+						labTimeD.BackColor = labTimeD.Text.Contains('.') ? Color.Pink : CBoard.bright;
 					else
 						labTimeD.BackColor = Color.LightGray;
 				}
@@ -436,7 +436,7 @@ namespace RapChessGui
 				{
 					labTimeT.Text = g.GetTime();
 					if ((g.timer.IsRunning) || (CData.gameState != CGameState.normal))
-						labTimeT.BackColor = labTimeT.Text.Contains('.') ? Color.Pink : CBoard.light;
+						labTimeT.BackColor = labTimeT.Text.Contains('.') ? Color.Pink : CBoard.bright;
 					else if (CData.gameState == CGameState.normal)
 						labTimeT.BackColor = Color.LightGray;
 				}
@@ -540,7 +540,7 @@ namespace RapChessGui
 			ListViewItem lvi = new ListViewItem(new[] { dt.ToString("mm:ss.ff"), g.score, g.GetDepth(), g.nodes.ToString("N0"), g.nps.ToString("N0"), g.pv });
 			ListView lv = g.isWhite ? lvMovesW : lvMovesB;
 			if ((lv.Items.Count & 1) > 0)
-				lvi.BackColor = CBoard.light2;
+				lvi.BackColor = CBoard.brighter;
 			lv.Items.Insert(0, lvi);
 		}
 
@@ -1749,7 +1749,7 @@ namespace RapChessGui
 				if (OW == OL)
 					OW = engineList.GetOptElo(indexW + 1);
 				double cg = CModeTournamentE.tourList.CountGames(CModeTournamentE.engine, CModeTournamentE.opponent, out _, out _, out _);
-				double mod = 0.5 + cg / 0xf;
+				double mod = 0.6 + (cg / 0xf) * 0.3;
 				if (mod > 0.9)
 					mod = 0.9;
 				newW = Convert.ToInt32(eloW * mod + Math.Max(OW, eloL) * (1.0 - mod));
@@ -1917,7 +1917,7 @@ namespace RapChessGui
 				if (OW == OL)
 					OW = engineList.GetOptElo(indexW + 1);
 				double cg = CModeTournamentP.tourList.CountGames(CModeTournamentE.engine, CModeTournamentE.opponent, out _, out _, out _);
-				double mod = 0.5 + cg / 0xf;
+				double mod = 0.6 + (cg / 0xf) * 0.3;
 				if (mod > 0.9)
 					mod = 0.9;
 				newW = Convert.ToInt32(eloW * mod + Math.Max(OW, eloL) * (1.0 - mod));

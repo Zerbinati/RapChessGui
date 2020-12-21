@@ -80,11 +80,11 @@ namespace RapChessGui
 
 	class CBoard
 	{
-		public static Color defColor = Color.FromArgb(0x80, 0x40, 0x20);
+		public static Color defColor = Color.FromArgb(0xff, 0xff, 0x80);
 		public static Color medium;
 		public static Color dark;
-		public static Color light;
-		public static Color light2;
+		public static Color bright;
+		public static Color brighter;
 		public static bool animated = false;
 		public static bool finished = true;
 		public static bool showArrow = false;
@@ -472,8 +472,8 @@ namespace RapChessGui
 		{
 			medium = GetColor(color, 0.5);
 			dark = GetColor(color, 0.02);
-			light = GetColor(color, 0.80);
-			light2 = GetColor(medium, Color.White, 0.84);
+			bright = GetColor(color, 0.80);
+			brighter = GetColor(medium, Color.White, 0.84);
 		}
 
 		public static void UpdatePosition()
