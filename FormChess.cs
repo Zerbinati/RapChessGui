@@ -346,8 +346,10 @@ namespace RapChessGui
 			labBookCB.BackColor = l;
 			labPonderW.BackColor = l;
 			labPonderB.BackColor = l;
-			Color[] pcc = new Color[2] { cl, cd };
-			chartMain.PaletteCustomColors = pcc;
+			chartMain.PaletteCustomColors[0] = cl;
+			chartMain.PaletteCustomColors[1] = cd;
+			chartGame.PaletteCustomColors[0] = CBoard.dark;
+			chartMatch.PaletteCustomColors[0] = CBoard.dark;
 			BackColor = CBoard.dark;
 		}
 
@@ -2525,7 +2527,7 @@ namespace RapChessGui
 			SetMode((CGameMode)combMainMode.SelectedIndex);
 		}
 
-		private void tlp_Resize(object sender, EventArgs e)
+		/*private void tlp_Resize(object sender, EventArgs e)
 		{
 			TableLayoutPanel tlp = sender as TableLayoutPanel;
 			foreach (Control ctrl in tlp.Controls)
@@ -2533,7 +2535,7 @@ namespace RapChessGui
 				float size = (float)(tlp.Width * 0.028);
 				ctrl.Font = new Font(ctrl.Font.Name, size);
 			}
-		}
+		}*/
 
 		private void butResignation_Click(object sender, EventArgs e)
 		{
@@ -2669,11 +2671,12 @@ namespace RapChessGui
 			TournamentPSelect();
 		}
 
-		#endregion
-
 		private void splitContainerBoard_SizeChanged(object sender, EventArgs e)
 		{
 			splitContainerBoard.SplitterDistance = panBoard.Height;
 		}
+
+		#endregion
+
 	}
 }
