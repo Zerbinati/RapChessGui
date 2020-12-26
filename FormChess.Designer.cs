@@ -64,8 +64,6 @@
 			this.cbEngine = new System.Windows.Forms.ComboBox();
 			this.cbComputer = new System.Windows.Forms.ComboBox();
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
-			this.labAutoElo = new System.Windows.Forms.Label();
-			this.labBack = new System.Windows.Forms.Label();
 			this.cbColor = new System.Windows.Forms.ComboBox();
 			this.tabPageMatch = new System.Windows.Forms.TabPage();
 			this.chartMatch = new System.Windows.Forms.DataVisualization.Charting.Chart();
@@ -415,9 +413,6 @@
 			// 
 			// chartGame
 			// 
-			this.chartGame.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
 			this.chartGame.BackColor = System.Drawing.Color.WhiteSmoke;
 			chartArea1.AxisX.LabelStyle.Enabled = false;
 			chartArea1.AxisX.MajorGrid.Enabled = false;
@@ -429,7 +424,8 @@
 			chartArea1.BorderDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Solid;
 			chartArea1.Name = "ChartArea1";
 			this.chartGame.ChartAreas.Add(chartArea1);
-			this.chartGame.Location = new System.Drawing.Point(3, 359);
+			this.chartGame.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.chartGame.Location = new System.Drawing.Point(3, 319);
 			this.chartGame.Name = "chartGame";
 			this.chartGame.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.None;
 			this.chartGame.PaletteCustomColors = new System.Drawing.Color[] {
@@ -440,7 +436,7 @@
 			series1.IsVisibleInLegend = false;
 			series1.Name = "Series1";
 			this.chartGame.Series.Add(series1);
-			this.chartGame.Size = new System.Drawing.Size(386, 103);
+			this.chartGame.Size = new System.Drawing.Size(386, 143);
 			this.chartGame.TabIndex = 28;
 			this.chartGame.Text = "chart1";
 			this.toolTip1.SetToolTip(this.chartGame, "User progress history");
@@ -449,7 +445,7 @@
 			// 
 			this.butBackward.Cursor = System.Windows.Forms.Cursors.Hand;
 			this.butBackward.Dock = System.Windows.Forms.DockStyle.Top;
-			this.butBackward.Location = new System.Drawing.Point(3, 330);
+			this.butBackward.Location = new System.Drawing.Point(3, 296);
 			this.butBackward.Name = "butBackward";
 			this.butBackward.Size = new System.Drawing.Size(386, 23);
 			this.butBackward.TabIndex = 27;
@@ -462,7 +458,7 @@
 			// 
 			this.butForward.Cursor = System.Windows.Forms.Cursors.Hand;
 			this.butForward.Dock = System.Windows.Forms.DockStyle.Top;
-			this.butForward.Location = new System.Drawing.Point(3, 307);
+			this.butForward.Location = new System.Drawing.Point(3, 273);
 			this.butForward.Name = "butForward";
 			this.butForward.Size = new System.Drawing.Size(386, 23);
 			this.butForward.TabIndex = 26;
@@ -475,7 +471,7 @@
 			// 
 			this.butResignation.Cursor = System.Windows.Forms.Cursors.Hand;
 			this.butResignation.Dock = System.Windows.Forms.DockStyle.Top;
-			this.butResignation.Location = new System.Drawing.Point(3, 284);
+			this.butResignation.Location = new System.Drawing.Point(3, 250);
 			this.butResignation.Name = "butResignation";
 			this.butResignation.Size = new System.Drawing.Size(386, 23);
 			this.butResignation.TabIndex = 25;
@@ -488,7 +484,7 @@
 			// 
 			this.butStop.Cursor = System.Windows.Forms.Cursors.Hand;
 			this.butStop.Dock = System.Windows.Forms.DockStyle.Top;
-			this.butStop.Location = new System.Drawing.Point(3, 261);
+			this.butStop.Location = new System.Drawing.Point(3, 227);
 			this.butStop.Name = "butStop";
 			this.butStop.Size = new System.Drawing.Size(386, 23);
 			this.butStop.TabIndex = 24;
@@ -501,7 +497,7 @@
 			// 
 			this.butContinueGame.Cursor = System.Windows.Forms.Cursors.Hand;
 			this.butContinueGame.Dock = System.Windows.Forms.DockStyle.Top;
-			this.butContinueGame.Location = new System.Drawing.Point(3, 238);
+			this.butContinueGame.Location = new System.Drawing.Point(3, 204);
 			this.butContinueGame.Name = "butContinueGame";
 			this.butContinueGame.Size = new System.Drawing.Size(386, 23);
 			this.butContinueGame.TabIndex = 23;
@@ -514,7 +510,7 @@
 			// 
 			this.butNewGame.Cursor = System.Windows.Forms.Cursors.Hand;
 			this.butNewGame.Dock = System.Windows.Forms.DockStyle.Top;
-			this.butNewGame.Location = new System.Drawing.Point(3, 215);
+			this.butNewGame.Location = new System.Drawing.Point(3, 181);
 			this.butNewGame.Name = "butNewGame";
 			this.butNewGame.Size = new System.Drawing.Size(386, 23);
 			this.butNewGame.TabIndex = 20;
@@ -531,7 +527,7 @@
 			this.groupBox2.Controls.Add(this.cbEngine);
 			this.groupBox2.Controls.Add(this.cbComputer);
 			this.groupBox2.Dock = System.Windows.Forms.DockStyle.Top;
-			this.groupBox2.Location = new System.Drawing.Point(3, 84);
+			this.groupBox2.Location = new System.Drawing.Point(3, 50);
 			this.groupBox2.Name = "groupBox2";
 			this.groupBox2.Size = new System.Drawing.Size(386, 131);
 			this.groupBox2.TabIndex = 19;
@@ -630,37 +626,14 @@
 			// 
 			// groupBox1
 			// 
-			this.groupBox1.Controls.Add(this.labAutoElo);
-			this.groupBox1.Controls.Add(this.labBack);
 			this.groupBox1.Controls.Add(this.cbColor);
 			this.groupBox1.Dock = System.Windows.Forms.DockStyle.Top;
 			this.groupBox1.Location = new System.Drawing.Point(3, 3);
 			this.groupBox1.Name = "groupBox1";
-			this.groupBox1.Size = new System.Drawing.Size(386, 81);
+			this.groupBox1.Size = new System.Drawing.Size(386, 47);
 			this.groupBox1.TabIndex = 18;
 			this.groupBox1.TabStop = false;
 			this.groupBox1.Text = "Human color";
-			// 
-			// labAutoElo
-			// 
-			this.labAutoElo.Dock = System.Windows.Forms.DockStyle.Top;
-			this.labAutoElo.ForeColor = System.Drawing.Color.White;
-			this.labAutoElo.Location = new System.Drawing.Point(3, 58);
-			this.labAutoElo.Name = "labAutoElo";
-			this.labAutoElo.Size = new System.Drawing.Size(380, 21);
-			this.labAutoElo.TabIndex = 31;
-			this.labAutoElo.Text = "Auto Elo On";
-			this.labAutoElo.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			// 
-			// labBack
-			// 
-			this.labBack.Dock = System.Windows.Forms.DockStyle.Top;
-			this.labBack.Location = new System.Drawing.Point(3, 37);
-			this.labBack.Name = "labBack";
-			this.labBack.Size = new System.Drawing.Size(380, 21);
-			this.labBack.TabIndex = 30;
-			this.labBack.Text = "Back 0";
-			this.labBack.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
 			// cbColor
 			// 
@@ -3942,12 +3915,10 @@
 		private System.Windows.Forms.RadioButton rbWhite;
 		private System.Windows.Forms.Button butStop;
 		private System.Windows.Forms.Button butContinueGame;
-		private System.Windows.Forms.Label labBack;
 		private System.Windows.Forms.GroupBox groupBox7;
 		private System.Windows.Forms.CheckedListBox clbCastling;
 		private System.Windows.Forms.Button butContinueMatch;
 		private System.Windows.Forms.Button butDefault;
-		private System.Windows.Forms.Label labAutoElo;
 		private System.Windows.Forms.ComboBox cbBook1;
 		private System.Windows.Forms.ComboBox cbMode1;
 		private System.Windows.Forms.ComboBox cbEngine1;

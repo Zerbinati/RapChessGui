@@ -80,7 +80,8 @@ namespace RapChessGui
 
 	class CBoard
 	{
-		public static Color defColor = Color.FromArgb(0xff, 0xff, 0x80);
+		public static Color colorDefault = Color.FromArgb(0xff, 0xff, 0x80);
+		public static Color colorRed = Color.FromArgb(0x80, 0x00, 0x00);
 		public static Color medium;
 		public static Color dark;
 		public static Color bright;
@@ -109,7 +110,7 @@ namespace RapChessGui
 
 		public void LoadFromIni()
 		{
-			color = ColorTranslator.FromHtml(CRapIni.This.Read("options>interface>color", ColorTranslator.ToHtml(defColor)));
+			color = ColorTranslator.FromHtml(CRapIni.This.Read("options>interface>color", ColorTranslator.ToHtml(colorDefault)));
 			SetColor();
 		}
 

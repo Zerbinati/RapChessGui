@@ -101,8 +101,8 @@ namespace RapChessGui
 			nudTourE.Value = 10000;
 			nudTourP.Value = 10000;
 			nudSpeed.Value = 200;
-			CBoard.SetColor(CBoard.defColor);
-			colorDialog1.Color = CBoard.defColor;
+			CBoard.SetColor(CBoard.colorDefault);
+			colorDialog1.Color = CBoard.colorDefault;
 			FormChess.This.BackColor = CBoard.dark;
 			FormChess.This.BoardPrepare();
 		}

@@ -127,7 +127,7 @@ namespace RapChessGui
 			nps = n;
 			npsSum += n;
 			npsCount++;
-			if((npsSum > (ulong.MaxValue >> 1)) &&((npsCount & 1) == 0))
+			if ((npsSum > (ulong.MaxValue >> 1)) && ((npsCount & 1) == 0))
 			{
 				npsSum >>= 1;
 				npsCount >>= 1;
@@ -398,8 +398,9 @@ namespace RapChessGui
 			return Color.DarkGray;
 		}
 
-		public string GetTime()
+		public string GetTime(out bool low)
 		{
+			low = false;
 			double ms = timer.Elapsed.TotalMilliseconds;
 			DateTime dt = new DateTime();
 			string mode = "";
@@ -418,14 +419,17 @@ namespace RapChessGui
 				if (t > 0)
 					dt = dt.AddMilliseconds(t);
 				if (t < 10000)
+				{
+					low = true;
 					return dt.ToString("ss.ff");
+				}
 			}
 			else if (mode == "Time")
 			{
 				double v = Convert.ToDouble(value);
 				if (((ms - timerStart) > (v + FormOptions.marginTime)) && (FormOptions.marginTime >= 0) && (value > 0) && timer.IsRunning)
 				{
-					if (CChess.This.IsValidMove(lastMove,out _))
+					if (CChess.This.IsValidMove(lastMove, out _))
 					{
 						EngineReset();
 						FormChess.This.MakeMove(lastMove);

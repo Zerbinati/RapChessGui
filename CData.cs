@@ -33,7 +33,6 @@ namespace RapChessGui
 		public static bool rotateBoard = false;
 		public static CGameState gameState = CGameState.normal;
 		public static CGameMode gameMode = CGameMode.game;
-		public static int back = 0;
 		public static double fps = 0;
 		public static List<string> fileBook = new List<string>();
 		public static List<string> fileEngine = new List<string>();
