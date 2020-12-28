@@ -351,6 +351,7 @@ namespace RapChessGui
 			chartGame.PaletteCustomColors[0] = CBoard.dark;
 			chartMatch.PaletteCustomColors[0] = CBoard.dark;
 			BackColor = CBoard.dark;
+			ShowAutoElo();
 		}
 
 		void PrepareFen(string fen = CChess.defFen)
@@ -371,8 +372,8 @@ namespace RapChessGui
 			formLogEngines.NewGame(gw, gb);
 			GamerList.Init();
 			ShowGamers();
-			RenderInfo(gw);
-			RenderInfo(gb);
+			ShowInfo(gw);
+			ShowInfo(gb);
 			SetBoardRotate();
 			CMessageList.Clear();
 			timerMessages.Enabled = CData.gameMode != CGameMode.edit;
@@ -398,7 +399,7 @@ namespace RapChessGui
 			splitContainerMoves.Panel2Collapsed = gb.player.IsHuman();
 		}
 
-		void RenderInfo(CGamer g)
+		void ShowInfo(CGamer g)
 		{
 			if (!FormOptions.This.cbShowPonder.Checked)
 				g.ponder = "";
@@ -460,7 +461,7 @@ namespace RapChessGui
 			}
 		}
 
-		public void SetGameState(CGameState gs, CGamer gamer = null)
+		public void SetGameState(CGameState gs, CGamer gamer = null,string umo = "")
 		{
 			if (gs == CGameState.normal)
 			{
@@ -511,7 +512,7 @@ namespace RapChessGui
 				case CGameState.error:
 					labError.Show();
 					ShowInfo($"{pl.name} make wrong move", Color.Red);
-					CRapLog.Add($"Wrong move {pl.name}");
+					CRapLog.Add($"Wrong move {pl.name} ({umo}) {Chess.GetFen()}");
 					break;
 			}
 			labResult.Text = tssInfo.Text;
@@ -887,18 +888,6 @@ namespace RapChessGui
 			ShowAutoElo();
 		}
 
-		void ShowAuto(bool first = false)
-		{
-			if (CModeGame.ranked || first)
-			{
-				CPlayer p = playerList.GetPlayerAuto();
-				cbEngine.SelectedIndex = cbEngine.FindStringExact(p.engine);
-				cbMode.SelectedIndex = cbMode.FindStringExact(p.modeValue.mode);
-				cbBook.SelectedIndex = cbBook.FindStringExact(p.book);
-				nudValue.Value = p.modeValue.GetValue();
-			}
-		}
-
 		void ShowInfo(string info, Color color, bool si = false)
 		{
 			if (si || !showInfo)
@@ -961,7 +950,6 @@ namespace RapChessGui
 			{
 				hu.hisElo.Add(Convert.ToDouble(hu.elo));
 				CData.HisToPoints(hu.hisElo, chartGame.Series[0].Points);
-				CRapLog.Add($"Your new elo {hu.elo}");
 			}
 			hu.eloOrg = hu.elo;
 			hu.SaveToIni();
@@ -1028,12 +1016,11 @@ namespace RapChessGui
 			TournamentPReset();
 			lvPlayer.ListViewItemSorter = new ListViewComparer(1, SortOrder.Descending);
 			lvEngine.ListViewItemSorter = new ListViewComparer(1, SortOrder.Descending);
-			ShowAuto(true);
 			MatchShow();
 			TournamentEShow();
 		}
 
-		public bool MakeMove(string emo)
+		public bool MakeMove(string umo)
 		{
 			if (CData.gameState != CGameState.normal)
 				return false;
@@ -1041,7 +1028,7 @@ namespace RapChessGui
 			CGamer cg = GamerList.GamerCur();
 			CPlayer cp = cg.player;
 			cg.timer.Stop();
-			emo = emo.ToLower();
+			umo = umo.ToLower();
 			double m = GamerList.curIndex == 0 ? 0.01 : -0.01;
 			chartMain.Series[GamerList.curIndex].Points.Add(cg.iScore * m);
 			if (GetRanked() && CModeGame.ranked && (cg.engine == null) && ((CChess.g_moveNumber >> 1) == 4))
@@ -1050,28 +1037,27 @@ namespace RapChessGui
 				cg.player.elo = cg.player.GetEloLess().ToString();
 				cg.player.SaveToIni();
 			}
-			if (!Chess.IsValidMove(emo, out int gmo))
-				if (Chess.IsValidMove($"{emo}q", out gmo))
-					emo = $"{emo}q";
+			if (!Chess.IsValidMove(umo, out int gmo))
+				if (Chess.IsValidMove($"{umo}q", out gmo))
+					umo = $"{umo}q";
 			if (gmo == 0)
 			{
 				List<int> gMoves = Chess.GenerateValidMoves();
 				List<string> eMoves = new List<string>();
 				foreach (int gm in gMoves)
 					eMoves.Add(Chess.GmoToUmo(gm));
-				FormLogEngines.AppendText($"Wrong move: ({emo})\n", Color.Red);
+				FormLogEngines.AppendText($"Wrong move: ({umo})\n", Color.Red);
 				FormLogEngines.AppendText($"Fen: {Chess.GetFen()}\n", Color.Black);
 				FormLogEngines.AppendText($"Legal moves: {string.Join(" ", eMoves)}\n", Color.Black);
-				CRapLog.Add($"Wrong move {cp.engine} ({emo}) {Chess.GetFen()}");
-				SetGameState(CGameState.error);
+				SetGameState(CGameState.error,cg,umo);
 				return false;
 			}
 			cg.countMoves++;
-			string san = Chess.UmoToSan(emo);
-			CChess.UmoToSD(emo, out CDrag.lastSou, out CDrag.lastDes);
+			string san = Chess.UmoToSan(umo);
+			CChess.UmoToSD(umo, out CDrag.lastSou, out CDrag.lastDes);
 			Board.MakeMove(gmo);
-			Chess.MakeMove(emo, out int piece);
-			CHistory.AddMove(piece, gmo, emo, san);
+			Chess.MakeMove(umo, out int piece);
+			CHistory.AddMove(piece, gmo, umo, san);
 			MoveToLvMoves(CHistory.moveList.Count - 1, piece, CHistory.LastNotation());
 			CEco eco = EcoList.GetEcoFen(Chess.GetEpd());
 			showInfo = false;
@@ -1081,7 +1067,7 @@ namespace RapChessGui
 				Board.ClearArrows();
 				if (eco != null)
 					ShowInfo(eco.name, Color.Lime, true);
-				else if ((lastEco != "") && (!lastEco.Contains(emo)))
+				else if ((lastEco != "") && (!lastEco.Contains(umo)))
 				{
 					ShowInfo("You missed the opening moves", Color.Pink, true);
 					Board.arrowEco.AddMoves(lastEco);
@@ -1103,7 +1089,7 @@ namespace RapChessGui
 				lastEco = "";
 			}
 			int moveNumber = (CChess.g_moveNumber >> 1) + 1;
-			tssMove.Text = "Move " + moveNumber.ToString() + " " + Chess.g_move50.ToString();
+			tssMove.Text = $"Move {moveNumber} {Chess.g_move50}";
 			SetGameState(Chess.GetGameState());
 			if (CData.gameState == CGameState.normal)
 			{
@@ -1261,8 +1247,8 @@ namespace RapChessGui
 			tssInfo.ForeColor = Color.Lime;
 			tssInfo.Text = $"Load fen {Chess.GetFen()}";
 			CData.gameState = Chess.GetGameState();
-			RenderInfo(gw);
-			RenderInfo(gb);
+			ShowInfo(gw);
+			ShowInfo(gb);
 			moves = Chess.GenerateValidMoves();
 			timerMessages.Enabled = true;
 			SetUnranked();
@@ -1306,8 +1292,8 @@ namespace RapChessGui
 			FormLogEngines.AppendTimeText($"Pgn {CHistory.GetPgn()}\n", Color.Gray);
 			ShowInfo($"Load pgn {CHistory.GetPgn()}", Color.Gainsboro);
 			CData.gameState = Chess.GetGameState();
-			RenderInfo(gw);
-			RenderInfo(gb);
+			ShowInfo(gw);
+			ShowInfo(gb);
 			moves = Chess.GenerateValidMoves();
 			timerMessages.Enabled = true;
 			SetUnranked();
@@ -1476,14 +1462,12 @@ namespace RapChessGui
 
 		void GameStart()
 		{
-			Clear();
+			SetMode(CGameMode.game);
 			lastEco = "";
-			GameShow();
 			CModeGame.color = cbColor.Text;
 			CModeGame.computer = cbComputer.Text;
 			CModeGame.engine = cbEngine.Text;
-			ShowAuto();
-			SetMode(CGameMode.game);
+			GameShow();
 			GamePrepare();
 			if (ShowLastGame())
 				CModeGame.rotate = !CModeGame.rotate;
@@ -1502,16 +1486,15 @@ namespace RapChessGui
 
 		void GameShow()
 		{
+			cbEngine.Text = CModeGame.engine;
+			cbBook.Text = CModeGame.book;
+			cbMode.Text = CModeGame.modeValue.mode;
+			nudValue.Value = CModeGame.modeValue.GetValue();
 			CPlayer hu = playerList.GetPlayerHuman();
 			CData.HisToPoints(hu.hisElo, chartGame.Series[0].Points);
 			CModeGame.ranked = GetRanked();
 			ShowAutoElo();
 			GamePrepare();
-			CGamer go = GamerList.GamerComputer();
-			if (go == null)
-				go = GamerList.GamerHuman();
-			cbEngine.Text = go.player.engine;
-			cbBook.Text = go.player.book;
 		}
 
 		void GaemEnd(CPlayer pw, CPlayer pl, bool isDraw)
@@ -2196,8 +2179,8 @@ namespace RapChessGui
 			}
 			else
 			{
-				RenderInfo(GamerList.GamerCur());
-				RenderInfo(GamerList.GamerSec());
+				ShowInfo(GamerList.GamerCur());
+				ShowInfo(GamerList.GamerSec());
 				if (CData.gameState == CGameState.normal)
 					GamerList.GamerCur().TryStart();
 			}
@@ -2428,12 +2411,6 @@ namespace RapChessGui
 		{
 			CModeGame.ranked = cbComputer.Text == "Auto";
 			ShowAutoElo();
-			ShowAuto();
-		}
-
-		private void nudValue_ValueChanged(object sender, EventArgs e)
-		{
-			CModeGame.modeValue.SetValue((int)nudValue.Value);
 		}
 
 		private void panBoard_Resize(object sender, EventArgs e)
@@ -2527,16 +2504,6 @@ namespace RapChessGui
 			SetMode((CGameMode)combMainMode.SelectedIndex);
 		}
 
-		/*private void tlp_Resize(object sender, EventArgs e)
-		{
-			TableLayoutPanel tlp = sender as TableLayoutPanel;
-			foreach (Control ctrl in tlp.Controls)
-			{
-				float size = (float)(tlp.Width * 0.028);
-				ctrl.Font = new Font(ctrl.Font.Name, size);
-			}
-		}*/
-
 		private void butResignation_Click(object sender, EventArgs e)
 		{
 			if (GetRanked() && IsGameLong() && IsGameProgress())
@@ -2622,12 +2589,10 @@ namespace RapChessGui
 
 		private void nudValue_Click(object sender, EventArgs e)
 		{
-			cbComputer.Text = "Custom";
 		}
 
 		private void cbEngine_Click(object sender, EventArgs e)
 		{
-			cbComputer.Text = "Custom";
 		}
 
 		private void lvEngine_Resize(object sender, EventArgs e)

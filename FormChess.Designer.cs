@@ -553,8 +553,6 @@
             0,
             0,
             0});
-			this.nudValue.ValueChanged += new System.EventHandler(this.nudValue_ValueChanged);
-			this.nudValue.Click += new System.EventHandler(this.nudValue_Click);
 			// 
 			// cbMode
 			// 
@@ -575,7 +573,6 @@
 			this.cbMode.TabIndex = 47;
 			this.toolTip1.SetToolTip(this.cbMode, "Select engine mode");
 			this.cbMode.SelectedIndexChanged += new System.EventHandler(this.cbMode_SelectedIndexChanged);
-			this.cbMode.Click += new System.EventHandler(this.cbEngine_Click);
 			// 
 			// cbBook
 			// 
@@ -589,7 +586,6 @@
 			this.cbBook.Sorted = true;
 			this.cbBook.TabIndex = 49;
 			this.toolTip1.SetToolTip(this.cbBook, "Select engine book");
-			this.cbBook.Click += new System.EventHandler(this.cbEngine_Click);
 			// 
 			// cbEngine
 			// 
@@ -603,7 +599,6 @@
 			this.cbEngine.Sorted = true;
 			this.cbEngine.TabIndex = 46;
 			this.toolTip1.SetToolTip(this.cbEngine, "Select engine");
-			this.cbEngine.Click += new System.EventHandler(this.cbEngine_Click);
 			// 
 			// cbComputer
 			// 

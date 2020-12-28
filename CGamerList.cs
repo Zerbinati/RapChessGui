@@ -381,14 +381,6 @@ namespace RapChessGui
 			else return "";
 		}
 
-		string SetTimeOut()
-		{
-			FormChess.This.SetGameState(CGameState.time);
-			if (engine != null)
-				CRapLog.Add($"Time out {engine.name}");
-			return "Time out";
-		}
-
 		public Color GetScoreColor()
 		{
 			if (iScore > 300)
@@ -415,7 +407,10 @@ namespace RapChessGui
 				double v = Convert.ToDouble(value);
 				double t = v - ms;
 				if ((t < -FormOptions.marginStandard) && (FormOptions.marginStandard >= 0) && timer.IsRunning)
-					return SetTimeOut();
+				{
+					FormChess.This.SetGameState(CGameState.time);
+					return "Time out";
+				}
 				if (t > 0)
 					dt = dt.AddMilliseconds(t);
 				if (t < 10000)
@@ -438,7 +433,10 @@ namespace RapChessGui
 
 					}
 					else
-						return SetTimeOut();
+					{
+						FormChess.This.SetGameState(CGameState.time);
+						return "Time out";
+					}
 					timeOut = true;
 				}
 				if (ms > 0)
