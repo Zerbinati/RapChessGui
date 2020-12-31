@@ -66,11 +66,6 @@ namespace RapChessGui
 			FormBook.This = new FormBook();
 			FormPlayer.This = new FormPlayer();
 			Reset();
-			cbColor.SelectedIndex = cbColor.FindStringExact(CModeGame.color);
-			cbEngine.SelectedIndex = cbEngine.FindStringExact(CModeGame.engine);
-			if ((cbEngine.SelectedIndex == -1) || (cbBook.SelectedIndex == -1) || (cbMode.SelectedIndex == -1))
-				CModeGame.computer = "Auto";
-			cbComputer.SelectedIndex = cbComputer.FindStringExact(CModeGame.computer);
 			Font fontChess = new Font(pfc.Families[0], 16);
 			Font fontChessPromo = new Font(pfc.Families[0], 32);
 			labTakenT.Font = fontChess;
@@ -1441,6 +1436,26 @@ namespace RapChessGui
 
 		#region mode
 
+		void GameSet()
+		{
+			CModeGame.color = cbColor.Text;
+			CModeGame.computer = cbComputer.Text;
+			CModeGame.engine = cbEngine.Text;
+			CModeGame.book = cbBook.Text;
+			CModeGame.modeValue.mode = cbMode.Text;
+			CModeGame.modeValue.SetValue((int)nudValue.Value);
+		}
+
+		void GameGet()
+		{
+			cbColor.Text = CModeGame.color;
+			cbComputer.Text = CModeGame.computer;
+			cbEngine.Text = CModeGame.engine;
+			cbBook.Text = CModeGame.book;
+			cbMode.Text = CModeGame.modeValue.mode;
+			nudValue.Value = CModeGame.modeValue.GetValue();
+		}
+
 		void GamePrepare()
 		{
 			lvMoves.Items.Clear();
@@ -1462,11 +1477,9 @@ namespace RapChessGui
 
 		void GameStart()
 		{
+			GameSet();
 			SetMode(CGameMode.game);
 			lastEco = "";
-			CModeGame.color = cbColor.Text;
-			CModeGame.computer = cbComputer.Text;
-			CModeGame.engine = cbEngine.Text;
 			GameShow();
 			GamePrepare();
 			if (ShowLastGame())
@@ -1486,10 +1499,7 @@ namespace RapChessGui
 
 		void GameShow()
 		{
-			cbEngine.Text = CModeGame.engine;
-			cbBook.Text = CModeGame.book;
-			cbMode.Text = CModeGame.modeValue.mode;
-			nudValue.Value = CModeGame.modeValue.GetValue();
+			GameGet();
 			CPlayer hu = playerList.GetPlayerHuman();
 			CData.HisToPoints(hu.hisElo, chartGame.Series[0].Points);
 			CModeGame.ranked = GetRanked();
