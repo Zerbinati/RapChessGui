@@ -42,6 +42,23 @@ namespace RapChessGui
 		readonly FormHisP formHisP = new FormHisP();
 		readonly FormHisE formHisE = new FormHisE();
 
+		protected override void WndProc(ref Message m)
+		{
+			const int WM_SYSCOMMAND = 0x0112;
+			const int SC_MINIMIZE = 0xF020;
+			switch (m.Msg)
+			{
+				case WM_SYSCOMMAND:
+					int command = m.WParam.ToInt32() & 0xfff0;
+					if (command == SC_MINIMIZE)
+					{
+						SplitSaveToIni();
+					}
+					break;
+			}
+			base.WndProc(ref m);
+		}
+
 		#region initiation
 
 		public FormChess()
@@ -75,7 +92,6 @@ namespace RapChessGui
 			labPromoB.Font = fontChessPromo;
 			labPromoN.Font = fontChessPromo;
 			toolTip1.Active = FormOptions.ShowTips();
-			lvMoves_Resize(lvMoves, null);
 			Chess.Initialize();
 			BoardPrepare();
 			combMainMode.SelectedIndex = 0;
@@ -247,13 +263,7 @@ namespace RapChessGui
 			RapIni.Write("position>height", height);
 			RapIni.Write("position>x", x);
 			RapIni.Write("position>y", y);
-			SplitSaveToIni(splitContainerMain);
-			SplitSaveToIni(splitContainerBoard);
-			SplitSaveToIni(splitContainerChart);
-			SplitSaveToIni(splitContainerTourE);
-			SplitSaveToIni(splitContainerTourP);
-			SplitSaveToIni(scTournamentEList);
-			SplitSaveToIni(scTournamentPList);
+			SplitSaveToIni();
 			Board.SaveToIni();
 		}
 
@@ -267,11 +277,12 @@ namespace RapChessGui
 		void SplitLoadFromIni(SplitContainer sc)
 		{
 			int size = sc.Orientation == Orientation.Horizontal ? sc.Size.Height : sc.Size.Width;
-			double p = (double)sc.SplitterDistance / size;
-			p = RapIni.ReadDouble($"position>split>{sc.Name}", p) * size;
+			double o = (double)sc.SplitterDistance / size;
+			double p = RapIni.ReadDouble($"position>split>{sc.Name}", o);
+			int d = Convert.ToInt32(p * size);
 			try
 			{
-				if (p > 0) sc.SplitterDistance = Convert.ToInt32(p);
+				if (p > 0) sc.SplitterDistance = d;
 			}
 			catch { }
 		}
@@ -285,6 +296,17 @@ namespace RapChessGui
 			SplitLoadFromIni(splitContainerTourP);
 			SplitLoadFromIni(scTournamentEList);
 			SplitLoadFromIni(scTournamentPList);
+		}
+
+		void SplitSaveToIni()
+		{
+			SplitSaveToIni(splitContainerMain);
+			SplitSaveToIni(splitContainerBoard);
+			SplitSaveToIni(splitContainerChart);
+			SplitSaveToIni(splitContainerTourE);
+			SplitSaveToIni(splitContainerTourP);
+			SplitSaveToIni(scTournamentEList);
+			SplitSaveToIni(scTournamentPList);
 		}
 
 		#endregion
@@ -1021,7 +1043,6 @@ namespace RapChessGui
 				return false;
 			Board.arrowCur.Clear();
 			CGamer cg = GamerList.GamerCur();
-			CPlayer cp = cg.player;
 			cg.timer.Stop();
 			umo = umo.ToLower();
 			double m = GamerList.curIndex == 0 ? 0.01 : -0.01;
@@ -1531,18 +1552,33 @@ namespace RapChessGui
 				SetUnranked();
 		}
 
+		void MatchSet()
+		{
+			CModeMatch.engine1 = cbEngine1.Text;
+			CModeMatch.engine2 = cbEngine2.Text;
+			CModeMatch.book1 = cbBook1.Text;
+			CModeMatch.book2 = cbBook2.Text;
+			CModeMatch.modeValue1.mode = cbMode1.Text;
+			CModeMatch.modeValue2.mode = cbMode2.Text;
+			CModeMatch.modeValue1.SetValue((int)nudValue1.Value);
+			CModeMatch.modeValue2.SetValue((int)nudValue2.Value);
+		}
+
+		void MatchGet()
+		{
+			cbEngine1.Text = CModeMatch.engine1;
+			cbEngine2.Text = CModeMatch.engine2;
+			cbBook1.Text = CModeMatch.book1;
+			cbBook2.Text = CModeMatch.book2;
+			cbMode1.Text = CModeMatch.modeValue1.mode;
+			cbMode2.Text = CModeMatch.modeValue2.mode;
+			nudValue1.Value = CModeMatch.modeValue1.GetValue();
+			nudValue2.Value = CModeMatch.modeValue2.GetValue();
+		}
+
 		void MatchShow()
 		{
-			cbEngine1.SelectedIndex = cbEngine1.FindStringExact(CModeMatch.engine1);
-			cbEngine2.SelectedIndex = cbEngine2.FindStringExact(CModeMatch.engine2);
-			cbMode1.SelectedIndex = cbMode1.FindStringExact(CModeMatch.modeValue1.mode);
-			cbMode2.SelectedIndex = cbMode2.FindStringExact(CModeMatch.modeValue2.mode);
-			cbBook1.SelectedIndex = cbBook1.FindStringExact(CModeMatch.book1);
-			cbBook2.SelectedIndex = cbBook2.FindStringExact(CModeMatch.book2);
-			nudValue1.Value = CModeMatch.modeValue1.GetValue();
-			nudValue1.Increment = CModeMatch.modeValue1.GetValueIncrement();
-			nudValue2.Value = CModeMatch.modeValue2.GetValue();
-			nudValue2.Increment = CModeMatch.modeValue2.GetValueIncrement();
+			MatchGet();
 			CModeMatch.his.MinMax(out double min, out double max);
 			double last = CModeMatch.his.Last();
 			labMatchGames.Text = $"Games {CModeMatch.games} result {last} min {min} max {max}";
@@ -1559,14 +1595,7 @@ namespace RapChessGui
 
 		void MatchStart()
 		{
-			CModeMatch.engine1 = cbEngine1.Text;
-			CModeMatch.engine2 = cbEngine2.Text;
-			CModeMatch.modeValue1.mode = cbMode1.Text;
-			CModeMatch.modeValue1.SetValue((int)nudValue1.Value);
-			CModeMatch.modeValue2.mode = cbMode2.Text;
-			CModeMatch.modeValue2.SetValue((int)nudValue2.Value);
-			CModeMatch.book1 = cbBook1.Text;
-			CModeMatch.book2 = cbBook2.Text;
+			MatchSet();
 			SetMode(CGameMode.match);
 			CPlayer p1 = new CPlayer("Player 1");
 			p1.engine = CModeMatch.engine1;
@@ -2175,11 +2204,6 @@ namespace RapChessGui
 			GamerList.Terminate();
 		}
 
-		private void FormChess_FormClosed(object sender, FormClosedEventArgs e)
-		{
-
-		}
-
 		private void Timer1_Tick_1(object sender, EventArgs e)
 		{
 			GetMessage();
@@ -2592,17 +2616,11 @@ namespace RapChessGui
 
 		private void FormChess_Resize(object sender, EventArgs e)
 		{
+			lvMoves_Resize(lvMoves, null);
 			LinesResize(lvMovesW);
 			LinesResize(lvMovesB);
 			SplitLoadFromIni();
-		}
-
-		private void nudValue_Click(object sender, EventArgs e)
-		{
-		}
-
-		private void cbEngine_Click(object sender, EventArgs e)
-		{
+			splitContainerBoard.SplitterDistance = panBoard.Height;
 		}
 
 		private void lvEngine_Resize(object sender, EventArgs e)
@@ -2646,12 +2664,11 @@ namespace RapChessGui
 			TournamentPSelect();
 		}
 
-		private void splitContainerBoard_SizeChanged(object sender, EventArgs e)
+		private void splitContainerMain_SplitterMoved(object sender, SplitterEventArgs e)
 		{
 			splitContainerBoard.SplitterDistance = panBoard.Height;
 		}
 
 		#endregion
-
 	}
 }
