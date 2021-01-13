@@ -81,7 +81,7 @@ namespace RapChessGui
 			if (colorDialog1.ShowDialog() != DialogResult.Cancel)
 			{
 				CBoard.SetColor(colorDialog1.Color);
-				FormChess.This.BackColor = CBoard.dark;
+				FormChess.This.SetColor();
 				FormChess.This.BoardPrepare();
 			}
 		}
@@ -103,7 +103,7 @@ namespace RapChessGui
 			nudSpeed.Value = 200;
 			CBoard.SetColor(CBoard.colorDefault);
 			colorDialog1.Color = CBoard.colorDefault;
-			FormChess.This.BackColor = CBoard.dark;
+			FormChess.This.BackColor = CBoard.colorDark;
 			FormChess.This.BoardPrepare();
 		}
 

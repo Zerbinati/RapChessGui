@@ -1297,7 +1297,6 @@
 			this.chartTournamentE.Series.Add(series5);
 			this.chartTournamentE.Size = new System.Drawing.Size(382, 116);
 			this.chartTournamentE.TabIndex = 30;
-			this.chartTournamentE.Text = "chart1";
 			this.toolTip1.SetToolTip(this.chartTournamentE, "Tournament history");
 			// 
 			// groupBox9

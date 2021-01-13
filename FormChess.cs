@@ -335,10 +335,8 @@ namespace RapChessGui
 
 		public void SetColor()
 		{
-			Color l = CBoard.GetColor(CBoard.medium, Color.White, 0.5);
-			Color d = CBoard.GetColor(CBoard.medium, Color.Black, 0.5);
-			Color cl = CBoard.GetColor(CBoard.medium, Color.White, 0.3);
-			Color cd = CBoard.GetColor(CBoard.medium, Color.Black, 0.3);
+			Color l = CBoard.GetColor(CBoard.colorMedium, Color.White, 0.5);
+			Color d = CBoard.GetColor(CBoard.colorMedium, Color.Black, 0.5);
 			labPlayerW.BackColor = d;
 			labPlayerB.BackColor = d;
 			labEngineW.BackColor = d;
@@ -363,12 +361,22 @@ namespace RapChessGui
 			labBookCB.BackColor = l;
 			labPonderW.BackColor = l;
 			labPonderB.BackColor = l;
-			chartMain.PaletteCustomColors[0] = cl;
-			chartMain.PaletteCustomColors[1] = cd;
-			chartGame.PaletteCustomColors[0] = CBoard.dark;
-			chartMatch.PaletteCustomColors[0] = CBoard.dark;
-			BackColor = CBoard.dark;
+			chartMain.PaletteCustomColors[0] = CBoard.colorMediumW;
+			chartMain.PaletteCustomColors[1] = CBoard.colorMediumB;
+			chartGame.PaletteCustomColors[0] = CBoard.colorDark;
+			chartMatch.PaletteCustomColors[0] = CBoard.colorDark;
+			chartTournamentE.PaletteCustomColors[0] = CBoard.colorDark;
+			chartTournamentE.PaletteCustomColors[1] = CBoard.colorMedium;
+			chartTournamentE.PaletteCustomColors[2] = CBoard.colorBright;
+			chartTournamentP.PaletteCustomColors[0] = CBoard.colorDark;
+			chartTournamentP.PaletteCustomColors[1] = CBoard.colorMedium;
+			chartTournamentP.PaletteCustomColors[2] = CBoard.colorBright;
+			BackColor = CBoard.colorDark;
+			chartGame.Invalidate();
+			chartMatch.Invalidate();
 			ShowAutoElo();
+			TournamentEReset();
+			TournamentPReset();
 		}
 
 		void PrepareFen(string fen = CChess.defFen)
@@ -447,8 +455,8 @@ namespace RapChessGui
 					labTimeD.Text = g.GetTime(out bool low);
 					if ((g.timer.IsRunning) || (CData.gameState != CGameState.normal))
 					{
-						labTimeD.BackColor = low ? CBoard.colorRed : CBoard.dark;
-						labTimeD.ForeColor = CBoard.brighter;
+						labTimeD.BackColor = low ? CBoard.colorRed : CBoard.colorDark;
+						labTimeD.ForeColor = CBoard.colorBrighter;
 					}
 					else
 					{
@@ -465,8 +473,8 @@ namespace RapChessGui
 					labTimeT.Text = g.GetTime(out bool low);
 					if ((g.timer.IsRunning) || (CData.gameState != CGameState.normal))
 					{
-						labTimeT.BackColor = low ? CBoard.colorRed : CBoard.dark;
-						labTimeT.ForeColor = CBoard.brighter;
+						labTimeT.BackColor = low ? CBoard.colorRed : CBoard.colorDark;
+						labTimeT.ForeColor = CBoard.colorBrighter;
 					}
 					else
 					{
@@ -574,7 +582,7 @@ namespace RapChessGui
 			ListViewItem lvi = new ListViewItem(new[] { dt.ToString("mm:ss.ff"), g.score, g.GetDepth(), g.nodes.ToString("N0"), g.nps.ToString("N0"), g.pv });
 			ListView lv = g.isWhite ? lvMovesW : lvMovesB;
 			if ((lv.Items.Count & 1) > 0)
-				lvi.BackColor = CBoard.brighter;
+				lvi.BackColor = CBoard.colorBrighter;
 			lv.Items.Insert(0, lvi);
 		}
 
@@ -935,13 +943,13 @@ namespace RapChessGui
 			{
 				if (GamerD().player.IsHuman())
 				{
-					labEloD.BackColor = CBoard.dark;
-					labEloD.ForeColor = CBoard.brighter;
+					labEloD.BackColor = CBoard.colorDark;
+					labEloD.ForeColor = CBoard.colorBrighter;
 				}
 				if (GamerT().player.IsHuman())
 				{
-					labEloT.BackColor = CBoard.dark;
-					labEloT.ForeColor = CBoard.brighter;
+					labEloT.BackColor = CBoard.colorDark;
+					labEloT.ForeColor = CBoard.colorBrighter;
 				}
 			}
 		}
@@ -984,7 +992,7 @@ namespace RapChessGui
 
 		void Reset()
 		{
-			BackColor = CBoard.dark;
+			BackColor = CBoard.colorDark;
 			if (!CData.reset)
 				return;
 			CData.reset = false;
@@ -1644,6 +1652,8 @@ namespace RapChessGui
 
 		void TournamentEReset()
 		{
+			string name = lvEngine.SelectedItems.Count > 0 ? lvEngine.SelectedItems[0].Text : "";
+			CEngine engine = engineList.GetEngine(name);
 			lvEngine.Items.Clear();
 			CModeTournamentE.FillList();
 			foreach (CEngine e in CModeTournamentE.engineList.list)
@@ -1652,6 +1662,8 @@ namespace RapChessGui
 				ListViewItem lvi = new ListViewItem(new[] { e.name, e.elo, del.ToString() });
 				lvi.BackColor = e.hisElo.GetColor();
 				lvEngine.Items.Add(lvi);
+				if (e == engine)
+					lvi.Selected = true;
 			}
 		}
 
@@ -1692,11 +1704,11 @@ namespace RapChessGui
 					int elo = Convert.ToInt32(engine.elo) - Convert.ToInt32(e.elo);
 					ListViewItem lvi = new ListViewItem(new[] { e.name, elo.ToString(), count.ToString(), pro.ToString() });
 					if (elo > 0)
-						lvi.BackColor = Color.FromArgb(0xff, 0xe0, 0xe0);
+						lvi.BackColor = CBoard.colorBrighterW;
 					if (elo < 0)
-						lvi.BackColor = Color.FromArgb(0xe0, 0xff, 0xe0);
+						lvi.BackColor = CBoard.colorBrighterB;
 					if (elo == 0)
-						lvi.BackColor = Color.FromArgb(0xff, 0xff, 0xff);
+						lvi.BackColor = Color.White;
 					lvEngineH.Items.Add(lvi);
 					int up = (lvEngineH.ClientRectangle.Height / lvi.Bounds.Height) >> 1;
 					int del = engine.position - e.position;
@@ -1829,6 +1841,8 @@ namespace RapChessGui
 
 		void TournamentPReset()
 		{
+			string name = lvPlayer.SelectedItems.Count > 0 ? lvPlayer.SelectedItems[0].Text : "";
+			CPlayer player = playerList.GetPlayer(name);
 			lvPlayer.Items.Clear();
 			CModeTournamentP.FillList();
 			foreach (CPlayer p in CModeTournamentP.playerList.list)
@@ -1838,6 +1852,8 @@ namespace RapChessGui
 					ListViewItem lvi = new ListViewItem(new[] { p.name, p.elo, del.ToString().ToString() });
 					lvi.BackColor = p.hisElo.GetColor();
 					lvPlayer.Items.Add(lvi);
+					if (p == player)
+						lvi.Selected = true;
 				}
 		}
 
@@ -1878,11 +1894,11 @@ namespace RapChessGui
 						int elo = Convert.ToInt32(player.elo) - Convert.ToInt32(p.elo);
 						ListViewItem lvi = new ListViewItem(new[] { p.name, elo.ToString(), count.ToString(), pro.ToString() });
 						if (elo > 0)
-							lvi.BackColor = Color.FromArgb(0xff, 0xe0, 0xe0);
+							lvi.BackColor = CBoard.colorBrighterW;
 						if (elo < 0)
-							lvi.BackColor = Color.FromArgb(0xe0, 0xff, 0xe0);
+							lvi.BackColor = CBoard.colorBrighterB;
 						if (elo == 0)
-							lvi.BackColor = Color.FromArgb(0xff, 0xff, 0xff);
+							lvi.BackColor = Color.White;
 						lvPlayerH.Items.Add(lvi);
 						int up = (lvPlayerH.ClientRectangle.Height / lvi.Bounds.Height) >> 1;
 						int del = player.position - p.position;

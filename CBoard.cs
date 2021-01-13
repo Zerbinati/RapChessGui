@@ -82,10 +82,16 @@ namespace RapChessGui
 	{
 		public static Color colorDefault = Color.FromArgb(0xff, 0xff, 0x80);
 		public static Color colorRed = Color.FromArgb(0x80, 0x00, 0x00);
-		public static Color medium;
-		public static Color dark;
-		public static Color bright;
-		public static Color brighter;
+		public static Color colorMedium;
+		public static Color colorMediumW;
+		public static Color colorMediumB;
+		public static Color colorDark;
+		public static Color colorBright;
+		public static Color colorBrightW;
+		public static Color colorBrightB;
+		public static Color colorBrighter;
+		public static Color colorBrighterW;
+		public static Color colorBrighterB;
 		public static bool animated = false;
 		public static bool finished = true;
 		public static bool showArrow = false;
@@ -203,7 +209,7 @@ namespace RapChessGui
 			Rectangle rec = new Rectangle();
 			Bitmap bmp = new Bitmap(size, size);
 			Graphics g = Graphics.FromImage(bmp);
-			SolidBrush brush1 = new SolidBrush(dark);
+			SolidBrush brush1 = new SolidBrush(colorDark);
 			SolidBrush brush2 = new SolidBrush(Color.FromArgb(0x60, 0x00, 0x00, 0x00));
 			SolidBrush brush3 = new SolidBrush(Color.FromArgb(0x60, 0xff, 0xff, 0xff));
 			Font font = new Font(FontFamily.GenericSansSerif, 16, FontStyle.Bold);
@@ -471,10 +477,16 @@ namespace RapChessGui
 
 		public static void SetColor()
 		{
-			medium = GetColor(color, 0.5);
-			dark = GetColor(color, 0.02);
-			bright = GetColor(color, 0.80);
-			brighter = GetColor(medium, Color.White, 0.84);
+			colorMedium = GetColor(color, 0.5);
+			colorDark = GetColor(color, 0.02);
+			colorBright = GetColor(color, 0.80);
+			colorBrighter = GetColor(colorMedium, Color.White, 0.84);
+			colorMediumW = GetColor(colorMedium, Color.White, 0.3);
+			colorMediumB = GetColor(colorMedium, Color.Black, 0.3);
+			colorBrightW = GetColor(colorBright, Color.White, 0.3);
+			colorBrightB = GetColor(colorBright, Color.Black, 0.3);
+			colorBrighterW = GetColor(colorBrighter, Color.White, 0.08);
+			colorBrighterB = GetColor(colorBrighter, Color.Black, 0.08);
 		}
 
 		public static void UpdatePosition()

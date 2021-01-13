@@ -103,9 +103,9 @@ namespace RapChessGui
 			MinMax(out double min, out double max);
 			double q = (max - min) / 10;
 			if (elo > max - q)
-				return Color.FromArgb(0xe0, 0xff, 0xe0);
+				return CBoard.colorBrighterB;
 			if (elo < min + q)
-				return Color.FromArgb(0xff, 0xe0, 0xe0);
+				return CBoard.colorBrighterW;
 			return Color.White;
 		}
 
