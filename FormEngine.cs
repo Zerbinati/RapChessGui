@@ -120,8 +120,9 @@ namespace RapChessGui
 		{
 			if (e.Index < 0)
 				return;
-			if ((e.State & DrawItemState.Selected) == DrawItemState.Selected)
-				e = new DrawItemEventArgs(e.Graphics, e.Font, e.Bounds, e.Index, e.State ^ DrawItemState.Selected, e.ForeColor, Color.Yellow);
+			bool selected = (e.State & DrawItemState.Selected) == DrawItemState.Selected;
+			if (selected)
+				e = new DrawItemEventArgs(e.Graphics, e.Font, e.Bounds, e.Index, e.State ^ DrawItemState.Selected,CBoard.colorBrighter, CBoard.colorDark);
 			e.DrawBackground();
 			string name = listBox1.Items[e.Index].ToString();
 			CEngine eng = FormChess.engineList.GetEngine(name);
@@ -130,6 +131,8 @@ namespace RapChessGui
 				b = Brushes.Brown;
 			if (!eng.FileExists())
 				b = Brushes.Red;
+			if (selected)
+				b = Brushes.White;
 			e.Graphics.DrawString(name, e.Font, b, e.Bounds, StringFormat.GenericDefault);
 			e.DrawFocusRectangle();
 		}
