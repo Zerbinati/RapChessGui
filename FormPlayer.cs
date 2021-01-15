@@ -171,5 +171,11 @@ namespace RapChessGui
 			e.Graphics.DrawString(name, e.Font, b, e.Bounds, StringFormat.GenericDefault);
 			e.DrawFocusRectangle();
 		}
+
+		private void listBox1_MouseUp(object sender, MouseEventArgs e)
+		{
+			tournament = -1;
+			listBox1.Capture = false;
+		}
 	}
 }
