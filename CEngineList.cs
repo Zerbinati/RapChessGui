@@ -75,11 +75,32 @@ namespace RapChessGui
 			return Convert.ToInt32(elo);
 		}
 
+		public string GetFile()
+		{
+			if (FileExists())
+				return file;
+			return "none";
+		}
+
 		public string GetName()
 		{
 			if (name != "")
 				return name;
 			return Path.GetFileNameWithoutExtension(file);
+		}
+
+		public bool SetTournament(bool tb)
+		{
+			int t = tb ? 1 : 0;
+			if (tb && (tournament > 0))
+				t = tournament;
+			if (tournament != t)
+			{
+				tournament = t;
+				SaveToIni();
+				return true;
+			}
+			return false;
 		}
 
 		public bool IsXb()
@@ -158,7 +179,7 @@ namespace RapChessGui
 			}
 		}
 
-		public CEngine NextTournament(CEngine e, bool rotate = true,bool back = false)
+		public CEngine NextTournament(CEngine e, bool rotate = true, bool back = false)
 		{
 			Sort();
 			int i = GetIndex(e.name);
@@ -172,7 +193,7 @@ namespace RapChessGui
 					i = (i + list.Count) % list.Count;
 				else
 					if ((i < 0) || (i >= list.Count))
-						return null;
+					return null;
 				e = list[i];
 				if (e.tournament > 0)
 					break;

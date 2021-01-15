@@ -9,6 +9,7 @@ namespace RapChessGui
 	public partial class FormEngine : Form
 	{
 		public static FormEngine This;
+		int tournament = -1;
 		string curEngineName;
 
 		public FormEngine()
@@ -17,20 +18,24 @@ namespace RapChessGui
 			InitializeComponent();
 		}
 
-		void SelectEngine(string name)
+		void SelectEngine(CEngine e)
 		{
-			CEngine e = FormChess.engineList.GetEngine(name);
-			if (e == null)
-				return;
 			tbEngineName.Text = e.name;
 			tbParameters.Text = e.parameters;
-			cbFileList.Text = e.file;
+			cbFileList.Text = e.GetFile();
 			cbProtocol.Text = e.protocol;
 			curEngineName = e.name;
 			cbModeStandard.Checked = e.modeStandard;
 			nudElo.Value = Convert.ToInt32(e.elo);
 			nudTournament.Value = e.tournament;
 			rtbOptions.Lines = e.options.ToArray();
+		}
+
+		void SelectEngine(string name)
+		{
+			CEngine e = FormChess.engineList.GetEngine(name);
+			if (e != null)
+				SelectEngine(e);
 		}
 
 		void UpdateListBox()
@@ -120,22 +125,71 @@ namespace RapChessGui
 		{
 			if (e.Index < 0)
 				return;
-			bool selected = (e.State & DrawItemState.Selected) == DrawItemState.Selected;
-			if (selected)
-				e = new DrawItemEventArgs(e.Graphics, e.Font, e.Bounds, e.Index, e.State ^ DrawItemState.Selected,CBoard.colorBrighter, CBoard.colorDark);
-			e.DrawBackground();
 			string name = listBox1.Items[e.Index].ToString();
 			CEngine eng = FormChess.engineList.GetEngine(name);
+			bool selected = (e.State & DrawItemState.Selected) == DrawItemState.Selected;
 			Brush b = Brushes.Black;
-			if (eng.tournament < 1)
-				b = Brushes.Brown;
-			if (!eng.FileExists())
-				b = Brushes.Red;
 			if (selected)
+			{
+				e = new DrawItemEventArgs(e.Graphics, e.Font, e.Bounds, e.Index, e.State ^ DrawItemState.Selected, CBoard.colorBrighter, CBoard.colorDark);
 				b = Brushes.White;
+			}
+			else if (!eng.FileExists())
+			{
+				e = new DrawItemEventArgs(e.Graphics, e.Font, e.Bounds, e.Index, e.State, Color.White, CBoard.colorRed);
+				b = Brushes.White;
+			}
+			else if (eng.tournament > 0)
+			{
+				e = new DrawItemEventArgs(e.Graphics, e.Font, e.Bounds, e.Index, e.State, Color.Black, CBoard.colorBrighter);
+			}
+			e.DrawBackground();
 			e.Graphics.DrawString(name, e.Font, b, e.Bounds, StringFormat.GenericDefault);
 			e.DrawFocusRectangle();
 		}
 
+		private void listBox1_MouseDown(object sender, MouseEventArgs e)
+		{
+			if (e.Button == MouseButtons.Right)
+			{
+				listBox1.Capture = true;
+				int index = listBox1.IndexFromPoint(e.Location);
+				if ((index >= 0) && (index < listBox1.Items.Count))
+				{
+					var item = listBox1.Items[index];
+					string name = item.ToString();
+					CEngine eng = FormChess.engineList.GetEngine(name);
+					tournament = eng.tournament > 0 ? 0 : 1;
+					if (eng.SetTournament(tournament == 1))
+					{
+						listBox1.Refresh();
+						if (name == curEngineName)
+							SelectEngine(eng);
+					}
+				}
+			}
+		}
+
+		private void listBox1_MouseUp(object sender, MouseEventArgs e)
+		{
+			tournament = -1;
+			listBox1.Capture = false;
+		}
+
+		private void listBox1_MouseMove(object sender, MouseEventArgs e)
+		{
+			if (e.Button == MouseButtons.Right)
+			{
+				int index = listBox1.IndexFromPoint(e.Location);
+				if ((index >= 0) && (index < listBox1.Items.Count) && (tournament >= 0))
+				{
+					var item = listBox1.Items[index];
+					string name = item.ToString();
+					CEngine eng = FormChess.engineList.GetEngine(name);
+					if (eng.SetTournament(tournament == 1))
+						listBox1.Refresh();
+				}
+			}
+		}
 	}
 }

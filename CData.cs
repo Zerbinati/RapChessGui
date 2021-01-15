@@ -77,6 +77,7 @@ namespace RapChessGui
 				string fn = Path.GetFileName(filePaths[n]);
 				fileEngine.Add(fn);
 			}
+			fileEngine.Add("none");
 		}
 
 	}
