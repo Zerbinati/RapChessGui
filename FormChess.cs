@@ -365,11 +365,11 @@ namespace RapChessGui
 			chartMain.PaletteCustomColors[1] = CBoard.colorMediumB;
 			chartGame.PaletteCustomColors[0] = CBoard.colorDark;
 			chartMatch.PaletteCustomColors[0] = CBoard.colorDark;
-			chartTournamentE.PaletteCustomColors[0] = CBoard.colorDark;
-			chartTournamentE.PaletteCustomColors[1] = CBoard.colorMedium;
+			chartTournamentE.PaletteCustomColors[0] = CBoard.colorMedium;
+			chartTournamentE.PaletteCustomColors[1] = CBoard.colorDark;
 			chartTournamentE.PaletteCustomColors[2] = CBoard.colorBright;
-			chartTournamentP.PaletteCustomColors[0] = CBoard.colorDark;
-			chartTournamentP.PaletteCustomColors[1] = CBoard.colorMedium;
+			chartTournamentP.PaletteCustomColors[0] = CBoard.colorMedium;
+			chartTournamentP.PaletteCustomColors[1] = CBoard.colorDark;
 			chartTournamentP.PaletteCustomColors[2] = CBoard.colorBright;
 			BackColor = CBoard.colorDark;
 			chartGame.Invalidate();

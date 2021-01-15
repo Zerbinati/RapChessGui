@@ -52,8 +52,8 @@ namespace RapChessGui
 			{
 				var item = listBox1.Items[n];
 				string name = item.ToString();
-				CEngine engine = FormChess.engineList.GetEngine(name);
-				if (engine.SetTournament(t))
+				CEngine eng = FormChess.engineList.GetEngine(name);
+				if (eng.SetTournament(t))
 					r = true;
 			}
 			if (r)

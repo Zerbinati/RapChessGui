@@ -8,6 +8,7 @@ namespace RapChessGui
 	public partial class FormPlayer : Form
 	{
 		public static FormPlayer This;
+		int indexFirst = -1;
 		int tournament = -1;
 		CPlayer player = null;
 		readonly CModeValue modeValue = new CModeValue();
@@ -18,23 +19,29 @@ namespace RapChessGui
 			InitializeComponent();
 		}
 
-		void SelectPlayer(CPlayer p)
+		void SelectPlayer()
 		{
-			tbPlayerName.Text = p.name;
-			if (FormChess.engineList.GetIndex(p.engine) >= 0)
-				cbEngineList.Text = p.engine;
+			tbPlayerName.Text = player.name;
+			if (FormChess.engineList.GetIndex(player.engine) >= 0)
+				cbEngineList.Text = player.engine;
 			else
 				cbEngineList.Text = "Human";
-			if (cbBookList.Items.IndexOf(p.book) >= 0)
-				cbBookList.Text = p.book;
+			if (cbBookList.Items.IndexOf(player.book) >= 0)
+				cbBookList.Text = player.book;
 			else
 				cbBookList.Text = "None";
-			nudTournament.Value = p.tournament;
-			nudElo.Value = Convert.ToInt32(p.elo);
-			nudValue.Value = p.modeValue.GetValue();
-			modeValue.mode = p.modeValue.mode;
-			modeValue.value = p.modeValue.value;
+			nudTournament.Value = player.tournament;
+			nudElo.Value = Convert.ToInt32(player.elo);
+			nudValue.Value = player.modeValue.GetValue();
+			modeValue.mode = player.modeValue.mode;
+			modeValue.value = player.modeValue.value;
 			combMode.SelectedIndex = combMode.FindStringExact(modeValue.mode);
+		}
+
+		void SelectPlayer(CPlayer p)
+		{
+			player = p;
+			SelectPlayer();
 		}
 
 		void SelectPlayer(string name)
@@ -42,6 +49,26 @@ namespace RapChessGui
 			player = FormChess.playerList.GetPlayer(name);
 			if (player != null)
 				SelectPlayer(player);
+		}
+
+		void SelectPlayers(int first, int last, bool t)
+		{
+			int f = first < last ? first : last;
+			int l = first < last ? last : first;
+			bool r = false;
+			for (int n = f; n <= l; n++)
+			{
+				var item = listBox1.Items[n];
+				string name = item.ToString();
+				CPlayer pla = FormChess.playerList.GetPlayer(name);
+				if (pla.SetTournament(t))
+					r = true;
+			}
+			if (r)
+			{
+				listBox1.Refresh();
+				SelectPlayer();
+			}
 		}
 
 		void UpdateListBox()
@@ -176,6 +203,42 @@ namespace RapChessGui
 		{
 			tournament = -1;
 			listBox1.Capture = false;
+		}
+
+		private void listBox1_MouseDown(object sender, MouseEventArgs e)
+		{
+			if (e.Button == MouseButtons.Right)
+			{
+				indexFirst = -1;
+				tournament = -1;
+				listBox1.Capture = true;
+				int index = listBox1.IndexFromPoint(e.Location);
+				if ((index >= 0) && (index < listBox1.Items.Count))
+				{
+					var item = listBox1.Items[index];
+					string name = item.ToString();
+					CPlayer pla = FormChess.playerList.GetPlayer(name);
+					indexFirst = index;
+					tournament = pla.tournament > 0 ? 0 : 1;
+					if (pla.SetTournament(tournament == 1))
+					{
+						listBox1.Refresh();
+						if (player == pla)
+							SelectPlayer();
+					}
+
+				}
+			}
+		}
+
+		private void listBox1_MouseMove(object sender, MouseEventArgs e)
+		{
+			if (e.Button == MouseButtons.Right)
+			{
+				int index = listBox1.IndexFromPoint(e.Location);
+				if ((index >= 0) && (index < listBox1.Items.Count) && (tournament >= 0))
+					SelectPlayers(indexFirst, index, tournament > 0);
+			}
 		}
 	}
 }
