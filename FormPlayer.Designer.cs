@@ -311,12 +311,15 @@
 			// listBox1
 			// 
 			this.listBox1.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.listBox1.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+			this.listBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
 			this.listBox1.FormattingEnabled = true;
 			this.listBox1.Location = new System.Drawing.Point(3, 16);
 			this.listBox1.Name = "listBox1";
 			this.listBox1.Size = new System.Drawing.Size(483, 572);
 			this.listBox1.Sorted = true;
 			this.listBox1.TabIndex = 1;
+			this.listBox1.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.listBox1_DrawItem);
 			this.listBox1.SelectedValueChanged += new System.EventHandler(this.ListBox1_SelectedValueChanged);
 			// 
 			// FormPlayer

@@ -9,8 +9,9 @@ namespace RapChessGui
 	public partial class FormEngine : Form
 	{
 		public static FormEngine This;
+		int indexFirst = -1;
 		int tournament = -1;
-		string curEngineName;
+		CEngine engine = null;
 
 		public FormEngine()
 		{
@@ -18,24 +19,48 @@ namespace RapChessGui
 			InitializeComponent();
 		}
 
+		void SelectEngine(){
+			tbEngineName.Text = engine.name;
+			tbParameters.Text = engine.parameters;
+			cbFileList.Text = engine.GetFile();
+			cbProtocol.Text = engine.protocol;
+			cbModeStandard.Checked = engine.modeStandard;
+			nudElo.Value = Convert.ToInt32(engine.elo);
+			nudTournament.Value = engine.tournament;
+			rtbOptions.Lines = engine.options.ToArray();
+		}
+
 		void SelectEngine(CEngine e)
 		{
-			tbEngineName.Text = e.name;
-			tbParameters.Text = e.parameters;
-			cbFileList.Text = e.GetFile();
-			cbProtocol.Text = e.protocol;
-			curEngineName = e.name;
-			cbModeStandard.Checked = e.modeStandard;
-			nudElo.Value = Convert.ToInt32(e.elo);
-			nudTournament.Value = e.tournament;
-			rtbOptions.Lines = e.options.ToArray();
+			engine = e;
+			SelectEngine();
 		}
 
 		void SelectEngine(string name)
 		{
-			CEngine e = FormChess.engineList.GetEngine(name);
-			if (e != null)
-				SelectEngine(e);
+			engine = FormChess.engineList.GetEngine(name);
+			if (engine != null)
+				SelectEngine(engine);
+		}
+
+		void SelectEngines(int first, int last, bool t)
+		{
+			int f = first < last ? first : last;
+			int l = first < last ? last : first;
+			bool r = false;
+			for (int n = f; n <= l; n++)
+			{
+				var item = listBox1.Items[n];
+				string name = item.ToString();
+				CEngine engine = FormChess.engineList.GetEngine(name);
+				if (engine.SetTournament(t))
+					r = true;
+			}
+			if (r)
+			{
+				listBox1.Refresh();
+				SelectEngine();
+			}
 		}
 
 		void UpdateListBox()
@@ -61,7 +86,6 @@ namespace RapChessGui
 			e.tournament = (int)nudTournament.Value;
 			e.options = rtbOptions.Lines.Cast<String>().ToList();
 			e.SaveToIni();
-			curEngineName = e.name;
 			UpdateListBox();
 			int index = listBox1.FindString(e.name);
 			if (index == -1) return;
@@ -80,7 +104,6 @@ namespace RapChessGui
 
 		private void ButUpdate_Click(object sender, EventArgs e)
 		{
-			CEngine engine = FormChess.engineList.GetEngine(curEngineName);
 			if (engine == null)
 				return;
 			CRapIni.This.DeleteKey($"engine>{engine.name}");
@@ -111,12 +134,11 @@ namespace RapChessGui
 
 		private void butClearHistory_Click(object sender, EventArgs e)
 		{
-			CEngine engine = FormChess.engineList.GetEngine(curEngineName);
 			if (engine != null)
 			{
 				engine.hisElo.list.Clear();
 				engine.SaveToIni();
-				int count = CModeTournamentE.tourList.DeletePlayer(curEngineName);
+				int count = CModeTournamentE.tourList.DeletePlayer(engine.name);
 				MessageBox.Show($"{count} records have been deleted");
 			}
 		}
@@ -152,6 +174,8 @@ namespace RapChessGui
 		{
 			if (e.Button == MouseButtons.Right)
 			{
+				indexFirst = -1;
+				tournament = -1;
 				listBox1.Capture = true;
 				int index = listBox1.IndexFromPoint(e.Location);
 				if ((index >= 0) && (index < listBox1.Items.Count))
@@ -159,13 +183,15 @@ namespace RapChessGui
 					var item = listBox1.Items[index];
 					string name = item.ToString();
 					CEngine eng = FormChess.engineList.GetEngine(name);
+					indexFirst = index;
 					tournament = eng.tournament > 0 ? 0 : 1;
 					if (eng.SetTournament(tournament == 1))
 					{
 						listBox1.Refresh();
-						if (name == curEngineName)
-							SelectEngine(eng);
+						if (engine == eng)
+							SelectEngine();
 					}
+
 				}
 			}
 		}
@@ -182,13 +208,7 @@ namespace RapChessGui
 			{
 				int index = listBox1.IndexFromPoint(e.Location);
 				if ((index >= 0) && (index < listBox1.Items.Count) && (tournament >= 0))
-				{
-					var item = listBox1.Items[index];
-					string name = item.ToString();
-					CEngine eng = FormChess.engineList.GetEngine(name);
-					if (eng.SetTournament(tournament == 1))
-						listBox1.Refresh();
-				}
+					SelectEngines(indexFirst, index, tournament > 0);
 			}
 		}
 	}

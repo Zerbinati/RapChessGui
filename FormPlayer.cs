@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using System.Windows.Forms;
 using RapIni;
 
@@ -7,7 +8,8 @@ namespace RapChessGui
 	public partial class FormPlayer : Form
 	{
 		public static FormPlayer This;
-		string curPlayerName;
+		int tournament = -1;
+		CPlayer player = null;
 		readonly CModeValue modeValue = new CModeValue();
 
 		public FormPlayer()
@@ -16,16 +18,8 @@ namespace RapChessGui
 			InitializeComponent();
 		}
 
-		public void SelectUser()
+		void SelectPlayer(CPlayer p)
 		{
-			SelectPlayer(curPlayerName);
-		}
-
-		void SelectPlayer(string name)
-		{
-			CPlayer p = FormChess.playerList.GetPlayer(name);
-			if (p == null)
-				return;
 			tbPlayerName.Text = p.name;
 			if (FormChess.engineList.GetIndex(p.engine) >= 0)
 				cbEngineList.Text = p.engine;
@@ -35,13 +29,19 @@ namespace RapChessGui
 				cbBookList.Text = p.book;
 			else
 				cbBookList.Text = "None";
-			curPlayerName = p.name;
 			nudTournament.Value = p.tournament;
 			nudElo.Value = Convert.ToInt32(p.elo);
 			nudValue.Value = p.modeValue.GetValue();
 			modeValue.mode = p.modeValue.mode;
 			modeValue.value = p.modeValue.value;
 			combMode.SelectedIndex = combMode.FindStringExact(modeValue.mode);
+		}
+
+		void SelectPlayer(string name)
+		{
+			player = FormChess.playerList.GetPlayer(name);
+			if (player != null)
+				SelectPlayer(player);
 		}
 
 		void UpdateListBox()
@@ -67,7 +67,6 @@ namespace RapChessGui
 			p.modeValue.mode = modeValue.mode;
 			p.modeValue.value = modeValue.value;
 			p.SaveToIni();
-			curPlayerName = p.name;
 			UpdateListBox();
 			int index = listBox1.FindString(p.name);
 			if (index == -1) return;
@@ -78,7 +77,6 @@ namespace RapChessGui
 		{
 			modeValue.mode = combMode.Text;
 			modeValue.SetValue((int)nudValue.Value);
-			CPlayer player = FormChess.playerList.GetPlayer(curPlayerName);
 			if (player == null)
 				return;
 			CRapIni.This.DeleteKey($"player>{player.name}");
@@ -120,12 +118,11 @@ namespace RapChessGui
 
 		private void butClearHistory_Click(object sender, EventArgs e)
 		{
-			CPlayer player = FormChess.playerList.GetPlayer(curPlayerName);
 			if (player != null)
 			{
 				player.hisElo.list.Clear();
 				player.SaveToIni();
-				int count = CModeTournamentP.tourList.DeletePlayer(curPlayerName);
+				int count = CModeTournamentP.tourList.DeletePlayer(player.name);
 				MessageBox.Show($"{count} records have been deleted");
 			}
 		}
@@ -151,6 +148,28 @@ namespace RapChessGui
 			nudValue.Increment = modeValue.GetValueIncrement();
 			nudValue.Value = modeValue.GetValue();
 			toolTip1.SetToolTip(nudValue, modeValue.GetTip());
+		}
+
+		private void listBox1_DrawItem(object sender, DrawItemEventArgs e)
+		{
+			if (e.Index < 0)
+				return;
+			string name = listBox1.Items[e.Index].ToString();
+			CPlayer pla = FormChess.playerList.GetPlayer(name);
+			bool selected = (e.State & DrawItemState.Selected) == DrawItemState.Selected;
+			Brush b = Brushes.Black;
+			if (selected)
+			{
+				e = new DrawItemEventArgs(e.Graphics, e.Font, e.Bounds, e.Index, e.State ^ DrawItemState.Selected, CBoard.colorBrighter, CBoard.colorDark);
+				b = Brushes.White;
+			}
+			else if (pla.tournament > 0)
+			{
+				e = new DrawItemEventArgs(e.Graphics, e.Font, e.Bounds, e.Index, e.State, Color.Black, CBoard.colorBrighter);
+			}
+			e.DrawBackground();
+			e.Graphics.DrawString(name, e.Font, b, e.Bounds, StringFormat.GenericDefault);
+			e.DrawFocusRectangle();
 		}
 	}
 }
