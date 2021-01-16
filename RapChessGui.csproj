@@ -116,17 +116,17 @@
     <Compile Include="FormBook.Designer.cs">
       <DependentUpon>FormBook.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormHisE.cs">
+    <Compile Include="FormChartE.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormHisE.designer.cs">
-      <DependentUpon>FormHisE.cs</DependentUpon>
+    <Compile Include="FormChartE.designer.cs">
+      <DependentUpon>FormChartE.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormHisP.cs">
+    <Compile Include="FormChartP.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormHisP.Designer.cs">
-      <DependentUpon>FormHisP.cs</DependentUpon>
+    <Compile Include="FormChartP.Designer.cs">
+      <DependentUpon>FormChartP.cs</DependentUpon>
     </Compile>
     <Compile Include="FormLastGame.cs">
       <SubType>Form</SubType>
@@ -178,11 +178,11 @@
       <DependentUpon>FormBook.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormHisE.resx">
-      <DependentUpon>FormHisE.cs</DependentUpon>
+    <EmbeddedResource Include="FormChartE.resx">
+      <DependentUpon>FormChartE.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormHisP.resx">
-      <DependentUpon>FormHisP.cs</DependentUpon>
+    <EmbeddedResource Include="FormChartP.resx">
+      <DependentUpon>FormChartP.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormLastGame.resx">
       <DependentUpon>FormLastGame.cs</DependentUpon>

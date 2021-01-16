@@ -1,7 +1,5 @@
 ﻿using System;
-using System.IO;
-using System.Collections.Generic;
-using System.Linq;
+using System.Drawing;
 using System.Windows.Forms;
 using RapIni;
 
@@ -96,6 +94,23 @@ namespace RapChessGui
 			UpdateListBox();
 			if (listBox1.Items.Count > 0)
 				listBox1.SetSelected(0, true);
+		}
+
+		private void listBox1_DrawItem(object sender, DrawItemEventArgs e)
+		{
+			if (e.Index < 0)
+				return;
+			string name = listBox1.Items[e.Index].ToString();
+			bool selected = (e.State & DrawItemState.Selected) == DrawItemState.Selected;
+			Brush b = Brushes.Black;
+			if (selected)
+			{
+				e = new DrawItemEventArgs(e.Graphics, e.Font, e.Bounds, e.Index, e.State ^ DrawItemState.Selected, CBoard.colorBrighter, CBoard.colorDark);
+				b = Brushes.White;
+			}
+			e.DrawBackground();
+			e.Graphics.DrawString(name, e.Font, b, e.Bounds, StringFormat.GenericDefault);
+			e.DrawFocusRectangle();
 		}
 	}
 }

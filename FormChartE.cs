@@ -4,12 +4,12 @@ using System.Windows.Forms.DataVisualization.Charting;
 
 namespace RapChessGui
 {
-	public partial class FormHisE : Form
+	public partial class FormChartE : Form
 	{
-		public static FormHisE This;
+		public static FormChartE This;
 		Series lastSeries = null;
 
-		public FormHisE()
+		public FormChartE()
 		{
 			InitializeComponent();
 			This = this;

@@ -11,12 +11,12 @@ using System.Windows.Forms.DataVisualization.Charting;
 
 namespace RapChessGui
 {
-	public partial class FormHisP : Form
+	public partial class FormChartP : Form
 	{
-		public static FormHisP This;
+		public static FormChartP This;
 		Series lastSeries = null;
 
-		public FormHisP()
+		public FormChartP()
 		{
 			InitializeComponent();
 			This = this;

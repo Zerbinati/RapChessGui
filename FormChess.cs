@@ -39,8 +39,8 @@ namespace RapChessGui
 		readonly FormLogGames formLogGames = new FormLogGames();
 		readonly FormLogEngines formLogEngines = new FormLogEngines();
 		readonly FormLastGame formLastGame = new FormLastGame();
-		readonly FormHisP formHisP = new FormHisP();
-		readonly FormHisE formHisE = new FormHisE();
+		readonly FormChartP formHisP = new FormChartP();
+		readonly FormChartE formHisE = new FormChartE();
 
 		protected override void WndProc(ref Message m)
 		{

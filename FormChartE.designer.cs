@@ -1,6 +1,6 @@
 ﻿namespace RapChessGui
 {
-	partial class FormHisE
+	partial class FormChartE
 	{
 		/// <summary>
 		/// Required designer variable.
