@@ -486,7 +486,7 @@ namespace RapChessGui
 			}
 		}
 
-		public void SetGameState(CGameState gs, CGamer gamer = null,string umo = "")
+		public void SetGameState(CGameState gs, CGamer gamer = null, string umo = "")
 		{
 			if (gs == CGameState.normal)
 			{
@@ -648,6 +648,7 @@ namespace RapChessGui
 						if (g.isBookStarted && !g.isBookFail)
 						{
 							g.countMovesBook++;
+							g.score = "book";
 							ShowInfo($"book {umo}", Color.Aquamarine);
 							if ((g.engine != null) && g.engine.IsXb())
 								g.isEngPrepared = false;
@@ -1073,7 +1074,7 @@ namespace RapChessGui
 				FormLogEngines.AppendText($"Wrong move: ({umo})\n", Color.Red);
 				FormLogEngines.AppendText($"Fen: {Chess.GetFen()}\n", Color.Black);
 				FormLogEngines.AppendText($"Legal moves: {string.Join(" ", eMoves)}\n", Color.Black);
-				SetGameState(CGameState.error,cg,umo);
+				SetGameState(CGameState.error, cg, umo);
 				return false;
 			}
 			cg.countMoves++;
@@ -1082,7 +1083,7 @@ namespace RapChessGui
 			Board.MakeMove(gmo);
 			Chess.MakeMove(umo, out int piece);
 			CHistory.AddMove(piece, gmo, umo, san);
-			MoveToLvMoves(CHistory.moveList.Count - 1, piece, CHistory.LastNotation());
+			MoveToLvMoves(CHistory.moveList.Count - 1, piece, CHistory.LastNotation(), cg.score);
 			CEco eco = EcoList.GetEcoFen(Chess.GetEpd());
 			showInfo = false;
 			if (cg.player.IsHuman())
@@ -1323,17 +1324,20 @@ namespace RapChessGui
 			SetUnranked();
 		}
 
-		private void MoveToLvMoves(int count, int piece, string emo)
+		private void MoveToLvMoves(int count, int piece, string umo, string score)
 		{
 			string[] p = { "", "\u2659", "\u2658", "\u2657", "\u2656", "\u2655", "\u2654", "", "", "\u265F", "\u265E", "\u265D", "\u265C", "\u265B", "\u265A", "" };
-			string m = $"{p[piece]} {emo}";
+			string m = $"{p[piece]} {umo}";
 			if ((count & 1) == 0)
 			{
 				int moveNumber = (count >> 1) + 1;
-				lvMoves.Items.Add(new ListViewItem(new[] { moveNumber.ToString(), m, "" }));
+				lvMoves.Items.Add(new ListViewItem(new[] { moveNumber.ToString(), m, score, "", "" })).EnsureVisible();
 			}
 			else
-				lvMoves.Items[lvMoves.Items.Count - 1].SubItems[2].Text = m;
+			{
+				lvMoves.Items[lvMoves.Items.Count - 1].SubItems[3].Text = m;
+				lvMoves.Items[lvMoves.Items.Count - 1].SubItems[4].Text = score;
+			}
 		}
 
 		void ShowHistory()
@@ -1344,7 +1348,7 @@ namespace RapChessGui
 			for (int n = 0; n < CHistory.moveList.Count; n++)
 			{
 				CHisMove m = CHistory.moveList[n];
-				MoveToLvMoves(n, m.piece, m.GetNotation());
+				MoveToLvMoves(n, m.piece, m.GetNotation(), "");
 			}
 		}
 
@@ -2482,11 +2486,13 @@ namespace RapChessGui
 		private void lvMoves_Resize(object sender, EventArgs e)
 		{
 			ListView lv = (ListView)sender;
-			int w = lv.Width;
-			w = Convert.ToInt32(w / 5);
+			int w = lv.Width - 32;
+			w = Convert.ToInt32(w / 9);
 			lv.Columns[0].Width = w;
 			lv.Columns[1].Width = w * 2;
 			lv.Columns[2].Width = w * 2;
+			lv.Columns[3].Width = w * 2;
+			lv.Columns[4].Width = w * 2;
 			ShowScrollBar(lv.Handle, 0, false);
 		}
 

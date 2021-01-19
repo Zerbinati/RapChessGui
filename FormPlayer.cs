@@ -88,7 +88,7 @@ namespace RapChessGui
 			p.name = tbPlayerName.Text;
 			p.engine = cbEngineList.Text;
 			p.book = cbBookList.Text;
-			p.tournament = (int)nudTournament.Value;
+			p.SetTournament((int)nudTournament.Value);
 			p.elo = nudElo.Value.ToString();
 			p.eloOrg = p.elo;
 			p.modeValue.mode = modeValue.mode;

@@ -57,8 +57,14 @@ namespace RapChessGui
 			return e - hisElo.EloAvg(e);
 		}
 
+		public void SetTournament(int t)
+		{
+			tournament = IsHuman() ? 0 : t;
+		}
+
 		public bool SetTournament(bool tb)
 		{
+			tb = IsComputer() & tb;
 			int t = tb ? 1 : 0;
 			if (tb && (tournament > 0))
 				t = tournament;

@@ -287,6 +287,8 @@
 			this.columnHeader21 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeader22 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.tlpBlack = new System.Windows.Forms.TableLayoutPanel();
+			this.columnHeader30 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.columnHeader31 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.tabControl1.SuspendLayout();
 			this.tabPageGame.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.chartGame)).BeginInit();
@@ -3423,7 +3425,9 @@
 			this.lvMoves.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeader3,
             this.columnHeader4,
-            this.columnHeader5});
+            this.columnHeader30,
+            this.columnHeader5,
+            this.columnHeader31});
 			this.lvMoves.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
 			this.lvMoves.FullRowSelect = true;
 			this.lvMoves.GridLines = true;
@@ -3735,6 +3739,16 @@
 			this.tlpBlack.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
 			this.tlpBlack.Size = new System.Drawing.Size(1180, 40);
 			this.tlpBlack.TabIndex = 35;
+			// 
+			// columnHeader30
+			// 
+			this.columnHeader30.Text = "Score";
+			this.columnHeader30.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			// 
+			// columnHeader31
+			// 
+			this.columnHeader31.Text = "Score";
+			this.columnHeader31.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
 			// 
 			// FormChess
 			// 
@@ -4083,6 +4097,8 @@
 		private System.Windows.Forms.Label labPonderB;
 		private System.Windows.Forms.DataVisualization.Charting.Chart chartMatch;
 		private System.Windows.Forms.ToolStripMenuItem lastTrainingToolStripMenuItem;
+		private System.Windows.Forms.ColumnHeader columnHeader30;
+		private System.Windows.Forms.ColumnHeader columnHeader31;
 	}
 }
 
