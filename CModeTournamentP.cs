@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using RapIni;
 
 namespace RapChessGui
@@ -14,6 +13,8 @@ namespace RapChessGui
 		public static string opponent = "";
 		public static CTourList tourList = new CTourList("Tour-players");
 		public static CPlayerList playerList = new CPlayerList();
+		public static CPlayer plaWin = null;
+		public static CPlayer plaLoose = null;
 
 		public static void SaveToIni()
 		{

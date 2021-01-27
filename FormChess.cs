@@ -1224,7 +1224,7 @@ namespace RapChessGui
 				}
 			}
 			Graphics pg = panBoard.CreateGraphics();
-			Board.RenderArrow(pg,FormOptions.This.cbArrow.Checked);
+			Board.RenderArrow(pg, FormOptions.This.cbArrow.Checked);
 			pg.Dispose();
 			stopwatch.Stop();
 			CData.fps = stopwatch.ElapsedMilliseconds > 0 ? CData.fps * 0.9 + 100 / stopwatch.ElapsedMilliseconds : 0;
@@ -1694,14 +1694,14 @@ namespace RapChessGui
 
 		void TournamentEReset()
 		{
+			CModeTournamentE.FillList();
 			string name = lvEngine.SelectedItems.Count > 0 ? lvEngine.SelectedItems[0].Text : "";
-			CEngine engine = engineList.GetEngine(name);
+			CEngine engine = CModeTournamentE.engineList.GetEngine(name);
 			lvEngine.Items.Clear();
 			CModeTournamentE.FillList();
 			foreach (CEngine e in CModeTournamentE.engineList.list)
 			{
-				int del = e.GetDeltaElo();
-				ListViewItem lvi = new ListViewItem(new[] { e.name, e.elo, del.ToString() });
+				ListViewItem lvi = new ListViewItem(new[] { e.name, e.elo, e.GetDeltaElo().ToString() });
 				lvi.BackColor = e.hisElo.GetColor();
 				lvEngine.Items.Add(lvi);
 				if (e == engine)
@@ -1715,9 +1715,8 @@ namespace RapChessGui
 				foreach (ListViewItem lvi in lvEngine.Items)
 					if (lvi.Text == e.name)
 					{
-						int del = e.GetDeltaElo();
 						lvi.SubItems[1].Text = e.elo;
-						lvi.SubItems[2].Text = del.ToString();
+						lvi.SubItems[2].Text = e.GetDeltaElo().ToString();
 						lvi.BackColor = e.hisElo.GetColor();
 					}
 		}
@@ -1728,7 +1727,7 @@ namespace RapChessGui
 				return;
 			ListViewItem top2 = null;
 			ListViewItem item = lvEngine.SelectedItems[0];
-			string name = item.SubItems[0].Text;
+			string name = item.Text;
 			CEngineList engineList = CModeTournamentE.engineList;
 			CEngine engine = engineList.GetEngine(name);
 			lvEngineH.Items.Clear();
@@ -1762,7 +1761,7 @@ namespace RapChessGui
 			int rep1 = engine.name == CModeTournamentE.engine ? CModeTournamentE.games : 0;
 			int rep2 = engine.name == CModeTournamentE.engine ? CModeTournamentE.repetition - 1 : engine.tournament;
 			labEngine.BackColor = engine.hisElo.GetColor();
-			labEngine.Text = $"{engine.name} games {countGames} opponents {opponents}/{CModeTournamentE.engineList.list.Count} repetitions {rep1}/{rep2}";
+			labEngine.Text = $"{engine.name} games {countGames} opponents {opponents}/{engineList.list.Count} repetitions {rep1}/{rep2}";
 			if (top2 != null)
 				lvEngineH.TopItem = top2;
 			CData.HisToPoints(engine.hisElo, chartTournamentE.Series[1].Points);
@@ -1797,8 +1796,8 @@ namespace RapChessGui
 
 		void TournamentEStart()
 		{
-			TournamentEUpdate(GamerList.gamer[0].engine);
-			TournamentEUpdate(GamerList.gamer[1].engine);
+			TournamentEUpdate(CModeTournamentE.engWin);
+			TournamentEUpdate(CModeTournamentE.engLoose);
 			CModeTournamentE.modeValue.mode = cbTourEMode.Text;
 			CModeTournamentE.modeValue.SetValue((int)nudTourE.Value);
 			CModeTournamentE.book = cbTourEBook.Text;
@@ -1832,6 +1831,8 @@ namespace RapChessGui
 			CPlayer plb = GamerList.gamer[1].player;
 			CEngine ew = gw.engine;
 			CEngine el = gl.engine;
+			CModeTournamentE.engWin = ew;
+			CModeTournamentE.engLoose = el;
 			int eloW = gw.engine.GetElo();
 			int eloL = gl.engine.GetElo();
 			int indexW = engineList.GetIndexElo(eloW);
@@ -1888,10 +1889,8 @@ namespace RapChessGui
 			lvPlayer.Items.Clear();
 			CModeTournamentP.FillList();
 			foreach (CPlayer p in CModeTournamentP.playerList.list)
-				if (p.IsComputer())
 				{
-					int del = p.GetDeltaElo();
-					ListViewItem lvi = new ListViewItem(new[] { p.name, p.elo, del.ToString().ToString() });
+					ListViewItem lvi = new ListViewItem(new[] { p.name, p.elo, p.GetDeltaElo().ToString() });
 					lvi.BackColor = p.hisElo.GetColor();
 					lvPlayer.Items.Add(lvi);
 					if (p == player)
@@ -1901,14 +1900,14 @@ namespace RapChessGui
 
 		void TournamentPUpdate(CPlayer p)
 		{
-			foreach (ListViewItem lvi in lvPlayer.Items)
-				if (lvi.Text == p.name)
-				{
-					int del = p.GetDeltaElo();
-					lvi.SubItems[1].Text = p.elo;
-					lvi.SubItems[2].Text = del.ToString();
-					lvi.BackColor = p.hisElo.GetColor();
-				}
+			if (p != null)
+				foreach (ListViewItem lvi in lvPlayer.Items)
+					if (lvi.Text == p.name)
+					{
+						lvi.SubItems[1].Text = p.elo;
+						lvi.SubItems[2].Text = p.GetDeltaElo().ToString();
+						lvi.BackColor = p.hisElo.GetColor();
+					}
 		}
 
 		void TournamentPShowHistory()
@@ -1917,7 +1916,7 @@ namespace RapChessGui
 				return;
 			ListViewItem top2 = null;
 			ListViewItem item = lvPlayer.SelectedItems[0];
-			string name = item.SubItems[0].Text;
+			string name = item.Text;
 			CPlayerList playerList = CModeTournamentP.playerList;
 			CPlayer player = playerList.GetPlayer(name);
 			lvPlayerH.Items.Clear();
@@ -1952,7 +1951,7 @@ namespace RapChessGui
 			int rep1 = player.name == CModeTournamentP.player ? CModeTournamentP.games : 0;
 			int rep2 = player.name == CModeTournamentP.player ? CModeTournamentP.repetition : player.tournament - 1;
 			labPlayer.BackColor = player.hisElo.GetColor();
-			labPlayer.Text = $"{player.name} games {countGames} opponents {opponents}/{CModeTournamentP.playerList.list.Count} repetitions {rep1}/{rep2}";
+			labPlayer.Text = $"{player.name} games {countGames} opponents {opponents}/{playerList.list.Count} repetitions {rep1}/{rep2}";
 			if (top2 != null)
 				lvPlayerH.TopItem = top2;
 			CData.HisToPoints(player.hisElo, chartTournamentP.Series[1].Points);
@@ -1987,8 +1986,8 @@ namespace RapChessGui
 
 		void TournamentPStart()
 		{
-			TournamentPUpdate(GamerList.gamer[0].player);
-			TournamentPUpdate(GamerList.gamer[1].player);
+			TournamentPUpdate(CModeTournamentP.plaWin);
+			TournamentPUpdate(CModeTournamentP.plaLoose);
 			SetMode(CGameMode.tourP);
 			CPlayer p1 = CModeTournamentP.SelectPlayer();
 			CPlayer p2 = CModeTournamentP.SelectOpponent(p1);
@@ -2004,6 +2003,8 @@ namespace RapChessGui
 		{
 			CPlayer plw = GamerList.gamer[0].player;
 			CPlayer plb = GamerList.gamer[1].player;
+			CModeTournamentP.plaWin = pw;
+			CModeTournamentP.plaLoose = pl;
 			int eloW = pw.GetElo();
 			int eloL = pl.GetElo();
 			int indexW = playerList.GetIndexElo(eloW);

@@ -16,6 +16,8 @@ namespace RapChessGui
 		public static CTourList tourList = new CTourList("Tour-engines");
 		public static CModeValue modeValue = new CModeValue();
 		public static CEngineList engineList = new CEngineList();
+		public static CEngine engWin = null;
+		public static CEngine engLoose = null;
 
 		public static void SaveToIni()
 		{
