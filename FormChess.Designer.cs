@@ -47,7 +47,6 @@
 			System.Windows.Forms.DataVisualization.Charting.Series series10 = new System.Windows.Forms.DataVisualization.Charting.Series();
 			System.Windows.Forms.DataVisualization.Charting.Series series11 = new System.Windows.Forms.DataVisualization.Charting.Series();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormChess));
-			this.timerMessages = new System.Windows.Forms.Timer(this.components);
 			this.tabControl1 = new System.Windows.Forms.TabControl();
 			this.tabPageGame = new System.Windows.Forms.TabPage();
 			this.chartGame = new System.Windows.Forms.DataVisualization.Charting.Chart();
@@ -172,7 +171,6 @@
 			this.butEditStart = new System.Windows.Forms.Button();
 			this.butDefault = new System.Windows.Forms.Button();
 			this.butClearBoard = new System.Windows.Forms.Button();
-			this.timerStart = new System.Windows.Forms.Timer(this.components);
 			this.menuStrip1 = new System.Windows.Forms.MenuStrip();
 			this.fenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.saveToClipboardToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -264,7 +262,9 @@
 			this.lvMoves = new System.Windows.Forms.ListView();
 			this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.columnHeader30 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeader5 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.columnHeader31 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.labResult = new System.Windows.Forms.Label();
 			this.tlpChartD = new System.Windows.Forms.TableLayoutPanel();
 			this.tlpChartT = new System.Windows.Forms.TableLayoutPanel();
@@ -287,8 +287,7 @@
 			this.columnHeader21 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeader22 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.tlpBlack = new System.Windows.Forms.TableLayoutPanel();
-			this.columnHeader30 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.columnHeader31 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.timerAnimation = new System.Windows.Forms.Timer(this.components);
 			this.tabControl1.SuspendLayout();
 			this.tabPageGame.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.chartGame)).BeginInit();
@@ -370,11 +369,6 @@
 			this.tlpWhite.SuspendLayout();
 			this.tlpBlack.SuspendLayout();
 			this.SuspendLayout();
-			// 
-			// timerMessages
-			// 
-			this.timerMessages.Interval = 10;
-			this.timerMessages.Tick += new System.EventHandler(this.Timer1_Tick_1);
 			// 
 			// tabControl1
 			// 
@@ -2167,11 +2161,6 @@
 			this.butClearBoard.UseVisualStyleBackColor = true;
 			this.butClearBoard.Click += new System.EventHandler(this.butClearBoard_Click);
 			// 
-			// timerStart
-			// 
-			this.timerStart.Interval = 6000;
-			this.timerStart.Tick += new System.EventHandler(this.TimerStart_Tick);
-			// 
 			// menuStrip1
 			// 
 			this.menuStrip1.BackColor = System.Drawing.SystemColors.Control;
@@ -3453,10 +3442,20 @@
 			this.columnHeader4.Text = "White";
 			this.columnHeader4.Width = 50;
 			// 
+			// columnHeader30
+			// 
+			this.columnHeader30.Text = "Score";
+			this.columnHeader30.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			// 
 			// columnHeader5
 			// 
 			this.columnHeader5.Text = "Black";
 			this.columnHeader5.Width = 50;
+			// 
+			// columnHeader31
+			// 
+			this.columnHeader31.Text = "Score";
+			this.columnHeader31.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
 			// 
 			// labResult
 			// 
@@ -3740,15 +3739,10 @@
 			this.tlpBlack.Size = new System.Drawing.Size(1180, 40);
 			this.tlpBlack.TabIndex = 35;
 			// 
-			// columnHeader30
+			// timerAnimation
 			// 
-			this.columnHeader30.Text = "Score";
-			this.columnHeader30.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-			// 
-			// columnHeader31
-			// 
-			this.columnHeader31.Text = "Score";
-			this.columnHeader31.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			this.timerAnimation.Interval = 1;
+			this.timerAnimation.Tick += new System.EventHandler(this.timerAnimation_Tick);
 			// 
 			// FormChess
 			// 
@@ -3857,7 +3851,6 @@
 		}
 
 		#endregion
-		private System.Windows.Forms.Timer timerMessages;
 		private System.Windows.Forms.TabControl tabControl1;
 		private System.Windows.Forms.TabPage tabPageGame;
 		private System.Windows.Forms.TabPage tabPageTraining;
@@ -3871,7 +3864,6 @@
 		private System.Windows.Forms.ComboBox cbTeacherEngine;
 		private System.Windows.Forms.GroupBox groupBox3;
 		private System.Windows.Forms.ComboBox cbTrainedEngine;
-		private System.Windows.Forms.Timer timerStart;
 		private System.Windows.Forms.TableLayoutPanel tlpTraining;
 		private System.Windows.Forms.Label label15;
 		private System.Windows.Forms.Label label14;
@@ -4099,6 +4091,7 @@
 		private System.Windows.Forms.ToolStripMenuItem lastTrainingToolStripMenuItem;
 		private System.Windows.Forms.ColumnHeader columnHeader30;
 		private System.Windows.Forms.ColumnHeader columnHeader31;
+		private System.Windows.Forms.Timer timerAnimation;
 	}
 }
 

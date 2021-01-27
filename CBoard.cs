@@ -3,7 +3,6 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Collections.Generic;
-using RapIni;
 
 namespace RapChessGui
 {
@@ -80,6 +79,7 @@ namespace RapChessGui
 
 	class CBoard
 	{
+		public static Color colorBoard;
 		public static Color colorDefault = Color.FromArgb(0xff, 0xff, 0x80);
 		public static Color colorRed = Color.FromArgb(0x80, 0x00, 0x00);
 		public static Color colorMedium;
@@ -94,7 +94,6 @@ namespace RapChessGui
 		public static Color colorBrighterB;
 		public static bool animated = false;
 		public static bool finished = true;
-		public static bool showArrow = false;
 		public static CField[] list = new CField[64];
 		int bmpX = 0;
 		int bmpY = 0;
@@ -103,7 +102,6 @@ namespace RapChessGui
 		int field = 64;
 		public static Bitmap[] background = new Bitmap[2];
 		public Bitmap bmpBoard;
-		public static Color color;
 		public CArrowList arrowCur = new CArrowList(Color.FromArgb(0x90, 0x10, 0xff, 0x10));
 		public CArrowList arrowEco = new CArrowList(Color.FromArgb(0x90, 0xff, 0x10, 0x10));
 
@@ -111,18 +109,6 @@ namespace RapChessGui
 		{
 			for (int n = 0; n < 64; n++)
 				list[n] = new CField();
-			LoadFromIni();
-		}
-
-		public void LoadFromIni()
-		{
-			color = ColorTranslator.FromHtml(CRapIni.This.Read("options>interface>color", ColorTranslator.ToHtml(colorDefault)));
-			SetColor();
-		}
-
-		public void SaveToIni()
-		{
-			CRapIni.This.Write("options>interface>color", ColorTranslator.ToHtml(color));
 		}
 
 		public void ClearArrows()
@@ -165,7 +151,7 @@ namespace RapChessGui
 			return GetMiddle(p.X, p.Y);
 		}
 
-		void RenderArrow(CArrow arrow, Graphics g)
+		void RenderArrow(Graphics g, CArrow arrow)
 		{
 			Pen pen = new Pen(arrow.color, 8);
 			pen.StartCap = LineCap.RoundAnchor;
@@ -173,11 +159,26 @@ namespace RapChessGui
 			g.DrawLine(pen, GetMiddle(arrow.a), GetMiddle(arrow.b));
 		}
 
-		public void RenderArrow(CArrowList al, Graphics g)
+		public void RenderArrow(Graphics g, CArrowList al)
 		{
 			foreach (CArrow a in al.list)
-				RenderArrow(a, g);
+				RenderArrow(g, a);
 		}
+
+		public void RenderArrow(Graphics g, bool show)
+		{
+			if (show)
+			{
+				Bitmap bmpArrow = new Bitmap(bmpBoard);
+				Graphics ga = Graphics.FromImage(bmpArrow);
+				RenderArrow(ga, arrowCur);
+				RenderArrow(ga, arrowEco);
+				g.DrawImage(bmpArrow, bmpX, bmpY);
+			}
+			else
+				g.DrawImage(bmpBoard, bmpX, bmpY);
+		}
+
 
 		public static void UpdateField(int index)
 		{
@@ -379,15 +380,6 @@ namespace RapChessGui
 			g.Dispose();
 		}
 
-		public void Render(Graphics g)
-		{
-			Bitmap bmpArrow = new Bitmap(bmpBoard);
-			Graphics ga = Graphics.FromImage(bmpArrow);
-			RenderArrow(arrowCur, ga);
-			RenderArrow(arrowEco, ga);
-			g.DrawImage(bmpArrow, bmpX, bmpY);
-		}
-
 		public static void MakeMove(int sou, int des)
 		{
 			list[des].piece = list[sou].piece;
@@ -471,15 +463,15 @@ namespace RapChessGui
 
 		public static void SetColor(Color c)
 		{
-			color = c;
+			colorBoard = c;
 			SetColor();
 		}
 
 		public static void SetColor()
 		{
-			colorMedium = GetColor(color, 0.5);
-			colorDark = GetColor(color, 0.02);
-			colorBright = GetColor(color, 0.80);
+			colorMedium = GetColor(colorBoard, 0.5);
+			colorDark = GetColor(colorBoard, 0.02);
+			colorBright = GetColor(colorBoard, 0.80);
 			colorBrighter = GetColor(colorMedium, Color.White, 0.84);
 			colorMediumW = GetColor(colorMedium, Color.White, 0.3);
 			colorMediumB = GetColor(colorMedium, Color.Black, 0.3);

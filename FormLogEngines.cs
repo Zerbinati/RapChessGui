@@ -24,15 +24,10 @@ namespace RapChessGui
 			This.richTextBox1.SelectedText = txt;
 		}
 
-		public static void AppendTime()
+		public static void AppendTimeText(string txt, Color col)
 		{
 			This.richTextBox1.SelectionColor = Color.Green;
 			This.richTextBox1.SelectedText = GetTimeElapsed();
-		}
-
-		public static void AppendTimeText(string txt, Color col)
-		{
-			AppendTime();
 			AppendText(txt, col);
 		}
 
@@ -91,6 +86,7 @@ namespace RapChessGui
 
 		private void butSend_Click(object sender, EventArgs e)
 		{
+			richTextBox1.Clear();
 			CGamer p = CGamerList.This.GetGamer(cbPlayerList.Text);
 			if (p != null)
 				foreach (string c in rtbCommand.Lines)
@@ -120,7 +116,7 @@ namespace RapChessGui
 		{
 			CGamer g = CGamerList.This.GetGamer(cbPlayerList.Text);
 			if (g != null)
-				g.EngineReset();
+				g.EngineRestart();
 		}
 
 		private void terminateToolStripMenuItem_Click(object sender, EventArgs e)

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.Diagnostics;
+using System.Threading;
 using RapLog;
 
 namespace RapChessGui
@@ -67,10 +68,10 @@ namespace RapChessGui
 			Init(true);
 		}
 
-		public void EngineReset()
+		public void EngineRestart()
 		{
 			isEngPrepared = false;
-			enginePro.SetProgram("Engines\\" + engine.file, engine.parameters);
+			enginePro.Restart();
 		}
 
 		public void EngineStop()
@@ -134,6 +135,19 @@ namespace RapChessGui
 			}
 		}
 
+		public string GetEngineFile()
+		{
+			if (engine == null)
+				return "";
+			else
+				return engine.file;
+		}
+
+		public string GetEngineName()
+		{
+			return engine == null ? "Human" : engine.name;
+		}
+
 		public ulong GetNps()
 		{
 			if (npsCount > 0)
@@ -148,12 +162,12 @@ namespace RapChessGui
 		public string GetMemory()
 		{
 			string result = "Memory";
-			if (enginePro.process != null)
+			enginePro.process.Refresh();
+			try
 			{
-				enginePro.process.Refresh();
-				if (!enginePro.process.HasExited)
-					result = enginePro.process.PrivateMemorySize64.ToString("N0");
+				result = enginePro.process.PrivateMemorySize64.ToString("N0");
 			}
+			catch { }
 			return result;
 		}
 
@@ -313,8 +327,7 @@ namespace RapChessGui
 			if (bookPro.process != null)
 			{
 				Color col = isWhite ? Color.DimGray : Color.Black;
-				FormLogEngines.AppendTime();
-				FormLogEngines.AppendText($"book {player.name}", col);
+				FormLogEngines.AppendTimeText($"book {player.name}", col);
 				FormLogEngines.AppendText($" < {msg}\n", Color.Brown);
 				bookPro.process.StandardInput.WriteLine(msg);
 			}
@@ -325,11 +338,11 @@ namespace RapChessGui
 			if (enginePro.process != null)
 			{
 				Color col = isWhite ? Color.DimGray : Color.Black;
-				FormLogEngines.AppendTime();
-				FormLogEngines.AppendText($"{player.name}", col);
+				FormLogEngines.AppendTimeText($"{player.name}", col);
 				FormLogEngines.AppendText($" < {msg}\n", Color.Brown);
 				enginePro.process.StandardInput.WriteLine(msg);
 			}
+			Thread.Sleep(0x1);
 		}
 
 		public string GetBook()
@@ -338,22 +351,6 @@ namespace RapChessGui
 				return "Book";
 			else
 				return player.book;
-		}
-
-		public string GetEngine()
-		{
-			if (engine == null)
-				return "Engine";
-			else
-				return engine.name;
-		}
-
-		public string GetEngineFile()
-		{
-			if (engine == null)
-				return "";
-			else
-				return engine.file;
 		}
 
 		public string GetMode()
@@ -426,11 +423,10 @@ namespace RapChessGui
 				{
 					if (CChess.This.IsValidMove(lastMove, out _))
 					{
-						EngineReset();
+						CRapLog.Add($"{player.engine} forced move {lastMove}");
+						FormLogEngines.AppendTimeText($"{player.name} forced move {lastMove}\n", Color.Orange);
+						EngineRestart();
 						FormChess.This.MakeMove(lastMove);
-						FormLogEngines.AppendTime();
-						FormLogEngines.AppendText($"{player.name} forced move {lastMove}\n", Color.Orange);
-
 					}
 					else
 					{
@@ -472,11 +468,11 @@ namespace RapChessGui
 			if (book == null)
 				p.book = "None";
 			else
-				bookPro.SetProgram("Books\\" + book.file, book.parameters);
+				bookPro.SetProgram(AppDomain.CurrentDomain.BaseDirectory + "Books\\" + book.file, book.parameters);
 			if (engine == null)
 				p.engine = "Human";
 			else
-				enginePro.SetProgram("Engines\\" + engine.file, engine.parameters);
+				enginePro.SetProgram(AppDomain.CurrentDomain.BaseDirectory + "Engines\\" + engine.file, engine.parameters);
 		}
 
 		public void SetPlayer()

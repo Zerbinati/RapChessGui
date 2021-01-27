@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
-using System.Drawing;
-using RapLog;
+﻿using System;
+using System.Collections.Generic;
+using System.Runtime.InteropServices;
 
 namespace RapChessGui
 {
@@ -19,9 +19,15 @@ namespace RapChessGui
 
 	static class CMessageList
 	{
+		static int winMessage;
 		private readonly static object locker = new object();
 		readonly static List<CMessage> list = new List<CMessage>();
 		readonly static List<CMessage> buffer = new List<CMessage>();
+
+		public static void Init(int m)
+		{
+			winMessage = m;
+		}
 
 		static void MsgSet(CMessage m)
 		{
@@ -29,6 +35,7 @@ namespace RapChessGui
 			{
 				list.Add(m);
 			}
+			CWinMessage.Message(winMessage);
 		}
 
 		static List<CMessage> MsgGet()

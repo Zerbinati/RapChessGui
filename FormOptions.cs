@@ -8,9 +8,11 @@ namespace RapChessGui
 	public partial class FormOptions : Form
 	{
 		public static FormOptions This;
+		public static int gameBreak = 8;
 		public static int marginStandard = 0;
 		public static int marginTime = 5000;
 		public static string priority;
+		public static Color colorBoard;
 
 		public FormOptions()
 		{
@@ -21,7 +23,8 @@ namespace RapChessGui
 
 		public void LoadFromIni()
 		{
-			if(CRapIni.This.ReadBool("options>interface>san", true))
+			colorDialog1.Color = CRapIni.This.ReadColor("options>interface>color", Color.Yellow);
+			if (CRapIni.This.ReadBool("options>interface>san", true))
 				rbSan.Checked = true;
 			else
 				rbUci.Checked = true;
@@ -30,31 +33,36 @@ namespace RapChessGui
 			cbAttack.Checked = CRapIni.This.ReadBool("options>interface>attack", cbAttack.Checked);
 			cbArrow.Checked = CRapIni.This.ReadBool("options>interface>arrow", cbArrow.Checked);
 			cbTips.Checked = CRapIni.This.ReadBool("options>interface>tips", cbTips.Checked);
-			nudSpeed.Value = CRapIni.This.ReadInt("options>interface>speed", 200);
+			nudBreak.Value = CRapIni.This.ReadInt("options>mode>game>brak", (int)nudBreak.Value);
+			nudSpeed.Value = CRapIni.This.ReadInt("options>interface>speed", (int)nudSpeed.Value);
 			cbGameAutoElo.Checked = CRapIni.This.ReadBool("options>game>autoelo",cbGameAutoElo.Checked);
 			combModeStandard.SelectedIndex = CRapIni.This.ReadInt("options>margin>standard", 1);
 			combModeTime.SelectedIndex = CRapIni.This.ReadInt("options>margin>time", 4);
 			priority = CRapIni.This.Read("options>priority", "Normal");
 			combPriority.SelectedIndex = combPriority.FindStringExact(priority);
-			CBoard.showArrow = cbArrow.Checked;
+			gameBreak = (int)nudBreak.Value;
+			colorBoard = colorDialog1.Color;
 			marginStandard = CbToMargin(combModeStandard.SelectedIndex);
-			marginTime = CbToMargin(combModeTime.SelectedIndex);		
+			marginTime = CbToMargin(combModeTime.SelectedIndex);
 		}
 
 		public void SaveToIni()
 		{
+			CRapIni.This.Write("options>interface>color",colorDialog1.Color);
 			CRapIni.This.Write("options>interface>san",rbSan.Checked);
 			CRapIni.This.Write("options>interface>showponder", cbShowPonder.Checked);
 			CRapIni.This.Write("options>interface>rotate", cbRotateBoard.Checked);
 			CRapIni.This.Write("options>interface>attack", cbAttack.Checked);
 			CRapIni.This.Write("options>interface>arrow", cbArrow.Checked);
 			CRapIni.This.Write("options>interface>tips", cbTips.Checked);
+			CRapIni.This.Write("options>mode>game>brak", nudBreak.Value);
 			CRapIni.This.Write("options>interface>speed", nudSpeed.Value);
 			CRapIni.This.Write("options>game>autoelo", cbGameAutoElo.Checked);
 			CRapIni.This.Write("options>margin>standard", combModeStandard.SelectedIndex);
 			CRapIni.This.Write("options>margin>time", combModeTime.SelectedIndex);
 			CRapIni.This.Write("options>priority", priority);
-			CBoard.showArrow = cbArrow.Checked;
+			gameBreak = (int)nudBreak.Value;
+			colorBoard = colorDialog1.Color;
 			marginStandard = CbToMargin(combModeStandard.SelectedIndex);
 			marginTime = CbToMargin(combModeTime.SelectedIndex);
 		}
@@ -77,7 +85,7 @@ namespace RapChessGui
 
 		private void butColor_Click(object sender, EventArgs e)
 		{
-			colorDialog1.Color = CBoard.color;
+			colorDialog1.Color = colorBoard;
 			if (colorDialog1.ShowDialog() != DialogResult.Cancel)
 			{
 				CBoard.SetColor(colorDialog1.Color);

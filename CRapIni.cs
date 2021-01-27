@@ -1,8 +1,9 @@
 ﻿using System;
+using System.Drawing;
 using System.IO;
-using System.Collections.Generic;
 using System.Reflection;
 using System.Linq;
+using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Net;
 using System.Text;
@@ -89,6 +90,11 @@ namespace RapIni
 			Write(key,value.ToString());
 		}
 
+		public void Write(string key, Color value)
+		{
+			Write(key, ColorTranslator.ToHtml(value));
+		}
+
 		public string ReadFromFile(string key, string def = "")
 		{
 			if (Load())
@@ -137,6 +143,12 @@ namespace RapIni
 				return ReadFromFile(key, def);
 			else
 				return ReadFromServer(key, def);
+		}
+
+		public Color ReadColor(string key, Color def)
+		{
+			string s = Read(key, ColorTranslator.ToHtml(def));
+			return ColorTranslator.FromHtml(s);
 		}
 
 		public double ReadDouble(string key, double def = 0)

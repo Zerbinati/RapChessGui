@@ -2,12 +2,31 @@
 using System.Drawing;
 using System.IO;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
 
 namespace RapChessGui
 {
 	public enum CGameMode { game, match,tourE, tourP, training, edit }
+
+	public static class CWinMessage
+	{
+		[DllImport("user32.dll")]
+		public static extern int SendMessage(IntPtr hWnd, int wMsg, IntPtr wParam, IntPtr lParam);
+
+		private readonly static object locker = new object();
+		public static IntPtr winHandle;
+
+		public static int Message(int msg)
+		{
+			lock (locker)
+			{
+				return SendMessage(winHandle,msg,IntPtr.Zero, IntPtr.Zero);
+			}
+		}
+
+	}
 
 	public static class CPromotion
 	{

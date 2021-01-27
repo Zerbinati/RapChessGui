@@ -60,6 +60,9 @@
 			this.rbSan = new System.Windows.Forms.RadioButton();
 			this.groupBox3 = new System.Windows.Forms.GroupBox();
 			this.combPriority = new System.Windows.Forms.ComboBox();
+			this.groupBox4 = new System.Windows.Forms.GroupBox();
+			this.label7 = new System.Windows.Forms.Label();
+			this.nudBreak = new System.Windows.Forms.NumericUpDown();
 			this.gbInterface.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.nudSpeed)).BeginInit();
 			this.gbGame.SuspendLayout();
@@ -70,12 +73,14 @@
 			((System.ComponentModel.ISupportInitialize)(this.nudTourE)).BeginInit();
 			this.gbNotation.SuspendLayout();
 			this.groupBox3.SuspendLayout();
+			this.groupBox4.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.nudBreak)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// butDefault
 			// 
 			this.butDefault.Dock = System.Windows.Forms.DockStyle.Top;
-			this.butDefault.Location = new System.Drawing.Point(0, 485);
+			this.butDefault.Location = new System.Drawing.Point(0, 533);
 			this.butDefault.Name = "butDefault";
 			this.butDefault.Size = new System.Drawing.Size(286, 24);
 			this.butDefault.TabIndex = 2;
@@ -93,7 +98,7 @@
 			this.gbInterface.Controls.Add(this.cbAttack);
 			this.gbInterface.Controls.Add(this.cbShowPonder);
 			this.gbInterface.Dock = System.Windows.Forms.DockStyle.Top;
-			this.gbInterface.Location = new System.Drawing.Point(0, 234);
+			this.gbInterface.Location = new System.Drawing.Point(0, 282);
 			this.gbInterface.Name = "gbInterface";
 			this.gbInterface.Size = new System.Drawing.Size(286, 148);
 			this.gbInterface.TabIndex = 4;
@@ -197,7 +202,7 @@
 			// 
 			this.butOk.DialogResult = System.Windows.Forms.DialogResult.OK;
 			this.butOk.Dock = System.Windows.Forms.DockStyle.Top;
-			this.butOk.Location = new System.Drawing.Point(0, 509);
+			this.butOk.Location = new System.Drawing.Point(0, 557);
 			this.butOk.Name = "butOk";
 			this.butOk.Size = new System.Drawing.Size(286, 24);
 			this.butOk.TabIndex = 1;
@@ -248,7 +253,7 @@
 			this.gbTournament.Controls.Add(this.label2);
 			this.gbTournament.Controls.Add(this.nudTourP);
 			this.gbTournament.Dock = System.Windows.Forms.DockStyle.Top;
-			this.gbTournament.Location = new System.Drawing.Point(0, 104);
+			this.gbTournament.Location = new System.Drawing.Point(0, 152);
 			this.gbTournament.Name = "gbTournament";
 			this.gbTournament.Size = new System.Drawing.Size(286, 52);
 			this.gbTournament.TabIndex = 7;
@@ -309,7 +314,7 @@
 			this.groupBox1.Controls.Add(this.combModeTime);
 			this.groupBox1.Controls.Add(this.combModeStandard);
 			this.groupBox1.Dock = System.Windows.Forms.DockStyle.Top;
-			this.groupBox1.Location = new System.Drawing.Point(0, 156);
+			this.groupBox1.Location = new System.Drawing.Point(0, 204);
 			this.groupBox1.Name = "groupBox1";
 			this.groupBox1.Size = new System.Drawing.Size(286, 78);
 			this.groupBox1.TabIndex = 8;
@@ -376,7 +381,7 @@
 			this.groupBox2.Controls.Add(this.label6);
 			this.groupBox2.Controls.Add(this.nudTourE);
 			this.groupBox2.Dock = System.Windows.Forms.DockStyle.Top;
-			this.groupBox2.Location = new System.Drawing.Point(0, 52);
+			this.groupBox2.Location = new System.Drawing.Point(0, 100);
 			this.groupBox2.Name = "groupBox2";
 			this.groupBox2.Size = new System.Drawing.Size(286, 52);
 			this.groupBox2.TabIndex = 9;
@@ -435,7 +440,7 @@
 			this.gbNotation.Controls.Add(this.rbUci);
 			this.gbNotation.Controls.Add(this.rbSan);
 			this.gbNotation.Dock = System.Windows.Forms.DockStyle.Top;
-			this.gbNotation.Location = new System.Drawing.Point(0, 382);
+			this.gbNotation.Location = new System.Drawing.Point(0, 430);
 			this.gbNotation.Name = "gbNotation";
 			this.gbNotation.Size = new System.Drawing.Size(286, 53);
 			this.gbNotation.TabIndex = 10;
@@ -470,7 +475,7 @@
 			// 
 			this.groupBox3.Controls.Add(this.combPriority);
 			this.groupBox3.Dock = System.Windows.Forms.DockStyle.Top;
-			this.groupBox3.Location = new System.Drawing.Point(0, 435);
+			this.groupBox3.Location = new System.Drawing.Point(0, 483);
 			this.groupBox3.Name = "groupBox3";
 			this.groupBox3.Size = new System.Drawing.Size(286, 50);
 			this.groupBox3.TabIndex = 11;
@@ -494,11 +499,57 @@
 			this.combPriority.TabIndex = 49;
 			this.combPriority.SelectedIndexChanged += new System.EventHandler(this.cbPriority_SelectedIndexChanged);
 			// 
+			// groupBox4
+			// 
+			this.groupBox4.Controls.Add(this.label7);
+			this.groupBox4.Controls.Add(this.nudBreak);
+			this.groupBox4.Dock = System.Windows.Forms.DockStyle.Top;
+			this.groupBox4.Location = new System.Drawing.Point(0, 52);
+			this.groupBox4.Name = "groupBox4";
+			this.groupBox4.Size = new System.Drawing.Size(286, 48);
+			this.groupBox4.TabIndex = 12;
+			this.groupBox4.TabStop = false;
+			this.groupBox4.Text = "Match";
+			// 
+			// label7
+			// 
+			this.label7.AutoSize = true;
+			this.label7.Location = new System.Drawing.Point(168, 21);
+			this.label7.Name = "label7";
+			this.label7.Size = new System.Drawing.Size(106, 13);
+			this.label7.TabIndex = 10;
+			this.label7.Text = "Break after the game";
+			// 
+			// nudBreak
+			// 
+			this.nudBreak.Increment = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
+			this.nudBreak.Location = new System.Drawing.Point(6, 19);
+			this.nudBreak.Maximum = new decimal(new int[] {
+            20,
+            0,
+            0,
+            0});
+			this.nudBreak.Name = "nudBreak";
+			this.nudBreak.Size = new System.Drawing.Size(156, 20);
+			this.nudBreak.TabIndex = 9;
+			this.nudBreak.TabStop = false;
+			this.nudBreak.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			this.nudBreak.ThousandsSeparator = true;
+			this.nudBreak.Value = new decimal(new int[] {
+            8,
+            0,
+            0,
+            0});
+			// 
 			// FormOptions
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(286, 548);
+			this.ClientSize = new System.Drawing.Size(286, 588);
 			this.Controls.Add(this.butOk);
 			this.Controls.Add(this.butDefault);
 			this.Controls.Add(this.groupBox3);
@@ -507,6 +558,7 @@
 			this.Controls.Add(this.groupBox1);
 			this.Controls.Add(this.gbTournament);
 			this.Controls.Add(this.groupBox2);
+			this.Controls.Add(this.groupBox4);
 			this.Controls.Add(this.gbGame);
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
 			this.Name = "FormOptions";
@@ -531,6 +583,9 @@
 			this.gbNotation.ResumeLayout(false);
 			this.gbNotation.PerformLayout();
 			this.groupBox3.ResumeLayout(false);
+			this.groupBox4.ResumeLayout(false);
+			this.groupBox4.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)(this.nudBreak)).EndInit();
 			this.ResumeLayout(false);
 
 		}
@@ -568,5 +623,8 @@
 		public System.Windows.Forms.CheckBox cbRotateBoard;
 		private System.Windows.Forms.GroupBox groupBox3;
 		private System.Windows.Forms.ComboBox combPriority;
+		private System.Windows.Forms.GroupBox groupBox4;
+		private System.Windows.Forms.Label label7;
+		public System.Windows.Forms.NumericUpDown nudBreak;
 	}
 }

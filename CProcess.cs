@@ -7,19 +7,26 @@ namespace RapChessGui
 {
 	public class CProcess
 	{
-		public Process process = null;
+		public Process process = new Process();
 
 		public int GetPid()
 		{
-			if (process == null)
-				return 0;
-			return process.Id;
+			try
+			{
+				return process.Id;
+			}
+			catch { }
+			return 0;
 		}
 
 		private void ProEvent(object sender, DataReceivedEventArgs e)
 		{
-			if ((process != null) && !String.IsNullOrEmpty(e.Data))
-				CMessageList.MessageAdd(process.Id, e.Data);
+			try
+			{
+				if (!String.IsNullOrEmpty(e.Data))
+					CMessageList.MessageAdd(process.Id, e.Data);
+			}
+			catch { }
 		}
 
 		void SetPriority(string priority)
@@ -45,10 +52,9 @@ namespace RapChessGui
 			}
 		}
 
-		public void SetProgram(string program, string param)
+		public void SetProgram(string path, string param)
 		{
 			Terminate();
-			string path = AppDomain.CurrentDomain.BaseDirectory + program;
 			if (File.Exists(path))
 			{
 				process = new Process();
@@ -63,23 +69,24 @@ namespace RapChessGui
 				process.Start();
 				process.BeginOutputReadLine();
 				SetPriority(FormOptions.priority);
-			}else
-				MessageBox.Show($"Missing engine {program}");
+			}
+			else
+				MessageBox.Show($"Missing engine {path}");
+		}
+
+		public void Restart()
+		{
+			SetProgram(process.StartInfo.FileName,process.StartInfo.Arguments);
 		}
 
 		public void Terminate()
 		{
 			try
 			{
-				if (process != null)
-				{
-					process.Kill();
-					process = null;
-				}
+				process.OutputDataReceived -= ProEvent;
+				process.Kill();
 			}
-			catch
-			{
-			}
+			catch { }
 		}
 
 	}

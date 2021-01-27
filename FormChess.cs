@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Text;
 using System.Runtime.InteropServices;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Linq;
 using RapIni;
@@ -18,19 +19,23 @@ namespace RapChessGui
 		private static extern IntPtr AddFontMemResourceEx(IntPtr pbFont, uint cbFont, IntPtr pdv, [In] ref uint pcFonts);
 
 		[DllImport("user32")]
-		private static extern bool ShowScrollBar(IntPtr hwnd, int wBar, [System.Runtime.InteropServices.MarshalAs(System.Runtime.InteropServices.UnmanagedType.Bool)] bool bShow);
+		private static extern bool ShowScrollBar(IntPtr hwnd, int wBar, [MarshalAs(UnmanagedType.Bool)] bool bShow);
+
+		public const int WM_GAME_NEXT = 1024;
+		public const int WM_GAME_MESSAGE = 1025;
+		public static IntPtr handle;
 
 		bool showInfo = false;
 		public static FormChess This;
 		public static bool boardRotate;
+		string lastEco = "";
 		List<int> moves = new List<int>();
 		public CRapIni RapIni = new CRapIni();
-		string lastEco = "";
+		readonly CBoard Board = new CBoard();
 		readonly CEcoList EcoList = new CEcoList();
 		readonly CChess Chess = new CChess();
 		readonly CGamerList GamerList = new CGamerList();
 		readonly CUci Uci = new CUci();
-		readonly CBoard Board = new CBoard();
 		public static PrivateFontCollection pfc = new PrivateFontCollection();
 		public static CBookList bookList = new CBookList();
 		public static CEngineList engineList = new CEngineList();
@@ -55,6 +60,12 @@ namespace RapChessGui
 						SplitSaveToIni();
 					}
 					break;
+				case WM_GAME_NEXT:
+					NextGame();
+					break;
+				case WM_GAME_MESSAGE:
+					GetMessage();
+					break;
 			}
 			base.WndProc(ref m);
 		}
@@ -75,13 +86,13 @@ namespace RapChessGui
 			AddFontMemResourceEx(data, (uint)fontData.Length, IntPtr.Zero, ref cFonts);
 			pfc.AddMemoryFont(data, fontLength);
 			Marshal.FreeCoTaskMem(data);
-			InitializeComponent();
-			IniCreate();
-			IniLoad();
 			FormOptions.This = new FormOptions();
 			FormEngine.This = new FormEngine();
 			FormBook.This = new FormBook();
 			FormPlayer.This = new FormPlayer();
+			InitializeComponent();
+			IniCreate();
+			IniLoad();
 			Reset();
 			Font fontChess = new Font(pfc.Families[0], 16);
 			Font fontChessPromo = new Font(pfc.Families[0], 32);
@@ -92,10 +103,13 @@ namespace RapChessGui
 			labPromoB.Font = fontChessPromo;
 			labPromoN.Font = fontChessPromo;
 			toolTip1.Active = FormOptions.ShowTips();
+			CWinMessage.winHandle = Handle;
+			CMessageList.Init(WM_GAME_MESSAGE);
 			Chess.Initialize();
 			BoardPrepare();
 			combMainMode.SelectedIndex = 0;
 			GameStart();
+			timerAnimation.Enabled = true;
 		}
 
 		void CreateDir(string dir)
@@ -264,7 +278,6 @@ namespace RapChessGui
 			RapIni.Write("position>x", x);
 			RapIni.Write("position>y", y);
 			SplitSaveToIni();
-			Board.SaveToIni();
 		}
 
 		void SplitSaveToIni(SplitContainer sc)
@@ -312,6 +325,18 @@ namespace RapChessGui
 		#endregion
 
 		#region main
+
+		void GameLoop()
+		{
+			if (CBoard.animated || CDrag.dragged)
+				RenderBoard();
+			else if (CData.gameState == CGameState.normal)
+			{
+				GamerList.GamerCur().TryStart();
+				ShowInfo(GamerList.GamerCur());
+				ShowInfo(GamerList.GamerSec());
+			}
+		}
 
 		void Clear()
 		{
@@ -379,6 +404,25 @@ namespace RapChessGui
 			TournamentPReset();
 		}
 
+		void NextGame()
+		{
+			switch (CData.gameMode)
+			{
+				case CGameMode.match:
+					MatchStart();
+					break;
+				case CGameMode.tourE:
+					TournamentEStart();
+					break;
+				case CGameMode.tourP:
+					TournamentPStart();
+					break;
+				case CGameMode.training:
+					TrainingStart();
+					break;
+			}
+		}
+
 		void PrepareFen(string fen = CChess.defFen)
 		{
 			CDrag.lastSou = -1;
@@ -401,7 +445,6 @@ namespace RapChessGui
 			ShowInfo(gb);
 			SetBoardRotate();
 			CMessageList.Clear();
-			timerMessages.Enabled = CData.gameMode != CGameMode.edit;
 		}
 
 		void ShowGamers()
@@ -410,8 +453,8 @@ namespace RapChessGui
 			CGamer gb = GamerList.gamer[1];
 			labPlayerW.Text = gw.GetPlayerName();
 			labPlayerB.Text = gb.GetPlayerName();
-			labEngineW.Text = gw.GetEngine();
-			labEngineB.Text = gb.GetEngine();
+			labEngineW.Text = gw.GetEngineName();
+			labEngineB.Text = gb.GetEngineName();
 			labBookNW.Text = gw.GetBook();
 			labBookNB.Text = gb.GetBook();
 			labModeW.Text = gw.GetMode();
@@ -546,9 +589,11 @@ namespace RapChessGui
 			CGamer gWhi = GamerList.GamerWhite();
 			CGamer gBla = GamerList.GamerBlack();
 			FormLogEngines.AppendTimeText($" White: {gWhi.player.name}\n", Color.DimGray);
-			FormLogEngines.AppendTimeText($" Clock: {gWhi.GetTime(out _)} Moves: {gWhi.countMoves} Book: {gWhi.countMovesBook}\n", Color.DimGray);
+			FormLogEngines.AppendTimeText($" Engine: {gWhi.GetEngineName()}\n", Color.DimGray);
+			FormLogEngines.AppendTimeText($" Clock: {gWhi.GetTime(out _)} Moves: {gWhi.countMoves} ({gWhi.countMoves - gWhi.countMovesBook}) Book: {gWhi.countMovesBook}\n", Color.DimGray);
 			FormLogEngines.AppendTimeText($" Black: {gBla.player.name}\n", Color.Black);
-			FormLogEngines.AppendTimeText($" Clock: {gBla.GetTime(out _)} Moves: {gBla.countMoves} Book: {gBla.countMovesBook}\n", Color.Black);
+			FormLogEngines.AppendTimeText($" Engine: {gBla.GetEngineName()}\n", Color.Black);
+			FormLogEngines.AppendTimeText($" Clock: {gBla.GetTime(out _)} Moves: {gBla.countMoves} ({gBla.countMoves - gBla.countMovesBook}) Book: {gBla.countMovesBook}\n", Color.Black);
 			FormLogEngines.AppendTimeText($" Finish {tssInfo.Text}\n", Color.Olive);
 			CreateRtf();
 			CreatePgn();
@@ -563,7 +608,7 @@ namespace RapChessGui
 			if (CData.gameMode == CGameMode.training)
 				TrainingEnd(gw, gl, isDraw);
 			GamerList.Terminate();
-			timerStart.Start();
+			Task.Delay(FormOptions.gameBreak * 1000).ContinueWith(t => CWinMessage.Message(WM_GAME_NEXT));
 		}
 
 		public void BoardPrepare()
@@ -804,7 +849,7 @@ namespace RapChessGui
 			{
 				CGamer gamer = GamerList.GetGamerPid(m.pid, out string protocol);
 				if (gamer == null)
-					CRapLog.Add($"Unknown pid ({GamerList.GamerCur().player.name} - {GamerList.GamerSec().player.name}) ({m.pid})-({GamerList.GamerCur().bookPro.GetPid()} {GamerList.GamerCur().enginePro.GetPid()})-({GamerList.GamerSec().bookPro.GetPid()} {GamerList.GamerSec().enginePro.GetPid()}) ({m.msg})");
+					CRapLog.Add($"Unknown pid ({GamerList.GamerCur().player.engine} - {GamerList.GamerSec().player.engine})");
 				else
 				{
 					string book = protocol == "Book" ? "book " : "";
@@ -854,15 +899,14 @@ namespace RapChessGui
 			foreach (String s in list)
 				formLogGames.textBox1.Text += $"{s}\r\n";
 			formLogGames.textBox1.Select(0, 0);
-			string fn = CData.gameState == CGameState.error ? "Error" : combMainMode.Text;
-			fn = $"History\\{fn}.pgn";
-			File.WriteAllText(fn, formLogGames.textBox1.Text);
+			if (CData.gameState == CGameState.error)
+				File.WriteAllLines("History\\Error.pgn", list);
+			else
+				File.WriteAllText($"History\\{combMainMode.Text}.pgn", formLogGames.textBox1.Text);
 		}
 
 		void SetMode(CGameMode mode)
 		{
-			timerMessages.Enabled = false;
-			timerStart.Enabled = false;
 			GamerList.Terminate();
 			string fen = Chess.GetFen();
 			Clear();
@@ -993,6 +1037,7 @@ namespace RapChessGui
 
 		void Reset()
 		{
+			CBoard.SetColor(FormOptions.colorBoard);
 			BackColor = CBoard.colorDark;
 			if (!CData.reset)
 				return;
@@ -1067,13 +1112,8 @@ namespace RapChessGui
 					umo = $"{umo}q";
 			if (gmo == 0)
 			{
-				List<int> gMoves = Chess.GenerateValidMoves();
-				List<string> eMoves = new List<string>();
-				foreach (int gm in gMoves)
-					eMoves.Add(Chess.GmoToUmo(gm));
 				FormLogEngines.AppendText($"Wrong move: ({umo})\n", Color.Red);
 				FormLogEngines.AppendText($"Fen: {Chess.GetFen()}\n", Color.Black);
-				FormLogEngines.AppendText($"Legal moves: {string.Join(" ", eMoves)}\n", Color.Black);
 				SetGameState(CGameState.error, cg, umo);
 				return false;
 			}
@@ -1184,7 +1224,7 @@ namespace RapChessGui
 				}
 			}
 			Graphics pg = panBoard.CreateGraphics();
-			Board.Render(pg);
+			Board.RenderArrow(pg,FormOptions.This.cbArrow.Checked);
 			pg.Dispose();
 			stopwatch.Stop();
 			CData.fps = stopwatch.ElapsedMilliseconds > 0 ? CData.fps * 0.9 + 100 / stopwatch.ElapsedMilliseconds : 0;
@@ -1275,7 +1315,6 @@ namespace RapChessGui
 			ShowInfo(gw);
 			ShowInfo(gb);
 			moves = Chess.GenerateValidMoves();
-			timerMessages.Enabled = true;
 			SetUnranked();
 		}
 
@@ -1320,7 +1359,6 @@ namespace RapChessGui
 			ShowInfo(gw);
 			ShowInfo(gb);
 			moves = Chess.GenerateValidMoves();
-			timerMessages.Enabled = true;
 			SetUnranked();
 		}
 
@@ -2017,19 +2055,24 @@ namespace RapChessGui
 
 		void TrainingShow()
 		{
-			double procent = CModeTraining.games > 0 ? (CModeTraining.errors * 100.0) / CModeTraining.games : 0;
-			labGames.Text = $"Games {CModeTraining.games}";
-			labErrors.Text = string.Format("Errors {0} ({1:N2}%)", CModeTraining.errors, procent);
 			cbTeacherEngine.SelectedIndex = cbTeacherEngine.FindStringExact(CModeTraining.teacher);
 			cbTrainedEngine.SelectedIndex = cbTrainedEngine.FindStringExact(CModeTraining.trained);
 			cbTeacherMode.SelectedIndex = cbTeacherMode.FindStringExact(CModeTraining.modeValueTeacher.mode);
 			cbTrainedMode.SelectedIndex = cbTrainedMode.FindStringExact(CModeTraining.modeValueTrained.mode);
 			cbTeacherBook.SelectedIndex = cbTeacherBook.FindStringExact(CModeTraining.teacherBook);
 			cbTrainedBook.SelectedIndex = cbTrainedBook.FindStringExact(CModeTraining.trainedBook);
-			nudTeacher.Value = CModeTraining.modeValueTeacher.GetValue();
-			nudTeacher.Increment = CModeTraining.modeValueTeacher.GetValueIncrement();
 			nudTrained.Value = CModeTraining.modeValueTrained.GetValue();
 			nudTrained.Increment = CModeTraining.modeValueTrained.GetValueIncrement();
+			TrainingUpdate();
+
+		}
+
+		void TrainingUpdate()
+		{
+			nudTeacher.Value = CModeTraining.modeValueTeacher.GetValue();
+			nudTeacher.Increment = CModeTraining.modeValueTeacher.GetValueIncrement();
+			labGames.Text = $"Games {CModeTraining.games}";
+			labErrors.Text = string.Format($"Errors {CModeTraining.errors}");
 			label12.Text = CModeTraining.win.ToString();
 			label13.Text = CModeTraining.loose.ToString();
 			label14.Text = CModeTraining.draw.ToString();
@@ -2040,8 +2083,9 @@ namespace RapChessGui
 			label10.Text = $"{CModeTraining.Result(true)}%";
 		}
 
-		void TraingStart()
+		void TrainingStart()
 		{
+			TrainingUpdate();
 			CModeTraining.teacher = cbTeacherEngine.Text;
 			CModeTraining.trained = cbTrainedEngine.Text;
 			CModeTraining.modeValueTeacher.mode = cbTeacherMode.Text;
@@ -2098,7 +2142,6 @@ namespace RapChessGui
 			}
 			if ((gl.player.name == "Trained") && ((CData.gameState == CGameState.time) || (CData.gameState == CGameState.error) || gl.timeOut))
 				CModeTraining.errors++;
-			TrainingShow();
 		}
 
 		void EditShow(string fen = CChess.defFen)
@@ -2224,42 +2267,6 @@ namespace RapChessGui
 			GamerList.Terminate();
 		}
 
-		private void Timer1_Tick_1(object sender, EventArgs e)
-		{
-			GetMessage();
-			if (CBoard.animated || CDrag.dragged)
-			{
-				RenderBoard();
-			}
-			else
-			{
-				ShowInfo(GamerList.GamerCur());
-				ShowInfo(GamerList.GamerSec());
-				if (CData.gameState == CGameState.normal)
-					GamerList.GamerCur().TryStart();
-			}
-		}
-
-		private void TimerStart_Tick(object sender, EventArgs e)
-		{
-			timerStart.Stop();
-			switch (CData.gameMode)
-			{
-				case CGameMode.match:
-					MatchStart();
-					break;
-				case CGameMode.tourE:
-					TournamentEStart();
-					break;
-				case CGameMode.tourP:
-					TournamentPStart();
-					break;
-				case CGameMode.training:
-					TraingStart();
-					break;
-			}
-		}
-
 		private void ButStart_Click(object sender, EventArgs e)
 		{
 			GameStart();
@@ -2273,6 +2280,7 @@ namespace RapChessGui
 		private void OptionsToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			FormOptions.This.ShowDialog(this);
+			CBoard.SetColor(FormOptions.colorBoard);
 			CBoard.ClearAttack();
 			CBoard.animated = true;
 			Board.arrowCur.Clear();
@@ -2287,7 +2295,7 @@ namespace RapChessGui
 		{
 			CModeTraining.Reset();
 			chartTraining.Series[0].Points.Clear();
-			TraingStart();
+			TrainingStart();
 		}
 
 		private void saveToClipboardToolStripMenuItem_Click(object sender, EventArgs e)
@@ -2691,6 +2699,12 @@ namespace RapChessGui
 			splitContainerBoard.SplitterDistance = panBoard.Height;
 		}
 
+		private void timerAnimation_Tick(object sender, EventArgs e)
+		{
+			GameLoop();
+		}
+
 		#endregion
+
 	}
 }
