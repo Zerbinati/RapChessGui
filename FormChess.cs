@@ -1694,7 +1694,6 @@ namespace RapChessGui
 
 		void TournamentEReset()
 		{
-			CModeTournamentE.FillList();
 			string name = lvEngine.SelectedItems.Count > 0 ? lvEngine.SelectedItems[0].Text : "";
 			CEngine engine = CModeTournamentE.engineList.GetEngine(name);
 			lvEngine.Items.Clear();
@@ -1822,11 +1821,11 @@ namespace RapChessGui
 			GamerList.gamer[CModeTournamentE.rotate ? 0 : 1].SetPlayer(p2);
 			TournamentESelect();
 			Clear();
-			PrepareGamers();
 		}
 
 		void TournamentEEnd(CGamer gw, CGamer gl, bool isDraw)
 		{
+			CEngineList engList = CModeTournamentE.engineList;
 			CPlayer plw = GamerList.gamer[0].player;
 			CPlayer plb = GamerList.gamer[1].player;
 			CEngine ew = gw.engine;
@@ -1835,10 +1834,10 @@ namespace RapChessGui
 			CModeTournamentE.engLoose = el;
 			int eloW = gw.engine.GetElo();
 			int eloL = gl.engine.GetElo();
-			int indexW = engineList.GetIndexElo(eloW);
-			int indexL = engineList.GetIndexElo(eloL);
-			int optW = engineList.GetOptElo(indexW);
-			int optL = engineList.GetOptElo(indexL);
+			int indexW = engList.GetIndexElo(eloW);
+			int indexL = engList.GetIndexElo(eloL);
+			int optW = engList.GetOptElo(indexW);
+			int optL = engList.GetOptElo(indexL);
 			int OW = optW;
 			int OL = optL;
 			int newW;
@@ -1855,7 +1854,7 @@ namespace RapChessGui
 				if (OL > eloL)
 					OL = eloL;
 				if (OW == OL)
-					OW = engineList.GetOptElo(indexW + 1);
+					OW = engList.GetOptElo(indexW + 1);
 				double cg = CModeTournamentE.tourList.CountGames(CModeTournamentE.engine, CModeTournamentE.opponent, out _, out _, out _);
 				double mod = 0.6 + (cg / 0xf) * 0.3;
 				if (mod > 0.9)
@@ -1996,21 +1995,21 @@ namespace RapChessGui
 			GamerList.gamer[CModeTournamentP.rotate ? 0 : 1].SetPlayer(p2);
 			TournamentPSelect();
 			Clear();
-			PrepareGamers();
 		}
 
 		void TournamentPEnd(CPlayer pw, CPlayer pl, bool isDraw)
 		{
+			CPlayerList plaList = CModeTournamentP.playerList;
 			CPlayer plw = GamerList.gamer[0].player;
 			CPlayer plb = GamerList.gamer[1].player;
 			CModeTournamentP.plaWin = pw;
 			CModeTournamentP.plaLoose = pl;
 			int eloW = pw.GetElo();
 			int eloL = pl.GetElo();
-			int indexW = playerList.GetIndexElo(eloW);
-			int indexL = playerList.GetIndexElo(eloL);
-			int optW = playerList.GetOptElo(indexW);
-			int optL = playerList.GetOptElo(indexL);
+			int indexW = plaList.GetIndexElo(eloW);
+			int indexL = plaList.GetIndexElo(eloL);
+			int optW = plaList.GetOptElo(indexW);
+			int optL = plaList.GetOptElo(indexL);
 			int OW = optW;
 			int OL = optL;
 			int newW;
@@ -2027,7 +2026,7 @@ namespace RapChessGui
 				if (OL > eloL)
 					OL = eloL;
 				if (OW == OL)
-					OW = engineList.GetOptElo(indexW + 1);
+					OW = plaList.GetOptElo(indexW + 1);
 				double cg = CModeTournamentP.tourList.CountGames(CModeTournamentE.engine, CModeTournamentE.opponent, out _, out _, out _);
 				double mod = 0.6 + (cg / 0xf) * 0.3;
 				if (mod > 0.9)

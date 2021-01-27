@@ -153,7 +153,7 @@ namespace RapChessGui
 		{
 			int result = 0;
 			foreach (CEngine e in list)
-				if (Convert.ToInt32(e.elo) < elo)
+				if (e.GetElo() < elo)
 					result++;
 			return result;
 		}
@@ -212,7 +212,7 @@ namespace RapChessGui
 		{
 			list.Sort(delegate (CEngine e1, CEngine e2)
 			{
-				int result = Convert.ToInt32(e2.elo) - Convert.ToInt32(e1.elo);
+				int result = e2.GetElo() - e1.GetElo();
 				if (result == 0)
 					result = e2.hisElo.EloAvg() - e1.hisElo.EloAvg();
 				return result;
