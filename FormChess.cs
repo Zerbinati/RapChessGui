@@ -1565,7 +1565,7 @@ namespace RapChessGui
 			Board.SetPosition();
 			Board.RenderBoard();
 			RenderBoard();
-			PrepareGamers();
+			Clear();
 		}
 
 		void GameShow()
@@ -1667,7 +1667,6 @@ namespace RapChessGui
 			moves = Chess.GenerateValidMoves();
 			CModeMatch.SaveToIni();
 			Clear();
-			PrepareGamers();
 		}
 
 		void MatchEnd(CPlayer pw, bool isDraw)
@@ -1694,18 +1693,17 @@ namespace RapChessGui
 
 		void TournamentEReset()
 		{
-			string name = lvEngine.SelectedItems.Count > 0 ? lvEngine.SelectedItems[0].Text : "";
-			CEngine engine = CModeTournamentE.engineList.GetEngine(name);
 			lvEngine.Items.Clear();
-			CModeTournamentE.FillList();
-			foreach (CEngine e in CModeTournamentE.engineList.list)
+			CEngineList engList = CModeTournamentE.FillList();
+			foreach (CEngine e in engList.list)
 			{
 				ListViewItem lvi = new ListViewItem(new[] { e.name, e.elo, e.GetDeltaElo().ToString() });
 				lvi.BackColor = e.hisElo.GetColor();
 				lvEngine.Items.Add(lvi);
-				if (e == engine)
-					lvi.Selected = true;
 			}
+			ListViewItem item = lvEngine.FindItemWithText(CModeTournamentE.engine);
+			if (item != null)
+				item.Selected = true;
 		}
 
 		void TournamentEUpdate(CEngine e)
@@ -1725,8 +1723,7 @@ namespace RapChessGui
 			if (lvEngine.SelectedItems.Count == 0)
 				return;
 			ListViewItem top2 = null;
-			ListViewItem item = lvEngine.SelectedItems[0];
-			string name = item.Text;
+			string name = lvEngine.SelectedItems[0].Text;
 			CEngineList engineList = CModeTournamentE.engineList;
 			CEngine engine = engineList.GetEngine(name);
 			lvEngineH.Items.Clear();
@@ -1883,18 +1880,17 @@ namespace RapChessGui
 
 		void TournamentPReset()
 		{
-			string name = lvPlayer.SelectedItems.Count > 0 ? lvPlayer.SelectedItems[0].Text : "";
-			CPlayer player = playerList.GetPlayer(name);
 			lvPlayer.Items.Clear();
-			CModeTournamentP.FillList();
-			foreach (CPlayer p in CModeTournamentP.playerList.list)
+			CPlayerList plaList = CModeTournamentP.FillList();
+			foreach (CPlayer p in plaList.list)
 				{
 					ListViewItem lvi = new ListViewItem(new[] { p.name, p.elo, p.GetDeltaElo().ToString() });
 					lvi.BackColor = p.hisElo.GetColor();
 					lvPlayer.Items.Add(lvi);
-					if (p == player)
-						lvi.Selected = true;
 				}
+			ListViewItem item = lvPlayer.FindItemWithText(CModeTournamentP.player);
+			if (item != null)
+				item.Selected = true;
 		}
 
 		void TournamentPUpdate(CPlayer p)
@@ -2115,7 +2111,6 @@ namespace RapChessGui
 			chartTraining.Series[0].Points.Add((double)nudTeacher.Value);
 			CModeTraining.SaveToIni();
 			Clear();
-			PrepareGamers();
 		}
 
 		void TrainingEnd(CGamer gw, CGamer gl, bool isDraw)

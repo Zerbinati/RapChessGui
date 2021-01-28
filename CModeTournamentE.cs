@@ -44,12 +44,13 @@ namespace RapChessGui
 			opponent = "";
 		}
 
-		public static void FillList()
+		public static CEngineList FillList()
 		{
 			engineList.list.Clear();
 			foreach (CEngine e in FormChess.engineList.list)
 				if ((e.tournament > 0) && ((modeValue.mode != "Standard") || e.modeStandard))
 					engineList.Add(e);
+			return engineList;
 		}
 
 		public static CEngine ChooseOpponent(CEngine engine, CEngine engine1, CEngine engine2)

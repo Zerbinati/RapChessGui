@@ -53,12 +53,13 @@ namespace RapChessGui
 			return null;
 		}
 
-		public static void FillList()
+		public static CPlayerList FillList()
 		{
 			playerList.list.Clear();
 			foreach (CPlayer p in FormChess.playerList.list)
 				if ((p.tournament > 0) && p.IsComputer())
 					playerList.Add(p);
+			return playerList;
 		}
 
 		public static CPlayer SelectRare()

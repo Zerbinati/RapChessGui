@@ -71,7 +71,7 @@ namespace RapChessGui
 				SetPriority(FormOptions.priority);
 			}
 			else
-				MessageBox.Show($"Missing engine {path}");
+				MessageBox.Show($"Missing engine {Path.GetFileName(path)}");
 		}
 
 		public void Restart()
