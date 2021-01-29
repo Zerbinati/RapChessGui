@@ -21,6 +21,11 @@ namespace RapChessGui
 			name = n;
 		}
 
+		public string GetParameters(CEngine e)
+		{
+			return parameters.Replace("[engine]",e.name);
+		}
+
 		public void LoadFromIni()
 		{
 			file = CRapIni.This.Read($"book>{name}>file", "");

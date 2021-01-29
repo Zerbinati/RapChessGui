@@ -17,7 +17,7 @@ namespace RapChessGui
 	class CEcoList
 	{
 		public List<CEco> list = new List<CEco>();
-		readonly string path = AppDomain.CurrentDomain.BaseDirectory + "Books\\eco.tsv";
+		readonly string path = AppDomain.CurrentDomain.BaseDirectory + "Books\\Eco.tsv";
 
 		public CEcoList()
 		{

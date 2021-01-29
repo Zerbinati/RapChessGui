@@ -468,7 +468,7 @@ namespace RapChessGui
 			if (book == null)
 				p.book = "None";
 			else
-				bookPro.SetProgram(AppDomain.CurrentDomain.BaseDirectory + "Books\\" + book.file, book.parameters);
+				bookPro.SetProgram(AppDomain.CurrentDomain.BaseDirectory + "Books\\" + book.file, book.GetParameters(engine));
 			if (engine == null)
 				p.engine = "Human";
 			else
