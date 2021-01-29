@@ -144,6 +144,11 @@ namespace RapChessGui
 				CBook b;
 				b = new CBook();
 				b.file = "BookReaderUci.exe";
+				b.name = "Auto";
+				b.parameters = "[engine] -lw 10";
+				bookList.Add(b);
+				b = new CBook();
+				b.file = "BookReaderUci.exe";
 				b.parameters = "Eco";
 				bookList.Add(b);
 				b = new CBook();
@@ -232,7 +237,7 @@ namespace RapChessGui
 				playerList.Add(p);
 				p = new CPlayer();
 				p.engine = "RapChessCs";
-				p.book = "BRU Eco";
+				p.book = "Auto";
 				p.modeValue.mode = "Time";
 				p.modeValue.value = 10;
 				p.elo = "1200";
