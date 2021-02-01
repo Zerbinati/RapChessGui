@@ -65,6 +65,7 @@ namespace RapChessGui
 			CRapIni.This.DeleteKey($"book>{book.name}");
 			SaveToIni(book);
 			MessageBox.Show($"Reader {book.name} has been modified");
+			CData.reset = true;
 		}
 
 		private void ButCreate_Click(object sender, EventArgs e)
@@ -75,6 +76,7 @@ namespace RapChessGui
 			FormChess.bookList.list.Add(reader);
 			SaveToIni(reader);
 			MessageBox.Show($"Book reader {reader.name} has been created");
+			CData.reset = true;
 		}
 
 		private void ButDelete_Click(object sender, EventArgs e)
@@ -83,6 +85,7 @@ namespace RapChessGui
 			FormChess.playerList.DeletePlayer(userName);
 			UpdateListBox();
 			MessageBox.Show($"Player {userName} has been removed");
+			CData.reset = true;
 		}
 
 		private void FormBook_Shown(object sender, EventArgs e)

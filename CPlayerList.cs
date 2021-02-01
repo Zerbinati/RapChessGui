@@ -84,7 +84,7 @@ namespace RapChessGui
 
 		public bool IsHuman()
 		{
-			return engine == "Human";
+			return (engine == "Human") && (modeValue.mode == "Infinite");
 		}
 
 		public void SetPlayer(string name)
@@ -104,12 +104,12 @@ namespace RapChessGui
 
 		public void LoadFromIni()
 		{
-			tournament = CRapIni.This.ReadInt($"player>{name}>tournament",tournament);
+			tournament = CRapIni.This.ReadInt($"player>{name}>tournament", tournament);
 			engine = CRapIni.This.Read($"player>{name}>engine", "Human");
 			modeValue.mode = CRapIni.This.Read($"player>{name}>mode", modeValue.mode);
 			modeValue.value = CRapIni.This.ReadInt($"player>{name}>value", modeValue.value);
 			book = CRapIni.This.Read($"player>{name}>book", "None");
-			elo = CRapIni.This.Read($"player>{name}>elo",elo);
+			elo = CRapIni.This.Read($"player>{name}>elo", elo);
 			eloOrg = CRapIni.This.Read($"player>{name}>eloOrg", eloOrg);
 			hisElo.LoadFromStr(CRapIni.This.Read($"player>{name}>history", ""));
 		}
@@ -137,7 +137,7 @@ namespace RapChessGui
 		{
 			if (name != "")
 				return name;
-				string n = "Human";
+			string n = "Human";
 			string b = "";
 			string m = "";
 			if (engine != "Human")
@@ -159,7 +159,10 @@ namespace RapChessGui
 		public void Add(CPlayer p)
 		{
 			p.name = p.GetName();
-			if (GetIndex(p.name) < 0)
+			int index = GetIndex(p.name);
+			if (index >= 0)
+				list[index] = p;
+			else
 				list.Add(p);
 		}
 
@@ -182,11 +185,11 @@ namespace RapChessGui
 			return null;
 		}
 
-		public CPlayer GetPlayerAuto(string name="")
+		public CPlayer GetPlayerAuto(string name = "")
 		{
-			if (name == "Human")
-				return GetPlayerHuman();
 			CPlayer ph = GetPlayerHuman();
+			if (name == "Human")
+				return ph;
 			return GetPlayerElo(ph);
 		}
 
@@ -212,14 +215,14 @@ namespace RapChessGui
 		{
 			CPlayer p = null;
 			int bstDel = 10000;
-			int elo = Convert.ToInt32(player.elo);
+			int elo = player.GetElo();
 			foreach (CPlayer cp in list)
 			{
 				if (cp == player)
 					continue;
 				if (cp.engine == "Human")
 					continue;
-				int curE = Convert.ToInt32(cp.elo);
+				int curE = cp.GetElo();
 				int curDel = Math.Abs(elo - curE);
 				if (bstDel > curDel)
 				{
@@ -234,7 +237,7 @@ namespace RapChessGui
 		{
 			list.Sort(delegate (CPlayer p1, CPlayer p2)
 			{
-				int result = Convert.ToInt32(p2.elo) - Convert.ToInt32(p1.elo);
+				int result = p2.GetElo() - p1.GetElo();
 				if (result == 0)
 					result = p2.hisElo.EloAvg() - p1.hisElo.EloAvg();
 				return result;
@@ -253,16 +256,17 @@ namespace RapChessGui
 			});
 		}
 
-		public void LoadFromIni()
+		public int LoadFromIni()
 		{
 			list.Clear();
-			List<string> pn = CRapIni.This.ReadList("player");
-			foreach (string name in pn)
+			List<string> pl = CRapIni.This.ReadList("player");
+			foreach (string name in pl)
 			{
 				var p = new CPlayer(name);
 				p.LoadFromIni();
 				list.Add(p);
 			}
+			return pl.Count;
 		}
 
 		public void DeletePlayer(string name)
@@ -284,7 +288,7 @@ namespace RapChessGui
 		{
 			int result = 0;
 			foreach (CPlayer u in list)
-				if (Convert.ToInt32(u.elo) < elo)
+				if (u.GetElo() < elo)
 					result++;
 			return result;
 		}

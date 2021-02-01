@@ -23,6 +23,8 @@ namespace RapChessGui
 
 		public string GetParameters(CEngine e)
 		{
+			if (e == null)
+				return "";
 			return parameters.Replace("[engine]",e.name);
 		}
 
@@ -56,11 +58,14 @@ namespace RapChessGui
 		public static string def = "BRU Eco";
 		public List<CBook> list = new List<CBook>();
 
-		public void Add(CBook br)
+		public void Add(CBook b)
 		{
-			br.name = br.GetName();
-			if (GetIndex(br.name) < 0)
-				list.Add(br);
+			b.name = b.GetName();
+			int index = GetIndex(b.name);
+			if (index >= 0)
+				list[index] = b;
+			else
+				list.Add(b);
 		}
 
 		public int GetIndex(string name)
@@ -74,16 +79,17 @@ namespace RapChessGui
 			return -1;
 		}
 
-		public void LoadFromIni()
+		public int LoadFromIni()
 		{
 			list.Clear();
-			List<string> pn = CRapIni.This.ReadList("book");
-			foreach (string name in pn)
+			List<string> bl = CRapIni.This.ReadList("book");
+			foreach (string name in bl)
 			{
 				var br = new CBook(name);
 				br.LoadFromIni();
 				list.Add(br);
 			}
+			return bl.Count;
 		}
 
 		public CBook GetBook(string name)

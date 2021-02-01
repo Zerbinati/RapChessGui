@@ -77,7 +77,10 @@ namespace RapChessGui
 			This = this;
 			CreateDir("Books");
 			CreateDir("Engines");
+			CreateDir("Engines//Uci");
+			CreateDir("Engines//Winboard");
 			CreateDir("History");
+			CData.UpdateFileEngine();
 			int fontLength = Properties.Resources.ChessPiece.Length;
 			byte[] fontData = Properties.Resources.ChessPiece;
 			IntPtr data = Marshal.AllocCoTaskMem(fontLength);
@@ -120,26 +123,20 @@ namespace RapChessGui
 
 		void IniCreate()
 		{
-			engineList.LoadFromIni();
-			if (engineList.list.Count == 0)
+			if (engineList.LoadFromIni() == 0)
 			{
-				CEngine e;
-				e = new CEngine();
-				e.file = "RapChessCs.exe";
-				e.elo = "1100";
-				engineList.Add(e);
-				e = new CEngine();
-				e.file = "RapSimpleCs.exe";
-				e.elo = "1000";
-				engineList.Add(e);
-				e = new CEngine();
-				e.file = "RapShortCs.exe";
-				e.elo = "900";
-				engineList.Add(e);
-				engineList.SaveToIni();
+				int index;
+				index = engineList.GetIndex("Uci-RapChessCs");
+				if (index >= 0)
+					engineList.list[index].elo = "1100";
+				index = engineList.GetIndex("Uci-RapSimpleCs");
+				if (index >= 0)
+					engineList.list[index].elo = "1000";
+				index = engineList.GetIndex("Uci-RapShortCs");
+				if (index >= 0)
+					engineList.list[index].elo = "900";
 			}
-			bookList.LoadFromIni();
-			if (bookList.list.Count == 0)
+			if (bookList.LoadFromIni() == 0)
 			{
 				CBook b;
 				b = new CBook();
@@ -177,11 +174,12 @@ namespace RapChessGui
 			if (playerList.GetPlayerHuman() == null)
 			{
 				CPlayer p = new CPlayer("Human");
-				p.modeValue.mode = "Infinite";
-				p.modeValue.value = 0;
 				p.tournament = 0;
 				p.elo = "500";
 				p.eloOrg = "500";
+				p.modeValue.mode = "Infinite";
+				p.modeValue.value = 0;
+				p.SaveToIni();
 				playerList.Add(p);
 			}
 			if (playerList.GetPlayerComputer() == null)
@@ -1060,34 +1058,34 @@ namespace RapChessGui
 				cbTeacherEngine.Items.Add(e.name);
 				cbTrainedEngine.Items.Add(e.name);
 			}
+			cbBook.Items.Clear();
+			cbMatchBook1.Items.Clear();
+			cbMatchBook2.Items.Clear();
 			cbTourEBook.Items.Clear();
 			cbTeacherBook.Items.Clear();
 			cbTrainedBook.Items.Clear();
-			cbBook.Items.Clear();
-			cbBook1.Items.Clear();
-			cbBook2.Items.Clear();
 			cbTourEBook.Items.Add("None");
 			cbTeacherBook.Items.Add("None");
 			cbTrainedBook.Items.Add("None");
 			cbBook.Items.Add("None");
-			cbBook1.Items.Add("None");
-			cbBook2.Items.Add("None");
+			cbMatchBook1.Items.Add("None");
+			cbMatchBook2.Items.Add("None");
 			foreach (CBook b in bookList.list)
 			{
+				cbBook.Items.Add(b.name);
+				cbMatchBook1.Items.Add(b.name);
+				cbMatchBook2.Items.Add(b.name);
 				cbTourEBook.Items.Add(b.name);
 				cbTeacherBook.Items.Add(b.name);
 				cbTrainedBook.Items.Add(b.name);
-				cbBook.Items.Add(b.name);
-				cbBook1.Items.Add(b.name);
-				cbBook2.Items.Add(b.name);
 			}
-			cbTourEBook.SelectedIndex = 0;
-			cbTeacherBook.SelectedIndex = 0;
-			cbTrainedBook.SelectedIndex = 0;
-			cbBook.SelectedIndex = 0;
-			cbBook1.SelectedIndex = 0;
-			cbBook2.SelectedIndex = 0;
-			cbEngine.SelectedIndex = 0;
+			cbTourEBook.SelectedIndex = cbTourEBook.Items.Count >= 0 ? 0 : -1; ;
+			cbTeacherBook.SelectedIndex = cbTeacherBook.Items.Count >= 0 ? 0 : -1;
+			cbTrainedBook.SelectedIndex = cbTrainedBook.Items.Count >= 0 ? 0 : -1;
+			cbBook.SelectedIndex = cbBook.Items.Count >= 0 ? 0 : -1; ;
+			cbMatchBook1.SelectedIndex = cbMatchBook1.Items.Count >= 0 ? 0 : -1; ;
+			cbMatchBook2.SelectedIndex = cbMatchBook2.Items.Count >= 0 ? 0 : -1; ;
+			cbEngine.SelectedIndex = cbEngine.Items.Count >= 0 ? 0 : -1;
 			TournamentEReset();
 			TournamentPReset();
 			lvPlayer.ListViewItemSorter = new ListViewComparer(1, SortOrder.Descending);
@@ -1556,8 +1554,6 @@ namespace RapChessGui
 			GameSet();
 			SetMode(CGameMode.game);
 			lastEco = "";
-			GameShow();
-			GamePrepare();
 			if (ShowLastGame())
 				CModeGame.rotate = !CModeGame.rotate;
 			if ((CModeGame.rotate && (cbColor.Text == "Auto")) || (cbColor.Text == "Black"))
@@ -1571,6 +1567,7 @@ namespace RapChessGui
 			Board.RenderBoard();
 			RenderBoard();
 			Clear();
+			GameShow();
 		}
 
 		void GameShow()
@@ -1578,9 +1575,9 @@ namespace RapChessGui
 			GameGet();
 			CPlayer hu = playerList.GetPlayerHuman();
 			CData.HisToPoints(hu.hisElo, chartGame.Series[0].Points);
+			GamePrepare();
 			CModeGame.ranked = GetRanked();
 			ShowAutoElo();
-			GamePrepare();
 		}
 
 		void GaemEnd(CPlayer pw, CPlayer pl, bool isDraw)
@@ -1611,8 +1608,8 @@ namespace RapChessGui
 		{
 			CModeMatch.engine1 = cbEngine1.Text;
 			CModeMatch.engine2 = cbEngine2.Text;
-			CModeMatch.book1 = cbBook1.Text;
-			CModeMatch.book2 = cbBook2.Text;
+			CModeMatch.book1 = cbMatchBook1.Text;
+			CModeMatch.book2 = cbMatchBook2.Text;
 			CModeMatch.modeValue1.mode = cbMode1.Text;
 			CModeMatch.modeValue2.mode = cbMode2.Text;
 			CModeMatch.modeValue1.SetValue((int)nudValue1.Value);
@@ -1623,8 +1620,8 @@ namespace RapChessGui
 		{
 			cbEngine1.Text = CModeMatch.engine1;
 			cbEngine2.Text = CModeMatch.engine2;
-			cbBook1.Text = CModeMatch.book1;
-			cbBook2.Text = CModeMatch.book2;
+			cbMatchBook1.Text = CModeMatch.book1;
+			cbMatchBook2.Text = CModeMatch.book2;
 			cbMode1.Text = CModeMatch.modeValue1.mode;
 			cbMode2.Text = CModeMatch.modeValue2.mode;
 			nudValue1.Value = CModeMatch.modeValue1.GetValue();
@@ -1888,11 +1885,11 @@ namespace RapChessGui
 			lvPlayer.Items.Clear();
 			CPlayerList plaList = CModeTournamentP.FillList();
 			foreach (CPlayer p in plaList.list)
-				{
-					ListViewItem lvi = new ListViewItem(new[] { p.name, p.elo, p.GetDeltaElo().ToString() });
-					lvi.BackColor = p.hisElo.GetColor();
-					lvPlayer.Items.Add(lvi);
-				}
+			{
+				ListViewItem lvi = new ListViewItem(new[] { p.name, p.elo, p.GetDeltaElo().ToString() });
+				lvi.BackColor = p.hisElo.GetColor();
+				lvPlayer.Items.Add(lvi);
+			}
 			ListViewItem item = lvPlayer.FindItemWithText(CModeTournamentP.player);
 			if (item != null)
 				item.Selected = true;

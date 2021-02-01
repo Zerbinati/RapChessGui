@@ -88,12 +88,12 @@
 			this.groupBox6 = new System.Windows.Forms.GroupBox();
 			this.nudValue2 = new System.Windows.Forms.NumericUpDown();
 			this.cbMode2 = new System.Windows.Forms.ComboBox();
-			this.cbBook2 = new System.Windows.Forms.ComboBox();
+			this.cbMatchBook2 = new System.Windows.Forms.ComboBox();
 			this.cbEngine2 = new System.Windows.Forms.ComboBox();
 			this.groupBox5 = new System.Windows.Forms.GroupBox();
 			this.nudValue1 = new System.Windows.Forms.NumericUpDown();
 			this.cbMode1 = new System.Windows.Forms.ComboBox();
-			this.cbBook1 = new System.Windows.Forms.ComboBox();
+			this.cbMatchBook1 = new System.Windows.Forms.ComboBox();
 			this.cbEngine1 = new System.Windows.Forms.ComboBox();
 			this.tabPageTourE = new System.Windows.Forms.TabPage();
 			this.splitContainerTourE = new System.Windows.Forms.SplitContainer();
@@ -952,7 +952,7 @@
 			// 
 			this.groupBox6.Controls.Add(this.nudValue2);
 			this.groupBox6.Controls.Add(this.cbMode2);
-			this.groupBox6.Controls.Add(this.cbBook2);
+			this.groupBox6.Controls.Add(this.cbMatchBook2);
 			this.groupBox6.Controls.Add(this.cbEngine2);
 			this.groupBox6.Dock = System.Windows.Forms.DockStyle.Top;
 			this.groupBox6.Location = new System.Drawing.Point(0, 108);
@@ -1000,17 +1000,17 @@
 			this.toolTip1.SetToolTip(this.cbMode2, "Select engine mode");
 			this.cbMode2.SelectedIndexChanged += new System.EventHandler(this.cbMode2_SelectedIndexChanged);
 			// 
-			// cbBook2
+			// cbMatchBook2
 			// 
-			this.cbBook2.Dock = System.Windows.Forms.DockStyle.Top;
-			this.cbBook2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.cbBook2.FormattingEnabled = true;
-			this.cbBook2.Location = new System.Drawing.Point(3, 37);
-			this.cbBook2.Name = "cbBook2";
-			this.cbBook2.Size = new System.Drawing.Size(386, 21);
-			this.cbBook2.Sorted = true;
-			this.cbBook2.TabIndex = 32;
-			this.toolTip1.SetToolTip(this.cbBook2, "Select engine opening book");
+			this.cbMatchBook2.Dock = System.Windows.Forms.DockStyle.Top;
+			this.cbMatchBook2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.cbMatchBook2.FormattingEnabled = true;
+			this.cbMatchBook2.Location = new System.Drawing.Point(3, 37);
+			this.cbMatchBook2.Name = "cbMatchBook2";
+			this.cbMatchBook2.Size = new System.Drawing.Size(386, 21);
+			this.cbMatchBook2.Sorted = true;
+			this.cbMatchBook2.TabIndex = 32;
+			this.toolTip1.SetToolTip(this.cbMatchBook2, "Select engine opening book");
 			// 
 			// cbEngine2
 			// 
@@ -1028,7 +1028,7 @@
 			// 
 			this.groupBox5.Controls.Add(this.nudValue1);
 			this.groupBox5.Controls.Add(this.cbMode1);
-			this.groupBox5.Controls.Add(this.cbBook1);
+			this.groupBox5.Controls.Add(this.cbMatchBook1);
 			this.groupBox5.Controls.Add(this.cbEngine1);
 			this.groupBox5.Dock = System.Windows.Forms.DockStyle.Top;
 			this.groupBox5.Location = new System.Drawing.Point(0, 0);
@@ -1076,17 +1076,17 @@
 			this.toolTip1.SetToolTip(this.cbMode1, "Select engine mode");
 			this.cbMode1.SelectedIndexChanged += new System.EventHandler(this.cbMode1_SelectedIndexChanged);
 			// 
-			// cbBook1
+			// cbMatchBook1
 			// 
-			this.cbBook1.Dock = System.Windows.Forms.DockStyle.Top;
-			this.cbBook1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.cbBook1.FormattingEnabled = true;
-			this.cbBook1.Location = new System.Drawing.Point(3, 37);
-			this.cbBook1.Name = "cbBook1";
-			this.cbBook1.Size = new System.Drawing.Size(386, 21);
-			this.cbBook1.Sorted = true;
-			this.cbBook1.TabIndex = 31;
-			this.toolTip1.SetToolTip(this.cbBook1, "Select engine opening book");
+			this.cbMatchBook1.Dock = System.Windows.Forms.DockStyle.Top;
+			this.cbMatchBook1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.cbMatchBook1.FormattingEnabled = true;
+			this.cbMatchBook1.Location = new System.Drawing.Point(3, 37);
+			this.cbMatchBook1.Name = "cbMatchBook1";
+			this.cbMatchBook1.Size = new System.Drawing.Size(386, 21);
+			this.cbMatchBook1.Sorted = true;
+			this.cbMatchBook1.TabIndex = 31;
+			this.toolTip1.SetToolTip(this.cbMatchBook1, "Select engine opening book");
 			// 
 			// cbEngine1
 			// 
@@ -3917,12 +3917,12 @@
 		private System.Windows.Forms.CheckedListBox clbCastling;
 		private System.Windows.Forms.Button butContinueMatch;
 		private System.Windows.Forms.Button butDefault;
-		private System.Windows.Forms.ComboBox cbBook1;
+		private System.Windows.Forms.ComboBox cbMatchBook1;
 		private System.Windows.Forms.ComboBox cbMode1;
 		private System.Windows.Forms.ComboBox cbEngine1;
 		private System.Windows.Forms.ComboBox cbEngine2;
 		private System.Windows.Forms.ComboBox cbMode2;
-		private System.Windows.Forms.ComboBox cbBook2;
+		private System.Windows.Forms.ComboBox cbMatchBook2;
 		private System.Windows.Forms.ComboBox cbTrainedBook;
 		private System.Windows.Forms.ComboBox cbTeacherMode;
 		private System.Windows.Forms.ComboBox cbTrainedMode;

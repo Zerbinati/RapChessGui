@@ -7,6 +7,7 @@ namespace RapChessGui
 {
 	public class CEngine
 	{
+		public static string defElo = "1000";
 		public bool modeStandard = true;
 		public int distance = 0;
 		public int position = 0;
@@ -15,7 +16,7 @@ namespace RapChessGui
 		public string file = "";
 		public string protocol = "Uci";
 		public string parameters = "";
-		public string elo = "1000";
+		public string elo = defElo;
 		public List<string> options = new List<string>();
 		public CHisElo hisElo = new CHisElo();
 
@@ -57,6 +58,11 @@ namespace RapChessGui
 			CRapIni.This.WriteList($"engine>{name}>options", options);
 			CRapIni.This.Write($"engine>{name}>elo", elo);
 			CRapIni.This.Write($"engine>{name}>history", hisElo.SaveToStr());
+		}
+
+		public bool IsAuto()
+		{
+			return file.Contains("\\");
 		}
 
 		public bool FileExists()
@@ -118,7 +124,10 @@ namespace RapChessGui
 		public void Add(CEngine e)
 		{
 			e.name = e.GetName();
-			if (GetIndex(e.name) < 0)
+			int index = GetIndex(e.name);
+			if (index >= 0)
+				list[index] = e;
+			else
 				list.Add(e);
 		}
 
@@ -134,6 +143,14 @@ namespace RapChessGui
 		{
 			foreach (CEngine e in list)
 				if (e.name == name)
+					return e;
+			return null;
+		}
+
+		public CEngine GetEngineByFile(string file)
+		{
+			foreach (CEngine e in list)
+				if (e.file == file)
 					return e;
 			return null;
 		}
@@ -167,7 +184,7 @@ namespace RapChessGui
 			return Convert.ToInt32((3000 * (index + 1)) / list.Count);
 		}
 
-		public void LoadFromIni()
+		public int LoadFromIni()
 		{
 			list.Clear();
 			List<string> en = CRapIni.This.ReadList("engine");
@@ -177,6 +194,37 @@ namespace RapChessGui
 				engine.LoadFromIni();
 				list.Add(engine);
 			}
+			foreach (string fn in CData.fileEngineUci)
+			{
+				string name = Path.GetFileNameWithoutExtension(fn);
+				string file = $"Uci\\{fn}";
+				CEngine engine = GetEngineByFile(file);
+				if (engine == null) { 
+					engine = new CEngine(name);
+					engine.file = file;
+					engine.SaveToIni();
+					list.Add(engine);
+				}
+			}
+			foreach (string fn in CData.fileEngineWb)
+			{
+				string name = Path.GetFileNameWithoutExtension(fn);
+				string file = $"Winboard\\{fn}";
+				CEngine engine = GetEngineByFile(file);
+				if (engine == null) { 
+					engine = new CEngine(name);
+					engine.file = file;
+					engine.SaveToIni();
+					list.Add(engine);
+				}
+			}
+			for(int n = list.Count -1;n>=0; n--)
+			{
+				CEngine e = list[n];
+				if (e.IsAuto() && !e.FileExists())
+					DeleteEngine(e.name);
+			}
+			return en.Count;
 		}
 
 		public CEngine NextTournament(CEngine e, bool rotate = true, bool back = false)

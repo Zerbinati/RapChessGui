@@ -176,20 +176,21 @@ namespace RapChessGui
 		/// </summary>
 		public void TryStart()
 		{
-			if ((book != null) && (!isBookFail))
-			{
-				if (!isBookStarted)
+			if (player.IsComputer())
+				if ((book != null) && (!isBookFail))
 				{
-					SendMessageBook(CHistory.GetPosition());
-					SendMessageBook("go");
-					isBookStarted = true;
+					if (!isBookStarted)
+					{
+						SendMessageBook(CHistory.GetPosition());
+						SendMessageBook("go");
+						isBookStarted = true;
+					}
 				}
-			}
-			else if (engine != null)
-				if (!isEngPrepared)
-					EngPrepare();
-				else if (readyok && !isEngRunning)
-					EngMakeMove();
+				else if (engine != null)
+					if (!isEngPrepared)
+						EngPrepare();
+					else if (readyok && !isEngRunning)
+						EngMakeMove();
 		}
 
 		public void TimerStart()

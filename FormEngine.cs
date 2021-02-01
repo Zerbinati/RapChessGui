@@ -127,6 +127,10 @@ namespace RapChessGui
 			cbFileList.Items.Clear();
 			foreach (string engine in CData.fileEngine)
 				cbFileList.Items.Add(engine);
+			foreach (string engine in CData.fileEngineUci)
+				cbFileList.Items.Add($@"Uci\\{engine}");
+			foreach (string engine in CData.fileEngineWb)
+				cbFileList.Items.Add($@"Winboard\\{engine}");
 			UpdateListBox();
 			if (listBox1.Items.Count > 0)
 				listBox1.SetSelected(0, true);

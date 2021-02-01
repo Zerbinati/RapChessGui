@@ -55,6 +55,8 @@ namespace RapChessGui
 		public static double fps = 0;
 		public static List<string> fileBook = new List<string>();
 		public static List<string> fileEngine = new List<string>();
+		public static List<string> fileEngineUci = new List<string>();
+		public static List<string> fileEngineWb = new List<string>();
 
 		public static void HisToPoints(CHisElo he, DataPointCollection po)
 		{
@@ -87,15 +89,22 @@ namespace RapChessGui
 			}
 		}
 
-		public static void UpdateFileEngine()
+		static void UpdateFileEngine(string path, List<string> list)
 		{
-			fileEngine.Clear();
-			string[] filePaths = Directory.GetFiles("Engines", "*.exe");
+			list.Clear();
+			string[] filePaths = Directory.GetFiles(path, "*.exe");
 			for (int n = 0; n < filePaths.Length; n++)
 			{
 				string fn = Path.GetFileName(filePaths[n]);
-				fileEngine.Add(fn);
+				list.Add(fn);
 			}
+		}
+
+		public static void UpdateFileEngine()
+		{
+			UpdateFileEngine("Engines",fileEngine);
+			UpdateFileEngine("Engines//Uci", fileEngineUci);
+			UpdateFileEngine("Engines//Winboard", fileEngineWb);
 			fileEngine.Add("none");
 		}
 
