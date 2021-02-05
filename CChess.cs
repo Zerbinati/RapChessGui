@@ -135,6 +135,36 @@ namespace RapChessGui
 		}
 
 		/// <summary>
+		/// Engine MOve TO Uci MOve
+		/// </summary>
+
+		public string EmoToUmo(int emo)
+		{
+			string result = SquareToStr(emo & 0xFF) + SquareToStr((emo >> 8) & 0xFF);
+			if ((emo & moveflagPromotion) > 0)
+			{
+				if ((emo & moveflagPromoteQueen) > 0) result += 'q';
+				else if ((emo & moveflagPromoteRook) > 0) result += 'r';
+				else if ((emo & moveflagPromoteBishop) > 0) result += 'b';
+				else result += 'n';
+			}
+			return result;
+		}
+
+		/// <summary>
+		/// Uci MOve TO Engine MOve
+		/// </summary>
+
+		public int UmoToEmo(string umo)
+		{
+			List<int> moves = GenerateAllMoves(whiteTurn, false);
+			foreach (int m in moves)
+				if (EmoToUmo(m) == umo)
+					return m;
+			return 0;
+		}
+
+		/// <summary>
 		/// Uci MOve TO SAN move
 		/// </summary>
 
@@ -206,7 +236,7 @@ namespace RapChessGui
 			List<int> moves = GenerateValidMoves();
 			foreach (int imo in moves)
 			{
-				string umo = GmoToUmo(imo);
+				string umo = EmoToUmo(imo);
 				if (umo == san)
 					return umo;
 				if (UmoToSan(umo).Trim(charsToTrim) == san)
@@ -260,24 +290,24 @@ namespace RapChessGui
 				promo = true;
 				move += 'q';
 			}
-			return IsValidMove(move,out _);
+			return IsValidMoveUmo(move, out _);
 		}
 
-		public bool IsValidMove(int gmo)
+		public bool IsValidMoveEmo(int emo)
 		{
 			List<int> moves = GenerateValidMoves();
 			foreach (int m in moves)
-				if (m == gmo)
+				if (m == emo)
 					return true;
 			return false;
 		}
 
-		public bool IsValidMove(string umo, out int emo)
+		public bool IsValidMoveUmo(string umo, out int emo)
 		{
 			emo = 0;
 			List<int> moves = GenerateValidMoves();
 			foreach (int m in moves)
-				if (GmoToUmo(m) == umo)
+				if (EmoToUmo(m) == umo)
 				{
 					emo = m;
 					return true;
@@ -285,13 +315,21 @@ namespace RapChessGui
 			return false;
 		}
 
-		public int UmoToGmo(string umo)
+		public bool IsValidMove(string move, out string umo, out string san, out int emo)
 		{
-			List<int> moves = GenerateAllMoves(whiteTurn, false);
+			emo = 0;
+			umo = "";
+			san = "";
+			List<int> moves = GenerateValidMoves();
 			foreach (int m in moves)
-				if (GmoToUmo(m) == umo)
-					return m;
-			return 0;
+			{
+				emo = m;
+				umo = EmoToUmo(emo);
+				san = UmoToSan(umo);
+				if ((umo == move) || (san == move))
+					return true;
+			}
+			return false;
 		}
 
 		ulong RAND_32()
@@ -323,20 +361,7 @@ namespace RapChessGui
 			}
 		}
 
-		public string GmoToUmo(int move)
-		{
-			string result = SquareToStr(move & 0xFF) + SquareToStr((move >> 8) & 0xFF);
-			if ((move & moveflagPromotion) > 0)
-			{
-				if ((move & moveflagPromoteQueen) > 0) result += 'q';
-				else if ((move & moveflagPromoteRook) > 0) result += 'r';
-				else if ((move & moveflagPromoteBishop) > 0) result += 'b';
-				else result += 'n';
-			}
-			return result;
-		}
-
-		public int MakeSquare(int x,int y)
+		public int MakeSquare(int x, int y)
 		{
 			return ((y + 4) << 4) | (x + 4);
 		}
@@ -692,7 +717,7 @@ namespace RapChessGui
 		public int MakeMove(string emo, out int piece)
 		{
 			piece = 0;
-			int m = UmoToGmo(emo);
+			int m = UmoToEmo(emo);
 			if (m > 0)
 			{
 				piece = g_board[m & 0xff] & 7;
@@ -703,7 +728,7 @@ namespace RapChessGui
 
 		public int MakeMove(string umo)
 		{
-			int m = UmoToGmo(umo);
+			int m = UmoToEmo(umo);
 			if (m > 0)
 				MakeMove(m);
 			return m;

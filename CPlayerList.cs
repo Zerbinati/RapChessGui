@@ -195,7 +195,7 @@ namespace RapChessGui
 
 		public CPlayer GetPlayerComputer()
 		{
-			Sort();
+			SortElo();
 			foreach (CPlayer p in list)
 				if (p.IsComputer())
 					return p;
@@ -204,7 +204,7 @@ namespace RapChessGui
 
 		public CPlayer GetPlayerHuman()
 		{
-			Sort();
+			SortElo();
 			foreach (CPlayer p in list)
 				if (p.IsHuman())
 					return p;
@@ -233,7 +233,7 @@ namespace RapChessGui
 			return p;
 		}
 
-		public void Sort()
+		public void SortElo()
 		{
 			list.Sort(delegate (CPlayer p1, CPlayer p2)
 			{
@@ -246,7 +246,7 @@ namespace RapChessGui
 
 		public void SortDistance(CPlayer player)
 		{
-			Sort();
+			SortElo();
 			FillPosition();
 			foreach (CPlayer p in list)
 				p.distance = Math.Abs(player.position - p.position);
@@ -288,7 +288,7 @@ namespace RapChessGui
 		{
 			int result = 0;
 			foreach (CPlayer u in list)
-				if (u.GetElo() < elo)
+				if (u.GetElo() > elo)
 					result++;
 			return result;
 		}
@@ -299,12 +299,12 @@ namespace RapChessGui
 				index = 0;
 			if (index >= list.Count)
 				index = list.Count - 1;
-			return Convert.ToInt32((3000 * (index + 1)) / list.Count);
+			return Convert.ToInt32((3000 * (list.Count - index)) / list.Count);
 		}
 
 		public CPlayer NextTournament(CPlayer p, bool rotate = true, bool back = false)
 		{
-			Sort();
+			SortElo();
 			int i = GetIndex(p.name);
 			for (int n = 0; n < list.Count - 1; n++)
 			{

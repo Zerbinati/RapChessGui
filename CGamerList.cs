@@ -422,7 +422,7 @@ namespace RapChessGui
 				double v = Convert.ToDouble(value);
 				if (((ms - timerStart) > (v + FormOptions.marginTime)) && (FormOptions.marginTime >= 0) && (value > 0) && timer.IsRunning)
 				{
-					if (CChess.This.IsValidMove(lastMove, out _))
+					if (CChess.This.IsValidMoveUmo(lastMove, out _))
 					{
 						CRapLog.Add($"{player.engine} forced move {lastMove}");
 						FormLogEngines.AppendTimeText($"{player.name} forced move {lastMove}\n", Color.Orange);

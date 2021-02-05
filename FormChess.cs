@@ -96,7 +96,7 @@ namespace RapChessGui
 			InitializeComponent();
 			IniCreate();
 			IniLoad();
-			Reset();
+			Reset(true);
 			Font fontChess = new Font(pfc.Families[0], 16);
 			Font fontChessPromo = new Font(pfc.Families[0], 32);
 			labTakenT.Font = fontChess;
@@ -125,16 +125,10 @@ namespace RapChessGui
 		{
 			if (engineList.LoadFromIni() == 0)
 			{
-				int index;
-				index = engineList.GetIndex("Uci-RapChessCs");
-				if (index >= 0)
-					engineList.list[index].elo = "1100";
-				index = engineList.GetIndex("Uci-RapSimpleCs");
-				if (index >= 0)
-					engineList.list[index].elo = "1000";
-				index = engineList.GetIndex("Uci-RapShortCs");
-				if (index >= 0)
-					engineList.list[index].elo = "900";
+				engineList.SetElo("RapChessCs");
+				engineList.SetElo("RapSimpleCs");
+				engineList.SetElo("RapShortCs");
+				engineList.SaveToIni();
 			}
 			if (bookList.LoadFromIni() == 0)
 			{
@@ -641,8 +635,8 @@ namespace RapChessGui
 			List<int> moves = new List<int>();
 			for (int n = i; n < Uci.tokens.Length; n++)
 			{
-				string umo = Uci.tokens[n];
-				if (Chess.IsValidMove(umo, out int gmo))
+				string move = Uci.tokens[n];
+				if (Chess.IsValidMove(move, out string umo, out string san, out int emo))
 				{
 					selfdepth++;
 					if (moves.Count == 0)
@@ -651,9 +645,8 @@ namespace RapChessGui
 						Board.arrowCur.AddMoves(umo);
 						RenderBoard();
 					}
-					string san = Chess.UmoToSan(umo);
-					Chess.MakeMove(gmo);
-					moves.Add(gmo);
+					Chess.MakeMove(emo);
+					moves.Add(emo);
 					if (FormOptions.This.rbSan.Checked)
 						pv += $" {san}";
 					else
@@ -783,12 +776,12 @@ namespace RapChessGui
 				umo = CChess.whiteTurn ? "e1g1" : "e8g8";
 			if (xmo == "o-o-o")
 				umo = CChess.whiteTurn ? "e1c1" : "e8c8";
-			if (Chess.IsValidMove(umo, out _))
+			if (Chess.IsValidMoveUmo(umo, out _))
 				return true;
 			else
 			{
 				umo += "q";
-				if (Chess.IsValidMove(umo, out _))
+				if (Chess.IsValidMoveUmo(umo, out _))
 					return true;
 				else
 				{
@@ -1038,11 +1031,18 @@ namespace RapChessGui
 				formLastGame.Show(this);
 		}
 
-		void Reset()
+		void UpdateEngineList()
+		{
+			CData.UpdateFileEngine();
+			engineList.AutoUpdate();
+			Reset(true);
+		}
+
+		void Reset(bool auto = false)
 		{
 			CBoard.SetColor(FormOptions.colorBoard);
 			BackColor = CBoard.colorDark;
-			if (!CData.reset)
+			if (!auto && !CData.reset)
 				return;
 			CData.reset = false;
 			cbEngine.Items.Clear();
@@ -1110,8 +1110,8 @@ namespace RapChessGui
 				cg.player.elo = cg.player.GetEloLess().ToString();
 				cg.player.SaveToIni();
 			}
-			if (!Chess.IsValidMove(umo, out int gmo))
-				if (Chess.IsValidMove($"{umo}q", out gmo))
+			if (!Chess.IsValidMoveUmo(umo, out int gmo))
+				if (Chess.IsValidMoveUmo($"{umo}q", out gmo))
 					umo = $"{umo}q";
 			if (gmo == 0)
 			{
@@ -1371,8 +1371,16 @@ namespace RapChessGui
 			string m = $"{p[piece]} {umo}";
 			if ((count & 1) == 0)
 			{
+				var items = lvMoves.Items;
+				bool last = items.Count > 0 ? items[items.Count - 1].Selected : true;
 				int moveNumber = (count >> 1) + 1;
-				lvMoves.Items.Add(new ListViewItem(new[] { moveNumber.ToString(), m, score, "", "" })).EnsureVisible();
+				ListViewItem lvItem = new ListViewItem(new[] { moveNumber.ToString(), m, score, "", "" });
+				lvMoves.Items.Add(lvItem);
+				if (last)
+				{
+					lvItem.Selected = true;
+					lvItem.EnsureVisible();
+				}
 			}
 			else
 			{
@@ -1729,7 +1737,7 @@ namespace RapChessGui
 			CEngineList engineList = CModeTournamentE.engineList;
 			CEngine engine = engineList.GetEngine(name);
 			lvEngineH.Items.Clear();
-			engineList.Sort();
+			engineList.SortElo();
 			engineList.FillPosition();
 			int countGames = 0;
 			int opponents = 0;
@@ -1777,10 +1785,12 @@ namespace RapChessGui
 
 		void TournamentESelect()
 		{
+			int del = lvEngine.TopItem.Bounds.Top;
 			foreach (ListViewItem lvi in lvEngine.Items)
 				if (lvi.Text == CModeTournamentE.engine)
 				{
-					int top = lvi.Index - ((lvEngine.ClientRectangle.Height / lvi.Bounds.Height) >> 1);
+					int c = (lvEngine.ClientRectangle.Height - del) / lvi.Bounds.Height;
+					int top = lvi.Index - (c >> 1);
 					if (top < 0)
 						top = 0;
 					lvi.Selected = true;
@@ -1917,7 +1927,7 @@ namespace RapChessGui
 			CPlayerList playerList = CModeTournamentP.playerList;
 			CPlayer player = playerList.GetPlayer(name);
 			lvPlayerH.Items.Clear();
-			playerList.Sort();
+			playerList.SortElo();
 			playerList.FillPosition();
 			int countGames = 0;
 			int opponents = 0;
@@ -1966,10 +1976,12 @@ namespace RapChessGui
 
 		void TournamentPSelect()
 		{
+			int del = lvEngine.TopItem.Bounds.Top;
 			foreach (ListViewItem lvi in lvPlayer.Items)
 				if (lvi.Text == CModeTournamentP.player)
 				{
-					int top = lvi.Index - ((lvPlayer.ClientRectangle.Height / lvi.Bounds.Height) >> 1);
+					int c = (lvPlayer.ClientRectangle.Height - del) / lvi.Bounds.Height;
+					int top = lvi.Index - (c >> 1);
 					if (top < 0)
 						top = 0;
 					lvi.Selected = true;
@@ -2699,6 +2711,16 @@ namespace RapChessGui
 		private void timerAnimation_Tick(object sender, EventArgs e)
 		{
 			GameLoop();
+		}
+
+		private void fileSystemWatcher1_Changed(object sender, FileSystemEventArgs e)
+		{
+			UpdateEngineList();
+		}
+
+		private void fileSystemWatcher1_Renamed(object sender, RenamedEventArgs e)
+		{
+			UpdateEngineList();
 		}
 
 		#endregion

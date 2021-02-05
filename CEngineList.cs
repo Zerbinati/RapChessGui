@@ -7,7 +7,7 @@ namespace RapChessGui
 {
 	public class CEngine
 	{
-		public static string defElo = "1000";
+		public static string defElo = "3000";
 		public bool modeStandard = true;
 		public int distance = 0;
 		public int position = 0;
@@ -58,6 +58,11 @@ namespace RapChessGui
 			CRapIni.This.WriteList($"engine>{name}>options", options);
 			CRapIni.This.Write($"engine>{name}>elo", elo);
 			CRapIni.This.Write($"engine>{name}>history", hisElo.SaveToStr());
+		}
+
+		public void SetElo(int e)
+		{
+			elo = e.ToString();
 		}
 
 		public bool IsAuto()
@@ -170,7 +175,7 @@ namespace RapChessGui
 		{
 			int result = 0;
 			foreach (CEngine e in list)
-				if (e.GetElo() < elo)
+				if (e.GetElo() > elo)
 					result++;
 			return result;
 		}
@@ -181,7 +186,51 @@ namespace RapChessGui
 				index = 0;
 			if (index >= list.Count)
 				index = list.Count - 1;
-			return Convert.ToInt32((3000 * (index + 1)) / list.Count);
+			return Convert.ToInt32((3000 * (list.Count - index)) / list.Count);
+		}
+
+		public void AutoUpdate()
+		{
+			foreach (string fn in CData.fileEngineUci)
+			{
+				string name = Path.GetFileNameWithoutExtension(fn);
+				string file = $@"Uci\\{fn}";
+				CEngine engine = GetEngineByFile(file);
+				if (engine == null)
+				{
+					engine = GetEngine(name);
+					if (engine == null)
+					{
+						engine = new CEngine(name);
+						list.Add(engine);
+					}
+					engine.file = file;
+					engine.SaveToIni();
+				}
+			}
+			foreach (string fn in CData.fileEngineWb)
+			{
+				string name = Path.GetFileNameWithoutExtension(fn);
+				string file = $@"Winboard\\{fn}";
+				CEngine engine = GetEngineByFile(file);
+				if (engine == null)
+				{
+					engine = GetEngine(name);
+					if (engine == null)
+					{
+						engine = new CEngine(name);
+						list.Add(engine);
+					}
+					engine.file = file;
+					engine.SaveToIni();
+				}
+			}
+			for (int n = list.Count - 1; n >= 0; n--)
+			{
+				CEngine e = list[n];
+				if (e.IsAuto() && !e.FileExists())
+					DeleteEngine(e.name);
+			}
 		}
 
 		public int LoadFromIni()
@@ -194,42 +243,13 @@ namespace RapChessGui
 				engine.LoadFromIni();
 				list.Add(engine);
 			}
-			foreach (string fn in CData.fileEngineUci)
-			{
-				string name = Path.GetFileNameWithoutExtension(fn);
-				string file = $"Uci\\{fn}";
-				CEngine engine = GetEngineByFile(file);
-				if (engine == null) { 
-					engine = new CEngine(name);
-					engine.file = file;
-					engine.SaveToIni();
-					list.Add(engine);
-				}
-			}
-			foreach (string fn in CData.fileEngineWb)
-			{
-				string name = Path.GetFileNameWithoutExtension(fn);
-				string file = $"Winboard\\{fn}";
-				CEngine engine = GetEngineByFile(file);
-				if (engine == null) { 
-					engine = new CEngine(name);
-					engine.file = file;
-					engine.SaveToIni();
-					list.Add(engine);
-				}
-			}
-			for(int n = list.Count -1;n>=0; n--)
-			{
-				CEngine e = list[n];
-				if (e.IsAuto() && !e.FileExists())
-					DeleteEngine(e.name);
-			}
+			AutoUpdate();
 			return en.Count;
 		}
 
 		public CEngine NextTournament(CEngine e, bool rotate = true, bool back = false)
 		{
-			Sort();
+			SortElo();
 			int i = GetIndex(e.name);
 			for (int n = 0; n < list.Count - 1; n++)
 			{
@@ -256,7 +276,7 @@ namespace RapChessGui
 				e.SaveToIni();
 		}
 
-		public void Sort()
+		public void SortElo()
 		{
 			list.Sort(delegate (CEngine e1, CEngine e2)
 			{
@@ -269,7 +289,7 @@ namespace RapChessGui
 
 		public void SortDistance(CEngine engine)
 		{
-			Sort();
+			SortElo();
 			FillPosition();
 			foreach (CEngine e in list)
 				e.distance = Math.Abs(engine.position - e.position);
@@ -277,6 +297,26 @@ namespace RapChessGui
 			{
 				return e1.distance - e2.distance;
 			});
+		}
+
+		public void SetElo(string name)
+		{
+			CEngine engine = GetEngine(name);
+			if (engine != null)
+			{
+				engine.SetElo(0);
+				SetElo();
+			}
+		}
+
+		public void SetElo()
+		{
+			SortElo();
+			for (int n = 0; n < list.Count; n++)
+			{
+				CEngine e = list[n];
+				e.SetElo(GetOptElo(n));
+			}
 		}
 
 		public void FillPosition()
