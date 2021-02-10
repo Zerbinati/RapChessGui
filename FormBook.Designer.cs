@@ -39,13 +39,13 @@
 			this.cbBookReaderList = new System.Windows.Forms.ComboBox();
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
 			this.tbReaderName = new System.Windows.Forms.TextBox();
-			this.groupBox2 = new System.Windows.Forms.GroupBox();
+			this.gbBooks = new System.Windows.Forms.GroupBox();
 			this.listBox1 = new System.Windows.Forms.ListBox();
 			this.panel1.SuspendLayout();
 			this.groupBox3.SuspendLayout();
 			this.groupBox4.SuspendLayout();
 			this.groupBox1.SuspendLayout();
-			this.groupBox2.SuspendLayout();
+			this.gbBooks.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// openFileDialog1
@@ -159,16 +159,16 @@
 			this.tbReaderName.Size = new System.Drawing.Size(305, 20);
 			this.tbReaderName.TabIndex = 0;
 			// 
-			// groupBox2
+			// gbBooks
 			// 
-			this.groupBox2.Controls.Add(this.listBox1);
-			this.groupBox2.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.groupBox2.Location = new System.Drawing.Point(0, 0);
-			this.groupBox2.Name = "groupBox2";
-			this.groupBox2.Size = new System.Drawing.Size(489, 591);
-			this.groupBox2.TabIndex = 5;
-			this.groupBox2.TabStop = false;
-			this.groupBox2.Text = "Books List";
+			this.gbBooks.Controls.Add(this.listBox1);
+			this.gbBooks.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.gbBooks.Location = new System.Drawing.Point(0, 0);
+			this.gbBooks.Name = "gbBooks";
+			this.gbBooks.Size = new System.Drawing.Size(489, 591);
+			this.gbBooks.TabIndex = 5;
+			this.gbBooks.TabStop = false;
+			this.gbBooks.Text = "Books List";
 			// 
 			// listBox1
 			// 
@@ -189,7 +189,7 @@
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(800, 591);
-			this.Controls.Add(this.groupBox2);
+			this.Controls.Add(this.gbBooks);
 			this.Controls.Add(this.panel1);
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
 			this.MinimizeBox = false;
@@ -205,7 +205,7 @@
 			this.groupBox4.ResumeLayout(false);
 			this.groupBox1.ResumeLayout(false);
 			this.groupBox1.PerformLayout();
-			this.groupBox2.ResumeLayout(false);
+			this.gbBooks.ResumeLayout(false);
 			this.ResumeLayout(false);
 
 		}
@@ -215,7 +215,7 @@
 		private System.Windows.Forms.Panel panel1;
 		private System.Windows.Forms.GroupBox groupBox1;
 		private System.Windows.Forms.TextBox tbReaderName;
-		private System.Windows.Forms.GroupBox groupBox2;
+		private System.Windows.Forms.GroupBox gbBooks;
 		public System.Windows.Forms.ListBox listBox1;
 		private System.Windows.Forms.GroupBox groupBox4;
 		private System.Windows.Forms.ComboBox cbBookReaderList;

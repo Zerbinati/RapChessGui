@@ -49,7 +49,7 @@
 			this.cbFileList = new System.Windows.Forms.ComboBox();
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
 			this.tbEngineName = new System.Windows.Forms.TextBox();
-			this.groupBox2 = new System.Windows.Forms.GroupBox();
+			this.gbEngines = new System.Windows.Forms.GroupBox();
 			this.listBox1 = new System.Windows.Forms.ListBox();
 			this.panel1.SuspendLayout();
 			this.gbTournament.SuspendLayout();
@@ -62,7 +62,7 @@
 			this.groupBox7.SuspendLayout();
 			this.groupBox4.SuspendLayout();
 			this.groupBox1.SuspendLayout();
-			this.groupBox2.SuspendLayout();
+			this.gbEngines.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// panel1
@@ -315,16 +315,16 @@
 			this.tbEngineName.Size = new System.Drawing.Size(305, 20);
 			this.tbEngineName.TabIndex = 0;
 			// 
-			// groupBox2
+			// gbEngines
 			// 
-			this.groupBox2.Controls.Add(this.listBox1);
-			this.groupBox2.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.groupBox2.Location = new System.Drawing.Point(0, 0);
-			this.groupBox2.Name = "groupBox2";
-			this.groupBox2.Size = new System.Drawing.Size(489, 624);
-			this.groupBox2.TabIndex = 5;
-			this.groupBox2.TabStop = false;
-			this.groupBox2.Text = "Engines List";
+			this.gbEngines.Controls.Add(this.listBox1);
+			this.gbEngines.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.gbEngines.Location = new System.Drawing.Point(0, 0);
+			this.gbEngines.Name = "gbEngines";
+			this.gbEngines.Size = new System.Drawing.Size(489, 624);
+			this.gbEngines.TabIndex = 5;
+			this.gbEngines.TabStop = false;
+			this.gbEngines.Text = "Engines List";
 			// 
 			// listBox1
 			// 
@@ -348,7 +348,7 @@
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(800, 624);
-			this.Controls.Add(this.groupBox2);
+			this.Controls.Add(this.gbEngines);
 			this.Controls.Add(this.panel1);
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
 			this.MinimizeBox = false;
@@ -372,7 +372,7 @@
 			this.groupBox4.ResumeLayout(false);
 			this.groupBox1.ResumeLayout(false);
 			this.groupBox1.PerformLayout();
-			this.groupBox2.ResumeLayout(false);
+			this.gbEngines.ResumeLayout(false);
 			this.ResumeLayout(false);
 
 		}
@@ -381,7 +381,7 @@
 		private System.Windows.Forms.Panel panel1;
 		private System.Windows.Forms.GroupBox groupBox1;
 		private System.Windows.Forms.TextBox tbEngineName;
-		private System.Windows.Forms.GroupBox groupBox2;
+		private System.Windows.Forms.GroupBox gbEngines;
 		public System.Windows.Forms.ListBox listBox1;
 		private System.Windows.Forms.GroupBox groupBox4;
 		private System.Windows.Forms.ComboBox cbFileList;

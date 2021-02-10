@@ -37,6 +37,7 @@ namespace RapChessGui
 			listBox1.Items.Clear();
 			foreach (CBook b in FormChess.bookList.list)
 				listBox1.Items.Add(b.name);
+			gbBooks.Text = $"Books {listBox1.Items.Count}";
 		}
 
 		private void ListBox1_SelectedValueChanged(object sender, EventArgs e)

@@ -68,6 +68,7 @@ namespace RapChessGui
 			listBox1.Items.Clear();
 			foreach (CEngine e in FormChess.engineList.list)
 				listBox1.Items.Add(e.name);
+			gbEngines.Text = $"Engines {listBox1.Items.Count}";
 		}
 
 		private void ListBox1_SelectedValueChanged(object sender, EventArgs e)

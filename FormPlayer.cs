@@ -76,6 +76,7 @@ namespace RapChessGui
 			listBox1.Items.Clear();
 			foreach (CPlayer u in FormChess.playerList.list)
 				listBox1.Items.Add(u.name);
+			gbPlayers.Text = $"Players {listBox1.Items.Count}";
 		}
 
 		private void ListBox1_SelectedValueChanged(object sender, EventArgs e)
@@ -188,6 +189,11 @@ namespace RapChessGui
 			if (selected)
 			{
 				e = new DrawItemEventArgs(e.Graphics, e.Font, e.Bounds, e.Index, e.State ^ DrawItemState.Selected, CBoard.colorBrighter, CBoard.colorDark);
+				b = Brushes.White;
+			}
+			else if (FormChess.engineList.GetEngine(pla.engine) == null)
+			{
+				e = new DrawItemEventArgs(e.Graphics, e.Font, e.Bounds, e.Index, e.State, Color.White, CBoard.colorRed);
 				b = Brushes.White;
 			}
 			else if (pla.tournament > 0)

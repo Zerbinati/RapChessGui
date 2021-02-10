@@ -605,6 +605,7 @@ namespace RapChessGui
 			if (CData.gameMode == CGameMode.training)
 				TrainingEnd(gw, gl, isDraw);
 			GamerList.Terminate();
+			Text = $"RapChessGui Games {++CData.gamesCount}";
 			Task.Delay(FormOptions.gameBreak * 1000).ContinueWith(t => CWinMessage.Message(WM_GAME_NEXT));
 		}
 
@@ -620,7 +621,14 @@ namespace RapChessGui
 		void AddLines(CGamer g)
 		{
 			DateTime dt = new DateTime();
-			dt = dt.AddMilliseconds(g.infMs);
+			try
+			{
+				dt = dt.AddMilliseconds(g.infMs);
+			}
+			catch
+			{
+				CRapLog.Add($"milliseconds {g.engine.name} {g.infMs}");
+			}
 			ListViewItem lvi = new ListViewItem(new[] { dt.ToString("mm:ss.ff"), g.score, g.GetDepth(), g.nodes.ToString("N0"), g.nps.ToString("N0"), g.pv });
 			ListView lv = g.isWhite ? lvMovesW : lvMovesB;
 			if ((lv.Items.Count & 1) > 0)
@@ -2570,6 +2578,7 @@ namespace RapChessGui
 
 		private void cbMainMode_SelectedIndexChanged(object sender, EventArgs e)
 		{
+			CData.gamesCount = 0;
 			FormLogGames.This.textBox1.Text = "";
 			tabControl1.SelectedIndex = combMainMode.SelectedIndex;
 			Board.Fill();

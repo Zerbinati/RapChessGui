@@ -29,23 +29,23 @@
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
-			System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea7 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-			System.Windows.Forms.DataVisualization.Charting.Series series12 = new System.Windows.Forms.DataVisualization.Charting.Series();
-			System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea8 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-			System.Windows.Forms.DataVisualization.Charting.Series series13 = new System.Windows.Forms.DataVisualization.Charting.Series();
-			System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea9 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-			System.Windows.Forms.DataVisualization.Charting.Series series14 = new System.Windows.Forms.DataVisualization.Charting.Series();
-			System.Windows.Forms.DataVisualization.Charting.Series series15 = new System.Windows.Forms.DataVisualization.Charting.Series();
-			System.Windows.Forms.DataVisualization.Charting.Series series16 = new System.Windows.Forms.DataVisualization.Charting.Series();
-			System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea10 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-			System.Windows.Forms.DataVisualization.Charting.Series series17 = new System.Windows.Forms.DataVisualization.Charting.Series();
-			System.Windows.Forms.DataVisualization.Charting.Series series18 = new System.Windows.Forms.DataVisualization.Charting.Series();
-			System.Windows.Forms.DataVisualization.Charting.Series series19 = new System.Windows.Forms.DataVisualization.Charting.Series();
-			System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea11 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-			System.Windows.Forms.DataVisualization.Charting.Series series20 = new System.Windows.Forms.DataVisualization.Charting.Series();
-			System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea12 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-			System.Windows.Forms.DataVisualization.Charting.Series series21 = new System.Windows.Forms.DataVisualization.Charting.Series();
-			System.Windows.Forms.DataVisualization.Charting.Series series22 = new System.Windows.Forms.DataVisualization.Charting.Series();
+			System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+			System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+			System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+			System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+			System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+			System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
+			System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
+			System.Windows.Forms.DataVisualization.Charting.Series series5 = new System.Windows.Forms.DataVisualization.Charting.Series();
+			System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+			System.Windows.Forms.DataVisualization.Charting.Series series6 = new System.Windows.Forms.DataVisualization.Charting.Series();
+			System.Windows.Forms.DataVisualization.Charting.Series series7 = new System.Windows.Forms.DataVisualization.Charting.Series();
+			System.Windows.Forms.DataVisualization.Charting.Series series8 = new System.Windows.Forms.DataVisualization.Charting.Series();
+			System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea5 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+			System.Windows.Forms.DataVisualization.Charting.Series series9 = new System.Windows.Forms.DataVisualization.Charting.Series();
+			System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea6 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+			System.Windows.Forms.DataVisualization.Charting.Series series10 = new System.Windows.Forms.DataVisualization.Charting.Series();
+			System.Windows.Forms.DataVisualization.Charting.Series series11 = new System.Windows.Forms.DataVisualization.Charting.Series();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormChess));
 			this.tabControl1 = new System.Windows.Forms.TabControl();
 			this.tabPageGame = new System.Windows.Forms.TabPage();
@@ -386,7 +386,7 @@
 			this.tabControl1.Location = new System.Drawing.Point(0, 39);
 			this.tabControl1.Name = "tabControl1";
 			this.tabControl1.SelectedIndex = 0;
-			this.tabControl1.Size = new System.Drawing.Size(400, 474);
+			this.tabControl1.Size = new System.Drawing.Size(345, 471);
 			this.tabControl1.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
 			this.tabControl1.TabIndex = 9;
 			this.tabControl1.SelectedIndexChanged += new System.EventHandler(this.tabControl1_SelectedIndexChanged);
@@ -405,36 +405,36 @@
 			this.tabPageGame.Location = new System.Drawing.Point(4, 5);
 			this.tabPageGame.Name = "tabPageGame";
 			this.tabPageGame.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPageGame.Size = new System.Drawing.Size(392, 465);
+			this.tabPageGame.Size = new System.Drawing.Size(337, 462);
 			this.tabPageGame.TabIndex = 0;
 			this.tabPageGame.Text = "Game";
 			// 
 			// chartGame
 			// 
 			this.chartGame.BackColor = System.Drawing.Color.WhiteSmoke;
-			chartArea7.AxisX.LabelStyle.Enabled = false;
-			chartArea7.AxisX.MajorGrid.Enabled = false;
-			chartArea7.AxisX.MajorTickMark.Enabled = false;
-			chartArea7.AxisY.IsStartedFromZero = false;
-			chartArea7.AxisY.MajorGrid.Enabled = false;
-			chartArea7.AxisY.MajorTickMark.Enabled = false;
-			chartArea7.BackColor = System.Drawing.Color.WhiteSmoke;
-			chartArea7.BorderDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Solid;
-			chartArea7.Name = "ChartArea1";
-			this.chartGame.ChartAreas.Add(chartArea7);
+			chartArea1.AxisX.LabelStyle.Enabled = false;
+			chartArea1.AxisX.MajorGrid.Enabled = false;
+			chartArea1.AxisX.MajorTickMark.Enabled = false;
+			chartArea1.AxisY.IsStartedFromZero = false;
+			chartArea1.AxisY.MajorGrid.Enabled = false;
+			chartArea1.AxisY.MajorTickMark.Enabled = false;
+			chartArea1.BackColor = System.Drawing.Color.WhiteSmoke;
+			chartArea1.BorderDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Solid;
+			chartArea1.Name = "ChartArea1";
+			this.chartGame.ChartAreas.Add(chartArea1);
 			this.chartGame.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.chartGame.Location = new System.Drawing.Point(3, 319);
 			this.chartGame.Name = "chartGame";
 			this.chartGame.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.None;
 			this.chartGame.PaletteCustomColors = new System.Drawing.Color[] {
         System.Drawing.Color.Olive};
-			series12.BorderWidth = 4;
-			series12.ChartArea = "ChartArea1";
-			series12.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-			series12.IsVisibleInLegend = false;
-			series12.Name = "Series1";
-			this.chartGame.Series.Add(series12);
-			this.chartGame.Size = new System.Drawing.Size(386, 143);
+			series1.BorderWidth = 4;
+			series1.ChartArea = "ChartArea1";
+			series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+			series1.IsVisibleInLegend = false;
+			series1.Name = "Series1";
+			this.chartGame.Series.Add(series1);
+			this.chartGame.Size = new System.Drawing.Size(331, 140);
 			this.chartGame.TabIndex = 28;
 			this.chartGame.Text = "chart1";
 			this.toolTip1.SetToolTip(this.chartGame, "User progress history");
@@ -445,7 +445,7 @@
 			this.butBackward.Dock = System.Windows.Forms.DockStyle.Top;
 			this.butBackward.Location = new System.Drawing.Point(3, 296);
 			this.butBackward.Name = "butBackward";
-			this.butBackward.Size = new System.Drawing.Size(386, 23);
+			this.butBackward.Size = new System.Drawing.Size(331, 23);
 			this.butBackward.TabIndex = 27;
 			this.butBackward.Text = "Back move";
 			this.toolTip1.SetToolTip(this.butBackward, "Resignation from further play");
@@ -458,7 +458,7 @@
 			this.butForward.Dock = System.Windows.Forms.DockStyle.Top;
 			this.butForward.Location = new System.Drawing.Point(3, 273);
 			this.butForward.Name = "butForward";
-			this.butForward.Size = new System.Drawing.Size(386, 23);
+			this.butForward.Size = new System.Drawing.Size(331, 23);
 			this.butForward.TabIndex = 26;
 			this.butForward.Text = "Make move";
 			this.toolTip1.SetToolTip(this.butForward, "Resignation from further play");
@@ -471,7 +471,7 @@
 			this.butResignation.Dock = System.Windows.Forms.DockStyle.Top;
 			this.butResignation.Location = new System.Drawing.Point(3, 250);
 			this.butResignation.Name = "butResignation";
-			this.butResignation.Size = new System.Drawing.Size(386, 23);
+			this.butResignation.Size = new System.Drawing.Size(331, 23);
 			this.butResignation.TabIndex = 25;
 			this.butResignation.Text = "Resignation";
 			this.toolTip1.SetToolTip(this.butResignation, "Resignation from further play");
@@ -484,7 +484,7 @@
 			this.butStop.Dock = System.Windows.Forms.DockStyle.Top;
 			this.butStop.Location = new System.Drawing.Point(3, 227);
 			this.butStop.Name = "butStop";
-			this.butStop.Size = new System.Drawing.Size(386, 23);
+			this.butStop.Size = new System.Drawing.Size(331, 23);
 			this.butStop.TabIndex = 24;
 			this.butStop.Text = "Stop calculating";
 			this.toolTip1.SetToolTip(this.butStop, "Engine stop calculating and makes a move immediately");
@@ -497,7 +497,7 @@
 			this.butContinueGame.Dock = System.Windows.Forms.DockStyle.Top;
 			this.butContinueGame.Location = new System.Drawing.Point(3, 204);
 			this.butContinueGame.Name = "butContinueGame";
-			this.butContinueGame.Size = new System.Drawing.Size(386, 23);
+			this.butContinueGame.Size = new System.Drawing.Size(331, 23);
 			this.butContinueGame.TabIndex = 23;
 			this.butContinueGame.Text = "Continue game";
 			this.toolTip1.SetToolTip(this.butContinueGame, "Continue game with current position");
@@ -510,7 +510,7 @@
 			this.butNewGame.Dock = System.Windows.Forms.DockStyle.Top;
 			this.butNewGame.Location = new System.Drawing.Point(3, 181);
 			this.butNewGame.Name = "butNewGame";
-			this.butNewGame.Size = new System.Drawing.Size(386, 23);
+			this.butNewGame.Size = new System.Drawing.Size(331, 23);
 			this.butNewGame.TabIndex = 20;
 			this.butNewGame.Text = "New game";
 			this.toolTip1.SetToolTip(this.butNewGame, "Start new game");
@@ -527,7 +527,7 @@
 			this.groupBox2.Dock = System.Windows.Forms.DockStyle.Top;
 			this.groupBox2.Location = new System.Drawing.Point(3, 50);
 			this.groupBox2.Name = "groupBox2";
-			this.groupBox2.Size = new System.Drawing.Size(386, 131);
+			this.groupBox2.Size = new System.Drawing.Size(331, 131);
 			this.groupBox2.TabIndex = 19;
 			this.groupBox2.TabStop = false;
 			this.groupBox2.Text = "Computer";
@@ -542,7 +542,7 @@
             0,
             0});
 			this.nudValue.Name = "nudValue";
-			this.nudValue.Size = new System.Drawing.Size(380, 20);
+			this.nudValue.Size = new System.Drawing.Size(325, 20);
 			this.nudValue.TabIndex = 50;
 			this.nudValue.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
 			this.nudValue.ThousandsSeparator = true;
@@ -566,7 +566,7 @@
             "Time"});
 			this.cbMode.Location = new System.Drawing.Point(3, 79);
 			this.cbMode.Name = "cbMode";
-			this.cbMode.Size = new System.Drawing.Size(380, 21);
+			this.cbMode.Size = new System.Drawing.Size(325, 21);
 			this.cbMode.Sorted = true;
 			this.cbMode.TabIndex = 47;
 			this.toolTip1.SetToolTip(this.cbMode, "Select engine mode");
@@ -580,7 +580,7 @@
 			this.cbBook.FormattingEnabled = true;
 			this.cbBook.Location = new System.Drawing.Point(3, 58);
 			this.cbBook.Name = "cbBook";
-			this.cbBook.Size = new System.Drawing.Size(380, 21);
+			this.cbBook.Size = new System.Drawing.Size(325, 21);
 			this.cbBook.Sorted = true;
 			this.cbBook.TabIndex = 49;
 			this.toolTip1.SetToolTip(this.cbBook, "Select engine book");
@@ -593,7 +593,7 @@
 			this.cbEngine.FormattingEnabled = true;
 			this.cbEngine.Location = new System.Drawing.Point(3, 37);
 			this.cbEngine.Name = "cbEngine";
-			this.cbEngine.Size = new System.Drawing.Size(380, 21);
+			this.cbEngine.Size = new System.Drawing.Size(325, 21);
 			this.cbEngine.Sorted = true;
 			this.cbEngine.TabIndex = 46;
 			this.toolTip1.SetToolTip(this.cbEngine, "Select engine");
@@ -611,7 +611,7 @@
             "Human"});
 			this.cbComputer.Location = new System.Drawing.Point(3, 16);
 			this.cbComputer.Name = "cbComputer";
-			this.cbComputer.Size = new System.Drawing.Size(380, 21);
+			this.cbComputer.Size = new System.Drawing.Size(325, 21);
 			this.cbComputer.Sorted = true;
 			this.cbComputer.TabIndex = 1;
 			this.toolTip1.SetToolTip(this.cbComputer, "Select human opponent");
@@ -623,7 +623,7 @@
 			this.groupBox1.Dock = System.Windows.Forms.DockStyle.Top;
 			this.groupBox1.Location = new System.Drawing.Point(3, 3);
 			this.groupBox1.Name = "groupBox1";
-			this.groupBox1.Size = new System.Drawing.Size(386, 47);
+			this.groupBox1.Size = new System.Drawing.Size(331, 47);
 			this.groupBox1.TabIndex = 18;
 			this.groupBox1.TabStop = false;
 			this.groupBox1.Text = "Human color";
@@ -642,7 +642,7 @@
             "Black"});
 			this.cbColor.Location = new System.Drawing.Point(3, 16);
 			this.cbColor.Name = "cbColor";
-			this.cbColor.Size = new System.Drawing.Size(380, 21);
+			this.cbColor.Size = new System.Drawing.Size(325, 21);
 			this.cbColor.TabIndex = 2;
 			this.toolTip1.SetToolTip(this.cbColor, "Select human color");
 			this.cbColor.SelectedIndexChanged += new System.EventHandler(this.cbColor_SelectedIndexChanged);
@@ -658,7 +658,7 @@
 			this.tabPageMatch.Controls.Add(this.groupBox5);
 			this.tabPageMatch.Location = new System.Drawing.Point(4, 5);
 			this.tabPageMatch.Name = "tabPageMatch";
-			this.tabPageMatch.Size = new System.Drawing.Size(392, 465);
+			this.tabPageMatch.Size = new System.Drawing.Size(392, 462);
 			this.tabPageMatch.TabIndex = 2;
 			this.tabPageMatch.Text = "Match";
 			this.tabPageMatch.UseVisualStyleBackColor = true;
@@ -666,29 +666,29 @@
 			// chartMatch
 			// 
 			this.chartMatch.BackColor = System.Drawing.Color.WhiteSmoke;
-			chartArea8.AxisX.LabelStyle.Enabled = false;
-			chartArea8.AxisX.MajorGrid.Enabled = false;
-			chartArea8.AxisX.MajorTickMark.Enabled = false;
-			chartArea8.AxisY.IsStartedFromZero = false;
-			chartArea8.AxisY.MajorGrid.Enabled = false;
-			chartArea8.AxisY.MajorTickMark.Enabled = false;
-			chartArea8.BackColor = System.Drawing.Color.WhiteSmoke;
-			chartArea8.BorderDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Solid;
-			chartArea8.Name = "ChartArea1";
-			this.chartMatch.ChartAreas.Add(chartArea8);
+			chartArea2.AxisX.LabelStyle.Enabled = false;
+			chartArea2.AxisX.MajorGrid.Enabled = false;
+			chartArea2.AxisX.MajorTickMark.Enabled = false;
+			chartArea2.AxisY.IsStartedFromZero = false;
+			chartArea2.AxisY.MajorGrid.Enabled = false;
+			chartArea2.AxisY.MajorTickMark.Enabled = false;
+			chartArea2.BackColor = System.Drawing.Color.WhiteSmoke;
+			chartArea2.BorderDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Solid;
+			chartArea2.Name = "ChartArea1";
+			this.chartMatch.ChartAreas.Add(chartArea2);
 			this.chartMatch.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.chartMatch.Location = new System.Drawing.Point(0, 344);
 			this.chartMatch.Name = "chartMatch";
 			this.chartMatch.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.None;
 			this.chartMatch.PaletteCustomColors = new System.Drawing.Color[] {
         System.Drawing.Color.Olive};
-			series13.BorderWidth = 4;
-			series13.ChartArea = "ChartArea1";
-			series13.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-			series13.IsVisibleInLegend = false;
-			series13.Name = "Series1";
-			this.chartMatch.Series.Add(series13);
-			this.chartMatch.Size = new System.Drawing.Size(392, 121);
+			series2.BorderWidth = 4;
+			series2.ChartArea = "ChartArea1";
+			series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+			series2.IsVisibleInLegend = false;
+			series2.Name = "Series1";
+			this.chartMatch.Series.Add(series2);
+			this.chartMatch.Size = new System.Drawing.Size(392, 118);
 			this.chartMatch.TabIndex = 29;
 			this.chartMatch.Text = "chart1";
 			this.toolTip1.SetToolTip(this.chartMatch, "User progress history");
@@ -1111,7 +1111,7 @@
 			this.tabPageTourE.Location = new System.Drawing.Point(4, 5);
 			this.tabPageTourE.Name = "tabPageTourE";
 			this.tabPageTourE.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPageTourE.Size = new System.Drawing.Size(392, 465);
+			this.tabPageTourE.Size = new System.Drawing.Size(392, 462);
 			this.tabPageTourE.TabIndex = 5;
 			this.tabPageTourE.Text = "TourE";
 			this.tabPageTourE.UseVisualStyleBackColor = true;
@@ -1131,8 +1131,8 @@
 			// splitContainerTourE.Panel2
 			// 
 			this.splitContainerTourE.Panel2.Controls.Add(this.chartTournamentE);
-			this.splitContainerTourE.Size = new System.Drawing.Size(386, 331);
-			this.splitContainerTourE.SplitterDistance = 207;
+			this.splitContainerTourE.Size = new System.Drawing.Size(386, 328);
+			this.splitContainerTourE.SplitterDistance = 205;
 			this.splitContainerTourE.TabIndex = 27;
 			// 
 			// scTournamentEList
@@ -1151,8 +1151,8 @@
 			// 
 			this.scTournamentEList.Panel2.Controls.Add(this.lvEngineH);
 			this.scTournamentEList.Panel2.Controls.Add(this.labEngine);
-			this.scTournamentEList.Size = new System.Drawing.Size(386, 207);
-			this.scTournamentEList.SplitterDistance = 102;
+			this.scTournamentEList.Size = new System.Drawing.Size(386, 205);
+			this.scTournamentEList.SplitterDistance = 101;
 			this.scTournamentEList.TabIndex = 24;
 			// 
 			// lvEngine
@@ -1169,7 +1169,7 @@
 			this.lvEngine.MultiSelect = false;
 			this.lvEngine.Name = "lvEngine";
 			this.lvEngine.ShowGroups = false;
-			this.lvEngine.Size = new System.Drawing.Size(382, 98);
+			this.lvEngine.Size = new System.Drawing.Size(382, 97);
 			this.lvEngine.Sorting = System.Windows.Forms.SortOrder.Descending;
 			this.lvEngine.TabIndex = 24;
 			this.lvEngine.UseCompatibleStateImageBehavior = false;
@@ -1211,7 +1211,7 @@
 			this.lvEngineH.MultiSelect = false;
 			this.lvEngineH.Name = "lvEngineH";
 			this.lvEngineH.ShowGroups = false;
-			this.lvEngineH.Size = new System.Drawing.Size(382, 84);
+			this.lvEngineH.Size = new System.Drawing.Size(382, 83);
 			this.lvEngineH.TabIndex = 28;
 			this.lvEngineH.UseCompatibleStateImageBehavior = false;
 			this.lvEngineH.View = System.Windows.Forms.View.Details;
@@ -1257,16 +1257,16 @@
 			// chartTournamentE
 			// 
 			this.chartTournamentE.BackColor = System.Drawing.Color.WhiteSmoke;
-			chartArea9.AxisX.LabelStyle.Enabled = false;
-			chartArea9.AxisX.MajorGrid.Enabled = false;
-			chartArea9.AxisX.MajorTickMark.Enabled = false;
-			chartArea9.AxisY.IsStartedFromZero = false;
-			chartArea9.AxisY.MajorGrid.Enabled = false;
-			chartArea9.AxisY.MajorTickMark.Enabled = false;
-			chartArea9.BackColor = System.Drawing.Color.WhiteSmoke;
-			chartArea9.BorderDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Solid;
-			chartArea9.Name = "ChartArea1";
-			this.chartTournamentE.ChartAreas.Add(chartArea9);
+			chartArea3.AxisX.LabelStyle.Enabled = false;
+			chartArea3.AxisX.MajorGrid.Enabled = false;
+			chartArea3.AxisX.MajorTickMark.Enabled = false;
+			chartArea3.AxisY.IsStartedFromZero = false;
+			chartArea3.AxisY.MajorGrid.Enabled = false;
+			chartArea3.AxisY.MajorTickMark.Enabled = false;
+			chartArea3.BackColor = System.Drawing.Color.WhiteSmoke;
+			chartArea3.BorderDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Solid;
+			chartArea3.Name = "ChartArea1";
+			this.chartTournamentE.ChartAreas.Add(chartArea3);
 			this.chartTournamentE.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.chartTournamentE.Location = new System.Drawing.Point(0, 0);
 			this.chartTournamentE.Name = "chartTournamentE";
@@ -1275,25 +1275,25 @@
         System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(192)))), ((int)(((byte)(0))))),
         System.Drawing.Color.Olive,
         System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))))};
-			series14.BorderWidth = 4;
-			series14.ChartArea = "ChartArea1";
-			series14.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-			series14.IsVisibleInLegend = false;
-			series14.Name = "Series1";
-			series15.BorderWidth = 4;
-			series15.ChartArea = "ChartArea1";
-			series15.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-			series15.IsVisibleInLegend = false;
-			series15.Name = "Series2";
-			series16.BorderWidth = 4;
-			series16.ChartArea = "ChartArea1";
-			series16.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-			series16.IsVisibleInLegend = false;
-			series16.Name = "Series3";
-			this.chartTournamentE.Series.Add(series14);
-			this.chartTournamentE.Series.Add(series15);
-			this.chartTournamentE.Series.Add(series16);
-			this.chartTournamentE.Size = new System.Drawing.Size(382, 116);
+			series3.BorderWidth = 4;
+			series3.ChartArea = "ChartArea1";
+			series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+			series3.IsVisibleInLegend = false;
+			series3.Name = "Series1";
+			series4.BorderWidth = 4;
+			series4.ChartArea = "ChartArea1";
+			series4.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+			series4.IsVisibleInLegend = false;
+			series4.Name = "Series2";
+			series5.BorderWidth = 4;
+			series5.ChartArea = "ChartArea1";
+			series5.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+			series5.IsVisibleInLegend = false;
+			series5.Name = "Series3";
+			this.chartTournamentE.Series.Add(series3);
+			this.chartTournamentE.Series.Add(series4);
+			this.chartTournamentE.Series.Add(series5);
+			this.chartTournamentE.Size = new System.Drawing.Size(382, 115);
 			this.chartTournamentE.TabIndex = 30;
 			this.toolTip1.SetToolTip(this.chartTournamentE, "Tournament history");
 			// 
@@ -1391,7 +1391,7 @@
 			this.tabPageTourP.Controls.Add(this.butStartTournament);
 			this.tabPageTourP.Location = new System.Drawing.Point(4, 5);
 			this.tabPageTourP.Name = "tabPageTourP";
-			this.tabPageTourP.Size = new System.Drawing.Size(392, 465);
+			this.tabPageTourP.Size = new System.Drawing.Size(392, 462);
 			this.tabPageTourP.TabIndex = 3;
 			this.tabPageTourP.Text = "TourP";
 			this.tabPageTourP.UseVisualStyleBackColor = true;
@@ -1411,8 +1411,8 @@
 			// splitContainerTourP.Panel2
 			// 
 			this.splitContainerTourP.Panel2.Controls.Add(this.chartTournamentP);
-			this.splitContainerTourP.Size = new System.Drawing.Size(392, 442);
-			this.splitContainerTourP.SplitterDistance = 289;
+			this.splitContainerTourP.Size = new System.Drawing.Size(392, 439);
+			this.splitContainerTourP.SplitterDistance = 287;
 			this.splitContainerTourP.TabIndex = 26;
 			// 
 			// scTournamentPList
@@ -1431,8 +1431,8 @@
 			// 
 			this.scTournamentPList.Panel2.Controls.Add(this.lvPlayerH);
 			this.scTournamentPList.Panel2.Controls.Add(this.labPlayer);
-			this.scTournamentPList.Size = new System.Drawing.Size(392, 289);
-			this.scTournamentPList.SplitterDistance = 170;
+			this.scTournamentPList.Size = new System.Drawing.Size(392, 287);
+			this.scTournamentPList.SplitterDistance = 168;
 			this.scTournamentPList.TabIndex = 24;
 			// 
 			// lvPlayer
@@ -1449,7 +1449,7 @@
 			this.lvPlayer.MultiSelect = false;
 			this.lvPlayer.Name = "lvPlayer";
 			this.lvPlayer.ShowGroups = false;
-			this.lvPlayer.Size = new System.Drawing.Size(388, 166);
+			this.lvPlayer.Size = new System.Drawing.Size(388, 164);
 			this.lvPlayer.Sorting = System.Windows.Forms.SortOrder.Ascending;
 			this.lvPlayer.TabIndex = 24;
 			this.lvPlayer.UseCompatibleStateImageBehavior = false;
@@ -1537,16 +1537,16 @@
 			// chartTournamentP
 			// 
 			this.chartTournamentP.BackColor = System.Drawing.Color.WhiteSmoke;
-			chartArea10.AxisX.LabelStyle.Enabled = false;
-			chartArea10.AxisX.MajorGrid.Enabled = false;
-			chartArea10.AxisX.MajorTickMark.Enabled = false;
-			chartArea10.AxisY.IsStartedFromZero = false;
-			chartArea10.AxisY.MajorGrid.Enabled = false;
-			chartArea10.AxisY.MajorTickMark.Enabled = false;
-			chartArea10.BackColor = System.Drawing.Color.WhiteSmoke;
-			chartArea10.BorderDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Solid;
-			chartArea10.Name = "ChartArea1";
-			this.chartTournamentP.ChartAreas.Add(chartArea10);
+			chartArea4.AxisX.LabelStyle.Enabled = false;
+			chartArea4.AxisX.MajorGrid.Enabled = false;
+			chartArea4.AxisX.MajorTickMark.Enabled = false;
+			chartArea4.AxisY.IsStartedFromZero = false;
+			chartArea4.AxisY.MajorGrid.Enabled = false;
+			chartArea4.AxisY.MajorTickMark.Enabled = false;
+			chartArea4.BackColor = System.Drawing.Color.WhiteSmoke;
+			chartArea4.BorderDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Solid;
+			chartArea4.Name = "ChartArea1";
+			this.chartTournamentP.ChartAreas.Add(chartArea4);
 			this.chartTournamentP.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.chartTournamentP.Location = new System.Drawing.Point(0, 0);
 			this.chartTournamentP.Name = "chartTournamentP";
@@ -1555,25 +1555,25 @@
         System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(192)))), ((int)(((byte)(0))))),
         System.Drawing.Color.Olive,
         System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))))};
-			series17.BorderWidth = 4;
-			series17.ChartArea = "ChartArea1";
-			series17.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-			series17.IsVisibleInLegend = false;
-			series17.Name = "Series1";
-			series18.BorderWidth = 4;
-			series18.ChartArea = "ChartArea1";
-			series18.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-			series18.IsVisibleInLegend = false;
-			series18.Name = "Series2";
-			series19.BorderWidth = 4;
-			series19.ChartArea = "ChartArea1";
-			series19.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-			series19.IsVisibleInLegend = false;
-			series19.Name = "Series3";
-			this.chartTournamentP.Series.Add(series17);
-			this.chartTournamentP.Series.Add(series18);
-			this.chartTournamentP.Series.Add(series19);
-			this.chartTournamentP.Size = new System.Drawing.Size(388, 145);
+			series6.BorderWidth = 4;
+			series6.ChartArea = "ChartArea1";
+			series6.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+			series6.IsVisibleInLegend = false;
+			series6.Name = "Series1";
+			series7.BorderWidth = 4;
+			series7.ChartArea = "ChartArea1";
+			series7.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+			series7.IsVisibleInLegend = false;
+			series7.Name = "Series2";
+			series8.BorderWidth = 4;
+			series8.ChartArea = "ChartArea1";
+			series8.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+			series8.IsVisibleInLegend = false;
+			series8.Name = "Series3";
+			this.chartTournamentP.Series.Add(series6);
+			this.chartTournamentP.Series.Add(series7);
+			this.chartTournamentP.Series.Add(series8);
+			this.chartTournamentP.Size = new System.Drawing.Size(388, 144);
 			this.chartTournamentP.TabIndex = 31;
 			this.chartTournamentP.Text = "chart1";
 			this.toolTip1.SetToolTip(this.chartTournamentP, "Tournament history");
@@ -1602,7 +1602,7 @@
 			this.tabPageTraining.Location = new System.Drawing.Point(4, 5);
 			this.tabPageTraining.Name = "tabPageTraining";
 			this.tabPageTraining.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPageTraining.Size = new System.Drawing.Size(392, 465);
+			this.tabPageTraining.Size = new System.Drawing.Size(392, 462);
 			this.tabPageTraining.TabIndex = 1;
 			this.tabPageTraining.Text = "Training";
 			this.tabPageTraining.UseVisualStyleBackColor = true;
@@ -1610,28 +1610,28 @@
 			// chartTraining
 			// 
 			this.chartTraining.BackColor = System.Drawing.Color.WhiteSmoke;
-			chartArea11.AxisX.LabelStyle.Enabled = false;
-			chartArea11.AxisX.MajorGrid.Enabled = false;
-			chartArea11.AxisX.MajorTickMark.Enabled = false;
-			chartArea11.AxisY.MajorGrid.Enabled = false;
-			chartArea11.AxisY.MajorTickMark.Enabled = false;
-			chartArea11.BackColor = System.Drawing.Color.WhiteSmoke;
-			chartArea11.BorderDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Solid;
-			chartArea11.Name = "ChartArea1";
-			this.chartTraining.ChartAreas.Add(chartArea11);
+			chartArea5.AxisX.LabelStyle.Enabled = false;
+			chartArea5.AxisX.MajorGrid.Enabled = false;
+			chartArea5.AxisX.MajorTickMark.Enabled = false;
+			chartArea5.AxisY.MajorGrid.Enabled = false;
+			chartArea5.AxisY.MajorTickMark.Enabled = false;
+			chartArea5.BackColor = System.Drawing.Color.WhiteSmoke;
+			chartArea5.BorderDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Solid;
+			chartArea5.Name = "ChartArea1";
+			this.chartTraining.ChartAreas.Add(chartArea5);
 			this.chartTraining.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.chartTraining.Location = new System.Drawing.Point(3, 318);
 			this.chartTraining.Name = "chartTraining";
 			this.chartTraining.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.None;
 			this.chartTraining.PaletteCustomColors = new System.Drawing.Color[] {
         System.Drawing.Color.Olive};
-			series20.BorderWidth = 4;
-			series20.ChartArea = "ChartArea1";
-			series20.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-			series20.IsVisibleInLegend = false;
-			series20.Name = "Series1";
-			this.chartTraining.Series.Add(series20);
-			this.chartTraining.Size = new System.Drawing.Size(386, 144);
+			series9.BorderWidth = 4;
+			series9.ChartArea = "ChartArea1";
+			series9.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+			series9.IsVisibleInLegend = false;
+			series9.Name = "Series1";
+			this.chartTraining.Series.Add(series9);
+			this.chartTraining.Size = new System.Drawing.Size(386, 141);
 			this.chartTraining.TabIndex = 29;
 			this.chartTraining.Text = "chart1";
 			this.toolTip1.SetToolTip(this.chartTraining, "Training history");
@@ -2060,7 +2060,7 @@
 			this.tabPageEdit.Controls.Add(this.butClearBoard);
 			this.tabPageEdit.Location = new System.Drawing.Point(4, 5);
 			this.tabPageEdit.Name = "tabPageEdit";
-			this.tabPageEdit.Size = new System.Drawing.Size(392, 465);
+			this.tabPageEdit.Size = new System.Drawing.Size(392, 462);
 			this.tabPageEdit.TabIndex = 4;
 			this.tabPageEdit.Text = "Edit";
 			// 
@@ -2651,7 +2651,7 @@
 			this.labTakenT.Location = new System.Drawing.Point(0, 0);
 			this.labTakenT.Margin = new System.Windows.Forms.Padding(0);
 			this.labTakenT.Name = "labTakenT";
-			this.labTakenT.Size = new System.Drawing.Size(277, 28);
+			this.labTakenT.Size = new System.Drawing.Size(320, 28);
 			this.labTakenT.TabIndex = 15;
 			this.labTakenT.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.toolTip1.SetToolTip(this.labTakenT, "Taken pieces");
@@ -2665,10 +2665,10 @@
 			this.labMaterialT.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
 			this.labMaterialT.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
 			this.labMaterialT.ForeColor = System.Drawing.Color.Black;
-			this.labMaterialT.Location = new System.Drawing.Point(277, 0);
+			this.labMaterialT.Location = new System.Drawing.Point(320, 0);
 			this.labMaterialT.Margin = new System.Windows.Forms.Padding(0);
 			this.labMaterialT.Name = "labMaterialT";
-			this.labMaterialT.Size = new System.Drawing.Size(81, 28);
+			this.labMaterialT.Size = new System.Drawing.Size(93, 28);
 			this.labMaterialT.TabIndex = 24;
 			this.labMaterialT.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			this.toolTip1.SetToolTip(this.labMaterialT, "Difference of pieces material between players");
@@ -2682,10 +2682,10 @@
 			this.labMaterialD.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
 			this.labMaterialD.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
 			this.labMaterialD.ForeColor = System.Drawing.Color.Black;
-			this.labMaterialD.Location = new System.Drawing.Point(277, 0);
+			this.labMaterialD.Location = new System.Drawing.Point(320, 0);
 			this.labMaterialD.Margin = new System.Windows.Forms.Padding(0);
 			this.labMaterialD.Name = "labMaterialD";
-			this.labMaterialD.Size = new System.Drawing.Size(81, 28);
+			this.labMaterialD.Size = new System.Drawing.Size(93, 28);
 			this.labMaterialD.TabIndex = 24;
 			this.labMaterialD.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			this.toolTip1.SetToolTip(this.labMaterialD, "Difference of pieces material between players");
@@ -2702,7 +2702,7 @@
 			this.labTakenD.Location = new System.Drawing.Point(0, 0);
 			this.labTakenD.Margin = new System.Windows.Forms.Padding(0);
 			this.labTakenD.Name = "labTakenD";
-			this.labTakenD.Size = new System.Drawing.Size(277, 28);
+			this.labTakenD.Size = new System.Drawing.Size(320, 28);
 			this.labTakenD.TabIndex = 15;
 			this.labTakenD.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.toolTip1.SetToolTip(this.labTakenD, "Taken pieces");
@@ -2828,7 +2828,7 @@
             "Edit"});
 			this.combMainMode.Location = new System.Drawing.Point(8, 8);
 			this.combMainMode.Name = "combMainMode";
-			this.combMainMode.Size = new System.Drawing.Size(384, 24);
+			this.combMainMode.Size = new System.Drawing.Size(329, 24);
 			this.combMainMode.TabIndex = 11;
 			this.toolTip1.SetToolTip(this.combMainMode, "Select game mode");
 			this.combMainMode.SelectedIndexChanged += new System.EventHandler(this.cbMainMode_SelectedIndexChanged);
@@ -2836,18 +2836,18 @@
 			// chartMain
 			// 
 			this.chartMain.BackColor = System.Drawing.Color.WhiteSmoke;
-			chartArea12.AxisX.IsLabelAutoFit = false;
-			chartArea12.AxisX.MajorGrid.Enabled = false;
-			chartArea12.AxisX.MajorTickMark.Enabled = false;
-			chartArea12.AxisY.IsLabelAutoFit = false;
-			chartArea12.AxisY.MajorGrid.Interval = 5D;
-			chartArea12.AxisY.MajorTickMark.Enabled = false;
-			chartArea12.AxisY.Maximum = 5D;
-			chartArea12.AxisY.Minimum = -5D;
-			chartArea12.BackColor = System.Drawing.Color.WhiteSmoke;
-			chartArea12.BorderDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Solid;
-			chartArea12.Name = "ChartArea1";
-			this.chartMain.ChartAreas.Add(chartArea12);
+			chartArea6.AxisX.IsLabelAutoFit = false;
+			chartArea6.AxisX.MajorGrid.Enabled = false;
+			chartArea6.AxisX.MajorTickMark.Enabled = false;
+			chartArea6.AxisY.IsLabelAutoFit = false;
+			chartArea6.AxisY.MajorGrid.Interval = 5D;
+			chartArea6.AxisY.MajorTickMark.Enabled = false;
+			chartArea6.AxisY.Maximum = 5D;
+			chartArea6.AxisY.Minimum = -5D;
+			chartArea6.BackColor = System.Drawing.Color.WhiteSmoke;
+			chartArea6.BorderDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Solid;
+			chartArea6.Name = "ChartArea1";
+			this.chartMain.ChartAreas.Add(chartArea6);
 			this.chartMain.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.chartMain.Location = new System.Drawing.Point(0, 34);
 			this.chartMain.Name = "chartMain";
@@ -2855,16 +2855,16 @@
 			this.chartMain.PaletteCustomColors = new System.Drawing.Color[] {
         System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(0))))),
         System.Drawing.Color.Olive};
-			series21.ChartArea = "ChartArea1";
-			series21.CustomProperties = "PointWidth=1";
-			series21.IsVisibleInLegend = false;
-			series21.Name = "Series1";
-			series22.ChartArea = "ChartArea1";
-			series22.CustomProperties = "PointWidth=1";
-			series22.Name = "Series2";
-			this.chartMain.Series.Add(series21);
-			this.chartMain.Series.Add(series22);
-			this.chartMain.Size = new System.Drawing.Size(354, 153);
+			series10.ChartArea = "ChartArea1";
+			series10.CustomProperties = "PointWidth=1";
+			series10.IsVisibleInLegend = false;
+			series10.Name = "Series1";
+			series11.ChartArea = "ChartArea1";
+			series11.CustomProperties = "PointWidth=1";
+			series11.Name = "Series2";
+			this.chartMain.Series.Add(series10);
+			this.chartMain.Series.Add(series11);
+			this.chartMain.Size = new System.Drawing.Size(409, 152);
 			this.chartMain.TabIndex = 0;
 			this.chartMain.Text = "chart1";
 			this.toolTip1.SetToolTip(this.chartMain, "Graphic representation of the game scores white player is  represent by light bar" +
@@ -3247,9 +3247,9 @@
 			this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tssMove,
             this.tssInfo});
-			this.statusStrip1.Location = new System.Drawing.Point(0, 840);
+			this.statusStrip1.Location = new System.Drawing.Point(0, 836);
 			this.statusStrip1.Name = "statusStrip1";
-			this.statusStrip1.Size = new System.Drawing.Size(1184, 22);
+			this.statusStrip1.Size = new System.Drawing.Size(1184, 26);
 			this.statusStrip1.TabIndex = 33;
 			this.statusStrip1.Text = "statusStrip1";
 			// 
@@ -3258,13 +3258,13 @@
 			this.tssMove.AutoSize = false;
 			this.tssMove.ForeColor = System.Drawing.Color.Gainsboro;
 			this.tssMove.Name = "tssMove";
-			this.tssMove.Size = new System.Drawing.Size(100, 17);
+			this.tssMove.Size = new System.Drawing.Size(100, 21);
 			// 
 			// tssInfo
 			// 
 			this.tssInfo.ForeColor = System.Drawing.Color.Gainsboro;
 			this.tssInfo.Name = "tssInfo";
-			this.tssInfo.Size = new System.Drawing.Size(0, 17);
+			this.tssInfo.Size = new System.Drawing.Size(0, 21);
 			// 
 			// splitContainerBoard
 			// 
@@ -3283,7 +3283,7 @@
 			// splitContainerBoard.Panel2
 			// 
 			this.splitContainerBoard.Panel2.Controls.Add(this.splitContainerMode);
-			this.splitContainerBoard.Size = new System.Drawing.Size(1184, 517);
+			this.splitContainerBoard.Size = new System.Drawing.Size(1184, 514);
 			this.splitContainerBoard.SplitterDistance = 414;
 			this.splitContainerBoard.TabIndex = 37;
 			// 
@@ -3295,7 +3295,7 @@
 			this.panBoard.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.panBoard.Location = new System.Drawing.Point(0, 24);
 			this.panBoard.Name = "panBoard";
-			this.panBoard.Size = new System.Drawing.Size(410, 465);
+			this.panBoard.Size = new System.Drawing.Size(410, 462);
 			this.panBoard.TabIndex = 2;
 			this.panBoard.Paint += new System.Windows.Forms.PaintEventHandler(this.panBoard_Paint);
 			this.panBoard.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseDown);
@@ -3317,7 +3317,7 @@
 			this.tlpPromotion.Controls.Add(this.labPromoR, 0, 0);
 			this.tlpPromotion.Cursor = System.Windows.Forms.Cursors.Hand;
 			this.tlpPromotion.Dock = System.Windows.Forms.DockStyle.Bottom;
-			this.tlpPromotion.Location = new System.Drawing.Point(0, 413);
+			this.tlpPromotion.Location = new System.Drawing.Point(0, 410);
 			this.tlpPromotion.Name = "tlpPromotion";
 			this.tlpPromotion.RowCount = 1;
 			this.tlpPromotion.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
@@ -3338,7 +3338,7 @@
 			this.tlpBoardD.Controls.Add(this.labColorD, 0, 0);
 			this.tlpBoardD.Controls.Add(this.labNameD, 0, 0);
 			this.tlpBoardD.Dock = System.Windows.Forms.DockStyle.Bottom;
-			this.tlpBoardD.Location = new System.Drawing.Point(0, 489);
+			this.tlpBoardD.Location = new System.Drawing.Point(0, 486);
 			this.tlpBoardD.Margin = new System.Windows.Forms.Padding(0);
 			this.tlpBoardD.Name = "tlpBoardD";
 			this.tlpBoardD.RowCount = 1;
@@ -3383,9 +3383,8 @@
 			// 
 			this.splitContainerMode.Panel2.Controls.Add(this.tabControl1);
 			this.splitContainerMode.Panel2.Controls.Add(this.panel1);
-			this.splitContainerMode.Panel2MinSize = 400;
-			this.splitContainerMode.Size = new System.Drawing.Size(762, 513);
-			this.splitContainerMode.SplitterDistance = 358;
+			this.splitContainerMode.Size = new System.Drawing.Size(762, 510);
+			this.splitContainerMode.SplitterDistance = 413;
 			this.splitContainerMode.TabIndex = 14;
 			// 
 			// splitContainerChart
@@ -3404,8 +3403,8 @@
 			// 
 			this.splitContainerChart.Panel2.Controls.Add(this.chartMain);
 			this.splitContainerChart.Panel2.Controls.Add(this.labResult);
-			this.splitContainerChart.Size = new System.Drawing.Size(358, 457);
-			this.splitContainerChart.SplitterDistance = 262;
+			this.splitContainerChart.Size = new System.Drawing.Size(413, 454);
+			this.splitContainerChart.SplitterDistance = 260;
 			this.splitContainerChart.TabIndex = 27;
 			// 
 			// lvMoves
@@ -3428,7 +3427,7 @@
 			this.lvMoves.MultiSelect = false;
 			this.lvMoves.Name = "lvMoves";
 			this.lvMoves.ShowGroups = false;
-			this.lvMoves.Size = new System.Drawing.Size(354, 258);
+			this.lvMoves.Size = new System.Drawing.Size(409, 256);
 			this.lvMoves.TabIndex = 27;
 			this.lvMoves.UseCompatibleStateImageBehavior = false;
 			this.lvMoves.View = System.Windows.Forms.View.Details;
@@ -3466,7 +3465,7 @@
 			this.labResult.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
 			this.labResult.Location = new System.Drawing.Point(0, 0);
 			this.labResult.Name = "labResult";
-			this.labResult.Size = new System.Drawing.Size(354, 34);
+			this.labResult.Size = new System.Drawing.Size(409, 34);
 			this.labResult.TabIndex = 1;
 			this.labResult.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			this.labResult.Visible = false;
@@ -3479,13 +3478,13 @@
 			this.tlpChartD.Controls.Add(this.labMaterialD, 0, 0);
 			this.tlpChartD.Controls.Add(this.labTakenD, 0, 0);
 			this.tlpChartD.Dock = System.Windows.Forms.DockStyle.Bottom;
-			this.tlpChartD.Location = new System.Drawing.Point(0, 485);
+			this.tlpChartD.Location = new System.Drawing.Point(0, 482);
 			this.tlpChartD.Margin = new System.Windows.Forms.Padding(0);
 			this.tlpChartD.Name = "tlpChartD";
 			this.tlpChartD.RowCount = 1;
 			this.tlpChartD.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
 			this.tlpChartD.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-			this.tlpChartD.Size = new System.Drawing.Size(358, 28);
+			this.tlpChartD.Size = new System.Drawing.Size(413, 28);
 			this.tlpChartD.TabIndex = 30;
 			// 
 			// tlpChartT
@@ -3502,7 +3501,7 @@
 			this.tlpChartT.RowCount = 1;
 			this.tlpChartT.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
 			this.tlpChartT.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-			this.tlpChartT.Size = new System.Drawing.Size(358, 28);
+			this.tlpChartT.Size = new System.Drawing.Size(413, 28);
 			this.tlpChartT.TabIndex = 29;
 			// 
 			// panel1
@@ -3512,7 +3511,7 @@
 			this.panel1.Location = new System.Drawing.Point(0, 0);
 			this.panel1.Name = "panel1";
 			this.panel1.Padding = new System.Windows.Forms.Padding(8);
-			this.panel1.Size = new System.Drawing.Size(400, 39);
+			this.panel1.Size = new System.Drawing.Size(345, 39);
 			this.panel1.TabIndex = 11;
 			// 
 			// splitContainerMain
@@ -3533,8 +3532,8 @@
 			// 
 			this.splitContainerMain.Panel2.Controls.Add(this.splitContainerMoves);
 			this.splitContainerMain.Panel2MinSize = 100;
-			this.splitContainerMain.Size = new System.Drawing.Size(1184, 814);
-			this.splitContainerMain.SplitterDistance = 517;
+			this.splitContainerMain.Size = new System.Drawing.Size(1184, 810);
+			this.splitContainerMain.SplitterDistance = 514;
 			this.splitContainerMain.TabIndex = 38;
 			this.splitContainerMain.SplitterMoved += new System.Windows.Forms.SplitterEventHandler(this.splitContainerMain_SplitterMoved);
 			// 
@@ -3555,8 +3554,8 @@
 			// 
 			this.splitContainerMoves.Panel2.Controls.Add(this.lvMovesB);
 			this.splitContainerMoves.Panel2.Controls.Add(this.tlpBlack);
-			this.splitContainerMoves.Size = new System.Drawing.Size(1184, 293);
-			this.splitContainerMoves.SplitterDistance = 146;
+			this.splitContainerMoves.Size = new System.Drawing.Size(1184, 292);
+			this.splitContainerMoves.SplitterDistance = 145;
 			this.splitContainerMoves.TabIndex = 33;
 			// 
 			// lvMovesW
@@ -3578,7 +3577,7 @@
 			this.lvMovesW.MultiSelect = false;
 			this.lvMovesW.Name = "lvMovesW";
 			this.lvMovesW.ShowGroups = false;
-			this.lvMovesW.Size = new System.Drawing.Size(1180, 102);
+			this.lvMovesW.Size = new System.Drawing.Size(1180, 101);
 			this.lvMovesW.TabIndex = 32;
 			this.lvMovesW.UseCompatibleStateImageBehavior = false;
 			this.lvMovesW.View = System.Windows.Forms.View.Details;

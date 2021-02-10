@@ -47,7 +47,7 @@
 			this.cbEngineList = new System.Windows.Forms.ComboBox();
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
 			this.tbPlayerName = new System.Windows.Forms.TextBox();
-			this.groupBox2 = new System.Windows.Forms.GroupBox();
+			this.gbPlayers = new System.Windows.Forms.GroupBox();
 			this.listBox1 = new System.Windows.Forms.ListBox();
 			this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
 			this.panel1.SuspendLayout();
@@ -60,7 +60,7 @@
 			this.gbBook.SuspendLayout();
 			this.gbEngine.SuspendLayout();
 			this.groupBox1.SuspendLayout();
-			this.groupBox2.SuspendLayout();
+			this.gbPlayers.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// panel1
@@ -297,16 +297,16 @@
 			this.tbPlayerName.Size = new System.Drawing.Size(305, 20);
 			this.tbPlayerName.TabIndex = 0;
 			// 
-			// groupBox2
+			// gbPlayers
 			// 
-			this.groupBox2.Controls.Add(this.listBox1);
-			this.groupBox2.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.groupBox2.Location = new System.Drawing.Point(0, 0);
-			this.groupBox2.Name = "groupBox2";
-			this.groupBox2.Size = new System.Drawing.Size(489, 591);
-			this.groupBox2.TabIndex = 5;
-			this.groupBox2.TabStop = false;
-			this.groupBox2.Text = "Players List";
+			this.gbPlayers.Controls.Add(this.listBox1);
+			this.gbPlayers.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.gbPlayers.Location = new System.Drawing.Point(0, 0);
+			this.gbPlayers.Name = "gbPlayers";
+			this.gbPlayers.Size = new System.Drawing.Size(489, 591);
+			this.gbPlayers.TabIndex = 5;
+			this.gbPlayers.TabStop = false;
+			this.gbPlayers.Text = "Players List";
 			// 
 			// listBox1
 			// 
@@ -330,7 +330,7 @@
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(800, 591);
-			this.Controls.Add(this.groupBox2);
+			this.Controls.Add(this.gbPlayers);
 			this.Controls.Add(this.panel1);
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
 			this.MinimizeBox = false;
@@ -351,7 +351,7 @@
 			this.gbEngine.ResumeLayout(false);
 			this.groupBox1.ResumeLayout(false);
 			this.groupBox1.PerformLayout();
-			this.groupBox2.ResumeLayout(false);
+			this.gbPlayers.ResumeLayout(false);
 			this.ResumeLayout(false);
 
 		}
@@ -360,7 +360,7 @@
 		private System.Windows.Forms.Panel panel1;
 		private System.Windows.Forms.GroupBox groupBox1;
 		private System.Windows.Forms.TextBox tbPlayerName;
-		private System.Windows.Forms.GroupBox groupBox2;
+		private System.Windows.Forms.GroupBox gbPlayers;
 		public System.Windows.Forms.ListBox listBox1;
 		private System.Windows.Forms.GroupBox gbEngine;
 		private System.Windows.Forms.ComboBox cbEngineList;
