@@ -337,6 +337,7 @@ namespace RapChessGui
 
 		void Clear()
 		{
+			Text = $"RapChessGui Games {++CData.gamesPlayed} Draws {CData.gamesDraw} Time out {CData.gamesTime} Errors {CData.gamesError}";
 			CData.gameState = CGameState.normal;
 			labEloD.BackColor = Color.LightGray;
 			labEloD.ForeColor = Color.Black;
@@ -571,10 +572,12 @@ namespace RapChessGui
 					ShowInfo($"{pl.name} resign", Color.Red);
 					break;
 				case CGameState.time:
+					CData.gamesTime++;
 					ShowInfo($"{pl.name} time out", Color.Red);
 					CRapLog.Add($"Time out {pl.name}");
 					break;
 				case CGameState.error:
+					CData.gamesError++;
 					labError.Show();
 					ShowInfo($"{pl.name} make wrong move", Color.Red);
 					CRapLog.Add($"Wrong move {pl.name} ({umo}) {Chess.GetFen()}");
@@ -605,7 +608,8 @@ namespace RapChessGui
 			if (CData.gameMode == CGameMode.training)
 				TrainingEnd(gw, gl, isDraw);
 			GamerList.Terminate();
-			Text = $"RapChessGui Games {++CData.gamesCount}";
+			if (isDraw)
+				CData.gamesDraw++;
 			Task.Delay(FormOptions.gameBreak * 1000).ContinueWith(t => CWinMessage.Message(WM_GAME_NEXT));
 		}
 
@@ -2578,7 +2582,7 @@ namespace RapChessGui
 
 		private void cbMainMode_SelectedIndexChanged(object sender, EventArgs e)
 		{
-			CData.gamesCount = 0;
+			CData.Clear();
 			FormLogGames.This.textBox1.Text = "";
 			tabControl1.SelectedIndex = combMainMode.SelectedIndex;
 			Board.Fill();

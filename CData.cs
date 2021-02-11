@@ -8,7 +8,7 @@ using System.Windows.Forms.DataVisualization.Charting;
 
 namespace RapChessGui
 {
-	public enum CGameMode { game, match,tourE, tourP, training, edit }
+	public enum CGameMode { game, match, tourE, tourP, training, edit }
 
 	public static class CWinMessage
 	{
@@ -22,7 +22,7 @@ namespace RapChessGui
 		{
 			lock (locker)
 			{
-				return SendMessage(winHandle,msg,IntPtr.Zero, IntPtr.Zero);
+				return SendMessage(winHandle, msg, IntPtr.Zero, IntPtr.Zero);
 			}
 		}
 
@@ -50,7 +50,10 @@ namespace RapChessGui
 	{
 		public static bool reset = true;
 		public static bool rotateBoard = false;
-		public static int gamesCount = 0;
+		public static int gamesPlayed = 0;
+		public static int gamesDraw = 0;
+		public static int gamesTime = 0;
+		public static int gamesError = 0;
 		public static double fps = 0;
 		public static CGameState gameState = CGameState.normal;
 		public static CGameMode gameMode = CGameMode.game;
@@ -59,12 +62,20 @@ namespace RapChessGui
 		public static List<string> fileEngineUci = new List<string>();
 		public static List<string> fileEngineWb = new List<string>();
 
+		public static void Clear()
+		{
+			gamesPlayed = 0;
+			gamesDraw = 0;
+			gamesTime = 0;
+			gamesError = 0;
+		}
+
 		public static void HisToPoints(CHisElo he, DataPointCollection po)
 		{
 			po.Clear();
 			int x = 100 - he.list.Count;
 			foreach (double v in he.list)
-				po.AddXY(x++,v);
+				po.AddXY(x++, v);
 		}
 
 		public static string MakeShort(string name)
@@ -103,7 +114,7 @@ namespace RapChessGui
 
 		public static void UpdateFileEngine()
 		{
-			UpdateFileEngine("Engines",fileEngine);
+			UpdateFileEngine("Engines", fileEngine);
 			UpdateFileEngine("Engines//Uci", fileEngineUci);
 			UpdateFileEngine("Engines//Winboard", fileEngineWb);
 			fileEngine.Add("none");
@@ -120,7 +131,8 @@ namespace RapChessGui
 			list = new List<double>(he.list);
 		}
 
-		public int EloAvg(int def = 0) {
+		public int EloAvg(int def = 0)
+		{
 			int sum = 0;
 			foreach (int i in list)
 				sum += i;
@@ -129,7 +141,7 @@ namespace RapChessGui
 
 		public Color GetColor()
 		{
-			double elo =Last();
+			double elo = Last();
 			MinMax(out double min, out double max);
 			double q = (max - min) / 10;
 			if (elo > max - q)
@@ -160,10 +172,10 @@ namespace RapChessGui
 			list.Add(value);
 			int c = list.Count - 100;
 			if (c > 0)
-				list.RemoveRange(0,c);
+				list.RemoveRange(0, c);
 		}
 
-		public int Add(int value,int min,int max)
+		public int Add(int value, int min, int max)
 		{
 			if (value < min)
 				value = min;
@@ -181,11 +193,11 @@ namespace RapChessGui
 				return 0;
 		}
 
-		public void MinMax(out double min,out double max)
+		public void MinMax(out double min, out double max)
 		{
 			min = list.Count > 0 ? list[0] : 0;
 			max = min;
-			foreach(double d in list)
+			foreach (double d in list)
 			{
 				if (min > d)
 					min = d;
@@ -302,23 +314,23 @@ namespace RapChessGui
 		public string ShortName()
 		{
 			string result = mode[0].ToString();
-			if(mode !="Infinite")
+			if (mode != "Infinite")
 				result = $"{result}{value}";
 			return $" {result}";
 		}
 
 		public string LongName()
 		{
-			if(mode == "Standard")
+			if (mode == "Standard")
 			{
 				int t = value * 15 + inc * 60;
 				int m = value / 4;
 				string min = m > 0 ? m.ToString() : "";
-				string sec = new string[4] {"", "¼", "½", "¾"}[value % 4];
+				string sec = new string[4] { "", "¼", "½", "¾" }[value % 4];
 				string tim = $"{min}{sec}+{inc}";
 				if (t > 21600)
 					return $"Mail {tim}";
-				if(t > 1800)
+				if (t > 1800)
 					return $"Classical {tim}";
 				if (t > 600)
 					return $"Rapid {tim}";
@@ -333,7 +345,7 @@ namespace RapChessGui
 			return mode;
 		}
 
-	} 
+	}
 
 	public class ListViewComparer : System.Collections.IComparer
 	{
