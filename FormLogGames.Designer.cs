@@ -52,7 +52,7 @@
 			this.Name = "FormLogGames";
 			this.ShowIcon = false;
 			this.ShowInTaskbar = false;
-			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
 			this.Text = "Log games";
 			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormPgn_FormClosing);
 			this.VisibleChanged += new System.EventHandler(this.FormLogGames_VisibleChanged);

@@ -105,6 +105,7 @@
     <Compile Include="CModeTraining.cs" />
     <Compile Include="CPlayerList.cs" />
     <Compile Include="CTourList.cs" />
+    <Compile Include="CUci.cs" />
     <Compile Include="FormChess.cs">
       <SubType>Form</SubType>
     </Compile>

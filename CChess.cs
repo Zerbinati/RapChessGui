@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace RapChessGui
+namespace NSChess
 {
+
 	public enum CGameState { normal, mate, stalemate, repetition, move50, material, time, error, resignation }
 
 	class CUndo
@@ -15,64 +16,7 @@ namespace RapChessGui
 		public ulong hash;
 	}
 
-	class CUci
-	{
-		public string command;
-		public string[] tokens;
-
-		public int GetIndex(string key, int def)
-		{
-			for (int n = 0; n < tokens.Length; n++)
-			{
-				if (tokens[n] == key)
-				{
-					return n + 1;
-				}
-			}
-			return def;
-		}
-
-		public int GetInt(string key, int def)
-		{
-			for (int n = 0; n < tokens.Length - 1; n++)
-			{
-				if (tokens[n] == key)
-				{
-					return Int32.Parse(tokens[n + 1]);
-				}
-			}
-			return def;
-		}
-
-		public bool GetValue(string name, out string value)
-		{
-			int i = GetIndex(name, tokens.Length);
-			if (i < tokens.Length)
-			{
-				value = tokens[i];
-				return true;
-			}
-			value = "";
-			return false;
-		}
-
-		public string Last()
-		{
-			if (tokens.Length > 0)
-				return tokens[tokens.Length - 1];
-			return "";
-		}
-
-		public void SetMsg(string msg)
-		{
-			if (msg == null)
-				msg = "";
-			tokens = msg.Split(new[] { ' ', '\t' }, StringSplitOptions.RemoveEmptyEntries);
-			command = tokens.Length > 0 ? tokens[0] : "";
-		}
-	}
-
-	class CChess
+	public class CChess
 	{
 		public static CChess This;
 		public const string defFen = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
@@ -100,7 +44,7 @@ namespace RapChessGui
 		ulong g_hash = 0;
 		int g_passing = 0;
 		public int g_move50 = 0;
-		public static int g_moveNumber = 0;
+		public int g_moveNumber = 0;
 		public bool g_inCheck = false;
 		int g_lastCastle = 0;
 		bool adjInsufficient = false;
@@ -108,7 +52,7 @@ namespace RapChessGui
 		readonly ulong[,] g_hashBoard = new ulong[256, 16];
 		readonly int[] boardCheck = new int[256];
 		readonly int[] boardCastle = new int[256];
-		public static bool whiteTurn = true;
+		public bool whiteTurn = true;
 		int usColor = 0;
 		int enColor = 0;
 		public static int[] arrField = new int[64];
@@ -186,7 +130,7 @@ namespace RapChessGui
 				return "O-O";
 			if ((flags & moveflagCastleQueen) > 0)
 				return "O-O-O";
-			List<int> moves = GenerateValidMoves();
+			List<int> moves = GenerateValidMoves(out _);
 			bool uniRank = true;
 			bool uniFile = true;
 			foreach (int m in moves)
@@ -233,7 +177,7 @@ namespace RapChessGui
 		{
 			char[] charsToTrim = { '+', '#' };
 			san = san.Trim(charsToTrim);
-			List<int> moves = GenerateValidMoves();
+			List<int> moves = GenerateValidMoves(out _);
 			foreach (int imo in moves)
 			{
 				string umo = EmoToUmo(imo);
@@ -260,7 +204,7 @@ namespace RapChessGui
 				return CGameState.repetition;
 			if (enInsufficient && myInsufficient)
 				return CGameState.material;
-			List<int> moves = GenerateValidMoves();
+			List<int> moves = GenerateValidMoves(out _);
 			if (moves.Count > 0)
 				return (int)CGameState.normal;
 			return check ? CGameState.mate : CGameState.stalemate;
@@ -295,7 +239,7 @@ namespace RapChessGui
 
 		public bool IsValidMoveEmo(int emo)
 		{
-			List<int> moves = GenerateValidMoves();
+			List<int> moves = GenerateValidMoves(out _);
 			foreach (int m in moves)
 				if (m == emo)
 					return true;
@@ -305,7 +249,7 @@ namespace RapChessGui
 		public bool IsValidMoveUmo(string umo, out int emo)
 		{
 			emo = 0;
-			List<int> moves = GenerateValidMoves();
+			List<int> moves = GenerateValidMoves(out _);
 			foreach (int m in moves)
 				if (EmoToUmo(m) == umo)
 				{
@@ -320,7 +264,7 @@ namespace RapChessGui
 			emo = 0;
 			umo = "";
 			san = "";
-			List<int> moves = GenerateValidMoves();
+			List<int> moves = GenerateValidMoves(out _);
 			foreach (int m in moves)
 			{
 				emo = m;
@@ -482,19 +426,25 @@ namespace RapChessGui
 				moves.Add(fr | (to << 8) | flag);
 		}
 
-		public List<int> GenerateValidMoves()
+		public List<int> GenerateValidMoves(out bool mate)
 		{
-			List<int> moves = new List<int>();
+			mate = false;
+			List<int> moves = new List<int>(64);
 			List<int> am = GenerateAllMoves(whiteTurn, false);
 			if (!g_inCheck)
-				foreach (int m in am)
+				foreach(int m in am)
 				{
 					MakeMove(m);
-					GenerateAllMoves(whiteTurn, false);
+					GenerateAllMoves(whiteTurn, true);
 					if (!g_inCheck)
 						moves.Add(m);
 					UnmakeMove(m);
 				}
+			if (moves.Count == 0)
+			{
+				GenerateAllMoves(!whiteTurn, true);
+				mate = g_inCheck;
+			}
 			return moves;
 		}
 
@@ -633,8 +583,43 @@ namespace RapChessGui
 			}
 		}
 
+		public bool Is2ToEnd(out string myMov, out string enMov)
+		{
+			myMov = "";
+			enMov = "";
+			List<int> mu1 = GenerateValidMoves(out _);//my last move
+			foreach (int myMove in mu1)
+			{
+				bool myEscape = true;
+				MakeMove(myMove);
+				List<int> mu2 = GenerateValidMoves(out _);//enemy mat move
+				foreach (int enMove in mu2)
+				{
+					bool enAttack = false;
+					MakeMove(enMove);
+					List<int> mu3 = GenerateValidMoves(out bool mate);//my illegal move
+					if (mate)
+					{
+						myEscape = false;
+						enAttack = true;
+						myMov = EmoToUmo(myMove);
+						enMov = EmoToUmo(enMove);
+					}
+					UnmakeMove(enMove);
+					if (enAttack)
+						continue;
+				}
+				UnmakeMove(myMove);
+				if (myEscape)
+					return false;
+			}
+			return true;
+		}
+
 		public bool SetFen(string fen = defFen)
 		{
+			if (fen == "")
+				fen = defFen;
 			string[] chunks = fen.Split(' ');
 			if (chunks.Length < 4)
 				return false;

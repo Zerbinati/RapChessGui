@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Drawing;
 using System.Diagnostics;
-using System.Threading;
 using RapLog;
+using NSChess;
 
 namespace RapChessGui
 {
@@ -343,7 +343,6 @@ namespace RapChessGui
 				FormLogEngines.AppendText($" < {msg}\n", Color.Brown);
 				enginePro.process.StandardInput.WriteLine(msg);
 			}
-			Thread.Sleep(0x1);
 		}
 
 		public string GetBook()
@@ -570,12 +569,12 @@ namespace RapChessGui
 
 		public CGamer GamerWinner()
 		{
-			return gamer[(CChess.g_moveNumber & 1) ^ 1];
+			return gamer[(FormChess.This.Chess.g_moveNumber & 1) ^ 1];
 		}
 
 		public CGamer GamerLoser()
 		{
-			return gamer[CChess.g_moveNumber & 1];
+			return gamer[FormChess.This.Chess.g_moveNumber & 1];
 		}
 
 		public CGamer GamerHuman()

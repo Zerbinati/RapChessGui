@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Collections.Generic;
+using NSChess;
 
 namespace RapChessGui
 {
@@ -353,7 +354,7 @@ namespace RapChessGui
 					gp1.AddString("pnbrqk"[image].ToString(), fontPiece.FontFamily, (int)fontPiece.Style, fontPiece.Size, rec, sf);
 				}
 			}
-			if (CChess.whiteTurn)
+			if (FormChess.This.Chess.whiteTurn)
 			{
 				g.DrawPath(penB, gpB);
 				g.FillPath(brushBlack, gpB);
@@ -553,8 +554,8 @@ namespace RapChessGui
 		{
 			ClearAttack();
 			if (show)
-				ShowAttack(show, CChess.whiteTurn);
-			ShowAttack(show, !CChess.whiteTurn);
+				ShowAttack(show, FormChess.This.Chess.whiteTurn);
+			ShowAttack(show, !FormChess.This.Chess.whiteTurn);
 		}
 
 	}
