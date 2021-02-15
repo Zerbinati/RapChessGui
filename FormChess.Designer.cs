@@ -3236,6 +3236,7 @@
 			this.splitContainerBoard.Panel1.Controls.Add(this.panBoard);
 			this.splitContainerBoard.Panel1.Controls.Add(this.tlpBoardD);
 			this.splitContainerBoard.Panel1.Controls.Add(this.tlpBoardT);
+			this.splitContainerBoard.Panel1.Resize += new System.EventHandler(this.splitContainerBoard_Panel1_Resize);
 			// 
 			// splitContainerBoard.Panel2
 			// 

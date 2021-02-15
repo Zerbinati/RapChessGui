@@ -21,6 +21,11 @@ namespace RapChessGui
 			name = n;
 		}
 
+		public bool FileExists()
+		{
+			return File.Exists("Books\\" + file);
+		}
+
 		public string GetParameters(CEngine e)
 		{
 			if (e == null)

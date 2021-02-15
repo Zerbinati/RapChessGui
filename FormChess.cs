@@ -136,25 +136,28 @@ namespace RapChessGui
 			{
 				CBook b;
 				b = new CBook();
-				b.file = "BookReaderUci.exe";
+				b.file = "BookReaderBru.exe";
 				b.name = "Auto";
 				b.parameters = "[engine] -lw 10";
 				bookList.Add(b);
 				b = new CBook();
-				b.file = "BookReaderUci.exe";
+				b.file = "BookReaderBru.exe";
 				b.parameters = "Eco";
 				bookList.Add(b);
 				b = new CBook();
-				b.file = "BookReaderUci.exe";
+				b.file = "BookReaderBru.exe";
 				b.parameters = "Tiny";
 				bookList.Add(b);
 				b = new CBook();
-				b.file = "BookReaderUci.exe";
+				b.file = "BookReaderBru.exe";
 				b.parameters = "Random1";
 				bookList.Add(b);
 				b = new CBook();
-				b.file = "BookReaderUci.exe";
+				b.file = "BookReaderBru.exe";
 				b.parameters = "Random2";
+				bookList.Add(b);
+				b = new CBook("ChessDb");
+				b.file = "BookReaderCdb.exe";
 				bookList.Add(b);
 				for (int n = 1; n < 10; n++)
 				{
@@ -231,7 +234,7 @@ namespace RapChessGui
 				playerList.Add(p);
 				p = new CPlayer();
 				p.engine = "RapChessCs";
-				p.book = "Auto";
+				p.book = "ChessDb";
 				p.modeValue.mode = "Time";
 				p.modeValue.value = 10;
 				p.elo = "1200";
@@ -324,6 +327,11 @@ namespace RapChessGui
 		#endregion
 
 		#region main
+
+		void SquareBoard()
+		{
+			splitContainerBoard.SplitterDistance = panBoard.Height;
+		}
 
 		void GameLoop()
 		{
@@ -1094,19 +1102,20 @@ namespace RapChessGui
 				cbTeacherBook.Items.Add(b.name);
 				cbTrainedBook.Items.Add(b.name);
 			}
-			cbTourEBook.SelectedIndex = cbTourEBook.Items.Count >= 0 ? 0 : -1; ;
-			cbTeacherBook.SelectedIndex = cbTeacherBook.Items.Count >= 0 ? 0 : -1;
-			cbTrainedBook.SelectedIndex = cbTrainedBook.Items.Count >= 0 ? 0 : -1;
-			cbBook.SelectedIndex = cbBook.Items.Count >= 0 ? 0 : -1; ;
-			cbMatchBook1.SelectedIndex = cbMatchBook1.Items.Count >= 0 ? 0 : -1; ;
-			cbMatchBook2.SelectedIndex = cbMatchBook2.Items.Count >= 0 ? 0 : -1; ;
-			cbEngine.SelectedIndex = cbEngine.Items.Count >= 0 ? 0 : -1;
+			cbTourEBook.SelectedIndex = cbTourEBook.Items.Count > 0 ? 0 : -1; ;
+			cbTeacherBook.SelectedIndex = cbTeacherBook.Items.Count > 0 ? 0 : -1;
+			cbTrainedBook.SelectedIndex = cbTrainedBook.Items.Count > 0 ? 0 : -1;
+			cbBook.SelectedIndex = cbBook.Items.Count > 0 ? 0 : -1; ;
+			cbMatchBook1.SelectedIndex = cbMatchBook1.Items.Count > 0 ? 0 : -1; ;
+			cbMatchBook2.SelectedIndex = cbMatchBook2.Items.Count > 0 ? 0 : -1; ;
+			cbEngine.SelectedIndex = cbEngine.Items.Count > 0 ? 0 : -1;
 			TournamentEReset();
 			TournamentPReset();
 			lvPlayer.ListViewItemSorter = new ListViewComparer(1, SortOrder.Descending);
 			lvEngine.ListViewItemSorter = new ListViewComparer(1, SortOrder.Descending);
 			MatchShow();
 			TournamentEShow();
+			TrainingShow();
 		}
 
 		public bool MakeMove(string umo)
@@ -2673,7 +2682,6 @@ namespace RapChessGui
 			LinesResize(lvMovesW);
 			LinesResize(lvMovesB);
 			SplitLoadFromIni();
-			splitContainerBoard.SplitterDistance = panBoard.Height;
 		}
 
 		private void lvEngine_Resize(object sender, EventArgs e)
@@ -2739,5 +2747,9 @@ namespace RapChessGui
 
 		#endregion
 
+		private void splitContainerBoard_Panel1_Resize(object sender, EventArgs e)
+		{
+			SquareBoard();
+		}
 	}
 }

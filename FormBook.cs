@@ -105,11 +105,17 @@ namespace RapChessGui
 			if (e.Index < 0)
 				return;
 			string name = listBox1.Items[e.Index].ToString();
+			CBook book = FormChess.bookList.GetBook(name);
 			bool selected = (e.State & DrawItemState.Selected) == DrawItemState.Selected;
 			Brush b = Brushes.Black;
 			if (selected)
 			{
 				e = new DrawItemEventArgs(e.Graphics, e.Font, e.Bounds, e.Index, e.State ^ DrawItemState.Selected, CBoard.colorBrighter, CBoard.colorDark);
+				b = Brushes.White;
+			}
+			else if (!book.FileExists())
+			{
+				e = new DrawItemEventArgs(e.Graphics, e.Font, e.Bounds, e.Index, e.State, Color.White, CBoard.colorRed);
 				b = Brushes.White;
 			}
 			e.DrawBackground();
