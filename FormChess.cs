@@ -675,7 +675,6 @@ namespace RapChessGui
 					else
 						pv += $" {umo}";
 				}
-				else break;
 			}
 			for (int n = moves.Count - 1; n >= 0; n--)
 				Chess.UnmakeMove(moves[n]);
@@ -2745,11 +2744,12 @@ namespace RapChessGui
 			UpdateEngineList();
 		}
 
-		#endregion
-
 		private void splitContainerBoard_Panel1_Resize(object sender, EventArgs e)
 		{
 			SquareBoard();
 		}
+
+		#endregion
+
 	}
 }

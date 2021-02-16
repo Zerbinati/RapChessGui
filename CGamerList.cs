@@ -421,19 +421,8 @@ namespace RapChessGui
 				double v = Convert.ToDouble(value);
 				if (((ms - timerStart) > (v + FormOptions.marginTime)) && (FormOptions.marginTime >= 0) && (value > 0) && timer.IsRunning)
 				{
-					if (CChess.This.IsValidMoveUmo(lastMove, out _))
-					{
-						CRapLog.Add($"{player.engine} forced move {lastMove}");
-						FormLogEngines.AppendTimeText($"{player.name} forced move {lastMove}\n", Color.Orange);
-						EngineRestart();
-						FormChess.This.MakeMove(lastMove);
-					}
-					else
-					{
 						FormChess.This.SetGameState(CGameState.time);
 						return "Time out";
-					}
-					timeOut = true;
 				}
 				if (ms > 0)
 					dt = dt.AddMilliseconds(ms);
