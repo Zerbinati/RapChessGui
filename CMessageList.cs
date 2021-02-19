@@ -95,7 +95,8 @@ namespace RapChessGui
 						buffer.Add(m);
 					if (bm)
 						gamer.timer.Stop();
-				}
+				}else
+					buffer.Add(m);
 			}
 			if (buffer.Count > 0)
 			{

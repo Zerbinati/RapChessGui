@@ -259,6 +259,25 @@ namespace NSChess
 			return false;
 		}
 
+		public bool IsValidMoveUmo(string move, out string umo, out int emo)
+		{
+			umo = move;
+			emo = 0;
+			move = move.ToLower();
+			List<int> moves = GenerateValidMoves(out _);
+			foreach (int m in moves)
+			{
+				string u = EmoToUmo(m);
+				if( (u == move)||(u == $"{move}q"))
+				{
+					umo = u;
+					emo = m;
+					return true;
+				}
+			}
+			return false;
+		}
+
 		public bool IsValidMove(string move, out string umo, out string san, out int emo)
 		{
 			emo = 0;
@@ -432,7 +451,7 @@ namespace NSChess
 			List<int> moves = new List<int>(64);
 			List<int> am = GenerateAllMoves(whiteTurn, false);
 			if (!g_inCheck)
-				foreach(int m in am)
+				foreach (int m in am)
 				{
 					MakeMove(m);
 					GenerateAllMoves(whiteTurn, true);

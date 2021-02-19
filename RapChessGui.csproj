@@ -96,6 +96,7 @@
     <Compile Include="CModeGame.cs" />
     <Compile Include="CModeTournamentE.cs" />
     <Compile Include="CModeTournamentP.cs" />
+    <Compile Include="COptionList.cs" />
     <Compile Include="CRapLog.cs" />
     <Compile Include="CModeMatch.cs" />
     <Compile Include="CBoard.cs" />

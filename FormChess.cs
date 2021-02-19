@@ -867,7 +867,14 @@ namespace RapChessGui
 			{
 				CGamer gamer = GamerList.GetGamerPid(m.pid, out string protocol);
 				if (gamer == null)
-					CRapLog.Add($"Unknown pid ({GamerList.GamerCur().player.engine} - {GamerList.GamerSec().player.engine})");
+				{
+					if (m.pid == FormEngine.process.GetPid())
+					{
+						FormEngine.AddOption(m.msg);
+					}
+					else
+						CRapLog.Add($"Unknown pid ({GamerList.GamerCur().player.engine} - {GamerList.GamerSec().player.engine})");
+				}
 				else
 				{
 					string book = protocol == "Book" ? "book " : "";
@@ -1124,7 +1131,6 @@ namespace RapChessGui
 			Board.arrowCur.Clear();
 			CGamer cg = GamerList.GamerCur();
 			cg.timer.Stop();
-			umo = umo.ToLower();
 			double m = GamerList.curIndex == 0 ? 0.01 : -0.01;
 			chartMain.Series[GamerList.curIndex].Points.Add(cg.iScore * m);
 			if (GetRanked() && CModeGame.ranked && (cg.engine == null) && ((Chess.g_moveNumber >> 1) == 4))
@@ -1133,10 +1139,7 @@ namespace RapChessGui
 				cg.player.elo = cg.player.GetEloLess().ToString();
 				cg.player.SaveToIni();
 			}
-			if (!Chess.IsValidMoveUmo(umo, out int gmo))
-				if (Chess.IsValidMoveUmo($"{umo}q", out gmo))
-					umo = $"{umo}q";
-			if (gmo == 0)
+			if (!Chess.IsValidMoveUmo(umo,out umo,out int gmo))
 			{
 				FormLogEngines.AppendText($"Wrong move: ({umo})\n", Color.Red);
 				FormLogEngines.AppendText($"Fen: {Chess.GetFen()}\n", Color.Black);

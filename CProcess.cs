@@ -52,7 +52,7 @@ namespace RapChessGui
 			}
 		}
 
-		public void SetProgram(string path, string param)
+		public int SetProgram(string path, string param = "")
 		{
 			Terminate();
 			if (File.Exists(path))
@@ -69,9 +69,10 @@ namespace RapChessGui
 				process.Start();
 				process.BeginOutputReadLine();
 				SetPriority(FormOptions.priority);
+				return process.Id;
 			}
-			else
 				MessageBox.Show($"Missing file {Path.GetFileName(path)}");
+			return 0;
 		}
 
 		public void Restart()

@@ -1,6 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
 using System.Windows.Forms;
 using RapIni;
 
@@ -12,6 +12,8 @@ namespace RapChessGui
 		int indexFirst = -1;
 		int tournament = -1;
 		CEngine engine = null;
+		public static CProcess process = new CProcess();
+		COptionList optionList = new COptionList();
 
 		public FormEngine()
 		{
@@ -19,7 +21,51 @@ namespace RapChessGui
 			InitializeComponent();
 		}
 
-		void SelectEngine(){
+		public static void AddOption(string o)
+		{
+			if (o == "uciok")
+				This.Uciok();
+			else
+				This.optionList.Add(o);
+		}
+
+		public void Uciok()
+		{
+			int y = 0;
+			panOptions.Controls.Clear();
+			optionList.Sort();
+			for (int n = 0; n < optionList.list.Count; n++)
+			{
+				string oName = $"optionN{n}";
+				string lName = $"optionN{n}";
+				COption o = optionList.list[n];
+				switch (o.type)
+				{
+					case "spin":
+						var nud = new NumericUpDown();
+						nud.Name = oName;
+						nud.Minimum = Convert.ToInt32(o.min);
+						nud.Maximum = Convert.ToInt32(o.max);
+						nud.Value = Convert.ToInt32(engine.GetOption(o.name, o.def));
+						nud.Location = new Point(3, y);
+						nud.TextAlign = HorizontalAlignment.Right;
+						panOptions.Controls.Add(nud);
+						var lab = new Label();
+						lab.Name = lName;
+						lab.Text = o.name;
+						lab.Location = new Point(128, y);
+						panOptions.Controls.Add(lab);
+						y += 24;
+						break;
+				}
+			}
+			process.Terminate();
+		}
+
+		void SelectEngine()
+		{
+			optionList.list.Clear();
+			Uciok();
 			tbEngineName.Text = engine.name;
 			tbParameters.Text = engine.parameters;
 			cbFileList.Text = engine.GetFile();
@@ -27,7 +73,11 @@ namespace RapChessGui
 			cbModeStandard.Checked = engine.modeStandard;
 			nudElo.Value = Convert.ToInt32(engine.elo);
 			nudTournament.Value = engine.tournament;
-			rtbOptions.Lines = engine.options.ToArray();
+			if ((engine.protocol == "Uci") && engine.FileExists())
+			{
+				if (process.SetProgram("Engines\\" + engine.file) > 0)
+					process.process.StandardInput.WriteLine("uci");
+			}
 		}
 
 		void SelectEngine(CEngine e)
@@ -85,12 +135,34 @@ namespace RapChessGui
 			e.modeStandard = cbModeStandard.Checked;
 			e.elo = nudElo.Value.ToString();
 			e.tournament = (int)nudTournament.Value;
-			e.options = rtbOptions.Lines.Cast<String>().ToList();
+			e.options = GetOptions();
 			e.SaveToIni();
 			UpdateListBox();
 			int index = listBox1.FindString(e.name);
 			if (index == -1) return;
 			listBox1.SetSelected(index, true);
+		}
+
+		List<string> GetOptions()
+		{
+			List<string> list = new List<string>();
+			for (int n = 0; n < optionList.list.Count; n++)
+			{
+				string oName = $"optionN{n}";
+				var c = panOptions.Controls.Find(oName, false);
+				if (c.Length == 0)
+					continue;
+				COption o = optionList.list[n];
+				switch (o.type)
+				{
+					case "spin":
+						NumericUpDown nud = (c[0]) as NumericUpDown;
+						if (nud.Value.ToString() != o.def)
+							list.Add($"name {o.name} value {nud.Value}");
+						break;
+				}
+			}
+			return list;
 		}
 
 		private void ButCreate_Click(object sender, EventArgs e)

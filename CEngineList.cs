@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using RapIni;
+using NSUci;
 
 namespace RapChessGui
 {
@@ -58,6 +59,18 @@ namespace RapChessGui
 			CRapIni.This.WriteList($"engine>{name}>options", options);
 			CRapIni.This.Write($"engine>{name}>elo", elo);
 			CRapIni.This.Write($"engine>{name}>history", hisElo.SaveToStr());
+		}
+
+		public string GetOption(string name,string def)
+		{
+			CUci uci = new CUci();
+			foreach (string o in options)
+			{
+				uci.SetMsg(o);
+				if (o.IndexOf($"name {name} value ") == 0)
+					return uci.Last();
+			}
+			return def;
 		}
 
 		public void SetElo(int e)

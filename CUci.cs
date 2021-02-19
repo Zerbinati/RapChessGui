@@ -43,6 +43,21 @@ namespace NSUci
 			return false;
 		}
 
+		public bool GetValue(string name, string end,out string value)
+		{
+			value = "";
+			int i = GetIndex(name, tokens.Length);
+			for(int n = i; n < tokens.Length; n++)
+			{
+				string t = tokens[n];
+				if (t == end)
+					break;
+				value += $" {t}";
+			}
+			value = value.Trim();
+			return value != "";
+		}
+
 		public string Last()
 		{
 			if (tokens.Length > 0)
