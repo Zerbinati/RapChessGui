@@ -31,6 +31,7 @@
 			this.colorDialog1 = new System.Windows.Forms.ColorDialog();
 			this.butDefault = new System.Windows.Forms.Button();
 			this.gbInterface = new System.Windows.Forms.GroupBox();
+			this.cbSound = new System.Windows.Forms.CheckBox();
 			this.butColor = new System.Windows.Forms.Button();
 			this.cbTips = new System.Windows.Forms.CheckBox();
 			this.cbArrow = new System.Windows.Forms.CheckBox();
@@ -38,7 +39,6 @@
 			this.nudSpeed = new System.Windows.Forms.NumericUpDown();
 			this.cbAttack = new System.Windows.Forms.CheckBox();
 			this.cbShowPonder = new System.Windows.Forms.CheckBox();
-			this.butOk = new System.Windows.Forms.Button();
 			this.gbGame = new System.Windows.Forms.GroupBox();
 			this.cbRotateBoard = new System.Windows.Forms.CheckBox();
 			this.cbGameAutoElo = new System.Windows.Forms.CheckBox();
@@ -80,7 +80,7 @@
 			// butDefault
 			// 
 			this.butDefault.Dock = System.Windows.Forms.DockStyle.Top;
-			this.butDefault.Location = new System.Drawing.Point(0, 533);
+			this.butDefault.Location = new System.Drawing.Point(0, 543);
 			this.butDefault.Name = "butDefault";
 			this.butDefault.Size = new System.Drawing.Size(286, 24);
 			this.butDefault.TabIndex = 2;
@@ -90,6 +90,7 @@
 			// 
 			// gbInterface
 			// 
+			this.gbInterface.Controls.Add(this.cbSound);
 			this.gbInterface.Controls.Add(this.butColor);
 			this.gbInterface.Controls.Add(this.cbTips);
 			this.gbInterface.Controls.Add(this.cbArrow);
@@ -100,15 +101,28 @@
 			this.gbInterface.Dock = System.Windows.Forms.DockStyle.Top;
 			this.gbInterface.Location = new System.Drawing.Point(0, 282);
 			this.gbInterface.Name = "gbInterface";
-			this.gbInterface.Size = new System.Drawing.Size(286, 148);
+			this.gbInterface.Size = new System.Drawing.Size(286, 158);
 			this.gbInterface.TabIndex = 4;
 			this.gbInterface.TabStop = false;
 			this.gbInterface.Text = "Interface";
 			// 
+			// cbSound
+			// 
+			this.cbSound.AutoSize = true;
+			this.cbSound.Checked = true;
+			this.cbSound.CheckState = System.Windows.Forms.CheckState.Checked;
+			this.cbSound.Dock = System.Windows.Forms.DockStyle.Top;
+			this.cbSound.Location = new System.Drawing.Point(3, 84);
+			this.cbSound.Name = "cbSound";
+			this.cbSound.Size = new System.Drawing.Size(280, 17);
+			this.cbSound.TabIndex = 13;
+			this.cbSound.Text = "Play sound";
+			this.cbSound.UseVisualStyleBackColor = true;
+			// 
 			// butColor
 			// 
 			this.butColor.Dock = System.Windows.Forms.DockStyle.Bottom;
-			this.butColor.Location = new System.Drawing.Point(3, 121);
+			this.butColor.Location = new System.Drawing.Point(3, 131);
 			this.butColor.Name = "butColor";
 			this.butColor.Size = new System.Drawing.Size(280, 24);
 			this.butColor.TabIndex = 4;
@@ -145,7 +159,7 @@
 			// label1
 			// 
 			this.label1.AutoSize = true;
-			this.label1.Location = new System.Drawing.Point(168, 97);
+			this.label1.Location = new System.Drawing.Point(168, 109);
 			this.label1.Name = "label1";
 			this.label1.Size = new System.Drawing.Size(85, 13);
 			this.label1.TabIndex = 9;
@@ -153,7 +167,7 @@
 			// 
 			// nudSpeed
 			// 
-			this.nudSpeed.Location = new System.Drawing.Point(6, 90);
+			this.nudSpeed.Location = new System.Drawing.Point(3, 107);
 			this.nudSpeed.Maximum = new decimal(new int[] {
             1000,
             0,
@@ -197,18 +211,6 @@
 			this.cbShowPonder.TabIndex = 6;
 			this.cbShowPonder.Text = "Show ponder";
 			this.cbShowPonder.UseVisualStyleBackColor = true;
-			// 
-			// butOk
-			// 
-			this.butOk.DialogResult = System.Windows.Forms.DialogResult.OK;
-			this.butOk.Dock = System.Windows.Forms.DockStyle.Top;
-			this.butOk.Location = new System.Drawing.Point(0, 557);
-			this.butOk.Name = "butOk";
-			this.butOk.Size = new System.Drawing.Size(286, 24);
-			this.butOk.TabIndex = 1;
-			this.butOk.Text = "Ok";
-			this.butOk.UseVisualStyleBackColor = true;
-			this.butOk.Click += new System.EventHandler(this.butOk_Click);
 			// 
 			// gbGame
 			// 
@@ -440,7 +442,7 @@
 			this.gbNotation.Controls.Add(this.rbUci);
 			this.gbNotation.Controls.Add(this.rbSan);
 			this.gbNotation.Dock = System.Windows.Forms.DockStyle.Top;
-			this.gbNotation.Location = new System.Drawing.Point(0, 430);
+			this.gbNotation.Location = new System.Drawing.Point(0, 440);
 			this.gbNotation.Name = "gbNotation";
 			this.gbNotation.Size = new System.Drawing.Size(286, 53);
 			this.gbNotation.TabIndex = 10;
@@ -475,7 +477,7 @@
 			// 
 			this.groupBox3.Controls.Add(this.combPriority);
 			this.groupBox3.Dock = System.Windows.Forms.DockStyle.Top;
-			this.groupBox3.Location = new System.Drawing.Point(0, 483);
+			this.groupBox3.Location = new System.Drawing.Point(0, 493);
 			this.groupBox3.Name = "groupBox3";
 			this.groupBox3.Size = new System.Drawing.Size(286, 50);
 			this.groupBox3.TabIndex = 11;
@@ -549,8 +551,7 @@
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(286, 588);
-			this.Controls.Add(this.butOk);
+			this.ClientSize = new System.Drawing.Size(286, 577);
 			this.Controls.Add(this.butDefault);
 			this.Controls.Add(this.groupBox3);
 			this.Controls.Add(this.gbNotation);
@@ -566,6 +567,7 @@
 			this.ShowInTaskbar = false;
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
 			this.Text = "Options";
+			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormOptions_FormClosing);
 			this.Shown += new System.EventHandler(this.FormOptions_Shown);
 			this.gbInterface.ResumeLayout(false);
 			this.gbInterface.PerformLayout();
@@ -596,7 +598,6 @@
 		private System.Windows.Forms.GroupBox gbInterface;
 		private System.Windows.Forms.Button butColor;
 		public System.Windows.Forms.CheckBox cbShowPonder;
-		private System.Windows.Forms.Button butOk;
 		private System.Windows.Forms.GroupBox gbGame;
 		public System.Windows.Forms.CheckBox cbGameAutoElo;
 		public System.Windows.Forms.CheckBox cbAttack;
@@ -626,5 +627,6 @@
 		private System.Windows.Forms.GroupBox groupBox4;
 		private System.Windows.Forms.Label label7;
 		public System.Windows.Forms.NumericUpDown nudBreak;
+		public System.Windows.Forms.CheckBox cbSound;
 	}
 }

@@ -33,6 +33,7 @@ namespace RapChessGui
 			cbAttack.Checked = CRapIni.This.ReadBool("options>interface>attack", cbAttack.Checked);
 			cbArrow.Checked = CRapIni.This.ReadBool("options>interface>arrow", cbArrow.Checked);
 			cbTips.Checked = CRapIni.This.ReadBool("options>interface>tips", cbTips.Checked);
+			cbSound.Checked = CRapIni.This.ReadBool("options>interface>sound", cbSound.Checked);
 			nudBreak.Value = CRapIni.This.ReadInt("options>mode>game>brak", (int)nudBreak.Value);
 			nudSpeed.Value = CRapIni.This.ReadInt("options>interface>speed", (int)nudSpeed.Value);
 			cbGameAutoElo.Checked = CRapIni.This.ReadBool("options>game>autoelo",cbGameAutoElo.Checked);
@@ -55,6 +56,7 @@ namespace RapChessGui
 			CRapIni.This.Write("options>interface>attack", cbAttack.Checked);
 			CRapIni.This.Write("options>interface>arrow", cbArrow.Checked);
 			CRapIni.This.Write("options>interface>tips", cbTips.Checked);
+			CRapIni.This.Write("options>interface>sound", cbSound.Checked);
 			CRapIni.This.Write("options>mode>game>brak", nudBreak.Value);
 			CRapIni.This.Write("options>interface>speed", nudSpeed.Value);
 			CRapIni.This.Write("options>game>autoelo", cbGameAutoElo.Checked);
@@ -65,6 +67,24 @@ namespace RapChessGui
 			colorBoard = colorDialog1.Color;
 			marginStandard = CbToMargin(combModeStandard.SelectedIndex);
 			marginTime = CbToMargin(combModeTime.SelectedIndex);
+		}
+
+		void FormLoad()
+		{
+			LoadFromIni();
+			nudTourE.Value = CModeTournamentE.records;
+			nudTourP.Value = CModeTournamentP.records;
+			labTourE.Text = $"Fill {(CModeTournamentE.tourList.list.Count * 100) / CModeTournamentE.records}%";
+			labTourP.Text = $"Fill {(CModeTournamentP.tourList.list.Count * 100) / CModeTournamentP.records}%";
+		}
+
+		void FormSave()
+		{
+			CModeTournamentE.records = (int)nudTourE.Value;
+			CModeTournamentP.records = (int)nudTourP.Value;
+			CModeTournamentE.SaveToIni();
+			CModeTournamentP.SaveToIni();
+			SaveToIni();
 		}
 
 		int CbToMargin(int i)
@@ -115,27 +135,19 @@ namespace RapChessGui
 			FormChess.This.BoardPrepare();
 		}
 
-		private void butOk_Click(object sender, EventArgs e)
-		{
-			CModeTournamentE.records = (int)nudTourE.Value;
-			CModeTournamentP.records = (int)nudTourP.Value;
-			CModeTournamentE.SaveToIni();
-			CModeTournamentP.SaveToIni();
-			SaveToIni();
-		}
-
 		private void FormOptions_Shown(object sender, EventArgs e)
 		{
-			LoadFromIni();
-			nudTourE.Value = CModeTournamentE.records;
-			nudTourP.Value = CModeTournamentP.records;
-			labTourE.Text = $"Fill {(CModeTournamentE.tourList.list.Count * 100) / CModeTournamentE.records}%";
-			labTourP.Text = $"Fill {(CModeTournamentP.tourList.list.Count * 100) / CModeTournamentP.records}%";
+			FormLoad();
 		}
 
 		private void cbPriority_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			priority = combPriority.Text;
+		}
+
+		private void FormOptions_FormClosing(object sender, FormClosingEventArgs e)
+		{
+			FormSave();
 		}
 	}
 }

@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Text;
+using System.Media;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -38,6 +39,7 @@ namespace RapChessGui
 		public CChess Chess = new CChess();
 		readonly CGamerList GamerList = new CGamerList();
 		readonly CUci Uci = new CUci();
+		SoundPlayer audioMove = new SoundPlayer(Properties.Resources.Move);
 		public static PrivateFontCollection pfc = new PrivateFontCollection();
 		public static CBookList bookList = new CBookList();
 		public static CEngineList engineList = new CEngineList();
@@ -327,6 +329,12 @@ namespace RapChessGui
 		#endregion
 
 		#region main
+
+		void PlaySound()
+		{
+			if (FormOptions.This.cbSound.Checked)
+				audioMove.Play();
+		}
 
 		void SquareBoard()
 		{
@@ -1139,13 +1147,14 @@ namespace RapChessGui
 				cg.player.elo = cg.player.GetEloLess().ToString();
 				cg.player.SaveToIni();
 			}
-			if (!Chess.IsValidMoveUmo(umo,out umo,out int gmo))
+			if (!Chess.IsValidMoveUmo(umo, out umo, out int gmo))
 			{
 				FormLogEngines.AppendText($"Wrong move: ({umo})\n", Color.Red);
 				FormLogEngines.AppendText($"Fen: {Chess.GetFen()}\n", Color.Black);
 				SetGameState(CGameState.error, cg, umo);
 				return false;
 			}
+			PlaySound();
 			cg.countMoves++;
 			string san = Chess.UmoToSan(umo);
 			CChess.UmoToSD(umo, out CDrag.lastSou, out CDrag.lastDes);

@@ -29,6 +29,9 @@
 		private void InitializeComponent()
 		{
 			this.panel1 = new System.Windows.Forms.Panel();
+			this.gbOptions = new System.Windows.Forms.GroupBox();
+			this.panOptions = new System.Windows.Forms.Panel();
+			this.butReset = new System.Windows.Forms.Button();
 			this.butClearHistory = new System.Windows.Forms.Button();
 			this.bDelete = new System.Windows.Forms.Button();
 			this.bCreate = new System.Windows.Forms.Button();
@@ -39,7 +42,6 @@
 			this.nudTournament = new System.Windows.Forms.NumericUpDown();
 			this.gbElo = new System.Windows.Forms.GroupBox();
 			this.nudElo = new System.Windows.Forms.NumericUpDown();
-			this.gbOptions = new System.Windows.Forms.GroupBox();
 			this.groupBox3 = new System.Windows.Forms.GroupBox();
 			this.tbParameters = new System.Windows.Forms.TextBox();
 			this.groupBox7 = new System.Windows.Forms.GroupBox();
@@ -50,14 +52,13 @@
 			this.tbEngineName = new System.Windows.Forms.TextBox();
 			this.gbEngines = new System.Windows.Forms.GroupBox();
 			this.listBox1 = new System.Windows.Forms.ListBox();
-			this.panOptions = new System.Windows.Forms.Panel();
 			this.panel1.SuspendLayout();
+			this.gbOptions.SuspendLayout();
 			this.gbTournament.SuspendLayout();
 			this.groupBox5.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.nudTournament)).BeginInit();
 			this.gbElo.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.nudElo)).BeginInit();
-			this.gbOptions.SuspendLayout();
 			this.groupBox3.SuspendLayout();
 			this.groupBox7.SuspendLayout();
 			this.groupBox4.SuspendLayout();
@@ -68,6 +69,7 @@
 			// panel1
 			// 
 			this.panel1.Controls.Add(this.gbOptions);
+			this.panel1.Controls.Add(this.butReset);
 			this.panel1.Controls.Add(this.butClearHistory);
 			this.panel1.Controls.Add(this.bDelete);
 			this.panel1.Controls.Add(this.bCreate);
@@ -82,15 +84,46 @@
 			this.panel1.Dock = System.Windows.Forms.DockStyle.Right;
 			this.panel1.Location = new System.Drawing.Point(489, 0);
 			this.panel1.Name = "panel1";
-			this.panel1.Size = new System.Drawing.Size(311, 624);
+			this.panel1.Size = new System.Drawing.Size(311, 682);
 			this.panel1.TabIndex = 0;
+			// 
+			// gbOptions
+			// 
+			this.gbOptions.Controls.Add(this.panOptions);
+			this.gbOptions.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.gbOptions.Location = new System.Drawing.Point(0, 427);
+			this.gbOptions.Name = "gbOptions";
+			this.gbOptions.Size = new System.Drawing.Size(311, 255);
+			this.gbOptions.TabIndex = 29;
+			this.gbOptions.TabStop = false;
+			this.gbOptions.Text = "Options";
+			// 
+			// panOptions
+			// 
+			this.panOptions.AutoScroll = true;
+			this.panOptions.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.panOptions.Location = new System.Drawing.Point(3, 16);
+			this.panOptions.Name = "panOptions";
+			this.panOptions.Size = new System.Drawing.Size(305, 236);
+			this.panOptions.TabIndex = 0;
+			// 
+			// butReset
+			// 
+			this.butReset.Dock = System.Windows.Forms.DockStyle.Top;
+			this.butReset.Location = new System.Drawing.Point(0, 403);
+			this.butReset.Name = "butReset";
+			this.butReset.Size = new System.Drawing.Size(311, 24);
+			this.butReset.TabIndex = 34;
+			this.butReset.Text = "Reset to defaults";
+			this.butReset.UseVisualStyleBackColor = true;
+			this.butReset.Click += new System.EventHandler(this.butReset_Click);
 			// 
 			// butClearHistory
 			// 
 			this.butClearHistory.Dock = System.Windows.Forms.DockStyle.Top;
-			this.butClearHistory.Location = new System.Drawing.Point(0, 400);
+			this.butClearHistory.Location = new System.Drawing.Point(0, 379);
 			this.butClearHistory.Name = "butClearHistory";
-			this.butClearHistory.Size = new System.Drawing.Size(311, 33);
+			this.butClearHistory.Size = new System.Drawing.Size(311, 24);
 			this.butClearHistory.TabIndex = 32;
 			this.butClearHistory.Text = "Clear tournament history";
 			this.butClearHistory.UseVisualStyleBackColor = true;
@@ -99,9 +132,9 @@
 			// bDelete
 			// 
 			this.bDelete.Dock = System.Windows.Forms.DockStyle.Top;
-			this.bDelete.Location = new System.Drawing.Point(0, 367);
+			this.bDelete.Location = new System.Drawing.Point(0, 355);
 			this.bDelete.Name = "bDelete";
-			this.bDelete.Size = new System.Drawing.Size(311, 33);
+			this.bDelete.Size = new System.Drawing.Size(311, 24);
 			this.bDelete.TabIndex = 27;
 			this.bDelete.Text = "Delete";
 			this.bDelete.UseVisualStyleBackColor = true;
@@ -110,9 +143,9 @@
 			// bCreate
 			// 
 			this.bCreate.Dock = System.Windows.Forms.DockStyle.Top;
-			this.bCreate.Location = new System.Drawing.Point(0, 334);
+			this.bCreate.Location = new System.Drawing.Point(0, 331);
 			this.bCreate.Name = "bCreate";
-			this.bCreate.Size = new System.Drawing.Size(311, 33);
+			this.bCreate.Size = new System.Drawing.Size(311, 24);
 			this.bCreate.TabIndex = 26;
 			this.bCreate.Text = "Create";
 			this.bCreate.UseVisualStyleBackColor = true;
@@ -123,7 +156,7 @@
 			this.bUpdate.Dock = System.Windows.Forms.DockStyle.Top;
 			this.bUpdate.Location = new System.Drawing.Point(0, 307);
 			this.bUpdate.Name = "bUpdate";
-			this.bUpdate.Size = new System.Drawing.Size(311, 27);
+			this.bUpdate.Size = new System.Drawing.Size(311, 24);
 			this.bUpdate.TabIndex = 25;
 			this.bUpdate.Text = "Update";
 			this.bUpdate.UseVisualStyleBackColor = true;
@@ -207,17 +240,6 @@
             0,
             0,
             0});
-			// 
-			// gbOptions
-			// 
-			this.gbOptions.Controls.Add(this.panOptions);
-			this.gbOptions.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.gbOptions.Location = new System.Drawing.Point(0, 433);
-			this.gbOptions.Name = "gbOptions";
-			this.gbOptions.Size = new System.Drawing.Size(311, 191);
-			this.gbOptions.TabIndex = 29;
-			this.gbOptions.TabStop = false;
-			this.gbOptions.Text = "Options";
 			// 
 			// groupBox3
 			// 
@@ -312,7 +334,7 @@
 			this.gbEngines.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.gbEngines.Location = new System.Drawing.Point(0, 0);
 			this.gbEngines.Name = "gbEngines";
-			this.gbEngines.Size = new System.Drawing.Size(489, 624);
+			this.gbEngines.Size = new System.Drawing.Size(489, 682);
 			this.gbEngines.TabIndex = 5;
 			this.gbEngines.TabStop = false;
 			this.gbEngines.Text = "Engines List";
@@ -325,7 +347,7 @@
 			this.listBox1.FormattingEnabled = true;
 			this.listBox1.Location = new System.Drawing.Point(3, 16);
 			this.listBox1.Name = "listBox1";
-			this.listBox1.Size = new System.Drawing.Size(483, 605);
+			this.listBox1.Size = new System.Drawing.Size(483, 663);
 			this.listBox1.Sorted = true;
 			this.listBox1.TabIndex = 1;
 			this.listBox1.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.listBox1_DrawItem);
@@ -334,20 +356,11 @@
 			this.listBox1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.listBox1_MouseMove);
 			this.listBox1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.listBox1_MouseUp);
 			// 
-			// panOptions
-			// 
-			this.panOptions.AutoScroll = true;
-			this.panOptions.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.panOptions.Location = new System.Drawing.Point(3, 16);
-			this.panOptions.Name = "panOptions";
-			this.panOptions.Size = new System.Drawing.Size(305, 172);
-			this.panOptions.TabIndex = 0;
-			// 
 			// FormEngine
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(800, 624);
+			this.ClientSize = new System.Drawing.Size(800, 682);
 			this.Controls.Add(this.gbEngines);
 			this.Controls.Add(this.panel1);
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
@@ -359,13 +372,13 @@
 			this.TopMost = true;
 			this.Shown += new System.EventHandler(this.FormEngine_Shown);
 			this.panel1.ResumeLayout(false);
+			this.gbOptions.ResumeLayout(false);
 			this.gbTournament.ResumeLayout(false);
 			this.gbTournament.PerformLayout();
 			this.groupBox5.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.nudTournament)).EndInit();
 			this.gbElo.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.nudElo)).EndInit();
-			this.gbOptions.ResumeLayout(false);
 			this.groupBox3.ResumeLayout(false);
 			this.groupBox3.PerformLayout();
 			this.groupBox7.ResumeLayout(false);
@@ -401,5 +414,6 @@
 		private System.Windows.Forms.GroupBox groupBox5;
 		private System.Windows.Forms.NumericUpDown nudTournament;
 		private System.Windows.Forms.Panel panOptions;
+		private System.Windows.Forms.Button butReset;
 	}
 }

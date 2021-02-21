@@ -69,5 +69,14 @@ namespace RapChessGui.Properties {
                 return ((byte[])(obj));
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
+        /// </summary>
+        internal static System.IO.UnmanagedMemoryStream Move {
+            get {
+                return ResourceManager.GetStream("Move", resourceCulture);
+            }
+        }
     }
 }

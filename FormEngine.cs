@@ -75,7 +75,7 @@ namespace RapChessGui
 			nudTournament.Value = engine.tournament;
 			if ((engine.protocol == "Uci") && engine.FileExists())
 			{
-				if (process.SetProgram("Engines\\" + engine.file) > 0)
+				if (process.SetProgram("Engines\\" + engine.file,engine.parameters) > 0)
 					process.process.StandardInput.WriteLine("uci");
 			}
 		}
@@ -287,6 +287,13 @@ namespace RapChessGui
 				if ((index >= 0) && (index < listBox1.Items.Count) && (tournament >= 0))
 					SelectEngines(indexFirst, index, tournament > 0);
 			}
+		}
+
+		private void butReset_Click(object sender, EventArgs e)
+		{
+			engine.options.Clear();
+			engine.SaveToIni();
+			Uciok();
 		}
 	}
 }

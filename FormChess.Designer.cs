@@ -1101,9 +1101,9 @@
 			// tabPageTourE
 			// 
 			this.tabPageTourE.Controls.Add(this.splitContainerTourE);
+			this.tabPageTourE.Controls.Add(this.butTourEStart);
 			this.tabPageTourE.Controls.Add(this.groupBox9);
 			this.tabPageTourE.Controls.Add(this.groupBox8);
-			this.tabPageTourE.Controls.Add(this.butTourEStart);
 			this.tabPageTourE.Location = new System.Drawing.Point(4, 5);
 			this.tabPageTourE.Name = "tabPageTourE";
 			this.tabPageTourE.Padding = new System.Windows.Forms.Padding(3);
@@ -1297,7 +1297,7 @@
 			// 
 			this.groupBox9.Controls.Add(this.cbTourEBook);
 			this.groupBox9.Dock = System.Windows.Forms.DockStyle.Top;
-			this.groupBox9.Location = new System.Drawing.Point(3, 87);
+			this.groupBox9.Location = new System.Drawing.Point(3, 64);
 			this.groupBox9.Name = "groupBox9";
 			this.groupBox9.Size = new System.Drawing.Size(331, 44);
 			this.groupBox9.TabIndex = 28;
@@ -1322,7 +1322,7 @@
 			this.groupBox8.Controls.Add(this.nudTourE);
 			this.groupBox8.Controls.Add(this.cbTourEMode);
 			this.groupBox8.Dock = System.Windows.Forms.DockStyle.Top;
-			this.groupBox8.Location = new System.Drawing.Point(3, 26);
+			this.groupBox8.Location = new System.Drawing.Point(3, 3);
 			this.groupBox8.Name = "groupBox8";
 			this.groupBox8.Size = new System.Drawing.Size(331, 61);
 			this.groupBox8.TabIndex = 23;
@@ -1372,7 +1372,7 @@
 			// 
 			this.butTourEStart.Cursor = System.Windows.Forms.Cursors.Hand;
 			this.butTourEStart.Dock = System.Windows.Forms.DockStyle.Top;
-			this.butTourEStart.Location = new System.Drawing.Point(3, 3);
+			this.butTourEStart.Location = new System.Drawing.Point(3, 108);
 			this.butTourEStart.Name = "butTourEStart";
 			this.butTourEStart.Size = new System.Drawing.Size(331, 23);
 			this.butTourEStart.TabIndex = 22;
@@ -2554,7 +2554,7 @@
 			this.labBookNW.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
 			this.labBookNW.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
 			this.labBookNW.ForeColor = System.Drawing.Color.White;
-			this.labBookNW.Location = new System.Drawing.Point(408, 0);
+			this.labBookNW.Location = new System.Drawing.Point(792, 0);
 			this.labBookNW.Margin = new System.Windows.Forms.Padding(0);
 			this.labBookNW.Name = "labBookNW";
 			this.labBookNW.Size = new System.Drawing.Size(192, 20);
@@ -2571,7 +2571,7 @@
 			this.labProtocolW.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
 			this.labProtocolW.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
 			this.labProtocolW.ForeColor = System.Drawing.Color.White;
-			this.labProtocolW.Location = new System.Drawing.Point(792, 0);
+			this.labProtocolW.Location = new System.Drawing.Point(408, 0);
 			this.labProtocolW.Margin = new System.Windows.Forms.Padding(0);
 			this.labProtocolW.Name = "labProtocolW";
 			this.labProtocolW.Size = new System.Drawing.Size(192, 20);
@@ -2707,7 +2707,7 @@
 			this.labProtocolB.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
 			this.labProtocolB.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
 			this.labProtocolB.ForeColor = System.Drawing.Color.White;
-			this.labProtocolB.Location = new System.Drawing.Point(792, 0);
+			this.labProtocolB.Location = new System.Drawing.Point(408, 0);
 			this.labProtocolB.Margin = new System.Windows.Forms.Padding(0);
 			this.labProtocolB.Name = "labProtocolB";
 			this.labProtocolB.Size = new System.Drawing.Size(192, 20);
@@ -2724,7 +2724,7 @@
 			this.labBookNB.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
 			this.labBookNB.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
 			this.labBookNB.ForeColor = System.Drawing.Color.White;
-			this.labBookNB.Location = new System.Drawing.Point(408, 0);
+			this.labBookNB.Location = new System.Drawing.Point(792, 0);
 			this.labBookNB.Margin = new System.Windows.Forms.Padding(0);
 			this.labBookNB.Name = "labBookNB";
 			this.labBookNB.Size = new System.Drawing.Size(192, 20);
@@ -3587,7 +3587,7 @@
 			this.tlpWhite.Controls.Add(this.labNpsW, 4, 1);
 			this.tlpWhite.Controls.Add(this.labNodesW, 3, 1);
 			this.tlpWhite.Controls.Add(this.labModeW, 4, 0);
-			this.tlpWhite.Controls.Add(this.labProtocolW, 5, 0);
+			this.tlpWhite.Controls.Add(this.labProtocolW, 3, 0);
 			this.tlpWhite.Controls.Add(this.labEngineW, 2, 0);
 			this.tlpWhite.Controls.Add(this.labMemoryW, 6, 0);
 			this.tlpWhite.Controls.Add(this.labDepthW, 2, 1);
@@ -3597,11 +3597,12 @@
 			this.tlpWhite.Controls.Add(this.labColW, 0, 1);
 			this.tlpWhite.Controls.Add(this.labScoreW, 1, 1);
 			this.tlpWhite.Controls.Add(this.labPlayerW, 1, 0);
-			this.tlpWhite.Controls.Add(this.labBookNW, 3, 0);
+			this.tlpWhite.Controls.Add(this.labBookNW, 5, 0);
 			this.tlpWhite.Dock = System.Windows.Forms.DockStyle.Top;
 			this.tlpWhite.Location = new System.Drawing.Point(0, 0);
 			this.tlpWhite.Name = "tlpWhite";
 			this.tlpWhite.RowCount = 2;
+			this.tlpWhite.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
 			this.tlpWhite.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
 			this.tlpWhite.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
 			this.tlpWhite.Size = new System.Drawing.Size(1180, 40);
@@ -3683,9 +3684,9 @@
 			this.tlpBlack.Controls.Add(this.labScoreB, 1, 1);
 			this.tlpBlack.Controls.Add(this.labColB, 0, 1);
 			this.tlpBlack.Controls.Add(this.labModeB, 4, 0);
-			this.tlpBlack.Controls.Add(this.labProtocolB, 5, 0);
+			this.tlpBlack.Controls.Add(this.labProtocolB, 3, 0);
 			this.tlpBlack.Controls.Add(this.labMemoryB, 6, 0);
-			this.tlpBlack.Controls.Add(this.labBookNB, 3, 0);
+			this.tlpBlack.Controls.Add(this.labBookNB, 5, 0);
 			this.tlpBlack.Controls.Add(this.labBlack, 0, 0);
 			this.tlpBlack.Controls.Add(this.labPlayerB, 1, 0);
 			this.tlpBlack.Controls.Add(this.labEngineB, 2, 0);
@@ -3693,6 +3694,7 @@
 			this.tlpBlack.Location = new System.Drawing.Point(0, 0);
 			this.tlpBlack.Name = "tlpBlack";
 			this.tlpBlack.RowCount = 2;
+			this.tlpBlack.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
 			this.tlpBlack.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
 			this.tlpBlack.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
 			this.tlpBlack.Size = new System.Drawing.Size(1180, 40);
