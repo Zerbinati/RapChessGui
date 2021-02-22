@@ -109,12 +109,12 @@
 			this.columnHeader29 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.labEngine = new System.Windows.Forms.Label();
 			this.chartTournamentE = new System.Windows.Forms.DataVisualization.Charting.Chart();
+			this.butTourEStart = new System.Windows.Forms.Button();
 			this.groupBox9 = new System.Windows.Forms.GroupBox();
 			this.cbTourEBook = new System.Windows.Forms.ComboBox();
 			this.groupBox8 = new System.Windows.Forms.GroupBox();
 			this.nudTourE = new System.Windows.Forms.NumericUpDown();
 			this.cbTourEMode = new System.Windows.Forms.ComboBox();
-			this.butTourEStart = new System.Windows.Forms.Button();
 			this.tabPageTourP = new System.Windows.Forms.TabPage();
 			this.splitContainerTourP = new System.Windows.Forms.SplitContainer();
 			this.scTournamentPList = new System.Windows.Forms.SplitContainer();
@@ -1293,6 +1293,19 @@
 			this.chartTournamentE.TabIndex = 30;
 			this.toolTip1.SetToolTip(this.chartTournamentE, "Tournament history");
 			// 
+			// butTourEStart
+			// 
+			this.butTourEStart.Cursor = System.Windows.Forms.Cursors.Hand;
+			this.butTourEStart.Dock = System.Windows.Forms.DockStyle.Top;
+			this.butTourEStart.Location = new System.Drawing.Point(3, 108);
+			this.butTourEStart.Name = "butTourEStart";
+			this.butTourEStart.Size = new System.Drawing.Size(331, 23);
+			this.butTourEStart.TabIndex = 22;
+			this.butTourEStart.Text = "Start";
+			this.toolTip1.SetToolTip(this.butTourEStart, "Start tournament");
+			this.butTourEStart.UseVisualStyleBackColor = true;
+			this.butTourEStart.Click += new System.EventHandler(this.butStartTournamentE_Click);
+			// 
 			// groupBox9
 			// 
 			this.groupBox9.Controls.Add(this.cbTourEBook);
@@ -1367,19 +1380,6 @@
 			this.cbTourEMode.TabIndex = 29;
 			this.toolTip1.SetToolTip(this.cbTourEMode, "Select engine mode");
 			this.cbTourEMode.SelectedIndexChanged += new System.EventHandler(this.cbTourEMode_SelectedIndexChanged);
-			// 
-			// butTourEStart
-			// 
-			this.butTourEStart.Cursor = System.Windows.Forms.Cursors.Hand;
-			this.butTourEStart.Dock = System.Windows.Forms.DockStyle.Top;
-			this.butTourEStart.Location = new System.Drawing.Point(3, 108);
-			this.butTourEStart.Name = "butTourEStart";
-			this.butTourEStart.Size = new System.Drawing.Size(331, 23);
-			this.butTourEStart.TabIndex = 22;
-			this.butTourEStart.Text = "Start";
-			this.toolTip1.SetToolTip(this.butTourEStart, "Start tournament");
-			this.butTourEStart.UseVisualStyleBackColor = true;
-			this.butTourEStart.Click += new System.EventHandler(this.butStartTournamentE_Click);
 			// 
 			// tabPageTourP
 			// 
@@ -2974,7 +2974,7 @@
 			this.labColW.Size = new System.Drawing.Size(24, 20);
 			this.labColW.TabIndex = 20;
 			this.labColW.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			this.toolTip1.SetToolTip(this.labColW, "Player color");
+			this.toolTip1.SetToolTip(this.labColW, "Score color");
 			// 
 			// labScoreW
 			// 
@@ -3093,7 +3093,7 @@
 			this.labColB.Size = new System.Drawing.Size(24, 20);
 			this.labColB.TabIndex = 21;
 			this.labColB.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			this.toolTip1.SetToolTip(this.labColB, "Player color");
+			this.toolTip1.SetToolTip(this.labColB, "Score color");
 			// 
 			// labScoreB
 			// 

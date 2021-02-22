@@ -380,11 +380,17 @@ namespace RapChessGui
 
 		public Color GetScoreColor()
 		{
-			if (iScore > 300)
-				return Color.Green;
-			else if (iScore < -300)
-				return Color.Brown;
-			return Color.DarkGray;
+			double dr = 1.0;
+			double dg = 1.0;
+			if (iScore > 0)
+				dr = 1.0 - iScore / 500.0;
+			if (iScore < 0)
+				dg = 1.0 + iScore / 500.0;
+			if (dr < 0)
+				dr = 0;
+			if (dg < 0)
+				dg = 0;
+			return Color.FromArgb(Convert.ToInt32(dr * 0xff), Convert.ToInt32(dg * 0xff), 0);
 		}
 
 		public string GetTime(out bool low)
@@ -421,8 +427,8 @@ namespace RapChessGui
 				double v = Convert.ToDouble(value);
 				if (((ms - timerStart) > (v + FormOptions.marginTime)) && (FormOptions.marginTime >= 0) && (value > 0) && timer.IsRunning)
 				{
-						FormChess.This.SetGameState(CGameState.time);
-						return "Time out";
+					FormChess.This.SetGameState(CGameState.time);
+					return "Time out";
 				}
 				if (ms > 0)
 					dt = dt.AddMilliseconds(ms);
