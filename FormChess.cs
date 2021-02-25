@@ -876,7 +876,7 @@ namespace RapChessGui
 					{
 						FormEngine.AddOption(m.msg);
 					}
-					if (m.pid == FormLogEngines.process.GetPid())
+					else if (m.pid == FormLogEngines.process.GetPid())
 					{
 						FormLogEngines.AppendText($"{m.msg}\n", Color.Black, true);
 					}
