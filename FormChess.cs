@@ -453,7 +453,7 @@ namespace RapChessGui
 		{
 			CGamer gw = GamerList.gamer[0];
 			CGamer gb = GamerList.gamer[1];
-			formLogEngines.NewGame(gw, gb);
+			FormLogEngines.WriteHeader(gw, gb);
 			GamerList.Init();
 			ShowGamers();
 			ShowInfo(gw);

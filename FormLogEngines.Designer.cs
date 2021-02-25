@@ -195,7 +195,6 @@
 
 		#endregion
 		private System.Windows.Forms.Panel panel1;
-		public System.Windows.Forms.ComboBox cbEngineList;
 		private System.Windows.Forms.Button butSend;
 		private System.Windows.Forms.RichTextBox rtbCommand;
 		private System.Windows.Forms.MenuStrip menuStrip1;
@@ -207,5 +206,6 @@
 		private System.Windows.Forms.ToolStripMenuItem quitToolStripMenuItem;
 		private System.Windows.Forms.Button butClear;
 		private System.Windows.Forms.RichTextBox richTextBox1;
+		private System.Windows.Forms.ComboBox cbEngineList;
 	}
 }

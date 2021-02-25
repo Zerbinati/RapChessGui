@@ -70,18 +70,6 @@ namespace RapChessGui
 			}
 		}
 
-		public void NewGame(CGamer gw, CGamer gb)
-		{
-			cbEngineList.Items.Clear();
-			if (gw.engine != null)
-				cbEngineList.Items.Add(gw.player.name);
-			if (gb.engine != null)
-				cbEngineList.Items.Add(gb.player.name);
-			if (cbEngineList.Items.Count > 0)
-				cbEngineList.SelectedIndex = 0;
-			WriteHeader(gw, gb);
-		}
-
 		static string GetTimeElapsed()
 		{
 			DateTime dt = new DateTime();
