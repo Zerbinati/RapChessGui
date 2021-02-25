@@ -259,7 +259,7 @@ namespace RapChessGui
 		public int LoadFromIni()
 		{
 			list.Clear();
-			List<string> pl = CRapIni.This.ReadList("player");
+			List<string> pl = CRapIni.This.ReadKeyList("player");
 			foreach (string name in pl)
 			{
 				var p = new CPlayer(name);

@@ -87,7 +87,7 @@ namespace RapChessGui
 		public int LoadFromIni()
 		{
 			list.Clear();
-			List<string> bl = CRapIni.This.ReadList("book");
+			List<string> bl = CRapIni.This.ReadKeyList("book");
 			foreach (string name in bl)
 			{
 				var br = new CBook(name);

@@ -56,12 +56,12 @@ namespace RapChessGui
 			CRapIni.This.Write($"engine>{name}>file", file);
 			CRapIni.This.Write($"engine>{name}>protocol", protocol);
 			CRapIni.This.Write($"engine>{name}>parameters", parameters);
-			CRapIni.This.WriteList($"engine>{name}>options", options);
+			CRapIni.This.Write($"engine>{name}>options", options);
 			CRapIni.This.Write($"engine>{name}>elo", elo);
 			CRapIni.This.Write($"engine>{name}>history", hisElo.SaveToStr());
 		}
 
-		public string GetOption(string name,string def)
+		public string GetOption(string name, string def)
 		{
 			CUci uci = new CUci();
 			foreach (string o in options)
@@ -249,7 +249,7 @@ namespace RapChessGui
 		public int LoadFromIni()
 		{
 			list.Clear();
-			List<string> en = CRapIni.This.ReadList("engine");
+			List<string> en = CRapIni.This.ReadKeyList("engine");
 			foreach (string name in en)
 			{
 				CEngine engine = new CEngine(name);

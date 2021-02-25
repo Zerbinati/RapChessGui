@@ -15,7 +15,7 @@ namespace RapIni
 		public static CRapIni This;
 		readonly string name = "";
 		readonly string path = "";
-		readonly string script ="";
+		readonly string script = "";
 		List<string> list = new List<string>();
 
 		public CRapIni()
@@ -32,6 +32,16 @@ namespace RapIni
 			this.name = name;
 			path = new FileInfo(name + ".ini").FullName.ToString();
 			script = Read("script", "");
+		}
+
+		string ListToString(List<string> list)
+		{
+			return String.Join(",", list.ToArray());
+		}
+
+		List<string> StringToList(string s)
+		{
+			return new List<string>(s.Split(','));
 		}
 
 		public void WriteToFile(string key, string value)
@@ -87,12 +97,17 @@ namespace RapIni
 
 		public void Write(string key, double value)
 		{
-			Write(key,value.ToString());
+			Write(key, value.ToString());
 		}
 
 		public void Write(string key, Color value)
 		{
 			Write(key, ColorTranslator.ToHtml(value));
+		}
+
+		public void Write(string key, List<string> value)
+		{
+			Write(key, ListToString(value));
 		}
 
 		public string ReadFromFile(string key, string def = "")
@@ -168,17 +183,15 @@ namespace RapIni
 		public bool ReadBool(string key, bool def = false)
 		{
 			string s = Read(key, Convert.ToString(def));
-			bool.TryParse(s,out bool result);
+			bool.TryParse(s, out bool result);
 			return result;
 		}
 
-		public void WriteList(string key, List<string> value)
+		public List<string> ReadList(string key)
 		{
-			DeleteKey(key);
-			foreach (string e in value)
-				Write(key,e);
+			string s = Read(key);
+			return StringToList(s);
 		}
-
 
 		public List<string> ReadListFromFile(string key)
 		{
@@ -222,7 +235,7 @@ namespace RapIni
 			return result.ToList();
 		}
 
-		public List<string> ReadList(string key)
+		public List<string> ReadKeyList(string key)
 		{
 			if (script == "")
 				return ReadListFromFile(key);
@@ -231,7 +244,7 @@ namespace RapIni
 		}
 
 
-			private void DeleteKeyFromFile(string key)
+		private void DeleteKeyFromFile(string key)
 		{
 			if (Load())
 			{
