@@ -369,7 +369,7 @@
 			this.ShowInTaskbar = false;
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
 			this.Text = "Engines";
-			this.TopMost = true;
+			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormEngine_FormClosing);
 			this.Shown += new System.EventHandler(this.FormEngine_Shown);
 			this.panel1.ResumeLayout(false);
 			this.gbOptions.ResumeLayout(false);

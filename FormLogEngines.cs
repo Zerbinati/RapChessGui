@@ -9,7 +9,9 @@ namespace RapChessGui
 	public partial class FormLogEngines : Form
 	{
 		public static FormLogEngines This;
+		static bool locked = false;
 		static readonly Stopwatch timer = new Stopwatch();
+		public static CProcess process = new CProcess();
 
 		public FormLogEngines()
 		{
@@ -18,17 +20,28 @@ namespace RapChessGui
 			richTextBox1.AddContextMenu();
 		}
 
-		public static void AppendText(string txt,Color col)
+		public static void AppendText(string txt, Color col, bool forced = false)
 		{
-			This.richTextBox1.SelectionColor = col;
-			This.richTextBox1.SelectedText = txt;
+			if (!locked || forced)
+			{
+				This.richTextBox1.SelectionColor = col;
+				This.richTextBox1.SelectedText = txt;
+			}
 		}
 
-		public static void AppendTimeText(string txt, Color col)
+		public static void AppendTimeText(string txt, Color col, bool forced = false)
 		{
-			This.richTextBox1.SelectionColor = Color.Green;
-			This.richTextBox1.SelectedText = GetTimeElapsed();
-			AppendText(txt, col);
+			if (!locked || forced)
+			{
+				This.richTextBox1.SelectionColor = Color.Green;
+				This.richTextBox1.SelectedText = GetTimeElapsed();
+				AppendText(txt, col);
+			}
+		}
+
+		public static void Save(string fn)
+		{
+			This.richTextBox1.SaveFile(fn);
 		}
 
 		public static void WriteHeaderGamer(CGamer g)
@@ -41,29 +54,32 @@ namespace RapChessGui
 			AppendTimeText($"Engine: {g.player.engine}\n", color);
 			AppendTimeText($"File: {g.engine.file}\n", color);
 			string parameters = g.engine.parameters;
-			if(parameters != "")
+			if (parameters != "")
 				AppendTimeText($"Parameters: {g.engine.parameters}\n", color);
 		}
 
 		public static void WriteHeader(CGamer gw, CGamer gb)
 		{
-			This.richTextBox1.Clear();
-			timer.Restart();
-			AppendTimeText($"Start {DateTime.Now:yyyy-MM-dd HH:mm}\n", Color.Olive);
-			WriteHeaderGamer(gw);
-			WriteHeaderGamer(gb);
+			if (!locked)
+			{
+				This.richTextBox1.Clear();
+				timer.Restart();
+				AppendTimeText($"Start {DateTime.Now:yyyy-MM-dd HH:mm}\n", Color.Olive);
+				WriteHeaderGamer(gw);
+				WriteHeaderGamer(gb);
+			}
 		}
 
-		public void NewGame(CGamer gw,CGamer gb)
+		public void NewGame(CGamer gw, CGamer gb)
 		{
-			cbPlayerList.Items.Clear();
+			cbEngineList.Items.Clear();
 			if (gw.engine != null)
-				cbPlayerList.Items.Add(gw.player.name);
+				cbEngineList.Items.Add(gw.player.name);
 			if (gb.engine != null)
-				cbPlayerList.Items.Add(gb.player.name);
-			if (cbPlayerList.Items.Count > 0)
-				cbPlayerList.SelectedIndex = 0;
-			WriteHeader(gw,gb);
+				cbEngineList.Items.Add(gb.player.name);
+			if (cbEngineList.Items.Count > 0)
+				cbEngineList.SelectedIndex = 0;
+			WriteHeader(gw, gb);
 		}
 
 		static string GetTimeElapsed()
@@ -77,20 +93,13 @@ namespace RapChessGui
 
 		private void FormLog_FormClosing(object sender, FormClosingEventArgs e)
 		{
+			locked = false;
+			process.Terminate();
 			if (e.CloseReason != CloseReason.FormOwnerClosing)
 			{
 				Hide();
 				e.Cancel = true;
 			}
-		}
-
-		private void butSend_Click(object sender, EventArgs e)
-		{
-			richTextBox1.Clear();
-			CGamer p = CGamerList.This.GetGamer(cbPlayerList.Text);
-			if (p != null)
-				foreach (string c in rtbCommand.Lines)
-					p.SendMessage(c);
 		}
 
 		private void saveToolStripMenuItem_Click(object sender, EventArgs e)
@@ -105,35 +114,59 @@ namespace RapChessGui
 			Process.Start(e.LinkText);
 		}
 
-		private void stopToolStripMenuItem_Click(object sender, EventArgs e)
+		private void quitToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			CGamer g = CGamerList.This.GetGamer(cbPlayerList.Text);
-			if (g != null)
-				g.EngineStop();
+			process.Quit();
 		}
 
-		private void resetToolStripMenuItem_Click(object sender, EventArgs e)
+		private void restartToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			CGamer g = CGamerList.This.GetGamer(cbPlayerList.Text);
-			if (g != null)
-				g.EngineRestart();
+			process.Restart();
+		}
+
+		private void stopToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			process.Stop();
 		}
 
 		private void terminateToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			CGamer g = CGamerList.This.GetGamer(cbPlayerList.Text);
-			if (g != null)
-				g.EngineTerminate() ;
-		}
-
-		private void closeToolStripMenuItem_Click(object sender, EventArgs e)
-		{
-			CGamer g = CGamerList.This.GetGamer(cbPlayerList.Text);
-			if (g != null)
-				g.EngineClose();
+			process.Terminate();
 		}
 
 		#endregion
-	}
 
+		private void cbEngineList_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			CEngine engine = FormChess.engineList.GetEngine(cbEngineList.Text);
+			if (engine != null)
+			{
+				locked = true;
+				richTextBox1.Clear();
+				process.SetProgram(AppDomain.CurrentDomain.BaseDirectory + "Engines\\" + engine.file, engine.parameters);
+			}
+		}
+
+		private void FormLogEngines_Shown(object sender, EventArgs e)
+		{
+			cbEngineList.Items.Clear();
+			foreach (CEngine eng in FormChess.engineList.list)
+				cbEngineList.Items.Add(eng.name);
+		}
+
+		private void butSend_Click(object sender, EventArgs e)
+		{
+			locked = true;
+			richTextBox1.Clear();
+			foreach (string c in rtbCommand.Lines)
+				process.WriteLine(c);
+		}
+
+		private void butClear_Click(object sender, EventArgs e)
+		{
+			locked = false;
+			richTextBox1.Clear();
+		}
+	}
 }
+

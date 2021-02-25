@@ -9,10 +9,18 @@ namespace RapChessGui
 
 	public class CGamer
 	{
-		public bool timeOut = false;
-		public bool uciok = false;
-		public bool wbok = false;
-		public bool readyok = false;
+		/// <summary>
+		/// Ceation of the protocol header has started.
+		/// </summary>
+		public bool isPrepareStarted = false;
+		/// <summary>
+		/// Creation of the protocol header is complete.
+		/// </summary>
+		public bool isPrepareFinished = false;
+		/// <summary>
+		/// The position of the chess pieces has been sent to the winboard chess engine.
+		/// </summary>
+		public bool isPositionWb = false;
 		/// <summary>
 		/// The book is already started.
 		/// </summary>
@@ -22,10 +30,6 @@ namespace RapChessGui
 		/// </summary>
 		public bool isBookFail = false;
 		/// <summary>
-		/// The engine is already prepared.
-		/// </summary>
-		public bool isEngPrepared = false;
-		/// <summary>
 		/// The engine is already running.
 		/// </summary>
 		public bool isEngRunning = false;
@@ -33,6 +37,10 @@ namespace RapChessGui
 		/// The gamer is white.
 		/// </summary>
 		public bool isWhite = true;
+		/// <summary>
+		/// Phase of prepare uci engine.
+		/// </summary>
+		public int uciPhase = 0;
 		/// <summary>
 		/// Count moves maked by book.
 		/// </summary>
@@ -68,9 +76,31 @@ namespace RapChessGui
 			Init(true);
 		}
 
+		public void UciNextPhase()
+		{
+			switch (++uciPhase)
+			{
+				case 1:
+					SendMessage("uci");
+					break;
+				case 2:
+					foreach (string op in engine.options)
+						SendMessage($"setoption {op}");
+					SendMessage("isready");
+					break;
+				case 3:
+					SendMessage("ucinewgame");
+					SendMessage("isready");
+					break;
+				case 4:
+					isPrepareFinished = true;
+					break;
+			}
+		}
+
 		public void EngineRestart()
 		{
-			isEngPrepared = false;
+			isPrepareStarted = false;
 			enginePro.Restart();
 		}
 
@@ -103,11 +133,13 @@ namespace RapChessGui
 		public void Init(bool w)
 		{
 			isWhite = w;
-			timeOut = false;
 			isBookStarted = false;
 			isBookFail = false;
-			isEngPrepared = false;
 			isEngRunning = false;
+			isPrepareStarted = false;
+			isPrepareFinished = false;
+			isPositionWb = false;
+			uciPhase = 0;
 			infMs = 0;
 			countMovesBook = 0;
 			countMoves = 0;
@@ -187,9 +219,9 @@ namespace RapChessGui
 					}
 				}
 				else if (engine != null)
-					if (!isEngPrepared)
+					if (!isPrepareStarted)
 						EngPrepare();
-					else if (readyok && !isEngRunning)
+					else if (isPrepareFinished && !isEngRunning)
 						EngMakeMove();
 		}
 
@@ -202,7 +234,7 @@ namespace RapChessGui
 		public void Undo()
 		{
 			if (engine.protocol == "Winboard")
-				wbok = false;
+				isPositionWb = false;
 		}
 
 		/// <summary>
@@ -210,22 +242,16 @@ namespace RapChessGui
 		/// </summary>
 		void EngPrepare()
 		{
+			isPrepareStarted = true;
 			lastMove = "";
 			mode = player.modeValue.GetUci();
 			value = player.modeValue.GetUciValue().ToString();
 			if (engine.protocol == "Uci")
-			{
-				SendMessage("uci");
-				uciok = false;
-				readyok = false;
-				wbok = true;
-			}
+				UciNextPhase();
 			else
 			{
 				SendMessage("xboard");
-				uciok = true;
-				readyok = true;
-				wbok = false;
+				isPrepareFinished = true;
 				switch (mode)
 				{
 					case "depth":
@@ -240,7 +266,6 @@ namespace RapChessGui
 						break;
 				}
 			}
-			isEngPrepared = true;
 		}
 
 		public Int64 GetIntTime()
@@ -286,7 +311,7 @@ namespace RapChessGui
 				UciGo();
 			else
 			{
-				if (wbok)
+				if (isPositionWb)
 					XbGo();
 				else
 				{
@@ -316,7 +341,7 @@ namespace RapChessGui
 					else
 						SendMessage("black");
 					SendMessage("go");
-					wbok = true;
+					isPositionWb = true;
 				}
 				TimerStart();
 			}
@@ -342,6 +367,7 @@ namespace RapChessGui
 				FormLogEngines.AppendTimeText($"{player.name}", col);
 				FormLogEngines.AppendText($" < {msg}\n", Color.Brown);
 				enginePro.process.StandardInput.WriteLine(msg);
+
 			}
 		}
 

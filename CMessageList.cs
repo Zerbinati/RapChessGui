@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Runtime.InteropServices;
+﻿using System.Collections.Generic;
 
 namespace RapChessGui
 {
@@ -21,8 +19,8 @@ namespace RapChessGui
 	{
 		static int winMessage;
 		private readonly static object locker = new object();
-		readonly static List<CMessage> list = new List<CMessage>();
-		readonly static List<CMessage> buffer = new List<CMessage>();
+		readonly static List<CMessage> listPri = new List<CMessage>();
+		readonly static List<CMessage> listSec = new List<CMessage>();
 
 		public static void Init(int m)
 		{
@@ -33,7 +31,7 @@ namespace RapChessGui
 		{
 			lock (locker)
 			{
-				list.Add(m);
+				listPri.Add(m);
 			}
 			CWinMessage.Message(winMessage);
 		}
@@ -43,8 +41,8 @@ namespace RapChessGui
 			List<CMessage> result;
 			lock (locker)
 			{
-				result = list.GetRange(0, list.Count);
-				list.Clear();
+				result = listPri.GetRange(0, listPri.Count);
+				listPri.Clear();
 			}
 			return result;
 		}
@@ -53,14 +51,14 @@ namespace RapChessGui
 		{
 			lock (locker)
 			{
-				list.Clear();
+				listPri.Clear();
 			}
 		}
 
 		public static void Clear()
 		{
 			MsgClear();
-			buffer.Clear();
+			listSec.Clear();
 		}
 
 
@@ -78,30 +76,31 @@ namespace RapChessGui
 				CGamer gamer = CGamerList.This.GetGamerPid(m.pid, out string protocol);
 				if (gamer != null)
 				{
-					bool bm = false;
 					if (protocol == "Uci")
 					{
-						bm = m.msg.Contains("bestmove");
-						if (bm || (buffer.Count < 0x1f) || !gamer.isEngRunning)
-							buffer.Add(m);
+						bool bm = m.msg.Contains("bestmove");
+						if (bm)
+							gamer.timer.Stop();
+						if (bm || (listSec.Count < 0x1f) || !gamer.isEngRunning)
+							listSec.Add(m);
 					}
 					else if(protocol == "Winboard")
 					{
-						bm = m.msg.Contains("move");
-						if (bm || (buffer.Count < 0x1f) || !gamer.isEngRunning)
-							buffer.Add(m);
+						bool bm = m.msg.Contains("move");
+						if (bm)
+							gamer.timer.Stop();
+						if (bm || (listSec.Count < 0x1f) || !gamer.isEngRunning)
+							listSec.Add(m);
 					}
 					else
-						buffer.Add(m);
-					if (bm)
-						gamer.timer.Stop();
+						listSec.Add(m);
 				}else
-					buffer.Add(m);
+					listSec.Add(m);
 			}
-			if (buffer.Count > 0)
+			if (listSec.Count > 0)
 			{
-				message = buffer[0];
-				buffer.RemoveAt(0);
+				message = listSec[0];
+				listSec.RemoveAt(0);
 			}
 			return message != null;
 		}

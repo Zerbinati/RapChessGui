@@ -338,7 +338,6 @@
 			this.ShowInTaskbar = false;
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
 			this.Text = "Players";
-			this.TopMost = true;
 			this.Shown += new System.EventHandler(this.FormPlayer_Shown);
 			this.panel1.ResumeLayout(false);
 			this.groupBox5.ResumeLayout(false);

@@ -197,7 +197,6 @@
 			this.ShowInTaskbar = false;
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
 			this.Text = "Books";
-			this.TopMost = true;
 			this.Shown += new System.EventHandler(this.FormBook_Shown);
 			this.panel1.ResumeLayout(false);
 			this.groupBox3.ResumeLayout(false);

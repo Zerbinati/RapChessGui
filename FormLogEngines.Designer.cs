@@ -30,16 +30,17 @@
 		{
 			this.richTextBox1 = new System.Windows.Forms.RichTextBox();
 			this.panel1 = new System.Windows.Forms.Panel();
+			this.butClear = new System.Windows.Forms.Button();
 			this.rtbCommand = new System.Windows.Forms.RichTextBox();
 			this.butSend = new System.Windows.Forms.Button();
-			this.cbPlayerList = new System.Windows.Forms.ComboBox();
+			this.cbEngineList = new System.Windows.Forms.ComboBox();
 			this.menuStrip1 = new System.Windows.Forms.MenuStrip();
 			this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.commandToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.quitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.restartToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.stopToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.resetToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.terminateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.closeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.panel1.SuspendLayout();
 			this.menuStrip1.SuspendLayout();
 			this.SuspendLayout();
@@ -49,21 +50,32 @@
 			this.richTextBox1.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.richTextBox1.Location = new System.Drawing.Point(0, 24);
 			this.richTextBox1.Name = "richTextBox1";
-			this.richTextBox1.Size = new System.Drawing.Size(800, 361);
+			this.richTextBox1.Size = new System.Drawing.Size(800, 341);
 			this.richTextBox1.TabIndex = 0;
 			this.richTextBox1.Text = "";
 			this.richTextBox1.LinkClicked += new System.Windows.Forms.LinkClickedEventHandler(this.richTextBox1_LinkClicked);
 			// 
 			// panel1
 			// 
+			this.panel1.Controls.Add(this.butClear);
 			this.panel1.Controls.Add(this.rtbCommand);
 			this.panel1.Controls.Add(this.butSend);
-			this.panel1.Controls.Add(this.cbPlayerList);
+			this.panel1.Controls.Add(this.cbEngineList);
 			this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-			this.panel1.Location = new System.Drawing.Point(0, 385);
+			this.panel1.Location = new System.Drawing.Point(0, 365);
 			this.panel1.Name = "panel1";
-			this.panel1.Size = new System.Drawing.Size(800, 65);
+			this.panel1.Size = new System.Drawing.Size(800, 96);
 			this.panel1.TabIndex = 1;
+			// 
+			// butClear
+			// 
+			this.butClear.Location = new System.Drawing.Point(12, 62);
+			this.butClear.Name = "butClear";
+			this.butClear.Size = new System.Drawing.Size(178, 21);
+			this.butClear.TabIndex = 7;
+			this.butClear.Text = "Clear";
+			this.butClear.UseVisualStyleBackColor = true;
+			this.butClear.Click += new System.EventHandler(this.butClear_Click);
 			// 
 			// rtbCommand
 			// 
@@ -72,7 +84,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.rtbCommand.Location = new System.Drawing.Point(196, 6);
 			this.rtbCommand.Name = "rtbCommand";
-			this.rtbCommand.Size = new System.Drawing.Size(592, 53);
+			this.rtbCommand.Size = new System.Drawing.Size(592, 84);
 			this.rtbCommand.TabIndex = 6;
 			this.rtbCommand.Text = "";
 			// 
@@ -86,17 +98,18 @@
 			this.butSend.UseVisualStyleBackColor = true;
 			this.butSend.Click += new System.EventHandler(this.butSend_Click);
 			// 
-			// cbPlayerList
+			// cbEngineList
 			// 
-			this.cbPlayerList.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.cbPlayerList.FormattingEnabled = true;
-			this.cbPlayerList.Items.AddRange(new object[] {
+			this.cbEngineList.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.cbEngineList.FormattingEnabled = true;
+			this.cbEngineList.Items.AddRange(new object[] {
             "Human"});
-			this.cbPlayerList.Location = new System.Drawing.Point(12, 10);
-			this.cbPlayerList.Name = "cbPlayerList";
-			this.cbPlayerList.Size = new System.Drawing.Size(178, 21);
-			this.cbPlayerList.Sorted = true;
-			this.cbPlayerList.TabIndex = 3;
+			this.cbEngineList.Location = new System.Drawing.Point(12, 10);
+			this.cbEngineList.Name = "cbEngineList";
+			this.cbEngineList.Size = new System.Drawing.Size(178, 21);
+			this.cbEngineList.Sorted = true;
+			this.cbEngineList.TabIndex = 3;
+			this.cbEngineList.SelectedIndexChanged += new System.EventHandler(this.cbEngineList_SelectedIndexChanged);
 			// 
 			// menuStrip1
 			// 
@@ -119,58 +132,59 @@
 			// commandToolStripMenuItem
 			// 
 			this.commandToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.quitToolStripMenuItem,
+            this.restartToolStripMenuItem,
             this.stopToolStripMenuItem,
-            this.closeToolStripMenuItem,
-            this.resetToolStripMenuItem,
             this.terminateToolStripMenuItem});
 			this.commandToolStripMenuItem.Name = "commandToolStripMenuItem";
 			this.commandToolStripMenuItem.Size = new System.Drawing.Size(55, 20);
 			this.commandToolStripMenuItem.Text = "Engine";
 			// 
+			// quitToolStripMenuItem
+			// 
+			this.quitToolStripMenuItem.Name = "quitToolStripMenuItem";
+			this.quitToolStripMenuItem.Size = new System.Drawing.Size(128, 22);
+			this.quitToolStripMenuItem.Text = "Quit";
+			this.quitToolStripMenuItem.Click += new System.EventHandler(this.quitToolStripMenuItem_Click);
+			// 
+			// restartToolStripMenuItem
+			// 
+			this.restartToolStripMenuItem.Name = "restartToolStripMenuItem";
+			this.restartToolStripMenuItem.Size = new System.Drawing.Size(128, 22);
+			this.restartToolStripMenuItem.Text = "Restart";
+			this.restartToolStripMenuItem.Click += new System.EventHandler(this.restartToolStripMenuItem_Click);
+			// 
 			// stopToolStripMenuItem
 			// 
 			this.stopToolStripMenuItem.Name = "stopToolStripMenuItem";
-			this.stopToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+			this.stopToolStripMenuItem.Size = new System.Drawing.Size(128, 22);
 			this.stopToolStripMenuItem.Text = "Stop";
 			this.stopToolStripMenuItem.Click += new System.EventHandler(this.stopToolStripMenuItem_Click);
-			// 
-			// resetToolStripMenuItem
-			// 
-			this.resetToolStripMenuItem.Name = "resetToolStripMenuItem";
-			this.resetToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-			this.resetToolStripMenuItem.Text = "Reset";
-			this.resetToolStripMenuItem.Click += new System.EventHandler(this.resetToolStripMenuItem_Click);
 			// 
 			// terminateToolStripMenuItem
 			// 
 			this.terminateToolStripMenuItem.Name = "terminateToolStripMenuItem";
-			this.terminateToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+			this.terminateToolStripMenuItem.Size = new System.Drawing.Size(128, 22);
 			this.terminateToolStripMenuItem.Text = "Terminate";
 			this.terminateToolStripMenuItem.Click += new System.EventHandler(this.terminateToolStripMenuItem_Click);
 			// 
-			// closeToolStripMenuItem
-			// 
-			this.closeToolStripMenuItem.Name = "closeToolStripMenuItem";
-			this.closeToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-			this.closeToolStripMenuItem.Text = "Close";
-			this.closeToolStripMenuItem.Click += new System.EventHandler(this.closeToolStripMenuItem_Click);
-			// 
-			// FormLog
+			// FormLogEngines
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(800, 450);
+			this.ClientSize = new System.Drawing.Size(800, 461);
 			this.Controls.Add(this.richTextBox1);
 			this.Controls.Add(this.panel1);
 			this.Controls.Add(this.menuStrip1);
 			this.MainMenuStrip = this.menuStrip1;
 			this.MinimizeBox = false;
-			this.Name = "FormLog";
+			this.Name = "FormLogEngines";
 			this.ShowIcon = false;
 			this.ShowInTaskbar = false;
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
 			this.Text = "Log engines";
 			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormLog_FormClosing);
+			this.Shown += new System.EventHandler(this.FormLogEngines_Shown);
 			this.panel1.ResumeLayout(false);
 			this.menuStrip1.ResumeLayout(false);
 			this.menuStrip1.PerformLayout();
@@ -180,18 +194,18 @@
 		}
 
 		#endregion
-
-		public System.Windows.Forms.RichTextBox richTextBox1;
 		private System.Windows.Forms.Panel panel1;
-		public System.Windows.Forms.ComboBox cbPlayerList;
+		public System.Windows.Forms.ComboBox cbEngineList;
 		private System.Windows.Forms.Button butSend;
 		private System.Windows.Forms.RichTextBox rtbCommand;
 		private System.Windows.Forms.MenuStrip menuStrip1;
 		private System.Windows.Forms.ToolStripMenuItem saveToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem commandToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem stopToolStripMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem resetToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem restartToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem terminateToolStripMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem closeToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem quitToolStripMenuItem;
+		private System.Windows.Forms.Button butClear;
+		private System.Windows.Forms.RichTextBox richTextBox1;
 	}
 }

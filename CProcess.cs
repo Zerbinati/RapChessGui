@@ -19,7 +19,7 @@ namespace RapChessGui
 			return 0;
 		}
 
-		private void ProEvent(object sender, DataReceivedEventArgs e)
+		private void OnDataReceived(object sender, DataReceivedEventArgs e)
 		{
 			try
 			{
@@ -61,33 +61,50 @@ namespace RapChessGui
 				process.StartInfo.FileName = path;
 				process.StartInfo.Arguments = param;
 				process.StartInfo.WorkingDirectory = Path.GetDirectoryName(path);
-				process.StartInfo.UseShellExecute = false;
 				process.StartInfo.CreateNoWindow = true;
 				process.StartInfo.RedirectStandardInput = true;
 				process.StartInfo.RedirectStandardOutput = true;
-				process.OutputDataReceived += ProEvent;
+				process.StartInfo.RedirectStandardError = true;
+				process.StartInfo.UseShellExecute = false;
+				process.OutputDataReceived += OnDataReceived;
 				process.Start();
 				process.BeginOutputReadLine();
 				SetPriority(FormOptions.priority);
 				return process.Id;
 			}
-				MessageBox.Show($"Missing file {Path.GetFileName(path)}");
+			MessageBox.Show($"Missing file {Path.GetFileName(path)}");
 			return 0;
 		}
 
 		public void Restart()
 		{
-			SetProgram(process.StartInfo.FileName,process.StartInfo.Arguments);
+			SetProgram(process.StartInfo.FileName, process.StartInfo.Arguments);
+		}
+
+		public void Stop()
+		{
+			WriteLine("stop");
+		}
+
+		public void Quit()
+		{
+			WriteLine("quit");
 		}
 
 		public void Terminate()
 		{
 			try
 			{
-				process.OutputDataReceived -= ProEvent;
+				process.OutputDataReceived -= OnDataReceived;
 				process.Kill();
 			}
 			catch { }
+		}
+
+		public void WriteLine(string c)
+		{
+			if (!process.HasExited)
+				process.StandardInput.WriteLine(c);
 		}
 
 	}

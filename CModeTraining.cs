@@ -9,7 +9,6 @@ namespace RapChessGui
 		public static int win;
 		public static int draw;
 		public static int loose;
-		public static int errors;
 		public static string teacher = "";
 		public static string trained = "";
 		public static string teacherBook = CBookList.def;
@@ -24,7 +23,6 @@ namespace RapChessGui
 			win = 0;
 			draw = 0;
 			loose = 0;
-			errors = 0;
 		}
 
 		public static int Total()

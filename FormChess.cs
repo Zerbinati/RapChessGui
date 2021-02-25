@@ -39,7 +39,7 @@ namespace RapChessGui
 		public CChess Chess = new CChess();
 		readonly CGamerList GamerList = new CGamerList();
 		readonly CUci Uci = new CUci();
-		SoundPlayer audioMove = new SoundPlayer(Properties.Resources.Move);
+		readonly SoundPlayer audioMove = new SoundPlayer(Properties.Resources.Move);
 		public static PrivateFontCollection pfc = new PrivateFontCollection();
 		public static CBookList bookList = new CBookList();
 		public static CEngineList engineList = new CEngineList();
@@ -115,7 +115,6 @@ namespace RapChessGui
 			Chess.Initialize();
 			BoardPrepare();
 			combMainMode.SelectedIndex = 0;
-			GameStart();
 			timerAnimation.Enabled = true;
 		}
 
@@ -568,37 +567,40 @@ namespace RapChessGui
 			switch (CData.gameState)
 			{
 				case CGameState.mate:
-					ShowInfo(pw.name + " win", Color.Lime);
+					ShowInfo(pw.name + " win", Color.Lime, true);
 					break;
 				case CGameState.stalemate:
 					isDraw = true;
-					ShowInfo("Stalemate", Color.Yellow);
+					ShowInfo("Stalemate", Color.Yellow, true);
 					break;
 				case CGameState.repetition:
 					isDraw = true;
-					ShowInfo("Threefold repetition", Color.Yellow);
+					ShowInfo("Threefold repetition", Color.Yellow, true);
 					break;
 				case CGameState.move50:
 					isDraw = true;
-					ShowInfo("Fifty-move rule", Color.Yellow);
+					ShowInfo("Fifty-move rule", Color.Yellow, true);
 					break;
 				case CGameState.material:
 					isDraw = true;
-					ShowInfo("Insufficient material", Color.Yellow);
+					ShowInfo("Insufficient material", Color.Yellow, true);
 					break;
 				case CGameState.resignation:
-					ShowInfo($"{pl.name} resign", Color.Red);
+					ShowInfo($"{pl.name} resign", Color.Red, true);
 					break;
 				case CGameState.time:
 					CData.gamesTime++;
-					ShowInfo($"{pl.name} time out", Color.Red);
+					ShowInfo($"{pl.name} time out", Color.Red, true);
 					CRapLog.Add($"Time out {pl.name}");
+					FormLogEngines.AppendText($"Time out {pl.name}\n", Color.Red);
 					break;
 				case CGameState.error:
 					CData.gamesError++;
 					labError.Show();
-					ShowInfo($"{pl.name} make wrong move", Color.Red);
+					ShowInfo($"{pl.name} make wrong move", Color.Red, true);
 					CRapLog.Add($"Wrong move {pl.name} ({umo}) {Chess.GetFen()}");
+					FormLogEngines.AppendText($"Wrong move: ({umo})\n", Color.Red);
+					FormLogEngines.AppendText($"Fen: {Chess.GetFen()}\n", Color.Black);
 					break;
 			}
 			labResult.Text = tssInfo.Text;
@@ -624,7 +626,7 @@ namespace RapChessGui
 			if (CData.gameMode == CGameMode.tourP)
 				TournamentPEnd(pw, pl, isDraw);
 			if (CData.gameMode == CGameMode.training)
-				TrainingEnd(gw, gl, isDraw);
+				TrainingEnd(gw, isDraw);
 			GamerList.Terminate();
 			if (isDraw)
 				CData.gamesDraw++;
@@ -699,14 +701,8 @@ namespace RapChessGui
 			switch (Uci.command)
 			{
 				case "uciok":
-					g.uciok = true;
-					foreach (string op in g.engine.options)
-						g.SendMessage($"setoption {op}");
-					g.SendMessage("ucinewgame");
-					g.SendMessage("isready");
-					break;
 				case "readyok":
-					g.readyok = true;
+					g.UciNextPhase();
 					break;
 				case "enginemove":
 					g.isBookFail = true;
@@ -722,7 +718,7 @@ namespace RapChessGui
 							g.score = "book";
 							ShowInfo($"book {umo}", Color.Aquamarine);
 							if ((g.engine != null) && g.engine.IsXb())
-								g.isEngPrepared = false;
+								g.isPrepareStarted = false;
 						}
 						MakeMove(umo);
 						if ((g.ponder != "") && FormOptions.This.rbSan.Checked)
@@ -846,7 +842,7 @@ namespace RapChessGui
 					}
 					else if (s.Contains("resign") || s.Contains("illegal"))
 						SetGameState(CGameState.resignation, g);
-					else if (g.wbok && Char.IsDigit(Uci.tokens[0][0]) && (Uci.tokens.Length > 4))
+					else if (g.isPrepareFinished && Char.IsDigit(Uci.tokens[0][0]) && (Uci.tokens.Length > 4))
 					{
 						try
 						{
@@ -880,6 +876,10 @@ namespace RapChessGui
 					{
 						FormEngine.AddOption(m.msg);
 					}
+					if (m.pid == FormLogEngines.process.GetPid())
+					{
+						FormLogEngines.AppendText($"{m.msg}\n", Color.Black, true);
+					}
 					else
 						CRapLog.Add($"Unknown pid ({GamerList.GamerCur().player.engine} - {GamerList.GamerSec().player.engine})");
 				}
@@ -903,7 +903,7 @@ namespace RapChessGui
 			fn = $"History\\{fn}.rtf";
 			try
 			{
-				FormLogEngines.This.richTextBox1.SaveFile(fn);
+				FormLogEngines.Save(fn);
 			}
 			catch
 			{
@@ -1149,8 +1149,6 @@ namespace RapChessGui
 			}
 			if (!Chess.IsValidMoveUmo(umo, out umo, out int gmo))
 			{
-				FormLogEngines.AppendText($"Wrong move: ({umo})\n", Color.Red);
-				FormLogEngines.AppendText($"Fen: {Chess.GetFen()}\n", Color.Black);
 				SetGameState(CGameState.error, cg, umo);
 				return false;
 			}
@@ -1561,6 +1559,7 @@ namespace RapChessGui
 			CModeGame.book = cbBook.Text;
 			CModeGame.modeValue.mode = cbMode.Text;
 			CModeGame.modeValue.SetValue((int)nudValue.Value);
+			CModeGame.SaveToIni();
 		}
 
 		void GameGet()
@@ -1594,8 +1593,13 @@ namespace RapChessGui
 
 		void GameStart()
 		{
+			Clear();
+			CPlayer hu = playerList.GetPlayerHuman();
+			CData.HisToPoints(hu.hisElo, chartGame.Series[0].Points);
+			CModeGame.ranked = GetRanked();
+			ShowAutoElo();
 			GameSet();
-			SetMode(CGameMode.game);
+			GamePrepare();
 			lastEco = "";
 			if (ShowLastGame())
 				CModeGame.rotate = !CModeGame.rotate;
@@ -1603,24 +1607,17 @@ namespace RapChessGui
 				GamerList.Rotate();
 			if (GamerList.GamerCur().player.IsHuman())
 				moves = Chess.GenerateValidMoves(out _);
-			CModeGame.SaveToIni();
 			SetBoardRotate();
 			Board.Fill();
 			Board.SetPosition();
 			Board.RenderBoard();
 			RenderBoard();
-			Clear();
-			GameShow();
 		}
 
 		void GameShow()
 		{
 			GameGet();
-			CPlayer hu = playerList.GetPlayerHuman();
-			CData.HisToPoints(hu.hisElo, chartGame.Series[0].Points);
-			GamePrepare();
-			CModeGame.ranked = GetRanked();
-			ShowAutoElo();
+			GameStart();
 		}
 
 		void GaemEnd(CPlayer pw, CPlayer pl, bool isDraw)
@@ -2160,7 +2157,7 @@ namespace RapChessGui
 			Clear();
 		}
 
-		void TrainingEnd(CGamer gw, CGamer gl, bool isDraw)
+		void TrainingEnd(CGamer gw, bool isDraw)
 		{
 			CModeTraining.games++;
 			if (!isDraw)
@@ -2182,8 +2179,6 @@ namespace RapChessGui
 				CModeTraining.draw++;
 				CModeTraining.modeValueTeacher.value++;
 			}
-			if ((gl.player.name == "Trained") && ((CData.gameState == CGameState.time) || (CData.gameState == CGameState.error) || gl.timeOut))
-				CModeTraining.errors++;
 		}
 
 		void EditShow(string fen = CChess.defFen)
@@ -2307,6 +2302,8 @@ namespace RapChessGui
 		{
 			IniSave();
 			GamerList.Terminate();
+			FormEngine.process.Terminate();
+			FormLogEngines.process.Terminate();
 		}
 
 		private void ButStart_Click(object sender, EventArgs e)

@@ -13,7 +13,7 @@ namespace RapChessGui
 		int tournament = -1;
 		CEngine engine = null;
 		public static CProcess process = new CProcess();
-		COptionList optionList = new COptionList();
+		readonly COptionList optionList = new COptionList();
 
 		public FormEngine()
 		{
@@ -75,8 +75,8 @@ namespace RapChessGui
 			nudTournament.Value = engine.tournament;
 			if ((engine.protocol == "Uci") && engine.FileExists())
 			{
-				if (process.SetProgram("Engines\\" + engine.file,engine.parameters) > 0)
-					process.process.StandardInput.WriteLine("uci");
+				if (process.SetProgram(AppDomain.CurrentDomain.BaseDirectory + "Engines\\" + engine.file, engine.parameters) > 0)
+					process.WriteLine("uci");
 			}
 		}
 
@@ -294,6 +294,11 @@ namespace RapChessGui
 			engine.options.Clear();
 			engine.SaveToIni();
 			Uciok();
+		}
+
+		private void FormEngine_FormClosing(object sender, FormClosingEventArgs e)
+		{
+			process.Terminate();
 		}
 	}
 }
