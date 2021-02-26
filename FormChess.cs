@@ -1578,13 +1578,14 @@ namespace RapChessGui
 			lvMovesW.Items.Clear();
 			lvMovesB.Items.Clear();
 			GamerList.gamer[0].SetPlayer(playerList.GetPlayerHuman());
-			CPlayer pc = new CPlayer(cbComputer.Text);
+			CPlayer pc = new CPlayer();
 			if (cbComputer.Text == "Custom")
 			{
 				pc.engine = cbEngine.Text;
 				pc.book = cbBook.Text;
 				pc.modeValue.mode = CModeGame.modeValue.mode;
 				pc.modeValue.value = CModeGame.modeValue.value;
+				pc.name = pc.GetName();
 			}
 			else
 				pc = playerList.GetPlayerAuto(cbComputer.Text);
@@ -1593,7 +1594,6 @@ namespace RapChessGui
 
 		void GameStart()
 		{
-			Clear();
 			CPlayer hu = playerList.GetPlayerHuman();
 			CData.HisToPoints(hu.hisElo, chartGame.Series[0].Points);
 			CModeGame.ranked = GetRanked();
@@ -1612,6 +1612,7 @@ namespace RapChessGui
 			Board.SetPosition();
 			Board.RenderBoard();
 			RenderBoard();
+			Clear();
 		}
 
 		void GameShow()
