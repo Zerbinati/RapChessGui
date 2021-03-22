@@ -160,8 +160,8 @@ namespace NSChess
 			if ((flags & moveflagCastleQueen) > 0)
 				return "O-O-O";
 			List<int> moves = GenerateValidMoves(out _);
-			bool uniRank = true;
-			bool uniFile = true;
+			bool showRank = false;
+			bool showFile = false;
 			foreach (int m in moves)
 			{
 				int f = m & 0xff;
@@ -171,16 +171,18 @@ namespace NSChess
 					if ((piece == pieceFr) && ((m & 0xff00) == (emo & 0xff00)))
 					{
 						if ((m & 0xf0) != (emo & 0xf0))
-							uniRank = false;
+							showRank = true;
 						if ((m & 0xf) != (emo & 0xf))
-							uniFile = false;
+							showFile = true;
 					}
 				}
 			}
 			if (isAttack && (pieceFr == piecePawn))
-				uniFile = false;
-			string faf = uniFile ? "" : umo.Substring(0, 1);
-			string far = uniRank ? "" : umo.Substring(1, 1);
+				showFile = true;
+			if (showFile && showRank)
+				showRank = false;
+			string faf = showFile ? umo.Substring(0, 1) : String.Empty;
+			string far = showRank ? umo.Substring(1, 1) : String.Empty;
 			string fb = umo.Substring(2, 2);
 			string attack = isAttack ? "x" : "";
 			string promo = "";
@@ -806,12 +808,11 @@ namespace NSChess
 			return GetGameState(out _);
 		}
 
-		bool IsRepetition()
+		bool IsRepetition(int count = 3)
 		{
-			int r = 1;
 			for (int n = undoIndex - 4; n >= undoIndex - g_move50; n -= 2)
 				if (undoStack[n].hash == g_hash)
-					if (++r > 2)
+					if (--count <= 1)
 						return true;
 			return false;
 		}

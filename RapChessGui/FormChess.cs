@@ -37,7 +37,6 @@ namespace RapChessGui
 		public static CChess Chess = new CChess();
 		readonly CGamerList GamerList = new CGamerList();
 		readonly CUci Uci = new CUci();
-		readonly List<string> TrainingList = new List<string>();
 		readonly SoundPlayer audioMove = new SoundPlayer(Properties.Resources.Move);
 		public static PrivateFontCollection pfc = new PrivateFontCollection();
 		public static CBookList bookList = new CBookList();
@@ -131,36 +130,32 @@ namespace RapChessGui
 			if (bookList.LoadFromIni() == 0)
 			{
 				CBook b;
-				b = new CBook("Gm2000");
+				b = new CBook("BigBin");
 				b.file = "BookReaderBin.exe";
 				b.parameters = b.name;
 				bookList.Add(b);
-				b = new CBook("Gm2600");
-				b.file = "BookReaderBin.exe";
+				b = new CBook("BigMem");
+				b.file = "BookReaderMem.exe";
+				b.parameters = $"{b.name} -w 100K";
+				bookList.Add(b);
+				b = new CBook("BigUmo");
+				b.file = "BookReaderUmo.exe";
 				b.parameters = b.name;
 				bookList.Add(b);
 				b = new CBook("ChessDb");
 				b.file = "BookReaderCdb.exe";
 				bookList.Add(b);
-				b = new CBook("BigMem");
+				b = new CBook();
+				b.file = "BookReaderMem.exe";
+				b.name = "Auto";
+				b.parameters = "[engine] -w 100K";
+				bookList.Add(b);
+				b = new CBook("Eco");
 				b.file = "BookReaderMem.exe";
 				b.parameters = b.name;
 				bookList.Add(b);
-				b = new CBook();
-				b.file = "BookReaderUmo.exe";
-				b.name = "Auto";
-				b.parameters = "[engine] -lw 10";
-				bookList.Add(b);
-				b = new CBook("Eco");
-				b.file = "BookReaderUmo.exe";
-				b.parameters = b.name;
-				bookList.Add(b);
-				b = new CBook("Random1");
-				b.file = "BookReaderUmo.exe";
-				b.parameters = b.name;
-				bookList.Add(b);
-				b = new CBook("Random2");
-				b.file = "BookReaderUmo.exe";
+				b = new CBook("Random");
+				b.file = "BookReaderMem.exe";
 				b.parameters = b.name;
 				bookList.Add(b);
 				for (int n = 1; n < 10; n++)
@@ -357,6 +352,7 @@ namespace RapChessGui
 
 		void Clear()
 		{
+			lastEco = String.Empty;
 			Text = $"RapChessGui Games {CData.gamesPlayed} Draws {CData.gamesDraw} Time out {CData.gamesTime} Errors {CData.gamesError}";
 			CData.eco = String.Empty;
 			CData.gameState = CGameState.normal;
@@ -697,17 +693,6 @@ namespace RapChessGui
 			AddLines(g);
 		}
 
-		void AddTrainingUci()
-		{
-			string uci = CHistory.GetMovesUci();
-			if (!String.IsNullOrEmpty(uci))
-			{
-				TrainingList.Add(uci);
-				TrainingList.Sort();
-				File.WriteAllLines($"Books\\{combMainMode.Text}.uci", TrainingList);
-			}
-		}
-
 		public void GetMessageUci(CGamer g, string msg)
 		{
 			Uci.SetMsg(msg);
@@ -734,11 +719,7 @@ namespace RapChessGui
 								g.isPositionWb = false;
 						}
 						else
-						{
-							if ((g.countMovesEngine == 0) && (g.book != null))
-								AddTrainingUci();
 							g.countMovesEngine++;
-						}
 						MakeMove(umo);
 						if ((g.ponder != "") && FormOptions.This.rbSan.Checked)
 							g.ponder = Chess.UmoToSan(g.ponder);
@@ -1231,7 +1212,7 @@ namespace RapChessGui
 			else
 			{
 				labEco.ForeColor = Color.Black;
-				lastEco = "";
+				lastEco = String.Empty;
 			}
 			int moveNumber = (Chess.g_moveNumber >> 1) + 1;
 			tssMove.Text = $"Move {moveNumber} {Chess.g_move50}";
@@ -1645,20 +1626,16 @@ namespace RapChessGui
 			CModeGame.ranked = GetRanked();
 			GameSet();
 			GamePrepare();
-			lastEco = String.Empty;
 			if (ShowLastGame())
 				CModeGame.rotate = !CModeGame.rotate;
 			if ((CModeGame.rotate && (cbColor.Text == "Auto")) || (cbColor.Text == "Black"))
 				GamerList.Rotate();
-			if (GamerList.GamerCur().player.IsHuman())
-				moves = Chess.GenerateValidMoves(out _);
 			Clear();
 			SetBoardRotate();
-			Board.Fill();
-			Board.SetPosition();
-			Board.RenderBoard();
-			RenderBoard();
+			RenderBoard(true);
 			ShowAutoElo();
+			if (GamerList.GamerCur().player.IsHuman())
+				moves = Chess.GenerateValidMoves(out _);
 		}
 
 		void GameShow()
@@ -2387,7 +2364,6 @@ namespace RapChessGui
 
 		private void ButTraining_Click(object sender, EventArgs e)
 		{
-			TrainingList.Clear();
 			CModeTraining.Reset();
 			chartTraining.Series[0].Points.Clear();
 			TrainingStart();
@@ -2658,8 +2634,7 @@ namespace RapChessGui
 		private void cbMainMode_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			CData.Clear();
-			FormLogGames.This.textBox1.Text = "";
-			TrainingList.Clear();
+			FormLogGames.This.textBox1.Text = String.Empty;
 			tabControl1.SelectedIndex = combMainMode.SelectedIndex;
 			Board.Fill();
 			RenderBoard();
