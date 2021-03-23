@@ -1617,6 +1617,8 @@ namespace RapChessGui
 			else
 				pc = playerList.GetPlayerAuto(cbComputer.Text);
 			GamerList.gamer[1].SetPlayer(pc);
+			if (GamerList.GamerCur().player.IsHuman())
+				moves = Chess.GenerateValidMoves(out _);
 		}
 
 		void GameStart()
@@ -1634,8 +1636,6 @@ namespace RapChessGui
 			SetBoardRotate();
 			RenderBoard(true);
 			ShowAutoElo();
-			if (GamerList.GamerCur().player.IsHuman())
-				moves = Chess.GenerateValidMoves(out _);
 		}
 
 		void GameShow()
