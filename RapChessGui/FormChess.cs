@@ -1285,7 +1285,7 @@ namespace RapChessGui
 				}
 			}
 			Graphics pg = panBoard.CreateGraphics();
-			Board.RenderArrow(pg, FormOptions.This.cbArrow.Checked);
+			Board.RenderArrows(pg);
 			pg.Dispose();
 			stopwatch.Stop();
 			CData.fps = stopwatch.ElapsedMilliseconds > 0 ? CData.fps * 0.9 + 100 / stopwatch.ElapsedMilliseconds : 0;
@@ -1531,7 +1531,7 @@ namespace RapChessGui
 			{
 				int sou = c & 0xff;
 				int i = CChess.Con256To64(sou);
-				CBoard.list[i].color = Color.Yellow;
+				CBoard.arrField[i].color = Color.Yellow;
 			}
 		}
 
@@ -1547,7 +1547,7 @@ namespace RapChessGui
 					int x = (des & 0xf) - 4;
 					int y = (des >> 4) - 4;
 					int i = y * 8 + x;
-					CBoard.list[i].color = Color.Yellow;
+					CBoard.arrField[i].color = Color.Yellow;
 				}
 		}
 
@@ -2176,6 +2176,9 @@ namespace RapChessGui
 				GamerList.Rotate();
 			CModeTraining.rotate = !CModeTraining.rotate;
 			chartTraining.Series[0].Points.Add((double)nudTeacher.Value);
+			if (chartTraining.Series[0].Points.Count > FormOptions.This.nudHistory.Value)
+				chartTraining.Series[0].Points.RemoveAt(0);
+			chartTraining.ChartAreas[0].RecalculateAxesScale();
 			CModeTraining.SaveToIni();
 			Clear();
 		}
@@ -2445,6 +2448,12 @@ namespace RapChessGui
 			}
 			if (CData.gameMode == (int)CGameMode.game)
 			{
+				if (e.Button == MouseButtons.Right)
+				{
+					CField f = CBoard.arrField[CDrag.mouseIndex];
+					f.circle = !f.circle;
+					return;
+				}
 				if (GamerList.GamerCur().engine != null)
 					return;
 				if (IsValid(CDrag.mouseIndex))

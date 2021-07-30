@@ -810,7 +810,10 @@ namespace NSChess
 
 		bool IsRepetition(int count = 3)
 		{
-			for (int n = undoIndex - 4; n >= undoIndex - g_move50; n -= 2)
+			int min =  undoIndex - g_move50;
+			if (min < 0)
+				min = 0;
+			for (int n = undoIndex - 4; n >= min; n -= 2)
 				if (undoStack[n].hash == g_hash)
 					if (--count <= 1)
 						return true;

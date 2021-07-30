@@ -360,7 +360,7 @@ namespace RapChessGui
 				Color col = isWhite ? Color.DimGray : Color.Black;
 				FormLogEngines.AppendTimeText($"book {player.name}", col);
 				FormLogEngines.AppendText($" < {msg}\n", Color.Brown);
-				bookPro.process.StandardInput.WriteLine(msg);
+				bookPro.WriteLine(msg);
 			}
 		}
 
@@ -371,8 +371,7 @@ namespace RapChessGui
 				Color col = isWhite ? Color.DimGray : Color.Black;
 				FormLogEngines.AppendTimeText($"{player.name}", col);
 				FormLogEngines.AppendText($" < {msg}\n", Color.Brown);
-				enginePro.process.StandardInput.WriteLine(msg);
-
+				enginePro.WriteLine(msg);
 			}
 		}
 

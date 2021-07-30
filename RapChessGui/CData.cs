@@ -126,7 +126,9 @@ namespace RapChessGui
 
 	public class CHisElo
 	{
-		public List<double> list = new List<double>(100);
+		public static int count = 100;
+
+		public List<double> list = new List<double>();
 
 		public void Assign(CHisElo he)
 		{
@@ -172,7 +174,7 @@ namespace RapChessGui
 		public void Add(double value)
 		{
 			list.Add(value);
-			int c = list.Count - 100;
+			int c = list.Count - count;
 			if (c > 0)
 				list.RemoveRange(0, c);
 		}

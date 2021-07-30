@@ -73,10 +73,22 @@ namespace RapChessGui
 	class CField
 	{
 		public bool attacked = false;
+		public bool circle = false;
 		public int x;
 		public int y;
 		public Color color = Color.Empty;
 		public CPiece piece = null;
+
+		public Rectangle GetRect()
+		{
+			Rectangle rec = new Rectangle();
+			rec.X = x;
+			rec.Y = y;
+			rec.Width = CBoard.field;
+			rec.Height = CBoard.field;
+			return rec;
+		}
+
 	}
 
 	class CBoard
@@ -94,12 +106,11 @@ namespace RapChessGui
 		public static Color colorLabelB;
 		public static bool animated = false;
 		public static bool finished = true;
-		public static CField[] list = new CField[64];
+		public static CField[] arrField = new CField[64];
 		int bmpX = 0;
 		int bmpY = 0;
-		int bmpSize = 64 * 8 + 32 * 2;
-		int frame = 32;
-		int field = 64;
+		public static int frame = 32;
+		public static int field = 64;
 		public static Bitmap[] background = new Bitmap[2];
 		public Bitmap bmpBoard;
 		public CArrowList arrowCur = new CArrowList(Color.FromArgb(0x90, 0x10, 0xff, 0x10));
@@ -108,20 +119,65 @@ namespace RapChessGui
 		public CBoard()
 		{
 			for (int n = 0; n < 64; n++)
-				list[n] = new CField();
+				arrField[n] = new CField();
 		}
 
 		public void ClearArrows()
 		{
 			arrowCur.Clear();
 			arrowEco.Clear();
+			ClearCircles();
+		}
+
+		public static void ClearAttack()
+		{
+			foreach (CField f in arrField)
+				f.attacked = false;
+		}
+
+		public void ClearCircles()
+		{
+			foreach (CField f in arrField)
+				f.circle = false;
 		}
 
 		public void ClearColors()
 		{
-			for (int n = 0; n < 64; n++)
-				list[n].color = Color.Empty;
+			foreach (CField f in arrField)
+				f.color = Color.Empty;
 		}
+
+		void DrawArrow(Graphics g, CArrow arrow)
+		{
+			using (Pen pen = new Pen(arrow.color, 8))
+			{
+				pen.StartCap = LineCap.RoundAnchor;
+				pen.EndCap = LineCap.ArrowAnchor;
+				g.DrawLine(pen, GetMiddle(arrow.a), GetMiddle(arrow.b));
+			}
+		}
+
+		public void DrawArrows(Graphics g, CArrowList al)
+		{
+			foreach (CArrow a in al.list)
+				DrawArrow(g, a);
+		}
+
+		void DrawCircle(Graphics g, Rectangle rec)
+		{
+			using (Pen pen = new Pen(Brushes.ForestGreen, 4))
+			{
+				g.DrawEllipse(pen, rec);
+			}
+		}
+
+		public void DrawCircles(Graphics g)
+		{
+			foreach (CField f in arrField)
+				if (f.circle)
+					DrawCircle(g, f.GetRect());
+		}
+
 
 		public Point GetMiddle(int x, int y)
 		{
@@ -151,32 +207,18 @@ namespace RapChessGui
 			return GetMiddle(p.X, p.Y);
 		}
 
-		void RenderArrow(Graphics g, CArrow arrow)
+		public void RenderArrows(Graphics g)
 		{
-			Pen pen = new Pen(arrow.color, 8);
-			pen.StartCap = LineCap.RoundAnchor;
-			pen.EndCap = LineCap.ArrowAnchor;
-			g.DrawLine(pen, GetMiddle(arrow.a), GetMiddle(arrow.b));
-		}
-
-		public void RenderArrow(Graphics g, CArrowList al)
-		{
-			foreach (CArrow a in al.list)
-				RenderArrow(g, a);
-		}
-
-		public void RenderArrow(Graphics g, bool show)
-		{
-			if (show)
+			Bitmap bmp = new Bitmap(bmpBoard);
+			Graphics gb = Graphics.FromImage(bmp);
+			DrawCircles(gb);
+			if (FormOptions.This.cbArrow.Checked)
 			{
-				Bitmap bmpArrow = new Bitmap(bmpBoard);
-				Graphics ga = Graphics.FromImage(bmpArrow);
-				RenderArrow(ga, arrowCur);
-				RenderArrow(ga, arrowEco);
-				g.DrawImage(bmpArrow, bmpX, bmpY);
+				DrawArrows(gb, arrowCur);
+				DrawArrows(gb, arrowEco);
+
 			}
-			else
-				g.DrawImage(bmpBoard, bmpX, bmpY);
+			g.DrawImage(bmp, bmpX, bmpY);
 		}
 
 
@@ -185,11 +227,11 @@ namespace RapChessGui
 			int i = CChess.arrField[index];
 			int f = FormChess.Chess.g_board[i];
 			if ((f & CChess.colorEmpty) > 0)
-				list[index].piece = null;
+				arrField[index].piece = null;
 			else
 			{
 				CPiece piece = new CPiece();
-				list[index].piece = piece;
+				arrField[index].piece = piece;
 				piece.SetImage(index);
 			}
 		}
@@ -284,7 +326,7 @@ namespace RapChessGui
 			int min = Math.Min(w, h);
 			field = min / 9;
 			frame = field >> 1;
-			bmpSize = 8 * field + 2 * frame;
+			int bmpSize = 8 * field + 2 * frame;
 			bmpX = (w - bmpSize) >> 1;
 			bmpY = (h - bmpSize) >> 1;
 			CreateBackground(0);
@@ -324,11 +366,11 @@ namespace RapChessGui
 					rec.Y = y2;
 					rec.Width = field;
 					rec.Height = field;
-					if ((i == CDrag.lastSou) || (i == CDrag.lastDes) || (list[i].color != Color.Empty))
+					if ((i == CDrag.lastSou) || (i == CDrag.lastDes) || (arrField[i].color != Color.Empty))
 						g.FillRectangle(brushYellow, rec);
-					else if (list[i].attacked && (CData.gameMode != CGameMode.edit))
+					else if (arrField[i].attacked && (CData.gameMode != CGameMode.edit))
 						g.FillRectangle(brushRed, rec);
-					CPiece piece = list[i].piece;
+					CPiece piece = arrField[i].piece;
 					if (piece == null)
 						continue;
 					if (piece.image < 0)
@@ -341,8 +383,8 @@ namespace RapChessGui
 						image = piece.desImage % 6;
 						gp1.AddString("pnbrqk"[image].ToString(), fontPiece.FontFamily, (int)fontPiece.Style, fontPiece.Size, rec, sf);
 					}
-					list[i].x = x2;
-					list[i].y = y2;
+					arrField[i].x = x2;
+					arrField[i].y = y2;
 					piece.SetPositionAni(x2, y2);
 					if ((i == CDrag.lastDes) && CDrag.dragged)
 						piece.SetPositionSta(CDrag.mouseX - frame - bmpX, CDrag.mouseY - frame - bmpY);
@@ -382,8 +424,8 @@ namespace RapChessGui
 
 		public static void MakeMove(int sou, int des)
 		{
-			list[des].piece = list[sou].piece;
-			list[sou].piece = null;
+			arrField[des].piece = arrField[sou].piece;
+			arrField[sou].piece = null;
 		}
 
 		public void MakeMove(int gm)
@@ -398,9 +440,9 @@ namespace RapChessGui
 			int yd = (des >> 4) - 4;
 			sou = ys * 8 + xs;
 			des = yd * 8 + xd;
-			CPiece pd = list[des].piece;
+			CPiece pd = arrField[des].piece;
 			if (pd != null)
-				list[sou].piece.desImage = pd.image;
+				arrField[sou].piece.desImage = pd.image;
 			MakeMove(sou, des);
 			if ((flags & CChess.moveflagCastleKing) > 0)
 			{
@@ -435,7 +477,7 @@ namespace RapChessGui
 		public static void UpdatePosition()
 		{
 			animated = false;
-			foreach (CField f in list)
+			foreach (CField f in arrField)
 			{
 				CPiece p = f.piece;
 				if (p != null)
@@ -455,9 +497,9 @@ namespace RapChessGui
 					int i = y * 8 + x;
 					int xr = FormChess.boardRotate ? 7 - x : x;
 					int x2 = frame + xr * field;
-					list[i].x = x2;
-					list[i].y = y2;
-					CPiece piece = list[i].piece;
+					arrField[i].x = x2;
+					arrField[i].y = y2;
+					CPiece piece = arrField[i].piece;
 					if (piece == null)
 						continue;
 					piece.SetPositionSta(x2, y2);
@@ -472,9 +514,9 @@ namespace RapChessGui
 				int i = CChess.arrField[n];
 				int f = FormChess.Chess.g_board[i];
 				if ((f & CChess.colorEmpty) > 0)
-					list[n].piece = null;
+					arrField[n].piece = null;
 				else
-					list[n].piece.SetImage(n);
+					arrField[n].piece.SetImage(n);
 			}
 		}
 
@@ -489,15 +531,9 @@ namespace RapChessGui
 					if (show || (r == CChess.pieceKing))
 					{
 						int i = CChess.Con256To64(d);
-						list[i].attacked = true;
+						arrField[i].attacked = true;
 					}
 			}
-		}
-
-		public static void ClearAttack()
-		{
-			for (int n = 0; n < 64; n++)
-				list[n].attacked = false;
 		}
 
 		public static void ShowAttack(bool show)

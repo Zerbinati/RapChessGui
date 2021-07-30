@@ -110,6 +110,13 @@ namespace RapIni
 			return ColorTranslator.FromHtml(s);
 		}
 
+		public decimal ReadDecimal(string key, decimal def = 0)
+		{
+			string s = Read(key, Convert.ToString(def));
+			decimal.TryParse(s, out decimal result);
+			return result;
+		}
+
 		public double ReadDouble(string key, double def = 0)
 		{
 			string s = Read(key, Convert.ToString(def));

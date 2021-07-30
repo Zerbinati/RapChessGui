@@ -35,8 +35,9 @@ namespace RapChessGui
 			cbArrow.Checked = CRapIni.This.ReadBool("options>interface>arrow", cbArrow.Checked);
 			cbTips.Checked = CRapIni.This.ReadBool("options>interface>tips", cbTips.Checked);
 			cbSound.Checked = CRapIni.This.ReadBool("options>interface>sound", cbSound.Checked);
-			nudBreak.Value = CRapIni.This.ReadInt("options>mode>game>brak", (int)nudBreak.Value);
-			nudSpeed.Value = CRapIni.This.ReadInt("options>interface>speed", (int)nudSpeed.Value);
+			nudBreak.Value = CRapIni.This.ReadDecimal("options>mode>game>brak", nudBreak.Value);
+			nudHistory.Value = CRapIni.This.ReadDecimal("options>interface>history", nudHistory.Value);
+			nudSpeed.Value = CRapIni.This.ReadDecimal("options>interface>speed", nudSpeed.Value);
 			cbGameAutoElo.Checked = CRapIni.This.ReadBool("options>game>autoelo", cbGameAutoElo.Checked);
 			combModeStandard.SelectedIndex = CRapIni.This.ReadInt("options>margin>standard", 1);
 			combModeTime.SelectedIndex = CRapIni.This.ReadInt("options>margin>time", 4);
@@ -46,6 +47,7 @@ namespace RapChessGui
 			colorBoard = colorDialog1.Color;
 			marginStandard = CbToMargin(combModeStandard.SelectedIndex);
 			marginTime = CbToMargin(combModeTime.SelectedIndex);
+			CHisElo.count = (int)nudHistory.Value;
 		}
 
 		public void SaveToIni()
@@ -59,6 +61,7 @@ namespace RapChessGui
 			CRapIni.This.Write("options>interface>tips", cbTips.Checked);
 			CRapIni.This.Write("options>interface>sound", cbSound.Checked);
 			CRapIni.This.Write("options>mode>game>brak", nudBreak.Value);
+			CRapIni.This.Write("options>interface>history", nudHistory.Value);
 			CRapIni.This.Write("options>interface>speed", nudSpeed.Value);
 			CRapIni.This.Write("options>game>autoelo", cbGameAutoElo.Checked);
 			CRapIni.This.Write("options>margin>standard", combModeStandard.SelectedIndex);
@@ -142,6 +145,7 @@ namespace RapChessGui
 			nudMinEloE.Value = 0;
 			nudMaxEloP.Value = 3000;
 			nudMinEloP.Value = 0;
+			nudHistory.Value = 100;
 			CBoard.SetColor(CBoard.colorDefault);
 			colorDialog1.Color = CBoard.colorDefault;
 			FormChess.This.BackColor = CBoard.colorChartD;

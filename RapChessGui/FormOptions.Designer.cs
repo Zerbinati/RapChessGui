@@ -43,6 +43,10 @@
 			this.cbRotateBoard = new System.Windows.Forms.CheckBox();
 			this.cbGameAutoElo = new System.Windows.Forms.CheckBox();
 			this.gbTournamentP = new System.Windows.Forms.GroupBox();
+			this.label10 = new System.Windows.Forms.Label();
+			this.label9 = new System.Windows.Forms.Label();
+			this.nudMinEloP = new System.Windows.Forms.NumericUpDown();
+			this.nudMaxEloP = new System.Windows.Forms.NumericUpDown();
 			this.labTourP = new System.Windows.Forms.Label();
 			this.label2 = new System.Windows.Forms.Label();
 			this.nudTourP = new System.Windows.Forms.NumericUpDown();
@@ -52,6 +56,10 @@
 			this.combModeTime = new System.Windows.Forms.ComboBox();
 			this.combModeStandard = new System.Windows.Forms.ComboBox();
 			this.gbTournamentE = new System.Windows.Forms.GroupBox();
+			this.label8 = new System.Windows.Forms.Label();
+			this.label5 = new System.Windows.Forms.Label();
+			this.nudMinEloE = new System.Windows.Forms.NumericUpDown();
+			this.nudMaxEloE = new System.Windows.Forms.NumericUpDown();
 			this.labTourE = new System.Windows.Forms.Label();
 			this.label6 = new System.Windows.Forms.Label();
 			this.nudTourE = new System.Windows.Forms.NumericUpDown();
@@ -67,21 +75,19 @@
 			this.tabControl1 = new System.Windows.Forms.TabControl();
 			this.tabPageInterface = new System.Windows.Forms.TabPage();
 			this.tabPageModes = new System.Windows.Forms.TabPage();
-			this.nudMaxEloP = new System.Windows.Forms.NumericUpDown();
-			this.nudMinEloP = new System.Windows.Forms.NumericUpDown();
-			this.nudMaxEloE = new System.Windows.Forms.NumericUpDown();
-			this.nudMinEloE = new System.Windows.Forms.NumericUpDown();
-			this.label5 = new System.Windows.Forms.Label();
-			this.label8 = new System.Windows.Forms.Label();
-			this.label9 = new System.Windows.Forms.Label();
-			this.label10 = new System.Windows.Forms.Label();
+			this.nudHistory = new System.Windows.Forms.NumericUpDown();
+			this.label11 = new System.Windows.Forms.Label();
 			this.gbInterface.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.nudSpeed)).BeginInit();
 			this.gbGame.SuspendLayout();
 			this.gbTournamentP.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.nudMinEloP)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.nudMaxEloP)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.nudTourP)).BeginInit();
 			this.gbTimeMargin.SuspendLayout();
 			this.gbTournamentE.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.nudMinEloE)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.nudMaxEloE)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.nudTourE)).BeginInit();
 			this.gbNotation.SuspendLayout();
 			this.gbPriority.SuspendLayout();
@@ -90,10 +96,7 @@
 			this.tabControl1.SuspendLayout();
 			this.tabPageInterface.SuspendLayout();
 			this.tabPageModes.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.nudMaxEloP)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.nudMinEloP)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.nudMaxEloE)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.nudMinEloE)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.nudHistory)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// butDefault
@@ -109,6 +112,8 @@
 			// 
 			// gbInterface
 			// 
+			this.gbInterface.Controls.Add(this.label11);
+			this.gbInterface.Controls.Add(this.nudHistory);
 			this.gbInterface.Controls.Add(this.cbSound);
 			this.gbInterface.Controls.Add(this.butColor);
 			this.gbInterface.Controls.Add(this.cbTips);
@@ -120,7 +125,7 @@
 			this.gbInterface.Dock = System.Windows.Forms.DockStyle.Top;
 			this.gbInterface.Location = new System.Drawing.Point(3, 3);
 			this.gbInterface.Name = "gbInterface";
-			this.gbInterface.Size = new System.Drawing.Size(359, 158);
+			this.gbInterface.Size = new System.Drawing.Size(359, 185);
 			this.gbInterface.TabIndex = 4;
 			this.gbInterface.TabStop = false;
 			this.gbInterface.Text = "Interface";
@@ -141,7 +146,7 @@
 			// butColor
 			// 
 			this.butColor.Dock = System.Windows.Forms.DockStyle.Bottom;
-			this.butColor.Location = new System.Drawing.Point(3, 131);
+			this.butColor.Location = new System.Drawing.Point(3, 158);
 			this.butColor.Name = "butColor";
 			this.butColor.Size = new System.Drawing.Size(353, 24);
 			this.butColor.TabIndex = 4;
@@ -285,6 +290,67 @@
 			this.gbTournamentP.TabStop = false;
 			this.gbTournamentP.Text = "Tournament-players";
 			// 
+			// label10
+			// 
+			this.label10.AutoSize = true;
+			this.label10.Location = new System.Drawing.Point(168, 76);
+			this.label10.Name = "label10";
+			this.label10.Size = new System.Drawing.Size(41, 13);
+			this.label10.TabIndex = 15;
+			this.label10.Text = "Min elo";
+			// 
+			// label9
+			// 
+			this.label9.AutoSize = true;
+			this.label9.Location = new System.Drawing.Point(168, 52);
+			this.label9.Name = "label9";
+			this.label9.Size = new System.Drawing.Size(44, 13);
+			this.label9.TabIndex = 14;
+			this.label9.Text = "Max elo";
+			// 
+			// nudMinEloP
+			// 
+			this.nudMinEloP.Increment = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
+			this.nudMinEloP.Location = new System.Drawing.Point(6, 69);
+			this.nudMinEloP.Maximum = new decimal(new int[] {
+            4000,
+            0,
+            0,
+            0});
+			this.nudMinEloP.Name = "nudMinEloP";
+			this.nudMinEloP.Size = new System.Drawing.Size(156, 20);
+			this.nudMinEloP.TabIndex = 13;
+			this.nudMinEloP.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			this.nudMinEloP.ThousandsSeparator = true;
+			// 
+			// nudMaxEloP
+			// 
+			this.nudMaxEloP.Increment = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
+			this.nudMaxEloP.Location = new System.Drawing.Point(6, 45);
+			this.nudMaxEloP.Maximum = new decimal(new int[] {
+            4000,
+            0,
+            0,
+            0});
+			this.nudMaxEloP.Name = "nudMaxEloP";
+			this.nudMaxEloP.Size = new System.Drawing.Size(156, 20);
+			this.nudMaxEloP.TabIndex = 12;
+			this.nudMaxEloP.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			this.nudMaxEloP.ThousandsSeparator = true;
+			this.nudMaxEloP.Value = new decimal(new int[] {
+            3000,
+            0,
+            0,
+            0});
+			// 
 			// labTourP
 			// 
 			this.labTourP.AutoSize = true;
@@ -339,7 +405,7 @@
 			this.gbTimeMargin.Controls.Add(this.combModeTime);
 			this.gbTimeMargin.Controls.Add(this.combModeStandard);
 			this.gbTimeMargin.Dock = System.Windows.Forms.DockStyle.Top;
-			this.gbTimeMargin.Location = new System.Drawing.Point(3, 214);
+			this.gbTimeMargin.Location = new System.Drawing.Point(3, 241);
 			this.gbTimeMargin.Name = "gbTimeMargin";
 			this.gbTimeMargin.Size = new System.Drawing.Size(359, 78);
 			this.gbTimeMargin.TabIndex = 8;
@@ -417,6 +483,67 @@
 			this.gbTournamentE.TabStop = false;
 			this.gbTournamentE.Text = "Tournament-engines";
 			// 
+			// label8
+			// 
+			this.label8.AutoSize = true;
+			this.label8.Location = new System.Drawing.Point(168, 78);
+			this.label8.Name = "label8";
+			this.label8.Size = new System.Drawing.Size(41, 13);
+			this.label8.TabIndex = 15;
+			this.label8.Text = "Min elo";
+			// 
+			// label5
+			// 
+			this.label5.AutoSize = true;
+			this.label5.Location = new System.Drawing.Point(168, 52);
+			this.label5.Name = "label5";
+			this.label5.Size = new System.Drawing.Size(44, 13);
+			this.label5.TabIndex = 14;
+			this.label5.Text = "Max elo";
+			// 
+			// nudMinEloE
+			// 
+			this.nudMinEloE.Increment = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
+			this.nudMinEloE.Location = new System.Drawing.Point(6, 71);
+			this.nudMinEloE.Maximum = new decimal(new int[] {
+            4000,
+            0,
+            0,
+            0});
+			this.nudMinEloE.Name = "nudMinEloE";
+			this.nudMinEloE.Size = new System.Drawing.Size(156, 20);
+			this.nudMinEloE.TabIndex = 13;
+			this.nudMinEloE.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			this.nudMinEloE.ThousandsSeparator = true;
+			// 
+			// nudMaxEloE
+			// 
+			this.nudMaxEloE.Increment = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
+			this.nudMaxEloE.Location = new System.Drawing.Point(6, 45);
+			this.nudMaxEloE.Maximum = new decimal(new int[] {
+            4000,
+            0,
+            0,
+            0});
+			this.nudMaxEloE.Name = "nudMaxEloE";
+			this.nudMaxEloE.Size = new System.Drawing.Size(156, 20);
+			this.nudMaxEloE.TabIndex = 12;
+			this.nudMaxEloE.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			this.nudMaxEloE.ThousandsSeparator = true;
+			this.nudMaxEloE.Value = new decimal(new int[] {
+            3000,
+            0,
+            0,
+            0});
+			// 
 			// labTourE
 			// 
 			this.labTourE.AutoSize = true;
@@ -469,7 +596,7 @@
 			this.gbNotation.Controls.Add(this.rbUci);
 			this.gbNotation.Controls.Add(this.rbSan);
 			this.gbNotation.Dock = System.Windows.Forms.DockStyle.Top;
-			this.gbNotation.Location = new System.Drawing.Point(3, 161);
+			this.gbNotation.Location = new System.Drawing.Point(3, 188);
 			this.gbNotation.Name = "gbNotation";
 			this.gbNotation.Size = new System.Drawing.Size(359, 53);
 			this.gbNotation.TabIndex = 10;
@@ -504,7 +631,7 @@
 			// 
 			this.gbPriority.Controls.Add(this.combPriority);
 			this.gbPriority.Dock = System.Windows.Forms.DockStyle.Top;
-			this.gbPriority.Location = new System.Drawing.Point(3, 292);
+			this.gbPriority.Location = new System.Drawing.Point(3, 319);
 			this.gbPriority.Name = "gbPriority";
 			this.gbPriority.Size = new System.Drawing.Size(359, 50);
 			this.gbPriority.TabIndex = 11;
@@ -629,127 +756,37 @@
 			this.tabPageModes.Text = "Modes";
 			this.tabPageModes.UseVisualStyleBackColor = true;
 			// 
-			// nudMaxEloP
+			// nudHistory
 			// 
-			this.nudMaxEloP.Increment = new decimal(new int[] {
+			this.nudHistory.Location = new System.Drawing.Point(3, 132);
+			this.nudHistory.Maximum = new decimal(new int[] {
+            200,
+            0,
+            0,
+            0});
+			this.nudHistory.Minimum = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+			this.nudHistory.Name = "nudHistory";
+			this.nudHistory.Size = new System.Drawing.Size(153, 20);
+			this.nudHistory.TabIndex = 14;
+			this.nudHistory.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			this.nudHistory.Value = new decimal(new int[] {
             100,
             0,
             0,
             0});
-			this.nudMaxEloP.Location = new System.Drawing.Point(6, 45);
-			this.nudMaxEloP.Maximum = new decimal(new int[] {
-            4000,
-            0,
-            0,
-            0});
-			this.nudMaxEloP.Name = "nudMaxEloP";
-			this.nudMaxEloP.Size = new System.Drawing.Size(156, 20);
-			this.nudMaxEloP.TabIndex = 12;
-			this.nudMaxEloP.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-			this.nudMaxEloP.ThousandsSeparator = true;
-			this.nudMaxEloP.Value = new decimal(new int[] {
-            3000,
-            0,
-            0,
-            0});
 			// 
-			// nudMinEloP
+			// label11
 			// 
-			this.nudMinEloP.Increment = new decimal(new int[] {
-            100,
-            0,
-            0,
-            0});
-			this.nudMinEloP.Location = new System.Drawing.Point(6, 69);
-			this.nudMinEloP.Maximum = new decimal(new int[] {
-            4000,
-            0,
-            0,
-            0});
-			this.nudMinEloP.Name = "nudMinEloP";
-			this.nudMinEloP.Size = new System.Drawing.Size(156, 20);
-			this.nudMinEloP.TabIndex = 13;
-			this.nudMinEloP.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-			this.nudMinEloP.ThousandsSeparator = true;
-			// 
-			// nudMaxEloE
-			// 
-			this.nudMaxEloE.Increment = new decimal(new int[] {
-            100,
-            0,
-            0,
-            0});
-			this.nudMaxEloE.Location = new System.Drawing.Point(6, 45);
-			this.nudMaxEloE.Maximum = new decimal(new int[] {
-            4000,
-            0,
-            0,
-            0});
-			this.nudMaxEloE.Name = "nudMaxEloE";
-			this.nudMaxEloE.Size = new System.Drawing.Size(156, 20);
-			this.nudMaxEloE.TabIndex = 12;
-			this.nudMaxEloE.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-			this.nudMaxEloE.ThousandsSeparator = true;
-			this.nudMaxEloE.Value = new decimal(new int[] {
-            3000,
-            0,
-            0,
-            0});
-			// 
-			// nudMinEloE
-			// 
-			this.nudMinEloE.Increment = new decimal(new int[] {
-            100,
-            0,
-            0,
-            0});
-			this.nudMinEloE.Location = new System.Drawing.Point(6, 71);
-			this.nudMinEloE.Maximum = new decimal(new int[] {
-            4000,
-            0,
-            0,
-            0});
-			this.nudMinEloE.Name = "nudMinEloE";
-			this.nudMinEloE.Size = new System.Drawing.Size(156, 20);
-			this.nudMinEloE.TabIndex = 13;
-			this.nudMinEloE.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-			this.nudMinEloE.ThousandsSeparator = true;
-			// 
-			// label5
-			// 
-			this.label5.AutoSize = true;
-			this.label5.Location = new System.Drawing.Point(168, 52);
-			this.label5.Name = "label5";
-			this.label5.Size = new System.Drawing.Size(44, 13);
-			this.label5.TabIndex = 14;
-			this.label5.Text = "Max elo";
-			// 
-			// label8
-			// 
-			this.label8.AutoSize = true;
-			this.label8.Location = new System.Drawing.Point(168, 78);
-			this.label8.Name = "label8";
-			this.label8.Size = new System.Drawing.Size(41, 13);
-			this.label8.TabIndex = 15;
-			this.label8.Text = "Min elo";
-			// 
-			// label9
-			// 
-			this.label9.AutoSize = true;
-			this.label9.Location = new System.Drawing.Point(168, 52);
-			this.label9.Name = "label9";
-			this.label9.Size = new System.Drawing.Size(44, 13);
-			this.label9.TabIndex = 14;
-			this.label9.Text = "Max elo";
-			// 
-			// label10
-			// 
-			this.label10.AutoSize = true;
-			this.label10.Location = new System.Drawing.Point(168, 76);
-			this.label10.Name = "label10";
-			this.label10.Size = new System.Drawing.Size(41, 13);
-			this.label10.TabIndex = 15;
-			this.label10.Text = "Min elo";
+			this.label11.AutoSize = true;
+			this.label11.Location = new System.Drawing.Point(168, 132);
+			this.label11.Name = "label11";
+			this.label11.Size = new System.Drawing.Size(71, 13);
+			this.label11.TabIndex = 15;
+			this.label11.Text = "History length";
 			// 
 			// FormOptions
 			// 
@@ -774,11 +811,15 @@
 			this.gbGame.PerformLayout();
 			this.gbTournamentP.ResumeLayout(false);
 			this.gbTournamentP.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)(this.nudMinEloP)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.nudMaxEloP)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.nudTourP)).EndInit();
 			this.gbTimeMargin.ResumeLayout(false);
 			this.gbTimeMargin.PerformLayout();
 			this.gbTournamentE.ResumeLayout(false);
 			this.gbTournamentE.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)(this.nudMinEloE)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.nudMaxEloE)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.nudTourE)).EndInit();
 			this.gbNotation.ResumeLayout(false);
 			this.gbNotation.PerformLayout();
@@ -789,10 +830,7 @@
 			this.tabControl1.ResumeLayout(false);
 			this.tabPageInterface.ResumeLayout(false);
 			this.tabPageModes.ResumeLayout(false);
-			((System.ComponentModel.ISupportInitialize)(this.nudMaxEloP)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.nudMinEloP)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.nudMaxEloE)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.nudMinEloE)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.nudHistory)).EndInit();
 			this.ResumeLayout(false);
 
 		}
@@ -845,5 +883,7 @@
 		private System.Windows.Forms.Label label5;
 		public System.Windows.Forms.NumericUpDown nudMinEloE;
 		public System.Windows.Forms.NumericUpDown nudMaxEloE;
+		private System.Windows.Forms.Label label11;
+		public System.Windows.Forms.NumericUpDown nudHistory;
 	}
 }
