@@ -77,11 +77,11 @@ namespace RapChessGui
 			tbEngineName.Text = engine.name;
 			tbParameters.Text = engine.parameters;
 			cbFileList.Text = engine.GetFile();
-			cbProtocol.Text = engine.protocol;
+			cbProtocol.Text = CData.ProtocolToStr(engine.protocol);
 			cbModeStandard.Checked = engine.modeStandard;
 			nudElo.Value = Convert.ToInt32(engine.elo);
 			nudTournament.Value = engine.tournament;
-			if ((engine.protocol == "Uci") && engine.FileExists())
+			if ((engine.protocol == CProtocol.uci) && engine.FileExists())
 			{
 				if (process.SetProgram(AppDomain.CurrentDomain.BaseDirectory + "Engines\\" + engine.file, engine.parameters) > 0)
 					process.WriteLine("uci");
@@ -138,7 +138,7 @@ namespace RapChessGui
 		{
 			e.name = tbEngineName.Text;
 			e.file = cbFileList.Text;
-			e.protocol = cbProtocol.Text;
+			e.protocol = CData.StrToProtocol(cbProtocol.Text);
 			e.parameters = tbParameters.Text;
 			e.modeStandard = cbModeStandard.Checked;
 			e.elo = nudElo.Value.ToString();

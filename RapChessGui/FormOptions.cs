@@ -71,6 +71,7 @@ namespace RapChessGui
 			colorBoard = colorDialog1.Color;
 			marginStandard = CbToMargin(combModeStandard.SelectedIndex);
 			marginTime = CbToMargin(combModeTime.SelectedIndex);
+			CHisElo.count = (int)nudHistory.Value;
 		}
 
 		void FormLoad()

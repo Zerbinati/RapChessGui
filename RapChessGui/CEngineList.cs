@@ -15,10 +15,10 @@ namespace RapChessGui
 		public int tournament = 1;
 		public string name = "";
 		public string file = "";
-		public string protocol = "Uci";
 		public string parameters = "";
 		public string elo = defElo;
 		public List<string> options = new List<string>();
+		public CProtocol protocol = CProtocol.uci;
 		public CHisElo hisElo = new CHisElo();
 
 		public CEngine()
@@ -35,7 +35,7 @@ namespace RapChessGui
 			tournament = CRapIni.This.ReadInt($"engine>{name}>tournament", tournament);
 			modeStandard = CRapIni.This.ReadBool($"engine>{name}>modeStandard", modeStandard);
 			file = CRapIni.This.Read($"engine>{name}>file", "Human");
-			protocol = CRapIni.This.Read($"engine>{name}>protocol", "Uci");
+			protocol = CData.StrToProtocol(CRapIni.This.Read($"engine>{name}>protocol", "Uci"));
 			parameters = CRapIni.This.Read($"engine>{name}>parameters", "");
 			options = CRapIni.This.ReadList($"engine>{name}>options");
 			elo = CRapIni.This.Read($"engine>{name}>elo", "1000");
@@ -54,7 +54,7 @@ namespace RapChessGui
 			CRapIni.This.Write($"engine>{name}>tournament", tournament);
 			CRapIni.This.Write($"engine>{name}>modeStandard", modeStandard);
 			CRapIni.This.Write($"engine>{name}>file", file);
-			CRapIni.This.Write($"engine>{name}>protocol", protocol);
+			CRapIni.This.Write($"engine>{name}>protocol", CData.ProtocolToStr(protocol));
 			CRapIni.This.Write($"engine>{name}>parameters", parameters);
 			CRapIni.This.Write($"engine>{name}>options", options);
 			CRapIni.This.Write($"engine>{name}>elo", elo);
@@ -129,7 +129,7 @@ namespace RapChessGui
 
 		public bool IsXb()
 		{
-			return protocol == "Winboard";
+			return protocol == CProtocol.winboard;
 		}
 
 	}

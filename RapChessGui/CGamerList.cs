@@ -110,7 +110,7 @@ namespace RapChessGui
 
 		public void EngineStop()
 		{
-			if (engine.protocol == "Uci")
+			if (engine.protocol == CProtocol.uci)
 				SendMessage("stop");
 			else
 				SendMessage("?");
@@ -126,9 +126,9 @@ namespace RapChessGui
 			SendMessage("quit");
 		}
 
-		public void Init(bool w)
+		public void Init(bool white)
 		{
-			isWhite = w;
+			isWhite = white;
 			isBookStarted = false;
 			isBookFail = false;
 			isEngRunning = false;
@@ -238,8 +238,9 @@ namespace RapChessGui
 
 		public void Undo()
 		{
-			if (engine.protocol == "Winboard")
-				isPositionWb = false;
+			if (engine != null)
+				if (engine.protocol == CProtocol.winboard)
+					isPositionWb = false;
 		}
 
 		/// <summary>
@@ -251,7 +252,7 @@ namespace RapChessGui
 			lastMove = "";
 			mode = player.modeValue.GetUci();
 			value = player.modeValue.GetUciValue().ToString();
-			if (engine.protocol == "Uci")
+			if (engine.protocol == CProtocol.uci)
 				UciNextPhase();
 			else
 			{
@@ -312,7 +313,7 @@ namespace RapChessGui
 		public void EngMakeMove()
 		{
 			Clear();
-			if (engine.protocol == "Uci")
+			if (engine.protocol == CProtocol.uci)
 				UciGo();
 			else
 			{
@@ -396,7 +397,7 @@ namespace RapChessGui
 			if (engine == null)
 				return "Protocol";
 			else
-				return engine.protocol;
+				return CData.ProtocolToStr(engine.protocol);
 		}
 
 		public string GetDepth()
@@ -549,13 +550,15 @@ namespace RapChessGui
 			curIndex = 0;
 		}
 
-		public void Rotate()
+		public void Rotate(bool cur=false)
 		{
 			CGamer p = gamer[0];
 			gamer[0] = gamer[1];
 			gamer[1] = p;
 			gamer[0].Init(true);
 			gamer[1].Init(false);
+			if (cur)
+				curIndex ^= 1;
 		}
 
 		public CGamer GetGamer(string name)
@@ -577,7 +580,7 @@ namespace RapChessGui
 				}
 				if (g.enginePro.GetPid() == pid)
 				{
-					protocol = g.engine.protocol;
+					protocol = CData.ProtocolToStr(g.engine.protocol);
 					return g;
 				}
 			}
@@ -641,6 +644,12 @@ namespace RapChessGui
 				g.bookPro.Terminate();
 				g.enginePro.Terminate();
 			}
+		}
+
+		public void Undo()
+		{
+			foreach (CGamer g in gamer)
+				g.Undo();
 		}
 
 	}

@@ -48,6 +48,27 @@ namespace RapChessGui
 			return false;
 		}
 
+		public static bool Back(int c)
+		{
+			if (c <= moveList.Count)
+			{
+				moveList.RemoveRange(moveList.Count - c, c);
+				return true;
+			}
+			return false;
+		}
+
+		public static bool BackTo(int mn,bool white)
+		{
+			int index = mn << 1;
+			if (!white)
+				index++;
+			if (((moveList.Count & 1) > 0) != white)
+				index++;
+			index++;
+			return Back(moveList.Count - index);
+		}
+
 		public static CHisMove Last()
 		{
 			if (moveList.Count == 0)

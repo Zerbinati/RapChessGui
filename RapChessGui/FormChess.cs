@@ -875,42 +875,42 @@ namespace RapChessGui
 		readonly static DeleMessage deleMessage = new DeleMessage(NewMessage);
 
 		public static void InvMessage(int id, string message)
-		{ 
+		{
 			This.Invoke(deleMessage, new object[] { id, message });
 		}
 
 		public static void NewMessage(int id, string msg)
 		{
-			This.GetMessage(id,msg);
+			This.GetMessage(id, msg);
 		}
 
-		public void GetMessage(int pid,string msg)
+		public void GetMessage(int pid, string msg)
 		{
-				CGamer gamer = GamerList.GetGamerPid(pid, out string protocol);
-				if (gamer == null)
+			CGamer gamer = GamerList.GetGamerPid(pid, out string protocol);
+			if (gamer == null)
+			{
+				if (pid == FormEngine.process.GetPid())
 				{
-					if (pid == FormEngine.process.GetPid())
-					{
-						FormEngine.AddOption(msg);
-					}
-					else if (pid == FormLogEngines.process.GetPid())
-					{
-						FormLogEngines.AppendText($"{msg}\n", Color.Black, true);
-					}
-					else
-						CRapLog.Add($"Unknown pid ({GamerList.GamerCur().player.engine} - {GamerList.GamerSec().player.engine})");
+					FormEngine.AddOption(msg);
+				}
+				else if (pid == FormLogEngines.process.GetPid())
+				{
+					FormLogEngines.AppendText($"{msg}\n", Color.Black, true);
 				}
 				else
-				{
-					string book = protocol == "Book" ? "book " : "";
-					Color col = gamer.isWhite ? Color.DimGray : Color.Black;
-					FormLogEngines.AppendTimeText($"{book}{gamer.player.name}", col);
-					FormLogEngines.AppendText($" > {msg}\n", Color.DarkBlue);
-					if ((protocol == "Uci") || (protocol == "Book"))
-						GetMessageUci(gamer, msg);
-					if (protocol == "Winboard")
-						GetMessageXb(gamer, msg);
-				}
+					CRapLog.Add($"Unknown pid ({GamerList.GamerCur().player.engine} - {GamerList.GamerSec().player.engine})");
+			}
+			else
+			{
+				string book = protocol == "Book" ? "book " : "";
+				Color col = gamer.isWhite ? Color.DimGray : Color.Black;
+				FormLogEngines.AppendTimeText($"{book}{gamer.player.name}", col);
+				FormLogEngines.AppendText($" > {msg}\n", Color.DarkBlue);
+				if ((protocol == "Uci") || (protocol == "Book"))
+					GetMessageUci(gamer, msg);
+				if (protocol == "Winboard")
+					GetMessageXb(gamer, msg);
+			}
 		}
 
 		void CreateRtf()
@@ -1463,6 +1463,7 @@ namespace RapChessGui
 			foreach (CHisMove m in CHistory.moveList)
 				Chess.MakeMove(m.emo);
 			CChess.UmoToSD(CHistory.LastUmo(), out CDrag.lastSou, out CDrag.lastDes);
+			Board.ClearArrows();
 			Board.Fill();
 			ShowHistory();
 		}
@@ -2698,21 +2699,6 @@ namespace RapChessGui
 			(sender as ListView).ListViewItemSorter = new ListViewComparer(e.Column, lv.Tag == null ? SortOrder.Ascending : SortOrder.Descending);
 		}
 
-		private void butBackward_Click(object sender, EventArgs e)
-		{
-			if (CHistory.Back())
-			{
-				RenderHistory();
-				moves = Chess.GenerateValidMoves(out _);
-				SetGameState(Chess.GetGameState());
-				ShowLastGame();
-				GamerList.GamerCur().player.elo = GamerList.GamerCur().player.GetEloLess().ToString();
-				GamerList.GamerSec().Undo();
-				RenderBoard();
-				SetUnranked();
-			}
-		}
-
 		private void butForward_Click(object sender, EventArgs e)
 		{
 			SetUnranked();
@@ -2800,7 +2786,43 @@ namespace RapChessGui
 			SquareBoard();
 		}
 
-		#endregion
 
+		private void lvMoves_SelectedIndexChanged(object sender, EventArgs e)
+		{
+
+		}
+
+		private void butBackward_Click(object sender, EventArgs e)
+		{
+			if (CHistory.Back(1))
+			{
+				GamerList.Rotate(true);
+				GamerList.Undo();
+				RenderHistory();
+				moves = Chess.GenerateValidMoves(out _);
+				SetGameState(Chess.GetGameState());
+				SetBoardRotate();
+				SetUnranked();
+				RenderBoard(true);
+			}
+		}
+
+		private void lvMoves_Click(object sender, EventArgs e)
+		{
+			if ((CData.gameMode != CGameMode.game) || (lvMoves.SelectedItems.Count == 0))
+				return;
+			int index = lvMoves.SelectedItems[0].Index;
+			if (CHistory.BackTo(index, GamerList.GamerHuman().isWhite))
+			{
+				GamerList.Undo();
+				RenderHistory();
+				moves = Chess.GenerateValidMoves(out _);
+				SetGameState(Chess.GetGameState());
+				SetUnranked();
+				RenderBoard(true);
+			}
+		}
+
+		#endregion
 	}
 }

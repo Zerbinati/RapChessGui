@@ -3391,6 +3391,7 @@
 			this.lvMoves.TabIndex = 27;
 			this.lvMoves.UseCompatibleStateImageBehavior = false;
 			this.lvMoves.View = System.Windows.Forms.View.Details;
+			this.lvMoves.Click += new System.EventHandler(this.lvMoves_Click);
 			this.lvMoves.Resize += new System.EventHandler(this.lvMoves_Resize);
 			// 
 			// columnHeader3
