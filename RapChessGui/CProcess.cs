@@ -12,12 +12,9 @@ namespace RapChessGui
 
 		public int GetPid()
 		{
-			try
-			{
-				return process.Id;
-			}
-			catch { }
-			return 0;
+			if (process.StartInfo.FileName == "")
+				return 0;
+			return process.Id;
 		}
 
 		private void OnDataReceived(object sender, DataReceivedEventArgs e)
@@ -75,7 +72,6 @@ namespace RapChessGui
 				SetPriority(FormOptions.priority);
 				return process.Id;
 			}
-			MessageBox.Show($"Missing file {Path.GetFileName(path)}");
 			return 0;
 		}
 
@@ -100,6 +96,7 @@ namespace RapChessGui
 			{
 				process.OutputDataReceived -= OnDataReceived;
 				process.Kill();
+				process.StartInfo.FileName = "";
 			}
 			catch { }
 		}

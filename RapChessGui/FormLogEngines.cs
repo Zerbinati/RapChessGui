@@ -48,7 +48,7 @@ namespace RapChessGui
 		{
 			Color color = g.isWhite ? Color.DimGray : Color.Black;
 			string colorS = g.isWhite ? "White" : "Black";
-			AppendTimeText($"{colorS}: {g.player.name}\n", color);
+			AppendTimeText($"{colorS}: {g.player.GetName()}\n", color);
 			if (g.engine == null)
 				return;
 			AppendTimeText($"Engine: {g.player.engine}\n", color);

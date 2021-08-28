@@ -30,6 +30,7 @@ namespace RapChessGui
 
 	public static class CHistory
 	{
+		public static int moveNumber = 0;
 		public static string fen = CChess.defFen;
 		public static List<CHisMove> moveList = new List<CHisMove>();
 
@@ -38,19 +39,9 @@ namespace RapChessGui
 			moveList.Add(new CHisMove(piece, emo, umo, san));
 		}
 
-		public static bool Back()
-		{
-			if (moveList.Count > 1)
-			{
-				moveList.RemoveRange(moveList.Count - 2, 2);
-				return true;
-			}
-			return false;
-		}
-
 		public static bool Back(int c)
 		{
-			if (c <= moveList.Count)
+			if ((c > 0) && (c <= moveList.Count))
 			{
 				moveList.RemoveRange(moveList.Count - c, c);
 				return true;
@@ -60,13 +51,10 @@ namespace RapChessGui
 
 		public static bool BackTo(int mn,bool white)
 		{
-			int index = mn << 1;
-			if (!white)
-				index++;
-			if (((moveList.Count & 1) > 0) != white)
-				index++;
-			index++;
-			return Back(moveList.Count - index);
+			int c = moveList.Count - (mn << 1) - 1;
+			if (white)
+				c--;
+			return Back(c);
 		}
 
 		public static CHisMove Last()
@@ -90,9 +78,16 @@ namespace RapChessGui
 			return moveList[moveList.Count - 1].umo;
 		}
 
-		public static void SetFen(string f = CChess.defFen)
+		public static bool LastWhite()
+		{
+			return ((moveNumber + moveList.Count) & 1) == 1;
+		}
+
+
+		public static void SetFen(string f = CChess.defFen,int mn = 0)
 		{
 			fen = f;
+			moveNumber = mn;
 			moveList.Clear();
 		}
 

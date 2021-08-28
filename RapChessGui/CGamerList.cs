@@ -102,6 +102,12 @@ namespace RapChessGui
 			}
 		}
 
+		public void Restart()
+		{
+			bookPro.Restart();
+			enginePro.Restart();
+		}
+
 		public void EngineRestart()
 		{
 			isPrepareStarted = false;
@@ -158,6 +164,14 @@ namespace RapChessGui
 			ponder = "";
 			pv = "";
 			score = "";
+		}
+
+		public string GetName()
+		{
+			if (player.name == "")
+				return isWhite ? "White" : "Black";
+			else
+				return player.name;
 		}
 
 		public void SetNps(ulong n)
@@ -491,6 +505,8 @@ namespace RapChessGui
 			player = p;
 			book = FormChess.bookList.GetBook(p.book);
 			engine = FormChess.engineList.GetEngine(p.engine);
+			bookPro.Terminate();
+			enginePro.Terminate();
 			if (book == null)
 				p.book = "None";
 			else
@@ -543,22 +559,19 @@ namespace RapChessGui
 				cg.TimerStart();
 		}
 
-		public void Init()
+		public void Init(int index = 0)
 		{
 			gamer[0].Init(true);
 			gamer[1].Init(false);
-			curIndex = 0;
+			curIndex = index;
 		}
 
-		public void Rotate(bool cur=false)
+		public void Rotate(int index = 0)
 		{
 			CGamer p = gamer[0];
 			gamer[0] = gamer[1];
 			gamer[1] = p;
-			gamer[0].Init(true);
-			gamer[1].Init(false);
-			if (cur)
-				curIndex ^= 1;
+			Init(index);
 		}
 
 		public CGamer GetGamer(string name)
@@ -634,6 +647,12 @@ namespace RapChessGui
 		public CGamer GamerSec()
 		{
 			return gamer[curIndex ^ 1];
+		}
+
+		public void Restart()
+		{
+			foreach (CGamer g in gamer)
+				g.Restart();
 		}
 
 		public void Terminate()

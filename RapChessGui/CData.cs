@@ -10,7 +10,7 @@ using NSChess;
 namespace RapChessGui
 {
 	public enum CGameMode { game, match, tourE, tourP, training, edit }
-	public enum CProtocol { uci, winboard}
+	public enum CProtocol { uci, winboard }
 
 	public static class CWinMessage
 	{
@@ -77,24 +77,22 @@ namespace RapChessGui
 		{
 			switch (p)
 			{
-				case CProtocol.uci:
-					return "Uci";
 				case CProtocol.winboard:
 					return "Windobard";
+				default:
+					return "Uci";
 			}
-			return "";
 		}
 
 		public static CProtocol StrToProtocol(string p)
 		{
 			switch (p)
 			{
-				case "Uci":
-					return CProtocol.uci;
 				case "Winboard":
 					return CProtocol.winboard;
+				default:
+					return CProtocol.uci;
 			}
-			return CProtocol.uci;
 		}
 
 		public static void HisToPoints(CHisElo he, DataPointCollection po)
