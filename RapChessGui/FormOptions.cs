@@ -113,7 +113,6 @@ namespace RapChessGui
 		private void CbRotateBoard_CheckedChanged(object sender, EventArgs e)
 		{
 			CData.rotateBoard = cbRotateBoard.Checked;
-			FormChess.This.RenderBoard();
 		}
 
 		private void butColor_Click(object sender, EventArgs e)

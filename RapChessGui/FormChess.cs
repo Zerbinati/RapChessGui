@@ -2397,16 +2397,17 @@ namespace RapChessGui
 		private void OptionsToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			FormOptions.This.ShowDialog(this);
+			toolTip1.Active = FormOptions.ShowTips();
 			CBoard.SetColor(FormOptions.colorBoard);
 			CBoard.ClearAttack();
 			CBoard.animated = true;
 			Board.arrowCur.Clear();
 			Board.arrowEco.Clear();
-			BoardPrepare();
 			ShowAutoElo();
 			ShowEco();
 			HistoryToLvMoves();
-			toolTip1.Active = FormOptions.ShowTips();
+			BoardPrepare();
+			RenderBoard();
 		}
 
 		private void ButTraining_Click(object sender, EventArgs e)
