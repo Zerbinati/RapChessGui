@@ -49,6 +49,7 @@ namespace RapChessGui
 		readonly FormChartP formHisP = new FormChartP();
 		readonly FormChartE formHisE = new FormChartE();
 
+		[System.Security.Permissions.PermissionSet(System.Security.Permissions.SecurityAction.Demand, Name = "FullTrust")]
 		protected override void WndProc(ref Message m)
 		{
 			const int WM_SYSCOMMAND = 0x0112;
@@ -877,7 +878,7 @@ namespace RapChessGui
 
 		readonly static DeleMessage deleMessage = new DeleMessage(NewMessage);
 
-		public static void InvMessage(int id, string message)
+		public static void SetMessage(int id, string message)
 		{
 			This.Invoke(deleMessage, new object[] { id, message });
 		}
@@ -900,15 +901,12 @@ namespace RapChessGui
 				{
 					FormLogEngines.AppendText($"{msg}\n", Color.Black, true);
 				}
-				else
+				else if (CData.gameState == CGameState.normal)
 					CRapLog.Add($"Unknown pid ({GamerList.GamerCur().player.engine} - {GamerList.GamerSec().player.engine})");
 			}
 			else
 			{
-				string book = protocol == "Book" ? "book " : "";
-				Color col = gamer.isWhite ? Color.DimGray : Color.Black;
-				FormLogEngines.AppendTimeText($"{book}{gamer.player.name}", col);
-				FormLogEngines.AppendText($" > {msg}\n", Color.DarkBlue);
+				FormLogEngines.SetMessage(gamer, protocol, msg);
 				if ((protocol == "Uci") || (protocol == "Book"))
 					GetMessageUci(gamer, msg);
 				if (protocol == "Winboard")
@@ -1882,11 +1880,11 @@ namespace RapChessGui
 
 		void TournamentESelect()
 		{
-			int del = lvEngine.TopItem.Bounds.Top;
+			//int del = lvEngine.TopItem.Bounds.Top;
 			foreach (ListViewItem lvi in lvEngine.Items)
 				if (lvi.Text == CModeTournamentE.engine)
 				{
-					int c = (lvEngine.ClientRectangle.Height - del) / lvi.Bounds.Height;
+					int c = lvEngine.ClientRectangle.Height / lvi.Bounds.Height;
 					int top = lvi.Index - (c >> 1);
 					if (top < 0)
 						top = 0;
@@ -2020,8 +2018,7 @@ namespace RapChessGui
 			if (lvPlayer.SelectedItems.Count == 0)
 				return;
 			ListViewItem top2 = null;
-			ListViewItem item = lvPlayer.SelectedItems[0];
-			string name = item.Text;
+			string name = lvPlayer.SelectedItems[0].Text;
 			CPlayerList playerList = CModeTournamentP.playerList;
 			CPlayer player = playerList.GetPlayer(name);
 			lvPlayerH.Items.Clear();
@@ -2074,11 +2071,11 @@ namespace RapChessGui
 
 		void TournamentPSelect()
 		{
-			int del = lvEngine.TopItem.Bounds.Top;
+			//int del = lvEngine.TopItem.Bounds.Top;
 			foreach (ListViewItem lvi in lvPlayer.Items)
 				if (lvi.Text == CModeTournamentP.player)
 				{
-					int c = (lvPlayer.ClientRectangle.Height - del) / lvi.Bounds.Height;
+					int c = lvPlayer.ClientRectangle.Height / lvi.Bounds.Height;
 					int top = lvi.Index - (c >> 1);
 					if (top < 0)
 						top = 0;

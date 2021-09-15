@@ -1,7 +1,6 @@
 ﻿using System;
 using System.IO;
 using System.Diagnostics;
-using System.Windows.Forms;
 
 namespace RapChessGui
 {
@@ -23,7 +22,7 @@ namespace RapChessGui
 			{
 				if (!String.IsNullOrEmpty(e.Data))
 				{
-					FormChess.InvMessage(process.Id, e.Data.Trim());
+					FormChess.SetMessage(process.Id, e.Data.Trim());
 				}
 			}
 			catch { }

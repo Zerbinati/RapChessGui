@@ -44,6 +44,14 @@ namespace RapChessGui
 			This.richTextBox1.SaveFile(fn);
 		}
 
+		public static void SetMessage(CGamer gamer, string protocol, string msg)
+		{
+			string book = protocol == "Book" ? "book " : "";
+			Color col = gamer.isWhite ? Color.DimGray : Color.Black;
+			AppendTimeText($"{book}{gamer.player.name}", col);
+			AppendText($" > {msg}\n", Color.DarkBlue);
+		}
+
 		public static void WriteHeaderGamer(CGamer g)
 		{
 			Color color = g.isWhite ? Color.DimGray : Color.Black;

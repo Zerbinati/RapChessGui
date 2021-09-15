@@ -78,7 +78,7 @@ namespace RapChessGui
 			switch (p)
 			{
 				case CProtocol.winboard:
-					return "Windobard";
+					return "Winboard";
 				default:
 					return "Uci";
 			}
