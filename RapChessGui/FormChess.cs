@@ -1880,11 +1880,11 @@ namespace RapChessGui
 
 		void TournamentESelect()
 		{
-			//int del = lvEngine.TopItem.Bounds.Top;
+			int del = lvEngine.TopItem.Bounds.Top;
 			foreach (ListViewItem lvi in lvEngine.Items)
 				if (lvi.Text == CModeTournamentE.engine)
 				{
-					int c = lvEngine.ClientRectangle.Height / lvi.Bounds.Height;
+					int c = (lvEngine.ClientRectangle.Height - del)/ lvi.Bounds.Height;
 					int top = lvi.Index - (c >> 1);
 					if (top < 0)
 						top = 0;
@@ -2071,11 +2071,11 @@ namespace RapChessGui
 
 		void TournamentPSelect()
 		{
-			//int del = lvEngine.TopItem.Bounds.Top;
+			int del = lvEngine.TopItem.Bounds.Top;
 			foreach (ListViewItem lvi in lvPlayer.Items)
 				if (lvi.Text == CModeTournamentP.player)
 				{
-					int c = lvPlayer.ClientRectangle.Height / lvi.Bounds.Height;
+					int c = (lvPlayer.ClientRectangle.Height - del)/ lvi.Bounds.Height;
 					int top = lvi.Index - (c >> 1);
 					if (top < 0)
 						top = 0;

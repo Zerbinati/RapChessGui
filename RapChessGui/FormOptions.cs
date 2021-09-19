@@ -40,7 +40,7 @@ namespace RapChessGui
 			nudSpeed.Value = CRapIni.This.ReadDecimal("options>interface>speed", nudSpeed.Value);
 			cbGameAutoElo.Checked = CRapIni.This.ReadBool("options>game>autoelo", cbGameAutoElo.Checked);
 			combModeStandard.SelectedIndex = CRapIni.This.ReadInt("options>margin>standard", 1);
-			combModeTime.SelectedIndex = CRapIni.This.ReadInt("options>margin>time", 4);
+			combModeTime.SelectedIndex = CRapIni.This.ReadInt("options>margin>time", 0);
 			priority = CRapIni.This.Read("options>priority", "Normal");
 			combPriority.SelectedIndex = combPriority.FindStringExact(priority);
 			gameBreak = (int)nudBreak.Value;

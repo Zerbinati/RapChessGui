@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Drawing;
 using System.Diagnostics;
-using RapLog;
 using NSChess;
 
 namespace RapChessGui
