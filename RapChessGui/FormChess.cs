@@ -26,7 +26,6 @@ namespace RapChessGui
 
 		public const int WM_GAME_NEXT = 1024;
 		public static IntPtr handle;
-		bool showInfo = false;
 		public static FormChess This;
 		public static bool boardRotate;
 		string lastEco = "";
@@ -363,7 +362,7 @@ namespace RapChessGui
 			labEloT.ForeColor = Color.Black;
 			labEco.Text = "";
 			tssMove.Text = "Move 1 0";
-			ShowInfo("Good luck", Color.Gainsboro, true);
+			ShowInfo("Good luck", Color.Gainsboro, 1);
 			labResult.Hide();
 			chartMain.Series[0].Points.Clear();
 			chartMain.Series[1].Points.Clear();
@@ -566,37 +565,37 @@ namespace RapChessGui
 			switch (CData.gameState)
 			{
 				case CGameState.mate:
-					ShowInfo(gw.GetName() + " win", Color.Lime, true);
+					ShowInfo(gw.GetName() + " win", Color.Lime, 1);
 					break;
 				case CGameState.stalemate:
 					isDraw = true;
-					ShowInfo("Stalemate", Color.Yellow, true);
+					ShowInfo("Stalemate", Color.Yellow, 1);
 					break;
 				case CGameState.repetition:
 					isDraw = true;
-					ShowInfo("Threefold repetition", Color.Yellow, true);
+					ShowInfo("Threefold repetition", Color.Yellow, 1);
 					break;
 				case CGameState.move50:
 					isDraw = true;
-					ShowInfo("Fifty-move rule", Color.Yellow, true);
+					ShowInfo("Fifty-move rule", Color.Yellow, 1);
 					break;
 				case CGameState.material:
 					isDraw = true;
-					ShowInfo("Insufficient material", Color.Yellow, true);
+					ShowInfo("Insufficient material", Color.Yellow, 1);
 					break;
 				case CGameState.resignation:
-					ShowInfo($"{pl.name} resign", Color.Red, true);
+					ShowInfo($"{pl.name} resign", Color.Red, 1);
 					break;
 				case CGameState.time:
 					CData.gamesTime++;
-					ShowInfo($"{pl.name} time out", Color.Red, true);
+					ShowInfo($"{pl.name} time out", Color.Red, 1);
 					CRapLog.Add($"Time out {pl.name}");
 					FormLogEngines.AppendText($"Time out {pl.name}\n", Color.Red);
 					break;
 				case CGameState.error:
 					CData.gamesError++;
 					labError.Show();
-					ShowInfo($"{pl.name} make wrong move", Color.Red, true);
+					ShowInfo($"{pl.name} make wrong move", Color.Red, 1);
 					CRapLog.Add($"Wrong move {pl.name} ({umo}) {Chess.GetFen()}");
 					FormLogEngines.AppendText($"Wrong move: ({umo})\n", Color.Red);
 					FormLogEngines.AppendText($"Fen: {Chess.GetFen()}\n", Color.Black);
@@ -732,7 +731,7 @@ namespace RapChessGui
 				case "info":
 					if (Uci.GetIndex("string", 0) == 1)
 					{
-						ShowInfo(Uci.GetValue(2, Uci.tokens.Length - 1), Color.Gainsboro, true);
+						ShowInfo(Uci.GetValue(2, Uci.tokens.Length - 1), Color.Gainsboro, 1);
 						break;
 					}
 					ulong nps = 0;
@@ -1012,13 +1011,13 @@ namespace RapChessGui
 			ShowAutoElo();
 		}
 
-		void ShowInfo(string info, Color color, bool si = false)
+		void ShowInfo(string info, Color color, int ip = 0)
 		{
-			if (si || !showInfo)
+			if (Convert.ToInt32(tssInfo.Tag) <= ip)
 			{
 				tssInfo.Text = info;
 				tssInfo.ForeColor = color;
-				showInfo = si;
+				tssInfo.Tag = ip;
 			}
 		}
 
@@ -1063,12 +1062,12 @@ namespace RapChessGui
 			if (eloDel > 0)
 			{
 				result = true;
-				ShowInfo($"Last game you win new elo is {hu.elo} (+{eloDel})", Color.FromArgb(0, 0xff, 0), true);
+				ShowInfo($"Last game you win new elo is {hu.elo} (+{eloDel})", Color.FromArgb(0, 0xff, 0), 1);
 			}
 			if (eloDel < 0)
 			{
 				result = true;
-				ShowInfo($"Last game you loose new elo is {hu.elo} ({eloDel})", Color.FromArgb(0xff, 0, 0), true);
+				ShowInfo($"Last game you loose new elo is {hu.elo} ({eloDel})", Color.FromArgb(0xff, 0, 0), 1);
 			}
 			if (result || changeProgress)
 			{
@@ -1187,16 +1186,16 @@ namespace RapChessGui
 			CHistory.AddMove(piece, gmo, umo, san);
 			MoveToLvMoves(CHistory.moveList.Count - 1, piece, CHistory.LastNotation(), cg.score);
 			CEco eco = EcoList.GetEcoFen(Chess.GetEpd());
-			showInfo = false;
+			tssInfo.Tag = 0;
 			if (cg.player.IsHuman())
 			{
 				tssInfo.Text = "";
 				Board.ClearArrows();
 				if (eco != null)
-					ShowInfo(eco.name, Color.Lime, true);
+					ShowInfo(eco.name, Color.Lime, 1);
 				else if ((lastEco != "") && (!lastEco.Contains(umo)))
 				{
-					ShowInfo("You missed the opening moves", Color.Pink, true);
+					ShowInfo("You missed the opening moves", Color.Pink, 1);
 					Board.arrowEco.AddMoves(lastEco);
 				}
 			}
@@ -1373,7 +1372,7 @@ namespace RapChessGui
 			CGamer gb = GamerList.gamer[1];
 			FormLogEngines.WriteHeader(gw, gb);
 			FormLogEngines.AppendTimeText($"Fen {Chess.GetFen()}\n", Color.Gray);
-			ShowInfo($"Load fen {Chess.GetFen()}", Color.Lime, true);
+			ShowInfo($"Load fen {Chess.GetFen()}", Color.Lime, 1);
 			ShowInfo(gw);
 			ShowInfo(gb);
 
@@ -1445,7 +1444,7 @@ namespace RapChessGui
 			CGamer gb = GamerList.gamer[1];
 			FormLogEngines.WriteHeader(gw, gb);
 			FormLogEngines.AppendTimeText($"Pgn {CHistory.GetPgn()}\n", Color.Gray);
-			ShowInfo($"Load pgn {CHistory.GetPgn()}", Color.Lime, true);
+			ShowInfo($"Load pgn {CHistory.GetPgn()}", Color.Lime, 1);
 			ShowInfo(gw);
 			ShowInfo(gb);
 

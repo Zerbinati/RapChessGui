@@ -243,6 +243,7 @@ namespace RapChessGui
 					if (engine == null)
 					{
 						engine = new CEngine(name);
+						engine.protocol = CProtocol.winboard;
 						list.Add(engine);
 					}
 					engine.file = file;
