@@ -27,6 +27,16 @@ namespace RapChessGui
 			name = n;
 		}
 
+		public void Check(CEngineList el)
+		{
+			CEngine e = el.GetEngine(engine);
+			if (e == null)
+			{
+				engine = "Human";
+				SaveToIni();
+			}
+		}
+
 		public int GetEloLess()
 		{
 			int levelDif = 2000 / FormChess.playerList.list.Count;
@@ -166,6 +176,12 @@ namespace RapChessGui
 				list[index] = p;
 			else
 				list.Add(p);
+		}
+
+		public void Check(CEngineList el)
+		{
+			foreach (CPlayer p in list)
+				p.Check(el);
 		}
 
 		public int GetIndex(string name)

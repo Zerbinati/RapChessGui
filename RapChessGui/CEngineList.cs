@@ -8,7 +8,6 @@ namespace RapChessGui
 {
 	public class CEngine
 	{
-		public static string defElo = "2000";
 		public bool modeStandard = true;
 		public int distance = 0;
 		public int position = 0;
@@ -16,7 +15,7 @@ namespace RapChessGui
 		public string name = "";
 		public string file = "";
 		public string parameters = "";
-		public string elo = defElo;
+		public string elo = "1500";
 		public List<string> options = new List<string>();
 		public CProtocol protocol = CProtocol.uci;
 		public CHisElo hisElo = new CHisElo();
@@ -38,7 +37,7 @@ namespace RapChessGui
 			protocol = CData.StrToProtocol(CRapIni.This.Read($"engine>{name}>protocol", "Uci"));
 			parameters = CRapIni.This.Read($"engine>{name}>parameters", "");
 			options = CRapIni.This.ReadList($"engine>{name}>options");
-			elo = CRapIni.This.Read($"engine>{name}>elo", "1000");
+			elo = CRapIni.This.Read($"engine>{name}>elo", elo);
 			hisElo.LoadFromStr(CRapIni.This.Read($"engine>{name}>history", ""));
 		}
 
@@ -125,11 +124,6 @@ namespace RapChessGui
 				return true;
 			}
 			return false;
-		}
-
-		public bool IsXb()
-		{
-			return protocol == CProtocol.winboard;
 		}
 
 	}
@@ -226,6 +220,7 @@ namespace RapChessGui
 					if (engine == null)
 					{
 						engine = new CEngine(name);
+						engine.protocol = CProtocol.uci;
 						list.Add(engine);
 					}
 					engine.file = file;

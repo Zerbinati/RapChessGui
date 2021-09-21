@@ -240,6 +240,7 @@ namespace RapChessGui
 				playerList.Add(p);
 				playerList.SaveToIni();
 			}
+			UpdateEngineList();
 		}
 
 		void IniLoad()
@@ -718,7 +719,7 @@ namespace RapChessGui
 							g.countMovesBook++;
 							g.score = "book";
 							ShowInfo($"book {umo}", Color.Aquamarine);
-							if ((g.engine != null) && g.engine.IsXb())
+							if ((g.engine != null) && (g.engine.protocol == CProtocol.winboard))
 								g.isPositionWb = false;
 						}
 						else
@@ -805,24 +806,24 @@ namespace RapChessGui
 
 		bool GetMoveXb(string xmo, out string umo)
 		{
-			umo = xmo.ToLower();
-			if (xmo == "o-o")
+			umo = xmo = new string(xmo.Where(c => !char.IsControl(c)).ToArray()).ToLower();
+			if ((xmo == "o-o") || (xmo == "0-0"))
 				umo = Chess.whiteTurn ? "e1g1" : "e8g8";
-			if (xmo == "o-o-o")
+			if ((xmo == "o-o-o") || (xmo == "0-0-0"))
 				umo = Chess.whiteTurn ? "e1c1" : "e8c8";
 			if (Chess.IsValidMove(umo, out _))
 				return true;
-			else
+			if (umo.Length > 4)
 			{
-				umo += "q";
+				umo = umo.Substring(0, 4);
 				if (Chess.IsValidMove(umo, out _))
 					return true;
-				else
-				{
-					umo = xmo;
-					return false;
-				}
 			}
+			umo += "q";
+			if (Chess.IsValidMove(umo, out _))
+				return true;
+			umo = xmo;
+			return false;
 		}
 
 		public void GetMessageXb(CGamer g, string msg)
@@ -1092,6 +1093,7 @@ namespace RapChessGui
 		{
 			CData.UpdateFileEngine();
 			engineList.AutoUpdate();
+			playerList.Check(engineList);
 			Reset(true);
 		}
 
@@ -1159,6 +1161,7 @@ namespace RapChessGui
 
 		public bool MakeMove(string umo)
 		{
+			umo = umo.Trim('\0').ToLower();
 			if (CData.gameState != CGameState.normal)
 				return false;
 			Board.arrowCur.Clear();
@@ -1883,7 +1886,7 @@ namespace RapChessGui
 			foreach (ListViewItem lvi in lvEngine.Items)
 				if (lvi.Text == CModeTournamentE.engine)
 				{
-					int c = (lvEngine.ClientRectangle.Height - del)/ lvi.Bounds.Height;
+					int c = (lvEngine.ClientRectangle.Height - del) / lvi.Bounds.Height;
 					int top = lvi.Index - (c >> 1);
 					if (top < 0)
 						top = 0;
@@ -2074,7 +2077,7 @@ namespace RapChessGui
 			foreach (ListViewItem lvi in lvPlayer.Items)
 				if (lvi.Text == CModeTournamentP.player)
 				{
-					int c = (lvPlayer.ClientRectangle.Height - del)/ lvi.Bounds.Height;
+					int c = (lvPlayer.ClientRectangle.Height - del) / lvi.Bounds.Height;
 					int top = lvi.Index - (c >> 1);
 					if (top < 0)
 						top = 0;
