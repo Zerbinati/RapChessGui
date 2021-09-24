@@ -173,10 +173,11 @@ namespace RapChessGui
 					b.parameters = v.ToString();
 					bookList.Add(b);
 				}
-				bookList.SaveToIni();
 				RapIni.Write("options>dir>Bin", "BookReaderBin.exe");
 				RapIni.Write("options>dir>Mem", "BookReaderMem.exe");
 				RapIni.Write("options>dir>Umo", "BookReaderUmo.exe");
+				DirBookList.LoadFromIni();
+				bookList.Update();
 			}
 			playerList.LoadFromIni();
 			if (playerList.GetPlayerRealHuman() == null)
@@ -229,14 +230,14 @@ namespace RapChessGui
 				playerList.Add(p);
 				p = new CPlayer();
 				p.engine = "RapShortCs";
-				p.book = "Eco";
+				p.book = "BRM Eco";
 				p.modeValue.mode = "Time";
 				p.modeValue.value = 10;
 				p.elo = "500";
 				playerList.Add(p);
 				p = new CPlayer();
 				p.engine = "RapSimpleCs";
-				p.book = "ChessDb";
+				p.book = "Chess DB";
 				p.modeValue.mode = "Time";
 				p.modeValue.value = 10;
 				p.elo = "1000";
