@@ -31,6 +31,8 @@
 			this.colorDialog1 = new System.Windows.Forms.ColorDialog();
 			this.butDefault = new System.Windows.Forms.Button();
 			this.gbInterface = new System.Windows.Forms.GroupBox();
+			this.label11 = new System.Windows.Forms.Label();
+			this.nudHistory = new System.Windows.Forms.NumericUpDown();
 			this.cbSound = new System.Windows.Forms.CheckBox();
 			this.butColor = new System.Windows.Forms.Button();
 			this.cbTips = new System.Windows.Forms.CheckBox();
@@ -75,9 +77,14 @@
 			this.tabControl1 = new System.Windows.Forms.TabControl();
 			this.tabPageInterface = new System.Windows.Forms.TabPage();
 			this.tabPageModes = new System.Windows.Forms.TabPage();
-			this.nudHistory = new System.Windows.Forms.NumericUpDown();
-			this.label11 = new System.Windows.Forms.Label();
+			this.tabPageBooks = new System.Windows.Forms.TabPage();
+			this.groupBox1 = new System.Windows.Forms.GroupBox();
+			this.lvBooks = new System.Windows.Forms.ListView();
+			this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.cbBookReader = new System.Windows.Forms.ComboBox();
 			this.gbInterface.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.nudHistory)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.nudSpeed)).BeginInit();
 			this.gbGame.SuspendLayout();
 			this.gbTournamentP.SuspendLayout();
@@ -96,7 +103,8 @@
 			this.tabControl1.SuspendLayout();
 			this.tabPageInterface.SuspendLayout();
 			this.tabPageModes.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.nudHistory)).BeginInit();
+			this.tabPageBooks.SuspendLayout();
+			this.groupBox1.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// butDefault
@@ -129,6 +137,38 @@
 			this.gbInterface.TabIndex = 4;
 			this.gbInterface.TabStop = false;
 			this.gbInterface.Text = "Interface";
+			// 
+			// label11
+			// 
+			this.label11.AutoSize = true;
+			this.label11.Location = new System.Drawing.Point(168, 132);
+			this.label11.Name = "label11";
+			this.label11.Size = new System.Drawing.Size(71, 13);
+			this.label11.TabIndex = 15;
+			this.label11.Text = "History length";
+			// 
+			// nudHistory
+			// 
+			this.nudHistory.Location = new System.Drawing.Point(3, 132);
+			this.nudHistory.Maximum = new decimal(new int[] {
+            200,
+            0,
+            0,
+            0});
+			this.nudHistory.Minimum = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+			this.nudHistory.Name = "nudHistory";
+			this.nudHistory.Size = new System.Drawing.Size(153, 20);
+			this.nudHistory.TabIndex = 14;
+			this.nudHistory.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			this.nudHistory.Value = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
 			// 
 			// cbSound
 			// 
@@ -442,7 +482,8 @@
             "0 sec",
             "1 sec",
             "2 sec",
-            "5 sec"});
+            "5 sec",
+            "10 sec"});
 			this.combModeTime.Location = new System.Drawing.Point(6, 46);
 			this.combModeTime.Name = "combModeTime";
 			this.combModeTime.Size = new System.Drawing.Size(153, 21);
@@ -460,7 +501,8 @@
             "0 sec",
             "1 sec",
             "2 sec",
-            "5 sec"});
+            "5 sec",
+            "10 sec"});
 			this.combModeStandard.Location = new System.Drawing.Point(6, 19);
 			this.combModeStandard.Name = "combModeStandard";
 			this.combModeStandard.Size = new System.Drawing.Size(153, 21);
@@ -707,7 +749,8 @@
 			this.listBox1.FormattingEnabled = true;
 			this.listBox1.Items.AddRange(new object[] {
             "Interface",
-            "Modes"});
+            "Modes",
+            "Books"});
 			this.listBox1.Location = new System.Drawing.Point(0, 0);
 			this.listBox1.Name = "listBox1";
 			this.listBox1.Size = new System.Drawing.Size(118, 370);
@@ -718,6 +761,7 @@
 			// 
 			this.tabControl1.Controls.Add(this.tabPageInterface);
 			this.tabControl1.Controls.Add(this.tabPageModes);
+			this.tabControl1.Controls.Add(this.tabPageBooks);
 			this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.tabControl1.ItemSize = new System.Drawing.Size(0, 1);
 			this.tabControl1.Location = new System.Drawing.Point(118, 0);
@@ -756,37 +800,66 @@
 			this.tabPageModes.Text = "Modes";
 			this.tabPageModes.UseVisualStyleBackColor = true;
 			// 
-			// nudHistory
+			// tabPageBooks
 			// 
-			this.nudHistory.Location = new System.Drawing.Point(3, 132);
-			this.nudHistory.Maximum = new decimal(new int[] {
-            200,
-            0,
-            0,
-            0});
-			this.nudHistory.Minimum = new decimal(new int[] {
-            10,
-            0,
-            0,
-            0});
-			this.nudHistory.Name = "nudHistory";
-			this.nudHistory.Size = new System.Drawing.Size(153, 20);
-			this.nudHistory.TabIndex = 14;
-			this.nudHistory.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-			this.nudHistory.Value = new decimal(new int[] {
-            100,
-            0,
-            0,
-            0});
+			this.tabPageBooks.Controls.Add(this.groupBox1);
+			this.tabPageBooks.Location = new System.Drawing.Point(4, 5);
+			this.tabPageBooks.Name = "tabPageBooks";
+			this.tabPageBooks.Padding = new System.Windows.Forms.Padding(3);
+			this.tabPageBooks.Size = new System.Drawing.Size(365, 361);
+			this.tabPageBooks.TabIndex = 2;
+			this.tabPageBooks.Text = "tabPage1";
+			this.tabPageBooks.UseVisualStyleBackColor = true;
 			// 
-			// label11
+			// groupBox1
 			// 
-			this.label11.AutoSize = true;
-			this.label11.Location = new System.Drawing.Point(168, 132);
-			this.label11.Name = "label11";
-			this.label11.Size = new System.Drawing.Size(71, 13);
-			this.label11.TabIndex = 15;
-			this.label11.Text = "History length";
+			this.groupBox1.Controls.Add(this.lvBooks);
+			this.groupBox1.Controls.Add(this.cbBookReader);
+			this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.groupBox1.Location = new System.Drawing.Point(3, 3);
+			this.groupBox1.Name = "groupBox1";
+			this.groupBox1.Size = new System.Drawing.Size(359, 355);
+			this.groupBox1.TabIndex = 51;
+			this.groupBox1.TabStop = false;
+			this.groupBox1.Text = "Autocreate";
+			// 
+			// lvBooks
+			// 
+			this.lvBooks.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader1,
+            this.columnHeader2});
+			this.lvBooks.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.lvBooks.FullRowSelect = true;
+			this.lvBooks.GridLines = true;
+			this.lvBooks.HideSelection = false;
+			this.lvBooks.Location = new System.Drawing.Point(3, 16);
+			this.lvBooks.MultiSelect = false;
+			this.lvBooks.Name = "lvBooks";
+			this.lvBooks.Size = new System.Drawing.Size(353, 315);
+			this.lvBooks.TabIndex = 52;
+			this.lvBooks.UseCompatibleStateImageBehavior = false;
+			this.lvBooks.View = System.Windows.Forms.View.Details;
+			this.lvBooks.SelectedIndexChanged += new System.EventHandler(this.lvBooks_SelectedIndexChanged);
+			// 
+			// columnHeader1
+			// 
+			this.columnHeader1.Text = "Directory";
+			// 
+			// columnHeader2
+			// 
+			this.columnHeader2.Text = "Book Reader";
+			this.columnHeader2.Width = 160;
+			// 
+			// cbBookReader
+			// 
+			this.cbBookReader.Dock = System.Windows.Forms.DockStyle.Bottom;
+			this.cbBookReader.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.cbBookReader.FormattingEnabled = true;
+			this.cbBookReader.Location = new System.Drawing.Point(3, 331);
+			this.cbBookReader.Name = "cbBookReader";
+			this.cbBookReader.Size = new System.Drawing.Size(353, 21);
+			this.cbBookReader.TabIndex = 51;
+			this.cbBookReader.SelectedIndexChanged += new System.EventHandler(this.cbBookReader_SelectedIndexChanged);
 			// 
 			// FormOptions
 			// 
@@ -806,6 +879,7 @@
 			this.Shown += new System.EventHandler(this.FormOptions_Shown);
 			this.gbInterface.ResumeLayout(false);
 			this.gbInterface.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)(this.nudHistory)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.nudSpeed)).EndInit();
 			this.gbGame.ResumeLayout(false);
 			this.gbGame.PerformLayout();
@@ -830,7 +904,8 @@
 			this.tabControl1.ResumeLayout(false);
 			this.tabPageInterface.ResumeLayout(false);
 			this.tabPageModes.ResumeLayout(false);
-			((System.ComponentModel.ISupportInitialize)(this.nudHistory)).EndInit();
+			this.tabPageBooks.ResumeLayout(false);
+			this.groupBox1.ResumeLayout(false);
 			this.ResumeLayout(false);
 
 		}
@@ -885,5 +960,11 @@
 		public System.Windows.Forms.NumericUpDown nudMaxEloE;
 		private System.Windows.Forms.Label label11;
 		public System.Windows.Forms.NumericUpDown nudHistory;
+		private System.Windows.Forms.TabPage tabPageBooks;
+		private System.Windows.Forms.GroupBox groupBox1;
+		private System.Windows.Forms.ListView lvBooks;
+		private System.Windows.Forms.ColumnHeader columnHeader1;
+		private System.Windows.Forms.ColumnHeader columnHeader2;
+		private System.Windows.Forms.ComboBox cbBookReader;
 	}
 }

@@ -30,7 +30,8 @@ namespace RapChessGui
 		public static bool boardRotate;
 		string lastEco = "";
 		List<int> moves = new List<int>();
-		public CRapIni RapIni = new CRapIni();
+		public static CRapIni RapIni = new CRapIni();
+		public static CDirBookList DirBookList = new CDirBookList();
 		readonly CBoard Board = new CBoard();
 		readonly CEcoList EcoList = new CEcoList();
 		public static CChess Chess = new CChess();
@@ -48,7 +49,6 @@ namespace RapChessGui
 		readonly FormChartP formHisP = new FormChartP();
 		readonly FormChartE formHisE = new FormChartE();
 
-		[System.Security.Permissions.PermissionSet(System.Security.Permissions.SecurityAction.Demand, Name = "FullTrust")]
 		protected override void WndProc(ref Message m)
 		{
 			const int WM_SYSCOMMAND = 0x0112;
@@ -76,10 +76,11 @@ namespace RapChessGui
 			This = this;
 			CreateDir("Books");
 			CreateDir("Engines");
-			CreateDir("Engines//Uci");
-			CreateDir("Engines//Winboard");
+			CreateDir(@"Engines/Uci");
+			CreateDir(@"Engines/Winboard");
 			CreateDir("History");
 			CData.UpdateFileEngine();
+			CData.UpdateFileBook();
 			int fontLength = Properties.Resources.ChessPiece.Length;
 			byte[] fontData = Properties.Resources.ChessPiece;
 			IntPtr data = Marshal.AllocCoTaskMem(fontLength);
@@ -94,6 +95,7 @@ namespace RapChessGui
 			FormPlayer.This = new FormPlayer();
 			InitializeComponent();
 			IniCreate();
+			DirBookList.LoadFromIni();
 			IniLoad();
 			Reset(true);
 			Font fontChess = new Font(pfc.Families[0], 16);
@@ -130,46 +132,54 @@ namespace RapChessGui
 			if (bookList.LoadFromIni() == 0)
 			{
 				CBook b;
+				b = new CBook();
+				b.exe = "BookReaderBin.exe";
+				b.name = "AutoBin";
+				b.parameters = "[engine] -w";
+				bookList.Add(b);
+				b = new CBook();
+				b.exe = "BookReaderMem.exe";
+				b.name = "AutoMem";
+				b.parameters = "[engine] -w 100K";
+				b = new CBook();
+				b.exe = "BookReaderUmo.exe";
+				b.name = "AutoUmo";
+				b.parameters = "[engine] -w";
+				bookList.Add(b);
+
+				bookList.Add(b);
 				b = new CBook("BigBin");
-				b.file = "BookReaderBin.exe";
+				b.exe = "BookReaderBin.exe";
 				b.parameters = b.name;
 				bookList.Add(b);
 				b = new CBook("BigMem");
-				b.file = "BookReaderMem.exe";
+				b.exe = "BookReaderMem.exe";
 				b.parameters = $"{b.name} -w 100K";
 				bookList.Add(b);
 				b = new CBook("BigUmo");
-				b.file = "BookReaderUmo.exe";
+				b.exe = "BookReaderUmo.exe";
 				b.parameters = b.name;
 				bookList.Add(b);
-				b = new CBook("ChessDb");
-				b.file = "BookReaderCdb.exe";
+
+				b = new CBook("Chess DB");
+				b.exe = "BookReaderCdb.exe";
 				bookList.Add(b);
-				b = new CBook();
-				b.file = "BookReaderMem.exe";
-				b.name = "Auto";
-				b.parameters = "[engine] -w 100K";
-				bookList.Add(b);
-				b = new CBook("Eco");
-				b.file = "BookReaderMem.exe";
-				b.parameters = b.name;
-				bookList.Add(b);
-				b = new CBook("Random");
-				b.file = "BookReaderMem.exe";
-				b.parameters = b.name;
-				bookList.Add(b);
+
 				for (int n = 1; n < 10; n++)
 				{
 					int v = n * 10;
 					b = new CBook();
-					b.file = "BookReaderRnd.exe";
+					b.exe = "BookReaderRnd.exe";
 					b.parameters = v.ToString();
 					bookList.Add(b);
 				}
 				bookList.SaveToIni();
+				RapIni.Write("options>dir>Bin", "BookReaderBin.exe");
+				RapIni.Write("options>dir>Mem", "BookReaderMem.exe");
+				RapIni.Write("options>dir>Umo", "BookReaderUmo.exe");
 			}
 			playerList.LoadFromIni();
-			if (playerList.GetPlayerHuman() == null)
+			if (playerList.GetPlayerRealHuman() == null)
 			{
 				CPlayer p = new CPlayer("Human");
 				p.tournament = 0;
@@ -383,7 +393,7 @@ namespace RapChessGui
 			ShowInfo(gw);
 			ShowInfo(gb);
 			SetBoardRotate();
-			if (GamerList.GamerCur().player.IsHuman())
+			if (GamerList.GamerCur().player.IsRealHuman())
 				moves = Chess.GenerateValidMoves(out _);
 		}
 
@@ -477,8 +487,8 @@ namespace RapChessGui
 			labProtocolB.Text = gb.GetProtocol();
 			labMemoryW.Text = gw.GetMemory();
 			labMemoryB.Text = gb.GetMemory();
-			splitContainerMoves.Panel1Collapsed = gw.player.IsHuman();
-			splitContainerMoves.Panel2Collapsed = gb.player.IsHuman();
+			splitContainerMoves.Panel1Collapsed = gw.player.IsRealHuman();
+			splitContainerMoves.Panel2Collapsed = gb.player.IsRealHuman();
 		}
 
 		void ShowInfo(CGamer g)
@@ -1005,7 +1015,7 @@ namespace RapChessGui
 			if (CModeGame.ranked == true)
 			{
 				CModeGame.ranked = false;
-				CPlayer ph = playerList.GetPlayerHuman();
+				CPlayer ph = playerList.GetPlayerRealHuman();
 				ph.elo = ph.eloOrg;
 				ph.SaveToIni();
 			}
@@ -1040,12 +1050,12 @@ namespace RapChessGui
 			labEloT.ForeColor = Color.Black;
 			if (GetRanked() && CModeGame.ranked)
 			{
-				if (GamerD().player.IsHuman())
+				if (GamerD().player.IsRealHuman())
 				{
 					labEloD.BackColor = CBoard.colorLabelB;
 					labEloD.ForeColor = CBoard.colorMessage;
 				}
-				if (GamerT().player.IsHuman())
+				if (GamerT().player.IsRealHuman())
 				{
 					labEloT.BackColor = CBoard.colorLabelB;
 					labEloT.ForeColor = CBoard.colorMessage;
@@ -1056,7 +1066,7 @@ namespace RapChessGui
 		bool ShowLastGame(bool changeProgress = false)
 		{
 			bool result = false;
-			CPlayer hu = playerList.GetPlayerHuman();
+			CPlayer hu = playerList.GetPlayerRealHuman();
 			int eloCur = Convert.ToInt32(hu.elo);
 			int eloOld = Convert.ToInt32(hu.eloOrg);
 			int eloDel = eloCur - eloOld;
@@ -1110,13 +1120,14 @@ namespace RapChessGui
 			cbEngine1.Items.Clear();
 			cbEngine2.Items.Clear();
 			foreach (CEngine e in engineList.list)
-			{
-				cbEngine.Items.Add(e.name);
-				cbEngine1.Items.Add(e.name);
-				cbEngine2.Items.Add(e.name);
-				cbTeacherEngine.Items.Add(e.name);
-				cbTrainedEngine.Items.Add(e.name);
-			}
+				if (e.FileExists())
+				{
+					cbEngine.Items.Add(e.name);
+					cbEngine1.Items.Add(e.name);
+					cbEngine2.Items.Add(e.name);
+					cbTeacherEngine.Items.Add(e.name);
+					cbTrainedEngine.Items.Add(e.name);
+				}
 			cbBook.Items.Clear();
 			cbMatchBook1.Items.Clear();
 			cbMatchBook2.Items.Clear();
@@ -1130,14 +1141,15 @@ namespace RapChessGui
 			cbMatchBook1.Items.Add("None");
 			cbMatchBook2.Items.Add("None");
 			foreach (CBook b in bookList.list)
-			{
-				cbBook.Items.Add(b.name);
-				cbMatchBook1.Items.Add(b.name);
-				cbMatchBook2.Items.Add(b.name);
-				cbTourEBook.Items.Add(b.name);
-				cbTeacherBook.Items.Add(b.name);
-				cbTrainedBook.Items.Add(b.name);
-			}
+				if (b.FileExists())
+				{
+					cbBook.Items.Add(b.name);
+					cbMatchBook1.Items.Add(b.name);
+					cbMatchBook2.Items.Add(b.name);
+					cbTourEBook.Items.Add(b.name);
+					cbTeacherBook.Items.Add(b.name);
+					cbTrainedBook.Items.Add(b.name);
+				}
 			cbTourEBook.SelectedIndex = cbTourEBook.Items.Count > 0 ? 0 : -1; ;
 			cbTeacherBook.SelectedIndex = cbTeacherBook.Items.Count > 0 ? 0 : -1;
 			cbTrainedBook.SelectedIndex = cbTrainedBook.Items.Count > 0 ? 0 : -1;
@@ -1145,6 +1157,7 @@ namespace RapChessGui
 			cbMatchBook1.SelectedIndex = cbMatchBook1.Items.Count > 0 ? 0 : -1; ;
 			cbMatchBook2.SelectedIndex = cbMatchBook2.Items.Count > 0 ? 0 : -1; ;
 			cbEngine.SelectedIndex = cbEngine.Items.Count > 0 ? 0 : -1;
+			bookList.Update();
 			TournamentEReset();
 			TournamentPReset();
 			lvPlayer.ListViewItemSorter = new ListViewComparer(1, SortOrder.Descending);
@@ -1190,7 +1203,7 @@ namespace RapChessGui
 			MoveToLvMoves(CHistory.moveList.Count - 1, piece, CHistory.LastNotation(), cg.score);
 			CEco eco = EcoList.GetEcoFen(Chess.GetEpd());
 			tssInfo.Tag = 0;
-			if (cg.player.IsHuman())
+			if (cg.player.IsRealHuman())
 			{
 				tssInfo.Text = "";
 				Board.ClearArrows();
@@ -1224,7 +1237,7 @@ namespace RapChessGui
 			if (CData.gameState == CGameState.normal)
 			{
 				GamerList.Next();
-				if (GamerList.GamerCur().player.IsHuman())
+				if (GamerList.GamerCur().player.IsRealHuman())
 					moves = Chess.GenerateValidMoves(out _);
 				else
 					if (GamerList.GamerCur().isWhite)
@@ -1238,8 +1251,8 @@ namespace RapChessGui
 
 		void SetBoardRotate()
 		{
-			boardRotate = (GamerList.gamer[1].player.IsHuman() && GamerList.gamer[0].player.IsComputer()) ^ CData.rotateBoard;
-			if ((GamerList.gamer[1].player.IsHuman()) && (GamerList.gamer[0].player.IsHuman()))
+			boardRotate = (GamerList.gamer[1].player.IsRealHuman() && GamerList.gamer[0].player.IsComputer()) ^ CData.rotateBoard;
+			if ((GamerList.gamer[1].player.IsRealHuman()) && (GamerList.gamer[0].player.IsRealHuman()))
 				boardRotate = !Chess.whiteTurn;
 		}
 
@@ -1646,7 +1659,7 @@ namespace RapChessGui
 		void SetingsToGamers()
 		{
 			GamerList.Init();
-			GamerList.gamer[0].SetPlayer(playerList.GetPlayerHuman());
+			GamerList.gamer[0].SetPlayer(playerList.GetPlayerRealHuman());
 			CPlayer pc = new CPlayer();
 			if (cbComputer.Text == "Custom")
 			{
@@ -1663,7 +1676,7 @@ namespace RapChessGui
 		void GameStart()
 		{
 			ComClear();
-			CPlayer hu = playerList.GetPlayerHuman();
+			CPlayer hu = playerList.GetPlayerRealHuman();
 			CData.HisToPoints(hu.hisElo, chartGame.Series[0].Points);
 			CModeGame.ranked = GetRanked();
 			GameSet();
@@ -1688,7 +1701,7 @@ namespace RapChessGui
 		{
 			if (GetRanked() && CModeGame.ranked)
 			{
-				if (pw.IsHuman())
+				if (pw.IsRealHuman())
 				{
 					if (isDraw)
 						pw.elo = pw.eloOrg;
@@ -2698,7 +2711,7 @@ namespace RapChessGui
 		{
 			if (GetRanked() && IsGameLong() && IsGameProgress())
 			{
-				CPlayer hu = playerList.GetPlayerHuman();
+				CPlayer hu = playerList.GetPlayerRealHuman();
 				hu.elo = hu.GetEloLess().ToString();
 			}
 			SetGameState(CGameState.resignation);

@@ -43,26 +43,26 @@ namespace RapChessGui
 
 		public static void SaveToIni()
 		{
-			CRapIni.This.Write("mode>training>teacher", teacher);
-			CRapIni.This.Write("mode>training>trained", trained);
-			CRapIni.This.Write("mode>training>teacherBook", teacherBook);
-			CRapIni.This.Write("mode>training>trainedBook", trainedBook);
-			CRapIni.This.Write("mode>training>teacherValue", modeValueTeacher.value);
-			CRapIni.This.Write("mode>training>trainedValue", modeValueTrained.value);
-			CRapIni.This.Write("mode>training>teacherMode", modeValueTeacher.mode);
-			CRapIni.This.Write("mode>training>trainedMode", modeValueTrained.mode);
+			FormChess.RapIni.Write("mode>training>teacher", teacher);
+			FormChess.RapIni.Write("mode>training>trained", trained);
+			FormChess.RapIni.Write("mode>training>teacherBook", teacherBook);
+			FormChess.RapIni.Write("mode>training>trainedBook", trainedBook);
+			FormChess.RapIni.Write("mode>training>teacherValue", modeValueTeacher.value);
+			FormChess.RapIni.Write("mode>training>trainedValue", modeValueTrained.value);
+			FormChess.RapIni.Write("mode>training>teacherMode", modeValueTeacher.mode);
+			FormChess.RapIni.Write("mode>training>trainedMode", modeValueTrained.mode);
 		}
 
 		public static void LoadFromIni()
 		{
-			teacher = CRapIni.This.Read("mode>training>teacher", CEngineList.def);
-			trained = CRapIni.This.Read("mode>training>trained", CEngineList.def);
-			teacherBook = CRapIni.This.Read("mode>training>teacherBook", teacherBook);
-			trainedBook = CRapIni.This.Read("mode>training>trainedBook", trainedBook);
-			modeValueTeacher.value = CRapIni.This.ReadInt("mode>training>teacherValue", modeValueTeacher.value);
-			modeValueTrained.value = CRapIni.This.ReadInt("mode>training>trainedValue", modeValueTrained.value);
-			modeValueTeacher.mode = CRapIni.This.Read("mode>training>teacherMode", modeValueTeacher.mode);
-			modeValueTrained.mode = CRapIni.This.Read("mode>training>trainedMode", modeValueTrained.mode);
+			teacher = FormChess.RapIni.Read("mode>training>teacher", CEngineList.def);
+			trained = FormChess.RapIni.Read("mode>training>trained", CEngineList.def);
+			teacherBook = FormChess.RapIni.Read("mode>training>teacherBook", teacherBook);
+			trainedBook = FormChess.RapIni.Read("mode>training>trainedBook", trainedBook);
+			modeValueTeacher.value = FormChess.RapIni.ReadInt("mode>training>teacherValue", modeValueTeacher.value);
+			modeValueTrained.value = FormChess.RapIni.ReadInt("mode>training>trainedValue", modeValueTrained.value);
+			modeValueTeacher.mode = FormChess.RapIni.Read("mode>training>teacherMode", modeValueTeacher.mode);
+			modeValueTrained.mode = FormChess.RapIni.Read("mode>training>trainedMode", modeValueTrained.mode);
 		}
 
 	}

@@ -140,8 +140,8 @@ namespace RapChessGui
 		public static void UpdateFileEngine()
 		{
 			UpdateFileEngine("Engines", fileEngine);
-			UpdateFileEngine("Engines//Uci", fileEngineUci);
-			UpdateFileEngine("Engines//Winboard", fileEngineWb);
+			UpdateFileEngine(@"Engines/Uci", fileEngineUci);
+			UpdateFileEngine(@"Engines/Winboard", fileEngineWb);
 			fileEngine.Add("none");
 		}
 

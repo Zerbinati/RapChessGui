@@ -107,7 +107,7 @@ namespace RapChessGui
 			modeValue.SetValue((int)nudValue.Value);
 			if (player == null)
 				return;
-			CRapIni.This.DeleteKey($"player>{player.name}");
+			FormChess.RapIni.DeleteKey($"player>{player.name}");
 			SaveToIni(player);
 			MessageBox.Show($"Player {player.name} has been modified");
 			CData.reset = true;

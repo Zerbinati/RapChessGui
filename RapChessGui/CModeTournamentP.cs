@@ -20,18 +20,18 @@ namespace RapChessGui
 
 		public static void SaveToIni()
 		{
-			CRapIni.This.Write("mode>tournamentP>player", player);
-			CRapIni.This.Write("mode>tournamentP>records", records);
-			CRapIni.This.Write("mode>tournamentP>rmaxElo", maxElo);
-			CRapIni.This.Write("mode>tournamentP>minElo", minElo);
+			FormChess.RapIni.Write("mode>tournamentP>player", player);
+			FormChess.RapIni.Write("mode>tournamentP>records", records);
+			FormChess.RapIni.Write("mode>tournamentP>rmaxElo", maxElo);
+			FormChess.RapIni.Write("mode>tournamentP>minElo", minElo);
 		}
 
 		public static void LoadFromIni()
 		{
-			player = CRapIni.This.Read("mode>tournamentP>player", player);
-			records = CRapIni.This.ReadInt("mode>tournamentP>records", records);
-			maxElo = CRapIni.This.ReadInt("mode>tournamentP>maxElo", maxElo);
-			minElo = CRapIni.This.ReadInt("mode>tournamentP>minElo", minElo);
+			player = FormChess.RapIni.Read("mode>tournamentP>player", player);
+			records = FormChess.RapIni.ReadInt("mode>tournamentP>records", records);
+			maxElo = FormChess.RapIni.ReadInt("mode>tournamentP>maxElo", maxElo);
+			minElo = FormChess.RapIni.ReadInt("mode>tournamentP>minElo", minElo);
 			tourList.SetLimit(records);
 		}
 

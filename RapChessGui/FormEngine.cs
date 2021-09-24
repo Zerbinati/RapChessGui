@@ -83,7 +83,7 @@ namespace RapChessGui
 			nudTournament.Value = engine.tournament;
 			if ((engine.protocol == CProtocol.uci) && engine.FileExists())
 			{
-				if (process.SetProgram(AppDomain.CurrentDomain.BaseDirectory + "Engines\\" + engine.file, engine.parameters) > 0)
+				if (process.SetProgram($@"{AppDomain.CurrentDomain.BaseDirectory}Engines\{engine.file}", engine.parameters) > 0)
 					process.WriteLine("uci");
 			}
 		}
@@ -195,7 +195,7 @@ namespace RapChessGui
 		{
 			if (engine == null)
 				return;
-			CRapIni.This.DeleteKey($"engine>{engine.name}");
+			FormChess.RapIni.DeleteKey($"engine>{engine.name}");
 			SaveToIni(engine);
 			MessageBox.Show($"Chess {engine.name} has been modified");
 			CData.reset = true;
@@ -217,9 +217,9 @@ namespace RapChessGui
 			foreach (string engine in CData.fileEngine)
 				cbFileList.Items.Add(engine);
 			foreach (string engine in CData.fileEngineUci)
-				cbFileList.Items.Add($@"Uci\\{engine}");
+				cbFileList.Items.Add($@"Uci\{engine}");
 			foreach (string engine in CData.fileEngineWb)
-				cbFileList.Items.Add($@"Winboard\\{engine}");
+				cbFileList.Items.Add($@"Winboard\{engine}");
 			UpdateListBox();
 			if (listBox1.Items.Count > 0)
 				listBox1.SetSelected(0, true);

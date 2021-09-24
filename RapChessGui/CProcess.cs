@@ -94,7 +94,8 @@ namespace RapChessGui
 			try
 			{
 				process.OutputDataReceived -= OnDataReceived;
-				process.Kill();
+				if (process.StartInfo.FileName != "")
+					process.Kill();
 				process.StartInfo.FileName = "";
 			}
 			catch { }

@@ -69,7 +69,7 @@ namespace RapChessGui
 
 		public void SetTournament(int t)
 		{
-			tournament = IsHuman() ? 0 : t;
+			tournament = IsRealHuman() ? 0 : t;
 		}
 
 		public bool SetTournament(bool tb)
@@ -92,7 +92,7 @@ namespace RapChessGui
 			return engine != "Human";
 		}
 
-		public bool IsHuman()
+		public bool IsRealHuman()
 		{
 			return (engine == "Human") && (modeValue.mode == "Infinite");
 		}
@@ -114,14 +114,14 @@ namespace RapChessGui
 
 		public void LoadFromIni()
 		{
-			tournament = CRapIni.This.ReadInt($"player>{name}>tournament", tournament);
-			engine = CRapIni.This.Read($"player>{name}>engine", "Human");
-			modeValue.mode = CRapIni.This.Read($"player>{name}>mode", modeValue.mode);
-			modeValue.value = CRapIni.This.ReadInt($"player>{name}>value", modeValue.value);
-			book = CRapIni.This.Read($"player>{name}>book", "None");
-			elo = CRapIni.This.Read($"player>{name}>elo", elo);
-			eloOrg = CRapIni.This.Read($"player>{name}>eloOrg", eloOrg);
-			hisElo.LoadFromStr(CRapIni.This.Read($"player>{name}>history", ""));
+			tournament = FormChess.RapIni.ReadInt($"player>{name}>tournament", tournament);
+			engine = FormChess.RapIni.Read($"player>{name}>engine", "Human");
+			modeValue.mode = FormChess.RapIni.Read($"player>{name}>mode", modeValue.mode);
+			modeValue.value = FormChess.RapIni.ReadInt($"player>{name}>value", modeValue.value);
+			book = FormChess.RapIni.Read($"player>{name}>book", "None");
+			elo = FormChess.RapIni.Read($"player>{name}>elo", elo);
+			eloOrg = FormChess.RapIni.Read($"player>{name}>eloOrg", eloOrg);
+			hisElo.LoadFromStr(FormChess.RapIni.Read($"player>{name}>history", ""));
 		}
 
 		public void SaveToIni()
@@ -133,14 +133,14 @@ namespace RapChessGui
 				hisElo.Add(e);
 				hisElo.Add(e);
 			}
-			CRapIni.This.Write($"player>{name}>tournament", tournament);
-			CRapIni.This.Write($"player>{name}>engine", engine);
-			CRapIni.This.Write($"player>{name}>mode", modeValue.mode);
-			CRapIni.This.Write($"player>{name}>value", modeValue.value);
-			CRapIni.This.Write($"player>{name}>book", book);
-			CRapIni.This.Write($"player>{name}>elo", elo);
-			CRapIni.This.Write($"player>{name}>eloOrg", eloOrg);
-			CRapIni.This.Write($"player>{name}>history", hisElo.SaveToStr());
+			FormChess.RapIni.Write($"player>{name}>tournament", tournament);
+			FormChess.RapIni.Write($"player>{name}>engine", engine);
+			FormChess.RapIni.Write($"player>{name}>mode", modeValue.mode);
+			FormChess.RapIni.Write($"player>{name}>value", modeValue.value);
+			FormChess.RapIni.Write($"player>{name}>book", book);
+			FormChess.RapIni.Write($"player>{name}>elo", elo);
+			FormChess.RapIni.Write($"player>{name}>eloOrg", eloOrg);
+			FormChess.RapIni.Write($"player>{name}>history", hisElo.SaveToStr());
 		}
 
 		public string GetName()
@@ -205,7 +205,7 @@ namespace RapChessGui
 
 		public CPlayer GetPlayerAuto(string name = "")
 		{
-			CPlayer ph = GetPlayerHuman();
+			CPlayer ph = GetPlayerRealHuman();
 			if (name == "Human")
 				return ph;
 			return GetPlayerElo(ph);
@@ -220,11 +220,11 @@ namespace RapChessGui
 			return null;
 		}
 
-		public CPlayer GetPlayerHuman()
+		public CPlayer GetPlayerRealHuman()
 		{
 			SortElo();
 			foreach (CPlayer p in list)
-				if (p.IsHuman())
+				if (p.IsRealHuman())
 					return p;
 			return null;
 		}
@@ -277,7 +277,7 @@ namespace RapChessGui
 		public int LoadFromIni()
 		{
 			list.Clear();
-			List<string> pl = CRapIni.This.ReadKeyList("player");
+			List<string> pl = FormChess.RapIni.ReadKeyList("player");
 			foreach (string name in pl)
 			{
 				var p = new CPlayer(name);
@@ -289,7 +289,7 @@ namespace RapChessGui
 
 		public void DeletePlayer(string name)
 		{
-			CRapIni.This.DeleteKey($"player>{name}");
+			FormChess.RapIni.DeleteKey($"player>{name}");
 			int i = GetIndex(name);
 			if (i >= 0)
 				list.RemoveAt(i);
@@ -297,7 +297,7 @@ namespace RapChessGui
 
 		public void SaveToIni()
 		{
-			CRapIni.This.DeleteKey("player");
+			FormChess.RapIni.DeleteKey("player");
 			foreach (CPlayer u in list)
 				u.SaveToIni();
 		}

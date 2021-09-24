@@ -22,24 +22,24 @@ namespace RapChessGui
 
 		public static void SaveToIni()
 		{
-			CRapIni.This.Write("mode>tournamentE>book", book);
-			CRapIni.This.Write("mode>tournamentE>engine", engine);
-			CRapIni.This.Write("mode>tournamentE>mode", modeValue.mode);
-			CRapIni.This.Write("mode>tournamentE>value", modeValue.value);
-			CRapIni.This.Write("mode>tournamentE>records", records);
-			CRapIni.This.Write("mode>tournamentE>rmaxElo", maxElo);
-			CRapIni.This.Write("mode>tournamentE>minElo", minElo);
+			FormChess.RapIni.Write("mode>tournamentE>book", book);
+			FormChess.RapIni.Write("mode>tournamentE>engine", engine);
+			FormChess.RapIni.Write("mode>tournamentE>mode", modeValue.mode);
+			FormChess.RapIni.Write("mode>tournamentE>value", modeValue.value);
+			FormChess.RapIni.Write("mode>tournamentE>records", records);
+			FormChess.RapIni.Write("mode>tournamentE>rmaxElo", maxElo);
+			FormChess.RapIni.Write("mode>tournamentE>minElo", minElo);
 		}
 
 		public static void LoadFromIni()
 		{
-			book = CRapIni.This.Read("mode>tournamentE>book", book);
-			engine = CRapIni.This.Read("mode>tournamentE>engine", "");
-			modeValue.mode = CRapIni.This.Read("mode>tournamentE>mode", modeValue.mode);
-			modeValue.value = CRapIni.This.ReadInt("mode>tournamentE>value", modeValue.value);
-			records = CRapIni.This.ReadInt("mode>tournamentE>records", records);
-			maxElo = CRapIni.This.ReadInt("mode>tournamentE>maxElo", maxElo);
-			minElo = CRapIni.This.ReadInt("mode>tournamentE>minElo", minElo);
+			book = FormChess.RapIni.Read("mode>tournamentE>book", book);
+			engine = FormChess.RapIni.Read("mode>tournamentE>engine", "");
+			modeValue.mode = FormChess.RapIni.Read("mode>tournamentE>mode", modeValue.mode);
+			modeValue.value = FormChess.RapIni.ReadInt("mode>tournamentE>value", modeValue.value);
+			records = FormChess.RapIni.ReadInt("mode>tournamentE>records", records);
+			maxElo = FormChess.RapIni.ReadInt("mode>tournamentE>maxElo", maxElo);
+			minElo = FormChess.RapIni.ReadInt("mode>tournamentE>minElo", minElo);
 			tourList.SetLimit(records);
 		}
 

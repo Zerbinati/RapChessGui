@@ -17,7 +17,7 @@ namespace RapChessGui
 	class CEcoList
 	{
 		public List<CEco> list = new List<CEco>();
-		readonly string path = AppDomain.CurrentDomain.BaseDirectory + "Books\\Eco.tsv";
+		readonly string path = $@"{AppDomain.CurrentDomain.BaseDirectory}Books\Eco.tsv";
 
 		public CEcoList()
 		{
@@ -62,7 +62,7 @@ namespace RapChessGui
 
 		public void SaveToUci()
 		{
-			string path = AppDomain.CurrentDomain.BaseDirectory + "Books\\eco.uci";
+			string path = $@"{AppDomain.CurrentDomain.BaseDirectory}Books\eco.uci";
 			List<string> moves = new List<string>();
 			foreach (CEco eco in list)
 				moves.Add(eco.moves);

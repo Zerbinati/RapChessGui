@@ -4,28 +4,23 @@ using System.IO;
 using System.Reflection;
 using System.Linq;
 using System.Collections.Generic;
-using System.Collections.Specialized;
-using System.Text;
 
 namespace RapIni
 {
 	public class CRapIni
 	{
-		public static CRapIni This;
 		readonly string name = "";
 		readonly string path = "";
 		List<string> list = new List<string>();
 
 		public CRapIni()
 		{
-			This = this;
 			name = Assembly.GetExecutingAssembly().GetName().Name;
 			path = new FileInfo(name + ".ini").FullName.ToString();
 		}
 
 		public CRapIni(string name)
 		{
-			This = this;
 			this.name = name;
 			path = new FileInfo(name + ".ini").FullName.ToString();
 		}

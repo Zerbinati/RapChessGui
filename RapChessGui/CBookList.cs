@@ -1,7 +1,6 @@
 ﻿
 using System.Collections.Generic;
 using System.IO;
-using RapIni;
 
 namespace RapChessGui
 {
@@ -9,7 +8,7 @@ namespace RapChessGui
 	public class CBook
 	{
 		public string name = "";
-		public string file = "";
+		public string exe = "";
 		public string parameters = "";
 
 		public CBook()
@@ -23,36 +22,53 @@ namespace RapChessGui
 
 		public bool FileExists()
 		{
-			return File.Exists("Books\\" + file);
+			return File.Exists($@"Books\{exe}");
+		}
+
+		public bool ParametersExists()
+		{
+			string[] tokens = parameters.Split(' ');
+			if (tokens.Length > 0)
+				return File.Exists($@"Books\{tokens[0]}");
+			return false;
+		}
+
+		public bool ParametersExists(string p)
+		{
+			return parameters.IndexOf(p) == 0;
 		}
 
 		public string GetParameters(CEngine e)
 		{
 			if (e == null)
 				return "";
-			return parameters.Replace("[engine]",e.name);
+			return parameters.Replace("[engine]", e.name);
 		}
 
 		public void LoadFromIni()
 		{
-			file = CRapIni.This.Read($"book>{name}>file", "");
-			parameters = CRapIni.This.Read($"book>{name}>parameters", "");
+			exe = FormChess.RapIni.Read($"book>{name}>exe", "");
+			parameters = FormChess.RapIni.Read($"book>{name}>parameters", "");
 		}
 
 		public void SaveToIni()
 		{
 			name = GetName();
-			CRapIni.This.Write($"book>{name}>file", file);
-			CRapIni.This.Write($"book>{name}>parameters", parameters);
+			FormChess.RapIni.Write($"book>{name}>exe", exe);
+			FormChess.RapIni.Write($"book>{name}>parameters", parameters);
 		}
 
 		public string GetName()
 		{
 			if (name != "")
 				return name;
-			string n = CData.MakeShort(Path.GetFileNameWithoutExtension(file));
-			if (parameters.Length < 0xf)
-				n = $"{n} {parameters}";
+			string n = CData.MakeShort(Path.GetFileNameWithoutExtension(exe));
+			string[] tokens = parameters.Split(' ');
+			if (tokens.Length > 0) {
+				string p = tokens[0];
+				p = Path.GetFileNameWithoutExtension(p);
+				return $"{n} {p}";
+			}
 			return n;
 		}
 
@@ -87,29 +103,81 @@ namespace RapChessGui
 		public int LoadFromIni()
 		{
 			list.Clear();
-			List<string> bl = CRapIni.This.ReadKeyList("book");
+			List<string> bl = FormChess.RapIni.ReadKeyList("book");
 			foreach (string name in bl)
 			{
 				var br = new CBook(name);
 				br.LoadFromIni();
 				list.Add(br);
 			}
+			SaveToIni();
 			return bl.Count;
 		}
 
 		public CBook GetBook(string name)
 		{
 			foreach (CBook br in list)
-			if (br.name == name)
+				if (br.name == name)
 					return br;
 			return null;
 		}
 
 		public void SaveToIni()
 		{
-			CRapIni.This.DeleteKey("book");
+			FormChess.RapIni.DeleteKey("book");
 			foreach (CBook br in list)
 				br.SaveToIni();
+		}
+
+		void TryDel(string dir)
+		{
+			for (int n = list.Count - 1; n >= 0; n--)
+			{
+				CBook book = list[n];
+				if (book.parameters.IndexOf(dir) == 0)
+					if (!book.FileExists() || !book.ParametersExists())
+						list.RemoveAt(n);
+			}
+		}
+
+		bool ParametersExists(string p)
+		{
+			foreach (CBook book in list)
+				if (book.ParametersExists(p))
+					return true;
+			return false;
+		}
+
+		void TryAdd(string br, string p)
+		{
+			if ((br != "none")&&!ParametersExists(p))
+			{
+				string fn = Path.GetFileName(p);
+				CBook b = new CBook();
+				//b.name = fn;
+				b.exe = br;
+				b.parameters = p;
+				list.Add(b);
+			}
+		}
+
+		void Update(string dir, string br)
+		{
+			TryDel(dir);
+			string path = $@"Books\{dir}";
+			string[] arrBooks = Directory.GetFiles(path);
+			foreach (string b in arrBooks)
+			{
+				string fn = Path.GetFileName(b);
+				TryAdd(br, $@"{dir}\{fn}");
+			}
+		}
+
+		public void Update()
+		{
+			foreach (CDirBook db in FormChess.DirBookList)
+				Update(db.dir, db.book);
+			SaveToIni();
 		}
 
 	}

@@ -55,38 +55,38 @@ namespace RapChessGui
 
 		public static void LoadFromIni()
 		{
-			rotate = CRapIni.This.ReadBool("mode>match>rotate");
-			games = CRapIni.This.ReadInt("mode>match>games");
-			win = CRapIni.This.ReadInt("mode>match>win");
-			draw = CRapIni.This.ReadInt("mode>match>draw");
-			loose = CRapIni.This.ReadInt("mode>match>loose");
-			book1 = CRapIni.This.Read("mode>match>book1", book1);
-			book2 = CRapIni.This.Read("mode>match>book2", book2);
-			engine1 = CRapIni.This.Read("mode>match>engine1", engine1);
-			engine2 = CRapIni.This.Read("mode>match>engine2", engine2);
-			modeValue1.mode = CRapIni.This.Read("mode>match>mode1", modeValue1.mode);
-			modeValue2.mode = CRapIni.This.Read("mode>match>mode2", modeValue2.mode);
-			modeValue1.value = CRapIni.This.ReadInt("mode>match>value1", modeValue1.value);
-			modeValue2.value = CRapIni.This.ReadInt("mode>match>value2", modeValue2.value);
-			his.LoadFromStr(CRapIni.This.Read("mode>match>his", ""));
+			rotate = FormChess.RapIni.ReadBool("mode>match>rotate");
+			games = FormChess.RapIni.ReadInt("mode>match>games");
+			win = FormChess.RapIni.ReadInt("mode>match>win");
+			draw = FormChess.RapIni.ReadInt("mode>match>draw");
+			loose = FormChess.RapIni.ReadInt("mode>match>loose");
+			book1 = FormChess.RapIni.Read("mode>match>book1", book1);
+			book2 = FormChess.RapIni.Read("mode>match>book2", book2);
+			engine1 = FormChess.RapIni.Read("mode>match>engine1", engine1);
+			engine2 = FormChess.RapIni.Read("mode>match>engine2", engine2);
+			modeValue1.mode = FormChess.RapIni.Read("mode>match>mode1", modeValue1.mode);
+			modeValue2.mode = FormChess.RapIni.Read("mode>match>mode2", modeValue2.mode);
+			modeValue1.value = FormChess.RapIni.ReadInt("mode>match>value1", modeValue1.value);
+			modeValue2.value = FormChess.RapIni.ReadInt("mode>match>value2", modeValue2.value);
+			his.LoadFromStr(FormChess.RapIni.Read("mode>match>his", ""));
 		}
 
 		public static void SaveToIni()
 		{
-			CRapIni.This.Write("mode>match>rotate", rotate.ToString());
-			CRapIni.This.Write("mode>match>games", games.ToString());
-			CRapIni.This.Write("mode>match>win", win.ToString());
-			CRapIni.This.Write("mode>match>draw", draw.ToString());
-			CRapIni.This.Write("mode>match>loose", loose.ToString());
-			CRapIni.This.Write("mode>match>book1", book1);
-			CRapIni.This.Write("mode>match>book2", book2);
-			CRapIni.This.Write("mode>match>engine1", engine1);
-			CRapIni.This.Write("mode>match>engine2", engine2);
-			CRapIni.This.Write("mode>match>mode1", modeValue1.mode);
-			CRapIni.This.Write("mode>match>mode2", modeValue2.mode);
-			CRapIni.This.Write("mode>match>value1", modeValue1.value);
-			CRapIni.This.Write("mode>match>value2", modeValue2.value);
-			CRapIni.This.Write("mode>match>his", his.SaveToStr());
+			FormChess.RapIni.Write("mode>match>rotate", rotate.ToString());
+			FormChess.RapIni.Write("mode>match>games", games.ToString());
+			FormChess.RapIni.Write("mode>match>win", win.ToString());
+			FormChess.RapIni.Write("mode>match>draw", draw.ToString());
+			FormChess.RapIni.Write("mode>match>loose", loose.ToString());
+			FormChess.RapIni.Write("mode>match>book1", book1);
+			FormChess.RapIni.Write("mode>match>book2", book2);
+			FormChess.RapIni.Write("mode>match>engine1", engine1);
+			FormChess.RapIni.Write("mode>match>engine2", engine2);
+			FormChess.RapIni.Write("mode>match>mode1", modeValue1.mode);
+			FormChess.RapIni.Write("mode>match>mode2", modeValue2.mode);
+			FormChess.RapIni.Write("mode>match>value1", modeValue1.value);
+			FormChess.RapIni.Write("mode>match>value2", modeValue2.value);
+			FormChess.RapIni.Write("mode>match>his", his.SaveToStr());
 		}
 
 	}

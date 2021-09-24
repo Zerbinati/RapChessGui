@@ -14,24 +14,24 @@ namespace RapChessGui
 
 		public static void SaveToIni()
 		{
-			CRapIni.This.Write("mode>game>rotate", rotate.ToString());
-			CRapIni.This.Write("mode>game>color", color);
-			CRapIni.This.Write("mode>game>computer",computer);
-			CRapIni.This.Write("mode>game>engine", engine);
-			CRapIni.This.Write("mode>game>book", book);
-			CRapIni.This.Write("mode>game>mode", modeValue.mode);
-			CRapIni.This.Write("mode>game>value", modeValue.value);
+			FormChess.RapIni.Write("mode>game>rotate", rotate.ToString());
+			FormChess.RapIni.Write("mode>game>color", color);
+			FormChess.RapIni.Write("mode>game>computer",computer);
+			FormChess.RapIni.Write("mode>game>engine", engine);
+			FormChess.RapIni.Write("mode>game>book", book);
+			FormChess.RapIni.Write("mode>game>mode", modeValue.mode);
+			FormChess.RapIni.Write("mode>game>value", modeValue.value);
 		}
 
 		public static void LoadFromIni()
 		{
-			rotate = CRapIni.This.ReadBool("mode>game>rotate");
-			color = CRapIni.This.Read("mode>game>color", color);
-			computer = CRapIni.This.Read("mode>game>computer", computer);
-			engine = CRapIni.This.Read("mode>game>engine", engine);
-			book = CRapIni.This.Read("mode>game>book", book);
-			modeValue.mode = CRapIni.This.Read("mode>game>mode",modeValue.mode);
-			modeValue.value = CRapIni.This.ReadInt("mode>game>value", modeValue.value);
+			rotate = FormChess.RapIni.ReadBool("mode>game>rotate");
+			color = FormChess.RapIni.Read("mode>game>color", color);
+			computer = FormChess.RapIni.Read("mode>game>computer", computer);
+			engine = FormChess.RapIni.Read("mode>game>engine", engine);
+			book = FormChess.RapIni.Read("mode>game>book", book);
+			modeValue.mode = FormChess.RapIni.Read("mode>game>mode",modeValue.mode);
+			modeValue.value = FormChess.RapIni.ReadInt("mode>game>value", modeValue.value);
 		}
 
 	}

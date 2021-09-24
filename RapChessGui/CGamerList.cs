@@ -509,11 +509,11 @@ namespace RapChessGui
 			if (book == null)
 				p.book = "None";
 			else
-				bookPro.SetProgram(AppDomain.CurrentDomain.BaseDirectory + "Books\\" + book.file, book.GetParameters(engine));
+				bookPro.SetProgram($@"{AppDomain.CurrentDomain.BaseDirectory}Books\{book.exe}", book.GetParameters(engine));
 			if (engine == null)
 				p.engine = "Human";
 			else
-				enginePro.SetProgram(AppDomain.CurrentDomain.BaseDirectory + "Engines\\" + engine.file, engine.parameters);
+				enginePro.SetProgram($@"{AppDomain.CurrentDomain.BaseDirectory}Engines\{engine.file}", engine.parameters);
 		}
 
 		public void SetPlayer()
@@ -554,7 +554,7 @@ namespace RapChessGui
 			cg.isEngRunning = false;
 			curIndex ^= 1;
 			cg = GamerCur();
-			if (cg.player.IsHuman())
+			if (cg.player.IsRealHuman())
 				cg.TimerStart();
 		}
 
@@ -622,9 +622,9 @@ namespace RapChessGui
 
 		public CGamer GamerHuman()
 		{
-			if (gamer[0].player.IsHuman())
+			if (gamer[0].player.IsRealHuman())
 				return gamer[0];
-			if (gamer[1].player.IsHuman())
+			if (gamer[1].player.IsRealHuman())
 				return gamer[1];
 			return null;
 		}
