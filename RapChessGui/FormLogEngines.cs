@@ -11,13 +11,35 @@ namespace RapChessGui
 		public static FormLogEngines This;
 		static bool locked = false;
 		static readonly Stopwatch timer = new Stopwatch();
-		public static CProcess process = new CProcess();
+		public static CProcess process = null;
 
 		public FormLogEngines()
 		{
 			This = this;
 			InitializeComponent();
 			richTextBox1.AddContextMenu();
+			process = new CProcess(OnDataReceived);
+		}
+
+		delegate void DeleMessage(string message);
+
+		readonly static DeleMessage deleMessage = new DeleMessage(NewMessage);
+
+		private void OnDataReceived(object sender, DataReceivedEventArgs e)
+		{
+			try
+			{
+				if (!String.IsNullOrEmpty(e.Data))
+				{
+					Invoke(deleMessage, new object[] { e.Data.Trim() });
+				}
+			}
+			catch { }
+		}
+
+		public static void NewMessage(string msg)
+		{
+			AppendText($"{msg}\n", Color.Black, true);
 		}
 
 		public static void AppendText(string txt, Color col, bool forced = false)
@@ -100,7 +122,7 @@ namespace RapChessGui
 
 		private void saveToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			string fn = $"{FormChess.This.combMainMode.Text} {DateTime.Now:yyyy-MM-dd hh-mm-ss}.rtf";
+			string fn = $"{FormChess.mode} {DateTime.Now:yyyy-MM-dd hh-mm-ss}.rtf";
 			richTextBox1.SaveFile(fn);
 			MessageBox.Show($"File {fn} has been saved");
 		}
@@ -139,7 +161,7 @@ namespace RapChessGui
 			{
 				locked = true;
 				richTextBox1.Clear();
-				process.SetProgram(AppDomain.CurrentDomain.BaseDirectory + "Engines\\" + engine.file, engine.parameters);
+				process.SetProgram($@"{AppDomain.CurrentDomain.BaseDirectory}Engines\{engine.file}", engine.parameters);
 			}
 		}
 

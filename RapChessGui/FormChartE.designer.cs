@@ -62,18 +62,18 @@
 			this.chart1.Text = "chart1";
 			this.chart1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.chart1_MouseDown);
 			// 
-			// FormHisE
+			// FormChartE
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(800, 450);
 			this.Controls.Add(this.chart1);
 			this.MinimizeBox = false;
-			this.Name = "FormHisE";
+			this.Name = "FormChartE";
 			this.ShowIcon = false;
 			this.ShowInTaskbar = false;
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-			this.Text = "Engine tournament history";
+			this.Text = "Engines tournament history";
 			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormHisE_FormClosing);
 			this.VisibleChanged += new System.EventHandler(this.FormHisE_VisibleChanged);
 			((System.ComponentModel.ISupportInitialize)(this.chart1)).EndInit();

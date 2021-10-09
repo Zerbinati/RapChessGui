@@ -1,8 +1,8 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
-using RapIni;
 
 namespace RapChessGui
 {
@@ -12,13 +12,14 @@ namespace RapChessGui
 		int indexFirst = -1;
 		int tournament = -1;
 		CEngine engine = null;
-		public static CProcess process = new CProcess();
+		public static CProcess process = null;
 		readonly COptionList optionList = new COptionList();
 
 		public FormEngine()
 		{
 			This = this;
 			InitializeComponent();
+			process = new CProcess(OnDataReceived);
 		}
 
 		public static void AddOption(string o)
@@ -55,6 +56,7 @@ namespace RapChessGui
 						lab.Text = o.name;
 						lab.Location = new Point(128, y);
 						panOptions.Controls.Add(lab);
+						y += 24;
 						break;
 					case "check":
 						var check = new CheckBox();
@@ -63,11 +65,32 @@ namespace RapChessGui
 						check.Checked = Convert.ToBoolean(engine.GetOption(o.name, o.def));
 						check.Location = new Point(3, y);
 						panOptions.Controls.Add(check);
+						y += 24;
 						break;
 				}
-				y += 24;
 			}
 			process.Terminate();
+		}
+
+		delegate void DeleMessage(string message);
+
+		readonly static DeleMessage deleMessage = new DeleMessage(NewMessage);
+
+		private void OnDataReceived(object sender, DataReceivedEventArgs e)
+		{
+			try
+			{
+				if (!String.IsNullOrEmpty(e.Data))
+				{
+					Invoke(deleMessage, new object[] { e.Data.Trim() });
+				}
+			}
+			catch { }
+		}
+
+		public static void NewMessage(string msg)
+		{
+			AddOption(msg);
 		}
 
 		void SelectEngine()

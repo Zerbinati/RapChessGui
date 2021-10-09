@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -6,16 +7,25 @@ namespace RapChessGui
 {
 	public partial class FormOptions : Form
 	{
-		public static FormOptions This;
+		public static bool autoElo = true;
+		public static bool isSan = true;
+		public static bool showArrow = true;
+		public static bool showAttack = false;
+		public static bool showPonder = true;
+		public static bool showTips = true;
+		public static bool spamOff = true;
+		public static bool soundOn = true;
+		public static int animationSpeed = 200;
 		public static int gameBreak = 8;
+		public static int historyLength = 100;
 		public static int marginStandard = 0;
 		public static int marginTime = 5000;
-		public static string priority;
+		public static int winLimit = 1;
+		public static ProcessPriorityClass priority = ProcessPriorityClass.Normal;
 		public static Color colorBoard;
 
 		public FormOptions()
 		{
-			This = this;
 			InitializeComponent();
 			LoadFromIni();
 			listBox1.SelectedIndex = 0;
@@ -24,29 +34,25 @@ namespace RapChessGui
 		public void LoadFromIni()
 		{
 			colorDialog1.Color = FormChess.RapIni.ReadColor("options>interface>color", Color.Yellow);
-			if (FormChess.RapIni.ReadBool("options>interface>san", true))
-				rbSan.Checked = true;
-			else
-				rbUci.Checked = true;
+			rbSan.Checked = FormChess.RapIni.ReadBool("options>interface>san", rbSan.Checked);
 			cbShowPonder.Checked = FormChess.RapIni.ReadBool("options>interface>showponder", cbShowPonder.Checked);
 			cbRotateBoard.Checked = FormChess.RapIni.ReadBool("options>interface>rotate", cbRotateBoard.Checked);
 			cbAttack.Checked = FormChess.RapIni.ReadBool("options>interface>attack", cbAttack.Checked);
 			cbArrow.Checked = FormChess.RapIni.ReadBool("options>interface>arrow", cbArrow.Checked);
 			cbTips.Checked = FormChess.RapIni.ReadBool("options>interface>tips", cbTips.Checked);
 			cbSound.Checked = FormChess.RapIni.ReadBool("options>interface>sound", cbSound.Checked);
+			cbSpam.Checked = FormChess.RapIni.ReadBool("options>interface>spam", cbSpam.Checked);
 			nudBreak.Value = FormChess.RapIni.ReadDecimal("options>mode>game>brak", nudBreak.Value);
+			nudTraining.Value = FormChess.RapIni.ReadDecimal("options>mode>training>strength", nudTraining.Value);
 			nudHistory.Value = FormChess.RapIni.ReadDecimal("options>interface>history", nudHistory.Value);
 			nudSpeed.Value = FormChess.RapIni.ReadDecimal("options>interface>speed", nudSpeed.Value);
 			cbGameAutoElo.Checked = FormChess.RapIni.ReadBool("options>game>autoelo", cbGameAutoElo.Checked);
 			combModeStandard.SelectedIndex = FormChess.RapIni.ReadInt("options>margin>standard", 1);
 			combModeTime.SelectedIndex = FormChess.RapIni.ReadInt("options>margin>time", 0);
-			priority = FormChess.RapIni.Read("options>priority", "Normal");
-			combPriority.SelectedIndex = combPriority.FindStringExact(priority);
-			gameBreak = (int)nudBreak.Value;
+			combPriority.SelectedIndex = FormChess.RapIni.ReadInt("options>priority", 2);
 			colorBoard = colorDialog1.Color;
-			marginStandard = CbToMargin(combModeStandard.SelectedIndex);
-			marginTime = CbToMargin(combModeTime.SelectedIndex);
-			CHisElo.count = (int)nudHistory.Value;
+			if(!rbSan.Checked)
+				rbUci.Checked = true;
 		}
 
 		public void SaveToIni()
@@ -59,18 +65,15 @@ namespace RapChessGui
 			FormChess.RapIni.Write("options>interface>arrow", cbArrow.Checked);
 			FormChess.RapIni.Write("options>interface>tips", cbTips.Checked);
 			FormChess.RapIni.Write("options>interface>sound", cbSound.Checked);
+			FormChess.RapIni.Write("options>interface>spam", cbSpam.Checked);
 			FormChess.RapIni.Write("options>mode>game>brak", nudBreak.Value);
+			FormChess.RapIni.Write("options>mode>training>strength", nudTraining.Value);
 			FormChess.RapIni.Write("options>interface>history", nudHistory.Value);
 			FormChess.RapIni.Write("options>interface>speed", nudSpeed.Value);
 			FormChess.RapIni.Write("options>game>autoelo", cbGameAutoElo.Checked);
 			FormChess.RapIni.Write("options>margin>standard", combModeStandard.SelectedIndex);
 			FormChess.RapIni.Write("options>margin>time", combModeTime.SelectedIndex);
-			FormChess.RapIni.Write("options>priority", priority);
-			gameBreak = (int)nudBreak.Value;
-			colorBoard = colorDialog1.Color;
-			marginStandard = CbToMargin(combModeStandard.SelectedIndex);
-			marginTime = CbToMargin(combModeTime.SelectedIndex);
-			CHisElo.count = (int)nudHistory.Value;
+			FormChess.RapIni.Write("options>priority", combPriority.SelectedIndex);
 		}
 
 		void FormLoad()
@@ -88,12 +91,16 @@ namespace RapChessGui
 				cbBookReader.Items.Add(book);
 			cbBookReader.SelectedIndex = 0;
 			LoadFromIni();
-			nudTourE.Value = CModeTournamentE.records;
-			nudMaxEloE.Value = CModeTournamentE.maxElo;
-			nudMinEloE.Value = CModeTournamentE.minElo;
-			nudTourP.Value = CModeTournamentP.records;
-			nudMaxEloP.Value = CModeTournamentP.maxElo;
-			nudMinEloP.Value = CModeTournamentP.minElo;
+			nudTourBRec.Value = CModeTournamentB.records;
+			nudTourBMax.Value = CModeTournamentB.maxElo;
+			nudTourBMin.Value = CModeTournamentB.minElo;
+			nudTourERec.Value = CModeTournamentE.records;
+			nudTourEMax.Value = CModeTournamentE.maxElo;
+			nudTourEMin.Value = CModeTournamentE.minElo;
+			nudTourPRec.Value = CModeTournamentP.records;
+			nudTourPMax.Value = CModeTournamentP.maxElo;
+			nudTourPMin.Value = CModeTournamentP.minElo;
+			labTourB.Text = $"Fill {(CModeTournamentB.tourList.list.Count * 100) / CModeTournamentB.records}%";
 			labTourE.Text = $"Fill {(CModeTournamentE.tourList.list.Count * 100) / CModeTournamentE.records}%";
 			labTourP.Text = $"Fill {(CModeTournamentP.tourList.list.Count * 100) / CModeTournamentP.records}%";
 		}
@@ -109,12 +116,16 @@ namespace RapChessGui
 				FormChess.DirBookList.Add(db);
 			}
 			FormChess.DirBookList.SaveToIni();
-			CModeTournamentE.records = (int)nudTourE.Value;
-			CModeTournamentE.maxElo = (int)Math.Max(nudMinEloE.Value, nudMaxEloE.Value);
-			CModeTournamentE.minElo = (int)Math.Min(nudMinEloE.Value, nudMaxEloE.Value);
-			CModeTournamentP.records = (int)nudTourP.Value;
-			CModeTournamentP.maxElo = (int)Math.Max(nudMinEloP.Value, nudMaxEloP.Value);
-			CModeTournamentP.minElo = (int)Math.Min(nudMinEloP.Value, nudMaxEloP.Value);
+			CModeTournamentB.records = (int)nudTourBRec.Value;
+			CModeTournamentB.maxElo = (int)Math.Max(nudTourBMin.Value, nudTourBMax.Value);
+			CModeTournamentB.minElo = (int)Math.Min(nudTourBMin.Value, nudTourBMax.Value);
+			CModeTournamentE.records = (int)nudTourERec.Value;
+			CModeTournamentE.maxElo = (int)Math.Max(nudTourEMin.Value, nudTourEMax.Value);
+			CModeTournamentE.minElo = (int)Math.Min(nudTourEMin.Value, nudTourEMax.Value);
+			CModeTournamentP.records = (int)nudTourPRec.Value;
+			CModeTournamentP.maxElo = (int)Math.Max(nudTourPMin.Value, nudTourPMax.Value);
+			CModeTournamentP.minElo = (int)Math.Min(nudTourPMin.Value, nudTourPMax.Value);
+			CModeTournamentB.SaveToIni();
 			CModeTournamentE.SaveToIni();
 			CModeTournamentP.SaveToIni();
 			SaveToIni();
@@ -123,11 +134,6 @@ namespace RapChessGui
 		int CbToMargin(int i)
 		{
 			return new int[] { -1, 0, 1000, 2000, 5000,10000 }[i];
-		}
-
-		public static bool ShowTips()
-		{
-			return This.cbTips.Checked;
 		}
 
 		private void CbRotateBoard_CheckedChanged(object sender, EventArgs e)
@@ -140,9 +146,8 @@ namespace RapChessGui
 			colorDialog1.Color = colorBoard;
 			if (colorDialog1.ShowDialog() != DialogResult.Cancel)
 			{
-				CBoard.SetColor(colorDialog1.Color);
-				FormChess.This.SetColor();
-				FormChess.This.BoardPrepare();
+				colorBoard = colorDialog1.Color;
+				(Owner as FormChess).BoardPrepare();
 			}
 		}
 
@@ -158,18 +163,17 @@ namespace RapChessGui
 			combModeStandard.SelectedIndex = 1;
 			combModeTime.SelectedIndex = 0;
 			combPriority.SelectedIndex = 2;
-			nudTourE.Value = 10000;
-			nudTourP.Value = 10000;
+			nudTourERec.Value = 10000;
+			nudTourPRec.Value = 10000;
 			nudSpeed.Value = 200;
-			nudMaxEloE.Value = 3000;
-			nudMinEloE.Value = 0;
-			nudMaxEloP.Value = 3000;
-			nudMinEloP.Value = 0;
+			nudTourEMax.Value = 3000;
+			nudTourEMin.Value = 0;
+			nudTourPMax.Value = 3000;
+			nudTourPMin.Value = 0;
 			nudHistory.Value = 100;
-			CBoard.SetColor(CBoard.colorDefault);
-			colorDialog1.Color = CBoard.colorDefault;
-			FormChess.This.BackColor = CBoard.colorChartD;
-			FormChess.This.BoardPrepare();
+			colorDialog1.Color = Color.Yellow;
+			colorBoard = colorDialog1.Color;
+			(Owner as FormChess).BoardPrepare();
 		}
 
 		private void FormOptions_Shown(object sender, EventArgs e)
@@ -179,7 +183,24 @@ namespace RapChessGui
 
 		private void cbPriority_SelectedIndexChanged(object sender, EventArgs e)
 		{
-			priority = combPriority.Text;
+			switch (combPriority.Text)
+			{
+				case "Idle":
+					priority = ProcessPriorityClass.Idle;
+					break;
+				case "Below normal":
+					priority = ProcessPriorityClass.BelowNormal;
+					break;
+				case "Normal":
+					priority = ProcessPriorityClass.Normal;
+					break;
+				case "Above normal":
+					priority = ProcessPriorityClass.AboveNormal;
+					break;
+				case "High":
+					priority = ProcessPriorityClass.High;
+					break;
+			}
 		}
 
 		private void FormOptions_FormClosing(object sender, FormClosingEventArgs e)
@@ -205,6 +226,76 @@ namespace RapChessGui
 		{
 			if (lvBooks.SelectedItems.Count > 0)
 				cbBookReader.Text = lvBooks.SelectedItems[0].SubItems[1].Text;
+		}
+
+		private void nudTraining_ValueChanged(object sender, EventArgs e)
+		{
+			winLimit = (int)nudTraining.Value;
+		}
+
+		private void rbSan_CheckedChanged(object sender, EventArgs e)
+		{
+			isSan = rbSan.Checked;
+		}
+
+		private void cbShowPonder_CheckedChanged(object sender, EventArgs e)
+		{
+			showPonder = cbShowPonder.Checked;
+		}
+
+		private void cbSpam_CheckedChanged(object sender, EventArgs e)
+		{
+			spamOff = cbSpam.Checked;
+		}
+
+		private void cbArrow_CheckedChanged(object sender, EventArgs e)
+		{
+			showArrow = cbArrow.Checked;
+		}
+
+		private void cbSound_CheckedChanged(object sender, EventArgs e)
+		{
+			soundOn = cbSound.Checked;
+		}
+
+		private void cbAttack_CheckedChanged(object sender, EventArgs e)
+		{
+			showAttack = cbAttack.Checked;
+		}
+
+		private void cbTips_CheckedChanged(object sender, EventArgs e)
+		{
+			showTips = cbTips.Checked;
+		}
+
+		private void nudSpeed_ValueChanged(object sender, EventArgs e)
+		{
+			animationSpeed = (int)nudSpeed.Value;
+		}
+
+		private void nudHistory_ValueChanged(object sender, EventArgs e)
+		{
+			historyLength = (int)nudHistory.Value;
+		}
+
+		private void cbGameAutoElo_CheckedChanged(object sender, EventArgs e)
+		{
+			autoElo = cbGameAutoElo.Checked;
+		}
+
+		private void nudBreak_ValueChanged(object sender, EventArgs e)
+		{
+			gameBreak = (int)nudBreak.Value;
+		}
+
+		private void combModeStandard_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			marginStandard = CbToMargin(combModeStandard.SelectedIndex);
+		}
+
+		private void combModeTime_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			marginTime = CbToMargin(combModeTime.SelectedIndex);
 		}
 	}
 }

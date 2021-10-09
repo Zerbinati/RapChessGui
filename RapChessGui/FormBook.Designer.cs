@@ -33,6 +33,8 @@
 			this.bDelete = new System.Windows.Forms.Button();
 			this.bCreate = new System.Windows.Forms.Button();
 			this.bUpdate = new System.Windows.Forms.Button();
+			this.gbElo = new System.Windows.Forms.GroupBox();
+			this.nudElo = new System.Windows.Forms.NumericUpDown();
 			this.groupBox3 = new System.Windows.Forms.GroupBox();
 			this.tbParameters = new System.Windows.Forms.TextBox();
 			this.groupBox4 = new System.Windows.Forms.GroupBox();
@@ -41,11 +43,17 @@
 			this.tbReaderName = new System.Windows.Forms.TextBox();
 			this.gbBooks = new System.Windows.Forms.GroupBox();
 			this.listBox1 = new System.Windows.Forms.ListBox();
+			this.groupBox5 = new System.Windows.Forms.GroupBox();
+			this.nudTournament = new System.Windows.Forms.NumericUpDown();
 			this.panel1.SuspendLayout();
+			this.gbElo.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.nudElo)).BeginInit();
 			this.groupBox3.SuspendLayout();
 			this.groupBox4.SuspendLayout();
 			this.groupBox1.SuspendLayout();
 			this.gbBooks.SuspendLayout();
+			this.groupBox5.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.nudTournament)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// openFileDialog1
@@ -57,6 +65,8 @@
 			this.panel1.Controls.Add(this.bDelete);
 			this.panel1.Controls.Add(this.bCreate);
 			this.panel1.Controls.Add(this.bUpdate);
+			this.panel1.Controls.Add(this.groupBox5);
+			this.panel1.Controls.Add(this.gbElo);
 			this.panel1.Controls.Add(this.groupBox3);
 			this.panel1.Controls.Add(this.groupBox4);
 			this.panel1.Controls.Add(this.groupBox1);
@@ -69,7 +79,7 @@
 			// bDelete
 			// 
 			this.bDelete.Dock = System.Windows.Forms.DockStyle.Top;
-			this.bDelete.Location = new System.Drawing.Point(0, 195);
+			this.bDelete.Location = new System.Drawing.Point(0, 285);
 			this.bDelete.Name = "bDelete";
 			this.bDelete.Size = new System.Drawing.Size(311, 33);
 			this.bDelete.TabIndex = 27;
@@ -80,7 +90,7 @@
 			// bCreate
 			// 
 			this.bCreate.Dock = System.Windows.Forms.DockStyle.Top;
-			this.bCreate.Location = new System.Drawing.Point(0, 162);
+			this.bCreate.Location = new System.Drawing.Point(0, 252);
 			this.bCreate.Name = "bCreate";
 			this.bCreate.Size = new System.Drawing.Size(311, 33);
 			this.bCreate.TabIndex = 26;
@@ -91,13 +101,44 @@
 			// bUpdate
 			// 
 			this.bUpdate.Dock = System.Windows.Forms.DockStyle.Top;
-			this.bUpdate.Location = new System.Drawing.Point(0, 135);
+			this.bUpdate.Location = new System.Drawing.Point(0, 225);
 			this.bUpdate.Name = "bUpdate";
 			this.bUpdate.Size = new System.Drawing.Size(311, 27);
 			this.bUpdate.TabIndex = 25;
 			this.bUpdate.Text = "Update";
 			this.bUpdate.UseVisualStyleBackColor = true;
 			this.bUpdate.Click += new System.EventHandler(this.ButUpdate_Click);
+			// 
+			// gbElo
+			// 
+			this.gbElo.Controls.Add(this.nudElo);
+			this.gbElo.Dock = System.Windows.Forms.DockStyle.Top;
+			this.gbElo.Location = new System.Drawing.Point(0, 135);
+			this.gbElo.Name = "gbElo";
+			this.gbElo.Size = new System.Drawing.Size(311, 45);
+			this.gbElo.TabIndex = 31;
+			this.gbElo.TabStop = false;
+			this.gbElo.Text = "Elo";
+			// 
+			// nudElo
+			// 
+			this.nudElo.Dock = System.Windows.Forms.DockStyle.Top;
+			this.nudElo.Location = new System.Drawing.Point(3, 16);
+			this.nudElo.Maximum = new decimal(new int[] {
+            15000,
+            0,
+            0,
+            0});
+			this.nudElo.Name = "nudElo";
+			this.nudElo.Size = new System.Drawing.Size(305, 20);
+			this.nudElo.TabIndex = 0;
+			this.nudElo.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			this.nudElo.ThousandsSeparator = true;
+			this.nudElo.Value = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
 			// 
 			// groupBox3
 			// 
@@ -184,6 +225,32 @@
 			this.listBox1.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.listBox1_DrawItem);
 			this.listBox1.SelectedValueChanged += new System.EventHandler(this.ListBox1_SelectedValueChanged);
 			// 
+			// groupBox5
+			// 
+			this.groupBox5.Controls.Add(this.nudTournament);
+			this.groupBox5.Dock = System.Windows.Forms.DockStyle.Top;
+			this.groupBox5.Location = new System.Drawing.Point(0, 180);
+			this.groupBox5.Name = "groupBox5";
+			this.groupBox5.Size = new System.Drawing.Size(311, 45);
+			this.groupBox5.TabIndex = 34;
+			this.groupBox5.TabStop = false;
+			this.groupBox5.Text = "Tournament priority";
+			// 
+			// nudTournament
+			// 
+			this.nudTournament.Dock = System.Windows.Forms.DockStyle.Top;
+			this.nudTournament.Location = new System.Drawing.Point(3, 16);
+			this.nudTournament.Name = "nudTournament";
+			this.nudTournament.Size = new System.Drawing.Size(305, 20);
+			this.nudTournament.TabIndex = 0;
+			this.nudTournament.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			this.nudTournament.ThousandsSeparator = true;
+			this.nudTournament.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+			// 
 			// FormBook
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -199,12 +266,16 @@
 			this.Text = "Books";
 			this.Shown += new System.EventHandler(this.FormBook_Shown);
 			this.panel1.ResumeLayout(false);
+			this.gbElo.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this.nudElo)).EndInit();
 			this.groupBox3.ResumeLayout(false);
 			this.groupBox3.PerformLayout();
 			this.groupBox4.ResumeLayout(false);
 			this.groupBox1.ResumeLayout(false);
 			this.groupBox1.PerformLayout();
 			this.gbBooks.ResumeLayout(false);
+			this.groupBox5.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this.nudTournament)).EndInit();
 			this.ResumeLayout(false);
 
 		}
@@ -223,5 +294,9 @@
 		private System.Windows.Forms.Button bDelete;
 		private System.Windows.Forms.Button bCreate;
 		private System.Windows.Forms.Button bUpdate;
+		private System.Windows.Forms.GroupBox gbElo;
+		private System.Windows.Forms.NumericUpDown nudElo;
+		private System.Windows.Forms.GroupBox groupBox5;
+		private System.Windows.Forms.NumericUpDown nudTournament;
 	}
 }

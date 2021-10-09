@@ -21,8 +21,7 @@ namespace RapChessGui
 		{
 			if ((curXY.X == desXY.X) && (curXY.Y == desXY.Y))
 				return false;
-			int speed = Convert.ToInt32(FormOptions.This.nudSpeed.Value);
-			double dif = timer.Elapsed.TotalMilliseconds / speed;
+			double dif = timer.Elapsed.TotalMilliseconds / FormOptions.animationSpeed;
 			if (dif >= 1)
 			{
 				curXY.X = desXY.X;
@@ -41,7 +40,7 @@ namespace RapChessGui
 		{
 			desImage = -1;
 			int i = CChess.arrField[index];
-			int f = FormChess.Chess.g_board[i];
+			int f = FormChess.chess.g_board[i];
 			image = (f & 7) - 1;
 			if ((f & CChess.colorBlack) > 0)
 				image += 6;
@@ -93,8 +92,6 @@ namespace RapChessGui
 
 	class CBoard
 	{
-		public static Color colorBoard;
-		public static Color colorDefault = Color.FromArgb(0xff, 0xff, 0x80);
 		public static Color colorRed = Color.FromArgb(0x80, 0x00, 0x00);
 		public static Color colorChartM;
 		public static Color colorChartD;
@@ -212,7 +209,7 @@ namespace RapChessGui
 			Bitmap bmp = new Bitmap(bmpBoard);
 			Graphics gb = Graphics.FromImage(bmp);
 			DrawCircles(gb);
-			if (FormOptions.This.cbArrow.Checked)
+			if (FormOptions.showArrow)
 			{
 				DrawArrows(gb, arrowCur);
 				DrawArrows(gb, arrowEco);
@@ -225,7 +222,7 @@ namespace RapChessGui
 		public static void UpdateField(int index)
 		{
 			int i = CChess.arrField[index];
-			int f = FormChess.Chess.g_board[i];
+			int f = FormChess.chess.g_board[i];
 			if ((f & CChess.colorEmpty) > 0)
 				arrField[index].piece = null;
 			else
@@ -241,7 +238,7 @@ namespace RapChessGui
 			for (int n = 0; n < 64; n++)
 				UpdateField(n);
 			SetPosition();
-			ShowAttack(FormOptions.This.cbAttack.Checked);
+			ShowAttack(FormOptions.showAttack);
 			RenderBoard();
 		}
 
@@ -395,7 +392,7 @@ namespace RapChessGui
 					gp1.AddString("pnbrqk"[image].ToString(), fontPiece.FontFamily, (int)fontPiece.Style, fontPiece.Size, rec, sf);
 				}
 			}
-			if (FormChess.Chess.whiteTurn)
+			if (FormChess.chess.whiteTurn)
 			{
 				g.DrawPath(penB, gpB);
 				g.FillPath(brushBlack, gpB);
@@ -455,15 +452,9 @@ namespace RapChessGui
 			ClearColors();
 		}
 
-		public static void SetColor(Color c)
-		{
-			colorBoard = c;
-			SetColor();
-		}
-
 		public static void SetColor()
 		{
-			CRapColor.SetColor(colorBoard);
+			CRapColor.SetColor(FormOptions.colorBoard);
 			colorLabelB = CRapColor.GetColor(CRapColor.H, 0.4, 0.2);
 			colorLabelW = CRapColor.GetColor(CRapColor.H, 0.4, 0.8);
 			colorListB = CRapColor.GetColor(CRapColor.H, 0.2, 0.8);
@@ -512,7 +503,7 @@ namespace RapChessGui
 			for (int n = 0; n < 64; n++)
 			{
 				int i = CChess.arrField[n];
-				int f = FormChess.Chess.g_board[i];
+				int f = FormChess.chess.g_board[i];
 				if ((f & CChess.colorEmpty) > 0)
 					arrField[n].piece = null;
 				else
@@ -526,7 +517,7 @@ namespace RapChessGui
 			foreach (int m in ml)
 			{
 				int d = (m >> 8) & 0xff;
-				int r = FormChess.Chess.g_board[d] & 7;
+				int r = FormChess.chess.g_board[d] & 7;
 				if (r > 0)
 					if (show || (r == CChess.pieceKing))
 					{
@@ -540,8 +531,8 @@ namespace RapChessGui
 		{
 			ClearAttack();
 			if (show)
-				ShowAttack(show, FormChess.Chess.whiteTurn);
-			ShowAttack(show, !FormChess.Chess.whiteTurn);
+				ShowAttack(show, FormChess.chess.whiteTurn);
+			ShowAttack(show, !FormChess.chess.whiteTurn);
 		}
 
 	}

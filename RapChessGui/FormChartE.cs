@@ -6,13 +6,11 @@ namespace RapChessGui
 {
 	public partial class FormChartE : Form
 	{
-		public static FormChartE This;
 		Series lastSeries = null;
 
 		public FormChartE()
 		{
 			InitializeComponent();
-			This = this;
 		}
 
 		private void FormHisE_FormClosing(object sender, FormClosingEventArgs e)

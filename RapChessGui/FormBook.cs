@@ -1,18 +1,15 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
-using RapIni;
 
 namespace RapChessGui
 {
 	public partial class FormBook : Form
 	{
-		public static FormBook This;
 		string curBookName;
 
 		public FormBook()
 		{
-			This = this;
 			InitializeComponent();
 		}
 
@@ -29,6 +26,8 @@ namespace RapChessGui
 			tbReaderName.Text = book.name;
 			cbBookReaderList.Text = book.exe;
 			tbParameters.Text = book.parameters;
+			nudElo.Value = Convert.ToInt32(book.elo);
+			nudTournament.Value = book.tournament;
 			curBookName = book.name;
 		}
 
@@ -50,6 +49,8 @@ namespace RapChessGui
 			reader.name = tbReaderName.Text;
 			reader.exe = cbBookReaderList.Text;
 			reader.parameters = tbParameters.Text;
+			reader.elo = nudElo.Value.ToString();
+			reader.tournament = (int)nudTournament.Value;
 			reader.SaveToIni();
 			curBookName = reader.name;
 			UpdateListBox();
@@ -82,10 +83,10 @@ namespace RapChessGui
 
 		private void ButDelete_Click(object sender, EventArgs e)
 		{
-			string userName = tbReaderName.Text;
-			FormChess.playerList.DeletePlayer(userName);
+			string name = tbReaderName.Text;
+			FormChess.bookList.DeleteBook(name);
 			UpdateListBox();
-			MessageBox.Show($"Player {userName} has been removed");
+			MessageBox.Show($"Book {name} has been removed");
 			CData.reset = true;
 		}
 

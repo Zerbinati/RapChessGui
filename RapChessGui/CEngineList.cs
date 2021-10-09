@@ -8,7 +8,6 @@ namespace RapChessGui
 	public class CEngine
 	{
 		public bool modeStandard = true;
-		public int distance = 0;
 		public int position = 0;
 		public int tournament = 1;
 		public string name = "";
@@ -37,7 +36,7 @@ namespace RapChessGui
 			parameters = FormChess.RapIni.Read($"engine>{name}>parameters", "");
 			options = FormChess.RapIni.ReadList($"engine>{name}>options");
 			elo = FormChess.RapIni.Read($"engine>{name}>elo", elo);
-			hisElo.LoadFromStr(FormChess.RapIni.Read($"engine>{name}>history", ""));
+			hisElo.LoadFromStr(FormChess.RapIni.Read($"engine>{name}>history"));
 		}
 
 		public void SaveToIni()
@@ -177,26 +176,10 @@ namespace RapChessGui
 			return -1;
 		}
 
-		public int GetIndexElo(int elo)
-		{
-			int result = 0;
-			foreach (CEngine e in list)
-				if (e.GetElo() > elo)
-					result++;
-			return result;
-		}
-
 		public int GetOptElo(double index)
 		{
-			if (index < 0)
-				index = 0;
-			if (index >= list.Count)
-				index = list.Count - 1;
-			return Convert.ToInt32((3000 * (list.Count - index)) / list.Count);
-		}
-
-		public int GetOptElo(double index, int min, int max)
-		{
+			int min = CModeTournamentE.minElo;
+			int max = CModeTournamentE.maxElo;
 			if (index < 0)
 				index = 0;
 			if (index >= list.Count)
@@ -306,15 +289,16 @@ namespace RapChessGui
 			});
 		}
 
-		public void SortDistance(CEngine engine)
+		public void SortPosition(CEngine engine)
 		{
 			SortElo();
 			FillPosition();
+			int position = engine.position;
 			foreach (CEngine e in list)
-				e.distance = Math.Abs(engine.position - e.position);
+				e.position = Math.Abs(position - e.position);
 			list.Sort(delegate (CEngine e1, CEngine e2)
 			{
-				return e1.distance - e2.distance;
+				return e1.position - e2.position;
 			});
 		}
 
@@ -340,9 +324,8 @@ namespace RapChessGui
 
 		public void FillPosition()
 		{
-			int position = 1;
 			for (int n = 0; n < list.Count; n++)
-				list[n].position = position++;
+				list[n].position = n;
 		}
 
 	}

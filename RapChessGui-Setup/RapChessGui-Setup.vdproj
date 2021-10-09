@@ -430,7 +430,7 @@
                 {
                 "Name" = "8:.NET Framework"
                 "Message" = "8:[VSDNETMSG]"
-                "FrameworkVersion" = "8:.NETFramework,Version=v4.7.2"
+                "FrameworkVersion" = "8:.NETFramework,Version=v4.8"
                 "AllowLaterVersions" = "11:FALSE"
                 "InstallUrl" = "8:http://go.microsoft.com/fwlink/?LinkId=863262"
                 }
@@ -1615,7 +1615,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:RapChessGui"
         "ProductCode" = "8:{6425323E-2E35-4673-840F-114EA0AF9A31}"
-        "PackageCode" = "8:{2E6EE7CA-B386-43FF-BE02-F4F1FB6DDDD1}"
+        "PackageCode" = "8:{D473FEAE-DC89-431D-8D8A-1CDCB0395095}"
         "UpgradeCode" = "8:{D5376D45-FD03-4B79-B4C3-D74BBDB925C3}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"

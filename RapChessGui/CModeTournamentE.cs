@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using RapIni;
+﻿using System;
+using System.Collections.Generic;
 
 namespace RapChessGui
 {
@@ -7,12 +7,12 @@ namespace RapChessGui
 	{
 		public static bool rotate = true;
 		public static int games = 0;
-		public static int repetition = 1;
+		public static int repetition = 0;
 		public static int records = 10000;
 		public static int maxElo = 3000;
 		public static int minElo = 0;
-		public static string engine = "";
-		public static string opponent = "";
+		public static string engine = String.Empty;
+		public static string opponent = String.Empty;
 		public static string book = "BRU Eco";
 		public static CTourList tourList = new CTourList("Tour-engines");
 		public static CModeValue modeValue = new CModeValue();
@@ -34,7 +34,7 @@ namespace RapChessGui
 		public static void LoadFromIni()
 		{
 			book = FormChess.RapIni.Read("mode>tournamentE>book", book);
-			engine = FormChess.RapIni.Read("mode>tournamentE>engine", "");
+			engine = FormChess.RapIni.Read("mode>tournamentE>engine", engine);
 			modeValue.mode = FormChess.RapIni.Read("mode>tournamentE>mode", modeValue.mode);
 			modeValue.value = FormChess.RapIni.ReadInt("mode>tournamentE>value", modeValue.value);
 			records = FormChess.RapIni.ReadInt("mode>tournamentE>records", records);
@@ -46,8 +46,9 @@ namespace RapChessGui
 		public static void NewGame()
 		{
 			rotate = true;
-			repetition = 1;
-			opponent = "";
+			games = 0;
+			repetition = 0;
+			opponent = String.Empty;
 		}
 
 		public static CEngineList FillList()
@@ -98,14 +99,17 @@ namespace RapChessGui
 			CEngine e = engineList.GetEngine(engine);
 			if (e == null)
 				e = SelectRare();
-			if (repetition <= 0)
+			if ((games >= repetition) && (games > 0))
+			{
 				e = engineList.NextTournament(e);
+				games = 0;
+			}
 			return e;
 		}
 
 		public static CEngine SelectOpponent(CEngine engine)
 		{
-			engineList.SortDistance(engine);
+			engineList.SortPosition(engine);
 			List<CEngine> el = new List<CEngine>();
 			foreach (CEngine e in engineList.list)
 				if (e != engine)
@@ -123,18 +127,21 @@ namespace RapChessGui
 
 		public static void SetRepeition(CEngine e, CEngine o)
 		{
-			games = engine == e.name ? ++games : 1;
-			if ((engine != e.name) || (opponent == ""))
+			if ((engine != e.name) || (opponent != o.name))
 			{
 				engine = e.name;
 				opponent = o.name;
 				SaveToIni();
 				tourList.CountGames(e.name, o.name, out int rw, out int rl, out _);
-				repetition = e.tournament;
-				if ((e.GetElo() > o.GetElo()) != (rw > rl))
-					repetition++;
-				rotate = true;
+				if (games == 0)
+				{
+					repetition = e.tournament;
+					if ((e.GetElo() > o.GetElo()) != (rw > rl))
+						repetition++;
+					rotate = true;
+				}
 			}
+			games++;
 			rotate ^= true;
 		}
 

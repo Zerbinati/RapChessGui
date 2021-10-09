@@ -6,13 +6,10 @@ namespace RapChessGui
 {
 	public partial class FormLastGame : Form
 	{
-
-		public static FormLastGame This;
 		public static string lastName = "";
 
 		public FormLastGame()
 		{
-			This = this;
 			InitializeComponent();
 		}
 

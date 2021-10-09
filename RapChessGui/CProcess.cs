@@ -7,48 +7,19 @@ namespace RapChessGui
 
 	public class CProcess
 	{
+		private readonly DataReceivedEventHandler dataR = null;
 		public Process process = new Process();
+
+		public CProcess(DataReceivedEventHandler drh)
+		{
+			dataR = drh;
+		}
 
 		public int GetPid()
 		{
-			if (process.StartInfo.FileName == "")
+			if (process.StartInfo.FileName == String.Empty)
 				return 0;
 			return process.Id;
-		}
-
-		private void OnDataReceived(object sender, DataReceivedEventArgs e)
-		{
-			try
-			{
-				if (!String.IsNullOrEmpty(e.Data))
-				{
-					FormChess.SetMessage(process.Id, e.Data.Trim());
-				}
-			}
-			catch { }
-		}
-
-		void SetPriority(string priority)
-		{
-			switch (priority)
-			{
-				case "Idle":
-					process.PriorityClass = ProcessPriorityClass.Idle;
-					break;
-				case "Below normal":
-					process.PriorityClass = ProcessPriorityClass.BelowNormal;
-					break;
-				case "Normal":
-					process.PriorityClass = ProcessPriorityClass.Normal;
-					break;
-				case "Above normal":
-					process.PriorityClass = ProcessPriorityClass.AboveNormal;
-					break;
-				case "High":
-					process.PriorityClass = ProcessPriorityClass.High;
-					break;
-
-			}
 		}
 
 		public int SetProgram(string path, string param = "")
@@ -65,10 +36,10 @@ namespace RapChessGui
 				process.StartInfo.RedirectStandardOutput = true;
 				process.StartInfo.RedirectStandardError = true;
 				process.StartInfo.UseShellExecute = false;
-				process.OutputDataReceived += OnDataReceived;
+				process.OutputDataReceived += dataR;
 				process.Start();
 				process.BeginOutputReadLine();
-				SetPriority(FormOptions.priority);
+				process.PriorityClass = FormOptions.priority;
 				return process.Id;
 			}
 			return 0;
@@ -89,14 +60,26 @@ namespace RapChessGui
 			WriteLine("quit");
 		}
 
+		public void Close()
+		{
+			if (process.StartInfo.FileName != String.Empty)
+			{
+				Quit();
+				process.OutputDataReceived -= dataR;
+				process.StartInfo.FileName = String.Empty;
+			}
+		}
+
 		public void Terminate()
 		{
 			try
 			{
-				process.OutputDataReceived -= OnDataReceived;
-				if (process.StartInfo.FileName != "")
+				if (process.StartInfo.FileName != String.Empty)
+				{
+					process.OutputDataReceived -= dataR;
 					process.Kill();
-				process.StartInfo.FileName = "";
+					process.StartInfo.FileName = String.Empty;
+				}
 			}
 			catch { }
 		}
@@ -104,7 +87,10 @@ namespace RapChessGui
 		public void WriteLine(string c)
 		{
 			if (!process.HasExited)
+			{
 				process.StandardInput.WriteLine(c);
+				process.StandardInput.Flush();
+			}
 		}
 
 	}

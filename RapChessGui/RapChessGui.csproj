@@ -66,6 +66,29 @@
     <TargetZone>LocalIntranet</TargetZone>
   </PropertyGroup>
   <PropertyGroup />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <NoWarn>IDE0017,IDE1006</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <NoWarn>IDE1006,IDE0017</NoWarn>
+    <PlatformTarget>x64</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -94,20 +117,28 @@
     <Compile Include="CExtensions.cs" />
     <Compile Include="CHistory.cs" />
     <Compile Include="CModeGame.cs" />
+    <Compile Include="CModeTournamentB.cs" />
     <Compile Include="CModeTournamentE.cs" />
     <Compile Include="CModeTournamentP.cs" />
     <Compile Include="COptionList.cs" />
+    <Compile Include="CProcess.cs" />
     <Compile Include="CRapColor.cs" />
     <Compile Include="CRapLog.cs" />
     <Compile Include="CModeMatch.cs" />
     <Compile Include="CBoard.cs" />
-    <Compile Include="CProcess.cs" />
+    <Compile Include="CProcessBuf.cs" />
     <Compile Include="CGamerList.cs" />
     <Compile Include="CRapIni.cs" />
     <Compile Include="CModeTraining.cs" />
     <Compile Include="CPlayerList.cs" />
     <Compile Include="CTourList.cs" />
     <Compile Include="CUci.cs" />
+    <Compile Include="FormChartB.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormChartB.Designer.cs">
+      <DependentUpon>FormChartB.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormChess.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -175,6 +206,9 @@
       <DependentUpon>FormPlayer.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
+    <EmbeddedResource Include="FormChartB.resx">
+      <DependentUpon>FormChartB.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormChess.resx">
       <DependentUpon>FormChess.cs</DependentUpon>
     </EmbeddedResource>

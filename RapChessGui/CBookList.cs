@@ -1,4 +1,5 @@
 ﻿
+using System;
 using System.Collections.Generic;
 using System.IO;
 
@@ -7,9 +8,13 @@ namespace RapChessGui
 
 	public class CBook
 	{
+		public int position = 0;
+		public int tournament = 1;
 		public string name = "";
 		public string exe = "";
 		public string parameters = "";
+		public string elo = "1500";
+		public CHisElo hisElo = new CHisElo();
 
 		public CBook()
 		{
@@ -42,13 +47,17 @@ namespace RapChessGui
 		{
 			if (e == null)
 				return "";
-			return parameters.Replace("[engine]", e.name);
+			string p = parameters.Replace("[engine]", e.name).Replace("[uci]", $@"{Directory.GetCurrentDirectory()}\engines\uci\");
+			return p;
 		}
 
 		public void LoadFromIni()
 		{
 			exe = FormChess.RapIni.Read($"book>{name}>exe", "");
 			parameters = FormChess.RapIni.Read($"book>{name}>parameters", "");
+			elo = FormChess.RapIni.Read($"book>{name}>elo", elo);
+			hisElo.LoadFromStr(FormChess.RapIni.Read($"book>{name}>history"));
+			tournament = FormChess.RapIni.ReadInt($"book>{name}>tournament", tournament);
 		}
 
 		public void SaveToIni()
@@ -56,6 +65,20 @@ namespace RapChessGui
 			name = GetName();
 			FormChess.RapIni.Write($"book>{name}>exe", exe);
 			FormChess.RapIni.Write($"book>{name}>parameters", parameters);
+			FormChess.RapIni.Write($"book>{name}>elo", elo);
+			FormChess.RapIni.Write($"book>{name}>history", hisElo.SaveToStr());
+			FormChess.RapIni.Write($"book>{name}>tournament", tournament);
+		}
+
+		public int GetDeltaElo()
+		{
+			int e = GetElo();
+			return e - hisElo.EloAvg(e);
+		}
+
+		public int GetElo()
+		{
+			return Convert.ToInt32(elo);
 		}
 
 		public string GetName()
@@ -64,7 +87,8 @@ namespace RapChessGui
 				return name;
 			string n = CData.MakeShort(Path.GetFileNameWithoutExtension(exe));
 			string[] tokens = parameters.Split(' ');
-			if (tokens.Length > 0) {
+			if (tokens.Length > 0)
+			{
 				string p = tokens[0];
 				p = Path.GetFileNameWithoutExtension(p);
 				return $"{n} {p}";
@@ -89,6 +113,20 @@ namespace RapChessGui
 				list.Add(b);
 		}
 
+		public void DeleteBook(string name)
+		{
+			FormChess.RapIni.DeleteKey($"book>{name}");
+			int i = GetIndex(name);
+			if (i >= 0)
+				list.RemoveAt(i);
+		}
+
+		public void FillPosition()
+		{
+			for (int n = 0; n < list.Count; n++)
+				list[n].position = n;
+		}
+
 		public int GetIndex(string name)
 		{
 			for (int n = 0; n < list.Count; n++)
@@ -98,6 +136,19 @@ namespace RapChessGui
 					return n;
 			}
 			return -1;
+		}
+
+		public int GetOptElo(double index)
+		{
+			int min = CModeTournamentB.minElo;
+			int max = CModeTournamentB.maxElo;
+			if (index < 0)
+				index = 0;
+			if (index >= list.Count)
+				index = list.Count - 1;
+			int range = max - min;
+			index = list.Count - index;
+			return min + Convert.ToInt32((range * (index + 1)) / (list.Count + 2));
 		}
 
 		public int LoadFromIni()
@@ -129,6 +180,28 @@ namespace RapChessGui
 				br.SaveToIni();
 		}
 
+		public CBook NextTournament(CBook b, bool rotate = true, bool back = false)
+		{
+			SortElo();
+			int i = GetIndex(b.name);
+			for (int n = 0; n < list.Count - 1; n++)
+			{
+				if (back)
+					i--;
+				else
+					i++;
+				if (rotate)
+					i = (i + list.Count) % list.Count;
+				else
+					if ((i < 0) || (i >= list.Count))
+					return null;
+				b = list[i];
+				if (b.tournament > 0)
+					break;
+			}
+			return b;
+		}
+
 		void TryDel(string dir)
 		{
 			for (int n = list.Count - 1; n >= 0; n--)
@@ -136,7 +209,7 @@ namespace RapChessGui
 				CBook book = list[n];
 				if (book.parameters.IndexOf(dir) == 0)
 					if (!book.FileExists() || !book.ParametersExists())
-						list.RemoveAt(n);
+						DeleteBook(book.name);
 			}
 		}
 
@@ -148,13 +221,38 @@ namespace RapChessGui
 			return false;
 		}
 
+		public void SortPosition(CBook book)
+		{
+			SortElo();
+			FillPosition();
+			int position = book.position;
+			foreach (CBook b in list)
+				b.position = Math.Abs(position - b.position);
+			list.Sort(delegate (CBook b1, CBook b2)
+			{
+				return b1.position - b2.position;
+			});
+		}
+
+		public void SortElo()
+		{
+			list.Sort(delegate (CBook b1, CBook b2)
+			{
+				int result = b2.GetElo() - b1.GetElo();
+				if (result != 0)
+					return result;
+				result = b2.hisElo.EloAvg() - b1.hisElo.EloAvg();
+				if (result != 0)
+					return result;
+				return String.Compare(b1.name, b2.name, comparisonType: StringComparison.OrdinalIgnoreCase);
+			});
+		}
+
 		void TryAdd(string br, string p)
 		{
-			if ((br != "none")&&!ParametersExists(p))
+			if ((br != "none") && !ParametersExists(p))
 			{
-				string fn = Path.GetFileName(p);
 				CBook b = new CBook();
-				//b.name = fn;
 				b.exe = br;
 				b.parameters = p;
 				list.Add(b);

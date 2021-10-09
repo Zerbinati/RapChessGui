@@ -29,23 +29,27 @@
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
-			System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea7 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+			System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+			System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+			System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+			System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+			System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+			System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
+			System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
+			System.Windows.Forms.DataVisualization.Charting.Series series5 = new System.Windows.Forms.DataVisualization.Charting.Series();
+			System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+			System.Windows.Forms.DataVisualization.Charting.Series series6 = new System.Windows.Forms.DataVisualization.Charting.Series();
+			System.Windows.Forms.DataVisualization.Charting.Series series7 = new System.Windows.Forms.DataVisualization.Charting.Series();
+			System.Windows.Forms.DataVisualization.Charting.Series series8 = new System.Windows.Forms.DataVisualization.Charting.Series();
+			System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea5 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+			System.Windows.Forms.DataVisualization.Charting.Series series9 = new System.Windows.Forms.DataVisualization.Charting.Series();
+			System.Windows.Forms.DataVisualization.Charting.Series series10 = new System.Windows.Forms.DataVisualization.Charting.Series();
+			System.Windows.Forms.DataVisualization.Charting.Series series11 = new System.Windows.Forms.DataVisualization.Charting.Series();
+			System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea6 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
 			System.Windows.Forms.DataVisualization.Charting.Series series12 = new System.Windows.Forms.DataVisualization.Charting.Series();
-			System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea8 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+			System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea7 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
 			System.Windows.Forms.DataVisualization.Charting.Series series13 = new System.Windows.Forms.DataVisualization.Charting.Series();
-			System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea9 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
 			System.Windows.Forms.DataVisualization.Charting.Series series14 = new System.Windows.Forms.DataVisualization.Charting.Series();
-			System.Windows.Forms.DataVisualization.Charting.Series series15 = new System.Windows.Forms.DataVisualization.Charting.Series();
-			System.Windows.Forms.DataVisualization.Charting.Series series16 = new System.Windows.Forms.DataVisualization.Charting.Series();
-			System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea10 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-			System.Windows.Forms.DataVisualization.Charting.Series series17 = new System.Windows.Forms.DataVisualization.Charting.Series();
-			System.Windows.Forms.DataVisualization.Charting.Series series18 = new System.Windows.Forms.DataVisualization.Charting.Series();
-			System.Windows.Forms.DataVisualization.Charting.Series series19 = new System.Windows.Forms.DataVisualization.Charting.Series();
-			System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea11 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-			System.Windows.Forms.DataVisualization.Charting.Series series20 = new System.Windows.Forms.DataVisualization.Charting.Series();
-			System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea12 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-			System.Windows.Forms.DataVisualization.Charting.Series series21 = new System.Windows.Forms.DataVisualization.Charting.Series();
-			System.Windows.Forms.DataVisualization.Charting.Series series22 = new System.Windows.Forms.DataVisualization.Charting.Series();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormChess));
 			this.tabControl1 = new System.Windows.Forms.TabControl();
 			this.tabPageGame = new System.Windows.Forms.TabPage();
@@ -95,14 +99,34 @@
 			this.cbMode1 = new System.Windows.Forms.ComboBox();
 			this.cbMatchBook1 = new System.Windows.Forms.ComboBox();
 			this.cbEngine1 = new System.Windows.Forms.ComboBox();
+			this.tabPageTourB = new System.Windows.Forms.TabPage();
+			this.splitContainerTourB = new System.Windows.Forms.SplitContainer();
+			this.splitContainer2 = new System.Windows.Forms.SplitContainer();
+			this.lvTourBList = new System.Windows.Forms.ListView();
+			this.columnHeader32 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.columnHeader33 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.columnHeader34 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.lvTourBSel = new System.Windows.Forms.ListView();
+			this.columnHeader35 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.columnHeader36 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.columnHeader37 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.columnHeader38 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.labBook = new System.Windows.Forms.Label();
+			this.chartTournamentB = new System.Windows.Forms.DataVisualization.Charting.Chart();
+			this.button1 = new System.Windows.Forms.Button();
+			this.groupBox11 = new System.Windows.Forms.GroupBox();
+			this.nudTourB = new System.Windows.Forms.NumericUpDown();
+			this.cbTourBMode = new System.Windows.Forms.ComboBox();
+			this.groupBox10 = new System.Windows.Forms.GroupBox();
+			this.cbTourBEngine = new System.Windows.Forms.ComboBox();
 			this.tabPageTourE = new System.Windows.Forms.TabPage();
 			this.splitContainerTourE = new System.Windows.Forms.SplitContainer();
 			this.scTournamentEList = new System.Windows.Forms.SplitContainer();
-			this.lvEngine = new System.Windows.Forms.ListView();
+			this.lvTourEList = new System.Windows.Forms.ListView();
 			this.columnHeader23 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeader24 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeader25 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.lvEngineH = new System.Windows.Forms.ListView();
+			this.lvTourESel = new System.Windows.Forms.ListView();
 			this.columnHeader26 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeader27 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeader28 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -118,11 +142,11 @@
 			this.tabPageTourP = new System.Windows.Forms.TabPage();
 			this.splitContainerTourP = new System.Windows.Forms.SplitContainer();
 			this.scTournamentPList = new System.Windows.Forms.SplitContainer();
-			this.lvPlayer = new System.Windows.Forms.ListView();
+			this.lvTourPList = new System.Windows.Forms.ListView();
 			this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeader6 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.lvPlayerH = new System.Windows.Forms.ListView();
+			this.lvTourPSel = new System.Windows.Forms.ListView();
 			this.columnHeader7 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeader9 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeader8 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -187,12 +211,14 @@
 			this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
 			this.lastGameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.lastMatchToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.lastTournamentbooksToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.lasstTournamentenginesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.lastTournamentplayersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.lastTrainingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
 			this.lastErrorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.historyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.booksToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.enginesToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
 			this.playersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.labFPS = new System.Windows.Forms.Label();
@@ -299,6 +325,19 @@
 			((System.ComponentModel.ISupportInitialize)(this.nudValue2)).BeginInit();
 			this.groupBox5.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.nudValue1)).BeginInit();
+			this.tabPageTourB.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.splitContainerTourB)).BeginInit();
+			this.splitContainerTourB.Panel1.SuspendLayout();
+			this.splitContainerTourB.Panel2.SuspendLayout();
+			this.splitContainerTourB.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).BeginInit();
+			this.splitContainer2.Panel1.SuspendLayout();
+			this.splitContainer2.Panel2.SuspendLayout();
+			this.splitContainer2.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.chartTournamentB)).BeginInit();
+			this.groupBox11.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.nudTourB)).BeginInit();
+			this.groupBox10.SuspendLayout();
 			this.tabPageTourE.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainerTourE)).BeginInit();
 			this.splitContainerTourE.Panel1.SuspendLayout();
@@ -373,6 +412,7 @@
 			this.tabControl1.Appearance = System.Windows.Forms.TabAppearance.FlatButtons;
 			this.tabControl1.Controls.Add(this.tabPageGame);
 			this.tabControl1.Controls.Add(this.tabPageMatch);
+			this.tabControl1.Controls.Add(this.tabPageTourB);
 			this.tabControl1.Controls.Add(this.tabPageTourE);
 			this.tabControl1.Controls.Add(this.tabPageTourP);
 			this.tabControl1.Controls.Add(this.tabPageTraining);
@@ -408,28 +448,28 @@
 			// chartGame
 			// 
 			this.chartGame.BackColor = System.Drawing.Color.WhiteSmoke;
-			chartArea7.AxisX.LabelStyle.Enabled = false;
-			chartArea7.AxisX.MajorGrid.Enabled = false;
-			chartArea7.AxisX.MajorTickMark.Enabled = false;
-			chartArea7.AxisY.IsStartedFromZero = false;
-			chartArea7.AxisY.MajorGrid.Enabled = false;
-			chartArea7.AxisY.MajorTickMark.Enabled = false;
-			chartArea7.BackColor = System.Drawing.Color.WhiteSmoke;
-			chartArea7.BorderDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Solid;
-			chartArea7.Name = "ChartArea1";
-			this.chartGame.ChartAreas.Add(chartArea7);
+			chartArea1.AxisX.LabelStyle.Enabled = false;
+			chartArea1.AxisX.MajorGrid.Enabled = false;
+			chartArea1.AxisX.MajorTickMark.Enabled = false;
+			chartArea1.AxisY.IsStartedFromZero = false;
+			chartArea1.AxisY.MajorGrid.Enabled = false;
+			chartArea1.AxisY.MajorTickMark.Enabled = false;
+			chartArea1.BackColor = System.Drawing.Color.WhiteSmoke;
+			chartArea1.BorderDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Solid;
+			chartArea1.Name = "ChartArea1";
+			this.chartGame.ChartAreas.Add(chartArea1);
 			this.chartGame.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.chartGame.Location = new System.Drawing.Point(3, 319);
 			this.chartGame.Name = "chartGame";
 			this.chartGame.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.None;
 			this.chartGame.PaletteCustomColors = new System.Drawing.Color[] {
         System.Drawing.Color.Olive};
-			series12.BorderWidth = 4;
-			series12.ChartArea = "ChartArea1";
-			series12.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-			series12.IsVisibleInLegend = false;
-			series12.Name = "Series1";
-			this.chartGame.Series.Add(series12);
+			series1.BorderWidth = 4;
+			series1.ChartArea = "ChartArea1";
+			series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+			series1.IsVisibleInLegend = false;
+			series1.Name = "Series1";
+			this.chartGame.Series.Add(series1);
 			this.chartGame.Size = new System.Drawing.Size(331, 140);
 			this.chartGame.TabIndex = 28;
 			this.chartGame.Text = "chart1";
@@ -662,28 +702,28 @@
 			// chartMatch
 			// 
 			this.chartMatch.BackColor = System.Drawing.Color.WhiteSmoke;
-			chartArea8.AxisX.LabelStyle.Enabled = false;
-			chartArea8.AxisX.MajorGrid.Enabled = false;
-			chartArea8.AxisX.MajorTickMark.Enabled = false;
-			chartArea8.AxisY.IsStartedFromZero = false;
-			chartArea8.AxisY.MajorGrid.Enabled = false;
-			chartArea8.AxisY.MajorTickMark.Enabled = false;
-			chartArea8.BackColor = System.Drawing.Color.WhiteSmoke;
-			chartArea8.BorderDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Solid;
-			chartArea8.Name = "ChartArea1";
-			this.chartMatch.ChartAreas.Add(chartArea8);
+			chartArea2.AxisX.LabelStyle.Enabled = false;
+			chartArea2.AxisX.MajorGrid.Enabled = false;
+			chartArea2.AxisX.MajorTickMark.Enabled = false;
+			chartArea2.AxisY.IsStartedFromZero = false;
+			chartArea2.AxisY.MajorGrid.Enabled = false;
+			chartArea2.AxisY.MajorTickMark.Enabled = false;
+			chartArea2.BackColor = System.Drawing.Color.WhiteSmoke;
+			chartArea2.BorderDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Solid;
+			chartArea2.Name = "ChartArea1";
+			this.chartMatch.ChartAreas.Add(chartArea2);
 			this.chartMatch.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.chartMatch.Location = new System.Drawing.Point(0, 344);
 			this.chartMatch.Name = "chartMatch";
 			this.chartMatch.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.None;
 			this.chartMatch.PaletteCustomColors = new System.Drawing.Color[] {
         System.Drawing.Color.Olive};
-			series13.BorderWidth = 4;
-			series13.ChartArea = "ChartArea1";
-			series13.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-			series13.IsVisibleInLegend = false;
-			series13.Name = "Series1";
-			this.chartMatch.Series.Add(series13);
+			series2.BorderWidth = 4;
+			series2.ChartArea = "ChartArea1";
+			series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+			series2.IsVisibleInLegend = false;
+			series2.Name = "Series1";
+			this.chartMatch.Series.Add(series2);
 			this.chartMatch.Size = new System.Drawing.Size(337, 118);
 			this.chartMatch.TabIndex = 29;
 			this.chartMatch.Text = "chart1";
@@ -1098,6 +1138,289 @@
 			this.cbEngine1.TabIndex = 28;
 			this.toolTip1.SetToolTip(this.cbEngine1, "Select engine");
 			// 
+			// tabPageTourB
+			// 
+			this.tabPageTourB.Controls.Add(this.splitContainerTourB);
+			this.tabPageTourB.Controls.Add(this.button1);
+			this.tabPageTourB.Controls.Add(this.groupBox11);
+			this.tabPageTourB.Controls.Add(this.groupBox10);
+			this.tabPageTourB.Location = new System.Drawing.Point(4, 5);
+			this.tabPageTourB.Name = "tabPageTourB";
+			this.tabPageTourB.Padding = new System.Windows.Forms.Padding(3);
+			this.tabPageTourB.Size = new System.Drawing.Size(337, 462);
+			this.tabPageTourB.TabIndex = 7;
+			this.tabPageTourB.Text = "TourB";
+			this.tabPageTourB.UseVisualStyleBackColor = true;
+			// 
+			// splitContainerTourB
+			// 
+			this.splitContainerTourB.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+			this.splitContainerTourB.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.splitContainerTourB.Location = new System.Drawing.Point(3, 131);
+			this.splitContainerTourB.Name = "splitContainerTourB";
+			this.splitContainerTourB.Orientation = System.Windows.Forms.Orientation.Horizontal;
+			// 
+			// splitContainerTourB.Panel1
+			// 
+			this.splitContainerTourB.Panel1.Controls.Add(this.splitContainer2);
+			// 
+			// splitContainerTourB.Panel2
+			// 
+			this.splitContainerTourB.Panel2.Controls.Add(this.chartTournamentB);
+			this.splitContainerTourB.Size = new System.Drawing.Size(331, 328);
+			this.splitContainerTourB.SplitterDistance = 205;
+			this.splitContainerTourB.TabIndex = 27;
+			// 
+			// splitContainer2
+			// 
+			this.splitContainer2.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+			this.splitContainer2.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.splitContainer2.Location = new System.Drawing.Point(0, 0);
+			this.splitContainer2.Name = "splitContainer2";
+			this.splitContainer2.Orientation = System.Windows.Forms.Orientation.Horizontal;
+			// 
+			// splitContainer2.Panel1
+			// 
+			this.splitContainer2.Panel1.Controls.Add(this.lvTourBList);
+			// 
+			// splitContainer2.Panel2
+			// 
+			this.splitContainer2.Panel2.Controls.Add(this.lvTourBSel);
+			this.splitContainer2.Panel2.Controls.Add(this.labBook);
+			this.splitContainer2.Size = new System.Drawing.Size(331, 205);
+			this.splitContainer2.SplitterDistance = 101;
+			this.splitContainer2.TabIndex = 24;
+			// 
+			// lvTourBList
+			// 
+			this.lvTourBList.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader32,
+            this.columnHeader33,
+            this.columnHeader34});
+			this.lvTourBList.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.lvTourBList.FullRowSelect = true;
+			this.lvTourBList.GridLines = true;
+			this.lvTourBList.HideSelection = false;
+			this.lvTourBList.Location = new System.Drawing.Point(0, 0);
+			this.lvTourBList.MultiSelect = false;
+			this.lvTourBList.Name = "lvTourBList";
+			this.lvTourBList.ShowGroups = false;
+			this.lvTourBList.Size = new System.Drawing.Size(327, 97);
+			this.lvTourBList.Sorting = System.Windows.Forms.SortOrder.Descending;
+			this.lvTourBList.TabIndex = 24;
+			this.lvTourBList.UseCompatibleStateImageBehavior = false;
+			this.lvTourBList.View = System.Windows.Forms.View.Details;
+			this.lvTourBList.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.lv_ColumnClick);
+			this.lvTourBList.SelectedIndexChanged += new System.EventHandler(this.lvTourBList_SelectedIndexChanged);
+			this.lvTourBList.Resize += new System.EventHandler(this.lvEngine_Resize);
+			// 
+			// columnHeader32
+			// 
+			this.columnHeader32.Tag = "";
+			this.columnHeader32.Text = "Book";
+			this.columnHeader32.Width = 150;
+			// 
+			// columnHeader33
+			// 
+			this.columnHeader33.Tag = "";
+			this.columnHeader33.Text = "Elo";
+			this.columnHeader33.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			this.columnHeader33.Width = 80;
+			// 
+			// columnHeader34
+			// 
+			this.columnHeader34.Text = "Changes";
+			this.columnHeader34.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			// 
+			// lvTourBSel
+			// 
+			this.lvTourBSel.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader35,
+            this.columnHeader36,
+            this.columnHeader37,
+            this.columnHeader38});
+			this.lvTourBSel.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.lvTourBSel.FullRowSelect = true;
+			this.lvTourBSel.GridLines = true;
+			this.lvTourBSel.HideSelection = false;
+			this.lvTourBSel.Location = new System.Drawing.Point(0, 13);
+			this.lvTourBSel.MultiSelect = false;
+			this.lvTourBSel.Name = "lvTourBSel";
+			this.lvTourBSel.ShowGroups = false;
+			this.lvTourBSel.Size = new System.Drawing.Size(327, 83);
+			this.lvTourBSel.TabIndex = 28;
+			this.lvTourBSel.UseCompatibleStateImageBehavior = false;
+			this.lvTourBSel.View = System.Windows.Forms.View.Details;
+			this.lvTourBSel.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.lv_ColumnClick);
+			this.lvTourBSel.Resize += new System.EventHandler(this.lvEngineH_Resize);
+			// 
+			// columnHeader35
+			// 
+			this.columnHeader35.Tag = "";
+			this.columnHeader35.Text = "Book";
+			this.columnHeader35.Width = 140;
+			// 
+			// columnHeader36
+			// 
+			this.columnHeader36.Text = "Elo";
+			this.columnHeader36.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			this.columnHeader36.Width = 50;
+			// 
+			// columnHeader37
+			// 
+			this.columnHeader37.Text = "Games";
+			this.columnHeader37.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			this.columnHeader37.Width = 50;
+			// 
+			// columnHeader38
+			// 
+			this.columnHeader38.Text = "Score";
+			this.columnHeader38.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			this.columnHeader38.Width = 50;
+			// 
+			// labBook
+			// 
+			this.labBook.Cursor = System.Windows.Forms.Cursors.Hand;
+			this.labBook.Dock = System.Windows.Forms.DockStyle.Top;
+			this.labBook.Location = new System.Drawing.Point(0, 0);
+			this.labBook.Name = "labBook";
+			this.labBook.Size = new System.Drawing.Size(327, 13);
+			this.labBook.TabIndex = 29;
+			this.labBook.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.toolTip1.SetToolTip(this.labBook, "Select current engine");
+			this.labBook.Click += new System.EventHandler(this.labBook_Click);
+			// 
+			// chartTournamentB
+			// 
+			this.chartTournamentB.BackColor = System.Drawing.Color.WhiteSmoke;
+			chartArea3.AxisX.LabelStyle.Enabled = false;
+			chartArea3.AxisX.MajorGrid.Enabled = false;
+			chartArea3.AxisX.MajorTickMark.Enabled = false;
+			chartArea3.AxisY.IsStartedFromZero = false;
+			chartArea3.AxisY.MajorGrid.Enabled = false;
+			chartArea3.AxisY.MajorTickMark.Enabled = false;
+			chartArea3.BackColor = System.Drawing.Color.WhiteSmoke;
+			chartArea3.BorderDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Solid;
+			chartArea3.Name = "ChartArea1";
+			this.chartTournamentB.ChartAreas.Add(chartArea3);
+			this.chartTournamentB.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.chartTournamentB.Location = new System.Drawing.Point(0, 0);
+			this.chartTournamentB.Name = "chartTournamentB";
+			this.chartTournamentB.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.None;
+			this.chartTournamentB.PaletteCustomColors = new System.Drawing.Color[] {
+        System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(192)))), ((int)(((byte)(0))))),
+        System.Drawing.Color.Olive,
+        System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))))};
+			series3.BorderWidth = 4;
+			series3.ChartArea = "ChartArea1";
+			series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+			series3.IsVisibleInLegend = false;
+			series3.Name = "Series1";
+			series4.BorderWidth = 4;
+			series4.ChartArea = "ChartArea1";
+			series4.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+			series4.IsVisibleInLegend = false;
+			series4.Name = "Series2";
+			series5.BorderWidth = 4;
+			series5.ChartArea = "ChartArea1";
+			series5.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+			series5.IsVisibleInLegend = false;
+			series5.Name = "Series3";
+			this.chartTournamentB.Series.Add(series3);
+			this.chartTournamentB.Series.Add(series4);
+			this.chartTournamentB.Series.Add(series5);
+			this.chartTournamentB.Size = new System.Drawing.Size(327, 115);
+			this.chartTournamentB.TabIndex = 30;
+			this.toolTip1.SetToolTip(this.chartTournamentB, "Tournament history");
+			// 
+			// button1
+			// 
+			this.button1.Cursor = System.Windows.Forms.Cursors.Hand;
+			this.button1.Dock = System.Windows.Forms.DockStyle.Top;
+			this.button1.Location = new System.Drawing.Point(3, 108);
+			this.button1.Name = "button1";
+			this.button1.Size = new System.Drawing.Size(331, 23);
+			this.button1.TabIndex = 22;
+			this.button1.Text = "Start";
+			this.toolTip1.SetToolTip(this.button1, "Start tournament");
+			this.button1.UseVisualStyleBackColor = true;
+			this.button1.Click += new System.EventHandler(this.butStartTournamentB_Click);
+			// 
+			// groupBox11
+			// 
+			this.groupBox11.Controls.Add(this.nudTourB);
+			this.groupBox11.Controls.Add(this.cbTourBMode);
+			this.groupBox11.Dock = System.Windows.Forms.DockStyle.Top;
+			this.groupBox11.Location = new System.Drawing.Point(3, 47);
+			this.groupBox11.Name = "groupBox11";
+			this.groupBox11.Size = new System.Drawing.Size(331, 61);
+			this.groupBox11.TabIndex = 23;
+			this.groupBox11.TabStop = false;
+			this.groupBox11.Text = "Time control";
+			// 
+			// nudTourB
+			// 
+			this.nudTourB.Dock = System.Windows.Forms.DockStyle.Top;
+			this.nudTourB.Location = new System.Drawing.Point(3, 37);
+			this.nudTourB.Maximum = new decimal(new int[] {
+            1000000000,
+            0,
+            0,
+            0});
+			this.nudTourB.Name = "nudTourB";
+			this.nudTourB.Size = new System.Drawing.Size(325, 20);
+			this.nudTourB.TabIndex = 51;
+			this.nudTourB.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			this.nudTourB.ThousandsSeparator = true;
+			this.nudTourB.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+			// 
+			// cbTourBMode
+			// 
+			this.cbTourBMode.Cursor = System.Windows.Forms.Cursors.Hand;
+			this.cbTourBMode.Dock = System.Windows.Forms.DockStyle.Top;
+			this.cbTourBMode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.cbTourBMode.FormattingEnabled = true;
+			this.cbTourBMode.Items.AddRange(new object[] {
+            "Depth",
+            "Nodes",
+            "Standard",
+            "Time"});
+			this.cbTourBMode.Location = new System.Drawing.Point(3, 16);
+			this.cbTourBMode.Name = "cbTourBMode";
+			this.cbTourBMode.Size = new System.Drawing.Size(325, 21);
+			this.cbTourBMode.Sorted = true;
+			this.cbTourBMode.TabIndex = 29;
+			this.toolTip1.SetToolTip(this.cbTourBMode, "Select engine mode");
+			this.cbTourBMode.SelectedIndexChanged += new System.EventHandler(this.cbTourBMode_SelectedIndexChanged);
+			// 
+			// groupBox10
+			// 
+			this.groupBox10.Controls.Add(this.cbTourBEngine);
+			this.groupBox10.Dock = System.Windows.Forms.DockStyle.Top;
+			this.groupBox10.Location = new System.Drawing.Point(3, 3);
+			this.groupBox10.Name = "groupBox10";
+			this.groupBox10.Size = new System.Drawing.Size(331, 44);
+			this.groupBox10.TabIndex = 28;
+			this.groupBox10.TabStop = false;
+			this.groupBox10.Text = "Engine";
+			// 
+			// cbTourBEngine
+			// 
+			this.cbTourBEngine.Cursor = System.Windows.Forms.Cursors.Hand;
+			this.cbTourBEngine.Dock = System.Windows.Forms.DockStyle.Top;
+			this.cbTourBEngine.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.cbTourBEngine.FormattingEnabled = true;
+			this.cbTourBEngine.Location = new System.Drawing.Point(3, 16);
+			this.cbTourBEngine.Name = "cbTourBEngine";
+			this.cbTourBEngine.Size = new System.Drawing.Size(325, 21);
+			this.cbTourBEngine.Sorted = true;
+			this.cbTourBEngine.TabIndex = 32;
+			this.toolTip1.SetToolTip(this.cbTourBEngine, "Select engine opening book");
+			// 
 			// tabPageTourE
 			// 
 			this.tabPageTourE.Controls.Add(this.splitContainerTourE);
@@ -1141,38 +1464,38 @@
 			// 
 			// scTournamentEList.Panel1
 			// 
-			this.scTournamentEList.Panel1.Controls.Add(this.lvEngine);
+			this.scTournamentEList.Panel1.Controls.Add(this.lvTourEList);
 			// 
 			// scTournamentEList.Panel2
 			// 
-			this.scTournamentEList.Panel2.Controls.Add(this.lvEngineH);
+			this.scTournamentEList.Panel2.Controls.Add(this.lvTourESel);
 			this.scTournamentEList.Panel2.Controls.Add(this.labEngine);
 			this.scTournamentEList.Size = new System.Drawing.Size(331, 205);
 			this.scTournamentEList.SplitterDistance = 101;
 			this.scTournamentEList.TabIndex = 24;
 			// 
-			// lvEngine
+			// lvTourEList
 			// 
-			this.lvEngine.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+			this.lvTourEList.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeader23,
             this.columnHeader24,
             this.columnHeader25});
-			this.lvEngine.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.lvEngine.FullRowSelect = true;
-			this.lvEngine.GridLines = true;
-			this.lvEngine.HideSelection = false;
-			this.lvEngine.Location = new System.Drawing.Point(0, 0);
-			this.lvEngine.MultiSelect = false;
-			this.lvEngine.Name = "lvEngine";
-			this.lvEngine.ShowGroups = false;
-			this.lvEngine.Size = new System.Drawing.Size(327, 97);
-			this.lvEngine.Sorting = System.Windows.Forms.SortOrder.Descending;
-			this.lvEngine.TabIndex = 24;
-			this.lvEngine.UseCompatibleStateImageBehavior = false;
-			this.lvEngine.View = System.Windows.Forms.View.Details;
-			this.lvEngine.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.lv_ColumnClick);
-			this.lvEngine.SelectedIndexChanged += new System.EventHandler(this.lvEngine_SelectedIndexChanged);
-			this.lvEngine.Resize += new System.EventHandler(this.lvEngine_Resize);
+			this.lvTourEList.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.lvTourEList.FullRowSelect = true;
+			this.lvTourEList.GridLines = true;
+			this.lvTourEList.HideSelection = false;
+			this.lvTourEList.Location = new System.Drawing.Point(0, 0);
+			this.lvTourEList.MultiSelect = false;
+			this.lvTourEList.Name = "lvTourEList";
+			this.lvTourEList.ShowGroups = false;
+			this.lvTourEList.Size = new System.Drawing.Size(327, 97);
+			this.lvTourEList.Sorting = System.Windows.Forms.SortOrder.Descending;
+			this.lvTourEList.TabIndex = 24;
+			this.lvTourEList.UseCompatibleStateImageBehavior = false;
+			this.lvTourEList.View = System.Windows.Forms.View.Details;
+			this.lvTourEList.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.lv_ColumnClick);
+			this.lvTourEList.SelectedIndexChanged += new System.EventHandler(this.lvEngine_SelectedIndexChanged);
+			this.lvTourEList.Resize += new System.EventHandler(this.lvEngine_Resize);
 			// 
 			// columnHeader23
 			// 
@@ -1192,27 +1515,27 @@
 			this.columnHeader25.Text = "Changes";
 			this.columnHeader25.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
 			// 
-			// lvEngineH
+			// lvTourESel
 			// 
-			this.lvEngineH.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+			this.lvTourESel.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeader26,
             this.columnHeader27,
             this.columnHeader28,
             this.columnHeader29});
-			this.lvEngineH.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.lvEngineH.FullRowSelect = true;
-			this.lvEngineH.GridLines = true;
-			this.lvEngineH.HideSelection = false;
-			this.lvEngineH.Location = new System.Drawing.Point(0, 13);
-			this.lvEngineH.MultiSelect = false;
-			this.lvEngineH.Name = "lvEngineH";
-			this.lvEngineH.ShowGroups = false;
-			this.lvEngineH.Size = new System.Drawing.Size(327, 83);
-			this.lvEngineH.TabIndex = 28;
-			this.lvEngineH.UseCompatibleStateImageBehavior = false;
-			this.lvEngineH.View = System.Windows.Forms.View.Details;
-			this.lvEngineH.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.lv_ColumnClick);
-			this.lvEngineH.Resize += new System.EventHandler(this.lvEngineH_Resize);
+			this.lvTourESel.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.lvTourESel.FullRowSelect = true;
+			this.lvTourESel.GridLines = true;
+			this.lvTourESel.HideSelection = false;
+			this.lvTourESel.Location = new System.Drawing.Point(0, 13);
+			this.lvTourESel.MultiSelect = false;
+			this.lvTourESel.Name = "lvTourESel";
+			this.lvTourESel.ShowGroups = false;
+			this.lvTourESel.Size = new System.Drawing.Size(327, 83);
+			this.lvTourESel.TabIndex = 28;
+			this.lvTourESel.UseCompatibleStateImageBehavior = false;
+			this.lvTourESel.View = System.Windows.Forms.View.Details;
+			this.lvTourESel.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.lv_ColumnClick);
+			this.lvTourESel.Resize += new System.EventHandler(this.lvEngineH_Resize);
 			// 
 			// columnHeader26
 			// 
@@ -1253,16 +1576,16 @@
 			// chartTournamentE
 			// 
 			this.chartTournamentE.BackColor = System.Drawing.Color.WhiteSmoke;
-			chartArea9.AxisX.LabelStyle.Enabled = false;
-			chartArea9.AxisX.MajorGrid.Enabled = false;
-			chartArea9.AxisX.MajorTickMark.Enabled = false;
-			chartArea9.AxisY.IsStartedFromZero = false;
-			chartArea9.AxisY.MajorGrid.Enabled = false;
-			chartArea9.AxisY.MajorTickMark.Enabled = false;
-			chartArea9.BackColor = System.Drawing.Color.WhiteSmoke;
-			chartArea9.BorderDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Solid;
-			chartArea9.Name = "ChartArea1";
-			this.chartTournamentE.ChartAreas.Add(chartArea9);
+			chartArea4.AxisX.LabelStyle.Enabled = false;
+			chartArea4.AxisX.MajorGrid.Enabled = false;
+			chartArea4.AxisX.MajorTickMark.Enabled = false;
+			chartArea4.AxisY.IsStartedFromZero = false;
+			chartArea4.AxisY.MajorGrid.Enabled = false;
+			chartArea4.AxisY.MajorTickMark.Enabled = false;
+			chartArea4.BackColor = System.Drawing.Color.WhiteSmoke;
+			chartArea4.BorderDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Solid;
+			chartArea4.Name = "ChartArea1";
+			this.chartTournamentE.ChartAreas.Add(chartArea4);
 			this.chartTournamentE.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.chartTournamentE.Location = new System.Drawing.Point(0, 0);
 			this.chartTournamentE.Name = "chartTournamentE";
@@ -1271,24 +1594,24 @@
         System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(192)))), ((int)(((byte)(0))))),
         System.Drawing.Color.Olive,
         System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))))};
-			series14.BorderWidth = 4;
-			series14.ChartArea = "ChartArea1";
-			series14.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-			series14.IsVisibleInLegend = false;
-			series14.Name = "Series1";
-			series15.BorderWidth = 4;
-			series15.ChartArea = "ChartArea1";
-			series15.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-			series15.IsVisibleInLegend = false;
-			series15.Name = "Series2";
-			series16.BorderWidth = 4;
-			series16.ChartArea = "ChartArea1";
-			series16.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-			series16.IsVisibleInLegend = false;
-			series16.Name = "Series3";
-			this.chartTournamentE.Series.Add(series14);
-			this.chartTournamentE.Series.Add(series15);
-			this.chartTournamentE.Series.Add(series16);
+			series6.BorderWidth = 4;
+			series6.ChartArea = "ChartArea1";
+			series6.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+			series6.IsVisibleInLegend = false;
+			series6.Name = "Series1";
+			series7.BorderWidth = 4;
+			series7.ChartArea = "ChartArea1";
+			series7.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+			series7.IsVisibleInLegend = false;
+			series7.Name = "Series2";
+			series8.BorderWidth = 4;
+			series8.ChartArea = "ChartArea1";
+			series8.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+			series8.IsVisibleInLegend = false;
+			series8.Name = "Series3";
+			this.chartTournamentE.Series.Add(series6);
+			this.chartTournamentE.Series.Add(series7);
+			this.chartTournamentE.Series.Add(series8);
 			this.chartTournamentE.Size = new System.Drawing.Size(327, 115);
 			this.chartTournamentE.TabIndex = 30;
 			this.toolTip1.SetToolTip(this.chartTournamentE, "Tournament history");
@@ -1421,38 +1744,38 @@
 			// 
 			// scTournamentPList.Panel1
 			// 
-			this.scTournamentPList.Panel1.Controls.Add(this.lvPlayer);
+			this.scTournamentPList.Panel1.Controls.Add(this.lvTourPList);
 			// 
 			// scTournamentPList.Panel2
 			// 
-			this.scTournamentPList.Panel2.Controls.Add(this.lvPlayerH);
+			this.scTournamentPList.Panel2.Controls.Add(this.lvTourPSel);
 			this.scTournamentPList.Panel2.Controls.Add(this.labPlayer);
 			this.scTournamentPList.Size = new System.Drawing.Size(337, 287);
 			this.scTournamentPList.SplitterDistance = 168;
 			this.scTournamentPList.TabIndex = 24;
 			// 
-			// lvPlayer
+			// lvTourPList
 			// 
-			this.lvPlayer.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+			this.lvTourPList.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeader1,
             this.columnHeader2,
             this.columnHeader6});
-			this.lvPlayer.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.lvPlayer.FullRowSelect = true;
-			this.lvPlayer.GridLines = true;
-			this.lvPlayer.HideSelection = false;
-			this.lvPlayer.Location = new System.Drawing.Point(0, 0);
-			this.lvPlayer.MultiSelect = false;
-			this.lvPlayer.Name = "lvPlayer";
-			this.lvPlayer.ShowGroups = false;
-			this.lvPlayer.Size = new System.Drawing.Size(333, 164);
-			this.lvPlayer.Sorting = System.Windows.Forms.SortOrder.Ascending;
-			this.lvPlayer.TabIndex = 24;
-			this.lvPlayer.UseCompatibleStateImageBehavior = false;
-			this.lvPlayer.View = System.Windows.Forms.View.Details;
-			this.lvPlayer.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.lv_ColumnClick);
-			this.lvPlayer.SelectedIndexChanged += new System.EventHandler(this.lvPlayer_SelectedIndexChanged);
-			this.lvPlayer.Resize += new System.EventHandler(this.lvEngine_Resize);
+			this.lvTourPList.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.lvTourPList.FullRowSelect = true;
+			this.lvTourPList.GridLines = true;
+			this.lvTourPList.HideSelection = false;
+			this.lvTourPList.Location = new System.Drawing.Point(0, 0);
+			this.lvTourPList.MultiSelect = false;
+			this.lvTourPList.Name = "lvTourPList";
+			this.lvTourPList.ShowGroups = false;
+			this.lvTourPList.Size = new System.Drawing.Size(333, 164);
+			this.lvTourPList.Sorting = System.Windows.Forms.SortOrder.Ascending;
+			this.lvTourPList.TabIndex = 24;
+			this.lvTourPList.UseCompatibleStateImageBehavior = false;
+			this.lvTourPList.View = System.Windows.Forms.View.Details;
+			this.lvTourPList.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.lv_ColumnClick);
+			this.lvTourPList.SelectedIndexChanged += new System.EventHandler(this.lvPlayer_SelectedIndexChanged);
+			this.lvTourPList.Resize += new System.EventHandler(this.lvEngine_Resize);
 			// 
 			// columnHeader1
 			// 
@@ -1472,27 +1795,27 @@
 			this.columnHeader6.Text = "Changes";
 			this.columnHeader6.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
 			// 
-			// lvPlayerH
+			// lvTourPSel
 			// 
-			this.lvPlayerH.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+			this.lvTourPSel.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeader7,
             this.columnHeader9,
             this.columnHeader8,
             this.columnHeader10});
-			this.lvPlayerH.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.lvPlayerH.FullRowSelect = true;
-			this.lvPlayerH.GridLines = true;
-			this.lvPlayerH.HideSelection = false;
-			this.lvPlayerH.Location = new System.Drawing.Point(0, 13);
-			this.lvPlayerH.MultiSelect = false;
-			this.lvPlayerH.Name = "lvPlayerH";
-			this.lvPlayerH.ShowGroups = false;
-			this.lvPlayerH.Size = new System.Drawing.Size(333, 98);
-			this.lvPlayerH.TabIndex = 28;
-			this.lvPlayerH.UseCompatibleStateImageBehavior = false;
-			this.lvPlayerH.View = System.Windows.Forms.View.Details;
-			this.lvPlayerH.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.lv_ColumnClick);
-			this.lvPlayerH.Resize += new System.EventHandler(this.lvEngineH_Resize);
+			this.lvTourPSel.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.lvTourPSel.FullRowSelect = true;
+			this.lvTourPSel.GridLines = true;
+			this.lvTourPSel.HideSelection = false;
+			this.lvTourPSel.Location = new System.Drawing.Point(0, 13);
+			this.lvTourPSel.MultiSelect = false;
+			this.lvTourPSel.Name = "lvTourPSel";
+			this.lvTourPSel.ShowGroups = false;
+			this.lvTourPSel.Size = new System.Drawing.Size(333, 98);
+			this.lvTourPSel.TabIndex = 28;
+			this.lvTourPSel.UseCompatibleStateImageBehavior = false;
+			this.lvTourPSel.View = System.Windows.Forms.View.Details;
+			this.lvTourPSel.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.lv_ColumnClick);
+			this.lvTourPSel.Resize += new System.EventHandler(this.lvEngineH_Resize);
 			// 
 			// columnHeader7
 			// 
@@ -1533,16 +1856,16 @@
 			// chartTournamentP
 			// 
 			this.chartTournamentP.BackColor = System.Drawing.Color.WhiteSmoke;
-			chartArea10.AxisX.LabelStyle.Enabled = false;
-			chartArea10.AxisX.MajorGrid.Enabled = false;
-			chartArea10.AxisX.MajorTickMark.Enabled = false;
-			chartArea10.AxisY.IsStartedFromZero = false;
-			chartArea10.AxisY.MajorGrid.Enabled = false;
-			chartArea10.AxisY.MajorTickMark.Enabled = false;
-			chartArea10.BackColor = System.Drawing.Color.WhiteSmoke;
-			chartArea10.BorderDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Solid;
-			chartArea10.Name = "ChartArea1";
-			this.chartTournamentP.ChartAreas.Add(chartArea10);
+			chartArea5.AxisX.LabelStyle.Enabled = false;
+			chartArea5.AxisX.MajorGrid.Enabled = false;
+			chartArea5.AxisX.MajorTickMark.Enabled = false;
+			chartArea5.AxisY.IsStartedFromZero = false;
+			chartArea5.AxisY.MajorGrid.Enabled = false;
+			chartArea5.AxisY.MajorTickMark.Enabled = false;
+			chartArea5.BackColor = System.Drawing.Color.WhiteSmoke;
+			chartArea5.BorderDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Solid;
+			chartArea5.Name = "ChartArea1";
+			this.chartTournamentP.ChartAreas.Add(chartArea5);
 			this.chartTournamentP.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.chartTournamentP.Location = new System.Drawing.Point(0, 0);
 			this.chartTournamentP.Name = "chartTournamentP";
@@ -1551,24 +1874,24 @@
         System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(192)))), ((int)(((byte)(0))))),
         System.Drawing.Color.Olive,
         System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))))};
-			series17.BorderWidth = 4;
-			series17.ChartArea = "ChartArea1";
-			series17.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-			series17.IsVisibleInLegend = false;
-			series17.Name = "Series1";
-			series18.BorderWidth = 4;
-			series18.ChartArea = "ChartArea1";
-			series18.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-			series18.IsVisibleInLegend = false;
-			series18.Name = "Series2";
-			series19.BorderWidth = 4;
-			series19.ChartArea = "ChartArea1";
-			series19.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-			series19.IsVisibleInLegend = false;
-			series19.Name = "Series3";
-			this.chartTournamentP.Series.Add(series17);
-			this.chartTournamentP.Series.Add(series18);
-			this.chartTournamentP.Series.Add(series19);
+			series9.BorderWidth = 4;
+			series9.ChartArea = "ChartArea1";
+			series9.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+			series9.IsVisibleInLegend = false;
+			series9.Name = "Series1";
+			series10.BorderWidth = 4;
+			series10.ChartArea = "ChartArea1";
+			series10.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+			series10.IsVisibleInLegend = false;
+			series10.Name = "Series2";
+			series11.BorderWidth = 4;
+			series11.ChartArea = "ChartArea1";
+			series11.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+			series11.IsVisibleInLegend = false;
+			series11.Name = "Series3";
+			this.chartTournamentP.Series.Add(series9);
+			this.chartTournamentP.Series.Add(series10);
+			this.chartTournamentP.Series.Add(series11);
 			this.chartTournamentP.Size = new System.Drawing.Size(333, 144);
 			this.chartTournamentP.TabIndex = 31;
 			this.chartTournamentP.Text = "chart1";
@@ -1605,27 +1928,27 @@
 			// chartTraining
 			// 
 			this.chartTraining.BackColor = System.Drawing.Color.WhiteSmoke;
-			chartArea11.AxisX.LabelStyle.Enabled = false;
-			chartArea11.AxisX.MajorGrid.Enabled = false;
-			chartArea11.AxisX.MajorTickMark.Enabled = false;
-			chartArea11.AxisY.MajorGrid.Enabled = false;
-			chartArea11.AxisY.MajorTickMark.Enabled = false;
-			chartArea11.BackColor = System.Drawing.Color.WhiteSmoke;
-			chartArea11.BorderDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Solid;
-			chartArea11.Name = "ChartArea1";
-			this.chartTraining.ChartAreas.Add(chartArea11);
+			chartArea6.AxisX.LabelStyle.Enabled = false;
+			chartArea6.AxisX.MajorGrid.Enabled = false;
+			chartArea6.AxisX.MajorTickMark.Enabled = false;
+			chartArea6.AxisY.MajorGrid.Enabled = false;
+			chartArea6.AxisY.MajorTickMark.Enabled = false;
+			chartArea6.BackColor = System.Drawing.Color.WhiteSmoke;
+			chartArea6.BorderDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Solid;
+			chartArea6.Name = "ChartArea1";
+			this.chartTraining.ChartAreas.Add(chartArea6);
 			this.chartTraining.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.chartTraining.Location = new System.Drawing.Point(3, 296);
 			this.chartTraining.Name = "chartTraining";
 			this.chartTraining.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.None;
 			this.chartTraining.PaletteCustomColors = new System.Drawing.Color[] {
         System.Drawing.Color.Olive};
-			series20.BorderWidth = 4;
-			series20.ChartArea = "ChartArea1";
-			series20.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-			series20.IsVisibleInLegend = false;
-			series20.Name = "Series1";
-			this.chartTraining.Series.Add(series20);
+			series12.BorderWidth = 4;
+			series12.ChartArea = "ChartArea1";
+			series12.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+			series12.IsVisibleInLegend = false;
+			series12.Name = "Series1";
+			this.chartTraining.Series.Add(series12);
 			this.chartTraining.Size = new System.Drawing.Size(331, 163);
 			this.chartTraining.TabIndex = 29;
 			this.chartTraining.Text = "chart1";
@@ -2231,6 +2554,7 @@
             this.toolStripMenuItem1,
             this.lastGameToolStripMenuItem,
             this.lastMatchToolStripMenuItem,
+            this.lastTournamentbooksToolStripMenuItem,
             this.lasstTournamentenginesToolStripMenuItem,
             this.lastTournamentplayersToolStripMenuItem,
             this.lastTrainingToolStripMenuItem,
@@ -2280,6 +2604,13 @@
 			this.lastMatchToolStripMenuItem.Text = "Last match";
 			this.lastMatchToolStripMenuItem.Click += new System.EventHandler(this.lastMatchToolStripMenuItem_Click);
 			// 
+			// lastTournamentbooksToolStripMenuItem
+			// 
+			this.lastTournamentbooksToolStripMenuItem.Name = "lastTournamentbooksToolStripMenuItem";
+			this.lastTournamentbooksToolStripMenuItem.Size = new System.Drawing.Size(212, 22);
+			this.lastTournamentbooksToolStripMenuItem.Text = "Last tournament-books";
+			this.lastTournamentbooksToolStripMenuItem.Click += new System.EventHandler(this.lastTournamentbooksToolStripMenuItem_Click);
+			// 
 			// lasstTournamentenginesToolStripMenuItem
 			// 
 			this.lasstTournamentenginesToolStripMenuItem.Name = "lasstTournamentenginesToolStripMenuItem";
@@ -2316,11 +2647,19 @@
 			// historyToolStripMenuItem
 			// 
 			this.historyToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.booksToolStripMenuItem,
             this.enginesToolStripMenuItem2,
             this.playersToolStripMenuItem});
 			this.historyToolStripMenuItem.Name = "historyToolStripMenuItem";
 			this.historyToolStripMenuItem.Size = new System.Drawing.Size(53, 20);
 			this.historyToolStripMenuItem.Text = "Charts";
+			// 
+			// booksToolStripMenuItem
+			// 
+			this.booksToolStripMenuItem.Name = "booksToolStripMenuItem";
+			this.booksToolStripMenuItem.Size = new System.Drawing.Size(115, 22);
+			this.booksToolStripMenuItem.Text = "Books";
+			this.booksToolStripMenuItem.Click += new System.EventHandler(this.booksToolStripMenuItem2_Click);
 			// 
 			// enginesToolStripMenuItem2
 			// 
@@ -2770,9 +3109,6 @@
 			// 
 			// combMainMode
 			// 
-			this.combMainMode.AutoCompleteCustomSource.AddRange(new string[] {
-            "White",
-            "Black"});
 			this.combMainMode.BackColor = System.Drawing.SystemColors.Window;
 			this.combMainMode.Cursor = System.Windows.Forms.Cursors.Hand;
 			this.combMainMode.Dock = System.Windows.Forms.DockStyle.Top;
@@ -2781,6 +3117,7 @@
 			this.combMainMode.Items.AddRange(new object[] {
             "Game",
             "Match",
+            "Tournament-books",
             "Tournament-engines",
             "Tournament-players",
             "Training",
@@ -2795,18 +3132,18 @@
 			// chartMain
 			// 
 			this.chartMain.BackColor = System.Drawing.Color.WhiteSmoke;
-			chartArea12.AxisX.IsLabelAutoFit = false;
-			chartArea12.AxisX.MajorGrid.Enabled = false;
-			chartArea12.AxisX.MajorTickMark.Enabled = false;
-			chartArea12.AxisY.IsLabelAutoFit = false;
-			chartArea12.AxisY.MajorGrid.Interval = 5D;
-			chartArea12.AxisY.MajorTickMark.Enabled = false;
-			chartArea12.AxisY.Maximum = 5D;
-			chartArea12.AxisY.Minimum = -5D;
-			chartArea12.BackColor = System.Drawing.Color.WhiteSmoke;
-			chartArea12.BorderDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Solid;
-			chartArea12.Name = "ChartArea1";
-			this.chartMain.ChartAreas.Add(chartArea12);
+			chartArea7.AxisX.IsLabelAutoFit = false;
+			chartArea7.AxisX.MajorGrid.Enabled = false;
+			chartArea7.AxisX.MajorTickMark.Enabled = false;
+			chartArea7.AxisY.IsLabelAutoFit = false;
+			chartArea7.AxisY.MajorGrid.Interval = 5D;
+			chartArea7.AxisY.MajorTickMark.Enabled = false;
+			chartArea7.AxisY.Maximum = 5D;
+			chartArea7.AxisY.Minimum = -5D;
+			chartArea7.BackColor = System.Drawing.Color.WhiteSmoke;
+			chartArea7.BorderDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Solid;
+			chartArea7.Name = "ChartArea1";
+			this.chartMain.ChartAreas.Add(chartArea7);
 			this.chartMain.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.chartMain.Location = new System.Drawing.Point(0, 34);
 			this.chartMain.Name = "chartMain";
@@ -2814,15 +3151,15 @@
 			this.chartMain.PaletteCustomColors = new System.Drawing.Color[] {
         System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(0))))),
         System.Drawing.Color.Olive};
-			series21.ChartArea = "ChartArea1";
-			series21.CustomProperties = "PointWidth=1";
-			series21.IsVisibleInLegend = false;
-			series21.Name = "Series1";
-			series22.ChartArea = "ChartArea1";
-			series22.CustomProperties = "PointWidth=1";
-			series22.Name = "Series2";
-			this.chartMain.Series.Add(series21);
-			this.chartMain.Series.Add(series22);
+			series13.ChartArea = "ChartArea1";
+			series13.CustomProperties = "PointWidth=1";
+			series13.IsVisibleInLegend = false;
+			series13.Name = "Series1";
+			series14.ChartArea = "ChartArea1";
+			series14.CustomProperties = "PointWidth=1";
+			series14.Name = "Series2";
+			this.chartMain.Series.Add(series13);
+			this.chartMain.Series.Add(series14);
 			this.chartMain.Size = new System.Drawing.Size(409, 152);
 			this.chartMain.TabIndex = 0;
 			this.chartMain.Text = "chart1";
@@ -3224,7 +3561,7 @@
 			this.tssInfo.ForeColor = System.Drawing.Color.Gainsboro;
 			this.tssInfo.Name = "tssInfo";
 			this.tssInfo.Size = new System.Drawing.Size(0, 21);
-			this.tssInfo.Tag = "0";
+			this.tssInfo.Tag = "";
 			// 
 			// splitContainerBoard
 			// 
@@ -3749,6 +4086,19 @@
 			((System.ComponentModel.ISupportInitialize)(this.nudValue2)).EndInit();
 			this.groupBox5.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.nudValue1)).EndInit();
+			this.tabPageTourB.ResumeLayout(false);
+			this.splitContainerTourB.Panel1.ResumeLayout(false);
+			this.splitContainerTourB.Panel2.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this.splitContainerTourB)).EndInit();
+			this.splitContainerTourB.ResumeLayout(false);
+			this.splitContainer2.Panel1.ResumeLayout(false);
+			this.splitContainer2.Panel2.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
+			this.splitContainer2.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this.chartTournamentB)).EndInit();
+			this.groupBox11.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this.nudTourB)).EndInit();
+			this.groupBox10.ResumeLayout(false);
 			this.tabPageTourE.ResumeLayout(false);
 			this.splitContainerTourE.Panel1.ResumeLayout(false);
 			this.splitContainerTourE.Panel2.ResumeLayout(false);
@@ -4006,11 +4356,11 @@
 		public System.Windows.Forms.DataVisualization.Charting.Chart chartGame;
 		public System.Windows.Forms.DataVisualization.Charting.Chart chartTraining;
 		private System.Windows.Forms.SplitContainer scTournamentEList;
-		private System.Windows.Forms.ListView lvEngine;
+		private System.Windows.Forms.ListView lvTourEList;
 		private System.Windows.Forms.ColumnHeader columnHeader23;
 		private System.Windows.Forms.ColumnHeader columnHeader24;
 		private System.Windows.Forms.ColumnHeader columnHeader25;
-		private System.Windows.Forms.ListView lvEngineH;
+		private System.Windows.Forms.ListView lvTourESel;
 		private System.Windows.Forms.ColumnHeader columnHeader26;
 		private System.Windows.Forms.ColumnHeader columnHeader27;
 		private System.Windows.Forms.ColumnHeader columnHeader28;
@@ -4018,12 +4368,12 @@
 		private System.Windows.Forms.Label labEngine;
 		public System.Windows.Forms.DataVisualization.Charting.Chart chartTournamentE;
 		private System.Windows.Forms.SplitContainer scTournamentPList;
-		private System.Windows.Forms.ListView lvPlayer;
+		private System.Windows.Forms.ListView lvTourPList;
 		private System.Windows.Forms.ColumnHeader columnHeader1;
 		private System.Windows.Forms.ColumnHeader columnHeader2;
 		private System.Windows.Forms.ColumnHeader columnHeader6;
 		private System.Windows.Forms.Label labPlayer;
-		private System.Windows.Forms.ListView lvPlayerH;
+		private System.Windows.Forms.ListView lvTourPSel;
 		private System.Windows.Forms.ColumnHeader columnHeader7;
 		private System.Windows.Forms.ColumnHeader columnHeader9;
 		private System.Windows.Forms.ColumnHeader columnHeader8;
@@ -4065,6 +4415,28 @@
 		private System.Windows.Forms.ColumnHeader columnHeader31;
 		private System.Windows.Forms.Timer timerAnimation;
 		private System.IO.FileSystemWatcher fileSystemWatcher1;
+		private System.Windows.Forms.TabPage tabPageTourB;
+		private System.Windows.Forms.SplitContainer splitContainerTourB;
+		private System.Windows.Forms.SplitContainer splitContainer2;
+		private System.Windows.Forms.ListView lvTourBList;
+		private System.Windows.Forms.ColumnHeader columnHeader32;
+		private System.Windows.Forms.ColumnHeader columnHeader33;
+		private System.Windows.Forms.ColumnHeader columnHeader34;
+		private System.Windows.Forms.ListView lvTourBSel;
+		private System.Windows.Forms.ColumnHeader columnHeader35;
+		private System.Windows.Forms.ColumnHeader columnHeader36;
+		private System.Windows.Forms.ColumnHeader columnHeader37;
+		private System.Windows.Forms.ColumnHeader columnHeader38;
+		private System.Windows.Forms.Label labBook;
+		public System.Windows.Forms.DataVisualization.Charting.Chart chartTournamentB;
+		private System.Windows.Forms.Button button1;
+		private System.Windows.Forms.GroupBox groupBox10;
+		private System.Windows.Forms.ComboBox cbTourBEngine;
+		private System.Windows.Forms.GroupBox groupBox11;
+		private System.Windows.Forms.NumericUpDown nudTourB;
+		private System.Windows.Forms.ComboBox cbTourBMode;
+		private System.Windows.Forms.ToolStripMenuItem lastTournamentbooksToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem booksToolStripMenuItem;
 	}
 }
 

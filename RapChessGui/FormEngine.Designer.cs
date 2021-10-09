@@ -226,7 +226,7 @@
 			this.nudElo.Dock = System.Windows.Forms.DockStyle.Top;
 			this.nudElo.Location = new System.Drawing.Point(3, 16);
 			this.nudElo.Maximum = new decimal(new int[] {
-            10000,
+            15000,
             0,
             0,
             0});

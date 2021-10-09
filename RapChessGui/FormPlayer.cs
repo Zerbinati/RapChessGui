@@ -7,7 +7,6 @@ namespace RapChessGui
 {
 	public partial class FormPlayer : Form
 	{
-		public static FormPlayer This;
 		int indexFirst = -1;
 		int tournament = -1;
 		CPlayer player = null;
@@ -15,7 +14,6 @@ namespace RapChessGui
 
 		public FormPlayer()
 		{
-			This = this;
 			InitializeComponent();
 		}
 

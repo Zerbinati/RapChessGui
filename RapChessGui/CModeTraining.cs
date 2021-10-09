@@ -1,4 +1,4 @@
-﻿using RapIni;
+﻿using System;
 
 namespace RapChessGui
 {
@@ -7,10 +7,11 @@ namespace RapChessGui
 		public static bool rotate = false;
 		public static int games;
 		public static int win;
+		public static int winInRow = 0;
 		public static int draw;
 		public static int loose;
-		public static string teacher = "";
-		public static string trained = "";
+		public static string teacher = String.Empty;
+		public static string trained = String.Empty;
 		public static string teacherBook = CBookList.def;
 		public static string trainedBook = CBookList.def;
 		public static CModeValue modeValueTeacher = new CModeValue();
@@ -21,6 +22,7 @@ namespace RapChessGui
 			rotate = false;
 			games = 0;
 			win = 0;
+			winInRow = 0;
 			draw = 0;
 			loose = 0;
 		}

@@ -71,8 +71,10 @@ namespace RapChessGui
 
 		public void SaveToFile(string path)
 		{
-			List<string> moves = new List<string>();
-			moves.Add($"eco\tname\tmoves\tfen\tcontinuations");
+			List<string> moves = new List<string>
+			{
+				$"eco\tname\tmoves\tfen\tcontinuations"
+			};
 			foreach (CEco eco in list)
 				moves.Add($"{eco.eco}\t{eco.name}\t{eco.moves}\t{eco.fen}\t{eco.continuations}");
 			File.WriteAllLines(path, moves);

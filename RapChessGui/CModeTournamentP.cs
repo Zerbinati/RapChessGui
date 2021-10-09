@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using RapIni;
+﻿using System;
+using System.Collections.Generic;
 
 namespace RapChessGui
 {
@@ -7,7 +7,7 @@ namespace RapChessGui
 	{
 		public static bool rotate = false;
 		public static int games = 0;
-		public static int repetition = 1;
+		public static int repetition = 0;
 		public static int records = 10000;
 		public static int maxElo = 3000;
 		public static int minElo = 0;
@@ -38,8 +38,9 @@ namespace RapChessGui
 		public static void NewGame()
 		{
 			rotate = true;
-			repetition = 1;
-			opponent = "";
+			games = 0;
+			repetition = 0;
+			opponent = String.Empty;
 		}
 
 		public static CPlayer ChooseOpponent(CPlayer player, CPlayer player1, CPlayer player2)
@@ -90,14 +91,17 @@ namespace RapChessGui
 			CPlayer p = playerList.GetPlayer(player);
 			if (p == null)
 				p = SelectRare();
-			if (repetition <= 0)
+			if ((games >= repetition) && (games > 0))
+			{
 				p = playerList.NextTournament(p);
+				games = 0;
+			}
 			return p;
 		}
 
 		public static CPlayer SelectOpponent(CPlayer player)
 		{
-			playerList.SortDistance(player);
+			playerList.SortPosition(player);
 			List<CPlayer> pl = new List<CPlayer>();
 			foreach (CPlayer p in playerList.list)
 				if ((p != player) && (p.engine != "Human"))
@@ -115,18 +119,21 @@ namespace RapChessGui
 
 		public static void SetRepeition(CPlayer p, CPlayer o)
 		{
-			games = player == p.name ? ++games : 1;
-			if ((player != p.name) || (opponent == ""))
+			if ((player != p.name) || (opponent != o.name))
 			{
 				player = p.name;
 				opponent = o.name;
 				SaveToIni();
 				tourList.CountGames(p.name, o.name, out int rw, out int rl, out _);
-				repetition = p.tournament;
-				if ((p.GetElo() > o.GetElo()) != (rw > rl))
-					repetition++;
-				rotate = true;
+				if (games == 0)
+				{
+					repetition = p.tournament;
+					if ((p.GetElo() > o.GetElo()) != (rw > rl))
+						repetition++;
+					rotate = true;
+				}
 			}
+			games++;
 			rotate ^= true;
 		}
 	}

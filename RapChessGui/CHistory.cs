@@ -20,7 +20,7 @@ namespace RapChessGui
 
 		public string GetNotation()
 		{
-			if (FormOptions.This.rbSan.Checked)
+			if (FormOptions.isSan)
 				return san;
 			else
 				return umo;

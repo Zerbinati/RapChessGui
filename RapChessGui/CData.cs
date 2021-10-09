@@ -9,7 +9,7 @@ using NSChess;
 
 namespace RapChessGui
 {
-	public enum CGameMode { game, match, tourE, tourP, training, edit }
+	public enum CGameMode { game, match, tourB, tourE, tourP, training, edit }
 	public enum CProtocol { uci, winboard }
 
 	public static class CWinMessage
@@ -58,6 +58,7 @@ namespace RapChessGui
 		public static int gamesError = 0;
 		public static double fps = 0;
 		public static string eco = String.Empty;
+		public static string none = "none";
 		public static CGameState gameState = CGameState.normal;
 		public static CGameMode gameMode = CGameMode.game;
 		public static List<string> fileBook = new List<string>();
@@ -149,7 +150,6 @@ namespace RapChessGui
 
 	public class CHisElo
 	{
-		public static int count = 100;
 
 		public List<double> list = new List<double>();
 
@@ -197,7 +197,7 @@ namespace RapChessGui
 		public void Add(double value)
 		{
 			list.Add(value);
-			int c = list.Count - count;
+			int c = list.Count - FormOptions.historyLength;
 			if (c > 0)
 				list.RemoveRange(0, c);
 		}

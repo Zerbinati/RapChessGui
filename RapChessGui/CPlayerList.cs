@@ -8,11 +8,10 @@ namespace RapChessGui
 	public class CPlayer
 	{
 		public int tournament = 1;
-		public int distance = 0;
 		public int position = 0;
 		public string name = "";
 		public string engine = "Human";
-		public string book = "None";
+		public string book = CData.none;
 		public string elo = "1000";
 		public string eloOrg = "1000";
 		public CModeValue modeValue = new CModeValue();
@@ -121,7 +120,7 @@ namespace RapChessGui
 			book = FormChess.RapIni.Read($"player>{name}>book", "None");
 			elo = FormChess.RapIni.Read($"player>{name}>elo", elo);
 			eloOrg = FormChess.RapIni.Read($"player>{name}>eloOrg", eloOrg);
-			hisElo.LoadFromStr(FormChess.RapIni.Read($"player>{name}>history", ""));
+			hisElo.LoadFromStr(FormChess.RapIni.Read($"player>{name}>history"));
 		}
 
 		public void SaveToIni()
@@ -262,15 +261,16 @@ namespace RapChessGui
 			});
 		}
 
-		public void SortDistance(CPlayer player)
+		public void SortPosition(CPlayer player)
 		{
 			SortElo();
 			FillPosition();
+			int position = player.position;
 			foreach (CPlayer p in list)
-				p.distance = Math.Abs(player.position - p.position);
+				p.position = Math.Abs(position - p.position);
 			list.Sort(delegate (CPlayer p1, CPlayer p2)
 			{
-				return p1.distance - p2.distance;
+				return p1.position - p2.position;
 			});
 		}
 
@@ -302,26 +302,10 @@ namespace RapChessGui
 				u.SaveToIni();
 		}
 
-		public int GetIndexElo(int elo)
-		{
-			int result = 0;
-			foreach (CPlayer u in list)
-				if (u.GetElo() > elo)
-					result++;
-			return result;
-		}
-
 		public int GetOptElo(double index)
 		{
-			if (index < 0)
-				index = 0;
-			if (index >= list.Count)
-				index = list.Count - 1;
-			return Convert.ToInt32((3000 * (list.Count - index)) / list.Count);
-		}
-
-		public int GetOptElo(double index,int min,int max)
-		{
+			int min = CModeTournamentP.minElo;
+			int max = CModeTournamentP.maxElo;
 			if (index < 0)
 				index = 0;
 			if (index >= list.Count)
@@ -355,12 +339,8 @@ namespace RapChessGui
 
 		public void FillPosition()
 		{
-			int position = 1;
 			for (int n = 0; n < list.Count; n++)
-			{
-				CPlayer p = list[n];
-				p.position = p.engine == "Human" ? 0 : position++;
-			}
+				list[n].position = n;
 		}
 
 
