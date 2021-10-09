@@ -3008,9 +3008,12 @@ namespace RapChessGui
 			ListView lv = (ListView)sender;
 			int w = lv.Width - 32;
 			w = Convert.ToInt32(w / 4);
-			lv.Columns[0].Width = w * 2;
-			lv.Columns[1].Width = w;
-			lv.Columns[2].Width = w;
+			if (lv.Columns.Count > 0)
+			{
+				lv.Columns[0].Width = w * 2;
+				lv.Columns[1].Width = w;
+				lv.Columns[2].Width = w;
+			}
 		}
 
 		private void lvEngineH_Resize(object sender, EventArgs e)
@@ -3018,10 +3021,13 @@ namespace RapChessGui
 			ListView lv = (ListView)sender;
 			int w = lv.Width - 32;
 			w = Convert.ToInt32(w / 6);
-			lv.Columns[0].Width = w * 3;
-			lv.Columns[1].Width = w;
-			lv.Columns[2].Width = w;
-			lv.Columns[3].Width = w;
+			if (lv.Columns.Count > 0)
+			{
+				lv.Columns[0].Width = w * 3;
+				lv.Columns[1].Width = w;
+				lv.Columns[2].Width = w;
+				lv.Columns[3].Width = w;
+			}
 		}
 
 		private void lvPlayer_SelectedIndexChanged(object sender, EventArgs e)
