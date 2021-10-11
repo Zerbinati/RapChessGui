@@ -44,17 +44,17 @@ namespace RapChessGui
 			SelectReader(listBox1.SelectedItem.ToString());
 		}
 
-		void SaveToIni(CBook reader)
+		void SaveToIni(CBook book)
 		{
-			reader.name = tbReaderName.Text;
-			reader.exe = cbBookReaderList.Text;
-			reader.parameters = tbParameters.Text;
-			reader.elo = nudElo.Value.ToString();
-			reader.tournament = (int)nudTournament.Value;
-			reader.SaveToIni();
-			curBookName = reader.name;
+			book.name = tbReaderName.Text;
+			book.exe = cbBookReaderList.Text;
+			book.parameters = tbParameters.Text;
+			book.elo = nudElo.Value.ToString();
+			book.tournament = (int)nudTournament.Value;
+			book.SaveToIni();
+			curBookName = book.name;
 			UpdateListBox();
-			int index = listBox1.FindString(reader.name);
+			int index = listBox1.FindString(book.name);
 			if (index == -1) return;
 			listBox1.SetSelected(index, true);
 		}
@@ -64,7 +64,7 @@ namespace RapChessGui
 			CBook book = FormChess.bookList.GetBook(curBookName);
 			if (book == null)
 				return;
-			FormChess.RapIni.DeleteKey($"book>{book.name}");
+			FormChess.iniFile.DeleteKey($"book>{book.name}");
 			SaveToIni(book);
 			MessageBox.Show($"Reader {book.name} has been modified");
 			CData.reset = true;
@@ -121,6 +121,10 @@ namespace RapChessGui
 			e.DrawBackground();
 			e.Graphics.DrawString(name, e.Font, b, e.Bounds, StringFormat.GenericDefault);
 			e.DrawFocusRectangle();
+		}
+
+		private void FormBook_FormClosing(object sender, FormClosingEventArgs e)
+		{
 		}
 	}
 }

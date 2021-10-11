@@ -22,7 +22,12 @@ namespace RapIni
 		public CRapIni(string name)
 		{
 			this.name = name;
-			path = new FileInfo(name + ".ini").FullName.ToString();
+			path = new FileInfo(name).FullName.ToString();
+		}
+
+		public void Clear()
+		{
+			list.Clear();
 		}
 
 		string ListToString(List<string> list)

@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using RapIni;
 
 namespace RapChessGui
 {
@@ -53,22 +54,23 @@ namespace RapChessGui
 
 		public void LoadFromIni()
 		{
-			exe = FormChess.RapIni.Read($"book>{name}>exe", "");
-			parameters = FormChess.RapIni.Read($"book>{name}>parameters", "");
-			elo = FormChess.RapIni.Read($"book>{name}>elo", elo);
-			hisElo.LoadFromStr(FormChess.RapIni.Read($"book>{name}>history"));
-			tournament = FormChess.RapIni.ReadInt($"book>{name}>tournament", tournament);
+			exe = CBookList.iniFile.Read($"book>{name}>exe", "");
+			parameters = CBookList.iniFile.Read($"book>{name}>parameters", "");
+			elo = CBookList.iniFile.Read($"book>{name}>elo", elo);
+			hisElo.LoadFromStr(CBookList.iniFile.Read($"book>{name}>history"));
+			tournament = CBookList.iniFile.ReadInt($"book>{name}>tournament", tournament);
 		}
 
 		public void SaveToIni()
 		{
 			name = GetName();
-			FormChess.RapIni.Write($"book>{name}>exe", exe);
-			FormChess.RapIni.Write($"book>{name}>parameters", parameters);
-			FormChess.RapIni.Write($"book>{name}>elo", elo);
-			FormChess.RapIni.Write($"book>{name}>history", hisElo.SaveToStr());
-			FormChess.RapIni.Write($"book>{name}>tournament", tournament);
+			CBookList.iniFile.Write($"book>{name}>exe", exe);
+			CBookList.iniFile.Write($"book>{name}>parameters", parameters);
+			CBookList.iniFile.Write($"book>{name}>elo", elo);
+			CBookList.iniFile.Write($"book>{name}>history", hisElo.SaveToStr());
+			CBookList.iniFile.Write($"book>{name}>tournament", tournament);
 		}
+
 
 		public int GetDeltaElo()
 		{
@@ -102,6 +104,7 @@ namespace RapChessGui
 	{
 		public static string def = "Eco";
 		public List<CBook> list = new List<CBook>();
+		public static CRapIni iniFile = new CRapIni(@"Ini\books.ini");
 
 		public void Add(CBook b)
 		{
@@ -115,7 +118,7 @@ namespace RapChessGui
 
 		public void DeleteBook(string name)
 		{
-			FormChess.RapIni.DeleteKey($"book>{name}");
+			iniFile.DeleteKey($"book>{name}");
 			int i = GetIndex(name);
 			if (i >= 0)
 				list.RemoveAt(i);
@@ -154,14 +157,13 @@ namespace RapChessGui
 		public int LoadFromIni()
 		{
 			list.Clear();
-			List<string> bl = FormChess.RapIni.ReadKeyList("book");
+			List<string> bl = FormChess.iniFile.ReadKeyList("book");
 			foreach (string name in bl)
 			{
 				var br = new CBook(name);
 				br.LoadFromIni();
 				list.Add(br);
 			}
-			SaveToIni();
 			return bl.Count;
 		}
 
@@ -175,7 +177,7 @@ namespace RapChessGui
 
 		public void SaveToIni()
 		{
-			FormChess.RapIni.DeleteKey("book");
+			iniFile.DeleteKey("book");
 			foreach (CBook br in list)
 				br.SaveToIni();
 		}

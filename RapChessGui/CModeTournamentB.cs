@@ -26,24 +26,24 @@ namespace RapChessGui
 
 		public static void SaveToIni()
 		{
-			FormChess.RapIni.Write("mode>tournamentB>book", book);
-			FormChess.RapIni.Write("mode>tournamentB>engine", engine);
-			FormChess.RapIni.Write("mode>tournamentB>mode", modeValue.mode);
-			FormChess.RapIni.Write("mode>tournamentB>value", modeValue.value);
-			FormChess.RapIni.Write("mode>tournamentB>records", records);
-			FormChess.RapIni.Write("mode>tournamentB>rmaxElo", maxElo);
-			FormChess.RapIni.Write("mode>tournamentB>minElo", minElo);
+			FormChess.iniFile.Write("mode>tournamentB>book", book);
+			FormChess.iniFile.Write("mode>tournamentB>engine", engine);
+			FormChess.iniFile.Write("mode>tournamentB>mode", modeValue.mode);
+			FormChess.iniFile.Write("mode>tournamentB>value", modeValue.value);
+			FormChess.iniFile.Write("mode>tournamentB>records", records);
+			FormChess.iniFile.Write("mode>tournamentB>rmaxElo", maxElo);
+			FormChess.iniFile.Write("mode>tournamentB>minElo", minElo);
 		}
 
 		public static void LoadFromIni()
 		{
-			book = FormChess.RapIni.Read("mode>tournamentB>book", book);
-			engine = FormChess.RapIni.Read("mode>tournamentB>engine", engine);
-			modeValue.mode = FormChess.RapIni.Read("mode>tournamentB>mode", modeValue.mode);
-			modeValue.value = FormChess.RapIni.ReadInt("mode>tournamentB>value", modeValue.value);
-			records = FormChess.RapIni.ReadInt("mode>tournamentB>records", records);
-			maxElo = FormChess.RapIni.ReadInt("mode>tournamentB>maxElo", maxElo);
-			minElo = FormChess.RapIni.ReadInt("mode>tournamentB>minElo", minElo);
+			book = FormChess.iniFile.Read("mode>tournamentB>book", book);
+			engine = FormChess.iniFile.Read("mode>tournamentB>engine", engine);
+			modeValue.mode = FormChess.iniFile.Read("mode>tournamentB>mode", modeValue.mode);
+			modeValue.value = FormChess.iniFile.ReadInt("mode>tournamentB>value", modeValue.value);
+			records = FormChess.iniFile.ReadInt("mode>tournamentB>records", records);
+			maxElo = FormChess.iniFile.ReadInt("mode>tournamentB>maxElo", maxElo);
+			minElo = FormChess.iniFile.ReadInt("mode>tournamentB>minElo", minElo);
 			tourList.SetLimit(records);
 		}
 

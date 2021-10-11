@@ -32,7 +32,7 @@ namespace RapChessGui
 
 		string continuations = String.Empty;
 		List<int> moves = new List<int>();
-		public static CRapIni RapIni = new CRapIni();
+		public static CRapIni iniFile = new CRapIni(@"Ini\options.ini");
 		public static CDirBookList DirBookList = new CDirBookList();
 		readonly CBoard Board = new CBoard();
 		readonly CEcoList EcoList = new CEcoList();
@@ -176,9 +176,9 @@ namespace RapChessGui
 					b.parameters = v.ToString();
 					bookList.Add(b);
 				}
-				RapIni.Write("options>dir>Bin", "BookReaderBin.exe");
-				RapIni.Write("options>dir>Mem", "BookReaderMem.exe");
-				RapIni.Write("options>dir>Umo", "BookReaderUmo.exe");
+				iniFile.Write("options>dir>Bin", "BookReaderBin.exe");
+				iniFile.Write("options>dir>Mem", "BookReaderMem.exe");
+				iniFile.Write("options>dir>Umo", "BookReaderUmo.exe");
 				DirBookList.LoadFromIni();
 				bookList.Update();
 			}
@@ -259,20 +259,20 @@ namespace RapChessGui
 
 		void IniLoad()
 		{
-			Width = RapIni.ReadInt("position>width", Width);
-			Height = RapIni.ReadInt("position>height", Height);
+			Width = iniFile.ReadInt("position>width", Width);
+			Height = iniFile.ReadInt("position>height", Height);
 			if (Width < 600)
 				Width = 600;
 			if (Height < 600)
 				Height = 600;
-			int x = RapIni.ReadInt("position>x", Location.X);
-			int y = RapIni.ReadInt("position>y", Location.Y);
+			int x = iniFile.ReadInt("position>x", Location.X);
+			int y = iniFile.ReadInt("position>y", Location.Y);
 			if (x < 0)
 				x = 0;
 			if (y < 0)
 				y = 0;
 			Location = new Point(x, y);
-			if (RapIni.ReadBool("position>maximized", false))
+			if (iniFile.ReadBool("position>maximized", false))
 				WindowState = FormWindowState.Maximized;
 			CModeGame.LoadFromIni();
 			CModeMatch.LoadFromIni();
@@ -289,11 +289,11 @@ namespace RapChessGui
 			int height = maximized ? RestoreBounds.Height : Height;
 			int x = maximized ? RestoreBounds.X : Location.X;
 			int y = maximized ? RestoreBounds.Y : Location.Y;
-			RapIni.Write("position>maximized", maximized);
-			RapIni.Write("position>width", width);
-			RapIni.Write("position>height", height);
-			RapIni.Write("position>x", x);
-			RapIni.Write("position>y", y);
+			iniFile.Write("position>maximized", maximized);
+			iniFile.Write("position>width", width);
+			iniFile.Write("position>height", height);
+			iniFile.Write("position>x", x);
+			iniFile.Write("position>y", y);
 			SplitSaveToIni();
 		}
 
@@ -301,14 +301,14 @@ namespace RapChessGui
 		{
 			int size = sc.Orientation == Orientation.Horizontal ? sc.Size.Height : sc.Size.Width;
 			double p = (double)sc.SplitterDistance / size;
-			RapIni.Write($"position>split>{sc.Name}", p);
+			iniFile.Write($"position>split>{sc.Name}", p);
 		}
 
 		void SplitLoadFromIni(SplitContainer sc)
 		{
 			int size = sc.Orientation == Orientation.Horizontal ? sc.Size.Height : sc.Size.Width;
 			double o = (double)sc.SplitterDistance / size;
-			double p = RapIni.ReadDouble($"position>split>{sc.Name}", o);
+			double p = iniFile.ReadDouble($"position>split>{sc.Name}", o);
 			int d = Convert.ToInt32(p * size);
 			try
 			{

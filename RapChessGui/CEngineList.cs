@@ -29,14 +29,14 @@ namespace RapChessGui
 
 		public void LoadFromIni()
 		{
-			tournament = FormChess.RapIni.ReadInt($"engine>{name}>tournament", tournament);
-			modeStandard = FormChess.RapIni.ReadBool($"engine>{name}>modeStandard", modeStandard);
-			file = FormChess.RapIni.Read($"engine>{name}>file", "Human");
-			protocol = CData.StrToProtocol(FormChess.RapIni.Read($"engine>{name}>protocol", "Uci"));
-			parameters = FormChess.RapIni.Read($"engine>{name}>parameters", "");
-			options = FormChess.RapIni.ReadList($"engine>{name}>options");
-			elo = FormChess.RapIni.Read($"engine>{name}>elo", elo);
-			hisElo.LoadFromStr(FormChess.RapIni.Read($"engine>{name}>history"));
+			tournament = FormChess.iniFile.ReadInt($"engine>{name}>tournament", tournament);
+			modeStandard = FormChess.iniFile.ReadBool($"engine>{name}>modeStandard", modeStandard);
+			file = FormChess.iniFile.Read($"engine>{name}>file", "Human");
+			protocol = CData.StrToProtocol(FormChess.iniFile.Read($"engine>{name}>protocol", "Uci"));
+			parameters = FormChess.iniFile.Read($"engine>{name}>parameters", "");
+			options = FormChess.iniFile.ReadList($"engine>{name}>options");
+			elo = FormChess.iniFile.Read($"engine>{name}>elo", elo);
+			hisElo.LoadFromStr(FormChess.iniFile.Read($"engine>{name}>history"));
 		}
 
 		public void SaveToIni()
@@ -48,14 +48,14 @@ namespace RapChessGui
 				hisElo.Add(e);
 				hisElo.Add(e);
 			}
-			FormChess.RapIni.Write($"engine>{name}>tournament", tournament);
-			FormChess.RapIni.Write($"engine>{name}>modeStandard", modeStandard);
-			FormChess.RapIni.Write($"engine>{name}>file", file);
-			FormChess.RapIni.Write($"engine>{name}>protocol", CData.ProtocolToStr(protocol));
-			FormChess.RapIni.Write($"engine>{name}>parameters", parameters);
-			FormChess.RapIni.Write($"engine>{name}>options", options);
-			FormChess.RapIni.Write($"engine>{name}>elo", elo);
-			FormChess.RapIni.Write($"engine>{name}>history", hisElo.SaveToStr());
+			FormChess.iniFile.Write($"engine>{name}>tournament", tournament);
+			FormChess.iniFile.Write($"engine>{name}>modeStandard", modeStandard);
+			FormChess.iniFile.Write($"engine>{name}>file", file);
+			FormChess.iniFile.Write($"engine>{name}>protocol", CData.ProtocolToStr(protocol));
+			FormChess.iniFile.Write($"engine>{name}>parameters", parameters);
+			FormChess.iniFile.Write($"engine>{name}>options", options);
+			FormChess.iniFile.Write($"engine>{name}>elo", elo);
+			FormChess.iniFile.Write($"engine>{name}>history", hisElo.SaveToStr());
 		}
 
 		public string GetOption(string name, string def)
@@ -143,7 +143,7 @@ namespace RapChessGui
 
 		public void DeleteEngine(string name)
 		{
-			FormChess.RapIni.DeleteKey($"engine>{name}");
+			FormChess.iniFile.DeleteKey($"engine>{name}");
 			int i = GetIndex(name);
 			if (i >= 0)
 				list.RemoveAt(i);
@@ -238,7 +238,7 @@ namespace RapChessGui
 		public int LoadFromIni()
 		{
 			list.Clear();
-			List<string> en = FormChess.RapIni.ReadKeyList("engine");
+			List<string> en = FormChess.iniFile.ReadKeyList("engine");
 			foreach (string name in en)
 			{
 				CEngine engine = new CEngine(name);
@@ -273,7 +273,7 @@ namespace RapChessGui
 
 		public void SaveToIni()
 		{
-			FormChess.RapIni.DeleteKey("engine");
+			FormChess.iniFile.DeleteKey("engine");
 			foreach (CEngine e in list)
 				e.SaveToIni();
 		}

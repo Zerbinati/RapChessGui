@@ -29,16 +29,16 @@ namespace RapChessGui
 			{
 				CDirBook db = new CDirBook();
 				db.dir = Path.GetFileName(dir);
-				db.book = FormChess.RapIni.Read($"options>dir>{db.dir}", db.book);
+				db.book = FormChess.iniFile.Read($"options>dir>{db.dir}", db.book);
 				Add(db);
 			}
 		}
 
 		public void SaveToIni()
 		{
-			FormChess.RapIni.DeleteKey("options>dir");
+			FormChess.iniFile.DeleteKey("options>dir");
 			foreach (CDirBook db in this)
-				FormChess.RapIni.Write($"options>dir>{db.dir}",db.book);
+				FormChess.iniFile.Write($"options>dir>{db.dir}",db.book);
 		}
 
 	}

@@ -218,7 +218,7 @@ namespace RapChessGui
 		{
 			if (engine == null)
 				return;
-			FormChess.RapIni.DeleteKey($"engine>{engine.name}");
+			FormChess.iniFile.DeleteKey($"engine>{engine.name}");
 			SaveToIni(engine);
 			MessageBox.Show($"Chess {engine.name} has been modified");
 			CData.reset = true;
