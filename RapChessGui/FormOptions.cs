@@ -134,6 +134,12 @@ namespace RapChessGui
 			SaveToIni();
 		}
 
+		public static void SetFontSize(Form form)
+		{
+			foreach (Control ctrl in form.Controls)
+				ctrl.Font = new Font(ctrl.Font.Name,fontSize, ctrl.Font.Style, ctrl.Font.Unit);
+		}
+
 		int CbToMargin(int i)
 		{
 			return new int[] { -1, 0, 1000, 2000, 5000,10000 }[i];

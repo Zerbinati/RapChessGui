@@ -235,12 +235,7 @@ namespace RapChessGui
 
 		private void FormEngine_Shown(object sender, EventArgs e)
 		{
-			foreach (Control ctrl in this.Controls)
-			{
-				Font fs = ctrl.Font;
-				Font fd = new Font(fs.Name, FormOptions.fontSize, fs.Style, fs.Unit);
-				ctrl.Font = fd;
-			}
+			FormOptions.SetFontSize(this);
 			CData.UpdateFileEngine();
 			cbFileList.Items.Clear();
 			foreach (string engine in CData.fileEngine)

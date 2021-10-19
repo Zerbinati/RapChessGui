@@ -78,8 +78,9 @@
 			// 
 			// bDelete
 			// 
+			this.bDelete.AutoSize = true;
 			this.bDelete.Dock = System.Windows.Forms.DockStyle.Top;
-			this.bDelete.Location = new System.Drawing.Point(0, 285);
+			this.bDelete.Location = new System.Drawing.Point(0, 256);
 			this.bDelete.Name = "bDelete";
 			this.bDelete.Size = new System.Drawing.Size(311, 33);
 			this.bDelete.TabIndex = 27;
@@ -89,8 +90,9 @@
 			// 
 			// bCreate
 			// 
+			this.bCreate.AutoSize = true;
 			this.bCreate.Dock = System.Windows.Forms.DockStyle.Top;
-			this.bCreate.Location = new System.Drawing.Point(0, 252);
+			this.bCreate.Location = new System.Drawing.Point(0, 223);
 			this.bCreate.Name = "bCreate";
 			this.bCreate.Size = new System.Drawing.Size(311, 33);
 			this.bCreate.TabIndex = 26;
@@ -100,8 +102,9 @@
 			// 
 			// bUpdate
 			// 
+			this.bUpdate.AutoSize = true;
 			this.bUpdate.Dock = System.Windows.Forms.DockStyle.Top;
-			this.bUpdate.Location = new System.Drawing.Point(0, 225);
+			this.bUpdate.Location = new System.Drawing.Point(0, 196);
 			this.bUpdate.Name = "bUpdate";
 			this.bUpdate.Size = new System.Drawing.Size(311, 27);
 			this.bUpdate.TabIndex = 25;
@@ -111,11 +114,12 @@
 			// 
 			// groupBox5
 			// 
+			this.groupBox5.AutoSize = true;
 			this.groupBox5.Controls.Add(this.nudTournament);
 			this.groupBox5.Dock = System.Windows.Forms.DockStyle.Top;
-			this.groupBox5.Location = new System.Drawing.Point(0, 180);
+			this.groupBox5.Location = new System.Drawing.Point(0, 157);
 			this.groupBox5.Name = "groupBox5";
-			this.groupBox5.Size = new System.Drawing.Size(311, 45);
+			this.groupBox5.Size = new System.Drawing.Size(311, 39);
 			this.groupBox5.TabIndex = 34;
 			this.groupBox5.TabStop = false;
 			this.groupBox5.Text = "Tournament priority";
@@ -137,11 +141,12 @@
 			// 
 			// gbElo
 			// 
+			this.gbElo.AutoSize = true;
 			this.gbElo.Controls.Add(this.nudElo);
 			this.gbElo.Dock = System.Windows.Forms.DockStyle.Top;
-			this.gbElo.Location = new System.Drawing.Point(0, 135);
+			this.gbElo.Location = new System.Drawing.Point(0, 118);
 			this.gbElo.Name = "gbElo";
-			this.gbElo.Size = new System.Drawing.Size(311, 45);
+			this.gbElo.Size = new System.Drawing.Size(311, 39);
 			this.gbElo.TabIndex = 31;
 			this.gbElo.TabStop = false;
 			this.gbElo.Text = "Elo";
@@ -168,11 +173,12 @@
 			// 
 			// groupBox3
 			// 
+			this.groupBox3.AutoSize = true;
 			this.groupBox3.Controls.Add(this.tbParameters);
 			this.groupBox3.Dock = System.Windows.Forms.DockStyle.Top;
-			this.groupBox3.Location = new System.Drawing.Point(0, 90);
+			this.groupBox3.Location = new System.Drawing.Point(0, 79);
 			this.groupBox3.Name = "groupBox3";
-			this.groupBox3.Size = new System.Drawing.Size(311, 45);
+			this.groupBox3.Size = new System.Drawing.Size(311, 39);
 			this.groupBox3.TabIndex = 15;
 			this.groupBox3.TabStop = false;
 			this.groupBox3.Text = "Parameters";
@@ -187,11 +193,12 @@
 			// 
 			// groupBox4
 			// 
+			this.groupBox4.AutoSize = true;
 			this.groupBox4.Controls.Add(this.cbBookReaderList);
 			this.groupBox4.Dock = System.Windows.Forms.DockStyle.Top;
-			this.groupBox4.Location = new System.Drawing.Point(0, 45);
+			this.groupBox4.Location = new System.Drawing.Point(0, 39);
 			this.groupBox4.Name = "groupBox4";
-			this.groupBox4.Size = new System.Drawing.Size(311, 45);
+			this.groupBox4.Size = new System.Drawing.Size(311, 40);
 			this.groupBox4.TabIndex = 11;
 			this.groupBox4.TabStop = false;
 			this.groupBox4.Text = "BookReader";
@@ -209,11 +216,12 @@
 			// 
 			// groupBox1
 			// 
+			this.groupBox1.AutoSize = true;
 			this.groupBox1.Controls.Add(this.tbReaderName);
 			this.groupBox1.Dock = System.Windows.Forms.DockStyle.Top;
 			this.groupBox1.Location = new System.Drawing.Point(0, 0);
 			this.groupBox1.Name = "groupBox1";
-			this.groupBox1.Size = new System.Drawing.Size(311, 45);
+			this.groupBox1.Size = new System.Drawing.Size(311, 39);
 			this.groupBox1.TabIndex = 1;
 			this.groupBox1.TabStop = false;
 			this.groupBox1.Text = "Name";
@@ -228,6 +236,7 @@
 			// 
 			// gbBooks
 			// 
+			this.gbBooks.AutoSize = true;
 			this.gbBooks.Controls.Add(this.listBox1);
 			this.gbBooks.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.gbBooks.Location = new System.Drawing.Point(0, 0);
@@ -255,6 +264,7 @@
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+			this.AutoSize = true;
 			this.ClientSize = new System.Drawing.Size(800, 591);
 			this.Controls.Add(this.gbBooks);
 			this.Controls.Add(this.panel1);
@@ -267,6 +277,7 @@
 			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormBook_FormClosing);
 			this.Shown += new System.EventHandler(this.FormBook_Shown);
 			this.panel1.ResumeLayout(false);
+			this.panel1.PerformLayout();
 			this.groupBox5.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.nudTournament)).EndInit();
 			this.gbElo.ResumeLayout(false);
@@ -278,6 +289,7 @@
 			this.groupBox1.PerformLayout();
 			this.gbBooks.ResumeLayout(false);
 			this.ResumeLayout(false);
+			this.PerformLayout();
 
 		}
 

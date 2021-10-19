@@ -89,11 +89,12 @@
 			// 
 			// gbOptions
 			// 
+			this.gbOptions.AutoSize = true;
 			this.gbOptions.Controls.Add(this.panOptions);
 			this.gbOptions.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.gbOptions.Location = new System.Drawing.Point(0, 427);
+			this.gbOptions.Location = new System.Drawing.Point(0, 392);
 			this.gbOptions.Name = "gbOptions";
-			this.gbOptions.Size = new System.Drawing.Size(311, 255);
+			this.gbOptions.Size = new System.Drawing.Size(311, 290);
 			this.gbOptions.TabIndex = 29;
 			this.gbOptions.TabStop = false;
 			this.gbOptions.Text = "Options";
@@ -104,13 +105,14 @@
 			this.panOptions.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.panOptions.Location = new System.Drawing.Point(3, 16);
 			this.panOptions.Name = "panOptions";
-			this.panOptions.Size = new System.Drawing.Size(305, 236);
+			this.panOptions.Size = new System.Drawing.Size(305, 271);
 			this.panOptions.TabIndex = 0;
 			// 
 			// butReset
 			// 
+			this.butReset.AutoSize = true;
 			this.butReset.Dock = System.Windows.Forms.DockStyle.Top;
-			this.butReset.Location = new System.Drawing.Point(0, 403);
+			this.butReset.Location = new System.Drawing.Point(0, 368);
 			this.butReset.Name = "butReset";
 			this.butReset.Size = new System.Drawing.Size(311, 24);
 			this.butReset.TabIndex = 34;
@@ -120,8 +122,9 @@
 			// 
 			// butClearHistory
 			// 
+			this.butClearHistory.AutoSize = true;
 			this.butClearHistory.Dock = System.Windows.Forms.DockStyle.Top;
-			this.butClearHistory.Location = new System.Drawing.Point(0, 379);
+			this.butClearHistory.Location = new System.Drawing.Point(0, 344);
 			this.butClearHistory.Name = "butClearHistory";
 			this.butClearHistory.Size = new System.Drawing.Size(311, 24);
 			this.butClearHistory.TabIndex = 32;
@@ -131,8 +134,9 @@
 			// 
 			// bDelete
 			// 
+			this.bDelete.AutoSize = true;
 			this.bDelete.Dock = System.Windows.Forms.DockStyle.Top;
-			this.bDelete.Location = new System.Drawing.Point(0, 355);
+			this.bDelete.Location = new System.Drawing.Point(0, 320);
 			this.bDelete.Name = "bDelete";
 			this.bDelete.Size = new System.Drawing.Size(311, 24);
 			this.bDelete.TabIndex = 27;
@@ -142,8 +146,9 @@
 			// 
 			// bCreate
 			// 
+			this.bCreate.AutoSize = true;
 			this.bCreate.Dock = System.Windows.Forms.DockStyle.Top;
-			this.bCreate.Location = new System.Drawing.Point(0, 331);
+			this.bCreate.Location = new System.Drawing.Point(0, 296);
 			this.bCreate.Name = "bCreate";
 			this.bCreate.Size = new System.Drawing.Size(311, 24);
 			this.bCreate.TabIndex = 26;
@@ -153,8 +158,9 @@
 			// 
 			// bUpdate
 			// 
+			this.bUpdate.AutoSize = true;
 			this.bUpdate.Dock = System.Windows.Forms.DockStyle.Top;
-			this.bUpdate.Location = new System.Drawing.Point(0, 307);
+			this.bUpdate.Location = new System.Drawing.Point(0, 272);
 			this.bUpdate.Name = "bUpdate";
 			this.bUpdate.Size = new System.Drawing.Size(311, 24);
 			this.bUpdate.TabIndex = 25;
@@ -164,11 +170,12 @@
 			// 
 			// gbTournament
 			// 
+			this.gbTournament.AutoSize = true;
 			this.gbTournament.Controls.Add(this.cbModeStandard);
 			this.gbTournament.Dock = System.Windows.Forms.DockStyle.Top;
-			this.gbTournament.Location = new System.Drawing.Point(0, 270);
+			this.gbTournament.Location = new System.Drawing.Point(0, 236);
 			this.gbTournament.Name = "gbTournament";
-			this.gbTournament.Size = new System.Drawing.Size(311, 37);
+			this.gbTournament.Size = new System.Drawing.Size(311, 36);
 			this.gbTournament.TabIndex = 31;
 			this.gbTournament.TabStop = false;
 			this.gbTournament.Text = "Options";
@@ -186,11 +193,12 @@
 			// 
 			// groupBox5
 			// 
+			this.groupBox5.AutoSize = true;
 			this.groupBox5.Controls.Add(this.nudTournament);
 			this.groupBox5.Dock = System.Windows.Forms.DockStyle.Top;
-			this.groupBox5.Location = new System.Drawing.Point(0, 225);
+			this.groupBox5.Location = new System.Drawing.Point(0, 197);
 			this.groupBox5.Name = "groupBox5";
-			this.groupBox5.Size = new System.Drawing.Size(311, 45);
+			this.groupBox5.Size = new System.Drawing.Size(311, 39);
 			this.groupBox5.TabIndex = 33;
 			this.groupBox5.TabStop = false;
 			this.groupBox5.Text = "Tournament priority";
@@ -212,11 +220,12 @@
 			// 
 			// gbElo
 			// 
+			this.gbElo.AutoSize = true;
 			this.gbElo.Controls.Add(this.nudElo);
 			this.gbElo.Dock = System.Windows.Forms.DockStyle.Top;
-			this.gbElo.Location = new System.Drawing.Point(0, 180);
+			this.gbElo.Location = new System.Drawing.Point(0, 158);
 			this.gbElo.Name = "gbElo";
-			this.gbElo.Size = new System.Drawing.Size(311, 45);
+			this.gbElo.Size = new System.Drawing.Size(311, 39);
 			this.gbElo.TabIndex = 30;
 			this.gbElo.TabStop = false;
 			this.gbElo.Text = "Elo";
@@ -243,11 +252,12 @@
 			// 
 			// groupBox3
 			// 
+			this.groupBox3.AutoSize = true;
 			this.groupBox3.Controls.Add(this.tbParameters);
 			this.groupBox3.Dock = System.Windows.Forms.DockStyle.Top;
-			this.groupBox3.Location = new System.Drawing.Point(0, 135);
+			this.groupBox3.Location = new System.Drawing.Point(0, 119);
 			this.groupBox3.Name = "groupBox3";
-			this.groupBox3.Size = new System.Drawing.Size(311, 45);
+			this.groupBox3.Size = new System.Drawing.Size(311, 39);
 			this.groupBox3.TabIndex = 15;
 			this.groupBox3.TabStop = false;
 			this.groupBox3.Text = "Parameters";
@@ -262,11 +272,12 @@
 			// 
 			// groupBox7
 			// 
+			this.groupBox7.AutoSize = true;
 			this.groupBox7.Controls.Add(this.cbProtocol);
 			this.groupBox7.Dock = System.Windows.Forms.DockStyle.Top;
-			this.groupBox7.Location = new System.Drawing.Point(0, 90);
+			this.groupBox7.Location = new System.Drawing.Point(0, 79);
 			this.groupBox7.Name = "groupBox7";
-			this.groupBox7.Size = new System.Drawing.Size(311, 45);
+			this.groupBox7.Size = new System.Drawing.Size(311, 40);
 			this.groupBox7.TabIndex = 28;
 			this.groupBox7.TabStop = false;
 			this.groupBox7.Text = "Protocol";
@@ -287,11 +298,12 @@
 			// 
 			// groupBox4
 			// 
+			this.groupBox4.AutoSize = true;
 			this.groupBox4.Controls.Add(this.cbFileList);
 			this.groupBox4.Dock = System.Windows.Forms.DockStyle.Top;
-			this.groupBox4.Location = new System.Drawing.Point(0, 45);
+			this.groupBox4.Location = new System.Drawing.Point(0, 39);
 			this.groupBox4.Name = "groupBox4";
-			this.groupBox4.Size = new System.Drawing.Size(311, 45);
+			this.groupBox4.Size = new System.Drawing.Size(311, 40);
 			this.groupBox4.TabIndex = 11;
 			this.groupBox4.TabStop = false;
 			this.groupBox4.Text = "Engin file";
@@ -311,11 +323,12 @@
 			// 
 			// groupBox1
 			// 
+			this.groupBox1.AutoSize = true;
 			this.groupBox1.Controls.Add(this.tbEngineName);
 			this.groupBox1.Dock = System.Windows.Forms.DockStyle.Top;
 			this.groupBox1.Location = new System.Drawing.Point(0, 0);
 			this.groupBox1.Name = "groupBox1";
-			this.groupBox1.Size = new System.Drawing.Size(311, 45);
+			this.groupBox1.Size = new System.Drawing.Size(311, 39);
 			this.groupBox1.TabIndex = 1;
 			this.groupBox1.TabStop = false;
 			this.groupBox1.Text = "Name";
@@ -330,6 +343,7 @@
 			// 
 			// gbEngines
 			// 
+			this.gbEngines.AutoSize = true;
 			this.gbEngines.Controls.Add(this.listBox1);
 			this.gbEngines.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.gbEngines.Location = new System.Drawing.Point(0, 0);
@@ -360,6 +374,7 @@
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+			this.AutoSize = true;
 			this.ClientSize = new System.Drawing.Size(800, 682);
 			this.Controls.Add(this.gbEngines);
 			this.Controls.Add(this.panel1);
@@ -372,6 +387,7 @@
 			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormEngine_FormClosing);
 			this.Shown += new System.EventHandler(this.FormEngine_Shown);
 			this.panel1.ResumeLayout(false);
+			this.panel1.PerformLayout();
 			this.gbOptions.ResumeLayout(false);
 			this.gbTournament.ResumeLayout(false);
 			this.gbTournament.PerformLayout();
@@ -387,6 +403,7 @@
 			this.groupBox1.PerformLayout();
 			this.gbEngines.ResumeLayout(false);
 			this.ResumeLayout(false);
+			this.PerformLayout();
 
 		}
 

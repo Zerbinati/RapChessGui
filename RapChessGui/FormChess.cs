@@ -83,10 +83,10 @@ namespace RapChessGui
 			This = this;
 			CreateDir("Books");
 			CreateDir("Engines");
-			CreateDir("Ini");
 			CreateDir(@"Engines/Uci");
 			CreateDir(@"Engines/Winboard");
 			CreateDir("History");
+			CreateDir("Ini");
 			CData.UpdateFileEngine();
 			CData.UpdateFileBook();
 			int fontLength = Properties.Resources.ChessPiece.Length;

@@ -155,6 +155,7 @@ namespace RapChessGui
 
 		private void FormPlayer_Shown(object sender, EventArgs e)
 		{
+			FormOptions.SetFontSize(this);
 			cbEngineList.Items.Clear();
 			cbEngineList.Items.Add("Human");
 			foreach (CEngine engine in FormChess.engineList.list)
