@@ -16,6 +16,7 @@ namespace RapChessGui
 		public static bool spamOff = true;
 		public static bool soundOn = true;
 		public static int animationSpeed = 200;
+		public static int fontSize = 10;
 		public static int gameBreak = 8;
 		public static int historyLength = 100;
 		public static int marginStandard = 0;
@@ -46,6 +47,7 @@ namespace RapChessGui
 			nudTraining.Value = FormChess.iniFile.ReadDecimal("options>mode>training>strength", nudTraining.Value);
 			nudHistory.Value = FormChess.iniFile.ReadDecimal("options>interface>history", nudHistory.Value);
 			nudSpeed.Value = FormChess.iniFile.ReadDecimal("options>interface>speed", nudSpeed.Value);
+			nudFontSize.Value = FormChess.iniFile.ReadDecimal("options>interface>font", nudFontSize.Value);
 			cbGameAutoElo.Checked = FormChess.iniFile.ReadBool("options>game>autoelo", cbGameAutoElo.Checked);
 			combModeStandard.SelectedIndex = FormChess.iniFile.ReadInt("options>margin>standard", 1);
 			combModeTime.SelectedIndex = FormChess.iniFile.ReadInt("options>margin>time", 0);
@@ -70,6 +72,7 @@ namespace RapChessGui
 			FormChess.iniFile.Write("options>mode>training>strength", nudTraining.Value);
 			FormChess.iniFile.Write("options>interface>history", nudHistory.Value);
 			FormChess.iniFile.Write("options>interface>speed", nudSpeed.Value);
+			FormChess.iniFile.Write("options>interface>font", nudFontSize.Value);
 			FormChess.iniFile.Write("options>game>autoelo", cbGameAutoElo.Checked);
 			FormChess.iniFile.Write("options>margin>standard", combModeStandard.SelectedIndex);
 			FormChess.iniFile.Write("options>margin>time", combModeTime.SelectedIndex);
@@ -296,6 +299,11 @@ namespace RapChessGui
 		private void combModeTime_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			marginTime = CbToMargin(combModeTime.SelectedIndex);
+		}
+
+		private void nudFontSize_ValueChanged(object sender, EventArgs e)
+		{
+			fontSize = (int)nudFontSize.Value;
 		}
 	}
 }

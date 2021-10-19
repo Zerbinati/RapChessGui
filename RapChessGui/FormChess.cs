@@ -83,6 +83,7 @@ namespace RapChessGui
 			This = this;
 			CreateDir("Books");
 			CreateDir("Engines");
+			CreateDir("Ini");
 			CreateDir(@"Engines/Uci");
 			CreateDir(@"Engines/Winboard");
 			CreateDir("History");

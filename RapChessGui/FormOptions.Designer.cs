@@ -96,6 +96,8 @@
 			this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.cbBookReader = new System.Windows.Forms.ComboBox();
+			this.nudFontSize = new System.Windows.Forms.NumericUpDown();
+			this.label17 = new System.Windows.Forms.Label();
 			this.gbInterface.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.nudHistory)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.nudSpeed)).BeginInit();
@@ -124,6 +126,7 @@
 			((System.ComponentModel.ISupportInitialize)(this.nudTourBRec)).BeginInit();
 			this.tabPageBooks.SuspendLayout();
 			this.groupBox1.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.nudFontSize)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// butDefault
@@ -139,6 +142,8 @@
 			// 
 			// gbInterface
 			// 
+			this.gbInterface.Controls.Add(this.label17);
+			this.gbInterface.Controls.Add(this.nudFontSize);
 			this.gbInterface.Controls.Add(this.label11);
 			this.gbInterface.Controls.Add(this.nudHistory);
 			this.gbInterface.Controls.Add(this.cbSound);
@@ -152,7 +157,7 @@
 			this.gbInterface.Dock = System.Windows.Forms.DockStyle.Top;
 			this.gbInterface.Location = new System.Drawing.Point(3, 3);
 			this.gbInterface.Name = "gbInterface";
-			this.gbInterface.Size = new System.Drawing.Size(359, 185);
+			this.gbInterface.Size = new System.Drawing.Size(359, 212);
 			this.gbInterface.TabIndex = 4;
 			this.gbInterface.TabStop = false;
 			this.gbInterface.Text = "Interface";
@@ -160,7 +165,7 @@
 			// label11
 			// 
 			this.label11.AutoSize = true;
-			this.label11.Location = new System.Drawing.Point(168, 132);
+			this.label11.Location = new System.Drawing.Point(168, 134);
 			this.label11.Name = "label11";
 			this.label11.Size = new System.Drawing.Size(71, 13);
 			this.label11.TabIndex = 15;
@@ -207,7 +212,7 @@
 			// butColor
 			// 
 			this.butColor.Dock = System.Windows.Forms.DockStyle.Bottom;
-			this.butColor.Location = new System.Drawing.Point(3, 158);
+			this.butColor.Location = new System.Drawing.Point(3, 185);
 			this.butColor.Name = "butColor";
 			this.butColor.Size = new System.Drawing.Size(353, 24);
 			this.butColor.TabIndex = 4;
@@ -472,7 +477,7 @@
 			this.gbTimeMargin.Controls.Add(this.combModeTime);
 			this.gbTimeMargin.Controls.Add(this.combModeStandard);
 			this.gbTimeMargin.Dock = System.Windows.Forms.DockStyle.Top;
-			this.gbTimeMargin.Location = new System.Drawing.Point(3, 241);
+			this.gbTimeMargin.Location = new System.Drawing.Point(3, 268);
 			this.gbTimeMargin.Name = "gbTimeMargin";
 			this.gbTimeMargin.Size = new System.Drawing.Size(359, 78);
 			this.gbTimeMargin.TabIndex = 8;
@@ -667,7 +672,7 @@
 			this.gbNotation.Controls.Add(this.rbUci);
 			this.gbNotation.Controls.Add(this.rbSan);
 			this.gbNotation.Dock = System.Windows.Forms.DockStyle.Top;
-			this.gbNotation.Location = new System.Drawing.Point(3, 188);
+			this.gbNotation.Location = new System.Drawing.Point(3, 215);
 			this.gbNotation.Name = "gbNotation";
 			this.gbNotation.Size = new System.Drawing.Size(359, 53);
 			this.gbNotation.TabIndex = 10;
@@ -705,7 +710,7 @@
 			this.gbPriority.Controls.Add(this.cbSpam);
 			this.gbPriority.Controls.Add(this.combPriority);
 			this.gbPriority.Dock = System.Windows.Forms.DockStyle.Top;
-			this.gbPriority.Location = new System.Drawing.Point(3, 319);
+			this.gbPriority.Location = new System.Drawing.Point(3, 346);
 			this.gbPriority.Name = "gbPriority";
 			this.gbPriority.Size = new System.Drawing.Size(359, 72);
 			this.gbPriority.TabIndex = 11;
@@ -1085,6 +1090,39 @@
 			this.cbBookReader.TabIndex = 51;
 			this.cbBookReader.SelectedIndexChanged += new System.EventHandler(this.cbBookReader_SelectedIndexChanged);
 			// 
+			// nudFontSize
+			// 
+			this.nudFontSize.Location = new System.Drawing.Point(3, 159);
+			this.nudFontSize.Maximum = new decimal(new int[] {
+            32,
+            0,
+            0,
+            0});
+			this.nudFontSize.Minimum = new decimal(new int[] {
+            8,
+            0,
+            0,
+            0});
+			this.nudFontSize.Name = "nudFontSize";
+			this.nudFontSize.Size = new System.Drawing.Size(153, 20);
+			this.nudFontSize.TabIndex = 16;
+			this.nudFontSize.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			this.nudFontSize.Value = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+			this.nudFontSize.ValueChanged += new System.EventHandler(this.nudFontSize_ValueChanged);
+			// 
+			// label17
+			// 
+			this.label17.AutoSize = true;
+			this.label17.Location = new System.Drawing.Point(168, 161);
+			this.label17.Name = "label17";
+			this.label17.Size = new System.Drawing.Size(49, 13);
+			this.label17.TabIndex = 17;
+			this.label17.Text = "Font size";
+			// 
 			// FormOptions
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1139,6 +1177,7 @@
 			((System.ComponentModel.ISupportInitialize)(this.nudTourBRec)).EndInit();
 			this.tabPageBooks.ResumeLayout(false);
 			this.groupBox1.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this.nudFontSize)).EndInit();
 			this.ResumeLayout(false);
 
 		}
@@ -1212,5 +1251,7 @@
 		public System.Windows.Forms.NumericUpDown nudTourBRec;
 		private System.Windows.Forms.Label label15;
 		public System.Windows.Forms.CheckBox cbSpam;
+		private System.Windows.Forms.Label label17;
+		public System.Windows.Forms.NumericUpDown nudFontSize;
 	}
 }
