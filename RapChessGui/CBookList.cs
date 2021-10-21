@@ -178,8 +178,8 @@ namespace RapChessGui
 		public void SaveToIni()
 		{
 			iniFile.DeleteKey("book");
-			foreach (CBook br in list)
-				br.SaveToIni();
+			foreach (CBook b in list)
+				b.SaveToIni();
 		}
 
 		public CBook NextTournament(CBook b, bool rotate = true, bool back = false)
