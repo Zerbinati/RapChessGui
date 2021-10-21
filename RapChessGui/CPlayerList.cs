@@ -113,14 +113,14 @@ namespace RapChessGui
 
 		public void LoadFromIni()
 		{
-			tournament = FormChess.iniFile.ReadInt($"player>{name}>tournament", tournament);
-			engine = FormChess.iniFile.Read($"player>{name}>engine", "Human");
-			modeValue.mode = FormChess.iniFile.Read($"player>{name}>mode", modeValue.mode);
-			modeValue.value = FormChess.iniFile.ReadInt($"player>{name}>value", modeValue.value);
-			book = FormChess.iniFile.Read($"player>{name}>book", "None");
-			elo = FormChess.iniFile.Read($"player>{name}>elo", elo);
-			eloOrg = FormChess.iniFile.Read($"player>{name}>eloOrg", eloOrg);
-			hisElo.LoadFromStr(FormChess.iniFile.Read($"player>{name}>history"));
+			tournament = CPlayerList.iniFile.ReadInt($"player>{name}>tournament", tournament);
+			engine = CPlayerList.iniFile.Read($"player>{name}>engine", "Human");
+			modeValue.mode = CPlayerList.iniFile.Read($"player>{name}>mode", modeValue.mode);
+			modeValue.value = CPlayerList.iniFile.ReadInt($"player>{name}>value", modeValue.value);
+			book = CPlayerList.iniFile.Read($"player>{name}>book", "None");
+			elo = CPlayerList.iniFile.Read($"player>{name}>elo", elo);
+			eloOrg = CPlayerList.iniFile.Read($"player>{name}>eloOrg", eloOrg);
+			hisElo.LoadFromStr(CPlayerList.iniFile.Read($"player>{name}>history"));
 		}
 
 		public void SaveToIni()
@@ -132,14 +132,14 @@ namespace RapChessGui
 				hisElo.Add(e);
 				hisElo.Add(e);
 			}
-			FormChess.iniFile.Write($"player>{name}>tournament", tournament);
-			FormChess.iniFile.Write($"player>{name}>engine", engine);
-			FormChess.iniFile.Write($"player>{name}>mode", modeValue.mode);
-			FormChess.iniFile.Write($"player>{name}>value", modeValue.value);
-			FormChess.iniFile.Write($"player>{name}>book", book);
-			FormChess.iniFile.Write($"player>{name}>elo", elo);
-			FormChess.iniFile.Write($"player>{name}>eloOrg", eloOrg);
-			FormChess.iniFile.Write($"player>{name}>history", hisElo.SaveToStr());
+			CPlayerList.iniFile.Write($"player>{name}>tournament", tournament);
+			CPlayerList.iniFile.Write($"player>{name}>engine", engine);
+			CPlayerList.iniFile.Write($"player>{name}>mode", modeValue.mode);
+			CPlayerList.iniFile.Write($"player>{name}>value", modeValue.value);
+			CPlayerList.iniFile.Write($"player>{name}>book", book);
+			CPlayerList.iniFile.Write($"player>{name}>elo", elo);
+			CPlayerList.iniFile.Write($"player>{name}>eloOrg", eloOrg);
+			CPlayerList.iniFile.Write($"player>{name}>history", hisElo.SaveToStr());
 		}
 
 		public string GetName()
@@ -166,6 +166,7 @@ namespace RapChessGui
 	public class CPlayerList
 	{
 		public List<CPlayer> list = new List<CPlayer>();
+		public static CRapIni iniFile = new CRapIni(@"Ini\players.ini");
 
 		public void Add(CPlayer p)
 		{
@@ -277,7 +278,7 @@ namespace RapChessGui
 		public int LoadFromIni()
 		{
 			list.Clear();
-			List<string> pl = FormChess.iniFile.ReadKeyList("player");
+			List<string> pl = iniFile.ReadKeyList("player");
 			foreach (string name in pl)
 			{
 				var p = new CPlayer(name);
@@ -289,7 +290,7 @@ namespace RapChessGui
 
 		public void DeletePlayer(string name)
 		{
-			FormChess.iniFile.DeleteKey($"player>{name}");
+			iniFile.DeleteKey($"player>{name}");
 			int i = GetIndex(name);
 			if (i >= 0)
 				list.RemoveAt(i);
@@ -297,9 +298,9 @@ namespace RapChessGui
 
 		public void SaveToIni()
 		{
-			FormChess.iniFile.DeleteKey("player");
-			foreach (CPlayer u in list)
-				u.SaveToIni();
+			iniFile.DeleteKey("player");
+			foreach (CPlayer p in list)
+				p.SaveToIni();
 		}
 
 		public int GetOptElo(double index)

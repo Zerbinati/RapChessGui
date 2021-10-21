@@ -157,7 +157,7 @@ namespace RapChessGui
 		public int LoadFromIni()
 		{
 			list.Clear();
-			List<string> bl = FormChess.iniFile.ReadKeyList("book");
+			List<string> bl = CBookList.iniFile.ReadKeyList("book");
 			foreach (string name in bl)
 			{
 				var br = new CBook(name);

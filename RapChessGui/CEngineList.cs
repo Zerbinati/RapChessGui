@@ -240,7 +240,7 @@ namespace RapChessGui
 		public int LoadFromIni()
 		{
 			list.Clear();
-			List<string> en = FormChess.iniFile.ReadKeyList("engine");
+			List<string> en = CEngineList.iniFile.ReadKeyList("engine");
 			foreach (string name in en)
 			{
 				CEngine engine = new CEngine(name);

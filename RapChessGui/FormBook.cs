@@ -64,7 +64,7 @@ namespace RapChessGui
 			CBook book = FormChess.bookList.GetBook(curBookName);
 			if (book == null)
 				return;
-			FormChess.iniFile.DeleteKey($"book>{book.name}");
+			CBookList.iniFile.DeleteKey($"book>{book.name}");
 			SaveToIni(book);
 			MessageBox.Show($"Reader {book.name} has been modified");
 			CData.reset = true;
