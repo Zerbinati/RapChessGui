@@ -243,12 +243,6 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_C84EA68A140443F59FF57DADF717D290"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_DF8AC4B3FD8E44C5861487E20BAF4D07"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -524,7 +518,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:RapChessGui, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:RapChessGui, Version=1.0.0.0, Culture=neutral, processorArchitecture=AMD64"
                 "ScatterAssemblies"
                 {
                     "_0F7DD1A0B40C46969523A5EFBF877319"
@@ -1297,26 +1291,6 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_C84EA68A140443F59FF57DADF717D290"
-            {
-            "SourcePath" = "8:..\\RapChessGui\\Release\\Books\\Bin\\Gm2200.bin"
-            "TargetName" = "8:Gm2200.bin"
-            "Tag" = "8:"
-            "Folder" = "8:_A2EA34A862FE4AEF9591DE019574D3DA"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_DF8AC4B3FD8E44C5861487E20BAF4D07"
             {
             "SourcePath" = "8:..\\RapChessGui\\Release\\Books\\BigBin.bin"
@@ -1495,17 +1469,6 @@
                     "Property" = "8:_3AFAA0FB635F483BA320A88CFDAE7BD3"
                         "Folders"
                         {
-                            "{9EF0B969-E518-4E46-987F-47570745A589}:_6A6BF7BAD23E44029753F66E746E92AB"
-                            {
-                            "Name" = "8:History"
-                            "AlwaysCreate" = "11:TRUE"
-                            "Condition" = "8:"
-                            "Transitive" = "11:FALSE"
-                            "Property" = "8:_900AC12E66054A06A674B4C2E286D780"
-                                "Folders"
-                                {
-                                }
-                            }
                             "{9EF0B969-E518-4E46-987F-47570745A589}:_A520FF4183B04AF48BE9DD8F810F64A5"
                             {
                             "Name" = "8:Books"

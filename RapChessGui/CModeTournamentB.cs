@@ -147,6 +147,8 @@ namespace RapChessGui
 					repetition = b.tournament;
 					if ((b.GetElo() > o.GetElo()) != (rw > rl))
 						repetition++;
+					if (b.hisElo.list.Count < o.hisElo.list.Count)
+						repetition++;
 					rotate = true;
 				}
 			}
