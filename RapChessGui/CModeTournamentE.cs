@@ -55,7 +55,7 @@ namespace RapChessGui
 		{
 			engineList.list.Clear();
 			foreach (CEngine e in FormChess.engineList.list)
-				if ((e.tournament > 0) && ((modeValue.mode != "Standard") || e.modeStandard))
+				if (e.FileExists() && (e.tournament > 0) && ((modeValue.mode != "Standard") || e.modeStandard))
 					if ((e.GetElo() >= minElo) && (e.GetElo() <= maxElo))
 						engineList.Add(e);
 			return engineList;
