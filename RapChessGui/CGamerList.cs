@@ -250,7 +250,7 @@ namespace RapChessGui
 		public void TryStart()
 		{
 			if (player.IsComputer())
-				if ((book != null) && (!isBookFail))
+				if ((book != null) && ((bookPro.process.StartInfo.FileName != String.Empty)) && (!isBookFail))
 				{
 					if (!isBookStarted)
 					{
