@@ -1,6 +1,6 @@
 ﻿namespace RapChessGui
 {
-	partial class FormPlayer
+	partial class FormEditPlayer
 	{
 		/// <summary>
 		/// Required designer variable.
@@ -50,6 +50,7 @@
 			this.gbPlayers = new System.Windows.Forms.GroupBox();
 			this.listBox1 = new System.Windows.Forms.ListBox();
 			this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+			this.butRename = new System.Windows.Forms.Button();
 			this.panel1.SuspendLayout();
 			this.groupBox5.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.nudTournament)).BeginInit();
@@ -68,6 +69,7 @@
 			this.panel1.Controls.Add(this.butClearHistory);
 			this.panel1.Controls.Add(this.bDelete);
 			this.panel1.Controls.Add(this.bCreate);
+			this.panel1.Controls.Add(this.butRename);
 			this.panel1.Controls.Add(this.bUpdate);
 			this.panel1.Controls.Add(this.groupBox5);
 			this.panel1.Controls.Add(this.gbElo);
@@ -85,9 +87,9 @@
 			// 
 			this.butClearHistory.AutoSize = true;
 			this.butClearHistory.Dock = System.Windows.Forms.DockStyle.Top;
-			this.butClearHistory.Location = new System.Drawing.Point(0, 350);
+			this.butClearHistory.Location = new System.Drawing.Point(0, 353);
 			this.butClearHistory.Name = "butClearHistory";
-			this.butClearHistory.Size = new System.Drawing.Size(311, 33);
+			this.butClearHistory.Size = new System.Drawing.Size(311, 24);
 			this.butClearHistory.TabIndex = 28;
 			this.butClearHistory.Text = "Clear tournament history";
 			this.butClearHistory.UseVisualStyleBackColor = true;
@@ -97,9 +99,9 @@
 			// 
 			this.bDelete.AutoSize = true;
 			this.bDelete.Dock = System.Windows.Forms.DockStyle.Top;
-			this.bDelete.Location = new System.Drawing.Point(0, 317);
+			this.bDelete.Location = new System.Drawing.Point(0, 329);
 			this.bDelete.Name = "bDelete";
-			this.bDelete.Size = new System.Drawing.Size(311, 33);
+			this.bDelete.Size = new System.Drawing.Size(311, 24);
 			this.bDelete.TabIndex = 27;
 			this.bDelete.Text = "Delete";
 			this.bDelete.UseVisualStyleBackColor = true;
@@ -109,9 +111,9 @@
 			// 
 			this.bCreate.AutoSize = true;
 			this.bCreate.Dock = System.Windows.Forms.DockStyle.Top;
-			this.bCreate.Location = new System.Drawing.Point(0, 284);
+			this.bCreate.Location = new System.Drawing.Point(0, 305);
 			this.bCreate.Name = "bCreate";
-			this.bCreate.Size = new System.Drawing.Size(311, 33);
+			this.bCreate.Size = new System.Drawing.Size(311, 24);
 			this.bCreate.TabIndex = 26;
 			this.bCreate.Text = "Create";
 			this.bCreate.UseVisualStyleBackColor = true;
@@ -123,7 +125,7 @@
 			this.bUpdate.Dock = System.Windows.Forms.DockStyle.Top;
 			this.bUpdate.Location = new System.Drawing.Point(0, 257);
 			this.bUpdate.Name = "bUpdate";
-			this.bUpdate.Size = new System.Drawing.Size(311, 27);
+			this.bUpdate.Size = new System.Drawing.Size(311, 24);
 			this.bUpdate.TabIndex = 25;
 			this.bUpdate.Text = "Update";
 			this.bUpdate.UseVisualStyleBackColor = true;
@@ -336,7 +338,19 @@
 			this.listBox1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.listBox1_MouseMove);
 			this.listBox1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.listBox1_MouseUp);
 			// 
-			// FormPlayer
+			// butRename
+			// 
+			this.butRename.AutoSize = true;
+			this.butRename.Dock = System.Windows.Forms.DockStyle.Top;
+			this.butRename.Location = new System.Drawing.Point(0, 281);
+			this.butRename.Name = "butRename";
+			this.butRename.Size = new System.Drawing.Size(311, 24);
+			this.butRename.TabIndex = 35;
+			this.butRename.Text = "Rename";
+			this.butRename.UseVisualStyleBackColor = true;
+			this.butRename.Click += new System.EventHandler(this.butRename_Click);
+			// 
+			// FormEditPlayer
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -346,7 +360,7 @@
 			this.Controls.Add(this.panel1);
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
 			this.MinimizeBox = false;
-			this.Name = "FormPlayer";
+			this.Name = "FormEditPlayer";
 			this.ShowInTaskbar = false;
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
 			this.Text = "Players";
@@ -391,5 +405,6 @@
 		private System.Windows.Forms.ToolTip toolTip1;
 		private System.Windows.Forms.GroupBox groupBox5;
 		private System.Windows.Forms.NumericUpDown nudTournament;
+		private System.Windows.Forms.Button butRename;
 	}
 }

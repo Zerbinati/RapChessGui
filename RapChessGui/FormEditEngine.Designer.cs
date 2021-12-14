@@ -1,6 +1,6 @@
 ﻿namespace RapChessGui
 {
-	partial class FormEngine
+	partial class FormEditEngine
 	{
 		/// <summary>
 		/// Required designer variable.
@@ -52,6 +52,7 @@
 			this.tbEngineName = new System.Windows.Forms.TextBox();
 			this.gbEngines = new System.Windows.Forms.GroupBox();
 			this.listBox1 = new System.Windows.Forms.ListBox();
+			this.button1 = new System.Windows.Forms.Button();
 			this.panel1.SuspendLayout();
 			this.gbOptions.SuspendLayout();
 			this.gbTournament.SuspendLayout();
@@ -68,11 +69,12 @@
 			// 
 			// panel1
 			// 
-			this.panel1.Controls.Add(this.gbOptions);
 			this.panel1.Controls.Add(this.butReset);
 			this.panel1.Controls.Add(this.butClearHistory);
 			this.panel1.Controls.Add(this.bDelete);
 			this.panel1.Controls.Add(this.bCreate);
+			this.panel1.Controls.Add(this.button1);
+			this.panel1.Controls.Add(this.gbOptions);
 			this.panel1.Controls.Add(this.bUpdate);
 			this.panel1.Controls.Add(this.gbTournament);
 			this.panel1.Controls.Add(this.groupBox5);
@@ -92,9 +94,9 @@
 			this.gbOptions.AutoSize = true;
 			this.gbOptions.Controls.Add(this.panOptions);
 			this.gbOptions.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.gbOptions.Location = new System.Drawing.Point(0, 392);
+			this.gbOptions.Location = new System.Drawing.Point(0, 296);
 			this.gbOptions.Name = "gbOptions";
-			this.gbOptions.Size = new System.Drawing.Size(311, 290);
+			this.gbOptions.Size = new System.Drawing.Size(311, 386);
 			this.gbOptions.TabIndex = 29;
 			this.gbOptions.TabStop = false;
 			this.gbOptions.Text = "Options";
@@ -105,14 +107,14 @@
 			this.panOptions.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.panOptions.Location = new System.Drawing.Point(3, 16);
 			this.panOptions.Name = "panOptions";
-			this.panOptions.Size = new System.Drawing.Size(305, 271);
+			this.panOptions.Size = new System.Drawing.Size(305, 367);
 			this.panOptions.TabIndex = 0;
 			// 
 			// butReset
 			// 
 			this.butReset.AutoSize = true;
 			this.butReset.Dock = System.Windows.Forms.DockStyle.Top;
-			this.butReset.Location = new System.Drawing.Point(0, 368);
+			this.butReset.Location = new System.Drawing.Point(0, 392);
 			this.butReset.Name = "butReset";
 			this.butReset.Size = new System.Drawing.Size(311, 24);
 			this.butReset.TabIndex = 34;
@@ -124,7 +126,7 @@
 			// 
 			this.butClearHistory.AutoSize = true;
 			this.butClearHistory.Dock = System.Windows.Forms.DockStyle.Top;
-			this.butClearHistory.Location = new System.Drawing.Point(0, 344);
+			this.butClearHistory.Location = new System.Drawing.Point(0, 368);
 			this.butClearHistory.Name = "butClearHistory";
 			this.butClearHistory.Size = new System.Drawing.Size(311, 24);
 			this.butClearHistory.TabIndex = 32;
@@ -136,7 +138,7 @@
 			// 
 			this.bDelete.AutoSize = true;
 			this.bDelete.Dock = System.Windows.Forms.DockStyle.Top;
-			this.bDelete.Location = new System.Drawing.Point(0, 320);
+			this.bDelete.Location = new System.Drawing.Point(0, 344);
 			this.bDelete.Name = "bDelete";
 			this.bDelete.Size = new System.Drawing.Size(311, 24);
 			this.bDelete.TabIndex = 27;
@@ -148,7 +150,7 @@
 			// 
 			this.bCreate.AutoSize = true;
 			this.bCreate.Dock = System.Windows.Forms.DockStyle.Top;
-			this.bCreate.Location = new System.Drawing.Point(0, 296);
+			this.bCreate.Location = new System.Drawing.Point(0, 320);
 			this.bCreate.Name = "bCreate";
 			this.bCreate.Size = new System.Drawing.Size(311, 24);
 			this.bCreate.TabIndex = 26;
@@ -370,7 +372,19 @@
 			this.listBox1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.listBox1_MouseMove);
 			this.listBox1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.listBox1_MouseUp);
 			// 
-			// FormEngine
+			// button1
+			// 
+			this.button1.AutoSize = true;
+			this.button1.Dock = System.Windows.Forms.DockStyle.Top;
+			this.button1.Location = new System.Drawing.Point(0, 296);
+			this.button1.Name = "button1";
+			this.button1.Size = new System.Drawing.Size(311, 24);
+			this.button1.TabIndex = 35;
+			this.button1.Text = "Rename";
+			this.button1.UseVisualStyleBackColor = true;
+			this.button1.Click += new System.EventHandler(this.button1_Click);
+			// 
+			// FormEditEngine
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -380,7 +394,7 @@
 			this.Controls.Add(this.panel1);
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
 			this.MinimizeBox = false;
-			this.Name = "FormEngine";
+			this.Name = "FormEditEngine";
 			this.ShowInTaskbar = false;
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
 			this.Text = "Engines";
@@ -432,5 +446,6 @@
 		private System.Windows.Forms.NumericUpDown nudTournament;
 		private System.Windows.Forms.Panel panOptions;
 		private System.Windows.Forms.Button butReset;
+		private System.Windows.Forms.Button button1;
 	}
 }

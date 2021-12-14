@@ -5,16 +5,28 @@ using RapIni;
 
 namespace RapChessGui
 {
-	public partial class FormPlayer : Form
+	public partial class FormEditPlayer : Form
 	{
 		int indexFirst = -1;
 		int tournament = -1;
 		CPlayer player = null;
 		readonly CModeValue modeValue = new CModeValue();
 
-		public FormPlayer()
+		public FormEditPlayer()
 		{
 			InitializeComponent();
+		}
+
+		void ClickUpdate()
+		{
+			modeValue.mode = combMode.Text;
+			modeValue.SetValue((int)nudValue.Value);
+			if (player == null)
+				return;
+			CPlayerList.iniFile.DeleteKey($"player>{player.name}");
+			SaveToIni(player);
+			MessageBox.Show($"Player {player.name} has been modified");
+			CData.reset = true;
 		}
 
 		void SelectPlayer()
@@ -101,14 +113,7 @@ namespace RapChessGui
 
 		private void ButUpdate_Click(object sender, EventArgs e)
 		{
-			modeValue.mode = combMode.Text;
-			modeValue.SetValue((int)nudValue.Value);
-			if (player == null)
-				return;
-			CPlayerList.iniFile.DeleteKey($"player>{player.name}");
-			SaveToIni(player);
-			MessageBox.Show($"Player {player.name} has been modified");
-			CData.reset = true;
+			ClickUpdate();
 		}
 
 		private void ButCreate_Click(object sender, EventArgs e)
@@ -244,6 +249,12 @@ namespace RapChessGui
 				if ((index >= 0) && (index < listBox1.Items.Count) && (tournament >= 0))
 					SelectPlayers(indexFirst, index, tournament > 0);
 			}
+		}
+
+		private void butRename_Click(object sender, EventArgs e)
+		{
+			tbPlayerName.Text = String.Empty;
+			ClickUpdate();
 		}
 	}
 }

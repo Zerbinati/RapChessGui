@@ -1,6 +1,6 @@
 ﻿namespace RapChessGui
 {
-	partial class FormBook
+	partial class FormEditBook
 	{
 		/// <summary>
 		/// Required designer variable.
@@ -45,6 +45,7 @@
 			this.tbReaderName = new System.Windows.Forms.TextBox();
 			this.gbBooks = new System.Windows.Forms.GroupBox();
 			this.listBox1 = new System.Windows.Forms.ListBox();
+			this.button1 = new System.Windows.Forms.Button();
 			this.panel1.SuspendLayout();
 			this.groupBox5.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.nudTournament)).BeginInit();
@@ -64,6 +65,7 @@
 			// 
 			this.panel1.Controls.Add(this.bDelete);
 			this.panel1.Controls.Add(this.bCreate);
+			this.panel1.Controls.Add(this.button1);
 			this.panel1.Controls.Add(this.bUpdate);
 			this.panel1.Controls.Add(this.groupBox5);
 			this.panel1.Controls.Add(this.gbElo);
@@ -80,9 +82,9 @@
 			// 
 			this.bDelete.AutoSize = true;
 			this.bDelete.Dock = System.Windows.Forms.DockStyle.Top;
-			this.bDelete.Location = new System.Drawing.Point(0, 256);
+			this.bDelete.Location = new System.Drawing.Point(0, 268);
 			this.bDelete.Name = "bDelete";
-			this.bDelete.Size = new System.Drawing.Size(311, 33);
+			this.bDelete.Size = new System.Drawing.Size(311, 24);
 			this.bDelete.TabIndex = 27;
 			this.bDelete.Text = "Delete";
 			this.bDelete.UseVisualStyleBackColor = true;
@@ -92,9 +94,9 @@
 			// 
 			this.bCreate.AutoSize = true;
 			this.bCreate.Dock = System.Windows.Forms.DockStyle.Top;
-			this.bCreate.Location = new System.Drawing.Point(0, 223);
+			this.bCreate.Location = new System.Drawing.Point(0, 244);
 			this.bCreate.Name = "bCreate";
-			this.bCreate.Size = new System.Drawing.Size(311, 33);
+			this.bCreate.Size = new System.Drawing.Size(311, 24);
 			this.bCreate.TabIndex = 26;
 			this.bCreate.Text = "Create";
 			this.bCreate.UseVisualStyleBackColor = true;
@@ -106,7 +108,7 @@
 			this.bUpdate.Dock = System.Windows.Forms.DockStyle.Top;
 			this.bUpdate.Location = new System.Drawing.Point(0, 196);
 			this.bUpdate.Name = "bUpdate";
-			this.bUpdate.Size = new System.Drawing.Size(311, 27);
+			this.bUpdate.Size = new System.Drawing.Size(311, 24);
 			this.bUpdate.TabIndex = 25;
 			this.bUpdate.Text = "Update";
 			this.bUpdate.UseVisualStyleBackColor = true;
@@ -260,7 +262,19 @@
 			this.listBox1.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.listBox1_DrawItem);
 			this.listBox1.SelectedValueChanged += new System.EventHandler(this.ListBox1_SelectedValueChanged);
 			// 
-			// FormBook
+			// button1
+			// 
+			this.button1.AutoSize = true;
+			this.button1.Dock = System.Windows.Forms.DockStyle.Top;
+			this.button1.Location = new System.Drawing.Point(0, 220);
+			this.button1.Name = "button1";
+			this.button1.Size = new System.Drawing.Size(311, 24);
+			this.button1.TabIndex = 35;
+			this.button1.Text = "Rename";
+			this.button1.UseVisualStyleBackColor = true;
+			this.button1.Click += new System.EventHandler(this.button1_Click);
+			// 
+			// FormEditBook
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -270,11 +284,10 @@
 			this.Controls.Add(this.panel1);
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
 			this.MinimizeBox = false;
-			this.Name = "FormBook";
+			this.Name = "FormEditBook";
 			this.ShowInTaskbar = false;
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
 			this.Text = "Books";
-			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormBook_FormClosing);
 			this.Shown += new System.EventHandler(this.FormBook_Shown);
 			this.panel1.ResumeLayout(false);
 			this.panel1.PerformLayout();
@@ -311,5 +324,6 @@
 		private System.Windows.Forms.NumericUpDown nudElo;
 		private System.Windows.Forms.GroupBox groupBox5;
 		private System.Windows.Forms.NumericUpDown nudTournament;
+		private System.Windows.Forms.Button button1;
 	}
 }

@@ -4,13 +4,24 @@ using System.Windows.Forms;
 
 namespace RapChessGui
 {
-	public partial class FormBook : Form
+	public partial class FormEditBook : Form
 	{
 		string curBookName;
 
-		public FormBook()
+		public FormEditBook()
 		{
 			InitializeComponent();
+		}
+
+		void ClickUpdate()
+		{
+			CBook book = FormChess.bookList.GetBook(curBookName);
+			if (book == null)
+				return;
+			CBookList.iniFile.DeleteKey($"book>{book.name}");
+			SaveToIni(book);
+			MessageBox.Show($"Reader {book.name} has been modified");
+			CData.reset = true;
 		}
 
 		public void SelectReader()
@@ -61,13 +72,7 @@ namespace RapChessGui
 
 		private void ButUpdate_Click(object sender, EventArgs e)
 		{
-			CBook book = FormChess.bookList.GetBook(curBookName);
-			if (book == null)
-				return;
-			CBookList.iniFile.DeleteKey($"book>{book.name}");
-			SaveToIni(book);
-			MessageBox.Show($"Reader {book.name} has been modified");
-			CData.reset = true;
+			ClickUpdate();
 		}
 
 		private void ButCreate_Click(object sender, EventArgs e)
@@ -124,8 +129,11 @@ namespace RapChessGui
 			e.DrawFocusRectangle();
 		}
 
-		private void FormBook_FormClosing(object sender, FormClosingEventArgs e)
+		private void button1_Click(object sender, EventArgs e)
 		{
+			tbReaderName.Text = String.Empty;
+			ClickUpdate();
 		}
+
 	}
 }

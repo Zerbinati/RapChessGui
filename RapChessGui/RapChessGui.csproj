@@ -145,11 +145,11 @@
     <Compile Include="FormChess.designer.cs">
       <DependentUpon>FormChess.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormBook.cs">
+    <Compile Include="FormEditBook.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormBook.Designer.cs">
-      <DependentUpon>FormBook.cs</DependentUpon>
+    <Compile Include="FormEditBook.Designer.cs">
+      <DependentUpon>FormEditBook.cs</DependentUpon>
     </Compile>
     <Compile Include="FormChartE.cs">
       <SubType>Form</SubType>
@@ -187,11 +187,11 @@
     <Compile Include="FormOptions.Designer.cs">
       <DependentUpon>FormOptions.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormEngine.cs">
+    <Compile Include="FormEditEngine.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormEngine.Designer.cs">
-      <DependentUpon>FormEngine.cs</DependentUpon>
+    <Compile Include="FormEditEngine.Designer.cs">
+      <DependentUpon>FormEditEngine.cs</DependentUpon>
     </Compile>
     <Compile Include="FormLogGames.cs">
       <SubType>Form</SubType>
@@ -199,11 +199,11 @@
     <Compile Include="FormLogGames.Designer.cs">
       <DependentUpon>FormLogGames.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormPlayer.cs">
+    <Compile Include="FormEditPlayer.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormPlayer.designer.cs">
-      <DependentUpon>FormPlayer.cs</DependentUpon>
+    <Compile Include="FormEditPlayer.designer.cs">
+      <DependentUpon>FormEditPlayer.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <EmbeddedResource Include="FormChartB.resx">
@@ -212,8 +212,8 @@
     <EmbeddedResource Include="FormChess.resx">
       <DependentUpon>FormChess.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormBook.resx">
-      <DependentUpon>FormBook.cs</DependentUpon>
+    <EmbeddedResource Include="FormEditBook.resx">
+      <DependentUpon>FormEditBook.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="FormChartE.resx">
@@ -234,14 +234,14 @@
     <EmbeddedResource Include="FormOptions.resx">
       <DependentUpon>FormOptions.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormEngine.resx">
-      <DependentUpon>FormEngine.cs</DependentUpon>
+    <EmbeddedResource Include="FormEditEngine.resx">
+      <DependentUpon>FormEditEngine.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormLogGames.resx">
       <DependentUpon>FormLogGames.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormPlayer.resx">
-      <DependentUpon>FormPlayer.cs</DependentUpon>
+    <EmbeddedResource Include="FormEditPlayer.resx">
+      <DependentUpon>FormEditPlayer.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

@@ -6,16 +6,16 @@ using System.Windows.Forms;
 
 namespace RapChessGui
 {
-	public partial class FormEngine : Form
+	public partial class FormEditEngine : Form
 	{
-		public static FormEngine This;
+		public static FormEditEngine This;
 		int indexFirst = -1;
 		int tournament = -1;
 		CEngine engine = null;
 		public static CProcess process = null;
 		readonly COptionList optionList = new COptionList();
 
-		public FormEngine()
+		public FormEditEngine()
 		{
 			This = this;
 			InitializeComponent();
@@ -28,6 +28,16 @@ namespace RapChessGui
 				This.Uciok();
 			else
 				This.optionList.Add(o);
+		}
+
+		void ClickUpdate()
+		{
+			if (engine == null)
+				return;
+			FormChess.iniFile.DeleteKey($"engine>{engine.name}");
+			SaveToIni(engine);
+			MessageBox.Show($"Chess {engine.name} has been modified");
+			CData.reset = true;
 		}
 
 		public void Uciok()
@@ -216,12 +226,7 @@ namespace RapChessGui
 
 		private void ButUpdate_Click(object sender, EventArgs e)
 		{
-			if (engine == null)
-				return;
-			FormChess.iniFile.DeleteKey($"engine>{engine.name}");
-			SaveToIni(engine);
-			MessageBox.Show($"Chess {engine.name} has been modified");
-			CData.reset = true;
+			ClickUpdate();
 		}
 
 		private void ButDelete_Click(object sender, EventArgs e)
@@ -339,6 +344,12 @@ namespace RapChessGui
 		private void FormEngine_FormClosing(object sender, FormClosingEventArgs e)
 		{
 			process.Terminate();
+		}
+
+		private void button1_Click(object sender, EventArgs e)
+		{
+			tbEngineName.Text = String.Empty;
+			ClickUpdate();
 		}
 	}
 }

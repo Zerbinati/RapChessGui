@@ -51,9 +51,9 @@ namespace RapChessGui
 		readonly FormChartB formHisB = new FormChartB();
 		readonly FormChartP formHisP = new FormChartP();
 		readonly FormChartE formHisE = new FormChartE();
-		readonly FormEngine formEngine = new FormEngine();
-		readonly FormBook formBook = new FormBook();
-		readonly FormPlayer formPlayer = new FormPlayer();
+		readonly FormEditEngine formEngine = new FormEditEngine();
+		readonly FormEditBook formBook = new FormEditBook();
+		readonly FormEditPlayer formPlayer = new FormEditPlayer();
 		readonly CGamerList GamerList = new CGamerList();
 
 		#region initiation
@@ -2627,7 +2627,7 @@ namespace RapChessGui
 		{
 			IniSave();
 			GamerList.Terminate();
-			FormEngine.process.Terminate();
+			FormEditEngine.process.Terminate();
 			FormLogEngines.process.Terminate();
 		}
 
