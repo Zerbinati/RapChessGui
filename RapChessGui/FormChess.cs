@@ -310,6 +310,8 @@ namespace RapChessGui
 			int size = sc.Orientation == Orientation.Horizontal ? sc.Size.Height : sc.Size.Width;
 			double o = (double)sc.SplitterDistance / size;
 			double p = iniFile.ReadDouble($"position>split>{sc.Name}", o);
+			if (p > 1)
+				p = 1;
 			int d = Convert.ToInt32(p * size);
 			try
 			{
