@@ -348,6 +348,11 @@ namespace RapChessGui
 
 		#region main
 
+		void MakeBoardSquare()
+		{
+			splitContainerBoard.SplitterDistance = panBoard.Height;
+		}
+
 		void PlaySound()
 		{
 			if (FormOptions.soundOn)
@@ -674,6 +679,7 @@ namespace RapChessGui
 		{
 			SetColor();
 			SetBoardRotate();
+			//splitContainerBoard.SplitterDistance = panBoard.Height;
 			Board.Resize(panBoard.Width, panBoard.Height);
 			RenderBoard();
 		}
@@ -3053,11 +3059,6 @@ namespace RapChessGui
 			TournamentPSelect();
 		}
 
-		private void splitContainerMain_SplitterMoved(object sender, SplitterEventArgs e)
-		{
-			splitContainerBoard.SplitterDistance = panBoard.Height;
-		}
-
 		private void timerAnimation_Tick(object sender, EventArgs e)
 		{
 			GameLoop();
@@ -3129,6 +3130,16 @@ namespace RapChessGui
 		private void lastTournamentbooksToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			ShowFormLastGame("tournament-books");
+		}
+
+		private void panBoard_Validated(object sender, EventArgs e)
+		{
+			MakeBoardSquare();
+		}
+
+		private void splitContainerMain_SplitterMoved(object sender, SplitterEventArgs e)
+		{
+			MakeBoardSquare();
 		}
 	}
 }

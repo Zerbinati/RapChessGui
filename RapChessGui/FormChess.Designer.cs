@@ -3600,6 +3600,7 @@
 			this.panBoard.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseMove);
 			this.panBoard.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseUp);
 			this.panBoard.Resize += new System.EventHandler(this.panBoard_Resize);
+			this.panBoard.Validated += new System.EventHandler(this.panBoard_Validated);
 			// 
 			// tlpPromotion
 			// 
