@@ -784,6 +784,11 @@ namespace NSChess
 
 		#region utils
 
+		public int MoveNumber()
+		{
+			return (g_moveNumber >> 1) + 1;
+		}
+
 		public CGameState GetGameState(out bool check)
 		{
 			GenerateAllMoves(!whiteTurn, true);
@@ -810,7 +815,7 @@ namespace NSChess
 
 		bool IsRepetition(int count = 3)
 		{
-			int min =  undoIndex - g_move50;
+			int min = undoIndex - g_move50;
 			if (min < 0)
 				min = 0;
 			for (int n = undoIndex - 4; n >= min; n -= 2)

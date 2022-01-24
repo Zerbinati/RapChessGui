@@ -24,6 +24,11 @@ namespace RapChessGui
 		[DllImport("user32")]
 		private static extern bool ShowScrollBar(IntPtr hwnd, int wBar, [MarshalAs(UnmanagedType.Bool)] bool bShow);
 
+		/// <summary>
+		/// Next game can auto start.
+		/// </summary>
+		bool autoStartNexGame = false;
+
 		public const int WM_GAME_NEXT = 1024;
 		public static IntPtr handle;
 		public static FormChess This;
@@ -72,7 +77,8 @@ namespace RapChessGui
 					}
 					break;
 				case WM_GAME_NEXT:
-					NextGame();
+					if (autoStartNexGame)
+						NextGame();
 					break;
 			}
 			base.WndProc(ref m);
@@ -382,6 +388,7 @@ namespace RapChessGui
 
 		void ComClear()
 		{
+			autoStartNexGame = false;
 			continuations = String.Empty;
 			Text = $"RapChessGui Games {CData.gamesPlayed} Draws {CData.gamesDraw} Time out {CData.gamesTime} Errors {CData.gamesError}";
 			CData.eco = String.Empty;
@@ -671,6 +678,7 @@ namespace RapChessGui
 					TournamentPEnd(pw, pl, isDraw);
 				if (CData.gameMode == CGameMode.training)
 					TrainingEnd(gw, isDraw);
+				autoStartNexGame = true;
 				Task.Delay(FormOptions.gameBreak * 1000).ContinueWith(t => CWinMessage.Message(WM_GAME_NEXT));
 			}
 		}
@@ -760,7 +768,8 @@ namespace RapChessGui
 						if (g.isBookStarted && !g.isBookFail)
 						{
 							g.countMovesBook++;
-							g.score = "book";
+							if (g.score == String.Empty)
+								g.score = "book";
 							ShowInfo($"book {umo}", Color.Aquamarine, 0, g);
 							if ((g.engine != null) && (g.engine.protocol == CProtocol.winboard))
 								g.isPositionWb = false;
@@ -1196,8 +1205,7 @@ namespace RapChessGui
 
 		void ShowMoveNumber()
 		{
-			int moveNumber = (chess.g_moveNumber >> 1) + 1;
-			tssMove.Text = $"Move {moveNumber} {chess.g_move50}";
+			tssMove.Text = $"Move {chess.MoveNumber()} {chess.g_move50} {chess.GenerateValidMoves(out _).Count}";
 		}
 
 		public bool MakeMove(string umo)
