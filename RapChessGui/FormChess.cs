@@ -530,7 +530,7 @@ namespace RapChessGui
 				g.ponderFormated = String.Empty;
 			if (g.isWhite)
 			{
-				labScoreW.Text = $"Score {g.score}";
+				labScoreW.Text = $"Score {g.scoreS}";
 				labNodesW.Text = $"Nodes {g.nodes:N0}";
 				labNpsW.Text = $"Nps {g.GetNps():N0}";
 				labPonderW.Text = $"Ponder {g.ponderFormated}";
@@ -540,7 +540,7 @@ namespace RapChessGui
 			}
 			else
 			{
-				labScoreB.Text = $"Score {g.score}";
+				labScoreB.Text = $"Score {g.scoreS}";
 				labNodesB.Text = $"Nodes {g.nodes:N0}";
 				labNpsB.Text = $"Nps {g.GetNps():N0}";
 				labPonderB.Text = $"Ponder {g.ponderFormated}";
@@ -703,7 +703,7 @@ namespace RapChessGui
 			{
 				CRapLog.Add($"milliseconds {g.engine.name} {g.infMs}");
 			}
-			ListViewItem lvi = new ListViewItem(new[] { dt.ToString("mm:ss.ff"), g.score, g.GetDepth(), g.nodes.ToString("N0"), g.nps.ToString("N0"), g.pv });
+			ListViewItem lvi = new ListViewItem(new[] { dt.ToString("mm:ss.ff"), g.scoreS, g.GetDepth(), g.nodes.ToString("N0"), g.nps.ToString("N0"), g.pv });
 			ListView lv = g.isWhite ? lvMovesW : lvMovesB;
 			if ((lv.Items.Count & 1) > 0)
 				lvi.BackColor = CBoard.colorMessage;
@@ -768,8 +768,8 @@ namespace RapChessGui
 						if (g.isBookStarted && !g.isBookFail)
 						{
 							g.countMovesBook++;
-							if (g.score == String.Empty)
-								g.score = "book";
+							if (g.scoreS == String.Empty)
+								g.scoreS = "book";
 							ShowInfo($"book {umo}", Color.Aquamarine, 0, g);
 							if ((g.engine != null) && (g.engine.protocol == CProtocol.winboard))
 								g.isPositionWb = false;
@@ -793,21 +793,21 @@ namespace RapChessGui
 					ulong nps = 0;
 					if (Uci.GetValue("cp", out string s))
 					{
-						g.score = s;
-						g.iScore = Int32.Parse(s);
+						g.scoreS = s;
+						g.scoreI = Int32.Parse(s);
 					}
 					if (Uci.GetValue("mate", out s))
 					{
 						int ip = Int32.Parse(s);
 						if (ip > 0)
 						{
-							g.score = $"+{s}M";
-							g.iScore = 0xffff - ip;
+							g.scoreS = $"+{s}M";
+							g.scoreI = 0xffff - ip;
 						}
 						else
 						{
-							g.score = $"{s}M";
-							g.iScore = -0xffff + ip;
+							g.scoreS = $"{s}M";
+							g.scoreI = -0xffff + ip;
 						}
 					}
 					if (Uci.GetValue("depth", out s))
@@ -913,8 +913,8 @@ namespace RapChessGui
 						try
 						{
 							g.depth = Int32.Parse(Uci.tokens[0]);
-							g.score = Uci.tokens[1];
-							g.iScore = Convert.ToInt32(g.score);
+							g.scoreS = Uci.tokens[1];
+							g.scoreI = Convert.ToInt32(g.scoreS);
 							g.infMs = (ulong)Convert.ToInt64(Uci.tokens[2]) * 10;
 							g.nodes = (ulong)Convert.ToInt64(Uci.tokens[3]);
 							g.nps = g.infMs > 0 ? (g.nodes * 1000) / g.infMs : 0;
@@ -1217,7 +1217,7 @@ namespace RapChessGui
 			CGamer cg = GamerList.GamerCur();
 			cg.timer.Stop();
 			double m = GamerList.curIndex == 0 ? 0.01 : -0.01;
-			chartMain.Series[GamerList.curIndex].Points.Add(cg.iScore * m);
+			chartMain.Series[GamerList.curIndex].Points.Add(cg.scoreI * m);
 			if (GetRanked() && CModeGame.ranked && (cg.engine == null) && ((chess.g_moveNumber >> 1) == 4))
 			{
 				cg.player.eloOrg = cg.player.elo;
@@ -1236,7 +1236,7 @@ namespace RapChessGui
 			Board.MakeMove(gmo);
 			chess.MakeMove(umo, out _, out int piece);
 			CHistory.AddMove(piece, gmo, umo, san);
-			MoveToLvMoves(CHistory.moveList.Count - 1, piece, CHistory.LastNotation(), cg.score);
+			MoveToLvMoves(CHistory.moveList.Count - 1, piece, CHistory.LastNotation(), cg.scoreS);
 			CEco eco = EcoList.GetEcoFen(chess.GetEpd());
 			if (cg.player.IsRealHuman())
 			{

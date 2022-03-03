@@ -53,13 +53,13 @@ namespace RapChessGui
 		/// </summary>
 		public int countMoves;
 		public int msgPriority = 0;
-		public int iScore;
+		public int scoreI;
 		public ulong infMs;
 		public ulong nodes;
 		public ulong nps;
 		public ulong npsSum;
 		public ulong npsCount;
-		public string score;
+		public string scoreS;
 		public int depth;
 		public int seldepth;
 		public string ponder;
@@ -79,7 +79,7 @@ namespace RapChessGui
 
 		public CGamer()
 		{
-			Init(true);
+			InitGame(true);
 		}
 
 		public string GetMessage(out int pid)
@@ -150,7 +150,7 @@ namespace RapChessGui
 			SendMessageToEngine("quit");
 		}
 
-		public void Init(bool white)
+		public void InitGame(bool white)
 		{
 			curProcess = null;
 			isWhite = white;
@@ -165,26 +165,26 @@ namespace RapChessGui
 			countMovesBook = 0;
 			countMovesEngine = 0;
 			countMoves = 0;
-			iScore = 0;
 			nodes = 0;
 			nps = 0;
 			npsSum = 0;
 			npsCount = 0;
 			timerStart = 0;
 			timer.Reset();
-			Clear();
+			InitMove();
 		}
 
-		void Clear()
+		void InitMove()
 		{
 			msgPriority = 0;
 			depth = 0;
 			seldepth = 0;
+			scoreI = 0;
 			lastMove = String.Empty;
 			ponder = String.Empty;
 			ponderFormated = String.Empty;
 			pv = String.Empty;
-			score = String.Empty;
+			scoreS = String.Empty;
 		}
 
 		public string GetName()
@@ -349,7 +349,7 @@ namespace RapChessGui
 		/// </summary>
 		public void EngMakeMove()
 		{
-			Clear();
+			InitMove();
 			if (engine.protocol == CProtocol.uci)
 				UciGo();
 			else
@@ -452,10 +452,10 @@ namespace RapChessGui
 		{
 			double dr = 1.0;
 			double dg = 1.0;
-			if (iScore > 0)
-				dr = 1.0 - iScore / 500.0;
-			if (iScore < 0)
-				dg = 1.0 + iScore / 500.0;
+			if (scoreI > 0)
+				dr = 1.0 - scoreI / 500.0;
+			if (scoreI < 0)
+				dg = 1.0 + scoreI / 500.0;
 			if (dr < 0)
 				dr = 0;
 			if (dg < 0)
@@ -586,8 +586,8 @@ namespace RapChessGui
 
 		public void Init(int index = 0)
 		{
-			gamer[0].Init(true);
-			gamer[1].Init(false);
+			gamer[0].InitGame(true);
+			gamer[1].InitGame(false);
 			curIndex = index;
 		}
 

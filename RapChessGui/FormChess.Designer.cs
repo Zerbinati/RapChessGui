@@ -3554,7 +3554,7 @@
 			this.tssMove.AutoSize = false;
 			this.tssMove.ForeColor = System.Drawing.Color.Gainsboro;
 			this.tssMove.Name = "tssMove";
-			this.tssMove.Size = new System.Drawing.Size(100, 21);
+			this.tssMove.Size = new System.Drawing.Size(128, 21);
 			// 
 			// tssInfo
 			// 
