@@ -349,7 +349,7 @@ namespace RapChessGui
 
 		private void button1_Click(object sender, EventArgs e)
 		{
-			tbEngineName.Text = Path.GetFileNameWithoutExtension(engine.file);
+			tbEngineName.Text = Path.GetFileNameWithoutExtension(cbFileList.Text);
 		}
 	}
 }
