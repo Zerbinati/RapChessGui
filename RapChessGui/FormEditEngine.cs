@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Windows.Forms;
 
 namespace RapChessGui
@@ -348,7 +349,7 @@ namespace RapChessGui
 
 		private void button1_Click(object sender, EventArgs e)
 		{
-			tbEngineName.Text = String.Empty;
+			tbEngineName.Text = Path.GetFileNameWithoutExtension(engine.file);
 		}
 	}
 }
