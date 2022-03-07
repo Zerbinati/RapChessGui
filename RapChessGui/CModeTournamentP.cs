@@ -131,7 +131,7 @@ namespace RapChessGui
 					if ((p.GetElo() > o.GetElo()) != (rw > rl))
 						repetition++;
 					if (p.hisElo.list.Count < o.hisElo.list.Count)
-						repetition++;
+						repetition += 2;
 					rotate = true;
 				}
 			}

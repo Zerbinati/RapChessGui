@@ -73,7 +73,7 @@ namespace RapChessGui
 		{
 			bookList.list.Clear();
 			foreach (CBook b in FormChess.bookList.list)
-				if (b.FileExists()&&(b.tournament > 0))
+				if (b.FileExists() && (b.tournament > 0))
 					if ((b.GetElo() >= minElo) && (b.GetElo() <= maxElo))
 						bookList.Add(b);
 			return bookList;
@@ -148,7 +148,7 @@ namespace RapChessGui
 					if ((b.GetElo() > o.GetElo()) != (rw > rl))
 						repetition++;
 					if (b.hisElo.list.Count < o.hisElo.list.Count)
-						repetition++;
+						repetition += 2;
 					rotate = true;
 				}
 			}
