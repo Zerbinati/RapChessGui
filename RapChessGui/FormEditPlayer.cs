@@ -94,7 +94,7 @@ namespace RapChessGui
 			SelectPlayer(listBox1.SelectedItem.ToString());
 		}
 
-		void SaveToIni(CPlayer p)
+		void UpdatePlayer(CPlayer p)
 		{
 			p.name = tbPlayerName.Text;
 			p.engine = cbEngineList.Text;
@@ -104,6 +104,11 @@ namespace RapChessGui
 			p.eloOrg = p.elo;
 			p.modeValue.mode = modeValue.mode;
 			p.modeValue.value = modeValue.value;
+		}
+
+		void SaveToIni(CPlayer p)
+		{
+			UpdatePlayer(p);
 			p.SaveToIni();
 			UpdateListBox();
 			int index = listBox1.FindString(p.name);
@@ -253,8 +258,9 @@ namespace RapChessGui
 
 		private void butRename_Click(object sender, EventArgs e)
 		{
-			tbPlayerName.Text = String.Empty;
-			ClickUpdate();
+			CPlayer p = new CPlayer();
+			UpdatePlayer(p);
+			tbPlayerName.Text = p.CreateName();
 		}
 	}
 }

@@ -96,7 +96,10 @@ namespace RapChessGui
 
 		public static CEngine SelectEngine()
 		{
-			CEngine e = engineList.GetEngine(engine);
+			string eng = FormOptions.tourESelected;
+			if (eng == "None")
+				eng = engine;
+			CEngine e = engineList.GetEngine(eng);
 			if (e == null)
 				e = SelectRare();
 			if ((games >= repetition) && (games > 0))
@@ -132,10 +135,12 @@ namespace RapChessGui
 				engine = e.name;
 				opponent = o.name;
 				SaveToIni();
-				tourList.CountGames(e.name, o.name, out int rw, out int rl, out _);
+				int cg = tourList.CountGames(e.name, o.name, out int rw, out int rl, out _);
 				if (games == 0)
 				{
 					repetition = e.tournament;
+					if (cg == 0)
+						repetition++;
 					if ((e.GetElo() > o.GetElo()) != (rw > rl))
 						repetition++;
 					if (e.hisElo.list.Count < o.hisElo.list.Count)

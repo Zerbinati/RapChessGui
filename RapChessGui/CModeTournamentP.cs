@@ -88,7 +88,10 @@ namespace RapChessGui
 
 		public static CPlayer SelectPlayer()
 		{
-			CPlayer p = playerList.GetPlayer(player);
+			string pla = FormOptions.tourPSelected;
+			if (pla == "None")
+				pla = player;
+			CPlayer p = playerList.GetPlayer(pla);
 			if (p == null)
 				p = SelectRare();
 			if ((games >= repetition) && (games > 0))
@@ -124,10 +127,12 @@ namespace RapChessGui
 				player = p.name;
 				opponent = o.name;
 				SaveToIni();
-				tourList.CountGames(p.name, o.name, out int rw, out int rl, out _);
+				int cg = tourList.CountGames(p.name, o.name, out int rw, out int rl, out _);
 				if (games == 0)
 				{
 					repetition = p.tournament;
+					if (cg == 0)
+						repetition++;
 					if ((p.GetElo() > o.GetElo()) != (rw > rl))
 						repetition++;
 					if (p.hisElo.list.Count < o.hisElo.list.Count)

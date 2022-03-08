@@ -55,17 +55,22 @@ namespace RapChessGui
 			SelectReader(listBox1.SelectedItem.ToString());
 		}
 
-		void SaveToIni(CBook book)
+		void UpdateBook(CBook b)
 		{
-			book.name = tbReaderName.Text;
-			book.exe = cbBookReaderList.Text;
-			book.parameters = tbParameters.Text;
-			book.elo = nudElo.Value.ToString();
-			book.tournament = (int)nudTournament.Value;
-			book.SaveToIni();
-			curBookName = book.name;
+			b.name = tbReaderName.Text;
+			b.exe = cbBookReaderList.Text;
+			b.parameters = tbParameters.Text;
+			b.elo = nudElo.Value.ToString();
+			b.tournament = (int)nudTournament.Value;
+		}
+
+		void SaveToIni(CBook b)
+		{
+			UpdateBook(b);
+			b.SaveToIni();
+			curBookName = b.name;
 			UpdateListBox();
-			int index = listBox1.FindString(book.name);
+			int index = listBox1.FindString(b.name);
 			if (index == -1) return;
 			listBox1.SetSelected(index, true);
 		}
@@ -131,8 +136,9 @@ namespace RapChessGui
 
 		private void button1_Click(object sender, EventArgs e)
 		{
-			tbReaderName.Text = String.Empty;
-			ClickUpdate();
+			CBook b = new CBook();
+			UpdateBook(b);
+			tbReaderName.Text = b.CreateName();
 		}
 
 	}

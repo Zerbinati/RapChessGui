@@ -85,6 +85,15 @@ namespace RapChessGui
 			}
 		}
 
+		public static void ComboSelect(ComboBox cb, string n)
+		{
+			int i = cb.FindStringExact(n);
+			if (i < 0)
+				i = 0;
+			cb.SelectedIndex = i;
+		}
+
+
 		public static CProtocol StrToProtocol(string p)
 		{
 			switch (p)
@@ -144,6 +153,52 @@ namespace RapChessGui
 			UpdateFileEngine(@"Engines/Uci", fileEngineUci);
 			UpdateFileEngine(@"Engines/Winboard", fileEngineWb);
 			fileEngine.Add("none");
+		}
+
+	}
+
+	public static class CElo
+	{
+		static double Probability(double rating1,double rating2)
+		{
+			return 1.0f * 1.0f / (1 + 1.0f *(Math.Pow(10, 1.0f * (rating1 - rating2) / 400)));
+		}
+
+		public static void EloRating(double Ra, double Rb, out int Na, out int Nb,int Ga,int Gb, int d)
+		{
+			double Kmin = 0xf;
+			double Kmax = 0x3f;
+			double Ka = Ga / FormOptions.historyLength;
+			double Kb = Gb / FormOptions.historyLength;
+			Ka = (Ka * Kmin) + ((1 - Ka) * Kmax);
+			Kb = (Kb * Kmin) + ((1 - Kb) * Kmax);
+			Na = 0;
+			Nb = 0;
+			double Pb = Probability(Ra, Rb);
+			double Pa = Probability(Rb, Ra);
+			if (d > 0)
+			{
+				Na = Convert.ToInt32(Ra + Ka * (1 - Pa));
+				Nb = Convert.ToInt32(Rb + Kb * (0 - Pb));
+			}
+			if(d < 0)
+			{
+				Na = Convert.ToInt32(Ra + Ka * (0 - Pa));
+				Nb = Convert.ToInt32(Rb + Kb * (1 - Pb));
+			}
+			if (d == 0)
+			{
+				Na = Convert.ToInt32(Ra + Ka * (0.5 - Pa));
+				Nb = Convert.ToInt32(Rb + Kb * (0.5 - Pb));
+			}
+			if (Na > 2950)
+				Na = 2950;
+			if (Nb > 2950)
+				Nb = 2950;
+			if (Na < 50)
+				Na = 50;
+			if (Nb < 50)
+				Nb = 50;
 		}
 
 	}

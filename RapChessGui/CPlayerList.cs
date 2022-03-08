@@ -142,22 +142,25 @@ namespace RapChessGui
 			CPlayerList.iniFile.Write($"player>{name}>history", hisElo.SaveToStr());
 		}
 
+		public string CreateName()
+		{
+			string n = "Human";
+			string b = String.Empty;
+			string m = String.Empty;
+			if (engine != "Human")
+			{
+				n = engine;
+				m = modeValue.ShortName();
+			}
+			if (book != "None")
+				b = $" {CData.MakeShort(book)}";
+			return $"{n}{b}{m}";
+		}
+
 		public string GetName()
 		{
 			if (name == String.Empty)
-			{
-				string n = "Human";
-				string b = String.Empty;
-				string m = String.Empty;
-				if (engine != "Human")
-				{
-					n = engine;
-					m = modeValue.ShortName();
-				}
-				if (book != "None")
-					b = $" {CData.MakeShort(book)}";
-				name = $"{n}{b}{m}";
-			}
+				return CreateName();
 			return name;
 		}
 

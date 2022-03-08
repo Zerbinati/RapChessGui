@@ -59,7 +59,7 @@ namespace RapChessGui
 			CEngineList.iniFile.Write($"engine>{name}>history", hisElo.SaveToStr());
 		}
 
-		public string GetDefaultName()
+		public string CreateName()
 		{
 			return Path.GetFileNameWithoutExtension(file);
 		}
@@ -111,9 +111,9 @@ namespace RapChessGui
 
 		public string GetName()
 		{
-			if (name != "")
-				return name;
-			return GetDefaultName();
+			if (name == "")
+				return CreateName();
+			return name;
 		}
 
 		public bool SetTournament(bool tb)

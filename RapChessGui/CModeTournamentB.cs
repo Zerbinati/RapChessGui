@@ -89,7 +89,10 @@ namespace RapChessGui
 
 		public static CBook SelectBook()
 		{
-			CBook b = bookList.GetBook(book);
+			string boo = FormOptions.tourBSelected;
+			if (boo == "None")
+				boo = book;
+			CBook b = bookList.GetBook(boo);
 			if (b == null)
 				b = SelectRare();
 			if ((games >= repetition) && (games > 0))
@@ -141,10 +144,12 @@ namespace RapChessGui
 				book = b.name;
 				opponent = o.name;
 				SaveToIni();
-				tourList.CountGames(b.name, o.name, out int rw, out int rl, out _);
+				int cg = tourList.CountGames(b.name, o.name, out int rw, out int rl, out _);
 				if (games == 0)
 				{
 					repetition = b.tournament;
+					if (cg == 0)
+						repetition++;
 					if ((b.GetElo() > o.GetElo()) != (rw > rl))
 						repetition++;
 					if (b.hisElo.list.Count < o.hisElo.list.Count)

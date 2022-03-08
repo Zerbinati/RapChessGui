@@ -321,7 +321,8 @@ namespace RapChessGui
 			int d = Convert.ToInt32(p * size);
 			try
 			{
-				if (p > 0) sc.SplitterDistance = d;
+				if (d > sc.Panel1MinSize)
+					sc.SplitterDistance = d;
 			}
 			catch { }
 		}
@@ -1734,20 +1735,15 @@ namespace RapChessGui
 		{
 			if (GetRanked() && CModeGame.ranked)
 			{
+				pw.elo = pw.eloOrg;
+				pl.elo = pl.eloOrg;
+				int eloW = pw.GetElo();
+				int eloL = pl.GetElo();
+				CElo.EloRating(eloW, eloL, out int newW, out int newL, pw.hisElo.list.Count, pl.hisElo.list.Count, isDraw ? 0 : 1);
 				if (pw.IsRealHuman())
-				{
-					if (isDraw)
-						pw.elo = pw.eloOrg;
-					else
-						pw.elo = pw.GetEloMore().ToString();
-				}
+					pw.elo = newW.ToString();
 				else
-				{
-					if (isDraw)
-						pl.elo = pl.eloOrg;
-					else
-						pl.elo = pl.GetEloLess().ToString();
-				}
+					pl.elo = newL.ToString();
 				ShowLastGame(true);
 			}
 			else
@@ -1853,49 +1849,32 @@ namespace RapChessGui
 			bookList.FillPosition();
 			int eloW = bw.GetElo();
 			int eloL = bl.GetElo();
-			int indexW = bw.position;
-			int indexL = bl.position;
-			int optW = bookList.GetOptElo(indexW);
-			int optL = bookList.GetOptElo(indexL);
-			int optM = (optW + optL) >> 1;
-			int OW = optW;
-			int OL = optL;
-			int newW;
-			int newL;
+			CElo.EloRating(eloW, eloL, out int newW, out int newL, bw.hisElo.list.Count, bl.hisElo.list.Count, isDraw ? 0 : 1);
 			if (isDraw)
-			{
-
-				newW = Convert.ToInt32(eloW * 0.9 + optM * 0.1);
-				newL = Convert.ToInt32(eloL * 0.9 + optM * 0.1);
 				CModeTournamentB.tourList.Write(pw.book, pb.book, "d");
-			}
 			else
 			{
 				if (eloW <= eloL)
-				{
-					OW = optL;
-					OL = optW;
 					CModeTournamentB.repetition++;
-				}
-				if (OW < eloW)
-					OW = eloW;
-				if (OL > eloL)
-					OL = eloL;
-				double cg = CModeTournamentB.CountGames();
-				double mod = 0.6 + (cg / 0xf) * 0.3;
-				if (mod > 0.9)
-					mod = 0.9;
-				newW = Convert.ToInt32(eloW * mod + Math.Max(OW, eloL) * (1.0 - mod));
-				newL = Convert.ToInt32(eloL * mod + Math.Min(OL, eloW) * (1.0 - mod));
 				string r = gw.player == pw ? "w" : "b";
 				CModeTournamentB.tourList.Write(pw.book, pb.book, r);
 			}
-			bw.hisElo.Add(newW);
-			bl.hisElo.Add(newL);
-			bw.elo = newW.ToString();
-			bl.elo = newL.ToString();
-			bw.SaveToIni();
-			bl.SaveToIni();
+			bool ls = bl.name == FormOptions.tourBSelected;
+			bool ws = bw.name == FormOptions.tourBSelected;
+			if (!ls)
+			{
+				bw.hisElo.Add(newW);
+				bw.elo = newW.ToString();
+				bw.SaveToIni();
+			}
+			if (!ws)
+			{
+				bl.hisElo.Add(newL);
+				bl.elo = newL.ToString();
+				bl.SaveToIni();
+			}
+			if ((CModeTournamentB.repetition <= CModeTournamentB.games) && (ws || ls))
+				CModeTournamentB.repetition++;
 		}
 
 		void TournamentBReset()
@@ -2193,48 +2172,32 @@ namespace RapChessGui
 			engList.FillPosition();
 			int eloW = ew.GetElo();
 			int eloL = el.GetElo();
-			int indexW = ew.position;
-			int indexL = el.position;
-			int optW = engList.GetOptElo(indexW);
-			int optL = engList.GetOptElo(indexL);
-			int optM = (optW + optL) >> 1;
-			int OW = optW;
-			int OL = optL;
-			int newW;
-			int newL;
+			CElo.EloRating(eloW, eloL, out int newW, out int newL, ew.hisElo.list.Count, el.hisElo.list.Count, isDraw ? 0 : 1);
 			if (isDraw)
-			{
-				newW = Convert.ToInt32(eloW * 0.9 + optM * 0.1);
-				newL = Convert.ToInt32(eloL * 0.9 + optM * 0.1);
 				CModeTournamentE.tourList.Write(pw.engine, pb.engine, "d");
-			}
 			else
 			{
 				if (eloW <= eloL)
-				{
-					OW = optL;
-					OL = optW;
 					CModeTournamentE.repetition++;
-				}
-				if (OW < eloW)
-					OW = eloW;
-				if (OL > eloL)
-					OL = eloL;
-				double cg = CModeTournamentE.tourList.CountGames(CModeTournamentE.engine, CModeTournamentE.opponent, out _, out _, out _);
-				double mod = 0.6 + (cg / 0xf) * 0.3;
-				if (mod > 0.9)
-					mod = 0.9;
-				newW = Convert.ToInt32(eloW * mod + Math.Max(OW, eloL) * (1.0 - mod));
-				newL = Convert.ToInt32(eloL * mod + Math.Min(OL, eloW) * (1.0 - mod));
 				string r = gw.player == pw ? "w" : "b";
 				CModeTournamentE.tourList.Write(pw.engine, pb.engine, r);
 			}
-			ew.hisElo.Add(newW);
-			el.hisElo.Add(newL);
-			ew.elo = newW.ToString();
-			el.elo = newL.ToString();
-			ew.SaveToIni();
-			el.SaveToIni();
+			bool ls = el.name == FormOptions.tourESelected;
+			bool ws = ew.name == FormOptions.tourESelected;
+			if (!ls)
+			{
+				ew.hisElo.Add(newW);
+				ew.elo = newW.ToString();
+				ew.SaveToIni();
+			}
+			if (!ws)
+			{
+				el.hisElo.Add(newL);
+				el.elo = newL.ToString();
+				el.SaveToIni();
+			}
+			if ((CModeTournamentE.repetition <= CModeTournamentE.games) && (ws || ls))
+				CModeTournamentE.repetition++;
 		}
 
 		void TournamentPReset()
@@ -2368,48 +2331,32 @@ namespace RapChessGui
 			plaList.FillPosition();
 			int eloW = pw.GetElo();
 			int eloL = pl.GetElo();
-			int indexW = pw.position;
-			int indexL = pl.position;
-			int optW = plaList.GetOptElo(indexW);
-			int optL = plaList.GetOptElo(indexL);
-			int optM = (optW + optL) >> 1;
-			int OW = optW;
-			int OL = optL;
-			int newW;
-			int newL;
+			CElo.EloRating(eloW, eloL, out int newW, out int newL, pw.hisElo.list.Count, pl.hisElo.list.Count, isDraw ? 0 : 1);
 			if (isDraw)
-			{
-				newW = Convert.ToInt32(eloW * 0.9 + optM * 0.1);
-				newL = Convert.ToInt32(eloL * 0.9 + optM * 0.1);
 				CModeTournamentP.tourList.Write(plw.name, plb.name, "d");
-			}
 			else
 			{
 				if (eloW <= eloL)
-				{
-					OW = optL;
-					OL = optW;
 					CModeTournamentP.repetition++;
-				}
-				if (OW < eloW)
-					OW = eloW;
-				if (OL > eloL)
-					OL = eloL;
-				double cg = CModeTournamentP.tourList.CountGames(CModeTournamentE.engine, CModeTournamentE.opponent, out _, out _, out _);
-				double mod = 0.6 + (cg / 0xf) * 0.3;
-				if (mod > 0.9)
-					mod = 0.9;
-				newW = Convert.ToInt32(eloW * mod + Math.Max(OW, eloL) * (1.0 - mod));
-				newL = Convert.ToInt32(eloL * mod + Math.Min(OL, eloW) * (1.0 - mod));
 				string r = pw == plw ? "w" : "b";
 				CModeTournamentP.tourList.Write(plw.name, plb.name, r);
 			}
-			pw.hisElo.Add(newW);
-			pl.hisElo.Add(newL);
-			pw.elo = newW.ToString();
-			pl.elo = newL.ToString();
-			pw.SaveToIni();
-			pl.SaveToIni();
+			bool ls = pl.name == FormOptions.tourPSelected;
+			bool ws = pw.name == FormOptions.tourPSelected;
+			if (!ls)
+			{
+				pw.hisElo.Add(newW);
+				pw.elo = newW.ToString();
+				pw.SaveToIni();
+			}
+			if (!ws)
+			{
+				pl.hisElo.Add(newL);
+				pl.elo = newL.ToString();
+				pl.SaveToIni();
+			}
+			if ((CModeTournamentP.repetition <= CModeTournamentP.games) && (ws || ls))
+				CModeTournamentP.repetition++;
 		}
 
 		void TrainingShow()

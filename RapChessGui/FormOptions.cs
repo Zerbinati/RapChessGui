@@ -22,6 +22,9 @@ namespace RapChessGui
 		public static int marginStandard = 0;
 		public static int marginTime = 5000;
 		public static int winLimit = 1;
+		public static string tourBSelected = "None";
+		public static string tourESelected = "None";
+		public static string tourPSelected = "None";
 		public static ProcessPriorityClass priority = ProcessPriorityClass.Normal;
 		public static Color colorBoard;
 
@@ -34,6 +37,9 @@ namespace RapChessGui
 
 		public void LoadFromIni()
 		{
+			tourBSelected = FormChess.iniFile.Read("options>mode>tourB>Selected", tourBSelected);
+			tourESelected = FormChess.iniFile.Read("options>mode>tourE>Selected", tourESelected);
+			tourPSelected = FormChess.iniFile.Read("options>mode>tourP>Selected", tourPSelected);
 			colorDialog1.Color = FormChess.iniFile.ReadColor("options>interface>color", Color.Yellow);
 			rbSan.Checked = FormChess.iniFile.ReadBool("options>interface>san", rbSan.Checked);
 			cbShowPonder.Checked = FormChess.iniFile.ReadBool("options>interface>showponder", cbShowPonder.Checked);
@@ -59,6 +65,9 @@ namespace RapChessGui
 
 		public void SaveToIni()
 		{
+			FormChess.iniFile.Write("options>mode>tourB>Selected", tourBSelected);
+			FormChess.iniFile.Write("options>mode>tourE>Selected", tourESelected);
+			FormChess.iniFile.Write("options>mode>tourP>Selected", tourPSelected);
 			FormChess.iniFile.Write("options>interface>color", colorDialog1.Color);
 			FormChess.iniFile.Write("options>interface>san", rbSan.Checked);
 			FormChess.iniFile.Write("options>interface>showponder", cbShowPonder.Checked);
@@ -88,12 +97,36 @@ namespace RapChessGui
 				ListViewItem lvi = new ListViewItem(new[] { db.dir, db.book });
 				lvBooks.Items.Add(lvi);
 			}
+
 			cbBookReader.Items.Clear();
-			cbBookReader.Items.Add("none");
+			cbBookReader.Items.Add("None");
 			foreach (string book in CData.fileBook)
 				cbBookReader.Items.Add(book);
 			cbBookReader.SelectedIndex = 0;
+
+			cbTourBSelected.Items.Clear();
+			cbTourBSelected.Items.Add("None");
+			foreach (CBook b in FormChess.bookList.list)
+				cbTourBSelected.Items.Add(b.name);
+			cbTourBSelected.SelectedIndex = 0;
+
+			cbTourESelected.Items.Clear();
+			cbTourESelected.Items.Add("None");
+			foreach (CEngine e in FormChess.engineList.list)
+				cbTourESelected.Items.Add(e.name);
+			cbTourESelected.SelectedIndex = 0;
+
+			cbTourPSelected.Items.Clear();
+			cbTourPSelected.Items.Add("None");
+			foreach (CPlayer p in FormChess.playerList.list)
+				cbTourPSelected.Items.Add(p.name);
+			cbTourPSelected.SelectedIndex = 0;
+
 			LoadFromIni();
+
+			CData.ComboSelect(cbTourBSelected,tourBSelected);
+			CData.ComboSelect(cbTourESelected, tourESelected);
+			CData.ComboSelect(cbTourPSelected, tourPSelected);
 			nudTourBRec.Value = CModeTournamentB.records;
 			nudTourBMax.Value = CModeTournamentB.maxElo;
 			nudTourBMin.Value = CModeTournamentB.minElo;
@@ -292,7 +325,7 @@ namespace RapChessGui
 			autoElo = cbGameAutoElo.Checked;
 		}
 
-		private void nudBreak_ValueChanged(object sender, EventArgs e)
+		private void nudMatch_ValueChanged(object sender, EventArgs e)
 		{
 			gameBreak = (int)nudBreak.Value;
 		}
@@ -310,6 +343,21 @@ namespace RapChessGui
 		private void nudFontSize_ValueChanged(object sender, EventArgs e)
 		{
 			fontSize = (int)nudFontSize.Value;
+		}
+
+		private void cbTourESelected_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			tourESelected = cbTourESelected.Text;
+		}
+
+		private void cbTourBSelected_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			tourBSelected = cbTourBSelected.Text;
+		}
+
+		private void cbTourPSelected_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			tourPSelected = cbTourPSelected.Text;
 		}
 	}
 }

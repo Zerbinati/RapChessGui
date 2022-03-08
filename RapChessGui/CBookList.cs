@@ -83,10 +83,8 @@ namespace RapChessGui
 			return Convert.ToInt32(elo);
 		}
 
-		public string GetName()
+		public string CreateName()
 		{
-			if (name != "")
-				return name;
 			string n = CData.MakeShort(Path.GetFileNameWithoutExtension(exe));
 			string[] tokens = parameters.Split(' ');
 			if (tokens.Length > 0)
@@ -96,6 +94,13 @@ namespace RapChessGui
 				return $"{n} {p}";
 			}
 			return n;
+		}
+
+		public string GetName()
+		{
+			if (name == "")
+				return CreateName();
+			return name;
 		}
 
 	}

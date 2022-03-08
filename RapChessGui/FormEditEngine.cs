@@ -168,7 +168,7 @@ namespace RapChessGui
 			SelectEngine(listBox1.SelectedItem.ToString());
 		}
 
-		void SaveToIni(CEngine e)
+		void UpdateEngine(CEngine e)
 		{
 			e.name = tbEngineName.Text;
 			e.file = cbFileList.Text;
@@ -178,6 +178,11 @@ namespace RapChessGui
 			e.elo = nudElo.Value.ToString();
 			e.tournament = (int)nudTournament.Value;
 			e.options = GetOptions();
+		}
+
+		void SaveToIni(CEngine e)
+		{
+			UpdateEngine(e);
 			e.SaveToIni();
 			UpdateListBox();
 			int index = listBox1.FindString(e.name);
@@ -349,7 +354,9 @@ namespace RapChessGui
 
 		private void button1_Click(object sender, EventArgs e)
 		{
-			tbEngineName.Text = Path.GetFileNameWithoutExtension(cbFileList.Text);
+			CEngine eng = new CEngine();
+			UpdateEngine(eng);
+			tbEngineName.Text = eng.CreateName();
 		}
 	}
 }
