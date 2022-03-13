@@ -88,10 +88,10 @@ namespace RapChessGui
 
 		public static CPlayer SelectPlayer()
 		{
-			string pla = FormOptions.tourPSelected;
-			if (pla == "None")
-				pla = player;
-			CPlayer p = playerList.GetPlayer(pla);
+			CPlayer p = playerList.GetPlayer(FormOptions.tourPSelected);
+			if (p != null)
+				return p;
+			p = playerList.GetPlayer(player);
 			if (p == null)
 				p = SelectRare();
 			if ((games >= repetition) && (games > 0))

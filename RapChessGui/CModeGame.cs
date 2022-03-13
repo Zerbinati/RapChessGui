@@ -19,7 +19,7 @@ namespace RapChessGui
 			FormChess.iniFile.Write("mode>game>computer",computer);
 			FormChess.iniFile.Write("mode>game>engine", engine);
 			FormChess.iniFile.Write("mode>game>book", book);
-			FormChess.iniFile.Write("mode>game>mode", modeValue.mode);
+			FormChess.iniFile.Write("mode>game>mode", modeValue.GetLevel());
 			FormChess.iniFile.Write("mode>game>value", modeValue.value);
 		}
 
@@ -30,7 +30,7 @@ namespace RapChessGui
 			computer = FormChess.iniFile.Read("mode>game>computer", computer);
 			engine = FormChess.iniFile.Read("mode>game>engine", engine);
 			book = FormChess.iniFile.Read("mode>game>book", book);
-			modeValue.mode = FormChess.iniFile.Read("mode>game>mode",modeValue.mode);
+			modeValue.SetLevel(FormChess.iniFile.Read("mode>game>mode",modeValue.GetLevel()));
 			modeValue.value = FormChess.iniFile.ReadInt("mode>game>value", modeValue.value);
 		}
 

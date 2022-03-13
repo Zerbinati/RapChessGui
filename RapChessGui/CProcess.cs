@@ -86,7 +86,7 @@ namespace RapChessGui
 
 		public void WriteLine(string c)
 		{
-			if (!process.HasExited)
+			if (process.StartInfo.FileName != String.Empty)
 			{
 				process.StandardInput.WriteLine(c);
 				process.StandardInput.Flush();

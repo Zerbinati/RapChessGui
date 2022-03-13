@@ -19,7 +19,7 @@ namespace RapChessGui
 
 		void ClickUpdate()
 		{
-			modeValue.mode = combMode.Text;
+			modeValue.SetLevel(combMode.Text);
 			modeValue.SetValue((int)nudValue.Value);
 			if (player == null)
 				return;
@@ -43,9 +43,9 @@ namespace RapChessGui
 			nudTournament.Value = player.tournament;
 			nudElo.Value = Convert.ToInt32(player.elo);
 			nudValue.Value = player.modeValue.GetValue();
-			modeValue.mode = player.modeValue.mode;
+			modeValue.level = player.modeValue.level;
 			modeValue.value = player.modeValue.value;
-			combMode.SelectedIndex = combMode.FindStringExact(modeValue.mode);
+			combMode.SelectedIndex = combMode.FindStringExact(modeValue.GetLevel());
 		}
 
 		void SelectPlayer(CPlayer p)
@@ -102,7 +102,7 @@ namespace RapChessGui
 			p.SetTournament((int)nudTournament.Value);
 			p.elo = nudElo.Value.ToString();
 			p.eloOrg = p.elo;
-			p.modeValue.mode = modeValue.mode;
+			p.modeValue.level = modeValue.level;
 			p.modeValue.value = modeValue.value;
 		}
 
@@ -126,7 +126,7 @@ namespace RapChessGui
 			string name = tbPlayerName.Text;
 			if (FormChess.playerList.GetPlayer(name) == null)
 			{
-				modeValue.mode = combMode.Text;
+				modeValue.SetLevel(combMode.Text);
 				modeValue.SetValue((int)nudValue.Value);
 				CPlayer player = new CPlayer(name);
 				player.engine = cbEngineList.Text;
@@ -181,7 +181,7 @@ namespace RapChessGui
 
 		private void combMode_SelectedIndexChanged(object sender, EventArgs e)
 		{
-			modeValue.mode = combMode.Text;
+			modeValue.SetLevel(combMode.Text);
 			nudValue.Increment = modeValue.GetValueIncrement();
 			nudValue.Value = modeValue.GetValue();
 			toolTip1.SetToolTip(nudValue, modeValue.GetTip());

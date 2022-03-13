@@ -28,7 +28,7 @@ namespace RapChessGui
 		{
 			FormChess.iniFile.Write("mode>tournamentB>book", book);
 			FormChess.iniFile.Write("mode>tournamentB>engine", engine);
-			FormChess.iniFile.Write("mode>tournamentB>mode", modeValue.mode);
+			FormChess.iniFile.Write("mode>tournamentB>mode", modeValue.GetLevel());
 			FormChess.iniFile.Write("mode>tournamentB>value", modeValue.value);
 			FormChess.iniFile.Write("mode>tournamentB>records", records);
 			FormChess.iniFile.Write("mode>tournamentB>rmaxElo", maxElo);
@@ -39,7 +39,7 @@ namespace RapChessGui
 		{
 			book = FormChess.iniFile.Read("mode>tournamentB>book", book);
 			engine = FormChess.iniFile.Read("mode>tournamentB>engine", engine);
-			modeValue.mode = FormChess.iniFile.Read("mode>tournamentB>mode", modeValue.mode);
+			modeValue.SetLevel(FormChess.iniFile.Read("mode>tournamentB>mode", modeValue.GetLevel()));
 			modeValue.value = FormChess.iniFile.ReadInt("mode>tournamentB>value", modeValue.value);
 			records = FormChess.iniFile.ReadInt("mode>tournamentB>records", records);
 			maxElo = FormChess.iniFile.ReadInt("mode>tournamentB>maxElo", maxElo);
@@ -89,10 +89,10 @@ namespace RapChessGui
 
 		public static CBook SelectBook()
 		{
-			string boo = FormOptions.tourBSelected;
-			if (boo == "None")
-				boo = book;
-			CBook b = bookList.GetBook(boo);
+			CBook b = bookList.GetBook(FormOptions.tourBSelected);
+			if (b != null)
+				return b;
+			b = bookList.GetBook(book);
 			if (b == null)
 				b = SelectRare();
 			if ((games >= repetition) && (games > 0))

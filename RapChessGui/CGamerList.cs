@@ -64,10 +64,10 @@ namespace RapChessGui
 		public int seldepth;
 		public string ponder;
 		public string ponderFormated;
-		public string mode;
 		public string value;
 		public string pv;
 		public string lastMove;
+		string command;
 		public double timerStart;
 		public Stopwatch timer = new Stopwatch();
 		public CProcessBuf curProcess = null;
@@ -287,21 +287,21 @@ namespace RapChessGui
 		{
 			isPrepareStarted = true;
 			lastMove = "";
-			mode = player.modeValue.GetUci();
 			value = player.modeValue.GetUciValue().ToString();
-			if (engine.protocol == CProtocol.uci)
+			if (engine.protocol == CProtocol.uci) {
+				command = player.modeValue.GetUci();
 				UciNextPhase();
-			else
+			}else
 			{
 				SendMessageToEngine("xboard");
 				isPrepareFinished = true;
-				switch (mode)
+				switch (player.modeValue.level)
 				{
-					case "depth":
-						mode = "sd";
+					case CLevel.depth:
+						command = "sd";
 						break;
-					case "movetime":
-						mode = "st";
+					case CLevel.time:
+						command = "st";
 						int v = Convert.ToInt32(player.modeValue.GetUciValue()) / 1000;
 						if (v < 1)
 							v = 1;
@@ -321,7 +321,7 @@ namespace RapChessGui
 		void UciGo()
 		{
 			SendMessageToEngine(CHistory.GetPosition());
-			if (player.modeValue.mode == "Standard")
+			if (player.modeValue.level == CLevel.standard)
 			{
 				CGamer gw = CGamerList.This.GamerWhite();
 				CGamer gb = CGamerList.This.GamerBlack();
@@ -334,7 +334,7 @@ namespace RapChessGui
 
 		void XbGo()
 		{
-			if (player.modeValue.mode == "Standard")
+			if (player.modeValue.level == CLevel.standard)
 			{
 				CGamer gc = CGamerList.This.GamerCur();
 				CGamer gs = CGamerList.This.GamerSec();
@@ -359,7 +359,7 @@ namespace RapChessGui
 				else
 				{
 					SendMessageToEngine("new");
-					if (player.modeValue.mode == "Standard")
+					if (player.modeValue.level == CLevel.standard)
 					{
 						int v = Convert.ToInt32(player.modeValue.GetUciValue());
 						int t = Convert.ToInt32(v - timer.Elapsed.TotalMilliseconds);
@@ -369,13 +369,12 @@ namespace RapChessGui
 						SendMessageToEngine($"otim {t / 10}");
 					}
 					else
-						SendMessageToEngine($"{mode} {value}");
+						SendMessageToEngine($"{command} {value}");
 					SendMessageToEngine("post");
 					if (CHistory.fen != CChess.defFen)
 					{
 						SendMessageToEngine($"setboard {CHistory.fen}");
 					}
-					SendMessageToEngine("easy");
 					SendMessageToEngine("force");
 					foreach (CHisMove m in CHistory.moveList)
 						SendMessageToEngine(m.umo);
@@ -468,14 +467,14 @@ namespace RapChessGui
 			low = false;
 			double ms = timer.Elapsed.TotalMilliseconds;
 			DateTime dt = new DateTime();
-			string mode = "";
+			CLevel level = CLevel.standard;
 			int value = 0;
 			if (player != null)
 			{
-				mode = player.modeValue.mode;
+				level = player.modeValue.level;
 				value = player.modeValue.GetUciValue();
 			}
-			if (mode == "Standard")
+			if (level == CLevel.standard)
 			{
 				double v = Convert.ToDouble(value);
 				double t = v - ms;
@@ -492,7 +491,7 @@ namespace RapChessGui
 					return dt.ToString("ss.ff");
 				}
 			}
-			else if (mode == "Time")
+			else if (level == CLevel.time)
 			{
 				double v = Convert.ToDouble(value);
 				if (((ms - timerStart) > (v + FormOptions.marginTime)) && (FormOptions.marginTime >= 0) && (value > 0) && timer.IsRunning)

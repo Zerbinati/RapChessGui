@@ -14,6 +14,7 @@ namespace RapChessGui
 		public static string engine = String.Empty;
 		public static string opponent = String.Empty;
 		public static string book = "BRU Eco";
+		static CLevel level = CLevel.standard;
 		public static CTourList tourList = new CTourList("Tour-engines");
 		public static CModeValue modeValue = new CModeValue();
 		public static CEngineList engineList = new CEngineList();
@@ -24,7 +25,7 @@ namespace RapChessGui
 		{
 			FormChess.iniFile.Write("mode>tournamentE>book", book);
 			FormChess.iniFile.Write("mode>tournamentE>engine", engine);
-			FormChess.iniFile.Write("mode>tournamentE>mode", modeValue.mode);
+			FormChess.iniFile.Write("mode>tournamentE>mode", modeValue.GetLevel());
 			FormChess.iniFile.Write("mode>tournamentE>value", modeValue.value);
 			FormChess.iniFile.Write("mode>tournamentE>records", records);
 			FormChess.iniFile.Write("mode>tournamentE>rmaxElo", maxElo);
@@ -35,7 +36,7 @@ namespace RapChessGui
 		{
 			book = FormChess.iniFile.Read("mode>tournamentE>book", book);
 			engine = FormChess.iniFile.Read("mode>tournamentE>engine", engine);
-			modeValue.mode = FormChess.iniFile.Read("mode>tournamentE>mode", modeValue.mode);
+			modeValue.SetLevel(FormChess.iniFile.Read("mode>tournamentE>mode", modeValue.GetLevel()));
 			modeValue.value = FormChess.iniFile.ReadInt("mode>tournamentE>value", modeValue.value);
 			records = FormChess.iniFile.ReadInt("mode>tournamentE>records", records);
 			maxElo = FormChess.iniFile.ReadInt("mode>tournamentE>maxElo", maxElo);
@@ -51,14 +52,23 @@ namespace RapChessGui
 			opponent = String.Empty;
 		}
 
-		public static CEngineList FillList()
+		public static void ListFill()
 		{
+			level = modeValue.level;
 			engineList.list.Clear();
 			foreach (CEngine e in FormChess.engineList.list)
-				if (e.FileExists() && (e.tournament > 0) && ((modeValue.mode != "Standard") || e.modeStandard))
+				if (e.FileExists() && (e.tournament > 0) && e.SupportLevel(level))
 					if ((e.GetElo() >= minElo) && (e.GetElo() <= maxElo))
 						engineList.Add(e);
-			return engineList;
+		}
+
+		public static bool ListUpdate()
+		{
+			if (level != modeValue.level) {
+				ListFill();
+				return true;
+			}
+			return false;
 		}
 
 		public static CEngine ChooseOpponent(CEngine engine, CEngine engine1, CEngine engine2)
@@ -96,10 +106,10 @@ namespace RapChessGui
 
 		public static CEngine SelectEngine()
 		{
-			string eng = FormOptions.tourESelected;
-			if (eng == "None")
-				eng = engine;
-			CEngine e = engineList.GetEngine(eng);
+			CEngine e = engineList.GetEngine(FormOptions.tourESelected);
+			if (e != null)
+				return e;
+			e = engineList.GetEngine(engine);
 			if (e == null)
 				e = SelectRare();
 			if ((games >= repetition) && (games > 0))

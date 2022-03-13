@@ -9,6 +9,8 @@ namespace RapChessGui
 	public class CEngine
 	{
 		public bool modeStandard = true;
+		public bool modeTime = true;
+		public bool modeDepth = true;
 		public int position = 0;
 		public int tournament = 1;
 		public string name = "";
@@ -21,6 +23,7 @@ namespace RapChessGui
 
 		public CEngine()
 		{
+
 		}
 
 		public CEngine(string n)
@@ -32,6 +35,8 @@ namespace RapChessGui
 		{
 			tournament = CEngineList.iniFile.ReadInt($"engine>{name}>tournament", tournament);
 			modeStandard = CEngineList.iniFile.ReadBool($"engine>{name}>modeStandard", modeStandard);
+			modeTime = CEngineList.iniFile.ReadBool($"engine>{name}>modeTime", modeTime);
+			modeDepth = CEngineList.iniFile.ReadBool($"engine>{name}>modeDepth", modeDepth);
 			file = CEngineList.iniFile.Read($"engine>{name}>file", "Human");
 			protocol = CData.StrToProtocol(CEngineList.iniFile.Read($"engine>{name}>protocol", "Uci"));
 			parameters = CEngineList.iniFile.Read($"engine>{name}>parameters", "");
@@ -50,13 +55,28 @@ namespace RapChessGui
 				hisElo.Add(e);
 			}
 			CEngineList.iniFile.Write($"engine>{name}>tournament", tournament);
-			CEngineList.iniFile.Write($"engine>{name}>modeStandard", modeStandard);
+			CEngineList.iniFile.Write($"engine>{name}>modeStandard",  modeStandard);
+			CEngineList.iniFile.Write($"engine>{name}>modeTime", modeTime);
+			CEngineList.iniFile.Write($"engine>{name}>modeDepth", modeDepth);
 			CEngineList.iniFile.Write($"engine>{name}>file", file);
 			CEngineList.iniFile.Write($"engine>{name}>protocol", CData.ProtocolToStr(protocol));
 			CEngineList.iniFile.Write($"engine>{name}>parameters", parameters);
 			CEngineList.iniFile.Write($"engine>{name}>options", options);
 			CEngineList.iniFile.Write($"engine>{name}>elo", elo);
 			CEngineList.iniFile.Write($"engine>{name}>history", hisElo.SaveToStr());
+		}
+
+		public bool SupportLevel(CLevel l)
+		{
+			switch (l)
+			{
+				case CLevel.standard:
+					return modeStandard;
+				case CLevel.depth:
+					return modeDepth;
+				default:
+					return modeTime;
+			}
 		}
 
 		public string CreateName()
@@ -106,7 +126,7 @@ namespace RapChessGui
 		{
 			if (FileExists())
 				return file;
-			return "none";
+			return "None";
 		}
 
 		public string GetName()
@@ -172,6 +192,13 @@ namespace RapChessGui
 			return null;
 		}
 
+		public CEngine GetEngineByIndex(int index)
+		{
+			if ((index < 0) || (index >= list.Count))
+				return null;
+			return list[index];
+		}
+
 		public int GetIndex(string name)
 		{
 			for (int n = 0; n < list.Count; n++)
@@ -198,10 +225,10 @@ namespace RapChessGui
 
 		public void AutoUpdate()
 		{
-			foreach (string fn in CData.fileEngineUci)
+			foreach (string fn in CData.fileEngineAuto)
 			{
 				string name = Path.GetFileNameWithoutExtension(fn);
-				string file = $@"Uci\{fn}";
+				string file = $@"Auto\{fn}";
 				CEngine engine = GetEngineByFile(file);
 				if (engine == null)
 				{
@@ -209,25 +236,7 @@ namespace RapChessGui
 					if (engine == null)
 					{
 						engine = new CEngine(name);
-						engine.protocol = CProtocol.uci;
-						list.Add(engine);
-					}
-					engine.file = file;
-					engine.SaveToIni();
-				}
-			}
-			foreach (string fn in CData.fileEngineWb)
-			{
-				string name = Path.GetFileNameWithoutExtension(fn);
-				string file = $@"Winboard\{fn}";
-				CEngine engine = GetEngineByFile(file);
-				if (engine == null)
-				{
-					engine = GetEngine(name);
-					if (engine == null)
-					{
-						engine = new CEngine(name);
-						engine.protocol = CProtocol.winboard;
+						engine.protocol = CProtocol.auto;
 						list.Add(engine);
 					}
 					engine.file = file;

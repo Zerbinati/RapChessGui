@@ -10,7 +10,8 @@ using NSChess;
 namespace RapChessGui
 {
 	public enum CGameMode { game, match, tourB, tourE, tourP, training, edit }
-	public enum CProtocol { uci, winboard }
+	public enum CProtocol { uci, winboard,auto,unknow }
+	public enum CLevel { standard, time, depth,nodes,infinite }
 
 	public static class CWinMessage
 	{
@@ -63,8 +64,7 @@ namespace RapChessGui
 		public static CGameMode gameMode = CGameMode.game;
 		public static List<string> fileBook = new List<string>();
 		public static List<string> fileEngine = new List<string>();
-		public static List<string> fileEngineUci = new List<string>();
-		public static List<string> fileEngineWb = new List<string>();
+		public static List<string> fileEngineAuto = new List<string>();
 
 		public static void Clear()
 		{
@@ -78,10 +78,15 @@ namespace RapChessGui
 		{
 			switch (p)
 			{
+				case CProtocol.uci:
+					return "Uci";
 				case CProtocol.winboard:
 					return "Winboard";
+				case CProtocol.auto:
+					return "Auto";
 				default:
-					return "Uci";
+					return "Unknown";
+
 			}
 		}
 
@@ -98,10 +103,14 @@ namespace RapChessGui
 		{
 			switch (p)
 			{
+				case "Uci":
+					return CProtocol.uci;
 				case "Winboard":
 					return CProtocol.winboard;
+				case "Auto":
+					return CProtocol.auto;
 				default:
-					return CProtocol.uci;
+					return CProtocol.unknow;
 			}
 		}
 
@@ -136,35 +145,36 @@ namespace RapChessGui
 			}
 		}
 
-		static void UpdateFileEngine(string path, List<string> list)
+		public static void UpdateFileEngine(string path, List<string> list)
 		{
 			list.Clear();
-			string[] filePaths = Directory.GetFiles(path, "*.exe");
-			for (int n = 0; n < filePaths.Length; n++)
+			if (Directory.Exists(path))
 			{
-				string fn = Path.GetFileName(filePaths[n]);
-				list.Add(fn);
+				string[] filePaths = Directory.GetFiles(path, "*.exe");
+				for (int n = 0; n < filePaths.Length; n++)
+				{
+					string fn = Path.GetFileName(filePaths[n]);
+					list.Add(fn);
+				}
 			}
 		}
 
 		public static void UpdateFileEngine()
 		{
 			UpdateFileEngine("Engines", fileEngine);
-			UpdateFileEngine(@"Engines/Uci", fileEngineUci);
-			UpdateFileEngine(@"Engines/Winboard", fileEngineWb);
-			fileEngine.Add("none");
+			UpdateFileEngine(@"Engines/Auto", fileEngineAuto);
 		}
 
 	}
 
 	public static class CElo
 	{
-		static double Probability(double rating1,double rating2)
+		static double Probability(double rating1, double rating2)
 		{
-			return 1.0f * 1.0f / (1 + 1.0f *(Math.Pow(10, 1.0f * (rating1 - rating2) / 400)));
+			return 1.0f * 1.0f / (1 + 1.0f * (Math.Pow(10, 1.0f * (rating1 - rating2) / 400)));
 		}
 
-		public static void EloRating(double Ra, double Rb, out int Na, out int Nb,int Ga,int Gb, int d)
+		public static void EloRating(double Ra, double Rb, out int Na, out int Nb, int Ga, int Gb, int d)
 		{
 			double Kmin = 0xf;
 			double Kmax = 0x3f;
@@ -181,7 +191,7 @@ namespace RapChessGui
 				Na = Convert.ToInt32(Ra + Ka * (1 - Pa));
 				Nb = Convert.ToInt32(Rb + Kb * (0 - Pb));
 			}
-			if(d < 0)
+			if (d < 0)
 			{
 				Na = Convert.ToInt32(Ra + Ka * (0 - Pa));
 				Nb = Convert.ToInt32(Rb + Kb * (1 - Pb));
@@ -282,10 +292,54 @@ namespace RapChessGui
 
 	public class CModeValue
 	{
-		public string mode = "Time";
+		public CLevel level = CLevel.time;
 		public int value = 10;
 		public int increment = 100;
 		public int inc = 0;
+
+		public static CLevel StrToLevel(string l)
+		{
+			switch (l)
+			{
+				case "Standard":
+					return CLevel.standard;
+				case "Time":
+					return CLevel.time;
+				case "Depth":
+					return CLevel.depth;
+				case "Nodes":
+					return CLevel.nodes;
+				default:
+					return CLevel.infinite;
+			}
+		}
+
+		public string LevelToStr(CLevel l)
+		{
+			switch (l)
+			{
+				case CLevel.standard:
+					return "Standard";
+				case CLevel.depth:
+					return "Depth";
+				case CLevel.nodes:
+					return "Nodes";
+				case CLevel.time:
+					return "Time";
+				default:
+					return "Infinite";
+			}
+		}
+
+		public void SetLevel(string l)
+		{
+			level = StrToLevel(l);
+		}
+
+		public string GetLevel()
+		{
+			return LevelToStr(level);
+		}
 
 		public void SetValue(int v)
 		{
@@ -305,22 +359,22 @@ namespace RapChessGui
 		public int GetUciValue()
 		{
 			int result = value * GetValueIncrement();
-			if (mode == "Standard")
+			if (level == CLevel.standard)
 				result *= 1000;
 			return result;
 		}
 
 		public int GetValueIncrement()
 		{
-			switch (mode)
+			switch (level)
 			{
-				case "Standard":
+				case CLevel.standard:
 					return 15;
-				case "Depth":
+				case CLevel.depth:
 					return 1;
-				case "Nodes":
+				case CLevel.nodes:
 					return 100000;
-				case "Infinite":
+				case CLevel.infinite:
 					return 0;
 				default:
 					return 100;
@@ -329,54 +383,32 @@ namespace RapChessGui
 
 		public string GetUci()
 		{
-			switch (mode)
+			switch (level)
 			{
-				case "Standard":
+				case CLevel.standard:
 					return "standard";
-				case "Depth":
+				case CLevel.depth:
 					return "depth";
-				case "Nodes":
+				case CLevel.nodes:
 					return "nodes";
-				case "Infinite":
+				case CLevel.infinite:
 					return "infinite";
 				default:
 					return "movetime";
 			}
 		}
 
-		public void SetUci(string uci)
-		{
-			switch (uci)
-			{
-				case "standard":
-					mode = "Standard";
-					break;
-				case "depth":
-					mode = "Depth";
-					break;
-				case "nodes":
-					mode = "Nodes";
-					break;
-				case "infinite":
-					mode = "Infinite";
-					break;
-				default:
-					mode = "Time";
-					break;
-			}
-		}
-
 		public string GetTip()
 		{
-			switch (mode)
+			switch (level)
 			{
-				case "Standard":
+				case CLevel.standard:
 					return "Base for whole game in seconds";
-				case "Depth":
+				case CLevel.depth:
 					return "Depth in half-moves";
-				case "Nodes":
+				case CLevel.nodes:
 					return "Maximum nodes per move";
-				case "Infinite":
+				case CLevel.infinite:
 					return "Infinite mode until click stop";
 				default:
 					return "Time per move in miliseconds";
@@ -385,6 +417,7 @@ namespace RapChessGui
 
 		public string ShortName()
 		{
+			string mode = GetLevel();
 			string result = mode[0].ToString();
 			if (mode != "Infinite")
 				result = $"{result}{value}";
@@ -393,6 +426,7 @@ namespace RapChessGui
 
 		public string LongName()
 		{
+			string mode = GetLevel();
 			if (mode == "Standard")
 			{
 				int t = value * 15 + inc * 60;

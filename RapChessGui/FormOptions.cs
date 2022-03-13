@@ -105,21 +105,27 @@ namespace RapChessGui
 			cbBookReader.SelectedIndex = 0;
 
 			cbTourBSelected.Items.Clear();
-			cbTourBSelected.Items.Add("None");
+			cbTourBSelected.Sorted = true;
 			foreach (CBook b in FormChess.bookList.list)
 				cbTourBSelected.Items.Add(b.name);
+			cbTourBSelected.Sorted = false;
+			cbTourBSelected.Items.Insert(0,"None");
 			cbTourBSelected.SelectedIndex = 0;
 
 			cbTourESelected.Items.Clear();
-			cbTourESelected.Items.Add("None");
+			cbTourESelected.Sorted = true;
 			foreach (CEngine e in FormChess.engineList.list)
 				cbTourESelected.Items.Add(e.name);
+			cbTourESelected.Sorted = false;
+			cbTourESelected.Items.Insert(0,"None");
 			cbTourESelected.SelectedIndex = 0;
 
 			cbTourPSelected.Items.Clear();
-			cbTourPSelected.Items.Add("None");
+			cbTourPSelected.Sorted = true;
 			foreach (CPlayer p in FormChess.playerList.list)
 				cbTourPSelected.Items.Add(p.name);
+			cbTourPSelected.Sorted = false;
+			cbTourPSelected.Items.Insert(0,"None");
 			cbTourPSelected.SelectedIndex = 0;
 
 			LoadFromIni();

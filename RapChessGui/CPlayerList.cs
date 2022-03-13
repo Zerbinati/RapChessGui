@@ -93,7 +93,7 @@ namespace RapChessGui
 
 		public bool IsRealHuman()
 		{
-			return (engine == "Human") && (modeValue.mode == "Infinite");
+			return (engine == "Human") && (modeValue.level == CLevel.infinite);
 		}
 
 		public void SetPlayer(string name)
@@ -105,7 +105,7 @@ namespace RapChessGui
 				engine = p.engine;
 				book = p.book;
 				elo = p.elo;
-				modeValue.mode = p.modeValue.mode;
+				modeValue.level = p.modeValue.level;
 				modeValue.value = p.modeValue.value;
 				hisElo.Assign(p.hisElo);
 			}
@@ -115,7 +115,7 @@ namespace RapChessGui
 		{
 			tournament = CPlayerList.iniFile.ReadInt($"player>{name}>tournament", tournament);
 			engine = CPlayerList.iniFile.Read($"player>{name}>engine", "Human");
-			modeValue.mode = CPlayerList.iniFile.Read($"player>{name}>mode", modeValue.mode);
+			modeValue.SetLevel(CPlayerList.iniFile.Read($"player>{name}>mode", modeValue.GetLevel()));
 			modeValue.value = CPlayerList.iniFile.ReadInt($"player>{name}>value", modeValue.value);
 			book = CPlayerList.iniFile.Read($"player>{name}>book", "None");
 			elo = CPlayerList.iniFile.Read($"player>{name}>elo", elo);
@@ -134,7 +134,7 @@ namespace RapChessGui
 			}
 			CPlayerList.iniFile.Write($"player>{name}>tournament", tournament);
 			CPlayerList.iniFile.Write($"player>{name}>engine", engine);
-			CPlayerList.iniFile.Write($"player>{name}>mode", modeValue.mode);
+			CPlayerList.iniFile.Write($"player>{name}>mode", modeValue.GetLevel());
 			CPlayerList.iniFile.Write($"player>{name}>value", modeValue.value);
 			CPlayerList.iniFile.Write($"player>{name}>book", book);
 			CPlayerList.iniFile.Write($"player>{name}>elo", elo);

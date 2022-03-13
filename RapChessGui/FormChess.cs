@@ -44,6 +44,7 @@ namespace RapChessGui
 		public static CChess chess = new CChess();
 		readonly CUci Uci = new CUci();
 		readonly SoundPlayer audioMove = new SoundPlayer(Properties.Resources.Move);
+		public static CRapLog log = new CRapLog();
 		public static PrivateFontCollection pfc = new PrivateFontCollection();
 		public static CBookList bookList = new CBookList();
 		public static CEngineList engineList = new CEngineList();
@@ -89,8 +90,7 @@ namespace RapChessGui
 			This = this;
 			CreateDir("Books");
 			CreateDir("Engines");
-			CreateDir(@"Engines/Uci");
-			CreateDir(@"Engines/Winboard");
+			CreateDir(@"Engines/Auto");
 			CreateDir("History");
 			CreateDir("Ini");
 			CData.UpdateFileEngine();
@@ -196,7 +196,7 @@ namespace RapChessGui
 				p.tournament = 0;
 				p.elo = "500";
 				p.eloOrg = "500";
-				p.modeValue.mode = "Infinite";
+				p.modeValue.SetLevel("Infinite");
 				p.modeValue.value = 0;
 				p.SaveToIni();
 				playerList.Add(p);
@@ -206,56 +206,56 @@ namespace RapChessGui
 				CPlayer p = new CPlayer();
 				p.engine = "RapChessCs";
 				p.book = "BRR 90";
-				p.modeValue.mode = "Time";
+				p.modeValue.level = CLevel.time;
 				p.modeValue.value = 10;
 				p.elo = "200";
 				playerList.Add(p);
 				p = new CPlayer();
 				p.engine = "RapChessCs";
 				p.book = "BRR 70";
-				p.modeValue.mode = "Time";
+				p.modeValue.level = CLevel.time;
 				p.modeValue.value = 10;
 				p.elo = "400";
 				playerList.Add(p);
 				p = new CPlayer();
 				p.engine = "RapChessCs";
 				p.book = "BRR 50";
-				p.modeValue.mode = "Time";
+				p.modeValue.level = CLevel.time;
 				p.modeValue.value = 10;
 				p.elo = "600";
 				playerList.Add(p);
 				p = new CPlayer();
 				p.engine = "RapChessCs";
 				p.book = "BRR 30";
-				p.modeValue.mode = "Time";
+				p.modeValue.level = CLevel.time;
 				p.modeValue.value = 10;
 				p.elo = "800";
 				playerList.Add(p);
 				p = new CPlayer();
 				p.engine = "RapChessCs";
 				p.book = "BRR 10";
-				p.modeValue.mode = "Time";
+				p.modeValue.level = CLevel.time;
 				p.modeValue.value = 10;
 				p.elo = "1000";
 				playerList.Add(p);
 				p = new CPlayer();
 				p.engine = "RapShortCs";
 				p.book = "BRM Eco";
-				p.modeValue.mode = "Time";
+				p.modeValue.level = CLevel.time;
 				p.modeValue.value = 10;
 				p.elo = "500";
 				playerList.Add(p);
 				p = new CPlayer();
 				p.engine = "RapSimpleCs";
 				p.book = "Chess DB";
-				p.modeValue.mode = "Time";
+				p.modeValue.level = CLevel.time;
 				p.modeValue.value = 10;
 				p.elo = "1000";
 				playerList.Add(p);
 				p = new CPlayer();
 				p.engine = "RapChessCs";
 				p.book = "BigMem";
-				p.modeValue.mode = "Time";
+				p.modeValue.level = CLevel.time;
 				p.modeValue.value = 10;
 				p.elo = "1200";
 				playerList.Add(p);
@@ -635,14 +635,14 @@ namespace RapChessGui
 				case CGameState.time:
 					CData.gamesTime++;
 					ShowInfo($"{pl.name} time out", Color.Red, 2);
-					CRapLog.Add($"Time out {pl.name}");
+					log.Add($"Time out {pl.name}");
 					FormLogEngines.AppendText($"Time out {pl.name}\n", Color.Red);
 					break;
 				case CGameState.error:
 					CData.gamesError++;
 					labError.Show();
 					ShowInfo($"{pl.name} make wrong move", Color.Red, 2);
-					CRapLog.Add($"Wrong move {pl.name} ({umo}) {chess.GetFen()}");
+					log.Add($"Wrong move {pl.name} ({umo}) {chess.GetFen()}");
 					FormLogEngines.AppendText($"Wrong move: ({umo})\n", Color.Red);
 					FormLogEngines.AppendText($"Fen: {chess.GetFen()}\n", Color.Black);
 					break;
@@ -688,7 +688,6 @@ namespace RapChessGui
 		{
 			SetColor();
 			SetBoardRotate();
-			//splitContainerBoard.SplitterDistance = panBoard.Height;
 			Board.Resize(panBoard.Width, panBoard.Height);
 			RenderBoard();
 		}
@@ -702,7 +701,7 @@ namespace RapChessGui
 			}
 			catch
 			{
-				CRapLog.Add($"milliseconds {g.engine.name} {g.infMs}");
+				log.Add($"milliseconds {g.engine.name} {g.infMs}");
 			}
 			ListViewItem lvi = new ListViewItem(new[] { dt.ToString("mm:ss.ff"), g.scoreS, g.GetDepth(), g.nodes.ToString("N0"), g.nps.ToString("N0"), g.pv });
 			ListView lv = g.isWhite ? lvMovesW : lvMovesB;
@@ -783,7 +782,7 @@ namespace RapChessGui
 					}
 					break;
 				case "log":
-					CRapLog.Add($"{g.GetName()} => {Uci.GetValue(1, 0)}");
+					log.Add($"{g.GetName()} => {Uci.GetValue(1, 0)}");
 					break;
 				case "info":
 					if (Uci.GetIndex("string", 0) == 1)
@@ -925,7 +924,7 @@ namespace RapChessGui
 						}
 						catch
 						{
-							CRapLog.Add($"{g.player.name} ({g.player.engine}) ({msg})");
+							log.Add($"{g.player.name} ({g.player.engine}) ({msg})");
 						}
 					}
 					break;
@@ -956,7 +955,7 @@ namespace RapChessGui
 			}
 			catch
 			{
-				CRapLog.Add($"Error save {fn}");
+				log.Add($"Error save {fn}");
 			}
 		}
 
@@ -1675,7 +1674,7 @@ namespace RapChessGui
 			CModeGame.computer = cbComputer.Text;
 			CModeGame.engine = cbEngine.Text;
 			CModeGame.book = cbBook.Text;
-			CModeGame.modeValue.mode = cbMode.Text;
+			CModeGame.modeValue.SetLevel(cbMode.Text);
 			CModeGame.modeValue.SetValue((int)nudValue.Value);
 			CModeGame.SaveToIni();
 		}
@@ -1686,7 +1685,7 @@ namespace RapChessGui
 			cbComputer.Text = CModeGame.computer;
 			cbEngine.Text = CModeGame.engine;
 			cbBook.Text = CModeGame.book;
-			cbMode.Text = CModeGame.modeValue.mode;
+			cbMode.Text = CModeGame.modeValue.GetLevel();
 			nudValue.Value = CModeGame.modeValue.GetValue();
 		}
 
@@ -1699,7 +1698,7 @@ namespace RapChessGui
 			{
 				pc.engine = cbEngine.Text;
 				pc.book = cbBook.Text;
-				pc.modeValue.mode = CModeGame.modeValue.mode;
+				pc.modeValue.level = CModeGame.modeValue.level;
 				pc.modeValue.value = CModeGame.modeValue.value;
 			}
 			else
@@ -1756,8 +1755,8 @@ namespace RapChessGui
 			CModeMatch.engine2 = cbEngine2.Text;
 			CModeMatch.book1 = cbMatchBook1.Text;
 			CModeMatch.book2 = cbMatchBook2.Text;
-			CModeMatch.modeValue1.mode = cbMode1.Text;
-			CModeMatch.modeValue2.mode = cbMode2.Text;
+			CModeMatch.modeValue1.SetLevel(cbMode1.Text);
+			CModeMatch.modeValue2.SetLevel(cbMode2.Text);
 			CModeMatch.modeValue1.SetValue((int)nudValue1.Value);
 			CModeMatch.modeValue2.SetValue((int)nudValue2.Value);
 		}
@@ -1768,8 +1767,8 @@ namespace RapChessGui
 			cbEngine2.Text = CModeMatch.engine2;
 			cbMatchBook1.Text = CModeMatch.book1;
 			cbMatchBook2.Text = CModeMatch.book2;
-			cbMode1.Text = CModeMatch.modeValue1.mode;
-			cbMode2.Text = CModeMatch.modeValue2.mode;
+			cbMode1.Text = CModeMatch.modeValue1.GetLevel();
+			cbMode2.Text = CModeMatch.modeValue2.GetLevel();
 			nudValue1.Value = CModeMatch.modeValue1.GetValue();
 			nudValue2.Value = CModeMatch.modeValue2.GetValue();
 		}
@@ -1799,12 +1798,12 @@ namespace RapChessGui
 			CPlayer p1 = new CPlayer("Player 1");
 			p1.engine = CModeMatch.engine1;
 			p1.book = CModeMatch.book1;
-			p1.modeValue.mode = CModeMatch.modeValue1.mode;
+			p1.modeValue.level = CModeMatch.modeValue1.level;
 			p1.modeValue.value = CModeMatch.modeValue1.value;
 			CPlayer p2 = new CPlayer("Player 2");
 			p2.engine = CModeMatch.engine2;
 			p2.book = CModeMatch.book2;
-			p2.modeValue.mode = CModeMatch.modeValue2.mode;
+			p2.modeValue.level = CModeMatch.modeValue2.level;
 			p2.modeValue.value = CModeMatch.modeValue2.value;
 			GamerList.gamer[0].SetPlayer(p1);
 			GamerList.gamer[1].SetPlayer(p2);
@@ -1916,7 +1915,7 @@ namespace RapChessGui
 			int bi = cbTourBEngine.FindStringExact(CModeTournamentB.engine);
 			if (bi > 0)
 				cbTourBEngine.SelectedIndex = bi;
-			cbTourBMode.SelectedIndex = cbTourBMode.FindStringExact(CModeTournamentB.modeValue.mode);
+			cbTourBMode.SelectedIndex = cbTourBMode.FindStringExact(CModeTournamentB.modeValue.GetLevel());
 			nudTourB.Value = CModeTournamentB.modeValue.GetValue();
 		}
 
@@ -1979,7 +1978,7 @@ namespace RapChessGui
 			ComClear();
 			TournamentBUpdate(CModeTournamentB.bookWin);
 			TournamentBUpdate(CModeTournamentB.bookLoose);
-			CModeTournamentB.modeValue.mode = cbTourBMode.Text;
+			CModeTournamentB.modeValue.SetLevel(cbTourBMode.Text);
 			CModeTournamentB.modeValue.SetValue((int)nudTourB.Value);
 			CModeTournamentB.engine = cbTourBEngine.Text;
 			CModeTournamentB.SaveToIni();
@@ -1994,9 +1993,9 @@ namespace RapChessGui
 			p2.elo = b2.elo;
 			p1.book = b1.name;
 			p2.book = b2.name;
-			p1.modeValue.mode = CModeTournamentB.modeValue.mode;
+			p1.modeValue.level = CModeTournamentB.modeValue.level;
 			p1.modeValue.value = CModeTournamentB.modeValue.value;
-			p2.modeValue.mode = CModeTournamentB.modeValue.mode;
+			p2.modeValue.level = CModeTournamentB.modeValue.level;
 			p2.modeValue.value = CModeTournamentB.modeValue.value;
 			CModeTournamentB.SetRepeition(b1, b2);
 			GamerList.gamer[CModeTournamentB.rotate ? 1 : 0].SetPlayer(p1);
@@ -2019,7 +2018,7 @@ namespace RapChessGui
 
 		void TournamentEShow()
 		{
-			int ei = cbTourEMode.FindStringExact(CModeTournamentE.modeValue.mode);
+			int ei = cbTourEMode.FindStringExact(CModeTournamentE.modeValue.GetLevel());
 			if (ei > 0)
 				cbTourEMode.SelectedIndex = ei;
 			cbTourEBook.SelectedIndex = cbTourEBook.FindStringExact(CModeTournamentE.book);
@@ -2029,8 +2028,8 @@ namespace RapChessGui
 		void TournamentEReset()
 		{
 			lvTourEList.Items.Clear();
-			CEngineList engList = CModeTournamentE.FillList();
-			foreach (CEngine e in engList.list)
+			CModeTournamentE.ListFill();
+			foreach (CEngine e in CModeTournamentE.engineList.list)
 			{
 				ListViewItem lvi = new ListViewItem(new[] { e.name, e.elo, e.GetDeltaElo().ToString() });
 				lvi.BackColor = e.hisElo.GetColor();
@@ -2061,6 +2060,7 @@ namespace RapChessGui
 			string name = lvTourEList.SelectedItems[0].Text;
 			CEngineList engineList = CModeTournamentE.engineList;
 			CEngine engine = engineList.GetEngine(name);
+			int elo = engine.GetElo();
 			lvTourESel.Items.Clear();
 			engineList.SortElo();
 			engineList.FillPosition();
@@ -2073,17 +2073,17 @@ namespace RapChessGui
 				{
 					opponents++;
 					int pro = (gw * 200 + gd * 100) / count - 100;
-					int elo = Convert.ToInt32(engine.elo) - Convert.ToInt32(e.elo);
+					int del = elo - e.GetElo();
 					ListViewItem lvi = new ListViewItem(new[] { e.name, elo.ToString(), count.ToString(), pro.ToString() });
-					if (elo > 0)
+					if (del > 0)
 						lvi.BackColor = CBoard.colorListW;
-					if (elo < 0)
+					if (del < 0)
 						lvi.BackColor = CBoard.colorListB;
-					if (elo == 0)
+					if (del == 0)
 						lvi.BackColor = Color.White;
 					lvTourESel.Items.Add(lvi);
 					int up = (lvTourESel.ClientRectangle.Height / lvi.Bounds.Height) >> 1;
-					int del = engine.position - e.position;
+					del = engine.position - e.position;
 					if (del >= up)
 						top2 = lvi;
 				}
@@ -2131,11 +2131,13 @@ namespace RapChessGui
 			ComClear();
 			TournamentEUpdate(CModeTournamentE.engWin);
 			TournamentEUpdate(CModeTournamentE.engLoose);
-			CModeTournamentE.modeValue.mode = cbTourEMode.Text;
+			CModeTournamentE.modeValue.SetLevel(cbTourEMode.Text);
 			CModeTournamentE.modeValue.SetValue((int)nudTourE.Value);
 			CModeTournamentE.book = cbTourEBook.Text;
 			CModeTournamentE.SaveToIni();
 			SetMode(CGameMode.tourE);
+			if (CModeTournamentE.ListUpdate())
+				TournamentEReset();
 			CEngine e1 = CModeTournamentE.SelectEngine();
 			CEngine e2 = CModeTournamentE.SelectOpponent(e1);
 			CPlayer p1 = new CPlayer(e1.name);
@@ -2145,10 +2147,10 @@ namespace RapChessGui
 			p1.elo = e1.elo;
 			p2.elo = e2.elo;
 			p1.book = CModeTournamentE.book;
-			p1.modeValue.mode = CModeTournamentE.modeValue.mode;
+			p1.modeValue.level = CModeTournamentE.modeValue.level;
 			p1.modeValue.value = CModeTournamentE.modeValue.value;
 			p2.book = CModeTournamentE.book;
-			p2.modeValue.mode = CModeTournamentE.modeValue.mode;
+			p2.modeValue.level = CModeTournamentE.modeValue.level;
 			p2.modeValue.value = CModeTournamentE.modeValue.value;
 			CModeTournamentE.SetRepeition(e1, e2);
 			GamerList.gamer[CModeTournamentE.rotate ? 1 : 0].SetPlayer(p1);
@@ -2363,8 +2365,8 @@ namespace RapChessGui
 		{
 			cbTeacherEngine.SelectedIndex = cbTeacherEngine.FindStringExact(CModeTraining.teacher);
 			cbTrainedEngine.SelectedIndex = cbTrainedEngine.FindStringExact(CModeTraining.trained);
-			cbTeacherMode.SelectedIndex = cbTeacherMode.FindStringExact(CModeTraining.modeValueTeacher.mode);
-			cbTrainedMode.SelectedIndex = cbTrainedMode.FindStringExact(CModeTraining.modeValueTrained.mode);
+			cbTeacherMode.SelectedIndex = cbTeacherMode.FindStringExact(CModeTraining.modeValueTeacher.GetLevel());
+			cbTrainedMode.SelectedIndex = cbTrainedMode.FindStringExact(CModeTraining.modeValueTrained.GetLevel());
 			cbTeacherBook.SelectedIndex = cbTeacherBook.FindStringExact(CModeTraining.teacherBook);
 			cbTrainedBook.SelectedIndex = cbTrainedBook.FindStringExact(CModeTraining.trainedBook);
 			nudTrained.Value = CModeTraining.modeValueTrained.GetValue();
@@ -2392,8 +2394,8 @@ namespace RapChessGui
 			TrainingUpdate();
 			CModeTraining.teacher = cbTeacherEngine.Text;
 			CModeTraining.trained = cbTrainedEngine.Text;
-			CModeTraining.modeValueTeacher.mode = cbTeacherMode.Text;
-			CModeTraining.modeValueTrained.mode = cbTrainedMode.Text;
+			CModeTraining.modeValueTeacher.SetLevel(cbTeacherMode.Text);
+			CModeTraining.modeValueTrained.SetLevel(cbTrainedMode.Text);
 			CModeTraining.teacherBook = cbTeacherBook.Text;
 			CModeTraining.trainedBook = cbTrainedBook.Text;
 			CModeTraining.modeValueTeacher.SetValue((int)nudTeacher.Value);
@@ -2402,12 +2404,12 @@ namespace RapChessGui
 			CPlayer pw = new CPlayer("Trained");
 			pw.engine = CModeTraining.trained;
 			pw.book = CModeTraining.trainedBook;
-			pw.modeValue.mode = CModeTraining.modeValueTrained.mode;
+			pw.modeValue.level = CModeTraining.modeValueTrained.level;
 			pw.modeValue.value = CModeTraining.modeValueTrained.value;
 			CPlayer pb = new CPlayer("Teacher");
 			pb.engine = CModeTraining.teacher;
 			pb.book = CModeTraining.teacherBook;
-			pb.modeValue.mode = CModeTraining.modeValueTeacher.mode;
+			pb.modeValue.level = CModeTraining.modeValueTeacher.level;
 			pb.modeValue.value = CModeTraining.modeValueTeacher.value;
 			GamerList.gamer[0].SetPlayer(pw);
 			GamerList.gamer[1].SetPlayer(pb);
@@ -2590,7 +2592,8 @@ namespace RapChessGui
 		{
 			IniSave();
 			GamerList.Terminate();
-			FormEditEngine.process.Terminate();
+			FormEditEngine.processOptions.Terminate();
+			FormEditEngine.processTest.Terminate();
 			FormLogEngines.process.Terminate();
 		}
 
@@ -2847,7 +2850,7 @@ namespace RapChessGui
 
 		private void cbMode_SelectedIndexChanged(object sender, EventArgs e)
 		{
-			CModeGame.modeValue.mode = cbMode.Text;
+			CModeGame.modeValue.SetLevel(cbMode.Text);
 			nudValue.Increment = CModeGame.modeValue.GetValueIncrement();
 			nudValue.Minimum = nudValue.Increment;
 			nudValue.Value = CModeGame.modeValue.GetValue();
@@ -2856,7 +2859,7 @@ namespace RapChessGui
 
 		private void cbMode1_SelectedIndexChanged(object sender, EventArgs e)
 		{
-			CModeMatch.modeValue1.mode = cbMode1.Text;
+			CModeMatch.modeValue1.SetLevel(cbMode1.Text);
 			nudValue1.Increment = CModeMatch.modeValue1.GetValueIncrement();
 			nudValue1.Minimum = nudValue1.Increment;
 			nudValue1.Value = CModeMatch.modeValue1.GetValue();
@@ -2865,7 +2868,7 @@ namespace RapChessGui
 
 		private void cbMode2_SelectedIndexChanged(object sender, EventArgs e)
 		{
-			CModeMatch.modeValue2.mode = cbMode2.Text;
+			CModeMatch.modeValue2.SetLevel(cbMode2.Text);
 			nudValue2.Increment = CModeMatch.modeValue2.GetValueIncrement();
 			nudValue2.Minimum = nudValue2.Increment;
 			nudValue2.Value = CModeMatch.modeValue2.GetValue();
@@ -2874,7 +2877,7 @@ namespace RapChessGui
 
 		private void cbTrainedMode_SelectedIndexChanged(object sender, EventArgs e)
 		{
-			CModeTraining.modeValueTrained.mode = cbTrainedMode.Text;
+			CModeTraining.modeValueTrained.SetLevel(cbTrainedMode.Text);
 			nudTrained.Increment = CModeTraining.modeValueTrained.GetValueIncrement();
 			nudTrained.Minimum = nudTrained.Increment;
 			nudTrained.Value = CModeTraining.modeValueTrained.GetValue();
@@ -2883,7 +2886,7 @@ namespace RapChessGui
 
 		private void cbTeacherMode_SelectedIndexChanged(object sender, EventArgs e)
 		{
-			CModeTraining.modeValueTeacher.mode = cbTeacherMode.Text;
+			CModeTraining.modeValueTeacher.SetLevel(cbTeacherMode.Text);
 			nudTeacher.Increment = CModeTraining.modeValueTeacher.GetValueIncrement();
 			nudTeacher.Minimum = nudTeacher.Increment;
 			nudTeacher.Value = Math.Max(CModeTraining.modeValueTeacher.GetValue(), nudTeacher.Minimum);
@@ -3056,7 +3059,7 @@ namespace RapChessGui
 
 		private void cbTourEMode_SelectedIndexChanged(object sender, EventArgs e)
 		{
-			CModeTournamentE.modeValue.mode = (sender as ComboBox).Text;
+			CModeTournamentE.modeValue.SetLevel((sender as ComboBox).Text);
 			nudTourE.Increment = CModeTournamentE.modeValue.GetValueIncrement();
 			nudTourE.Minimum = nudTourE.Increment;
 			nudTourE.Value = Math.Max(CModeTournamentE.modeValue.GetValue(), nudTourE.Minimum);
@@ -3065,7 +3068,7 @@ namespace RapChessGui
 
 		private void cbTourBMode_SelectedIndexChanged(object sender, EventArgs e)
 		{
-			CModeTournamentB.modeValue.mode = (sender as ComboBox).Text;
+			CModeTournamentB.modeValue.SetLevel((sender as ComboBox).Text);
 			nudTourB.Increment = CModeTournamentB.modeValue.GetValueIncrement();
 			nudTourB.Minimum = nudTourB.Increment;
 			nudTourB.Value = Math.Max(CModeTournamentB.modeValue.GetValue(), nudTourB.Minimum);
@@ -3095,6 +3098,10 @@ namespace RapChessGui
 		private void splitContainerMain_SplitterMoved(object sender, SplitterEventArgs e)
 		{
 			MakeBoardSquare();
+		}
+
+		private void FormChess_Shown(object sender, EventArgs e)
+		{
 		}
 	}
 }

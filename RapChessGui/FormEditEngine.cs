@@ -4,31 +4,30 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace RapChessGui
 {
+
 	public partial class FormEditEngine : Form
 	{
 		public static FormEditEngine This;
+		int testMode = 0;
+		CEngine testEngine = null;
 		int indexFirst = -1;
 		int tournament = -1;
 		CEngine engine = null;
-		public static CProcess process = null;
+		public static CProcess processTest = null;
+		public static CProcess processOptions = null;
 		readonly COptionList optionList = new COptionList();
 
 		public FormEditEngine()
 		{
 			This = this;
 			InitializeComponent();
-			process = new CProcess(OnDataReceived);
-		}
-
-		public static void AddOption(string o)
-		{
-			if (o == "uciok")
-				This.Uciok();
-			else
-				This.optionList.Add(o);
+			processTest = new CProcess(OnDataReceivedTest);
+			processOptions = new CProcess(OnDataReceivedOptions);
 		}
 
 		void ClickUpdate()
@@ -80,46 +79,212 @@ namespace RapChessGui
 						break;
 				}
 			}
-			process.Terminate();
 		}
 
-		delegate void DeleMessage(string message);
+		delegate void DeleMessageTest(string message);
 
-		readonly static DeleMessage deleMessage = new DeleMessage(NewMessage);
+		delegate void DeleMessageOptions(string message);
 
-		private void OnDataReceived(object sender, DataReceivedEventArgs e)
+		readonly static DeleMessageTest deleMessageTest = new DeleMessageTest(NewMessageTest);
+
+		readonly static DeleMessageOptions deleMessageOptions = new DeleMessageOptions(NewMessageOptions);
+
+		private void OnDataReceivedTest(object sender, DataReceivedEventArgs e)
 		{
 			try
 			{
 				if (!String.IsNullOrEmpty(e.Data))
 				{
-					Invoke(deleMessage, new object[] { e.Data.Trim() });
+					Invoke(deleMessageTest, new object[] { e.Data.Trim() });
 				}
 			}
 			catch { }
 		}
 
-		public static void NewMessage(string msg)
+		private void OnDataReceivedOptions(object sender, DataReceivedEventArgs e)
 		{
-			AddOption(msg);
+			try
+			{
+				if (!String.IsNullOrEmpty(e.Data))
+				{
+					Invoke(deleMessageOptions, new object[] { e.Data.Trim() });
+				}
+			}
+			catch { }
+		}
+
+		public static void NewMessageTest(string msg)
+		{
+			switch (This.testMode)
+			{
+				case 0:
+					if (msg == "uciok")
+					{
+						This.testEngine.protocol = CProtocol.uci;
+						if (This.testEngine == This.engine)
+							This.cbProtocol.Text = "Uci";
+					}
+					break;
+				case 1:
+					if (msg.Contains("move"))
+					{
+						This.testEngine.modeTime = false;
+						if (This.testEngine == This.engine)
+							This.cbModeTime.Checked = false;
+					}
+					break;
+				case 2:
+					if (msg.Contains("move"))
+					{
+						This.testEngine.modeDepth = false;
+						if (This.testEngine == This.engine)
+							This.cbModeDepth.Checked = false;
+					}
+					break;
+				case 3:
+					if (msg.Contains("move"))
+					{
+						This.testEngine.modeStandard = false;
+						if (This.testEngine == This.engine)
+							This.cbModeStandard.Checked = false;
+					}
+					break;
+			}
+		}
+
+		public static void NewMessageOptions(string msg)
+		{
+			if (msg == "uciok")
+				This.Uciok();
+			else
+				This.optionList.Add(msg);
+		}
+
+		public Task StartTestAuto()
+		{
+			return Task.Run(() =>
+			{
+				foreach (CEngine e in FormChess.engineList.list)
+					if ((e.FileExists() && e.protocol == CProtocol.auto))
+					{
+						testEngine = e;
+						testMode = 0;
+						testEngine.protocol = CProtocol.winboard;
+						processTest.SetProgram($@"{AppDomain.CurrentDomain.BaseDirectory}Engines\{e.file}", e.parameters);
+						processTest.WriteLine("uci");
+						Thread.Sleep(500);
+						processTest.Terminate();
+						testMode = 1;
+						testEngine.modeTime = true;
+						processTest.SetProgram($@"{AppDomain.CurrentDomain.BaseDirectory}Engines\{e.file}", e.parameters);
+						if (testEngine.protocol == CProtocol.uci)
+						{
+							processTest.WriteLine("uci");
+							processTest.WriteLine("ucinewgame");
+							processTest.WriteLine("position startpos");
+							processTest.WriteLine("go movetime 10000");
+						}
+						else
+						{
+							processTest.WriteLine("xboard");
+							processTest.WriteLine("new");
+							processTest.WriteLine("st 10");
+							processTest.WriteLine("post");
+							processTest.WriteLine("white");
+							processTest.WriteLine("go");
+						}
+						Thread.Sleep(2000);
+						processTest.Terminate();
+						testMode = 2;
+						testEngine.modeDepth = true;
+						processTest.SetProgram($@"{AppDomain.CurrentDomain.BaseDirectory}Engines\{e.file}", e.parameters);
+						if (testEngine.protocol == CProtocol.uci)
+						{
+							processTest.WriteLine("uci");
+							processTest.WriteLine("ucinewgame");
+							processTest.WriteLine("position startpos");
+							processTest.WriteLine("go depth 100");
+						}
+						else
+						{
+							processTest.WriteLine("xboard");
+							processTest.WriteLine("new");
+							processTest.WriteLine("sd 100");
+							processTest.WriteLine("post");
+							processTest.WriteLine("white");
+							processTest.WriteLine("go");
+						}
+						Thread.Sleep(2000);
+						processTest.Terminate();
+						testMode = 3;
+						testEngine.modeStandard = true;
+						processTest.SetProgram($@"{AppDomain.CurrentDomain.BaseDirectory}Engines\{e.file}", e.parameters);
+						if (testEngine.protocol == CProtocol.uci)
+						{
+							processTest.WriteLine("uci");
+							processTest.WriteLine("ucinewgame");
+							processTest.WriteLine("position startpos");
+							processTest.WriteLine("go wtime 1000000 btime 1000000 winc 0 binc 0");
+						}
+						else
+						{
+							processTest.WriteLine("xboard");
+							processTest.WriteLine("new");
+							processTest.WriteLine("time 100000");
+							processTest.WriteLine("otim 100000");
+							processTest.WriteLine("post");
+							processTest.WriteLine("white");
+							processTest.WriteLine("go");
+						}
+						Thread.Sleep(2000);
+						processTest.Terminate();
+						testEngine.SaveToIni();
+					}
+			});
+		}
+
+		void ClickAuto()
+		{
+			engine.protocol = CProtocol.auto;
+			cbProtocol.Text = "Winboard";
+			cbModeStandard.Checked = true;
+			cbModeTime.Checked = true;
+			cbModeDepth.Checked = true;
+			StartTestAuto();
+		}
+
+		void StartTestOptions()
+		{
+			if (processOptions.SetProgram($@"{AppDomain.CurrentDomain.BaseDirectory}Engines\{engine.file}", engine.parameters) > 0)
+			{
+				processOptions.WriteLine("uci");
+				Task.Run(() =>
+				{
+					Thread.Sleep(500);
+					processOptions.Terminate();
+				});
+			}
+		}
+
+		void ShowEngine()
+		{
+			tbEngineName.Text = engine.name;
+			tbParameters.Text = engine.parameters;
+			cbFileList.Text = engine.GetFile();
+			cbProtocol.Text = CData.ProtocolToStr(engine.protocol);
+			cbModeStandard.Checked = engine.modeStandard;
+			cbModeTime.Checked = engine.modeTime;
+			cbModeDepth.Checked = engine.modeDepth;
+			nudElo.Value = Convert.ToInt32(engine.elo);
+			nudTournament.Value = engine.tournament;
 		}
 
 		void SelectEngine()
 		{
 			optionList.list.Clear();
 			Uciok();
-			tbEngineName.Text = engine.name;
-			tbParameters.Text = engine.parameters;
-			cbFileList.Text = engine.GetFile();
-			cbProtocol.Text = CData.ProtocolToStr(engine.protocol);
-			cbModeStandard.Checked = engine.modeStandard;
-			nudElo.Value = Convert.ToInt32(engine.elo);
-			nudTournament.Value = engine.tournament;
-			if ((engine.protocol == CProtocol.uci) && engine.FileExists())
-			{
-				if (process.SetProgram($@"{AppDomain.CurrentDomain.BaseDirectory}Engines\{engine.file}", engine.parameters) > 0)
-					process.WriteLine("uci");
-			}
+			ShowEngine();
+			StartTestOptions();
 		}
 
 		void SelectEngine(CEngine e)
@@ -163,11 +328,6 @@ namespace RapChessGui
 			gbEngines.Text = $"Engines {listBox1.Items.Count}";
 		}
 
-		private void ListBox1_SelectedValueChanged(object sender, EventArgs e)
-		{
-			SelectEngine(listBox1.SelectedItem.ToString());
-		}
-
 		void UpdateEngine(CEngine e)
 		{
 			e.name = tbEngineName.Text;
@@ -175,6 +335,8 @@ namespace RapChessGui
 			e.protocol = CData.StrToProtocol(cbProtocol.Text);
 			e.parameters = tbParameters.Text;
 			e.modeStandard = cbModeStandard.Checked;
+			e.modeTime = cbModeTime.Checked;
+			e.modeDepth = cbModeDepth.Checked;
 			e.elo = nudElo.Value.ToString();
 			e.tournament = (int)nudTournament.Value;
 			e.options = GetOptions();
@@ -246,15 +408,17 @@ namespace RapChessGui
 
 		private void FormEngine_Shown(object sender, EventArgs e)
 		{
+			StartTestAuto();
 			FormOptions.SetFontSize(this);
 			CData.UpdateFileEngine();
 			cbFileList.Items.Clear();
+			cbFileList.Sorted = true;
 			foreach (string engine in CData.fileEngine)
 				cbFileList.Items.Add(engine);
-			foreach (string engine in CData.fileEngineUci)
-				cbFileList.Items.Add($@"Uci\{engine}");
-			foreach (string engine in CData.fileEngineWb)
-				cbFileList.Items.Add($@"Winboard\{engine}");
+			foreach (string engine in CData.fileEngineAuto)
+				cbFileList.Items.Add($@"Auto\{engine}");
+			cbFileList.Sorted = false;
+			cbFileList.Items.Insert(0, "None");
 			UpdateListBox();
 			if (listBox1.Items.Count > 0)
 				listBox1.SetSelected(0, true);
@@ -349,14 +513,25 @@ namespace RapChessGui
 
 		private void FormEngine_FormClosing(object sender, FormClosingEventArgs e)
 		{
-			process.Terminate();
+			processTest.Terminate();
 		}
 
-		private void button1_Click(object sender, EventArgs e)
+		private void bUpdate_Click(object sender, EventArgs e)
 		{
 			CEngine eng = new CEngine();
 			UpdateEngine(eng);
 			tbEngineName.Text = eng.CreateName();
 		}
+
+		private void bAuto_Click(object sender, EventArgs e)
+		{
+			ClickAuto();
+		}
+
+		private void ListBox1_SelectedValueChanged(object sender, EventArgs e)
+		{
+			SelectEngine(listBox1.SelectedItem.ToString());
+		}
+
 	}
 }
