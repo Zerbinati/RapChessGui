@@ -32,6 +32,7 @@
 			this.panel1 = new System.Windows.Forms.Panel();
 			this.bDelete = new System.Windows.Forms.Button();
 			this.bCreate = new System.Windows.Forms.Button();
+			this.button1 = new System.Windows.Forms.Button();
 			this.bUpdate = new System.Windows.Forms.Button();
 			this.groupBox5 = new System.Windows.Forms.GroupBox();
 			this.nudTournament = new System.Windows.Forms.NumericUpDown();
@@ -40,12 +41,11 @@
 			this.groupBox3 = new System.Windows.Forms.GroupBox();
 			this.tbParameters = new System.Windows.Forms.TextBox();
 			this.groupBox4 = new System.Windows.Forms.GroupBox();
-			this.cbBookReaderList = new System.Windows.Forms.ComboBox();
+			this.cbBookreaderList = new System.Windows.Forms.ComboBox();
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
 			this.tbReaderName = new System.Windows.Forms.TextBox();
 			this.gbBooks = new System.Windows.Forms.GroupBox();
 			this.listBox1 = new System.Windows.Forms.ListBox();
-			this.button1 = new System.Windows.Forms.Button();
 			this.panel1.SuspendLayout();
 			this.groupBox5.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.nudTournament)).BeginInit();
@@ -102,6 +102,18 @@
 			this.bCreate.UseVisualStyleBackColor = true;
 			this.bCreate.Click += new System.EventHandler(this.ButCreate_Click);
 			// 
+			// button1
+			// 
+			this.button1.AutoSize = true;
+			this.button1.Dock = System.Windows.Forms.DockStyle.Top;
+			this.button1.Location = new System.Drawing.Point(0, 220);
+			this.button1.Name = "button1";
+			this.button1.Size = new System.Drawing.Size(311, 24);
+			this.button1.TabIndex = 35;
+			this.button1.Text = "Rename";
+			this.button1.UseVisualStyleBackColor = true;
+			this.button1.Click += new System.EventHandler(this.button1_Click);
+			// 
 			// bUpdate
 			// 
 			this.bUpdate.AutoSize = true;
@@ -110,7 +122,7 @@
 			this.bUpdate.Name = "bUpdate";
 			this.bUpdate.Size = new System.Drawing.Size(311, 24);
 			this.bUpdate.TabIndex = 25;
-			this.bUpdate.Text = "Update";
+			this.bUpdate.Text = "Save";
 			this.bUpdate.UseVisualStyleBackColor = true;
 			this.bUpdate.Click += new System.EventHandler(this.ButUpdate_Click);
 			// 
@@ -196,7 +208,7 @@
 			// groupBox4
 			// 
 			this.groupBox4.AutoSize = true;
-			this.groupBox4.Controls.Add(this.cbBookReaderList);
+			this.groupBox4.Controls.Add(this.cbBookreaderList);
 			this.groupBox4.Dock = System.Windows.Forms.DockStyle.Top;
 			this.groupBox4.Location = new System.Drawing.Point(0, 39);
 			this.groupBox4.Name = "groupBox4";
@@ -205,16 +217,16 @@
 			this.groupBox4.TabStop = false;
 			this.groupBox4.Text = "BookReader";
 			// 
-			// cbBookReaderList
+			// cbBookreaderList
 			// 
-			this.cbBookReaderList.Dock = System.Windows.Forms.DockStyle.Top;
-			this.cbBookReaderList.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.cbBookReaderList.FormattingEnabled = true;
-			this.cbBookReaderList.Location = new System.Drawing.Point(3, 16);
-			this.cbBookReaderList.Name = "cbBookReaderList";
-			this.cbBookReaderList.Size = new System.Drawing.Size(305, 21);
-			this.cbBookReaderList.Sorted = true;
-			this.cbBookReaderList.TabIndex = 2;
+			this.cbBookreaderList.Dock = System.Windows.Forms.DockStyle.Top;
+			this.cbBookreaderList.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.cbBookreaderList.FormattingEnabled = true;
+			this.cbBookreaderList.Location = new System.Drawing.Point(3, 16);
+			this.cbBookreaderList.Name = "cbBookreaderList";
+			this.cbBookreaderList.Size = new System.Drawing.Size(305, 21);
+			this.cbBookreaderList.Sorted = true;
+			this.cbBookreaderList.TabIndex = 2;
 			// 
 			// groupBox1
 			// 
@@ -262,18 +274,6 @@
 			this.listBox1.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.listBox1_DrawItem);
 			this.listBox1.SelectedValueChanged += new System.EventHandler(this.ListBox1_SelectedValueChanged);
 			// 
-			// button1
-			// 
-			this.button1.AutoSize = true;
-			this.button1.Dock = System.Windows.Forms.DockStyle.Top;
-			this.button1.Location = new System.Drawing.Point(0, 220);
-			this.button1.Name = "button1";
-			this.button1.Size = new System.Drawing.Size(311, 24);
-			this.button1.TabIndex = 35;
-			this.button1.Text = "Rename";
-			this.button1.UseVisualStyleBackColor = true;
-			this.button1.Click += new System.EventHandler(this.button1_Click);
-			// 
 			// FormEditBook
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -314,7 +314,7 @@
 		private System.Windows.Forms.GroupBox gbBooks;
 		public System.Windows.Forms.ListBox listBox1;
 		private System.Windows.Forms.GroupBox groupBox4;
-		private System.Windows.Forms.ComboBox cbBookReaderList;
+		private System.Windows.Forms.ComboBox cbBookreaderList;
 		private System.Windows.Forms.GroupBox groupBox3;
 		private System.Windows.Forms.TextBox tbParameters;
 		private System.Windows.Forms.Button bDelete;

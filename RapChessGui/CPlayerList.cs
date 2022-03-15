@@ -10,7 +10,7 @@ namespace RapChessGui
 		public int tournament = 1;
 		public int position = 0;
 		public string name = "";
-		public string engine = "Human";
+		public string engine = CData.none;
 		public string book = CData.none;
 		public string elo = "1000";
 		public string eloOrg = "1000";
@@ -28,10 +28,10 @@ namespace RapChessGui
 
 		public void Check(CEngineList el)
 		{
-			CEngine e = el.GetEngine(engine);
+			CEngine e = el.GetEngineByName(engine);
 			if (e == null)
 			{
-				engine = "Human";
+				engine = "None";
 				SaveToIni();
 			}
 		}
@@ -88,12 +88,12 @@ namespace RapChessGui
 
 		public bool IsComputer()
 		{
-			return engine != "Human";
+			return engine != "None";
 		}
 
 		public bool IsRealHuman()
 		{
-			return (engine == "Human") && (modeValue.level == CLevel.infinite);
+			return (engine == "None") && (modeValue.level == CLevel.infinite);
 		}
 
 		public void SetPlayer(string name)
@@ -114,7 +114,7 @@ namespace RapChessGui
 		public void LoadFromIni()
 		{
 			tournament = CPlayerList.iniFile.ReadInt($"player>{name}>tournament", tournament);
-			engine = CPlayerList.iniFile.Read($"player>{name}>engine", "Human");
+			engine = CPlayerList.iniFile.Read($"player>{name}>engine", "None");
 			modeValue.SetLevel(CPlayerList.iniFile.Read($"player>{name}>mode", modeValue.GetLevel()));
 			modeValue.value = CPlayerList.iniFile.ReadInt($"player>{name}>value", modeValue.value);
 			book = CPlayerList.iniFile.Read($"player>{name}>book", "None");
@@ -147,7 +147,7 @@ namespace RapChessGui
 			string n = "Human";
 			string b = String.Empty;
 			string m = String.Empty;
-			if (engine != "Human")
+			if (engine != "None")
 			{
 				n = engine;
 				m = modeValue.ShortName();
@@ -206,14 +206,6 @@ namespace RapChessGui
 			return null;
 		}
 
-		public CPlayer GetPlayerAuto(string name = "")
-		{
-			CPlayer ph = GetPlayerRealHuman();
-			if (name == "Human")
-				return ph;
-			return GetPlayerElo(ph);
-		}
-
 		public CPlayer GetPlayerComputer()
 		{
 			SortElo();
@@ -223,25 +215,13 @@ namespace RapChessGui
 			return null;
 		}
 
-		public CPlayer GetPlayerRealHuman()
+		public CPlayer GetPlayerByElo(int elo)
 		{
-			SortElo();
-			foreach (CPlayer p in list)
-				if (p.IsRealHuman())
-					return p;
-			return null;
-		}
-
-		CPlayer GetPlayerElo(CPlayer player)
-		{
-			CPlayer p = null;
+			CPlayer p = CModeGame.player;
 			int bstDel = 10000;
-			int elo = player.GetElo();
 			foreach (CPlayer cp in list)
 			{
-				if (cp == player)
-					continue;
-				if (cp.engine == "Human")
+				if (cp.engine == "None")
 					continue;
 				int curE = cp.GetElo();
 				int curDel = Math.Abs(elo - curE);

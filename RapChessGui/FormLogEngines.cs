@@ -156,7 +156,7 @@ namespace RapChessGui
 
 		private void cbEngineList_SelectedIndexChanged(object sender, EventArgs e)
 		{
-			CEngine engine = FormChess.engineList.GetEngine(cbEngineList.Text);
+			CEngine engine = FormChess.engineList.GetEngineByName(cbEngineList.Text);
 			if (engine != null)
 			{
 				locked = true;

@@ -2,7 +2,6 @@
 using System.Diagnostics;
 using System.Collections.Generic;
 using System.Drawing;
-using System.IO;
 using System.Windows.Forms;
 using System.Threading;
 using System.Threading.Tasks;
@@ -13,14 +12,12 @@ namespace RapChessGui
 	public partial class FormEditEngine : Form
 	{
 		public static FormEditEngine This;
-		int testMode = 0;
-		CEngine testEngine = null;
 		int indexFirst = -1;
 		int tournament = -1;
-		CEngine engine = null;
+		static CEngine engine = null;
 		public static CProcess processTest = null;
 		public static CProcess processOptions = null;
-		readonly COptionList optionList = new COptionList();
+		readonly static COptionList optionList = new COptionList();
 
 		public FormEditEngine()
 		{
@@ -42,7 +39,7 @@ namespace RapChessGui
 
 		public void Uciok()
 		{
-			int y = 0;
+			int y = 8;
 			panOptions.Controls.Clear();
 			optionList.Sort();
 			for (int n = 0; n < optionList.list.Count; n++)
@@ -115,38 +112,39 @@ namespace RapChessGui
 
 		public static void NewMessageTest(string msg)
 		{
-			switch (This.testMode)
+			bool con = msg.Contains(FormChess.testEngine.protocol == CProtocol.uci ? "bestmove " : "move ");
+			switch (FormChess.testMode)
 			{
 				case 0:
 					if (msg == "uciok")
 					{
-						This.testEngine.protocol = CProtocol.uci;
-						if (This.testEngine == This.engine)
+						FormChess.testEngine.protocol = CProtocol.uci;
+						if (FormChess.testEngine == engine)
 							This.cbProtocol.Text = "Uci";
 					}
 					break;
 				case 1:
-					if (msg.Contains("move"))
+					if (con)
 					{
-						This.testEngine.modeTime = false;
-						if (This.testEngine == This.engine)
-							This.cbModeTime.Checked = false;
+						FormChess.testEngine.modeTime = FormChess.testResult;
+						if (FormChess.testEngine == engine)
+							This.cbModeTime.Checked = FormChess.testResult;
 					}
 					break;
 				case 2:
-					if (msg.Contains("move"))
+					if (con)
 					{
-						This.testEngine.modeDepth = false;
-						if (This.testEngine == This.engine)
-							This.cbModeDepth.Checked = false;
+						FormChess.testEngine.modeDepth = FormChess.testResult;
+						if (FormChess.testEngine == engine)
+							This.cbModeDepth.Checked = FormChess.testResult;
 					}
 					break;
 				case 3:
-					if (msg.Contains("move"))
+					if (con)
 					{
-						This.testEngine.modeStandard = false;
-						if (This.testEngine == This.engine)
-							This.cbModeStandard.Checked = false;
+						FormChess.testEngine.modeStandard = FormChess.testResult;
+						if (FormChess.testEngine == engine)
+							This.cbModeStandard.Checked = FormChess.testResult;
 					}
 					break;
 			}
@@ -157,100 +155,14 @@ namespace RapChessGui
 			if (msg == "uciok")
 				This.Uciok();
 			else
-				This.optionList.Add(msg);
-		}
-
-		public Task StartTestAuto()
-		{
-			return Task.Run(() =>
-			{
-				foreach (CEngine e in FormChess.engineList.list)
-					if ((e.FileExists() && e.protocol == CProtocol.auto))
-					{
-						testEngine = e;
-						testMode = 0;
-						testEngine.protocol = CProtocol.winboard;
-						processTest.SetProgram($@"{AppDomain.CurrentDomain.BaseDirectory}Engines\{e.file}", e.parameters);
-						processTest.WriteLine("uci");
-						Thread.Sleep(500);
-						processTest.Terminate();
-						testMode = 1;
-						testEngine.modeTime = true;
-						processTest.SetProgram($@"{AppDomain.CurrentDomain.BaseDirectory}Engines\{e.file}", e.parameters);
-						if (testEngine.protocol == CProtocol.uci)
-						{
-							processTest.WriteLine("uci");
-							processTest.WriteLine("ucinewgame");
-							processTest.WriteLine("position startpos");
-							processTest.WriteLine("go movetime 10000");
-						}
-						else
-						{
-							processTest.WriteLine("xboard");
-							processTest.WriteLine("new");
-							processTest.WriteLine("st 10");
-							processTest.WriteLine("post");
-							processTest.WriteLine("white");
-							processTest.WriteLine("go");
-						}
-						Thread.Sleep(2000);
-						processTest.Terminate();
-						testMode = 2;
-						testEngine.modeDepth = true;
-						processTest.SetProgram($@"{AppDomain.CurrentDomain.BaseDirectory}Engines\{e.file}", e.parameters);
-						if (testEngine.protocol == CProtocol.uci)
-						{
-							processTest.WriteLine("uci");
-							processTest.WriteLine("ucinewgame");
-							processTest.WriteLine("position startpos");
-							processTest.WriteLine("go depth 100");
-						}
-						else
-						{
-							processTest.WriteLine("xboard");
-							processTest.WriteLine("new");
-							processTest.WriteLine("sd 100");
-							processTest.WriteLine("post");
-							processTest.WriteLine("white");
-							processTest.WriteLine("go");
-						}
-						Thread.Sleep(2000);
-						processTest.Terminate();
-						testMode = 3;
-						testEngine.modeStandard = true;
-						processTest.SetProgram($@"{AppDomain.CurrentDomain.BaseDirectory}Engines\{e.file}", e.parameters);
-						if (testEngine.protocol == CProtocol.uci)
-						{
-							processTest.WriteLine("uci");
-							processTest.WriteLine("ucinewgame");
-							processTest.WriteLine("position startpos");
-							processTest.WriteLine("go wtime 1000000 btime 1000000 winc 0 binc 0");
-						}
-						else
-						{
-							processTest.WriteLine("xboard");
-							processTest.WriteLine("new");
-							processTest.WriteLine("time 100000");
-							processTest.WriteLine("otim 100000");
-							processTest.WriteLine("post");
-							processTest.WriteLine("white");
-							processTest.WriteLine("go");
-						}
-						Thread.Sleep(2000);
-						processTest.Terminate();
-						testEngine.SaveToIni();
-					}
-			});
+				optionList.Add(msg);
 		}
 
 		void ClickAuto()
 		{
+			MessageBox.Show("Autodetection take about 11 seconds.");
 			engine.protocol = CProtocol.auto;
-			cbProtocol.Text = "Winboard";
-			cbModeStandard.Checked = true;
-			cbModeTime.Checked = true;
-			cbModeDepth.Checked = true;
-			StartTestAuto();
+			FormChess.StartTestAuto(processTest);
 		}
 
 		void StartTestOptions()
@@ -295,7 +207,7 @@ namespace RapChessGui
 
 		void SelectEngine(string name)
 		{
-			engine = FormChess.engineList.GetEngine(name);
+			engine = FormChess.engineList.GetEngineByName(name);
 			if (engine != null)
 				SelectEngine(engine);
 		}
@@ -309,7 +221,7 @@ namespace RapChessGui
 			{
 				var item = listBox1.Items[n];
 				string name = item.ToString();
-				CEngine eng = FormChess.engineList.GetEngine(name);
+				CEngine eng = FormChess.engineList.GetEngineByName(name);
 				if (eng.SetTournament(t))
 					r = true;
 			}
@@ -399,16 +311,18 @@ namespace RapChessGui
 
 		private void ButDelete_Click(object sender, EventArgs e)
 		{
-			string engineName = tbEngineName.Text;
-			FormChess.engineList.DeleteEngine(engineName);
-			UpdateListBox();
-			MessageBox.Show($"Chess {engineName} has been removed");
-			CData.reset = true;
+			string name = tbEngineName.Text;
+			var dr = MessageBox.Show($"Are you sure that you would like to delete {name}?","Delete engine",MessageBoxButtons.YesNo,MessageBoxIcon.Question);
+			if (dr == DialogResult.Yes)
+			{
+				FormChess.engineList.DeleteEngine(name);
+				UpdateListBox();
+				CData.reset = true;
+			}
 		}
 
 		private void FormEngine_Shown(object sender, EventArgs e)
 		{
-			StartTestAuto();
 			FormOptions.SetFontSize(this);
 			CData.UpdateFileEngine();
 			cbFileList.Items.Clear();
@@ -419,6 +333,7 @@ namespace RapChessGui
 				cbFileList.Items.Add($@"Auto\{engine}");
 			cbFileList.Sorted = false;
 			cbFileList.Items.Insert(0, "None");
+			cbFileList.SelectedIndex = 0;
 			UpdateListBox();
 			if (listBox1.Items.Count > 0)
 				listBox1.SetSelected(0, true);
@@ -440,7 +355,7 @@ namespace RapChessGui
 			if (e.Index < 0)
 				return;
 			string name = listBox1.Items[e.Index].ToString();
-			CEngine eng = FormChess.engineList.GetEngine(name);
+			CEngine eng = FormChess.engineList.GetEngineByName(name);
 			bool selected = (e.State & DrawItemState.Selected) == DrawItemState.Selected;
 			Brush b = Brushes.Black;
 			if (selected)
@@ -474,7 +389,7 @@ namespace RapChessGui
 				{
 					var item = listBox1.Items[index];
 					string name = item.ToString();
-					CEngine eng = FormChess.engineList.GetEngine(name);
+					CEngine eng = FormChess.engineList.GetEngineByName(name);
 					indexFirst = index;
 					tournament = eng.tournament > 0 ? 0 : 1;
 					if (eng.SetTournament(tournament == 1))

@@ -257,7 +257,7 @@ namespace RapChessGui
 
 		void TryAdd(string br, string p)
 		{
-			if ((br != "none") && !ParametersExists(p))
+			if ((br != "None") && !ParametersExists(p))
 			{
 				CBook b = new CBook();
 				b.exe = br;
@@ -280,7 +280,7 @@ namespace RapChessGui
 
 		public void Update()
 		{
-			foreach (CDirBook db in FormChess.DirBookList)
+			foreach (CDirBook db in FormChess.dirBookList)
 				Update(db.dir, db.book);
 			SaveToIni();
 		}

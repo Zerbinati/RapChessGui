@@ -141,13 +141,12 @@ namespace RapChessGui
 
 		private void ButDelete_Click(object sender, EventArgs e)
 		{
-			string playerName = tbPlayerName.Text;
-			DialogResult dr = MessageBox.Show($"Are you sure to delete player {playerName}?", "Confirm Delete", MessageBoxButtons.YesNo);
+			string name = tbPlayerName.Text;
+			DialogResult dr = MessageBox.Show($"Are you sure to delete player {name}?", "Confirm Delete", MessageBoxButtons.YesNo);
 			if (dr == DialogResult.Yes)
 			{
-				FormChess.playerList.DeletePlayer(playerName);
+				FormChess.playerList.DeletePlayer(name);
 				UpdateListBox();
-				MessageBox.Show($"Player {playerName} has been removed");
 				CData.reset = true;
 			}
 		}
@@ -167,13 +166,19 @@ namespace RapChessGui
 		{
 			FormOptions.SetFontSize(this);
 			cbEngineList.Items.Clear();
-			cbEngineList.Items.Add("Human");
+			cbEngineList.Sorted = true;
 			foreach (CEngine engine in FormChess.engineList.list)
 				cbEngineList.Items.Add(engine.name);
+			cbEngineList.Sorted = false;
+			cbEngineList.Items.Insert(0, "None");
+			cbEngineList.SelectedIndex = 0;
 			cbBookList.Items.Clear();
-			cbBookList.Items.Add("None");
+			cbBookList.Sorted = true;
 			foreach (CBook book in FormChess.bookList.list)
 				cbBookList.Items.Add(book.name);
+			cbBookList.Sorted = false;
+			cbBookList.Items.Insert(0, "None");
+			cbBookList.SelectedIndex = 0;
 			UpdateListBox();
 			if (listBox1.Items.Count > 0)
 				listBox1.SetSelected(0, true);
@@ -200,7 +205,7 @@ namespace RapChessGui
 				e = new DrawItemEventArgs(e.Graphics, e.Font, e.Bounds, e.Index, e.State ^ DrawItemState.Selected, CBoard.colorMessage, CBoard.colorChartD);
 				b = Brushes.White;
 			}
-			else if (FormChess.engineList.GetEngine(pla.engine) == null)
+			else if (FormChess.engineList.GetEngineByName(pla.engine) == null)
 			{
 				e = new DrawItemEventArgs(e.Graphics, e.Font, e.Bounds, e.Index, e.State, Color.White, CBoard.colorRed);
 				b = Brushes.White;

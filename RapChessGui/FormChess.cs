@@ -9,6 +9,7 @@ using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Linq;
+using System.Threading;
 using RapIni;
 using RapLog;
 using NSUci;
@@ -16,8 +17,11 @@ using NSChess;
 
 namespace RapChessGui
 {
+
 	public partial class FormChess : Form
 	{
+		#region variable
+
 		[DllImport("gdi32.dll")]
 		private static extern IntPtr AddFontMemResourceEx(IntPtr pbFont, uint cbFont, IntPtr pdv, [In] ref uint pcFonts);
 
@@ -28,17 +32,19 @@ namespace RapChessGui
 		/// Next game can auto start.
 		/// </summary>
 		bool autoStartNexGame = false;
-
+		public static bool testResult = false;
+		public static int testMode = 0;
+		public static CEngine testEngine = null;
+		public static Task testTask = new Task(() => { });
 		public const int WM_GAME_NEXT = 1024;
 		public static IntPtr handle;
 		public static FormChess This;
 		public static bool boardRotate;
 		public static string mode = "Game";
-
 		string continuations = String.Empty;
 		List<int> moves = new List<int>();
 		public static CRapIni iniFile = new CRapIni(@"Ini\options.ini");
-		public static CDirBookList DirBookList = new CDirBookList();
+		public static CDirBookList dirBookList = new CDirBookList();
 		readonly CBoard Board = new CBoard();
 		readonly CEcoList EcoList = new CEcoList();
 		public static CChess chess = new CChess();
@@ -46,6 +52,7 @@ namespace RapChessGui
 		readonly SoundPlayer audioMove = new SoundPlayer(Properties.Resources.Move);
 		public static CRapLog log = new CRapLog();
 		public static PrivateFontCollection pfc = new PrivateFontCollection();
+		public static CProcess processTest = null;
 		public static CBookList bookList = new CBookList();
 		public static CEngineList engineList = new CEngineList();
 		public static CPlayerList playerList = new CPlayerList();
@@ -61,6 +68,8 @@ namespace RapChessGui
 		readonly FormEditBook formBook = new FormEditBook();
 		readonly FormEditPlayer formPlayer = new FormEditPlayer();
 		readonly CGamerList GamerList = new CGamerList();
+
+		#endregion
 
 		#region initiation
 
@@ -95,6 +104,7 @@ namespace RapChessGui
 			CreateDir("Ini");
 			CData.UpdateFileEngine();
 			CData.UpdateFileBook();
+			processTest = new CProcess(OnDataReceivedTest);
 			int fontLength = Properties.Resources.ChessPiece.Length;
 			byte[] fontData = Properties.Resources.ChessPiece;
 			IntPtr data = Marshal.AllocCoTaskMem(fontLength);
@@ -104,10 +114,8 @@ namespace RapChessGui
 			pfc.AddMemoryFont(data, fontLength);
 			Marshal.FreeCoTaskMem(data);
 			InitializeComponent();
-			IniCreate();
-			DirBookList.LoadFromIni();
 			IniLoad();
-			Reset(true);
+			bookList.Update();
 			Font fontChess = new Font(pfc.Families[0], 16);
 			Font fontChessPromo = new Font(pfc.Families[0], 32);
 			labTakenT.Font = fontChess;
@@ -118,7 +126,6 @@ namespace RapChessGui
 			labPromoN.Font = fontChessPromo;
 			toolTip1.Active = FormOptions.showTips;
 			CWinMessage.winHandle = Handle;
-			chess.Initialize();
 			BoardPrepare();
 			combMainMode.SelectedIndex = 0;
 			timerAnimation.Enabled = true;
@@ -128,140 +135,6 @@ namespace RapChessGui
 		{
 			if (!Directory.Exists(dir))
 				Directory.CreateDirectory(dir);
-		}
-
-		void IniCreate()
-		{
-			if (engineList.LoadFromIni() == 0)
-			{
-				engineList.SetElo("RapChessCs");
-				engineList.SetElo("RapSimpleCs");
-				engineList.SetElo("RapShortCs");
-				engineList.SaveToIni();
-			}
-			if (bookList.LoadFromIni() == 0)
-			{
-				CBook b;
-				b = new CBook();
-				b.exe = "BookReaderBin.exe";
-				b.name = "AutoBin";
-				b.parameters = "[engine] -w";
-				bookList.Add(b);
-				b = new CBook();
-				b.exe = "BookReaderMem.exe";
-				b.name = "AutoMem";
-				b.parameters = "[engine] -w 100K";
-				b = new CBook();
-				b.exe = "BookReaderUmo.exe";
-				b.name = "AutoUmo";
-				b.parameters = "[engine] -w";
-				bookList.Add(b);
-
-				bookList.Add(b);
-				b = new CBook("BigBin");
-				b.exe = "BookReaderBin.exe";
-				b.parameters = b.name;
-				bookList.Add(b);
-				b = new CBook("BigMem");
-				b.exe = "BookReaderMem.exe";
-				b.parameters = $"{b.name} -w 100K";
-				bookList.Add(b);
-				b = new CBook("BigUmo");
-				b.exe = "BookReaderUmo.exe";
-				b.parameters = b.name;
-				bookList.Add(b);
-
-				b = new CBook("Chess DB");
-				b.exe = "BookReaderCdb.exe";
-				bookList.Add(b);
-
-				for (int n = 1; n < 10; n++)
-				{
-					int v = n * 10;
-					b = new CBook();
-					b.exe = "BookReaderRnd.exe";
-					b.parameters = v.ToString();
-					bookList.Add(b);
-				}
-				iniFile.Write("options>dir>Bin", "BookReaderBin.exe");
-				iniFile.Write("options>dir>Mem", "BookReaderMem.exe");
-				iniFile.Write("options>dir>Umo", "BookReaderUmo.exe");
-				DirBookList.LoadFromIni();
-				bookList.Update();
-			}
-			playerList.LoadFromIni();
-			if (playerList.GetPlayerRealHuman() == null)
-			{
-				CPlayer p = new CPlayer("Human");
-				p.tournament = 0;
-				p.elo = "500";
-				p.eloOrg = "500";
-				p.modeValue.SetLevel("Infinite");
-				p.modeValue.value = 0;
-				p.SaveToIni();
-				playerList.Add(p);
-			}
-			if (playerList.GetPlayerComputer() == null)
-			{
-				CPlayer p = new CPlayer();
-				p.engine = "RapChessCs";
-				p.book = "BRR 90";
-				p.modeValue.level = CLevel.time;
-				p.modeValue.value = 10;
-				p.elo = "200";
-				playerList.Add(p);
-				p = new CPlayer();
-				p.engine = "RapChessCs";
-				p.book = "BRR 70";
-				p.modeValue.level = CLevel.time;
-				p.modeValue.value = 10;
-				p.elo = "400";
-				playerList.Add(p);
-				p = new CPlayer();
-				p.engine = "RapChessCs";
-				p.book = "BRR 50";
-				p.modeValue.level = CLevel.time;
-				p.modeValue.value = 10;
-				p.elo = "600";
-				playerList.Add(p);
-				p = new CPlayer();
-				p.engine = "RapChessCs";
-				p.book = "BRR 30";
-				p.modeValue.level = CLevel.time;
-				p.modeValue.value = 10;
-				p.elo = "800";
-				playerList.Add(p);
-				p = new CPlayer();
-				p.engine = "RapChessCs";
-				p.book = "BRR 10";
-				p.modeValue.level = CLevel.time;
-				p.modeValue.value = 10;
-				p.elo = "1000";
-				playerList.Add(p);
-				p = new CPlayer();
-				p.engine = "RapShortCs";
-				p.book = "BRM Eco";
-				p.modeValue.level = CLevel.time;
-				p.modeValue.value = 10;
-				p.elo = "500";
-				playerList.Add(p);
-				p = new CPlayer();
-				p.engine = "RapSimpleCs";
-				p.book = "Chess DB";
-				p.modeValue.level = CLevel.time;
-				p.modeValue.value = 10;
-				p.elo = "1000";
-				playerList.Add(p);
-				p = new CPlayer();
-				p.engine = "RapChessCs";
-				p.book = "BigMem";
-				p.modeValue.level = CLevel.time;
-				p.modeValue.value = 10;
-				p.elo = "1200";
-				playerList.Add(p);
-				playerList.SaveToIni();
-			}
-			UpdateEngineList();
 		}
 
 		void IniLoad()
@@ -281,6 +154,10 @@ namespace RapChessGui
 			Location = new Point(x, y);
 			if (iniFile.ReadBool("position>maximized", false))
 				WindowState = FormWindowState.Maximized;
+			bookList.LoadFromIni();
+			engineList.LoadFromIni();
+			playerList.LoadFromIni();
+			dirBookList.LoadFromIni();
 			CModeGame.LoadFromIni();
 			CModeMatch.LoadFromIni();
 			CModeTournamentB.LoadFromIni();
@@ -349,6 +226,214 @@ namespace RapChessGui
 			SplitSaveToIni(splitContainerTourP);
 			SplitSaveToIni(scTournamentEList);
 			SplitSaveToIni(scTournamentPList);
+		}
+
+		#endregion
+
+		#region process
+
+		delegate void DeleMessageTest(string message);
+
+
+		readonly static DeleMessageTest deleMessageTest = new DeleMessageTest(NewMessageTest);
+
+		private void OnDataReceivedTest(object sender, DataReceivedEventArgs e)
+		{
+			try
+			{
+				if (!String.IsNullOrEmpty(e.Data))
+				{
+					Invoke(deleMessageTest, new object[] { e.Data.Trim() });
+				}
+			}
+			catch { }
+		}
+
+		public static void NewMessageTest(string msg)
+		{
+			bool con = msg.Contains(testEngine.protocol == CProtocol.uci ? "bestmove " : "move ");
+			switch (testMode)
+			{
+				case 0:
+					if (msg == "uciok")
+						testEngine.protocol = CProtocol.uci;
+					break;
+				case 1:
+					if (con)
+						testEngine.modeTime = testResult;
+					break;
+				case 2:
+					if (con)
+						testEngine.modeDepth = testResult;
+					break;
+				case 3:
+					if (con)
+						testEngine.modeStandard = testResult;
+					break;
+			}
+		}
+
+		public static void StartTestAuto(CProcess processTest)
+		{
+			if (testTask.Status != TaskStatus.Running)
+				testTask = Task.Run(() =>
+				{
+					foreach (CEngine e in FormChess.engineList.list)
+						if ((e.FileExists() && e.protocol == CProtocol.auto))
+						{
+							testEngine = e;
+							testMode = 0;
+							testEngine.protocol = CProtocol.winboard;
+							processTest.SetProgram($@"{AppDomain.CurrentDomain.BaseDirectory}Engines\{e.file}", e.parameters);
+							processTest.WriteLine("uci");
+							Thread.Sleep(500);
+							processTest.Terminate();
+							testMode = 1;
+							testEngine.modeTime = false;
+							testResult = true;
+							processTest.SetProgram($@"{AppDomain.CurrentDomain.BaseDirectory}Engines\{e.file}", e.parameters);
+							if (testEngine.protocol == CProtocol.uci)
+							{
+								processTest.WriteLine("uci");
+								processTest.WriteLine("ucinewgame");
+								processTest.WriteLine("position startpos");
+								processTest.WriteLine("go movetime 1000");
+							}
+							else
+							{
+								processTest.WriteLine("xboard");
+								processTest.WriteLine("new");
+								processTest.WriteLine("st 1");
+								processTest.WriteLine("post");
+								processTest.WriteLine("white");
+								processTest.WriteLine("go");
+							}
+							Thread.Sleep(1500);
+							processTest.Terminate();
+							if (testEngine.modeTime)
+							{
+								testResult = false;
+								processTest.SetProgram($@"{AppDomain.CurrentDomain.BaseDirectory}Engines\{e.file}", e.parameters);
+								if (testEngine.protocol == CProtocol.uci)
+								{
+									processTest.WriteLine("uci");
+									processTest.WriteLine("ucinewgame");
+									processTest.WriteLine("position startpos");
+									processTest.WriteLine("go movetime 10000");
+								}
+								else
+								{
+									processTest.WriteLine("xboard");
+									processTest.WriteLine("new");
+									processTest.WriteLine("st 10");
+									processTest.WriteLine("post");
+									processTest.WriteLine("white");
+									processTest.WriteLine("go");
+								}
+								Thread.Sleep(2000);
+								processTest.Terminate();
+							}
+							testMode = 2;
+							testEngine.modeDepth = false;
+							testResult = true;
+							processTest.SetProgram($@"{AppDomain.CurrentDomain.BaseDirectory}Engines\{e.file}", e.parameters);
+							if (testEngine.protocol == CProtocol.uci)
+							{
+								processTest.WriteLine("uci");
+								processTest.WriteLine("ucinewgame");
+								processTest.WriteLine("position startpos");
+								processTest.WriteLine("go depth 3");
+							}
+							else
+							{
+								processTest.WriteLine("xboard");
+								processTest.WriteLine("new");
+								processTest.WriteLine("sd 3");
+								processTest.WriteLine("post");
+								processTest.WriteLine("white");
+								processTest.WriteLine("go");
+							}
+							Thread.Sleep(1000);
+							processTest.Terminate();
+							if (testEngine.modeDepth)
+							{
+								testResult = false;
+								processTest.SetProgram($@"{AppDomain.CurrentDomain.BaseDirectory}Engines\{e.file}", e.parameters);
+								if (testEngine.protocol == CProtocol.uci)
+								{
+									processTest.WriteLine("uci");
+									processTest.WriteLine("ucinewgame");
+									processTest.WriteLine("position startpos");
+									processTest.WriteLine("go depth 100");
+								}
+								else
+								{
+									processTest.WriteLine("xboard");
+									processTest.WriteLine("new");
+									processTest.WriteLine("sd 100");
+									processTest.WriteLine("post");
+									processTest.WriteLine("white");
+									processTest.WriteLine("go");
+								}
+								Thread.Sleep(2000);
+								processTest.Terminate();
+							}
+							testMode = 3;
+							testEngine.modeStandard = false;
+							testResult = true;
+							processTest.SetProgram($@"{AppDomain.CurrentDomain.BaseDirectory}Engines\{e.file}", e.parameters);
+							if (testEngine.protocol == CProtocol.uci)
+							{
+								processTest.WriteLine("uci");
+								processTest.WriteLine("ucinewgame");
+								processTest.WriteLine("position startpos");
+								processTest.WriteLine("go wtime 500 btime 500 winc 0 binc 0");
+							}
+							else
+							{
+								processTest.WriteLine("xboard");
+								processTest.WriteLine("new");
+								processTest.WriteLine("time 50");
+								processTest.WriteLine("otim 50");
+								processTest.WriteLine("post");
+								processTest.WriteLine("white");
+								processTest.WriteLine("go");
+							}
+							Thread.Sleep(1000);
+							processTest.Terminate();
+							if (testEngine.modeStandard)
+							{
+								testResult = false;
+								processTest.SetProgram($@"{AppDomain.CurrentDomain.BaseDirectory}Engines\{e.file}", e.parameters);
+								if (testEngine.protocol == CProtocol.uci)
+								{
+									processTest.WriteLine("uci");
+									processTest.WriteLine("ucinewgame");
+									processTest.WriteLine("position startpos");
+									processTest.WriteLine("go wtime 1000000 btime 1000000 winc 0 binc 0");
+								}
+								else
+								{
+									processTest.WriteLine("xboard");
+									processTest.WriteLine("new");
+									processTest.WriteLine("time 100000");
+									processTest.WriteLine("otim 100000");
+									processTest.WriteLine("post");
+									processTest.WriteLine("white");
+									processTest.WriteLine("go");
+								}
+								Thread.Sleep(2000);
+								processTest.Terminate();
+							}
+							if (!testEngine.modeDepth && !testEngine.modeStandard && !testEngine.modeTime)
+							{
+								testEngine.modeDepth = true;
+								testEngine.modeStandard = true;
+								testEngine.modeTime = true;
+							}
+							testEngine.SaveToIni();
+						}
+				});
 		}
 
 		#endregion
@@ -1039,9 +1124,8 @@ namespace RapChessGui
 			if (CModeGame.ranked == true)
 			{
 				CModeGame.ranked = false;
-				CPlayer ph = playerList.GetPlayerRealHuman();
-				ph.elo = ph.eloOrg;
-				ph.SaveToIni();
+				CModeGame.player.elo = CModeGame.player.eloOrg;
+				CModeGame.SaveToIni();
 			}
 			ShowAutoElo();
 		}
@@ -1091,7 +1175,7 @@ namespace RapChessGui
 		bool ShowLastGame(bool changeProgress = false)
 		{
 			bool result = false;
-			CPlayer hu = playerList.GetPlayerRealHuman();
+			CPlayer hu = CModeGame.player;
 			int eloCur = Convert.ToInt32(hu.elo);
 			int eloOld = Convert.ToInt32(hu.eloOrg);
 			int eloDel = eloCur - eloOld;
@@ -1129,6 +1213,7 @@ namespace RapChessGui
 			CData.UpdateFileEngine();
 			engineList.AutoUpdate();
 			playerList.Check(engineList);
+			StartTestAuto(processTest);
 			Reset(true);
 		}
 
@@ -1161,12 +1246,12 @@ namespace RapChessGui
 			cbTourEBook.Items.Clear();
 			cbTeacherBook.Items.Clear();
 			cbTrainedBook.Items.Clear();
-			cbTourEBook.Items.Add("None");
-			cbTeacherBook.Items.Add("None");
-			cbTrainedBook.Items.Add("None");
-			cbBook.Items.Add("None");
-			cbMatchBook1.Items.Add("None");
-			cbMatchBook2.Items.Add("None");
+			cbBook.Sorted = true;
+			cbMatchBook1.Sorted = true;
+			cbMatchBook2.Sorted = true;
+			cbTourEBook.Sorted = true;
+			cbTeacherBook.Sorted = true;
+			cbTrainedBook.Sorted = true;
 			foreach (CBook b in bookList.list)
 				if (b.FileExists())
 				{
@@ -1177,15 +1262,26 @@ namespace RapChessGui
 					cbTeacherBook.Items.Add(b.name);
 					cbTrainedBook.Items.Add(b.name);
 				}
-			cbTourEBook.SelectedIndex = cbTourEBook.Items.Count > 0 ? 0 : -1; ;
-			cbTeacherBook.SelectedIndex = cbTeacherBook.Items.Count > 0 ? 0 : -1;
-			cbTrainedBook.SelectedIndex = cbTrainedBook.Items.Count > 0 ? 0 : -1;
-			cbBook.SelectedIndex = cbBook.Items.Count > 0 ? 0 : -1; ;
-			cbMatchBook1.SelectedIndex = cbMatchBook1.Items.Count > 0 ? 0 : -1; ;
-			cbMatchBook2.SelectedIndex = cbMatchBook2.Items.Count > 0 ? 0 : -1; ;
+			cbBook.Sorted = false;
+			cbMatchBook1.Sorted = false;
+			cbMatchBook2.Sorted = false;
+			cbTourEBook.Sorted = false;
+			cbTeacherBook.Sorted = false;
+			cbTrainedBook.Sorted = false;
+			cbBook.Items.Insert(0, CData.none);
+			cbMatchBook1.Items.Insert(0, CData.none);
+			cbMatchBook2.Items.Insert(0, CData.none);
+			cbTourEBook.Items.Insert(0, CData.none);
+			cbTeacherBook.Items.Insert(0, CData.none);
+			cbTrainedBook.Items.Insert(0, CData.none);
+			cbBook.SelectedIndex = 0;
+			cbMatchBook1.SelectedIndex = 0;
+			cbMatchBook2.SelectedIndex = 0;
+			cbTourEBook.SelectedIndex = 0;
+			cbTeacherBook.SelectedIndex = 0;
+			cbTrainedBook.SelectedIndex = 0;
 			cbEngine.SelectedIndex = cbEngine.Items.Count > 0 ? 0 : -1;
 			cbTourBEngine.SelectedIndex = cbTourBEngine.Items.Count > 0 ? 0 : -1;
-			bookList.Update();
 			TournamentBReset();
 			TournamentEReset();
 			TournamentPReset();
@@ -1692,7 +1788,7 @@ namespace RapChessGui
 		void SetingsToGamers()
 		{
 			GamerList.Init();
-			GamerList.gamer[0].SetPlayer(playerList.GetPlayerRealHuman());
+			GamerList.gamer[0].SetPlayer(CModeGame.player);
 			CPlayer pc = new CPlayer();
 			if (cbComputer.Text == "Custom")
 			{
@@ -1702,14 +1798,14 @@ namespace RapChessGui
 				pc.modeValue.value = CModeGame.modeValue.value;
 			}
 			else
-				pc = playerList.GetPlayerAuto(cbComputer.Text);
+				pc = playerList.GetPlayerByElo(CModeGame.player.GetElo());
 			GamerList.gamer[1].SetPlayer(pc);
 		}
 
 		void GameStart()
 		{
 			ComClear();
-			CPlayer hu = playerList.GetPlayerRealHuman();
+			CPlayer hu = CModeGame.player;
 			CData.HisToPoints(hu.hisElo, chartGame.Series[0].Points);
 			CModeGame.ranked = GetRanked();
 			GameSet();
@@ -2059,7 +2155,7 @@ namespace RapChessGui
 			ListViewItem top2 = null;
 			string name = lvTourEList.SelectedItems[0].Text;
 			CEngineList engineList = CModeTournamentE.engineList;
-			CEngine engine = engineList.GetEngine(name);
+			CEngine engine = engineList.GetEngineByName(name);
 			int elo = engine.GetElo();
 			lvTourESel.Items.Clear();
 			engineList.SortElo();
@@ -2162,8 +2258,8 @@ namespace RapChessGui
 		void TournamentEEnd(CGamer gw, CGamer gl, bool isDraw)
 		{
 			CEngineList engList = CModeTournamentE.engineList;
-			CEngine ew = engList.GetEngine(gw.engine.name);
-			CEngine el = engList.GetEngine(gl.engine.name);
+			CEngine ew = engList.GetEngineByName(gw.engine.name);
+			CEngine el = engList.GetEngineByName(gl.engine.name);
 			if ((ew == null) || (el == null))
 				return;
 			CPlayer pw = GamerList.gamer[0].player;
@@ -2243,7 +2339,7 @@ namespace RapChessGui
 			int countGames = 0;
 			int opponents = 0;
 			foreach (CPlayer p in playerList.list)
-				if (p.engine != "Human")
+				if (p.engine != CData.none)
 				{
 					int count = CModeTournamentP.tourList.CountGames(name, p.name, out int gw, out int gl, out int gd);
 					if (count > 0)
@@ -2592,6 +2688,7 @@ namespace RapChessGui
 		{
 			IniSave();
 			GamerList.Terminate();
+			processTest.Terminate();
 			FormEditEngine.processOptions.Terminate();
 			FormEditEngine.processTest.Terminate();
 			FormLogEngines.process.Terminate();
@@ -2913,7 +3010,7 @@ namespace RapChessGui
 		{
 			if (GetRanked() && IsGameLong() && IsGameProgress())
 			{
-				CPlayer hu = playerList.GetPlayerRealHuman();
+				CPlayer hu = CModeGame.player;
 				hu.elo = hu.GetEloLess().ToString();
 			}
 			SetGameState(CGameState.resignation);
@@ -3102,6 +3199,11 @@ namespace RapChessGui
 
 		private void FormChess_Shown(object sender, EventArgs e)
 		{
+		}
+
+		private void FormChess_Shown_1(object sender, EventArgs e)
+		{
+			UpdateEngineList();
 		}
 	}
 }

@@ -217,7 +217,7 @@ namespace RapChessGui
 
 		public string GetEngineName()
 		{
-			return engine == null ? "Human" : engine.name;
+			return engine == null ? "None" : engine.name;
 		}
 
 		public ulong GetNps()
@@ -528,7 +528,7 @@ namespace RapChessGui
 		{
 			player = p;
 			book = FormChess.bookList.GetBook(p.book);
-			engine = FormChess.engineList.GetEngine(p.engine);
+			engine = FormChess.engineList.GetEngineByName(p.engine);
 			bookPro.Terminate();
 			enginePro.Terminate();
 			if (book == null)
@@ -536,7 +536,7 @@ namespace RapChessGui
 			else
 				bookPro.SetProgram($@"{AppDomain.CurrentDomain.BaseDirectory}Books\{book.exe}", book.GetParameters(engine));
 			if (engine == null)
-				p.engine = "Human";
+				p.engine = "None";
 			else
 				enginePro.SetProgram($@"{AppDomain.CurrentDomain.BaseDirectory}Engines\{engine.file}", engine.parameters, FormOptions.spamOff);
 		}

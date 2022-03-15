@@ -11,7 +11,7 @@ namespace RapChessGui
 	public class CDirBook
 	{
 		public string dir = "";
-		public string book = "none";
+		public string book = "None";
 	}
 
 	public class CDirBookList : List<CDirBook>

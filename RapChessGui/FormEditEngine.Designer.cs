@@ -96,6 +96,7 @@
 			// panOptions
 			// 
 			this.panOptions.AutoScroll = true;
+			this.panOptions.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
 			this.panOptions.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.panOptions.Location = new System.Drawing.Point(0, 474);
 			this.panOptions.Name = "panOptions";
@@ -110,7 +111,7 @@
 			this.bAuto.Name = "bAuto";
 			this.bAuto.Size = new System.Drawing.Size(311, 24);
 			this.bAuto.TabIndex = 37;
-			this.bAuto.Text = "Auto";
+			this.bAuto.Text = "Autodetect";
 			this.bAuto.UseVisualStyleBackColor = true;
 			this.bAuto.Click += new System.EventHandler(this.bAuto_Click);
 			// 
@@ -182,7 +183,7 @@
 			this.bUpdate.Name = "bUpdate";
 			this.bUpdate.Size = new System.Drawing.Size(311, 24);
 			this.bUpdate.TabIndex = 25;
-			this.bUpdate.Text = "Update";
+			this.bUpdate.Text = "Save";
 			this.bUpdate.UseVisualStyleBackColor = true;
 			this.bUpdate.Click += new System.EventHandler(this.ButUpdate_Click);
 			// 

@@ -4073,6 +4073,7 @@
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
 			this.Text = "RapChessGui";
 			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormChess_FormClosing);
+			this.Shown += new System.EventHandler(this.FormChess_Shown_1);
 			this.Resize += new System.EventHandler(this.FormChess_Resize);
 			this.tabControl1.ResumeLayout(false);
 			this.tabPageGame.ResumeLayout(false);

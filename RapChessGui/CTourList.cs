@@ -142,7 +142,7 @@ namespace RapChessGui
 			string n = "";
 			if (list.Count > 0)
 				n = list[list.Count - 1].w;
-			return FormChess.engineList.GetEngine(n);
+			return FormChess.engineList.GetEngineByName(n);
 		}
 
 		public CPlayer LastPlayer()

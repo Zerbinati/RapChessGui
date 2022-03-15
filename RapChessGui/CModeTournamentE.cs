@@ -106,10 +106,10 @@ namespace RapChessGui
 
 		public static CEngine SelectEngine()
 		{
-			CEngine e = engineList.GetEngine(FormOptions.tourESelected);
+			CEngine e = engineList.GetEngineByName(FormOptions.tourESelected);
 			if (e != null)
 				return e;
-			e = engineList.GetEngine(engine);
+			e = engineList.GetEngineByName(engine);
 			if (e == null)
 				e = SelectRare();
 			if ((games >= repetition) && (games > 0))

@@ -18,7 +18,7 @@ namespace RapChessGui
 		public string parameters = "";
 		public string elo = "1500";
 		public List<string> options = new List<string>();
-		public CProtocol protocol = CProtocol.uci;
+		public CProtocol protocol = CProtocol.auto;
 		public CHisElo hisElo = new CHisElo();
 
 		public CEngine()
@@ -37,7 +37,7 @@ namespace RapChessGui
 			modeStandard = CEngineList.iniFile.ReadBool($"engine>{name}>modeStandard", modeStandard);
 			modeTime = CEngineList.iniFile.ReadBool($"engine>{name}>modeTime", modeTime);
 			modeDepth = CEngineList.iniFile.ReadBool($"engine>{name}>modeDepth", modeDepth);
-			file = CEngineList.iniFile.Read($"engine>{name}>file", "Human");
+			file = CEngineList.iniFile.Read($"engine>{name}>file", "None");
 			protocol = CData.StrToProtocol(CEngineList.iniFile.Read($"engine>{name}>protocol", "Uci"));
 			parameters = CEngineList.iniFile.Read($"engine>{name}>parameters", "");
 			options = CEngineList.iniFile.ReadList($"engine>{name}>options");
@@ -68,6 +68,8 @@ namespace RapChessGui
 
 		public bool SupportLevel(CLevel l)
 		{
+			if ((protocol != CProtocol.uci) && (protocol != CProtocol.winboard))
+				return false;
 			switch (l)
 			{
 				case CLevel.standard:
@@ -176,7 +178,7 @@ namespace RapChessGui
 				list.RemoveAt(i);
 		}
 
-		public CEngine GetEngine(string name)
+		public CEngine GetEngineByName(string name)
 		{
 			foreach (CEngine e in list)
 				if (e.name == name)
@@ -232,7 +234,7 @@ namespace RapChessGui
 				CEngine engine = GetEngineByFile(file);
 				if (engine == null)
 				{
-					engine = GetEngine(name);
+					engine = GetEngineByName(name);
 					if (engine == null)
 					{
 						engine = new CEngine(name);
@@ -316,26 +318,6 @@ namespace RapChessGui
 			{
 				return e1.position - e2.position;
 			});
-		}
-
-		public void SetElo(string name)
-		{
-			CEngine engine = GetEngine(name);
-			if (engine != null)
-			{
-				engine.SetElo(0);
-				SetElo();
-			}
-		}
-
-		public void SetElo()
-		{
-			SortElo();
-			for (int n = 0; n < list.Count; n++)
-			{
-				CEngine e = list[n];
-				e.SetElo(GetOptElo(n));
-			}
 		}
 
 		public void FillPosition()

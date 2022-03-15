@@ -35,7 +35,7 @@ namespace RapChessGui
 			if (book == null)
 				return;
 			tbReaderName.Text = book.name;
-			cbBookReaderList.Text = book.exe;
+			cbBookreaderList.Text = book.exe;
 			tbParameters.Text = book.parameters;
 			nudElo.Value = Convert.ToInt32(book.elo);
 			nudTournament.Value = book.tournament;
@@ -58,7 +58,7 @@ namespace RapChessGui
 		void UpdateBook(CBook b)
 		{
 			b.name = tbReaderName.Text;
-			b.exe = cbBookReaderList.Text;
+			b.exe = cbBookreaderList.Text;
 			b.parameters = tbParameters.Text;
 			b.elo = nudElo.Value.ToString();
 			b.tournament = (int)nudTournament.Value;
@@ -84,7 +84,7 @@ namespace RapChessGui
 		{
 			string name = tbReaderName.Text;
 			CBook reader = new CBook(name);
-			reader.exe = cbBookReaderList.Text;
+			reader.exe = cbBookreaderList.Text;
 			FormChess.bookList.list.Add(reader);
 			SaveToIni(reader);
 			MessageBox.Show($"Book reader {reader.name} has been created");
@@ -94,18 +94,26 @@ namespace RapChessGui
 		private void ButDelete_Click(object sender, EventArgs e)
 		{
 			string name = tbReaderName.Text;
-			FormChess.bookList.DeleteBook(name);
-			UpdateListBox();
-			MessageBox.Show($"Book {name} has been removed");
-			CData.reset = true;
+			var dr = MessageBox.Show($"Are you sure that you would like to delete {name}?", "Delete engine", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+			if (dr == DialogResult.Yes)
+			{
+				FormChess.bookList.DeleteBook(name);
+				UpdateListBox();
+				MessageBox.Show($"Book {name} has been removed");
+				CData.reset = true;
+			}
 		}
 
 		private void FormBook_Shown(object sender, EventArgs e)
 		{
 			FormOptions.SetFontSize(this);
-			cbBookReaderList.Items.Clear();
+			cbBookreaderList.Items.Clear();
+			cbBookreaderList.Sorted = true;
 			foreach (string book in CData.fileBook)
-				cbBookReaderList.Items.Add(book);
+				cbBookreaderList.Items.Add(book);
+			cbBookreaderList.Sorted = false;
+			cbBookreaderList.Items.Insert(0, "None");
+			cbBookreaderList.SelectedIndex = 0;
 			UpdateListBox();
 			if (listBox1.Items.Count > 0)
 				listBox1.SetSelected(0, true);

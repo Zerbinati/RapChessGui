@@ -33,6 +33,7 @@
 			this.butClearHistory = new System.Windows.Forms.Button();
 			this.bDelete = new System.Windows.Forms.Button();
 			this.bCreate = new System.Windows.Forms.Button();
+			this.butRename = new System.Windows.Forms.Button();
 			this.bUpdate = new System.Windows.Forms.Button();
 			this.groupBox5 = new System.Windows.Forms.GroupBox();
 			this.nudTournament = new System.Windows.Forms.NumericUpDown();
@@ -50,7 +51,6 @@
 			this.gbPlayers = new System.Windows.Forms.GroupBox();
 			this.listBox1 = new System.Windows.Forms.ListBox();
 			this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-			this.butRename = new System.Windows.Forms.Button();
 			this.panel1.SuspendLayout();
 			this.groupBox5.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.nudTournament)).BeginInit();
@@ -119,6 +119,18 @@
 			this.bCreate.UseVisualStyleBackColor = true;
 			this.bCreate.Click += new System.EventHandler(this.ButCreate_Click);
 			// 
+			// butRename
+			// 
+			this.butRename.AutoSize = true;
+			this.butRename.Dock = System.Windows.Forms.DockStyle.Top;
+			this.butRename.Location = new System.Drawing.Point(0, 281);
+			this.butRename.Name = "butRename";
+			this.butRename.Size = new System.Drawing.Size(311, 24);
+			this.butRename.TabIndex = 35;
+			this.butRename.Text = "Rename";
+			this.butRename.UseVisualStyleBackColor = true;
+			this.butRename.Click += new System.EventHandler(this.butRename_Click);
+			// 
 			// bUpdate
 			// 
 			this.bUpdate.AutoSize = true;
@@ -127,7 +139,7 @@
 			this.bUpdate.Name = "bUpdate";
 			this.bUpdate.Size = new System.Drawing.Size(311, 24);
 			this.bUpdate.TabIndex = 25;
-			this.bUpdate.Text = "Update";
+			this.bUpdate.Text = "Save";
 			this.bUpdate.UseVisualStyleBackColor = true;
 			this.bUpdate.Click += new System.EventHandler(this.ButUpdate_Click);
 			// 
@@ -261,7 +273,6 @@
 			this.cbBookList.Location = new System.Drawing.Point(3, 16);
 			this.cbBookList.Name = "cbBookList";
 			this.cbBookList.Size = new System.Drawing.Size(305, 21);
-			this.cbBookList.Sorted = true;
 			this.cbBookList.TabIndex = 2;
 			// 
 			// gbEngine
@@ -281,12 +292,9 @@
 			this.cbEngineList.Dock = System.Windows.Forms.DockStyle.Top;
 			this.cbEngineList.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.cbEngineList.FormattingEnabled = true;
-			this.cbEngineList.Items.AddRange(new object[] {
-            "Human"});
 			this.cbEngineList.Location = new System.Drawing.Point(3, 16);
 			this.cbEngineList.Name = "cbEngineList";
 			this.cbEngineList.Size = new System.Drawing.Size(305, 21);
-			this.cbEngineList.Sorted = true;
 			this.cbEngineList.TabIndex = 2;
 			// 
 			// groupBox1
@@ -337,18 +345,6 @@
 			this.listBox1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.listBox1_MouseDown);
 			this.listBox1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.listBox1_MouseMove);
 			this.listBox1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.listBox1_MouseUp);
-			// 
-			// butRename
-			// 
-			this.butRename.AutoSize = true;
-			this.butRename.Dock = System.Windows.Forms.DockStyle.Top;
-			this.butRename.Location = new System.Drawing.Point(0, 281);
-			this.butRename.Name = "butRename";
-			this.butRename.Size = new System.Drawing.Size(311, 24);
-			this.butRename.TabIndex = 35;
-			this.butRename.Text = "Rename";
-			this.butRename.UseVisualStyleBackColor = true;
-			this.butRename.Click += new System.EventHandler(this.butRename_Click);
 			// 
 			// FormEditPlayer
 			// 

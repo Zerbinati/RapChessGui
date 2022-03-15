@@ -91,8 +91,7 @@ namespace RapChessGui
 		void FormLoad()
 		{
 			lvBooks.Items.Clear();
-			FormChess.DirBookList.LoadFromIni();
-			foreach (CDirBook db in FormChess.DirBookList)
+			foreach (CDirBook db in FormChess.dirBookList)
 			{
 				ListViewItem lvi = new ListViewItem(new[] { db.dir, db.book });
 				lvBooks.Items.Add(lvi);
@@ -149,15 +148,15 @@ namespace RapChessGui
 
 		void FormSave()
 		{
-			FormChess.DirBookList.Clear();
+			FormChess.dirBookList.Clear();
 			foreach (ListViewItem lvi in lvBooks.Items)
 			{
 				CDirBook db = new CDirBook();
 				db.dir = lvi.SubItems[0].Text;
 				db.book = lvi.SubItems[1].Text;
-				FormChess.DirBookList.Add(db);
+				FormChess.dirBookList.Add(db);
 			}
-			FormChess.DirBookList.SaveToIni();
+			FormChess.dirBookList.SaveToIni();
 			CModeTournamentB.records = (int)nudTourBRec.Value;
 			CModeTournamentB.maxElo = (int)Math.Max(nudTourBMin.Value, nudTourBMax.Value);
 			CModeTournamentB.minElo = (int)Math.Min(nudTourBMin.Value, nudTourBMax.Value);
