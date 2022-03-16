@@ -116,6 +116,7 @@ namespace RapChessGui
 			InitializeComponent();
 			IniLoad();
 			bookList.Update();
+			Reset(true);
 			Font fontChess = new Font(pfc.Families[0], 16);
 			Font fontChessPromo = new Font(pfc.Families[0], 32);
 			labTakenT.Font = fontChess;
@@ -1214,32 +1215,55 @@ namespace RapChessGui
 			engineList.AutoUpdate();
 			playerList.Check(engineList);
 			StartTestAuto(processTest);
-			Reset(true);
+			Reset();
 		}
 
-		void Reset(bool auto = false)
+		void ResetListEngine()
 		{
-			CBoard.SetColor();
-			BackColor = CBoard.colorChartD;
-			if (!auto && !CData.reset)
-				return;
-			CData.reset = false;
 			cbEngine.Items.Clear();
-			cbEngine1.Items.Clear();
-			cbEngine2.Items.Clear();
+			cbMatchEngine1.Items.Clear();
+			cbMatchEngine2.Items.Clear();
 			cbTourBEngine.Items.Clear();
 			cbTeacherEngine.Items.Clear();
 			cbTrainedEngine.Items.Clear();
+			cbEngine.Sorted = true;
+			cbMatchEngine1.Sorted = true;
+			cbMatchEngine2.Sorted = true;
+			cbTourBEngine.Sorted = true;
+			cbTeacherEngine.Sorted = true;
+			cbTrainedEngine.Sorted = true;
 			foreach (CEngine e in engineList.list)
 				if (e.FileExists())
 				{
 					cbEngine.Items.Add(e.name);
-					cbEngine1.Items.Add(e.name);
-					cbEngine2.Items.Add(e.name);
+					cbMatchEngine1.Items.Add(e.name);
+					cbMatchEngine2.Items.Add(e.name);
 					cbTourBEngine.Items.Add(e.name);
 					cbTeacherEngine.Items.Add(e.name);
 					cbTrainedEngine.Items.Add(e.name);
 				}
+			cbEngine.Sorted = false;
+			cbMatchEngine1.Sorted = false;
+			cbMatchEngine2.Sorted = false;
+			cbTourBEngine.Sorted = false;
+			cbTeacherEngine.Sorted = false;
+			cbTrainedEngine.Sorted = false;
+			cbEngine.Items.Insert(0, CData.none);
+			cbMatchEngine1.Items.Insert(0, CData.none);
+			cbMatchEngine2.Items.Insert(0, CData.none);
+			cbTourBEngine.Items.Insert(0, CData.none);
+			cbTeacherEngine.Items.Insert(0, CData.none);
+			cbTrainedEngine.Items.Insert(0, CData.none);
+			cbEngine.Text = CData.none;
+			cbMatchEngine1.Text = CData.none;
+			cbMatchEngine2.Text = CData.none;
+			cbTourBEngine.Text = CData.none;
+			cbTeacherEngine.Text = CData.none;
+			cbTrainedEngine.Text = CData.none;
+		}
+
+		void ResetListBook()
+		{
 			cbBook.Items.Clear();
 			cbMatchBook1.Items.Clear();
 			cbMatchBook2.Items.Clear();
@@ -1274,14 +1298,23 @@ namespace RapChessGui
 			cbTourEBook.Items.Insert(0, CData.none);
 			cbTeacherBook.Items.Insert(0, CData.none);
 			cbTrainedBook.Items.Insert(0, CData.none);
-			cbBook.SelectedIndex = 0;
-			cbMatchBook1.SelectedIndex = 0;
-			cbMatchBook2.SelectedIndex = 0;
-			cbTourEBook.SelectedIndex = 0;
-			cbTeacherBook.SelectedIndex = 0;
-			cbTrainedBook.SelectedIndex = 0;
-			cbEngine.SelectedIndex = cbEngine.Items.Count > 0 ? 0 : -1;
-			cbTourBEngine.SelectedIndex = cbTourBEngine.Items.Count > 0 ? 0 : -1;
+			cbBook.Text = CData.none;
+			cbMatchBook1.Text = CData.none;
+			cbMatchBook2.Text = CData.none;
+			cbTourEBook.Text = CData.none;
+			cbTeacherBook.Text = CData.none;
+			cbTrainedBook.Text = CData.none;
+		}
+
+		void Reset(bool forced = false)
+		{
+			CBoard.SetColor();
+			BackColor = CBoard.colorChartD;
+			if (!forced && !CData.reset)
+				return;
+			CData.reset = false;
+			ResetListEngine();
+			ResetListBook();
 			TournamentBReset();
 			TournamentEReset();
 			TournamentPReset();
@@ -1783,6 +1816,8 @@ namespace RapChessGui
 			cbBook.Text = CModeGame.book;
 			cbMode.Text = CModeGame.modeValue.GetLevel();
 			nudValue.Value = CModeGame.modeValue.GetValue();
+			if (cbEngine.SelectedIndex < 0)
+				cbEngine.SelectedIndex = 0;
 		}
 
 		void SetingsToGamers()
@@ -1804,6 +1839,8 @@ namespace RapChessGui
 
 		void GameStart()
 		{
+			if ((cbEngine.SelectedIndex == 0) && (cbComputer.SelectedIndex == 1))
+				return;
 			ComClear();
 			CPlayer hu = CModeGame.player;
 			CData.HisToPoints(hu.hisElo, chartGame.Series[0].Points);
@@ -1847,8 +1884,8 @@ namespace RapChessGui
 
 		void MatchSet()
 		{
-			CModeMatch.engine1 = cbEngine1.Text;
-			CModeMatch.engine2 = cbEngine2.Text;
+			CModeMatch.engine1 = cbMatchEngine1.Text;
+			CModeMatch.engine2 = cbMatchEngine2.Text;
 			CModeMatch.book1 = cbMatchBook1.Text;
 			CModeMatch.book2 = cbMatchBook2.Text;
 			CModeMatch.modeValue1.SetLevel(cbMode1.Text);
@@ -1859,14 +1896,18 @@ namespace RapChessGui
 
 		void MatchGet()
 		{
-			cbEngine1.Text = CModeMatch.engine1;
-			cbEngine2.Text = CModeMatch.engine2;
+			cbMatchEngine1.Text = CModeMatch.engine1;
+			cbMatchEngine2.Text = CModeMatch.engine2;
 			cbMatchBook1.Text = CModeMatch.book1;
 			cbMatchBook2.Text = CModeMatch.book2;
 			cbMode1.Text = CModeMatch.modeValue1.GetLevel();
 			cbMode2.Text = CModeMatch.modeValue2.GetLevel();
 			nudValue1.Value = CModeMatch.modeValue1.GetValue();
 			nudValue2.Value = CModeMatch.modeValue2.GetValue();
+			if (cbMatchEngine1.SelectedIndex < 0)
+				cbMatchEngine1.SelectedIndex = 0;
+			if (cbMatchEngine2.SelectedIndex < 0)
+				cbMatchEngine2.SelectedIndex = 0;
 		}
 
 		void MatchShow()
@@ -1888,6 +1929,8 @@ namespace RapChessGui
 
 		void MatchStart()
 		{
+			if ((cbMatchEngine1.SelectedIndex == 0) || (cbMatchEngine2.SelectedIndex == 0))
+				return;
 			ComClear();
 			MatchSet();
 			SetMode(CGameMode.match);
@@ -2071,6 +2114,8 @@ namespace RapChessGui
 
 		void TournamentBStart()
 		{
+			if (cbTourBEngine.SelectedIndex == 0)
+				return;
 			ComClear();
 			TournamentBUpdate(CModeTournamentB.bookWin);
 			TournamentBUpdate(CModeTournamentB.bookLoose);
@@ -2486,6 +2531,8 @@ namespace RapChessGui
 
 		void TrainingStart()
 		{
+			if ((cbTeacherEngine.SelectedIndex == 0) || (cbTrainedEngine.SelectedIndex == 0))
+				return;
 			ComClear();
 			TrainingUpdate();
 			CModeTraining.teacher = cbTeacherEngine.Text;

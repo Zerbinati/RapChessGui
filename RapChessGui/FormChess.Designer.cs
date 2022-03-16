@@ -93,12 +93,12 @@
 			this.nudValue2 = new System.Windows.Forms.NumericUpDown();
 			this.cbMode2 = new System.Windows.Forms.ComboBox();
 			this.cbMatchBook2 = new System.Windows.Forms.ComboBox();
-			this.cbEngine2 = new System.Windows.Forms.ComboBox();
+			this.cbMatchEngine2 = new System.Windows.Forms.ComboBox();
 			this.groupBox5 = new System.Windows.Forms.GroupBox();
 			this.nudValue1 = new System.Windows.Forms.NumericUpDown();
 			this.cbMode1 = new System.Windows.Forms.ComboBox();
 			this.cbMatchBook1 = new System.Windows.Forms.ComboBox();
-			this.cbEngine1 = new System.Windows.Forms.ComboBox();
+			this.cbMatchEngine1 = new System.Windows.Forms.ComboBox();
 			this.tabPageTourB = new System.Windows.Forms.TabPage();
 			this.splitContainerTourB = new System.Windows.Forms.SplitContainer();
 			this.splitContainer2 = new System.Windows.Forms.SplitContainer();
@@ -991,7 +991,7 @@
 			this.groupBox6.Controls.Add(this.nudValue2);
 			this.groupBox6.Controls.Add(this.cbMode2);
 			this.groupBox6.Controls.Add(this.cbMatchBook2);
-			this.groupBox6.Controls.Add(this.cbEngine2);
+			this.groupBox6.Controls.Add(this.cbMatchEngine2);
 			this.groupBox6.Dock = System.Windows.Forms.DockStyle.Top;
 			this.groupBox6.Location = new System.Drawing.Point(0, 108);
 			this.groupBox6.Name = "groupBox6";
@@ -1052,22 +1052,22 @@
 			// 
 			// cbEngine2
 			// 
-			this.cbEngine2.Dock = System.Windows.Forms.DockStyle.Top;
-			this.cbEngine2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.cbEngine2.FormattingEnabled = true;
-			this.cbEngine2.Location = new System.Drawing.Point(3, 16);
-			this.cbEngine2.Name = "cbEngine2";
-			this.cbEngine2.Size = new System.Drawing.Size(331, 21);
-			this.cbEngine2.Sorted = true;
-			this.cbEngine2.TabIndex = 29;
-			this.toolTip1.SetToolTip(this.cbEngine2, "Select engine");
+			this.cbMatchEngine2.Dock = System.Windows.Forms.DockStyle.Top;
+			this.cbMatchEngine2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.cbMatchEngine2.FormattingEnabled = true;
+			this.cbMatchEngine2.Location = new System.Drawing.Point(3, 16);
+			this.cbMatchEngine2.Name = "cbEngine2";
+			this.cbMatchEngine2.Size = new System.Drawing.Size(331, 21);
+			this.cbMatchEngine2.Sorted = true;
+			this.cbMatchEngine2.TabIndex = 29;
+			this.toolTip1.SetToolTip(this.cbMatchEngine2, "Select engine");
 			// 
 			// groupBox5
 			// 
 			this.groupBox5.Controls.Add(this.nudValue1);
 			this.groupBox5.Controls.Add(this.cbMode1);
 			this.groupBox5.Controls.Add(this.cbMatchBook1);
-			this.groupBox5.Controls.Add(this.cbEngine1);
+			this.groupBox5.Controls.Add(this.cbMatchEngine1);
 			this.groupBox5.Dock = System.Windows.Forms.DockStyle.Top;
 			this.groupBox5.Location = new System.Drawing.Point(0, 0);
 			this.groupBox5.Name = "groupBox5";
@@ -1128,15 +1128,15 @@
 			// 
 			// cbEngine1
 			// 
-			this.cbEngine1.Dock = System.Windows.Forms.DockStyle.Top;
-			this.cbEngine1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.cbEngine1.FormattingEnabled = true;
-			this.cbEngine1.Location = new System.Drawing.Point(3, 16);
-			this.cbEngine1.Name = "cbEngine1";
-			this.cbEngine1.Size = new System.Drawing.Size(331, 21);
-			this.cbEngine1.Sorted = true;
-			this.cbEngine1.TabIndex = 28;
-			this.toolTip1.SetToolTip(this.cbEngine1, "Select engine");
+			this.cbMatchEngine1.Dock = System.Windows.Forms.DockStyle.Top;
+			this.cbMatchEngine1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.cbMatchEngine1.FormattingEnabled = true;
+			this.cbMatchEngine1.Location = new System.Drawing.Point(3, 16);
+			this.cbMatchEngine1.Name = "cbEngine1";
+			this.cbMatchEngine1.Size = new System.Drawing.Size(331, 21);
+			this.cbMatchEngine1.Sorted = true;
+			this.cbMatchEngine1.TabIndex = 28;
+			this.toolTip1.SetToolTip(this.cbMatchEngine1, "Select engine");
 			// 
 			// tabPageTourB
 			// 
@@ -4246,8 +4246,8 @@
 		private System.Windows.Forms.Button butDefault;
 		private System.Windows.Forms.ComboBox cbMatchBook1;
 		private System.Windows.Forms.ComboBox cbMode1;
-		private System.Windows.Forms.ComboBox cbEngine1;
-		private System.Windows.Forms.ComboBox cbEngine2;
+		private System.Windows.Forms.ComboBox cbMatchEngine1;
+		private System.Windows.Forms.ComboBox cbMatchEngine2;
 		private System.Windows.Forms.ComboBox cbMode2;
 		private System.Windows.Forms.ComboBox cbMatchBook2;
 		private System.Windows.Forms.ComboBox cbTrainedBook;
