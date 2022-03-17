@@ -1840,7 +1840,10 @@ namespace RapChessGui
 		void GameStart()
 		{
 			if ((cbEngine.SelectedIndex == 0) && (cbComputer.SelectedIndex == 1))
+			{
+				MessageBox.Show("Please select engine");
 				return;
+			}
 			ComClear();
 			CPlayer hu = CModeGame.player;
 			CData.HisToPoints(hu.hisElo, chartGame.Series[0].Points);
@@ -1930,7 +1933,10 @@ namespace RapChessGui
 		void MatchStart()
 		{
 			if ((cbMatchEngine1.SelectedIndex == 0) || (cbMatchEngine2.SelectedIndex == 0))
+			{
+				MessageBox.Show("Please select engine");
 				return;
+			}
 			ComClear();
 			MatchSet();
 			SetMode(CGameMode.match);
@@ -2115,7 +2121,10 @@ namespace RapChessGui
 		void TournamentBStart()
 		{
 			if (cbTourBEngine.SelectedIndex == 0)
+			{
+				MessageBox.Show("Please select engine");
 				return;
+			}
 			ComClear();
 			TournamentBUpdate(CModeTournamentB.bookWin);
 			TournamentBUpdate(CModeTournamentB.bookLoose);
@@ -2532,7 +2541,10 @@ namespace RapChessGui
 		void TrainingStart()
 		{
 			if ((cbTeacherEngine.SelectedIndex == 0) || (cbTrainedEngine.SelectedIndex == 0))
+			{
+				MessageBox.Show("Please select engine");
 				return;
+			}
 			ComClear();
 			TrainingUpdate();
 			CModeTraining.teacher = cbTeacherEngine.Text;
