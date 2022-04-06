@@ -10,11 +10,11 @@ namespace RapChessGui
 		public static int winInRow = 0;
 		public static int draw;
 		public static int loose;
-		public static string teacher = String.Empty;
+		public static string trainer = String.Empty;
 		public static string trained = String.Empty;
-		public static string teacherBook = CBookList.def;
+		public static string trainerBook = CBookList.def;
 		public static string trainedBook = CBookList.def;
-		public static CModeValue modeValueTeacher = new CModeValue();
+		public static CModeValue modeValueTrainer = new CModeValue();
 		public static CModeValue modeValueTrained = new CModeValue();
 
 		public static void Reset()
@@ -45,25 +45,25 @@ namespace RapChessGui
 
 		public static void SaveToIni()
 		{
-			FormChess.iniFile.Write("mode>training>teacher", teacher);
+			FormChess.iniFile.Write("mode>training>trainer", trainer);
 			FormChess.iniFile.Write("mode>training>trained", trained);
-			FormChess.iniFile.Write("mode>training>teacherBook", teacherBook);
+			FormChess.iniFile.Write("mode>training>trainerBook", trainerBook);
 			FormChess.iniFile.Write("mode>training>trainedBook", trainedBook);
-			FormChess.iniFile.Write("mode>training>teacherValue", modeValueTeacher.value);
+			FormChess.iniFile.Write("mode>training>trainerValue", modeValueTrainer.value);
 			FormChess.iniFile.Write("mode>training>trainedValue", modeValueTrained.value);
-			FormChess.iniFile.Write("mode>training>teacherMode", modeValueTeacher.GetLevel());
+			FormChess.iniFile.Write("mode>training>trainerMode", modeValueTrainer.GetLevel());
 			FormChess.iniFile.Write("mode>training>trainedMode", modeValueTrained.GetLevel());
 		}
 
 		public static void LoadFromIni()
 		{
-			teacher = FormChess.iniFile.Read("mode>training>teacher", CEngineList.def);
+			trainer = FormChess.iniFile.Read("mode>training>trainer", CEngineList.def);
 			trained = FormChess.iniFile.Read("mode>training>trained", CEngineList.def);
-			teacherBook = FormChess.iniFile.Read("mode>training>teacherBook", teacherBook);
+			trainerBook = FormChess.iniFile.Read("mode>training>trainerBook", trainerBook);
 			trainedBook = FormChess.iniFile.Read("mode>training>trainedBook", trainedBook);
-			modeValueTeacher.value = FormChess.iniFile.ReadInt("mode>training>teacherValue", modeValueTeacher.value);
+			modeValueTrainer.value = FormChess.iniFile.ReadInt("mode>training>trainerValue", modeValueTrainer.value);
 			modeValueTrained.value = FormChess.iniFile.ReadInt("mode>training>trainedValue", modeValueTrained.value);
-			modeValueTeacher.SetLevel(FormChess.iniFile.Read("mode>training>teacherMode", modeValueTeacher.GetLevel()));
+			modeValueTrainer.SetLevel(FormChess.iniFile.Read("mode>training>trainerMode", modeValueTrainer.GetLevel()));
 			modeValueTrained.SetLevel(FormChess.iniFile.Read("mode>training>trainedMode", modeValueTrained.GetLevel()));
 		}
 

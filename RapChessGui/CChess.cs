@@ -437,7 +437,7 @@ namespace NSChess
 				moves.Add(fr | (to << 8) | flag);
 		}
 
-		public List<int> GenerateValidMoves(out bool mate, bool norep = false)
+		public List<int> GenerateValidMoves(out bool mate, int repetytion = -1)
 		{
 			mate = false;
 			int count = 0;
@@ -451,7 +451,7 @@ namespace NSChess
 					if (!g_inCheck)
 					{
 						count++;
-						if (!norep || !IsRepetition())
+						if ((repetytion < 0) || !IsRepetition(repetytion))
 							moves.Add(m);
 					}
 					UnmakeMove(m);

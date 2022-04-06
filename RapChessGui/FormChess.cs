@@ -1196,7 +1196,7 @@ namespace RapChessGui
 				CData.HisToPoints(hu.hisElo, chartGame.Series[0].Points);
 			}
 			hu.eloOrg = hu.elo;
-			hu.SaveToIni();
+			CModeGame.SaveToIni();
 			return result;
 		}
 
@@ -1224,13 +1224,13 @@ namespace RapChessGui
 			cbMatchEngine1.Items.Clear();
 			cbMatchEngine2.Items.Clear();
 			cbTourBEngine.Items.Clear();
-			cbTeacherEngine.Items.Clear();
+			cbTrainerEngine.Items.Clear();
 			cbTrainedEngine.Items.Clear();
 			cbEngine.Sorted = true;
 			cbMatchEngine1.Sorted = true;
 			cbMatchEngine2.Sorted = true;
 			cbTourBEngine.Sorted = true;
-			cbTeacherEngine.Sorted = true;
+			cbTrainerEngine.Sorted = true;
 			cbTrainedEngine.Sorted = true;
 			foreach (CEngine e in engineList.list)
 				if (e.FileExists())
@@ -1239,26 +1239,26 @@ namespace RapChessGui
 					cbMatchEngine1.Items.Add(e.name);
 					cbMatchEngine2.Items.Add(e.name);
 					cbTourBEngine.Items.Add(e.name);
-					cbTeacherEngine.Items.Add(e.name);
+					cbTrainerEngine.Items.Add(e.name);
 					cbTrainedEngine.Items.Add(e.name);
 				}
 			cbEngine.Sorted = false;
 			cbMatchEngine1.Sorted = false;
 			cbMatchEngine2.Sorted = false;
 			cbTourBEngine.Sorted = false;
-			cbTeacherEngine.Sorted = false;
+			cbTrainerEngine.Sorted = false;
 			cbTrainedEngine.Sorted = false;
 			cbEngine.Items.Insert(0, CData.none);
 			cbMatchEngine1.Items.Insert(0, CData.none);
 			cbMatchEngine2.Items.Insert(0, CData.none);
 			cbTourBEngine.Items.Insert(0, CData.none);
-			cbTeacherEngine.Items.Insert(0, CData.none);
+			cbTrainerEngine.Items.Insert(0, CData.none);
 			cbTrainedEngine.Items.Insert(0, CData.none);
 			cbEngine.Text = CData.none;
 			cbMatchEngine1.Text = CData.none;
 			cbMatchEngine2.Text = CData.none;
 			cbTourBEngine.Text = CData.none;
-			cbTeacherEngine.Text = CData.none;
+			cbTrainerEngine.Text = CData.none;
 			cbTrainedEngine.Text = CData.none;
 		}
 
@@ -1268,13 +1268,13 @@ namespace RapChessGui
 			cbMatchBook1.Items.Clear();
 			cbMatchBook2.Items.Clear();
 			cbTourEBook.Items.Clear();
-			cbTeacherBook.Items.Clear();
+			cbTrainerBook.Items.Clear();
 			cbTrainedBook.Items.Clear();
 			cbBook.Sorted = true;
 			cbMatchBook1.Sorted = true;
 			cbMatchBook2.Sorted = true;
 			cbTourEBook.Sorted = true;
-			cbTeacherBook.Sorted = true;
+			cbTrainerBook.Sorted = true;
 			cbTrainedBook.Sorted = true;
 			foreach (CBook b in bookList.list)
 				if (b.FileExists())
@@ -1283,26 +1283,26 @@ namespace RapChessGui
 					cbMatchBook1.Items.Add(b.name);
 					cbMatchBook2.Items.Add(b.name);
 					cbTourEBook.Items.Add(b.name);
-					cbTeacherBook.Items.Add(b.name);
+					cbTrainerBook.Items.Add(b.name);
 					cbTrainedBook.Items.Add(b.name);
 				}
 			cbBook.Sorted = false;
 			cbMatchBook1.Sorted = false;
 			cbMatchBook2.Sorted = false;
 			cbTourEBook.Sorted = false;
-			cbTeacherBook.Sorted = false;
+			cbTrainerBook.Sorted = false;
 			cbTrainedBook.Sorted = false;
 			cbBook.Items.Insert(0, CData.none);
 			cbMatchBook1.Items.Insert(0, CData.none);
 			cbMatchBook2.Items.Insert(0, CData.none);
 			cbTourEBook.Items.Insert(0, CData.none);
-			cbTeacherBook.Items.Insert(0, CData.none);
+			cbTrainerBook.Items.Insert(0, CData.none);
 			cbTrainedBook.Items.Insert(0, CData.none);
 			cbBook.Text = CData.none;
 			cbMatchBook1.Text = CData.none;
 			cbMatchBook2.Text = CData.none;
 			cbTourEBook.Text = CData.none;
-			cbTeacherBook.Text = CData.none;
+			cbTrainerBook.Text = CData.none;
 			cbTrainedBook.Text = CData.none;
 		}
 
@@ -2513,16 +2513,16 @@ namespace RapChessGui
 
 		void TrainingShow()
 		{
-			cbTeacherEngine.SelectedIndex = cbTeacherEngine.FindStringExact(CModeTraining.teacher);
+			cbTrainerEngine.SelectedIndex = cbTrainerEngine.FindStringExact(CModeTraining.trainer);
 			cbTrainedEngine.SelectedIndex = cbTrainedEngine.FindStringExact(CModeTraining.trained);
-			cbTeacherMode.SelectedIndex = cbTeacherMode.FindStringExact(CModeTraining.modeValueTeacher.GetLevel());
+			cbTrainerMode.SelectedIndex = cbTrainerMode.FindStringExact(CModeTraining.modeValueTrainer.GetLevel());
 			cbTrainedMode.SelectedIndex = cbTrainedMode.FindStringExact(CModeTraining.modeValueTrained.GetLevel());
-			cbTeacherBook.SelectedIndex = cbTeacherBook.FindStringExact(CModeTraining.teacherBook);
+			cbTrainerBook.SelectedIndex = cbTrainerBook.FindStringExact(CModeTraining.trainerBook);
 			cbTrainedBook.SelectedIndex = cbTrainedBook.FindStringExact(CModeTraining.trainedBook);
 			nudTrained.Value = CModeTraining.modeValueTrained.GetValue();
 			nudTrained.Increment = CModeTraining.modeValueTrained.GetValueIncrement();
-			nudTeacher.Value = CModeTraining.modeValueTeacher.GetValue();
-			nudTeacher.Increment = CModeTraining.modeValueTeacher.GetValueIncrement();
+			nudTrainer.Value = CModeTraining.modeValueTrainer.GetValue();
+			nudTrainer.Increment = CModeTraining.modeValueTrainer.GetValueIncrement();
 			TrainingUpdate();
 		}
 
@@ -2540,20 +2540,20 @@ namespace RapChessGui
 
 		void TrainingStart()
 		{
-			if ((cbTeacherEngine.SelectedIndex == 0) || (cbTrainedEngine.SelectedIndex == 0))
+			if ((cbTrainerEngine.SelectedIndex == 0) || (cbTrainedEngine.SelectedIndex == 0))
 			{
 				MessageBox.Show("Please select engine");
 				return;
 			}
 			ComClear();
 			TrainingUpdate();
-			CModeTraining.teacher = cbTeacherEngine.Text;
+			CModeTraining.trainer = cbTrainerEngine.Text;
 			CModeTraining.trained = cbTrainedEngine.Text;
-			CModeTraining.modeValueTeacher.SetLevel(cbTeacherMode.Text);
+			CModeTraining.modeValueTrainer.SetLevel(cbTrainerMode.Text);
 			CModeTraining.modeValueTrained.SetLevel(cbTrainedMode.Text);
-			CModeTraining.teacherBook = cbTeacherBook.Text;
+			CModeTraining.trainerBook = cbTrainerBook.Text;
 			CModeTraining.trainedBook = cbTrainedBook.Text;
-			CModeTraining.modeValueTeacher.SetValue((int)nudTeacher.Value);
+			CModeTraining.modeValueTrainer.SetValue((int)nudTrainer.Value);
 			CModeTraining.modeValueTrained.SetValue((int)nudTrained.Value);
 			SetMode(CGameMode.training);
 			CPlayer pw = new CPlayer("Trained");
@@ -2561,11 +2561,11 @@ namespace RapChessGui
 			pw.book = CModeTraining.trainedBook;
 			pw.modeValue.level = CModeTraining.modeValueTrained.level;
 			pw.modeValue.value = CModeTraining.modeValueTrained.value;
-			CPlayer pb = new CPlayer("Teacher");
-			pb.engine = CModeTraining.teacher;
-			pb.book = CModeTraining.teacherBook;
-			pb.modeValue.level = CModeTraining.modeValueTeacher.level;
-			pb.modeValue.value = CModeTraining.modeValueTeacher.value;
+			CPlayer pb = new CPlayer("Trainer");
+			pb.engine = CModeTraining.trainer;
+			pb.book = CModeTraining.trainerBook;
+			pb.modeValue.level = CModeTraining.modeValueTrainer.level;
+			pb.modeValue.value = CModeTraining.modeValueTrainer.value;
 			GamerList.gamer[0].SetPlayer(pw);
 			GamerList.gamer[1].SetPlayer(pb);
 			pw.elo = GamerList.gamer[0].engine.elo;
@@ -2573,7 +2573,7 @@ namespace RapChessGui
 			if (CModeTraining.rotate)
 				GamerList.Rotate(0);
 			CModeTraining.rotate = !CModeTraining.rotate;
-			chartTraining.Series[0].Points.Add((double)nudTeacher.Value);
+			chartTraining.Series[0].Points.Add((double)nudTrainer.Value);
 			if (chartTraining.Series[0].Points.Count > FormOptions.historyLength)
 				chartTraining.Series[0].Points.RemoveAt(0);
 			chartTraining.ChartAreas[0].RecalculateAxesScale();
@@ -2587,17 +2587,17 @@ namespace RapChessGui
 			CModeTraining.games++;
 			if (!isDraw)
 			{
-				if (gw.player.name == "Teacher")
+				if (gw.player.name == "Trainer")
 				{
 					CModeTraining.win++;
 					if (++CModeTraining.winInRow > FormOptions.winLimit)
 					{
-						if (--CModeTraining.modeValueTeacher.value < 1)
-							CModeTraining.modeValueTeacher.value = 1;
-						decimal nv = nudTeacher.Value - nudTeacher.Increment;
-						if (nv < nudTeacher.Minimum)
-							nv = nudTeacher.Minimum;
-						nudTeacher.Value = nv;
+						if (--CModeTraining.modeValueTrainer.value < 1)
+							CModeTraining.modeValueTrainer.value = 1;
+						decimal nv = nudTrainer.Value - nudTrainer.Increment;
+						if (nv < nudTrainer.Minimum)
+							nv = nudTrainer.Minimum;
+						nudTrainer.Value = nv;
 					}
 					up = false;
 				}
@@ -2605,17 +2605,17 @@ namespace RapChessGui
 				{
 					CModeTraining.loose++;
 					CModeTraining.winInRow = 0;
-					CModeTraining.modeValueTeacher.value++;
+					CModeTraining.modeValueTrainer.value++;
 				}
 			}
 			else
 			{
 				CModeTraining.draw++;
 				CModeTraining.winInRow = 0;
-				CModeTraining.modeValueTeacher.value++;
+				CModeTraining.modeValueTrainer.value++;
 			}
 			if (up)
-				nudTeacher.Value += nudTeacher.Increment;
+				nudTrainer.Value += nudTrainer.Increment;
 		}
 
 		void EditShow(string fen = CChess.defFen)
@@ -3042,11 +3042,11 @@ namespace RapChessGui
 
 		private void cbTeacherMode_SelectedIndexChanged(object sender, EventArgs e)
 		{
-			CModeTraining.modeValueTeacher.SetLevel(cbTeacherMode.Text);
-			nudTeacher.Increment = CModeTraining.modeValueTeacher.GetValueIncrement();
-			nudTeacher.Minimum = nudTeacher.Increment;
-			nudTeacher.Value = Math.Max(CModeTraining.modeValueTeacher.GetValue(), nudTeacher.Minimum);
-			toolTip1.SetToolTip(nudTeacher, CModeTraining.modeValueTeacher.GetTip());
+			CModeTraining.modeValueTrainer.SetLevel(cbTrainerMode.Text);
+			nudTrainer.Increment = CModeTraining.modeValueTrainer.GetValueIncrement();
+			nudTrainer.Minimum = nudTrainer.Increment;
+			nudTrainer.Value = Math.Max(CModeTraining.modeValueTrainer.GetValue(), nudTrainer.Minimum);
+			toolTip1.SetToolTip(nudTrainer, CModeTraining.modeValueTrainer.GetTip());
 		}
 
 		private void cbColor_SelectedIndexChanged(object sender, EventArgs e)
@@ -3263,6 +3263,18 @@ namespace RapChessGui
 		private void FormChess_Shown_1(object sender, EventArgs e)
 		{
 			UpdateEngineList();
+		}
+
+		private void cbComputer_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			bool v = (sender as ComboBox).SelectedIndex == 1;
+			nudValue.Visible = v;
+			cbMode.Visible = v;
+			cbBook.Visible = v;
+			cbEngine.Visible = v;
+			v = (sender as ComboBox).SelectedIndex != 2;
+			butForward.Visible = v;
+			butStop.Visible = v;
 		}
 	}
 }

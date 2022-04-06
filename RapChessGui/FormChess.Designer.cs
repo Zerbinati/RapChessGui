@@ -174,10 +174,10 @@
 			this.label16 = new System.Windows.Forms.Label();
 			this.butTraining = new System.Windows.Forms.Button();
 			this.groupBox4 = new System.Windows.Forms.GroupBox();
-			this.nudTeacher = new System.Windows.Forms.NumericUpDown();
-			this.cbTeacherMode = new System.Windows.Forms.ComboBox();
-			this.cbTeacherBook = new System.Windows.Forms.ComboBox();
-			this.cbTeacherEngine = new System.Windows.Forms.ComboBox();
+			this.nudTrainer = new System.Windows.Forms.NumericUpDown();
+			this.cbTrainerMode = new System.Windows.Forms.ComboBox();
+			this.cbTrainerBook = new System.Windows.Forms.ComboBox();
+			this.cbTrainerEngine = new System.Windows.Forms.ComboBox();
 			this.groupBox3 = new System.Windows.Forms.GroupBox();
 			this.nudTrained = new System.Windows.Forms.NumericUpDown();
 			this.cbTrainedMode = new System.Windows.Forms.ComboBox();
@@ -365,7 +365,7 @@
 			((System.ComponentModel.ISupportInitialize)(this.chartTraining)).BeginInit();
 			this.tlpTraining.SuspendLayout();
 			this.groupBox4.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.nudTeacher)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.nudTrainer)).BeginInit();
 			this.groupBox3.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.nudTrained)).BeginInit();
 			this.tabPageEdit.SuspendLayout();
@@ -459,7 +459,7 @@
 			chartArea1.Name = "ChartArea1";
 			this.chartGame.ChartAreas.Add(chartArea1);
 			this.chartGame.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.chartGame.Location = new System.Drawing.Point(3, 319);
+			this.chartGame.Location = new System.Drawing.Point(3, 311);
 			this.chartGame.Name = "chartGame";
 			this.chartGame.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.None;
 			this.chartGame.PaletteCustomColors = new System.Drawing.Color[] {
@@ -470,7 +470,7 @@
 			series1.IsVisibleInLegend = false;
 			series1.Name = "Series1";
 			this.chartGame.Series.Add(series1);
-			this.chartGame.Size = new System.Drawing.Size(331, 140);
+			this.chartGame.Size = new System.Drawing.Size(331, 148);
 			this.chartGame.TabIndex = 28;
 			this.chartGame.Text = "chart1";
 			this.toolTip1.SetToolTip(this.chartGame, "User progress history");
@@ -479,7 +479,7 @@
 			// 
 			this.butBackward.Cursor = System.Windows.Forms.Cursors.Hand;
 			this.butBackward.Dock = System.Windows.Forms.DockStyle.Top;
-			this.butBackward.Location = new System.Drawing.Point(3, 296);
+			this.butBackward.Location = new System.Drawing.Point(3, 288);
 			this.butBackward.Name = "butBackward";
 			this.butBackward.Size = new System.Drawing.Size(331, 23);
 			this.butBackward.TabIndex = 27;
@@ -492,7 +492,7 @@
 			// 
 			this.butForward.Cursor = System.Windows.Forms.Cursors.Hand;
 			this.butForward.Dock = System.Windows.Forms.DockStyle.Top;
-			this.butForward.Location = new System.Drawing.Point(3, 273);
+			this.butForward.Location = new System.Drawing.Point(3, 265);
 			this.butForward.Name = "butForward";
 			this.butForward.Size = new System.Drawing.Size(331, 23);
 			this.butForward.TabIndex = 26;
@@ -505,7 +505,7 @@
 			// 
 			this.butResignation.Cursor = System.Windows.Forms.Cursors.Hand;
 			this.butResignation.Dock = System.Windows.Forms.DockStyle.Top;
-			this.butResignation.Location = new System.Drawing.Point(3, 250);
+			this.butResignation.Location = new System.Drawing.Point(3, 242);
 			this.butResignation.Name = "butResignation";
 			this.butResignation.Size = new System.Drawing.Size(331, 23);
 			this.butResignation.TabIndex = 25;
@@ -518,7 +518,7 @@
 			// 
 			this.butStop.Cursor = System.Windows.Forms.Cursors.Hand;
 			this.butStop.Dock = System.Windows.Forms.DockStyle.Top;
-			this.butStop.Location = new System.Drawing.Point(3, 227);
+			this.butStop.Location = new System.Drawing.Point(3, 219);
 			this.butStop.Name = "butStop";
 			this.butStop.Size = new System.Drawing.Size(331, 23);
 			this.butStop.TabIndex = 24;
@@ -531,7 +531,7 @@
 			// 
 			this.butContinueGame.Cursor = System.Windows.Forms.Cursors.Hand;
 			this.butContinueGame.Dock = System.Windows.Forms.DockStyle.Top;
-			this.butContinueGame.Location = new System.Drawing.Point(3, 204);
+			this.butContinueGame.Location = new System.Drawing.Point(3, 196);
 			this.butContinueGame.Name = "butContinueGame";
 			this.butContinueGame.Size = new System.Drawing.Size(331, 23);
 			this.butContinueGame.TabIndex = 23;
@@ -544,7 +544,7 @@
 			// 
 			this.butNewGame.Cursor = System.Windows.Forms.Cursors.Hand;
 			this.butNewGame.Dock = System.Windows.Forms.DockStyle.Top;
-			this.butNewGame.Location = new System.Drawing.Point(3, 181);
+			this.butNewGame.Location = new System.Drawing.Point(3, 173);
 			this.butNewGame.Name = "butNewGame";
 			this.butNewGame.Size = new System.Drawing.Size(331, 23);
 			this.butNewGame.TabIndex = 20;
@@ -555,6 +555,8 @@
 			// 
 			// groupBox2
 			// 
+			this.groupBox2.AutoSize = true;
+			this.groupBox2.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
 			this.groupBox2.Controls.Add(this.nudValue);
 			this.groupBox2.Controls.Add(this.cbMode);
 			this.groupBox2.Controls.Add(this.cbBook);
@@ -563,7 +565,7 @@
 			this.groupBox2.Dock = System.Windows.Forms.DockStyle.Top;
 			this.groupBox2.Location = new System.Drawing.Point(3, 50);
 			this.groupBox2.Name = "groupBox2";
-			this.groupBox2.Size = new System.Drawing.Size(331, 131);
+			this.groupBox2.Size = new System.Drawing.Size(331, 123);
 			this.groupBox2.TabIndex = 19;
 			this.groupBox2.TabStop = false;
 			this.groupBox2.Text = "Computer";
@@ -651,6 +653,7 @@
 			this.cbComputer.Sorted = true;
 			this.cbComputer.TabIndex = 1;
 			this.toolTip1.SetToolTip(this.cbComputer, "Select human opponent");
+			this.cbComputer.SelectedIndexChanged += new System.EventHandler(this.cbComputer_SelectedIndexChanged);
 			this.cbComputer.SelectedValueChanged += new System.EventHandler(this.cbComputer_SelectedValueChanged);
 			// 
 			// groupBox1
@@ -1050,13 +1053,13 @@
 			this.cbMatchBook2.TabIndex = 32;
 			this.toolTip1.SetToolTip(this.cbMatchBook2, "Select engine opening book");
 			// 
-			// cbEngine2
+			// cbMatchEngine2
 			// 
 			this.cbMatchEngine2.Dock = System.Windows.Forms.DockStyle.Top;
 			this.cbMatchEngine2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.cbMatchEngine2.FormattingEnabled = true;
 			this.cbMatchEngine2.Location = new System.Drawing.Point(3, 16);
-			this.cbMatchEngine2.Name = "cbEngine2";
+			this.cbMatchEngine2.Name = "cbMatchEngine2";
 			this.cbMatchEngine2.Size = new System.Drawing.Size(331, 21);
 			this.cbMatchEngine2.Sorted = true;
 			this.cbMatchEngine2.TabIndex = 29;
@@ -1126,13 +1129,13 @@
 			this.cbMatchBook1.TabIndex = 31;
 			this.toolTip1.SetToolTip(this.cbMatchBook1, "Select engine opening book");
 			// 
-			// cbEngine1
+			// cbMatchEngine1
 			// 
 			this.cbMatchEngine1.Dock = System.Windows.Forms.DockStyle.Top;
 			this.cbMatchEngine1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.cbMatchEngine1.FormattingEnabled = true;
 			this.cbMatchEngine1.Location = new System.Drawing.Point(3, 16);
-			this.cbMatchEngine1.Name = "cbEngine1";
+			this.cbMatchEngine1.Name = "cbMatchEngine1";
 			this.cbMatchEngine1.Size = new System.Drawing.Size(331, 21);
 			this.cbMatchEngine1.Sorted = true;
 			this.cbMatchEngine1.TabIndex = 28;
@@ -2176,81 +2179,81 @@
 			// 
 			// groupBox4
 			// 
-			this.groupBox4.Controls.Add(this.nudTeacher);
-			this.groupBox4.Controls.Add(this.cbTeacherMode);
-			this.groupBox4.Controls.Add(this.cbTeacherBook);
-			this.groupBox4.Controls.Add(this.cbTeacherEngine);
+			this.groupBox4.Controls.Add(this.nudTrainer);
+			this.groupBox4.Controls.Add(this.cbTrainerMode);
+			this.groupBox4.Controls.Add(this.cbTrainerBook);
+			this.groupBox4.Controls.Add(this.cbTrainerEngine);
 			this.groupBox4.Dock = System.Windows.Forms.DockStyle.Top;
 			this.groupBox4.Location = new System.Drawing.Point(3, 108);
 			this.groupBox4.Name = "groupBox4";
 			this.groupBox4.Size = new System.Drawing.Size(331, 105);
 			this.groupBox4.TabIndex = 20;
 			this.groupBox4.TabStop = false;
-			this.groupBox4.Text = "Teacher";
+			this.groupBox4.Text = "Trainer";
 			// 
-			// nudTeacher
+			// nudTrainer
 			// 
-			this.nudTeacher.Dock = System.Windows.Forms.DockStyle.Top;
-			this.nudTeacher.Location = new System.Drawing.Point(3, 79);
-			this.nudTeacher.Maximum = new decimal(new int[] {
+			this.nudTrainer.Dock = System.Windows.Forms.DockStyle.Top;
+			this.nudTrainer.Location = new System.Drawing.Point(3, 79);
+			this.nudTrainer.Maximum = new decimal(new int[] {
             1000000000,
             0,
             0,
             0});
-			this.nudTeacher.Name = "nudTeacher";
-			this.nudTeacher.Size = new System.Drawing.Size(325, 20);
-			this.nudTeacher.TabIndex = 28;
-			this.nudTeacher.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-			this.nudTeacher.ThousandsSeparator = true;
-			this.nudTeacher.Value = new decimal(new int[] {
+			this.nudTrainer.Name = "nudTrainer";
+			this.nudTrainer.Size = new System.Drawing.Size(325, 20);
+			this.nudTrainer.TabIndex = 28;
+			this.nudTrainer.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			this.nudTrainer.ThousandsSeparator = true;
+			this.nudTrainer.Value = new decimal(new int[] {
             1,
             0,
             0,
             0});
 			// 
-			// cbTeacherMode
+			// cbTrainerMode
 			// 
-			this.cbTeacherMode.Cursor = System.Windows.Forms.Cursors.Hand;
-			this.cbTeacherMode.Dock = System.Windows.Forms.DockStyle.Top;
-			this.cbTeacherMode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.cbTeacherMode.FormattingEnabled = true;
-			this.cbTeacherMode.Items.AddRange(new object[] {
+			this.cbTrainerMode.Cursor = System.Windows.Forms.Cursors.Hand;
+			this.cbTrainerMode.Dock = System.Windows.Forms.DockStyle.Top;
+			this.cbTrainerMode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.cbTrainerMode.FormattingEnabled = true;
+			this.cbTrainerMode.Items.AddRange(new object[] {
             "Depth",
             "Nodes",
             "Standard",
             "Time"});
-			this.cbTeacherMode.Location = new System.Drawing.Point(3, 58);
-			this.cbTeacherMode.Name = "cbTeacherMode";
-			this.cbTeacherMode.Size = new System.Drawing.Size(325, 21);
-			this.cbTeacherMode.Sorted = true;
-			this.cbTeacherMode.TabIndex = 30;
-			this.toolTip1.SetToolTip(this.cbTeacherMode, "Select mode");
-			this.cbTeacherMode.SelectedIndexChanged += new System.EventHandler(this.cbTeacherMode_SelectedIndexChanged);
+			this.cbTrainerMode.Location = new System.Drawing.Point(3, 58);
+			this.cbTrainerMode.Name = "cbTrainerMode";
+			this.cbTrainerMode.Size = new System.Drawing.Size(325, 21);
+			this.cbTrainerMode.Sorted = true;
+			this.cbTrainerMode.TabIndex = 30;
+			this.toolTip1.SetToolTip(this.cbTrainerMode, "Select mode");
+			this.cbTrainerMode.SelectedIndexChanged += new System.EventHandler(this.cbTeacherMode_SelectedIndexChanged);
 			// 
-			// cbTeacherBook
+			// cbTrainerBook
 			// 
-			this.cbTeacherBook.Cursor = System.Windows.Forms.Cursors.Hand;
-			this.cbTeacherBook.Dock = System.Windows.Forms.DockStyle.Top;
-			this.cbTeacherBook.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.cbTeacherBook.FormattingEnabled = true;
-			this.cbTeacherBook.Location = new System.Drawing.Point(3, 37);
-			this.cbTeacherBook.Name = "cbTeacherBook";
-			this.cbTeacherBook.Size = new System.Drawing.Size(325, 21);
-			this.cbTeacherBook.Sorted = true;
-			this.cbTeacherBook.TabIndex = 26;
-			this.toolTip1.SetToolTip(this.cbTeacherBook, "Select chess opening book");
+			this.cbTrainerBook.Cursor = System.Windows.Forms.Cursors.Hand;
+			this.cbTrainerBook.Dock = System.Windows.Forms.DockStyle.Top;
+			this.cbTrainerBook.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.cbTrainerBook.FormattingEnabled = true;
+			this.cbTrainerBook.Location = new System.Drawing.Point(3, 37);
+			this.cbTrainerBook.Name = "cbTrainerBook";
+			this.cbTrainerBook.Size = new System.Drawing.Size(325, 21);
+			this.cbTrainerBook.Sorted = true;
+			this.cbTrainerBook.TabIndex = 26;
+			this.toolTip1.SetToolTip(this.cbTrainerBook, "Select chess opening book");
 			// 
-			// cbTeacherEngine
+			// cbTrainerEngine
 			// 
-			this.cbTeacherEngine.Cursor = System.Windows.Forms.Cursors.Hand;
-			this.cbTeacherEngine.Dock = System.Windows.Forms.DockStyle.Top;
-			this.cbTeacherEngine.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.cbTeacherEngine.Location = new System.Drawing.Point(3, 16);
-			this.cbTeacherEngine.Name = "cbTeacherEngine";
-			this.cbTeacherEngine.Size = new System.Drawing.Size(325, 21);
-			this.cbTeacherEngine.Sorted = true;
-			this.cbTeacherEngine.TabIndex = 2;
-			this.toolTip1.SetToolTip(this.cbTeacherEngine, "Select engine");
+			this.cbTrainerEngine.Cursor = System.Windows.Forms.Cursors.Hand;
+			this.cbTrainerEngine.Dock = System.Windows.Forms.DockStyle.Top;
+			this.cbTrainerEngine.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.cbTrainerEngine.Location = new System.Drawing.Point(3, 16);
+			this.cbTrainerEngine.Name = "cbTrainerEngine";
+			this.cbTrainerEngine.Size = new System.Drawing.Size(325, 21);
+			this.cbTrainerEngine.Sorted = true;
+			this.cbTrainerEngine.TabIndex = 2;
+			this.toolTip1.SetToolTip(this.cbTrainerEngine, "Select engine");
 			// 
 			// groupBox3
 			// 
@@ -4077,6 +4080,7 @@
 			this.Resize += new System.EventHandler(this.FormChess_Resize);
 			this.tabControl1.ResumeLayout(false);
 			this.tabPageGame.ResumeLayout(false);
+			this.tabPageGame.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.chartGame)).EndInit();
 			this.groupBox2.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.nudValue)).EndInit();
@@ -4128,7 +4132,7 @@
 			((System.ComponentModel.ISupportInitialize)(this.chartTraining)).EndInit();
 			this.tlpTraining.ResumeLayout(false);
 			this.groupBox4.ResumeLayout(false);
-			((System.ComponentModel.ISupportInitialize)(this.nudTeacher)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.nudTrainer)).EndInit();
 			this.groupBox3.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.nudTrained)).EndInit();
 			this.tabPageEdit.ResumeLayout(false);
@@ -4188,7 +4192,7 @@
 		private System.Windows.Forms.ComboBox cbColor;
 		private System.Windows.Forms.Button butTraining;
 		private System.Windows.Forms.GroupBox groupBox4;
-		private System.Windows.Forms.ComboBox cbTeacherEngine;
+		private System.Windows.Forms.ComboBox cbTrainerEngine;
 		private System.Windows.Forms.GroupBox groupBox3;
 		private System.Windows.Forms.ComboBox cbTrainedEngine;
 		private System.Windows.Forms.TableLayoutPanel tlpTraining;
@@ -4229,8 +4233,8 @@
 		private System.Windows.Forms.GroupBox groupBox6;
 		private System.Windows.Forms.GroupBox groupBox5;
 		private System.Windows.Forms.NumericUpDown nudTrained;
-		private System.Windows.Forms.NumericUpDown nudTeacher;
-		private System.Windows.Forms.ComboBox cbTeacherBook;
+		private System.Windows.Forms.NumericUpDown nudTrainer;
+		private System.Windows.Forms.ComboBox cbTrainerBook;
 		private System.Windows.Forms.TabPage tabPageTourP;
 		private System.Windows.Forms.Button butStartTournament;
 		private System.Windows.Forms.TabPage tabPageEdit;
@@ -4251,7 +4255,7 @@
 		private System.Windows.Forms.ComboBox cbMode2;
 		private System.Windows.Forms.ComboBox cbMatchBook2;
 		private System.Windows.Forms.ComboBox cbTrainedBook;
-		private System.Windows.Forms.ComboBox cbTeacherMode;
+		private System.Windows.Forms.ComboBox cbTrainerMode;
 		private System.Windows.Forms.ComboBox cbTrainedMode;
 		private System.Windows.Forms.MenuStrip menuStrip1;
 		private System.Windows.Forms.ToolStripMenuItem fenToolStripMenuItem;
