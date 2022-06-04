@@ -200,21 +200,25 @@ namespace RapIni
 			return true;
 		}
 
-		private bool Load()
+
+		bool Load()
 		{
-			if (File.Exists(path))
+			list.Clear();
+			try
 			{
-				try
+				using (FileStream fs = File.Open(path, FileMode.Open, FileAccess.Read, FileShare.Read))
+				using (StreamReader reader = new StreamReader(fs))
 				{
-					list = File.ReadAllLines(path).ToList();
-				}
-				catch
-				{
-					return false;
+					string line = String.Empty;
+					while ((line = reader.ReadLine()) != null)
+						if (!String.IsNullOrEmpty(line))
+							list.Add(line);
 				}
 			}
-			else
-				list.Clear();
+			catch
+			{
+				return false;
+			}
 			return true;
 		}
 

@@ -1183,12 +1183,12 @@ namespace RapChessGui
 			if (eloDel > 0)
 			{
 				result = true;
-				ShowInfo($"Last game you win new elo is {hu.elo} (+{eloDel})", Color.FromArgb(0, 0xff, 0));
+				ShowInfo($"Yours new elo is {hu.elo} (+{eloDel})", Color.FromArgb(0, 0xff, 0));
 			}
 			if (eloDel < 0)
 			{
 				result = true;
-				ShowInfo($"Last game you loose new elo is {hu.elo} ({eloDel})", Color.FromArgb(0xff, 0, 0));
+				ShowInfo($"Yours new elo is {hu.elo} ({eloDel})", Color.FromArgb(0xff, 0, 0));
 			}
 			if (result || changeProgress)
 			{
@@ -1568,7 +1568,7 @@ namespace RapChessGui
 			labEloD.ForeColor = Color.Black;
 			labEloT.BackColor = Color.LightGray;
 			labEloT.ForeColor = Color.Black;
-			labEco.Text = "";
+			labEco.Text = String.Empty;
 			labResult.Hide();
 			chess.SetFen(CHistory.fen);
 			foreach (CHisMove m in CHistory.moveList)
@@ -2592,6 +2592,7 @@ namespace RapChessGui
 					CModeTraining.win++;
 					if (++CModeTraining.winInRow > FormOptions.winLimit)
 					{
+						CModeTraining.winInRow = 0;
 						if (--CModeTraining.modeValueTrainer.value < 1)
 							CModeTraining.modeValueTrainer.value = 1;
 						decimal nv = nudTrainer.Value - nudTrainer.Increment;
@@ -2923,7 +2924,9 @@ namespace RapChessGui
 
 		private void butContinueGame_Click(object sender, EventArgs e)
 		{
-			LoadFen(chess.GetFen());
+			string fen = chess.GetFen();
+			GameSet();
+			LoadFen(fen);
 		}
 
 		private void SaveToClipboardToolStripMenuItem1_Click(object sender, EventArgs e)
