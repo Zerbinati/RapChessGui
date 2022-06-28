@@ -44,11 +44,17 @@ namespace RapChessGui
 			return parameters.IndexOf(p) == 0;
 		}
 
-		public string GetParameters(CEngine e)
+		public string GetFileName()
 		{
-			if (e == null)
-				return "";
-			string p = parameters.Replace("[engine]", e.name).Replace("[uci]", $@"{Directory.GetCurrentDirectory()}\engines\uci\");
+			return $@"{AppDomain.CurrentDomain.BaseDirectory}Books\{exe}";
+		}
+
+		public string GetParameters(CEngine e = null)
+		{
+			string p = parameters;
+			if (e != null)
+				p = p.Replace("[engine]", e.name);
+			p = p.Replace("[uci]", $@"{Directory.GetCurrentDirectory()}\engines\uci\");
 			return p;
 		}
 

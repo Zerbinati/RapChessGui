@@ -46,6 +46,7 @@
 			this.tbReaderName = new System.Windows.Forms.TextBox();
 			this.gbBooks = new System.Windows.Forms.GroupBox();
 			this.listBox1 = new System.Windows.Forms.ListBox();
+			this.bConsole = new System.Windows.Forms.Button();
 			this.panel1.SuspendLayout();
 			this.groupBox5.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.nudTournament)).BeginInit();
@@ -63,6 +64,7 @@
 			// 
 			// panel1
 			// 
+			this.panel1.Controls.Add(this.bConsole);
 			this.panel1.Controls.Add(this.bDelete);
 			this.panel1.Controls.Add(this.bCreate);
 			this.panel1.Controls.Add(this.button1);
@@ -274,6 +276,18 @@
 			this.listBox1.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.listBox1_DrawItem);
 			this.listBox1.SelectedValueChanged += new System.EventHandler(this.ListBox1_SelectedValueChanged);
 			// 
+			// bConsole
+			// 
+			this.bConsole.AutoSize = true;
+			this.bConsole.Dock = System.Windows.Forms.DockStyle.Top;
+			this.bConsole.Location = new System.Drawing.Point(0, 292);
+			this.bConsole.Name = "bConsole";
+			this.bConsole.Size = new System.Drawing.Size(311, 24);
+			this.bConsole.TabIndex = 36;
+			this.bConsole.Text = "Console";
+			this.bConsole.UseVisualStyleBackColor = true;
+			this.bConsole.Click += new System.EventHandler(this.bConsole_Click);
+			// 
 			// FormEditBook
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -325,5 +339,6 @@
 		private System.Windows.Forms.GroupBox groupBox5;
 		private System.Windows.Forms.NumericUpDown nudTournament;
 		private System.Windows.Forms.Button button1;
+		private System.Windows.Forms.Button bConsole;
 	}
 }

@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
+using System.Diagnostics;
+using System.IO;
 
 namespace RapChessGui
 {
@@ -149,5 +151,14 @@ namespace RapChessGui
 			tbReaderName.Text = b.CreateName();
 		}
 
+		private void bConsole_Click(object sender, EventArgs e)
+		{
+			CBook book = FormChess.bookList.GetBook(curBookName);
+			ProcessStartInfo psi = new ProcessStartInfo();
+			psi.FileName = book.GetFileName();
+			psi.Arguments = book.GetParameters();
+			psi.WorkingDirectory = Path.GetDirectoryName(psi.FileName);
+			Process.Start(psi);
+		}
 	}
 }
