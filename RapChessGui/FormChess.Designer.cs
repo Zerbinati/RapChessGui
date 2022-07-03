@@ -193,6 +193,15 @@
 			this.butDefault = new System.Windows.Forms.Button();
 			this.butClearBoard = new System.Windows.Forms.Button();
 			this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+			this.clipboardToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.loadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.fenToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+			this.pgnToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+			this.uciToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.fenToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
+			this.pgnToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
+			this.uciToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
 			this.manageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.booksToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
 			this.enginesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -306,15 +315,6 @@
 			this.tlpBlack = new System.Windows.Forms.TableLayoutPanel();
 			this.timerAnimation = new System.Windows.Forms.Timer(this.components);
 			this.fileSystemWatcher1 = new System.IO.FileSystemWatcher();
-			this.clipboardToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.loadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.fenToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-			this.pgnToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-			this.uciToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.fenToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
-			this.pgnToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
-			this.uciToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
 			this.tabControl1.SuspendLayout();
 			this.tabPageGame.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.chartGame)).BeginInit();
@@ -2462,9 +2462,80 @@
 			this.menuStrip1.Location = new System.Drawing.Point(0, 2);
 			this.menuStrip1.Name = "menuStrip1";
 			this.menuStrip1.ShowItemToolTips = true;
-			this.menuStrip1.Size = new System.Drawing.Size(423, 24);
+			this.menuStrip1.Size = new System.Drawing.Size(303, 24);
 			this.menuStrip1.TabIndex = 1;
 			this.menuStrip1.Text = "menuStrip1";
+			// 
+			// clipboardToolStripMenuItem
+			// 
+			this.clipboardToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.loadToolStripMenuItem,
+            this.saveToolStripMenuItem});
+			this.clipboardToolStripMenuItem.Name = "clipboardToolStripMenuItem";
+			this.clipboardToolStripMenuItem.Size = new System.Drawing.Size(71, 20);
+			this.clipboardToolStripMenuItem.Text = "Clipboard";
+			// 
+			// loadToolStripMenuItem
+			// 
+			this.loadToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.fenToolStripMenuItem1,
+            this.pgnToolStripMenuItem1,
+            this.uciToolStripMenuItem});
+			this.loadToolStripMenuItem.Name = "loadToolStripMenuItem";
+			this.loadToolStripMenuItem.Size = new System.Drawing.Size(100, 22);
+			this.loadToolStripMenuItem.Text = "Load";
+			// 
+			// fenToolStripMenuItem1
+			// 
+			this.fenToolStripMenuItem1.Name = "fenToolStripMenuItem1";
+			this.fenToolStripMenuItem1.Size = new System.Drawing.Size(95, 22);
+			this.fenToolStripMenuItem1.Text = "Fen";
+			this.fenToolStripMenuItem1.Click += new System.EventHandler(this.fenToolStripMenuItem1_Click);
+			// 
+			// pgnToolStripMenuItem1
+			// 
+			this.pgnToolStripMenuItem1.Name = "pgnToolStripMenuItem1";
+			this.pgnToolStripMenuItem1.Size = new System.Drawing.Size(95, 22);
+			this.pgnToolStripMenuItem1.Text = "Pgn";
+			this.pgnToolStripMenuItem1.Click += new System.EventHandler(this.pgnToolStripMenuItem1_Click);
+			// 
+			// uciToolStripMenuItem
+			// 
+			this.uciToolStripMenuItem.Name = "uciToolStripMenuItem";
+			this.uciToolStripMenuItem.Size = new System.Drawing.Size(95, 22);
+			this.uciToolStripMenuItem.Text = "Uci";
+			this.uciToolStripMenuItem.Click += new System.EventHandler(this.uciToolStripMenuItem_Click);
+			// 
+			// saveToolStripMenuItem
+			// 
+			this.saveToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.fenToolStripMenuItem2,
+            this.pgnToolStripMenuItem2,
+            this.uciToolStripMenuItem1});
+			this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
+			this.saveToolStripMenuItem.Size = new System.Drawing.Size(100, 22);
+			this.saveToolStripMenuItem.Text = "Save";
+			// 
+			// fenToolStripMenuItem2
+			// 
+			this.fenToolStripMenuItem2.Name = "fenToolStripMenuItem2";
+			this.fenToolStripMenuItem2.Size = new System.Drawing.Size(95, 22);
+			this.fenToolStripMenuItem2.Text = "Fen";
+			this.fenToolStripMenuItem2.Click += new System.EventHandler(this.fenToolStripMenuItem2_Click);
+			// 
+			// pgnToolStripMenuItem2
+			// 
+			this.pgnToolStripMenuItem2.Name = "pgnToolStripMenuItem2";
+			this.pgnToolStripMenuItem2.Size = new System.Drawing.Size(95, 22);
+			this.pgnToolStripMenuItem2.Text = "Pgn";
+			this.pgnToolStripMenuItem2.Click += new System.EventHandler(this.pgnToolStripMenuItem2_Click);
+			// 
+			// uciToolStripMenuItem1
+			// 
+			this.uciToolStripMenuItem1.Name = "uciToolStripMenuItem1";
+			this.uciToolStripMenuItem1.Size = new System.Drawing.Size(95, 22);
+			this.uciToolStripMenuItem1.Text = "Uci";
+			this.uciToolStripMenuItem1.Click += new System.EventHandler(this.uciToolStripMenuItem1_Click);
 			// 
 			// manageToolStripMenuItem
 			// 
@@ -2479,21 +2550,21 @@
 			// booksToolStripMenuItem1
 			// 
 			this.booksToolStripMenuItem1.Name = "booksToolStripMenuItem1";
-			this.booksToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
+			this.booksToolStripMenuItem1.Size = new System.Drawing.Size(115, 22);
 			this.booksToolStripMenuItem1.Text = "Books";
 			this.booksToolStripMenuItem1.Click += new System.EventHandler(this.booksToolStripMenuItem1_Click);
 			// 
 			// enginesToolStripMenuItem
 			// 
 			this.enginesToolStripMenuItem.Name = "enginesToolStripMenuItem";
-			this.enginesToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+			this.enginesToolStripMenuItem.Size = new System.Drawing.Size(115, 22);
 			this.enginesToolStripMenuItem.Text = "Engines";
 			this.enginesToolStripMenuItem.Click += new System.EventHandler(this.enginesToolStripMenuItem_Click);
 			// 
 			// playersToolStripMenuItem1
 			// 
 			this.playersToolStripMenuItem1.Name = "playersToolStripMenuItem1";
-			this.playersToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
+			this.playersToolStripMenuItem1.Size = new System.Drawing.Size(115, 22);
 			this.playersToolStripMenuItem1.Text = "Players";
 			this.playersToolStripMenuItem1.Click += new System.EventHandler(this.playersToolStripMenuItem1_Click);
 			// 
@@ -2616,21 +2687,21 @@
 			// booksToolStripMenuItem
 			// 
 			this.booksToolStripMenuItem.Name = "booksToolStripMenuItem";
-			this.booksToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+			this.booksToolStripMenuItem.Size = new System.Drawing.Size(115, 22);
 			this.booksToolStripMenuItem.Text = "Books";
 			this.booksToolStripMenuItem.Click += new System.EventHandler(this.booksToolStripMenuItem2_Click);
 			// 
 			// enginesToolStripMenuItem2
 			// 
 			this.enginesToolStripMenuItem2.Name = "enginesToolStripMenuItem2";
-			this.enginesToolStripMenuItem2.Size = new System.Drawing.Size(180, 22);
+			this.enginesToolStripMenuItem2.Size = new System.Drawing.Size(115, 22);
 			this.enginesToolStripMenuItem2.Text = "Engines";
 			this.enginesToolStripMenuItem2.Click += new System.EventHandler(this.enginesToolStripMenuItem2_Click);
 			// 
 			// playersToolStripMenuItem
 			// 
 			this.playersToolStripMenuItem.Name = "playersToolStripMenuItem";
-			this.playersToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+			this.playersToolStripMenuItem.Size = new System.Drawing.Size(115, 22);
 			this.playersToolStripMenuItem.Text = "Players";
 			this.playersToolStripMenuItem.Click += new System.EventHandler(this.playersToolStripMenuItem_Click);
 			// 
@@ -2665,9 +2736,9 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.labEco.Cursor = System.Windows.Forms.Cursors.Default;
 			this.labEco.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-			this.labEco.Location = new System.Drawing.Point(400, 4);
+			this.labEco.Location = new System.Drawing.Point(299, 4);
 			this.labEco.Name = "labEco";
-			this.labEco.Size = new System.Drawing.Size(722, 22);
+			this.labEco.Size = new System.Drawing.Size(823, 22);
 			this.labEco.TabIndex = 3;
 			this.labEco.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			this.toolTip1.SetToolTip(this.labEco, "Names of chess openings variations");
@@ -4015,77 +4086,6 @@
 			this.fileSystemWatcher1.Created += new System.IO.FileSystemEventHandler(this.fileSystemWatcher1_Changed);
 			this.fileSystemWatcher1.Deleted += new System.IO.FileSystemEventHandler(this.fileSystemWatcher1_Changed);
 			this.fileSystemWatcher1.Renamed += new System.IO.RenamedEventHandler(this.fileSystemWatcher1_Renamed);
-			// 
-			// clipboardToolStripMenuItem
-			// 
-			this.clipboardToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.loadToolStripMenuItem,
-            this.saveToolStripMenuItem});
-			this.clipboardToolStripMenuItem.Name = "clipboardToolStripMenuItem";
-			this.clipboardToolStripMenuItem.Size = new System.Drawing.Size(71, 20);
-			this.clipboardToolStripMenuItem.Text = "Clipboard";
-			// 
-			// loadToolStripMenuItem
-			// 
-			this.loadToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.fenToolStripMenuItem1,
-            this.pgnToolStripMenuItem1,
-            this.uciToolStripMenuItem});
-			this.loadToolStripMenuItem.Name = "loadToolStripMenuItem";
-			this.loadToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-			this.loadToolStripMenuItem.Text = "Load";
-			// 
-			// saveToolStripMenuItem
-			// 
-			this.saveToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.fenToolStripMenuItem2,
-            this.pgnToolStripMenuItem2,
-            this.uciToolStripMenuItem1});
-			this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-			this.saveToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-			this.saveToolStripMenuItem.Text = "Save";
-			// 
-			// fenToolStripMenuItem1
-			// 
-			this.fenToolStripMenuItem1.Name = "fenToolStripMenuItem1";
-			this.fenToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
-			this.fenToolStripMenuItem1.Text = "Fen";
-			this.fenToolStripMenuItem1.Click += new System.EventHandler(this.fenToolStripMenuItem1_Click);
-			// 
-			// pgnToolStripMenuItem1
-			// 
-			this.pgnToolStripMenuItem1.Name = "pgnToolStripMenuItem1";
-			this.pgnToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
-			this.pgnToolStripMenuItem1.Text = "Pgn";
-			this.pgnToolStripMenuItem1.Click += new System.EventHandler(this.pgnToolStripMenuItem1_Click);
-			// 
-			// uciToolStripMenuItem
-			// 
-			this.uciToolStripMenuItem.Name = "uciToolStripMenuItem";
-			this.uciToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-			this.uciToolStripMenuItem.Text = "Uci";
-			this.uciToolStripMenuItem.Click += new System.EventHandler(this.uciToolStripMenuItem_Click);
-			// 
-			// fenToolStripMenuItem2
-			// 
-			this.fenToolStripMenuItem2.Name = "fenToolStripMenuItem2";
-			this.fenToolStripMenuItem2.Size = new System.Drawing.Size(180, 22);
-			this.fenToolStripMenuItem2.Text = "Fen";
-			this.fenToolStripMenuItem2.Click += new System.EventHandler(this.fenToolStripMenuItem2_Click);
-			// 
-			// pgnToolStripMenuItem2
-			// 
-			this.pgnToolStripMenuItem2.Name = "pgnToolStripMenuItem2";
-			this.pgnToolStripMenuItem2.Size = new System.Drawing.Size(180, 22);
-			this.pgnToolStripMenuItem2.Text = "Pgn";
-			this.pgnToolStripMenuItem2.Click += new System.EventHandler(this.pgnToolStripMenuItem2_Click);
-			// 
-			// uciToolStripMenuItem1
-			// 
-			this.uciToolStripMenuItem1.Name = "uciToolStripMenuItem1";
-			this.uciToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
-			this.uciToolStripMenuItem1.Text = "Uci";
-			this.uciToolStripMenuItem1.Click += new System.EventHandler(this.uciToolStripMenuItem1_Click);
 			// 
 			// FormChess
 			// 
