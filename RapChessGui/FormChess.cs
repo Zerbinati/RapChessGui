@@ -1825,7 +1825,9 @@ namespace RapChessGui
 			GamerList.Init();
 			GamerList.gamer[0].SetPlayer(CModeGame.player);
 			CPlayer pc = new CPlayer();
-			if (cbComputer.Text == "Custom")
+			if (cbComputer.Text == "Human")
+				pc = CModeGame.player;
+			else if (cbComputer.Text == "Custom")
 			{
 				pc.engine = cbEngine.Text;
 				pc.book = cbBook.Text;
@@ -2789,17 +2791,17 @@ namespace RapChessGui
 
 		private void saveToClipboardToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			Clipboard.SetText(chess.GetFen());
+
 		}
 
 		private void loadFromClipboardToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			LoadFen(Clipboard.GetText().Trim());
+
 		}
 
 		private void loadPgnFromClipboard_Click(object sender, EventArgs e)
 		{
-			LoadPgn(Clipboard.GetText().Trim());
+
 		}
 
 		private void bStartMatch_Click(object sender, EventArgs e)
@@ -2931,7 +2933,7 @@ namespace RapChessGui
 
 		private void SaveToClipboardToolStripMenuItem1_Click(object sender, EventArgs e)
 		{
-			Clipboard.SetText(CHistory.GetPgn());
+
 		}
 
 		private void clbCastling_ItemCheck(object sender, ItemCheckEventArgs e)
@@ -3278,6 +3280,36 @@ namespace RapChessGui
 			v = (sender as ComboBox).SelectedIndex != 2;
 			butForward.Visible = v;
 			butStop.Visible = v;
+		}
+
+		private void fenToolStripMenuItem1_Click(object sender, EventArgs e)
+		{
+			LoadFen(Clipboard.GetText().Trim());
+		}
+
+		private void fenToolStripMenuItem2_Click(object sender, EventArgs e)
+		{
+			Clipboard.SetText(chess.GetFen());
+		}
+
+		private void pgnToolStripMenuItem1_Click(object sender, EventArgs e)
+		{
+			LoadPgn(Clipboard.GetText().Trim());
+		}
+
+		private void pgnToolStripMenuItem2_Click(object sender, EventArgs e)
+		{
+			Clipboard.SetText(CHistory.GetPgn());
+		}
+
+		private void uciToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			LoadPgn(Clipboard.GetText().Trim());
+		}
+
+		private void uciToolStripMenuItem1_Click(object sender, EventArgs e)
+		{
+			Clipboard.SetText(CHistory.GetUci());
 		}
 	}
 }

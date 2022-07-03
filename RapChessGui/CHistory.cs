@@ -91,7 +91,7 @@ namespace RapChessGui
 			moveList.Clear();
 		}
 
-		public static string GetMovesUci()
+		public static string GetUci()
 		{
 			string result = string.Empty;
 			foreach (CHisMove m in moveList)
@@ -130,7 +130,7 @@ namespace RapChessGui
 			string result = "position ";
 			result += (fen == CChess.defFen) ? "startpos" : "fen " + fen;
 			if (moveList.Count > 0)
-				return result + " moves " + GetMovesUci();
+				return result + " moves " + GetUci();
 			else
 				return result;
 		}
