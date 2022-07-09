@@ -534,7 +534,7 @@ namespace RapChessGui
 			if (book == null)
 				p.book = CData.none;
 			else
-				bookPro.SetProgram($@"{AppDomain.CurrentDomain.BaseDirectory}Books\{book.exe}", book.GetParameters(engine));
+				bookPro.SetProgram($@"{AppDomain.CurrentDomain.BaseDirectory}Books\{book.file}", book.GetParameters(engine));
 			if (engine == null)
 				p.engine = "None";
 			else

@@ -57,6 +57,7 @@
 			this.gbEngines = new System.Windows.Forms.GroupBox();
 			this.listBox1 = new System.Windows.Forms.ListBox();
 			this.timerPhase = new System.Windows.Forms.Timer(this.components);
+			this.bConsole = new System.Windows.Forms.Button();
 			this.panel1.SuspendLayout();
 			this.gbTournament.SuspendLayout();
 			this.groupBox5.SuspendLayout();
@@ -73,6 +74,7 @@
 			// panel1
 			// 
 			this.panel1.Controls.Add(this.panOptions);
+			this.panel1.Controls.Add(this.bConsole);
 			this.panel1.Controls.Add(this.bAuto);
 			this.panel1.Controls.Add(this.butReset);
 			this.panel1.Controls.Add(this.butClearHistory);
@@ -98,9 +100,9 @@
 			this.panOptions.AutoScroll = true;
 			this.panOptions.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
 			this.panOptions.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.panOptions.Location = new System.Drawing.Point(0, 474);
+			this.panOptions.Location = new System.Drawing.Point(0, 498);
 			this.panOptions.Name = "panOptions";
-			this.panOptions.Size = new System.Drawing.Size(311, 330);
+			this.panOptions.Size = new System.Drawing.Size(311, 306);
 			this.panOptions.TabIndex = 36;
 			// 
 			// bAuto
@@ -414,6 +416,18 @@
 			this.listBox1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.listBox1_MouseMove);
 			this.listBox1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.listBox1_MouseUp);
 			// 
+			// bConsole
+			// 
+			this.bConsole.AutoSize = true;
+			this.bConsole.Dock = System.Windows.Forms.DockStyle.Top;
+			this.bConsole.Location = new System.Drawing.Point(0, 474);
+			this.bConsole.Name = "bConsole";
+			this.bConsole.Size = new System.Drawing.Size(311, 24);
+			this.bConsole.TabIndex = 38;
+			this.bConsole.Text = "Console";
+			this.bConsole.UseVisualStyleBackColor = true;
+			this.bConsole.Click += new System.EventHandler(this.bConsole_Click);
+			// 
 			// FormEditEngine
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -479,5 +493,6 @@
 		private System.Windows.Forms.Panel panOptions;
 		private System.Windows.Forms.Button bAuto;
 		private System.Windows.Forms.Timer timerPhase;
+		private System.Windows.Forms.Button bConsole;
 	}
 }

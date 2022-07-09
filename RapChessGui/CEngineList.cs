@@ -131,6 +131,11 @@ namespace RapChessGui
 			return "None";
 		}
 
+		public string GetFileName()
+		{
+			return $@"{AppDomain.CurrentDomain.BaseDirectory}Engines\{file}";
+		}
+
 		public string GetName()
 		{
 			if (name == "")

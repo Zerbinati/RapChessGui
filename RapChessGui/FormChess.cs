@@ -48,7 +48,7 @@ namespace RapChessGui
 		readonly CBoard Board = new CBoard();
 		readonly CEcoList EcoList = new CEcoList();
 		public static CChess chess = new CChess();
-		readonly CUci Uci = new CUci();
+		readonly CUci uci = new CUci();
 		readonly SoundPlayer audioMove = new SoundPlayer(Properties.Resources.Move);
 		public static CRapLog log = new CRapLog();
 		public static PrivateFontCollection pfc = new PrivateFontCollection();
@@ -801,9 +801,9 @@ namespace RapChessGui
 			int selfdepth = 0;
 			string pv = String.Empty;
 			List<int> moves = new List<int>();
-			for (int n = i; n < Uci.tokens.Length; n++)
+			for (int n = i; n < uci.tokens.Length; n++)
 			{
-				string move = Uci.tokens[n];
+				string move = uci.tokens[n];
 				if (chess.IsValidMove(move, out string umo, out string san, out int emo))
 				{
 					selfdepth++;
@@ -832,8 +832,8 @@ namespace RapChessGui
 
 		public void GetMessageUci(CGamer g, string msg)
 		{
-			Uci.SetMsg(msg);
-			switch (Uci.command)
+			uci.SetMsg(msg);
+			switch (uci.command)
 			{
 				case "uciok":
 				case "readyok":
@@ -849,8 +849,8 @@ namespace RapChessGui
 					g.timer.Stop();
 					if (GamerList.GamerCur() == g)
 					{
-						Uci.GetValue("bestmove", out string umo);
-						Uci.GetValue("ponder", out g.ponder);
+						uci.GetValue("bestmove", out string umo);
+						uci.GetValue("ponder", out g.ponder);
 						if (g.isBookStarted && !g.isBookFail)
 						{
 							g.countMovesBook++;
@@ -868,21 +868,21 @@ namespace RapChessGui
 					}
 					break;
 				case "log":
-					log.Add($"{g.GetName()} => {Uci.GetValue(1, 0)}");
+					log.Add($"{g.GetName()} => {uci.GetValue(1, 0)}");
 					break;
 				case "info":
-					if (Uci.GetIndex("string", 0) == 1)
+					if (uci.GetIndex("string", 0) == 1)
 					{
-						ShowInfo(Uci.GetValue(2, Uci.tokens.Length - 1), Color.Gainsboro, 2, g);
+						ShowInfo(uci.GetValue(2, uci.tokens.Length - 1), Color.Gainsboro, 2, g);
 						break;
 					}
 					ulong nps = 0;
-					if (Uci.GetValue("cp", out string s))
+					if (uci.GetValue("cp", out string s))
 					{
 						g.scoreS = s;
 						g.scoreI = Int32.Parse(s);
 					}
-					if (Uci.GetValue("mate", out s))
+					if (uci.GetValue("mate", out s))
 					{
 						int ip = Int32.Parse(s);
 						if (ip > 0)
@@ -896,11 +896,11 @@ namespace RapChessGui
 							g.scoreI = -0xffff + ip;
 						}
 					}
-					if (Uci.GetValue("depth", out s))
+					if (uci.GetValue("depth", out s))
 						g.depth = Int32.Parse(s);
-					if (Uci.GetValue("seldepth", out s))
+					if (uci.GetValue("seldepth", out s))
 						g.seldepth = Int32.Parse(s);
-					if (Uci.GetValue("nodes", out s))
+					if (uci.GetValue("nodes", out s))
 					{
 						try
 						{
@@ -911,7 +911,7 @@ namespace RapChessGui
 							g.nodes = 0;
 						}
 					}
-					if (Uci.GetValue("nps", out s))
+					if (uci.GetValue("nps", out s))
 					{
 						try
 						{
@@ -923,7 +923,7 @@ namespace RapChessGui
 						}
 						nps = g.nps;
 					}
-					if (Uci.GetValue("time", out s))
+					if (uci.GetValue("time", out s))
 					{
 						try
 						{
@@ -938,7 +938,7 @@ namespace RapChessGui
 					}
 					if (nps > 0)
 						g.SetNps(nps);
-					int i = Uci.GetIndex("pv", 0);
+					int i = uci.GetIndex("pv", 0);
 					if (i > 0)
 						SetPv(i + 1, g);
 					break;
@@ -970,8 +970,8 @@ namespace RapChessGui
 		public void GetMessageXb(CGamer g, string msg)
 		{
 			string umo;
-			Uci.SetMsg(msg);
-			switch (Uci.command)
+			uci.SetMsg(msg);
+			switch (uci.command)
 			{
 				case "0-1":
 				case "1-0":
@@ -979,8 +979,8 @@ namespace RapChessGui
 					SetGameState(CGameState.resignation, g);
 					break;
 				case "move":
-					Uci.GetValue("ponder", out g.ponder);
-					GetMoveXb(Uci.tokens[1], out umo);
+					uci.GetValue("ponder", out g.ponder);
+					GetMoveXb(uci.tokens[1], out umo);
 					MakeMove(umo);
 					if (g.ponder != String.Empty)
 						g.ponderFormated = FormOptions.isSan ? chess.UmoToSan(g.ponder) : g.ponder;
@@ -989,20 +989,20 @@ namespace RapChessGui
 					string s = msg.ToLower();
 					if (s.Contains("move"))
 					{
-						if (GetMoveXb(Uci.Last(), out umo))
+						if (GetMoveXb(uci.Last(), out umo))
 							MakeMove(umo);
 					}
 					else if (s.Contains("resign") || s.Contains("illegal"))
 						SetGameState(CGameState.resignation, g);
-					else if (g.isPrepareFinished && Char.IsDigit(Uci.tokens[0][0]) && (Uci.tokens.Length > 4))
+					else if (g.isPrepareFinished && Char.IsDigit(uci.tokens[0][0]) && (uci.tokens.Length > 4))
 					{
 						try
 						{
-							g.depth = Int32.Parse(Uci.tokens[0]);
-							g.scoreS = Uci.tokens[1];
+							g.depth = Int32.Parse(uci.tokens[0]);
+							g.scoreS = uci.tokens[1];
 							g.scoreI = Convert.ToInt32(g.scoreS);
-							g.infMs = (ulong)Convert.ToInt64(Uci.tokens[2]) * 10;
-							g.nodes = (ulong)Convert.ToInt64(Uci.tokens[3]);
+							g.infMs = (ulong)Convert.ToInt64(uci.tokens[2]) * 10;
+							g.nodes = (ulong)Convert.ToInt64(uci.tokens[3]);
 							g.nps = g.infMs > 0 ? (g.nodes * 1000) / g.infMs : 0;
 							if (g.nps > 0)
 								g.SetNps(g.nps);

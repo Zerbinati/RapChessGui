@@ -5,6 +5,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using System.Threading;
 using System.Threading.Tasks;
+using System.IO;
 
 namespace RapChessGui
 {
@@ -448,5 +449,13 @@ namespace RapChessGui
 			SelectEngine(listBox1.SelectedItem.ToString());
 		}
 
+		private void bConsole_Click(object sender, EventArgs e)
+		{
+			ProcessStartInfo psi = new ProcessStartInfo();
+			psi.FileName = engine.GetFileName();
+			psi.Arguments = engine.parameters;
+			psi.WorkingDirectory = Path.GetDirectoryName(psi.FileName);
+			Process.Start(psi);
+		}
 	}
 }

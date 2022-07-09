@@ -12,7 +12,7 @@ namespace RapChessGui
 		public int position = 0;
 		public int tournament = 1;
 		public string name = "";
-		public string exe = "";
+		public string file = "";
 		public string parameters = "";
 		public string elo = "1500";
 		public CHisElo hisElo = new CHisElo();
@@ -28,7 +28,7 @@ namespace RapChessGui
 
 		public bool FileExists()
 		{
-			return File.Exists($@"Books\{exe}");
+			return File.Exists($@"Books\{file}");
 		}
 
 		public bool ParametersExists()
@@ -46,7 +46,7 @@ namespace RapChessGui
 
 		public string GetFileName()
 		{
-			return $@"{AppDomain.CurrentDomain.BaseDirectory}Books\{exe}";
+			return $@"{AppDomain.CurrentDomain.BaseDirectory}Books\{file}";
 		}
 
 		public string GetParameters(CEngine e = null)
@@ -60,7 +60,7 @@ namespace RapChessGui
 
 		public void LoadFromIni()
 		{
-			exe = CBookList.iniFile.Read($"book>{name}>exe", "");
+			file = CBookList.iniFile.Read($"book>{name}>exe", "");
 			parameters = CBookList.iniFile.Read($"book>{name}>parameters", "");
 			elo = CBookList.iniFile.Read($"book>{name}>elo", elo);
 			hisElo.LoadFromStr(CBookList.iniFile.Read($"book>{name}>history"));
@@ -70,7 +70,7 @@ namespace RapChessGui
 		public void SaveToIni()
 		{
 			name = GetName();
-			CBookList.iniFile.Write($"book>{name}>exe", exe);
+			CBookList.iniFile.Write($"book>{name}>exe", file);
 			CBookList.iniFile.Write($"book>{name}>parameters", parameters);
 			CBookList.iniFile.Write($"book>{name}>elo", elo);
 			CBookList.iniFile.Write($"book>{name}>history", hisElo.SaveToStr());
@@ -91,7 +91,7 @@ namespace RapChessGui
 
 		public string CreateName()
 		{
-			string n = CData.MakeShort(Path.GetFileNameWithoutExtension(exe));
+			string n = CData.MakeShort(Path.GetFileNameWithoutExtension(file));
 			string[] tokens = parameters.Split(' ');
 			if (tokens.Length > 0)
 			{
@@ -266,7 +266,7 @@ namespace RapChessGui
 			if ((br != "None") && !ParametersExists(p))
 			{
 				CBook b = new CBook();
-				b.exe = br;
+				b.file = br;
 				b.parameters = p;
 				list.Add(b);
 			}
