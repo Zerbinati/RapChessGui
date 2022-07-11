@@ -30,6 +30,7 @@
 		{
 			this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
 			this.panel1 = new System.Windows.Forms.Panel();
+			this.bConsole = new System.Windows.Forms.Button();
 			this.bDelete = new System.Windows.Forms.Button();
 			this.bCreate = new System.Windows.Forms.Button();
 			this.button1 = new System.Windows.Forms.Button();
@@ -46,7 +47,7 @@
 			this.tbReaderName = new System.Windows.Forms.TextBox();
 			this.gbBooks = new System.Windows.Forms.GroupBox();
 			this.listBox1 = new System.Windows.Forms.ListBox();
-			this.bConsole = new System.Windows.Forms.Button();
+			this.bLog = new System.Windows.Forms.Button();
 			this.panel1.SuspendLayout();
 			this.groupBox5.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.nudTournament)).BeginInit();
@@ -64,6 +65,7 @@
 			// 
 			// panel1
 			// 
+			this.panel1.Controls.Add(this.bLog);
 			this.panel1.Controls.Add(this.bConsole);
 			this.panel1.Controls.Add(this.bDelete);
 			this.panel1.Controls.Add(this.bCreate);
@@ -79,6 +81,18 @@
 			this.panel1.Name = "panel1";
 			this.panel1.Size = new System.Drawing.Size(311, 591);
 			this.panel1.TabIndex = 0;
+			// 
+			// bConsole
+			// 
+			this.bConsole.AutoSize = true;
+			this.bConsole.Dock = System.Windows.Forms.DockStyle.Top;
+			this.bConsole.Location = new System.Drawing.Point(0, 292);
+			this.bConsole.Name = "bConsole";
+			this.bConsole.Size = new System.Drawing.Size(311, 24);
+			this.bConsole.TabIndex = 36;
+			this.bConsole.Text = "Console";
+			this.bConsole.UseVisualStyleBackColor = true;
+			this.bConsole.Click += new System.EventHandler(this.bConsole_Click);
 			// 
 			// bDelete
 			// 
@@ -276,17 +290,17 @@
 			this.listBox1.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.listBox1_DrawItem);
 			this.listBox1.SelectedValueChanged += new System.EventHandler(this.ListBox1_SelectedValueChanged);
 			// 
-			// bConsole
+			// bLog
 			// 
-			this.bConsole.AutoSize = true;
-			this.bConsole.Dock = System.Windows.Forms.DockStyle.Top;
-			this.bConsole.Location = new System.Drawing.Point(0, 292);
-			this.bConsole.Name = "bConsole";
-			this.bConsole.Size = new System.Drawing.Size(311, 24);
-			this.bConsole.TabIndex = 36;
-			this.bConsole.Text = "Console";
-			this.bConsole.UseVisualStyleBackColor = true;
-			this.bConsole.Click += new System.EventHandler(this.bConsole_Click);
+			this.bLog.AutoSize = true;
+			this.bLog.Dock = System.Windows.Forms.DockStyle.Top;
+			this.bLog.Location = new System.Drawing.Point(0, 316);
+			this.bLog.Name = "bLog";
+			this.bLog.Size = new System.Drawing.Size(311, 24);
+			this.bLog.TabIndex = 37;
+			this.bLog.Text = "Log";
+			this.bLog.UseVisualStyleBackColor = true;
+			this.bLog.Click += new System.EventHandler(this.bLog_Click);
 			// 
 			// FormEditBook
 			// 
@@ -340,5 +354,6 @@
 		private System.Windows.Forms.NumericUpDown nudTournament;
 		private System.Windows.Forms.Button button1;
 		private System.Windows.Forms.Button bConsole;
+		private System.Windows.Forms.Button bLog;
 	}
 }

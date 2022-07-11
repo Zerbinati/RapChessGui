@@ -1,6 +1,6 @@
 ﻿namespace RapChessGui
 {
-	partial class FormLogGames
+	partial class FormLogBook
 	{
 		/// <summary>
 		/// Required designer variable.
@@ -40,22 +40,22 @@
 			this.textBox1.ReadOnly = true;
 			this.textBox1.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
 			this.textBox1.Size = new System.Drawing.Size(800, 450);
-			this.textBox1.TabIndex = 0;
+			this.textBox1.TabIndex = 1;
 			// 
-			// FormLogGames
+			// FormLogBook
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(800, 450);
 			this.Controls.Add(this.textBox1);
 			this.MinimizeBox = false;
-			this.Name = "FormLogGames";
+			this.Name = "FormLogBook";
 			this.ShowIcon = false;
 			this.ShowInTaskbar = false;
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
 			this.Text = "Log book";
-			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormPgn_FormClosing);
-			this.VisibleChanged += new System.EventHandler(this.FormLogGames_VisibleChanged);
+			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormLogBook_FormClosing);
+			this.VisibleChanged += new System.EventHandler(this.FormLogBook_VisibleChanged);
 			this.ResumeLayout(false);
 			this.PerformLayout();
 

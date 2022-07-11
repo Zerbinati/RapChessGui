@@ -9,6 +9,7 @@ namespace RapChessGui
 	public partial class FormEditBook : Form
 	{
 		public static CBook book = null;
+		readonly FormLogBook formLogBook = new FormLogBook();
 
 		public FormEditBook()
 		{
@@ -154,6 +155,14 @@ namespace RapChessGui
 			psi.Arguments = book.GetParameters();
 			psi.WorkingDirectory = Path.GetDirectoryName(psi.FileName);
 			Process.Start(psi);
+		}
+
+		private void bLog_Click(object sender, EventArgs e)
+		{
+			if (formLogBook.Visible)
+				formLogBook.Focus();
+			else
+				formLogBook.Show(this);
 		}
 	}
 }
