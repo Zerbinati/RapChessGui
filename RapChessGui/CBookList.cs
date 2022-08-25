@@ -33,10 +33,7 @@ namespace RapChessGui
 
 		public bool ParametersExists()
 		{
-			string[] tokens = parameters.Split(' ');
-			if (tokens.Length > 0)
-				return File.Exists($@"Books\{tokens[0]}");
-			return false;
+			return File.Exists($@"Books\{parameters}");
 		}
 
 		public bool ParametersExists(string p)
@@ -171,7 +168,7 @@ namespace RapChessGui
 			List<string> bl = CBookList.iniFile.ReadKeyList("book");
 			foreach (string name in bl)
 			{
-				var br = new CBook(name);
+				CBook br = new CBook(name);
 				br.LoadFromIni();
 				list.Add(br);
 			}
@@ -261,14 +258,15 @@ namespace RapChessGui
 			});
 		}
 
-		void TryAdd(string br, string p)
+		void TryAdd(string bf, string bp)
 		{
-			if ((br != "None") && !ParametersExists(p))
+			if ((bf != "None") && !ParametersExists(bp))
 			{
-				CBook b = new CBook();
-				b.file = br;
-				b.parameters = p;
-				list.Add(b);
+					CBook b = new CBook();
+					b.file = bf;
+					b.parameters = bp;
+					b.name = b.GetName();
+					list.Add(b);
 			}
 		}
 
