@@ -2,16 +2,15 @@
 using System.Drawing;
 using System.IO;
 using System.Reflection;
-using System.Linq;
 using System.Collections.Generic;
 
 namespace RapIni
 {
 	public class CRapIni
 	{
-		readonly string name = "";
-		readonly string path = "";
-		List<string> list = new List<string>();
+		readonly string name = String.Empty;
+		readonly string path = String.Empty;
+		readonly List<string> list = new List<string>();
 
 		public CRapIni()
 		{
@@ -191,7 +190,16 @@ namespace RapIni
 			list.Sort();
 			try
 			{
-				File.WriteAllLines(path, list);
+				using (FileStream fs = File.Open(path, FileMode.Create, FileAccess.Write, FileShare.None))
+				using (StreamWriter sw = new StreamWriter(fs))
+				{
+					foreach (String line in list)
+					{
+						string l = line.Trim('\0');
+						if (!String.IsNullOrEmpty(l))
+							sw.WriteLine(l);
+					}
+				}
 			}
 			catch
 			{
@@ -211,8 +219,11 @@ namespace RapIni
 				{
 					string line = String.Empty;
 					while ((line = reader.ReadLine()) != null)
-						if (!String.IsNullOrEmpty(line))
-							list.Add(line);
+					{
+						string l = line.Trim('\0');
+						if (!String.IsNullOrEmpty(l))
+							list.Add(l);
+					}
 				}
 			}
 			catch

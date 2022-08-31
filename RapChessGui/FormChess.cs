@@ -2633,6 +2633,13 @@ namespace RapChessGui
 			clbCastling.SetItemChecked(2, (chess.g_castleRights & 4) > 0);
 			clbCastling.SetItemChecked(3, (chess.g_castleRights & 8) > 0);
 			chess.g_castleRights = cr;
+			EditGetFen();
+			RenderBoard();
+		}
+
+		void EditGetFen()
+		{
+			tbFen.Text = chess.GetFen();
 		}
 
 		#endregion
@@ -2862,6 +2869,7 @@ namespace RapChessGui
 				}
 				Board.Fill();
 				RenderBoard(true);
+				EditGetFen();
 			}
 			if (CData.gameMode == (int)CGameMode.game)
 			{
@@ -2922,6 +2930,7 @@ namespace RapChessGui
 			boardRotate = !chess.whiteTurn;
 			Board.Fill();
 			RenderBoard(true);
+			EditGetFen();
 		}
 
 		private void butContinueGame_Click(object sender, EventArgs e)
@@ -2953,6 +2962,7 @@ namespace RapChessGui
 					chess.g_castleRights ^= 8;
 					break;
 			}
+			EditGetFen();
 		}
 
 		private void butContinueMatch_Click(object sender, EventArgs e)
@@ -3310,6 +3320,11 @@ namespace RapChessGui
 		private void uciToolStripMenuItem1_Click(object sender, EventArgs e)
 		{
 			Clipboard.SetText(CHistory.GetUci());
+		}
+
+		private void button2_Click(object sender, EventArgs e)
+		{
+			EditShow(tbFen.Text);
 		}
 	}
 }

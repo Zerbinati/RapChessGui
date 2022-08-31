@@ -315,6 +315,9 @@
 			this.tlpBlack = new System.Windows.Forms.TableLayoutPanel();
 			this.timerAnimation = new System.Windows.Forms.Timer(this.components);
 			this.fileSystemWatcher1 = new System.IO.FileSystemWatcher();
+			this.groupBox12 = new System.Windows.Forms.GroupBox();
+			this.tbFen = new System.Windows.Forms.TextBox();
+			this.button2 = new System.Windows.Forms.Button();
 			this.tabControl1.SuspendLayout();
 			this.tabPageGame.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.chartGame)).BeginInit();
@@ -408,6 +411,7 @@
 			this.tlpWhite.SuspendLayout();
 			this.tlpBlack.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher1)).BeginInit();
+			this.groupBox12.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// tabControl1
@@ -2339,6 +2343,7 @@
 			// tabPageEdit
 			// 
 			this.tabPageEdit.BackColor = System.Drawing.Color.Transparent;
+			this.tabPageEdit.Controls.Add(this.groupBox12);
 			this.tabPageEdit.Controls.Add(this.groupBox7);
 			this.tabPageEdit.Controls.Add(this.gbToMove);
 			this.tabPageEdit.Controls.Add(this.butEditStart);
@@ -4087,6 +4092,38 @@
 			this.fileSystemWatcher1.Deleted += new System.IO.FileSystemEventHandler(this.fileSystemWatcher1_Changed);
 			this.fileSystemWatcher1.Renamed += new System.IO.RenamedEventHandler(this.fileSystemWatcher1_Renamed);
 			// 
+			// groupBox12
+			// 
+			this.groupBox12.Controls.Add(this.button2);
+			this.groupBox12.Controls.Add(this.tbFen);
+			this.groupBox12.Dock = System.Windows.Forms.DockStyle.Top;
+			this.groupBox12.Location = new System.Drawing.Point(0, 212);
+			this.groupBox12.Name = "groupBox12";
+			this.groupBox12.Size = new System.Drawing.Size(337, 72);
+			this.groupBox12.TabIndex = 6;
+			this.groupBox12.TabStop = false;
+			this.groupBox12.Text = "Fen";
+			// 
+			// tbFen
+			// 
+			this.tbFen.Dock = System.Windows.Forms.DockStyle.Top;
+			this.tbFen.Location = new System.Drawing.Point(3, 16);
+			this.tbFen.Name = "tbFen";
+			this.tbFen.Size = new System.Drawing.Size(331, 20);
+			this.tbFen.TabIndex = 0;
+			// 
+			// button2
+			// 
+			this.button2.Dock = System.Windows.Forms.DockStyle.Top;
+			this.button2.Location = new System.Drawing.Point(3, 36);
+			this.button2.Name = "button2";
+			this.button2.Size = new System.Drawing.Size(331, 25);
+			this.button2.TabIndex = 5;
+			this.button2.Text = "Update";
+			this.toolTip1.SetToolTip(this.button2, "Start new game from current position");
+			this.button2.UseVisualStyleBackColor = true;
+			this.button2.Click += new System.EventHandler(this.button2_Click);
+			// 
 			// FormChess
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -4203,6 +4240,8 @@
 			this.tlpWhite.ResumeLayout(false);
 			this.tlpBlack.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher1)).EndInit();
+			this.groupBox12.ResumeLayout(false);
+			this.groupBox12.PerformLayout();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -4473,6 +4512,9 @@
 		private System.Windows.Forms.ToolStripMenuItem fenToolStripMenuItem2;
 		private System.Windows.Forms.ToolStripMenuItem pgnToolStripMenuItem2;
 		private System.Windows.Forms.ToolStripMenuItem uciToolStripMenuItem1;
+		private System.Windows.Forms.GroupBox groupBox12;
+		private System.Windows.Forms.TextBox tbFen;
+		private System.Windows.Forms.Button button2;
 	}
 }
 
