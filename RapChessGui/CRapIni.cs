@@ -6,11 +6,10 @@ using System.Collections.Generic;
 
 namespace RapIni
 {
-	public class CRapIni
+	public class CRapIni:List<string>
 	{
 		readonly string name = String.Empty;
 		readonly string path = String.Empty;
-		readonly List<string> list = new List<string>();
 
 		public CRapIni()
 		{
@@ -22,11 +21,6 @@ namespace RapIni
 		{
 			this.name = name;
 			path = new FileInfo(name).FullName.ToString();
-		}
-
-		public void Clear()
-		{
-			list.Clear();
 		}
 
 		string ListToString(List<string> list)
@@ -47,7 +41,7 @@ namespace RapIni
 			{
 				DeleteKey(key);
 				if (!String.IsNullOrEmpty(value))
-					list.Add($"{key}>{value}");
+					Add($"{key}>{value}");
 				Save();
 			}
 
@@ -88,7 +82,7 @@ namespace RapIni
 			if (Load())
 			{
 				string[] ak = key.Split(new[] { '>' }, StringSplitOptions.RemoveEmptyEntries);
-				foreach (string e in list)
+				foreach (string e in this)
 				{
 					if (e.IndexOf($"{key}>") == 0)
 					{
@@ -149,7 +143,7 @@ namespace RapIni
 			if (Load())
 			{
 				string[] ak = key.Split(new[] { '>' }, StringSplitOptions.RemoveEmptyEntries);
-				foreach (string e in list)
+				foreach (string e in this)
 				{
 					if (e.IndexOf($"{key}>") == 0)
 					{
@@ -170,11 +164,11 @@ namespace RapIni
 		{
 			if (Load())
 			{
-				for (int n = list.Count - 1; n >= 0; n--)
+				for (int n = Count - 1; n >= 0; n--)
 				{
 
-					if (list[n].IndexOf($"{key}>") == 0)
-						list.RemoveAt(n);
+					if (this[n].IndexOf($"{key}>") == 0)
+						RemoveAt(n);
 				}
 				Save();
 			}
@@ -187,13 +181,13 @@ namespace RapIni
 
 		private bool Save()
 		{
-			list.Sort();
+			Sort();
 			try
 			{
 				using (FileStream fs = File.Open(path, FileMode.Create, FileAccess.Write, FileShare.None))
 				using (StreamWriter sw = new StreamWriter(fs))
 				{
-					foreach (String line in list)
+					foreach (String line in this)
 					{
 						string l = line.Trim('\0');
 						if (!String.IsNullOrEmpty(l))
@@ -211,7 +205,7 @@ namespace RapIni
 
 		bool Load()
 		{
-			list.Clear();
+			Clear();
 			try
 			{
 				using (FileStream fs = File.Open(path, FileMode.Open, FileAccess.Read, FileShare.Read))
@@ -222,7 +216,7 @@ namespace RapIni
 					{
 						string l = line.Trim('\0');
 						if (!String.IsNullOrEmpty(l))
-							list.Add(l);
+							Add(l);
 					}
 				}
 			}
