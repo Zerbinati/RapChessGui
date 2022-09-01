@@ -2633,6 +2633,7 @@ namespace RapChessGui
 			clbCastling.SetItemChecked(2, (chess.g_castleRights & 4) > 0);
 			clbCastling.SetItemChecked(3, (chess.g_castleRights & 8) > 0);
 			chess.g_castleRights = cr;
+			cbPassant.Text = chess.Passant;
 			nudMove.Value = chess.MoveNumber;
 			nudReversible.Value = chess.g_move50;
 			EditGetFen();
@@ -3338,6 +3339,12 @@ namespace RapChessGui
 		private void nudReversible_ValueChanged(object sender, EventArgs e)
 		{
 			chess.g_move50 = (int)nudReversible.Value;
+			EditGetFen();
+		}
+
+		private void cbPassant_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			chess.Passant = cbPassant.Text;
 			EditGetFen();
 		}
 	}

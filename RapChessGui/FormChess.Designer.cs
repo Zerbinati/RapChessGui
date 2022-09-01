@@ -322,6 +322,8 @@
 			this.nudMove = new System.Windows.Forms.NumericUpDown();
 			this.groupBox14 = new System.Windows.Forms.GroupBox();
 			this.nudReversible = new System.Windows.Forms.NumericUpDown();
+			this.groupBox15 = new System.Windows.Forms.GroupBox();
+			this.cbPassant = new System.Windows.Forms.ComboBox();
 			this.tabControl1.SuspendLayout();
 			this.tabPageGame.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.chartGame)).BeginInit();
@@ -420,6 +422,7 @@
 			((System.ComponentModel.ISupportInitialize)(this.nudMove)).BeginInit();
 			this.groupBox14.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.nudReversible)).BeginInit();
+			this.groupBox15.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// tabControl1
@@ -2354,6 +2357,7 @@
 			this.tabPageEdit.Controls.Add(this.groupBox12);
 			this.tabPageEdit.Controls.Add(this.groupBox13);
 			this.tabPageEdit.Controls.Add(this.groupBox14);
+			this.tabPageEdit.Controls.Add(this.groupBox15);
 			this.tabPageEdit.Controls.Add(this.groupBox7);
 			this.tabPageEdit.Controls.Add(this.gbToMove);
 			this.tabPageEdit.Controls.Add(this.butEditStart);
@@ -4107,7 +4111,7 @@
 			this.groupBox12.Controls.Add(this.button2);
 			this.groupBox12.Controls.Add(this.tbFen);
 			this.groupBox12.Dock = System.Windows.Forms.DockStyle.Top;
-			this.groupBox12.Location = new System.Drawing.Point(0, 306);
+			this.groupBox12.Location = new System.Drawing.Point(0, 353);
 			this.groupBox12.Name = "groupBox12";
 			this.groupBox12.Size = new System.Drawing.Size(337, 72);
 			this.groupBox12.TabIndex = 6;
@@ -4138,7 +4142,7 @@
 			// 
 			this.groupBox13.Controls.Add(this.nudMove);
 			this.groupBox13.Dock = System.Windows.Forms.DockStyle.Top;
-			this.groupBox13.Location = new System.Drawing.Point(0, 259);
+			this.groupBox13.Location = new System.Drawing.Point(0, 306);
 			this.groupBox13.Name = "groupBox13";
 			this.groupBox13.RightToLeft = System.Windows.Forms.RightToLeft.No;
 			this.groupBox13.Size = new System.Drawing.Size(337, 47);
@@ -4169,7 +4173,7 @@
 			// 
 			this.groupBox14.Controls.Add(this.nudReversible);
 			this.groupBox14.Dock = System.Windows.Forms.DockStyle.Top;
-			this.groupBox14.Location = new System.Drawing.Point(0, 212);
+			this.groupBox14.Location = new System.Drawing.Point(0, 259);
 			this.groupBox14.Name = "groupBox14";
 			this.groupBox14.RightToLeft = System.Windows.Forms.RightToLeft.No;
 			this.groupBox14.Size = new System.Drawing.Size(337, 47);
@@ -4185,6 +4189,50 @@
 			this.nudReversible.Size = new System.Drawing.Size(331, 20);
 			this.nudReversible.TabIndex = 9;
 			this.nudReversible.ValueChanged += new System.EventHandler(this.nudReversible_ValueChanged);
+			// 
+			// groupBox15
+			// 
+			this.groupBox15.Controls.Add(this.cbPassant);
+			this.groupBox15.Dock = System.Windows.Forms.DockStyle.Top;
+			this.groupBox15.Location = new System.Drawing.Point(0, 212);
+			this.groupBox15.Name = "groupBox15";
+			this.groupBox15.RightToLeft = System.Windows.Forms.RightToLeft.No;
+			this.groupBox15.Size = new System.Drawing.Size(337, 47);
+			this.groupBox15.TabIndex = 9;
+			this.groupBox15.TabStop = false;
+			this.groupBox15.Text = "En passant square";
+			// 
+			// cbPassant
+			// 
+			this.cbPassant.BackColor = System.Drawing.SystemColors.Window;
+			this.cbPassant.Cursor = System.Windows.Forms.Cursors.Hand;
+			this.cbPassant.Dock = System.Windows.Forms.DockStyle.Top;
+			this.cbPassant.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.cbPassant.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+			this.cbPassant.Items.AddRange(new object[] {
+            "-",
+            "a3",
+            "a6",
+            "b3",
+            "b6",
+            "c3",
+            "c6",
+            "d3",
+            "d6",
+            "e3",
+            "e6",
+            "f3",
+            "f6",
+            "g3",
+            "g6",
+            "h3",
+            "h6"});
+			this.cbPassant.Location = new System.Drawing.Point(3, 16);
+			this.cbPassant.Name = "cbPassant";
+			this.cbPassant.Size = new System.Drawing.Size(331, 24);
+			this.cbPassant.TabIndex = 12;
+			this.toolTip1.SetToolTip(this.cbPassant, "Select en passant square");
+			this.cbPassant.SelectedIndexChanged += new System.EventHandler(this.cbPassant_SelectedIndexChanged);
 			// 
 			// FormChess
 			// 
@@ -4308,6 +4356,7 @@
 			((System.ComponentModel.ISupportInitialize)(this.nudMove)).EndInit();
 			this.groupBox14.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.nudReversible)).EndInit();
+			this.groupBox15.ResumeLayout(false);
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -4464,7 +4513,6 @@
 		private System.Windows.Forms.Label labBlack;
 		private System.Windows.Forms.Label labEngineB;
 		private System.Windows.Forms.Panel panel1;
-		public System.Windows.Forms.ComboBox combMainMode;
 		private System.Windows.Forms.Button butResignation;
 		private System.Windows.Forms.TabPage tabPageTourE;
 		private System.Windows.Forms.SplitContainer splitContainerTourE;
@@ -4585,6 +4633,9 @@
 		private System.Windows.Forms.NumericUpDown nudReversible;
 		private System.Windows.Forms.GroupBox groupBox13;
 		private System.Windows.Forms.NumericUpDown nudMove;
+		private System.Windows.Forms.GroupBox groupBox15;
+		private System.Windows.Forms.ComboBox cbPassant;
+		private System.Windows.Forms.ComboBox combMainMode;
 	}
 }
 

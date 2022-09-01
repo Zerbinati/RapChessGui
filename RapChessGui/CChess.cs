@@ -65,14 +65,43 @@ namespace NSChess
 
 		public int MoveNumber
 		{
-			get { return ((g_moveNumber >> 1) + 1); }
-			set {
+			get
+			{
+				return ((g_moveNumber >> 1) + 1);
+			}
+			set
+			{
 				g_moveNumber = value;
 				if (g_moveNumber > 0)
 					g_moveNumber--;
 				g_moveNumber <<= 1;
 				if (!whiteTurn)
 					g_moveNumber++;
+			}
+		}
+
+		public string Passant
+		{
+			get
+			{
+				int myPiece = whiteTurn ? piecePawn | colorWhite : piecePawn | colorBlack;
+				int y = 12 - (g_passing >> 4);
+				if (g_passing > 0)
+					if (whiteTurn)
+					{
+						if ((y == 6) && ((g_board[g_passing + 15] == myPiece) || (g_board[g_passing + 17] == myPiece)))
+							return SquareToUmo(g_passing);
+					}
+					else
+					{
+						if ((y == 3) && ((g_board[g_passing - 15] == myPiece) || (g_board[g_passing - 17] == myPiece)))
+							return SquareToUmo(g_passing);
+					}
+				return "-";
+			}
+			set
+			{
+				g_passing = UmoToSquare(value);
 			}
 		}
 
@@ -266,12 +295,12 @@ namespace NSChess
 
 		int UmoToSquare(string s)
 		{
-			if (s.Length < 2)
+			if (s.Length != 2)
 				return 0;
-			string xs = "abcdefgh";
-			string ys = "87654321";
-			int x = xs.IndexOf(s[0]);
-			int y = ys.IndexOf(s[1]);
+			int x = "abcdefgh".IndexOf(s[0]);
+			int y = "87654321".IndexOf(s[1]);
+			if ((x == -1) || (y == -1))
+				return 0;
 			return ((y + 4) << 4) | (x + 4);
 		}
 
@@ -350,7 +379,7 @@ namespace NSChess
 				g_castleRights |= 4;
 			if (chunks[2].IndexOf('q') != -1)
 				g_castleRights |= 8;
-			g_passing = UmoToSquare(chunks[3]);
+			Passant = chunks[3];
 			g_move50 = chunks.Length < 5 ? 0 : Int32.Parse(chunks[4]);
 			MoveNumber = chunks.Length < 6 ? 1 : Int32.Parse(chunks[5]);
 			undoIndex = g_move50;
@@ -405,27 +434,7 @@ namespace NSChess
 				if ((g_castleRights & 8) != 0)
 					result += 'q';
 			}
-			result += ' ';
-			if (g_passing == 0)
-				result += '-';
-			else
-			{
-				if (whiteTurn)
-				{
-					if ((g_board[g_passing + 15] == (piecePawn | colorWhite)) || (g_board[g_passing + 17] == (piecePawn | colorWhite)))
-						result += SquareToUmo(g_passing);
-					else
-						result += '-';
-				}
-				else
-				{
-					if ((g_board[g_passing - 15] == (piecePawn | colorBlack)) || (g_board[g_passing - 17] == (piecePawn | colorBlack)))
-						result += SquareToUmo(g_passing);
-					else
-						result += '-';
-				}
-			}
-			return result;
+			return $"{result} {Passant}";
 		}
 
 		public string GetFen()
