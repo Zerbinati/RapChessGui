@@ -85,18 +85,13 @@ namespace NSChess
 			get
 			{
 				int myPiece = whiteTurn ? piecePawn | colorWhite : piecePawn | colorBlack;
-				int y = 12 - (g_passing >> 4);
-				if (g_passing > 0)
-					if (whiteTurn)
-					{
-						if ((y == 6) && ((g_board[g_passing + 15] == myPiece) || (g_board[g_passing + 17] == myPiece)))
+				int yb = whiteTurn ? 6 : 3;
+				int yc = 12 - (g_passing >> 4);
+				if (yc != yb)
+					return "-";
+				int del = whiteTurn ? 1 : -1;
+				if ((g_board[g_passing + 15 * del] == myPiece) || (g_board[g_passing + 17 * del] == myPiece))
 							return SquareToUmo(g_passing);
-					}
-					else
-					{
-						if ((y == 3) && ((g_board[g_passing - 15] == myPiece) || (g_board[g_passing - 17] == myPiece)))
-							return SquareToUmo(g_passing);
-					}
 				return "-";
 			}
 			set
