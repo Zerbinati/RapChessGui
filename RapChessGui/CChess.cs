@@ -63,6 +63,19 @@ namespace NSChess
 		readonly int[] arrDirQueen = { 1, -1, 15, -15, 16, -16, 17, -17 };
 		readonly CUndo[] undoStack = new CUndo[0xfff];
 
+		public int MoveNumber
+		{
+			get { return ((g_moveNumber >> 1) + 1); }
+			set {
+				g_moveNumber = value;
+				if (g_moveNumber > 0)
+					g_moveNumber--;
+				g_moveNumber <<= 1;
+				if (!whiteTurn)
+					g_moveNumber++;
+			}
+		}
+
 		#region initation
 
 		public CChess()
@@ -339,12 +352,7 @@ namespace NSChess
 				g_castleRights |= 8;
 			g_passing = UmoToSquare(chunks[3]);
 			g_move50 = chunks.Length < 5 ? 0 : Int32.Parse(chunks[4]);
-			g_moveNumber = chunks.Length < 6 ? 1 : Int32.Parse(chunks[5]);
-			if (g_moveNumber > 0)
-				g_moveNumber--;
-			g_moveNumber <<= 1;
-			if (!whiteTurn)
-				g_moveNumber++;
+			MoveNumber = chunks.Length < 6 ? 1 : Int32.Parse(chunks[5]);
 			undoIndex = g_move50;
 			return true;
 		}
@@ -422,7 +430,7 @@ namespace NSChess
 
 		public string GetFen()
 		{
-			return GetEpd() + ' ' + g_move50 + ' ' + ((g_moveNumber >> 1) + 1);
+			return $"{GetEpd()} {g_move50} {MoveNumber}";
 		}
 
 		#endregion
@@ -783,11 +791,6 @@ namespace NSChess
 		#endregion
 
 		#region utils
-
-		public int MoveNumber()
-		{
-			return (g_moveNumber >> 1) + 1;
-		}
 
 		public CGameState GetGameState(out bool check)
 		{

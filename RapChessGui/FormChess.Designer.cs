@@ -318,6 +318,10 @@
 			this.groupBox12 = new System.Windows.Forms.GroupBox();
 			this.tbFen = new System.Windows.Forms.TextBox();
 			this.button2 = new System.Windows.Forms.Button();
+			this.groupBox13 = new System.Windows.Forms.GroupBox();
+			this.nudMove = new System.Windows.Forms.NumericUpDown();
+			this.groupBox14 = new System.Windows.Forms.GroupBox();
+			this.nudReversible = new System.Windows.Forms.NumericUpDown();
 			this.tabControl1.SuspendLayout();
 			this.tabPageGame.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.chartGame)).BeginInit();
@@ -412,6 +416,10 @@
 			this.tlpBlack.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher1)).BeginInit();
 			this.groupBox12.SuspendLayout();
+			this.groupBox13.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.nudMove)).BeginInit();
+			this.groupBox14.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.nudReversible)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// tabControl1
@@ -2344,6 +2352,8 @@
 			// 
 			this.tabPageEdit.BackColor = System.Drawing.Color.Transparent;
 			this.tabPageEdit.Controls.Add(this.groupBox12);
+			this.tabPageEdit.Controls.Add(this.groupBox13);
+			this.tabPageEdit.Controls.Add(this.groupBox14);
 			this.tabPageEdit.Controls.Add(this.groupBox7);
 			this.tabPageEdit.Controls.Add(this.gbToMove);
 			this.tabPageEdit.Controls.Add(this.butEditStart);
@@ -4097,7 +4107,7 @@
 			this.groupBox12.Controls.Add(this.button2);
 			this.groupBox12.Controls.Add(this.tbFen);
 			this.groupBox12.Dock = System.Windows.Forms.DockStyle.Top;
-			this.groupBox12.Location = new System.Drawing.Point(0, 212);
+			this.groupBox12.Location = new System.Drawing.Point(0, 306);
 			this.groupBox12.Name = "groupBox12";
 			this.groupBox12.Size = new System.Drawing.Size(337, 72);
 			this.groupBox12.TabIndex = 6;
@@ -4123,6 +4133,58 @@
 			this.toolTip1.SetToolTip(this.button2, "Start new game from current position");
 			this.button2.UseVisualStyleBackColor = true;
 			this.button2.Click += new System.EventHandler(this.button2_Click);
+			// 
+			// groupBox13
+			// 
+			this.groupBox13.Controls.Add(this.nudMove);
+			this.groupBox13.Dock = System.Windows.Forms.DockStyle.Top;
+			this.groupBox13.Location = new System.Drawing.Point(0, 259);
+			this.groupBox13.Name = "groupBox13";
+			this.groupBox13.RightToLeft = System.Windows.Forms.RightToLeft.No;
+			this.groupBox13.Size = new System.Drawing.Size(337, 47);
+			this.groupBox13.TabIndex = 7;
+			this.groupBox13.TabStop = false;
+			this.groupBox13.Text = "Move";
+			// 
+			// nudMove
+			// 
+			this.nudMove.Dock = System.Windows.Forms.DockStyle.Top;
+			this.nudMove.Location = new System.Drawing.Point(3, 16);
+			this.nudMove.Maximum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
+			this.nudMove.Name = "nudMove";
+			this.nudMove.Size = new System.Drawing.Size(331, 20);
+			this.nudMove.TabIndex = 9;
+			this.nudMove.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+			this.nudMove.ValueChanged += new System.EventHandler(this.nudMove_ValueChanged);
+			// 
+			// groupBox14
+			// 
+			this.groupBox14.Controls.Add(this.nudReversible);
+			this.groupBox14.Dock = System.Windows.Forms.DockStyle.Top;
+			this.groupBox14.Location = new System.Drawing.Point(0, 212);
+			this.groupBox14.Name = "groupBox14";
+			this.groupBox14.RightToLeft = System.Windows.Forms.RightToLeft.No;
+			this.groupBox14.Size = new System.Drawing.Size(337, 47);
+			this.groupBox14.TabIndex = 8;
+			this.groupBox14.TabStop = false;
+			this.groupBox14.Text = "Reversible half moves";
+			// 
+			// nudReversible
+			// 
+			this.nudReversible.Dock = System.Windows.Forms.DockStyle.Top;
+			this.nudReversible.Location = new System.Drawing.Point(3, 16);
+			this.nudReversible.Name = "nudReversible";
+			this.nudReversible.Size = new System.Drawing.Size(331, 20);
+			this.nudReversible.TabIndex = 9;
+			this.nudReversible.ValueChanged += new System.EventHandler(this.nudReversible_ValueChanged);
 			// 
 			// FormChess
 			// 
@@ -4242,6 +4304,10 @@
 			((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher1)).EndInit();
 			this.groupBox12.ResumeLayout(false);
 			this.groupBox12.PerformLayout();
+			this.groupBox13.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this.nudMove)).EndInit();
+			this.groupBox14.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this.nudReversible)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -4515,6 +4581,10 @@
 		private System.Windows.Forms.GroupBox groupBox12;
 		private System.Windows.Forms.TextBox tbFen;
 		private System.Windows.Forms.Button button2;
+		private System.Windows.Forms.GroupBox groupBox14;
+		private System.Windows.Forms.NumericUpDown nudReversible;
+		private System.Windows.Forms.GroupBox groupBox13;
+		private System.Windows.Forms.NumericUpDown nudMove;
 	}
 }
 

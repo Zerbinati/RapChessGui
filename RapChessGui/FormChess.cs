@@ -1334,7 +1334,7 @@ namespace RapChessGui
 
 		void ShowMoveNumber()
 		{
-			tssMove.Text = $"Move {chess.MoveNumber()} {chess.g_move50} {chess.GenerateValidMoves(out _).Count}";
+			tssMove.Text = $"Move {chess.MoveNumber} {chess.g_move50} {chess.GenerateValidMoves(out _).Count}";
 		}
 
 		public bool MakeMove(string umo)
@@ -2633,6 +2633,8 @@ namespace RapChessGui
 			clbCastling.SetItemChecked(2, (chess.g_castleRights & 4) > 0);
 			clbCastling.SetItemChecked(3, (chess.g_castleRights & 8) > 0);
 			chess.g_castleRights = cr;
+			nudMove.Value = chess.MoveNumber;
+			nudReversible.Value = chess.g_move50;
 			EditGetFen();
 			RenderBoard();
 		}
@@ -3325,6 +3327,18 @@ namespace RapChessGui
 		private void button2_Click(object sender, EventArgs e)
 		{
 			EditShow(tbFen.Text);
+		}
+
+		private void nudMove_ValueChanged(object sender, EventArgs e)
+		{
+			chess.MoveNumber = (int)nudMove.Value;
+			EditGetFen();
+		}
+
+		private void nudReversible_ValueChanged(object sender, EventArgs e)
+		{
+			chess.g_move50 = (int)nudReversible.Value;
+			EditGetFen();
 		}
 	}
 }
