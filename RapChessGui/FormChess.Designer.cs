@@ -184,6 +184,15 @@
 			this.cbTrainedBook = new System.Windows.Forms.ComboBox();
 			this.cbTrainedEngine = new System.Windows.Forms.ComboBox();
 			this.tabPageEdit = new System.Windows.Forms.TabPage();
+			this.groupBox12 = new System.Windows.Forms.GroupBox();
+			this.button2 = new System.Windows.Forms.Button();
+			this.tbFen = new System.Windows.Forms.TextBox();
+			this.groupBox13 = new System.Windows.Forms.GroupBox();
+			this.nudMove = new System.Windows.Forms.NumericUpDown();
+			this.groupBox14 = new System.Windows.Forms.GroupBox();
+			this.nudReversible = new System.Windows.Forms.NumericUpDown();
+			this.groupBox15 = new System.Windows.Forms.GroupBox();
+			this.cbPassant = new System.Windows.Forms.ComboBox();
 			this.groupBox7 = new System.Windows.Forms.GroupBox();
 			this.clbCastling = new System.Windows.Forms.CheckedListBox();
 			this.gbToMove = new System.Windows.Forms.GroupBox();
@@ -315,15 +324,19 @@
 			this.tlpBlack = new System.Windows.Forms.TableLayoutPanel();
 			this.timerAnimation = new System.Windows.Forms.Timer(this.components);
 			this.fileSystemWatcher1 = new System.IO.FileSystemWatcher();
-			this.groupBox12 = new System.Windows.Forms.GroupBox();
-			this.tbFen = new System.Windows.Forms.TextBox();
-			this.button2 = new System.Windows.Forms.Button();
-			this.groupBox13 = new System.Windows.Forms.GroupBox();
-			this.nudMove = new System.Windows.Forms.NumericUpDown();
-			this.groupBox14 = new System.Windows.Forms.GroupBox();
-			this.nudReversible = new System.Windows.Forms.NumericUpDown();
-			this.groupBox15 = new System.Windows.Forms.GroupBox();
-			this.cbPassant = new System.Windows.Forms.ComboBox();
+			this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
+			this.label31 = new System.Windows.Forms.Label();
+			this.label30 = new System.Windows.Forms.Label();
+			this.label25 = new System.Windows.Forms.Label();
+			this.label24 = new System.Windows.Forms.Label();
+			this.label23 = new System.Windows.Forms.Label();
+			this.label22 = new System.Windows.Forms.Label();
+			this.label21 = new System.Windows.Forms.Label();
+			this.label20 = new System.Windows.Forms.Label();
+			this.label19 = new System.Windows.Forms.Label();
+			this.label18 = new System.Windows.Forms.Label();
+			this.label17 = new System.Windows.Forms.Label();
+			this.label1 = new System.Windows.Forms.Label();
 			this.tabControl1.SuspendLayout();
 			this.tabPageGame.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.chartGame)).BeginInit();
@@ -381,6 +394,12 @@
 			this.groupBox3.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.nudTrained)).BeginInit();
 			this.tabPageEdit.SuspendLayout();
+			this.groupBox12.SuspendLayout();
+			this.groupBox13.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.nudMove)).BeginInit();
+			this.groupBox14.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.nudReversible)).BeginInit();
+			this.groupBox15.SuspendLayout();
 			this.groupBox7.SuspendLayout();
 			this.gbToMove.SuspendLayout();
 			this.menuStrip1.SuspendLayout();
@@ -417,12 +436,7 @@
 			this.tlpWhite.SuspendLayout();
 			this.tlpBlack.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher1)).BeginInit();
-			this.groupBox12.SuspendLayout();
-			this.groupBox13.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.nudMove)).BeginInit();
-			this.groupBox14.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.nudReversible)).BeginInit();
-			this.groupBox15.SuspendLayout();
+			this.tableLayoutPanel2.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// tabControl1
@@ -2354,6 +2368,7 @@
 			// tabPageEdit
 			// 
 			this.tabPageEdit.BackColor = System.Drawing.Color.Transparent;
+			this.tabPageEdit.Controls.Add(this.tableLayoutPanel2);
 			this.tabPageEdit.Controls.Add(this.groupBox12);
 			this.tabPageEdit.Controls.Add(this.groupBox13);
 			this.tabPageEdit.Controls.Add(this.groupBox14);
@@ -2368,6 +2383,134 @@
 			this.tabPageEdit.Size = new System.Drawing.Size(337, 462);
 			this.tabPageEdit.TabIndex = 4;
 			this.tabPageEdit.Text = "Edit";
+			// 
+			// groupBox12
+			// 
+			this.groupBox12.Controls.Add(this.button2);
+			this.groupBox12.Controls.Add(this.tbFen);
+			this.groupBox12.Dock = System.Windows.Forms.DockStyle.Top;
+			this.groupBox12.Location = new System.Drawing.Point(0, 353);
+			this.groupBox12.Name = "groupBox12";
+			this.groupBox12.Size = new System.Drawing.Size(337, 66);
+			this.groupBox12.TabIndex = 6;
+			this.groupBox12.TabStop = false;
+			this.groupBox12.Text = "Fen";
+			// 
+			// button2
+			// 
+			this.button2.Dock = System.Windows.Forms.DockStyle.Top;
+			this.button2.Location = new System.Drawing.Point(3, 36);
+			this.button2.Name = "button2";
+			this.button2.Size = new System.Drawing.Size(331, 25);
+			this.button2.TabIndex = 5;
+			this.button2.Text = "Update";
+			this.toolTip1.SetToolTip(this.button2, "Start new game from current position");
+			this.button2.UseVisualStyleBackColor = true;
+			this.button2.Click += new System.EventHandler(this.button2_Click);
+			// 
+			// tbFen
+			// 
+			this.tbFen.Dock = System.Windows.Forms.DockStyle.Top;
+			this.tbFen.Location = new System.Drawing.Point(3, 16);
+			this.tbFen.Name = "tbFen";
+			this.tbFen.Size = new System.Drawing.Size(331, 20);
+			this.tbFen.TabIndex = 0;
+			// 
+			// groupBox13
+			// 
+			this.groupBox13.Controls.Add(this.nudMove);
+			this.groupBox13.Dock = System.Windows.Forms.DockStyle.Top;
+			this.groupBox13.Location = new System.Drawing.Point(0, 306);
+			this.groupBox13.Name = "groupBox13";
+			this.groupBox13.RightToLeft = System.Windows.Forms.RightToLeft.No;
+			this.groupBox13.Size = new System.Drawing.Size(337, 47);
+			this.groupBox13.TabIndex = 7;
+			this.groupBox13.TabStop = false;
+			this.groupBox13.Text = "Move";
+			// 
+			// nudMove
+			// 
+			this.nudMove.Dock = System.Windows.Forms.DockStyle.Top;
+			this.nudMove.Location = new System.Drawing.Point(3, 16);
+			this.nudMove.Maximum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
+			this.nudMove.Name = "nudMove";
+			this.nudMove.Size = new System.Drawing.Size(331, 20);
+			this.nudMove.TabIndex = 9;
+			this.nudMove.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+			this.nudMove.ValueChanged += new System.EventHandler(this.nudMove_ValueChanged);
+			// 
+			// groupBox14
+			// 
+			this.groupBox14.Controls.Add(this.nudReversible);
+			this.groupBox14.Dock = System.Windows.Forms.DockStyle.Top;
+			this.groupBox14.Location = new System.Drawing.Point(0, 259);
+			this.groupBox14.Name = "groupBox14";
+			this.groupBox14.RightToLeft = System.Windows.Forms.RightToLeft.No;
+			this.groupBox14.Size = new System.Drawing.Size(337, 47);
+			this.groupBox14.TabIndex = 8;
+			this.groupBox14.TabStop = false;
+			this.groupBox14.Text = "Reversible half moves";
+			// 
+			// nudReversible
+			// 
+			this.nudReversible.Dock = System.Windows.Forms.DockStyle.Top;
+			this.nudReversible.Location = new System.Drawing.Point(3, 16);
+			this.nudReversible.Name = "nudReversible";
+			this.nudReversible.Size = new System.Drawing.Size(331, 20);
+			this.nudReversible.TabIndex = 9;
+			this.nudReversible.ValueChanged += new System.EventHandler(this.nudReversible_ValueChanged);
+			// 
+			// groupBox15
+			// 
+			this.groupBox15.Controls.Add(this.cbPassant);
+			this.groupBox15.Dock = System.Windows.Forms.DockStyle.Top;
+			this.groupBox15.Location = new System.Drawing.Point(0, 212);
+			this.groupBox15.Name = "groupBox15";
+			this.groupBox15.RightToLeft = System.Windows.Forms.RightToLeft.No;
+			this.groupBox15.Size = new System.Drawing.Size(337, 47);
+			this.groupBox15.TabIndex = 9;
+			this.groupBox15.TabStop = false;
+			this.groupBox15.Text = "En passant square";
+			// 
+			// cbPassant
+			// 
+			this.cbPassant.BackColor = System.Drawing.SystemColors.Window;
+			this.cbPassant.Cursor = System.Windows.Forms.Cursors.Hand;
+			this.cbPassant.Dock = System.Windows.Forms.DockStyle.Top;
+			this.cbPassant.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.cbPassant.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+			this.cbPassant.Items.AddRange(new object[] {
+            "-",
+            "a3",
+            "a6",
+            "b3",
+            "b6",
+            "c3",
+            "c6",
+            "d3",
+            "d6",
+            "e3",
+            "e6",
+            "f3",
+            "f6",
+            "g3",
+            "g6",
+            "h3",
+            "h6"});
+			this.cbPassant.Location = new System.Drawing.Point(3, 16);
+			this.cbPassant.Name = "cbPassant";
+			this.cbPassant.Size = new System.Drawing.Size(331, 24);
+			this.cbPassant.TabIndex = 12;
+			this.toolTip1.SetToolTip(this.cbPassant, "Select en passant square");
+			this.cbPassant.SelectedIndexChanged += new System.EventHandler(this.cbPassant_SelectedIndexChanged);
 			// 
 			// groupBox7
 			// 
@@ -4106,133 +4249,184 @@
 			this.fileSystemWatcher1.Deleted += new System.IO.FileSystemEventHandler(this.fileSystemWatcher1_Changed);
 			this.fileSystemWatcher1.Renamed += new System.IO.RenamedEventHandler(this.fileSystemWatcher1_Renamed);
 			// 
-			// groupBox12
+			// tableLayoutPanel2
 			// 
-			this.groupBox12.Controls.Add(this.button2);
-			this.groupBox12.Controls.Add(this.tbFen);
-			this.groupBox12.Dock = System.Windows.Forms.DockStyle.Top;
-			this.groupBox12.Location = new System.Drawing.Point(0, 353);
-			this.groupBox12.Name = "groupBox12";
-			this.groupBox12.Size = new System.Drawing.Size(337, 72);
-			this.groupBox12.TabIndex = 6;
-			this.groupBox12.TabStop = false;
-			this.groupBox12.Text = "Fen";
+			this.tableLayoutPanel2.ColumnCount = 6;
+			this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
+			this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
+			this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
+			this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
+			this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
+			this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
+			this.tableLayoutPanel2.Controls.Add(this.label31, 5, 1);
+			this.tableLayoutPanel2.Controls.Add(this.label30, 4, 1);
+			this.tableLayoutPanel2.Controls.Add(this.label25, 3, 1);
+			this.tableLayoutPanel2.Controls.Add(this.label24, 2, 1);
+			this.tableLayoutPanel2.Controls.Add(this.label23, 1, 1);
+			this.tableLayoutPanel2.Controls.Add(this.label22, 0, 1);
+			this.tableLayoutPanel2.Controls.Add(this.label21, 5, 0);
+			this.tableLayoutPanel2.Controls.Add(this.label20, 4, 0);
+			this.tableLayoutPanel2.Controls.Add(this.label19, 3, 0);
+			this.tableLayoutPanel2.Controls.Add(this.label18, 2, 0);
+			this.tableLayoutPanel2.Controls.Add(this.label17, 1, 0);
+			this.tableLayoutPanel2.Controls.Add(this.label1, 0, 0);
+			this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.tableLayoutPanel2.Location = new System.Drawing.Point(0, 419);
+			this.tableLayoutPanel2.Name = "tableLayoutPanel2";
+			this.tableLayoutPanel2.RowCount = 2;
+			this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+			this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+			this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+			this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+			this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+			this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+			this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+			this.tableLayoutPanel2.Size = new System.Drawing.Size(337, 43);
+			this.tableLayoutPanel2.TabIndex = 12;
 			// 
-			// tbFen
+			// label31
 			// 
-			this.tbFen.Dock = System.Windows.Forms.DockStyle.Top;
-			this.tbFen.Location = new System.Drawing.Point(3, 16);
-			this.tbFen.Name = "tbFen";
-			this.tbFen.Size = new System.Drawing.Size(331, 20);
-			this.tbFen.TabIndex = 0;
+			this.label31.AutoSize = true;
+			this.label31.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.label31.Location = new System.Drawing.Point(283, 21);
+			this.label31.Name = "label31";
+			this.label31.Size = new System.Drawing.Size(51, 22);
+			this.label31.TabIndex = 11;
+			this.label31.Text = "k";
+			this.label31.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.label31.Click += new System.EventHandler(this.editLabel_Click);
 			// 
-			// button2
+			// label30
 			// 
-			this.button2.Dock = System.Windows.Forms.DockStyle.Top;
-			this.button2.Location = new System.Drawing.Point(3, 36);
-			this.button2.Name = "button2";
-			this.button2.Size = new System.Drawing.Size(331, 25);
-			this.button2.TabIndex = 5;
-			this.button2.Text = "Update";
-			this.toolTip1.SetToolTip(this.button2, "Start new game from current position");
-			this.button2.UseVisualStyleBackColor = true;
-			this.button2.Click += new System.EventHandler(this.button2_Click);
+			this.label30.AutoSize = true;
+			this.label30.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.label30.Location = new System.Drawing.Point(227, 21);
+			this.label30.Name = "label30";
+			this.label30.Size = new System.Drawing.Size(50, 22);
+			this.label30.TabIndex = 10;
+			this.label30.Text = "q";
+			this.label30.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.label30.Click += new System.EventHandler(this.editLabel_Click);
 			// 
-			// groupBox13
+			// label25
 			// 
-			this.groupBox13.Controls.Add(this.nudMove);
-			this.groupBox13.Dock = System.Windows.Forms.DockStyle.Top;
-			this.groupBox13.Location = new System.Drawing.Point(0, 306);
-			this.groupBox13.Name = "groupBox13";
-			this.groupBox13.RightToLeft = System.Windows.Forms.RightToLeft.No;
-			this.groupBox13.Size = new System.Drawing.Size(337, 47);
-			this.groupBox13.TabIndex = 7;
-			this.groupBox13.TabStop = false;
-			this.groupBox13.Text = "Move";
+			this.label25.AutoSize = true;
+			this.label25.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.label25.Location = new System.Drawing.Point(171, 21);
+			this.label25.Name = "label25";
+			this.label25.Size = new System.Drawing.Size(50, 22);
+			this.label25.TabIndex = 9;
+			this.label25.Text = "r";
+			this.label25.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.label25.Click += new System.EventHandler(this.editLabel_Click);
 			// 
-			// nudMove
+			// label24
 			// 
-			this.nudMove.Dock = System.Windows.Forms.DockStyle.Top;
-			this.nudMove.Location = new System.Drawing.Point(3, 16);
-			this.nudMove.Maximum = new decimal(new int[] {
-            1000,
-            0,
-            0,
-            0});
-			this.nudMove.Name = "nudMove";
-			this.nudMove.Size = new System.Drawing.Size(331, 20);
-			this.nudMove.TabIndex = 9;
-			this.nudMove.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-			this.nudMove.ValueChanged += new System.EventHandler(this.nudMove_ValueChanged);
+			this.label24.AutoSize = true;
+			this.label24.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.label24.Location = new System.Drawing.Point(115, 21);
+			this.label24.Name = "label24";
+			this.label24.Size = new System.Drawing.Size(50, 22);
+			this.label24.TabIndex = 8;
+			this.label24.Text = "b";
+			this.label24.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.label24.Click += new System.EventHandler(this.editLabel_Click);
 			// 
-			// groupBox14
+			// label23
 			// 
-			this.groupBox14.Controls.Add(this.nudReversible);
-			this.groupBox14.Dock = System.Windows.Forms.DockStyle.Top;
-			this.groupBox14.Location = new System.Drawing.Point(0, 259);
-			this.groupBox14.Name = "groupBox14";
-			this.groupBox14.RightToLeft = System.Windows.Forms.RightToLeft.No;
-			this.groupBox14.Size = new System.Drawing.Size(337, 47);
-			this.groupBox14.TabIndex = 8;
-			this.groupBox14.TabStop = false;
-			this.groupBox14.Text = "Reversible half moves";
+			this.label23.AutoSize = true;
+			this.label23.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.label23.Location = new System.Drawing.Point(59, 21);
+			this.label23.Name = "label23";
+			this.label23.Size = new System.Drawing.Size(50, 22);
+			this.label23.TabIndex = 7;
+			this.label23.Text = "n";
+			this.label23.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.label23.Click += new System.EventHandler(this.editLabel_Click);
 			// 
-			// nudReversible
+			// label22
 			// 
-			this.nudReversible.Dock = System.Windows.Forms.DockStyle.Top;
-			this.nudReversible.Location = new System.Drawing.Point(3, 16);
-			this.nudReversible.Name = "nudReversible";
-			this.nudReversible.Size = new System.Drawing.Size(331, 20);
-			this.nudReversible.TabIndex = 9;
-			this.nudReversible.ValueChanged += new System.EventHandler(this.nudReversible_ValueChanged);
+			this.label22.AutoSize = true;
+			this.label22.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.label22.Location = new System.Drawing.Point(3, 21);
+			this.label22.Name = "label22";
+			this.label22.Size = new System.Drawing.Size(50, 22);
+			this.label22.TabIndex = 6;
+			this.label22.Text = "p";
+			this.label22.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.label22.Click += new System.EventHandler(this.editLabel_Click);
 			// 
-			// groupBox15
+			// label21
 			// 
-			this.groupBox15.Controls.Add(this.cbPassant);
-			this.groupBox15.Dock = System.Windows.Forms.DockStyle.Top;
-			this.groupBox15.Location = new System.Drawing.Point(0, 212);
-			this.groupBox15.Name = "groupBox15";
-			this.groupBox15.RightToLeft = System.Windows.Forms.RightToLeft.No;
-			this.groupBox15.Size = new System.Drawing.Size(337, 47);
-			this.groupBox15.TabIndex = 9;
-			this.groupBox15.TabStop = false;
-			this.groupBox15.Text = "En passant square";
+			this.label21.AutoSize = true;
+			this.label21.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.label21.Location = new System.Drawing.Point(283, 0);
+			this.label21.Name = "label21";
+			this.label21.Size = new System.Drawing.Size(51, 21);
+			this.label21.TabIndex = 5;
+			this.label21.Text = "K";
+			this.label21.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.label21.Click += new System.EventHandler(this.editLabel_Click);
 			// 
-			// cbPassant
+			// label20
 			// 
-			this.cbPassant.BackColor = System.Drawing.SystemColors.Window;
-			this.cbPassant.Cursor = System.Windows.Forms.Cursors.Hand;
-			this.cbPassant.Dock = System.Windows.Forms.DockStyle.Top;
-			this.cbPassant.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.cbPassant.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-			this.cbPassant.Items.AddRange(new object[] {
-            "-",
-            "a3",
-            "a6",
-            "b3",
-            "b6",
-            "c3",
-            "c6",
-            "d3",
-            "d6",
-            "e3",
-            "e6",
-            "f3",
-            "f6",
-            "g3",
-            "g6",
-            "h3",
-            "h6"});
-			this.cbPassant.Location = new System.Drawing.Point(3, 16);
-			this.cbPassant.Name = "cbPassant";
-			this.cbPassant.Size = new System.Drawing.Size(331, 24);
-			this.cbPassant.TabIndex = 12;
-			this.toolTip1.SetToolTip(this.cbPassant, "Select en passant square");
-			this.cbPassant.SelectedIndexChanged += new System.EventHandler(this.cbPassant_SelectedIndexChanged);
+			this.label20.AutoSize = true;
+			this.label20.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.label20.Location = new System.Drawing.Point(227, 0);
+			this.label20.Name = "label20";
+			this.label20.Size = new System.Drawing.Size(50, 21);
+			this.label20.TabIndex = 4;
+			this.label20.Text = "Q";
+			this.label20.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.label20.Click += new System.EventHandler(this.editLabel_Click);
+			// 
+			// label19
+			// 
+			this.label19.AutoSize = true;
+			this.label19.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.label19.Location = new System.Drawing.Point(171, 0);
+			this.label19.Name = "label19";
+			this.label19.Size = new System.Drawing.Size(50, 21);
+			this.label19.TabIndex = 3;
+			this.label19.Text = "R";
+			this.label19.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.label19.Click += new System.EventHandler(this.editLabel_Click);
+			// 
+			// label18
+			// 
+			this.label18.AutoSize = true;
+			this.label18.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.label18.Location = new System.Drawing.Point(115, 0);
+			this.label18.Name = "label18";
+			this.label18.Size = new System.Drawing.Size(50, 21);
+			this.label18.TabIndex = 2;
+			this.label18.Text = "B";
+			this.label18.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.label18.Click += new System.EventHandler(this.editLabel_Click);
+			// 
+			// label17
+			// 
+			this.label17.AutoSize = true;
+			this.label17.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.label17.Location = new System.Drawing.Point(59, 0);
+			this.label17.Name = "label17";
+			this.label17.Size = new System.Drawing.Size(50, 21);
+			this.label17.TabIndex = 1;
+			this.label17.Text = "N";
+			this.label17.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.label17.Click += new System.EventHandler(this.editLabel_Click);
+			// 
+			// label1
+			// 
+			this.label1.AutoSize = true;
+			this.label1.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.label1.Location = new System.Drawing.Point(3, 0);
+			this.label1.Name = "label1";
+			this.label1.Size = new System.Drawing.Size(50, 21);
+			this.label1.TabIndex = 0;
+			this.label1.Text = "P";
+			this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.label1.Click += new System.EventHandler(this.editLabel_Click);
 			// 
 			// FormChess
 			// 
@@ -4310,6 +4504,13 @@
 			this.groupBox3.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.nudTrained)).EndInit();
 			this.tabPageEdit.ResumeLayout(false);
+			this.groupBox12.ResumeLayout(false);
+			this.groupBox12.PerformLayout();
+			this.groupBox13.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this.nudMove)).EndInit();
+			this.groupBox14.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this.nudReversible)).EndInit();
+			this.groupBox15.ResumeLayout(false);
 			this.groupBox7.ResumeLayout(false);
 			this.gbToMove.ResumeLayout(false);
 			this.gbToMove.PerformLayout();
@@ -4350,13 +4551,8 @@
 			this.tlpWhite.ResumeLayout(false);
 			this.tlpBlack.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher1)).EndInit();
-			this.groupBox12.ResumeLayout(false);
-			this.groupBox12.PerformLayout();
-			this.groupBox13.ResumeLayout(false);
-			((System.ComponentModel.ISupportInitialize)(this.nudMove)).EndInit();
-			this.groupBox14.ResumeLayout(false);
-			((System.ComponentModel.ISupportInitialize)(this.nudReversible)).EndInit();
-			this.groupBox15.ResumeLayout(false);
+			this.tableLayoutPanel2.ResumeLayout(false);
+			this.tableLayoutPanel2.PerformLayout();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -4636,6 +4832,19 @@
 		private System.Windows.Forms.GroupBox groupBox15;
 		private System.Windows.Forms.ComboBox cbPassant;
 		private System.Windows.Forms.ComboBox combMainMode;
+		private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
+		private System.Windows.Forms.Label label31;
+		private System.Windows.Forms.Label label30;
+		private System.Windows.Forms.Label label25;
+		private System.Windows.Forms.Label label24;
+		private System.Windows.Forms.Label label23;
+		private System.Windows.Forms.Label label22;
+		private System.Windows.Forms.Label label21;
+		private System.Windows.Forms.Label label20;
+		private System.Windows.Forms.Label label19;
+		private System.Windows.Forms.Label label18;
+		private System.Windows.Forms.Label label17;
+		private System.Windows.Forms.Label label1;
 	}
 }
 

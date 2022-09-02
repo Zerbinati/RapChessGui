@@ -303,6 +303,35 @@ namespace NSChess
 
 		#region fen
 
+		public int CharToPiece(char c)
+		{
+			int piece = Char.IsUpper(c) ? colorWhite : colorBlack;
+			switch (Char.ToLower(c))
+			{
+				case 'p':
+					piece |= piecePawn;
+					break;
+				case 'n':
+					piece |= pieceKnight;
+					break;
+				case 'b':
+					piece |= pieceBishop;
+					break;
+				case 'r':
+					piece |= pieceRook;
+					break;
+				case 'q':
+					piece |= pieceQueen;
+					break;
+				case 'k':
+					piece |= pieceKing;
+					break;
+				default:
+					return 0;
+			}
+			return piece;
+		}
+
 		public bool SetFen(string fen = defFen)
 		{
 			if (fen == "")
@@ -330,31 +359,10 @@ namespace NSChess
 				}
 				else
 				{
-					int piece = Char.IsUpper(c) ? colorWhite : colorBlack;
+					int piece = CharToPiece(c);
+					if (piece == 0)
+						return false;
 					int index = (row + 4) * 16 + col + 4;
-					switch (Char.ToLower(c))
-					{
-						case 'p':
-							piece |= piecePawn;
-							break;
-						case 'n':
-							piece |= pieceKnight;
-							break;
-						case 'b':
-							piece |= pieceBishop;
-							break;
-						case 'r':
-							piece |= pieceRook;
-							break;
-						case 'q':
-							piece |= pieceQueen;
-							break;
-						case 'k':
-							piece |= pieceKing;
-							break;
-						default:
-							return false;
-					}
 					g_board[index] = piece;
 					col++;
 				}

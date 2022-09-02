@@ -69,6 +69,31 @@ namespace RapChessGui
 		readonly FormEditPlayer formPlayer = new FormEditPlayer();
 		readonly CGamerList GamerList = new CGamerList();
 
+		string EditSelected
+		{
+			get
+			{
+				foreach (Control c in tableLayoutPanel2.Controls)
+				{
+					Label l = c as Label;
+					if (l.BackColor == Color.Yellow)
+						return l.Text;
+				}
+				return String.Empty;
+			}
+			set
+			{
+				foreach (Control c in tableLayoutPanel2.Controls)
+				{
+					Label l = c as Label;
+					if (l.Text == value)
+						l.BackColor = Color.Yellow;
+					else
+						l.BackColor = Color.Silver;
+				}
+			}
+		}
+
 		#endregion
 
 		#region initiation
@@ -125,11 +150,16 @@ namespace RapChessGui
 			labPromoR.Font = fontChessPromo;
 			labPromoB.Font = fontChessPromo;
 			labPromoN.Font = fontChessPromo;
+			foreach (Control c in tableLayoutPanel2.Controls)
+			{
+				(c as Label).Font = fontChess;
+			}
 			toolTip1.Active = FormOptions.showTips;
 			CWinMessage.winHandle = Handle;
 			BoardPrepare();
 			combMainMode.SelectedIndex = 0;
 			timerAnimation.Enabled = true;
+			EditSelected = "P";
 		}
 
 		void CreateDir(string dir)
@@ -2840,36 +2870,10 @@ namespace RapChessGui
 			if (CData.gameMode == CGameMode.edit)
 			{
 				int i = CChess.arrField[CDrag.mouseIndex];
-				int f = chess.g_board[i];
-				int r = f & 7;
 				if (e.Button == MouseButtons.Left)
-				{
-					if ((chess.g_board[i] & CChess.colorWhite) == 0)
-						chess.g_board[i] = CChess.colorWhite | CChess.piecePawn;
-					else
-					{
-						if (++r == CChess.pieceKing + 1)
-							chess.g_board[i] = CChess.colorEmpty;
-						else
-							chess.g_board[i] = CChess.colorWhite | r;
-					}
-				}
+					chess.g_board[i] = chess.CharToPiece(EditSelected[0]);
 				if (e.Button == MouseButtons.Right)
-				{
-					if ((chess.g_board[i] & CChess.colorBlack) == 0)
-						chess.g_board[i] = CChess.colorBlack | CChess.piecePawn;
-					else
-					{
-						if (++r == CChess.pieceKing + 1)
-							chess.g_board[i] = CChess.colorEmpty;
-						else
-							chess.g_board[i] = CChess.colorBlack | r;
-					}
-				}
-				if (e.Button == MouseButtons.Middle)
-				{
 					chess.g_board[i] = CChess.colorEmpty;
-				}
 				Board.Fill();
 				RenderBoard(true);
 				EditGetFen();
@@ -3346,6 +3350,11 @@ namespace RapChessGui
 		{
 			chess.Passant = cbPassant.Text;
 			EditGetFen();
+		}
+
+		private void editLabel_Click(object sender, EventArgs e)
+		{
+			EditSelected = (sender as Label).Text;
 		}
 	}
 }
