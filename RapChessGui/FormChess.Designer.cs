@@ -324,7 +324,7 @@
 			this.tlpBlack = new System.Windows.Forms.TableLayoutPanel();
 			this.timerAnimation = new System.Windows.Forms.Timer(this.components);
 			this.fileSystemWatcher1 = new System.IO.FileSystemWatcher();
-			this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
+			this.tlpEdit = new System.Windows.Forms.TableLayoutPanel();
 			this.label31 = new System.Windows.Forms.Label();
 			this.label30 = new System.Windows.Forms.Label();
 			this.label25 = new System.Windows.Forms.Label();
@@ -436,7 +436,7 @@
 			this.tlpWhite.SuspendLayout();
 			this.tlpBlack.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher1)).BeginInit();
-			this.tableLayoutPanel2.SuspendLayout();
+			this.tlpEdit.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// tabControl1
@@ -2368,7 +2368,7 @@
 			// tabPageEdit
 			// 
 			this.tabPageEdit.BackColor = System.Drawing.Color.Transparent;
-			this.tabPageEdit.Controls.Add(this.tableLayoutPanel2);
+			this.tabPageEdit.Controls.Add(this.tlpEdit);
 			this.tabPageEdit.Controls.Add(this.groupBox12);
 			this.tabPageEdit.Controls.Add(this.groupBox13);
 			this.tabPageEdit.Controls.Add(this.groupBox14);
@@ -2652,7 +2652,7 @@
 			this.fenToolStripMenuItem1.Name = "fenToolStripMenuItem1";
 			this.fenToolStripMenuItem1.Size = new System.Drawing.Size(95, 22);
 			this.fenToolStripMenuItem1.Text = "Fen";
-			this.fenToolStripMenuItem1.Click += new System.EventHandler(this.fenToolStripMenuItem1_Click);
+			this.fenToolStripMenuItem1.Click += new System.EventHandler(this.menuClipboardLoadFen_Click);
 			// 
 			// pgnToolStripMenuItem1
 			// 
@@ -4251,38 +4251,38 @@
 			// 
 			// tableLayoutPanel2
 			// 
-			this.tableLayoutPanel2.ColumnCount = 6;
-			this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
-			this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
-			this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
-			this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
-			this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
-			this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
-			this.tableLayoutPanel2.Controls.Add(this.label31, 5, 1);
-			this.tableLayoutPanel2.Controls.Add(this.label30, 4, 1);
-			this.tableLayoutPanel2.Controls.Add(this.label25, 3, 1);
-			this.tableLayoutPanel2.Controls.Add(this.label24, 2, 1);
-			this.tableLayoutPanel2.Controls.Add(this.label23, 1, 1);
-			this.tableLayoutPanel2.Controls.Add(this.label22, 0, 1);
-			this.tableLayoutPanel2.Controls.Add(this.label21, 5, 0);
-			this.tableLayoutPanel2.Controls.Add(this.label20, 4, 0);
-			this.tableLayoutPanel2.Controls.Add(this.label19, 3, 0);
-			this.tableLayoutPanel2.Controls.Add(this.label18, 2, 0);
-			this.tableLayoutPanel2.Controls.Add(this.label17, 1, 0);
-			this.tableLayoutPanel2.Controls.Add(this.label1, 0, 0);
-			this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.tableLayoutPanel2.Location = new System.Drawing.Point(0, 419);
-			this.tableLayoutPanel2.Name = "tableLayoutPanel2";
-			this.tableLayoutPanel2.RowCount = 2;
-			this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-			this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-			this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-			this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-			this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-			this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-			this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-			this.tableLayoutPanel2.Size = new System.Drawing.Size(337, 43);
-			this.tableLayoutPanel2.TabIndex = 12;
+			this.tlpEdit.ColumnCount = 6;
+			this.tlpEdit.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
+			this.tlpEdit.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
+			this.tlpEdit.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
+			this.tlpEdit.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
+			this.tlpEdit.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
+			this.tlpEdit.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
+			this.tlpEdit.Controls.Add(this.label31, 5, 1);
+			this.tlpEdit.Controls.Add(this.label30, 4, 1);
+			this.tlpEdit.Controls.Add(this.label25, 3, 1);
+			this.tlpEdit.Controls.Add(this.label24, 2, 1);
+			this.tlpEdit.Controls.Add(this.label23, 1, 1);
+			this.tlpEdit.Controls.Add(this.label22, 0, 1);
+			this.tlpEdit.Controls.Add(this.label21, 5, 0);
+			this.tlpEdit.Controls.Add(this.label20, 4, 0);
+			this.tlpEdit.Controls.Add(this.label19, 3, 0);
+			this.tlpEdit.Controls.Add(this.label18, 2, 0);
+			this.tlpEdit.Controls.Add(this.label17, 1, 0);
+			this.tlpEdit.Controls.Add(this.label1, 0, 0);
+			this.tlpEdit.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.tlpEdit.Location = new System.Drawing.Point(0, 419);
+			this.tlpEdit.Name = "tableLayoutPanel2";
+			this.tlpEdit.RowCount = 2;
+			this.tlpEdit.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+			this.tlpEdit.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+			this.tlpEdit.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+			this.tlpEdit.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+			this.tlpEdit.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+			this.tlpEdit.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+			this.tlpEdit.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+			this.tlpEdit.Size = new System.Drawing.Size(337, 43);
+			this.tlpEdit.TabIndex = 12;
 			// 
 			// label31
 			// 
@@ -4551,8 +4551,8 @@
 			this.tlpWhite.ResumeLayout(false);
 			this.tlpBlack.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher1)).EndInit();
-			this.tableLayoutPanel2.ResumeLayout(false);
-			this.tableLayoutPanel2.PerformLayout();
+			this.tlpEdit.ResumeLayout(false);
+			this.tlpEdit.PerformLayout();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -4832,7 +4832,7 @@
 		private System.Windows.Forms.GroupBox groupBox15;
 		private System.Windows.Forms.ComboBox cbPassant;
 		private System.Windows.Forms.ComboBox combMainMode;
-		private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
+		private System.Windows.Forms.TableLayoutPanel tlpEdit;
 		private System.Windows.Forms.Label label31;
 		private System.Windows.Forms.Label label30;
 		private System.Windows.Forms.Label label25;

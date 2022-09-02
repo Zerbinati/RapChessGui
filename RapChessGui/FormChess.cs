@@ -73,7 +73,7 @@ namespace RapChessGui
 		{
 			get
 			{
-				foreach (Control c in tableLayoutPanel2.Controls)
+				foreach (Control c in tlpEdit.Controls)
 				{
 					Label l = c as Label;
 					if (l.BackColor == Color.Yellow)
@@ -83,7 +83,7 @@ namespace RapChessGui
 			}
 			set
 			{
-				foreach (Control c in tableLayoutPanel2.Controls)
+				foreach (Control c in tlpEdit.Controls)
 				{
 					Label l = c as Label;
 					if (l.Text == value)
@@ -146,14 +146,10 @@ namespace RapChessGui
 			Font fontChessPromo = new Font(pfc.Families[0], 32);
 			labTakenT.Font = fontChess;
 			labTakenD.Font = fontChess;
-			labPromoQ.Font = fontChessPromo;
-			labPromoR.Font = fontChessPromo;
-			labPromoB.Font = fontChessPromo;
-			labPromoN.Font = fontChessPromo;
-			foreach (Control c in tableLayoutPanel2.Controls)
-			{
+			foreach (Control c in tlpPromotion.Controls)
+				(c as Label).Font = fontChessPromo;
+			foreach (Control c in tlpEdit.Controls)
 				(c as Label).Font = fontChess;
-			}
 			toolTip1.Active = FormOptions.showTips;
 			CWinMessage.winHandle = Handle;
 			BoardPrepare();
@@ -2872,7 +2868,7 @@ namespace RapChessGui
 				int i = CChess.arrField[CDrag.mouseIndex];
 				if (e.Button == MouseButtons.Left)
 					chess.g_board[i] = chess.CharToPiece(EditSelected[0]);
-				if (e.Button == MouseButtons.Right)
+				else
 					chess.g_board[i] = CChess.colorEmpty;
 				Board.Fill();
 				RenderBoard(true);
@@ -3299,9 +3295,13 @@ namespace RapChessGui
 			butStop.Visible = v;
 		}
 
-		private void fenToolStripMenuItem1_Click(object sender, EventArgs e)
+		private void menuClipboardLoadFen_Click(object sender, EventArgs e)
 		{
-			LoadFen(Clipboard.GetText().Trim());
+			string fen = Clipboard.GetText().Trim();
+			if (CData.gameMode == CGameMode.edit)
+				EditSelected = fen;
+			else
+				LoadFen(fen);
 		}
 
 		private void fenToolStripMenuItem2_Click(object sender, EventArgs e)
