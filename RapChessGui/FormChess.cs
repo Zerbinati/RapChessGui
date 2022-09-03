@@ -2112,17 +2112,17 @@ namespace RapChessGui
 				{
 					opponents++;
 					int pro = (gw * 200 + gd * 100) / count - 100;
-					int elo = book.GetElo() - b.GetElo();
-					ListViewItem lvi = new ListViewItem(new[] { b.name, elo.ToString(), count.ToString(), pro.ToString() });
-					if (elo > 0)
+					int del = book.GetElo() - b.GetElo();
+					ListViewItem lvi = new ListViewItem(new[] { b.name, del.ToString(), count.ToString(), pro.ToString() });
+					if (del > 0)
 						lvi.BackColor = CBoard.colorListW;
-					if (elo < 0)
+					if (del < 0)
 						lvi.BackColor = CBoard.colorListB;
-					if (elo == 0)
+					if (del == 0)
 						lvi.BackColor = Color.White;
 					lvTourBSel.Items.Add(lvi);
 					int up = (lvTourBSel.ClientRectangle.Height / lvi.Bounds.Height) >> 1;
-					int del = book.position - b.position;
+					del = book.position - b.position;
 					if (del >= up)
 						top2 = lvi;
 				}
@@ -2252,7 +2252,7 @@ namespace RapChessGui
 					opponents++;
 					int pro = (gw * 200 + gd * 100) / count - 100;
 					int del = elo - e.GetElo();
-					ListViewItem lvi = new ListViewItem(new[] { e.name, elo.ToString(), count.ToString(), pro.ToString() });
+					ListViewItem lvi = new ListViewItem(new[] { e.name, del.ToString(), count.ToString(), pro.ToString() });
 					if (del > 0)
 						lvi.BackColor = CBoard.colorListW;
 					if (del < 0)
@@ -2428,17 +2428,17 @@ namespace RapChessGui
 					{
 						opponents++;
 						int pro = (gw * 200 + gd * 100) / count - 100;
-						int elo = Convert.ToInt32(player.elo) - Convert.ToInt32(p.elo);
-						ListViewItem lvi = new ListViewItem(new[] { p.name, elo.ToString(), count.ToString(), pro.ToString() });
-						if (elo > 0)
+						int del = Convert.ToInt32(player.elo) - Convert.ToInt32(p.elo);
+						ListViewItem lvi = new ListViewItem(new[] { p.name, del.ToString(), count.ToString(), pro.ToString() });
+						if (del > 0)
 							lvi.BackColor = CBoard.colorListW;
-						if (elo < 0)
+						if (del < 0)
 							lvi.BackColor = CBoard.colorListB;
-						if (elo == 0)
+						if (del == 0)
 							lvi.BackColor = Color.White;
 						lvTourPSel.Items.Add(lvi);
 						int up = (lvTourPSel.ClientRectangle.Height / lvi.Bounds.Height) >> 1;
-						int del = player.position - p.position;
+						del = player.position - p.position;
 						if (del >= up)
 							top2 = lvi;
 					}
