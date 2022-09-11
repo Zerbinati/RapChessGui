@@ -61,6 +61,11 @@ namespace RapChessGui
 			}
 		}
 
+		public static void AddMove(int move)
+		{
+			AppendTimeText($"move {move}\n",Color.Green);
+		}
+
 		public static void Save(string fn)
 		{
 			This.richTextBox1.SaveFile(fn);

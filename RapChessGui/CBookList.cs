@@ -51,7 +51,7 @@ namespace RapChessGui
 			string p = parameters;
 			if (e != null)
 				p = p.Replace("[engine]", e.name);
-			p = p.Replace("[uci]", $@"{Directory.GetCurrentDirectory()}\engines\uci\");
+			p = p.Replace("[auto]", $@"{Directory.GetCurrentDirectory()}\engines\auto\");
 			return p;
 		}
 

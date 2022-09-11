@@ -349,6 +349,8 @@ namespace RapChessGui
 		/// </summary>
 		public void EngMakeMove()
 		{
+			if (isWhite)
+				FormLogEngines.AddMove(FormChess.chess.MoveNumber);
 			InitMove();
 			if (engine.protocol == CProtocol.uci)
 				UciGo();

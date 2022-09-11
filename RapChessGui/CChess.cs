@@ -334,7 +334,7 @@ namespace NSChess
 
 		public bool SetFen(string fen = defFen)
 		{
-			if (fen == "")
+			if (String.IsNullOrEmpty(fen))
 				fen = defFen;
 			string[] chunks = fen.Split(' ');
 			if (chunks.Length < 4)
