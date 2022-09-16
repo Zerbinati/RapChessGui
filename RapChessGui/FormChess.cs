@@ -2021,15 +2021,16 @@ namespace RapChessGui
 			bookList.FillPosition();
 			int eloW = bw.GetElo();
 			int eloL = bl.GetElo();
+			bool f = CModeTournamentB.first == pw.book;
 			CElo.EloRating(eloW, eloL, out int newW, out int newL, bw.hisElo.list.Count, bl.hisElo.list.Count, isDraw ? 0 : 1);
 			if (isDraw)
-				CModeTournamentB.tourList.Write(pw.book, pb.book, "d");
+				CModeTournamentB.tourList.Write(pw.book, pb.book, "d",f);
 			else
 			{
 				if (eloW <= eloL)
 					CModeTournamentB.repetition++;
 				string r = gw.player == pw ? "w" : "b";
-				CModeTournamentB.tourList.Write(pw.book, pb.book, r);
+				CModeTournamentB.tourList.Write(pw.book, pb.book, r,f);
 			}
 			bool ls = bl.name == FormOptions.tourBSelected;
 			bool ws = bw.name == FormOptions.tourBSelected;
@@ -2059,7 +2060,7 @@ namespace RapChessGui
 				lvi.BackColor = b.hisElo.GetColor();
 				lvTourBList.Items.Add(lvi);
 			}
-			ListViewItem item = lvTourBList.FindItemWithText(CModeTournamentB.book);
+			ListViewItem item = lvTourBList.FindItemWithText(CModeTournamentB.first);
 			if (item != null)
 				item.Selected = true;
 		}
@@ -2068,7 +2069,7 @@ namespace RapChessGui
 		{
 			int del = lvTourBList.TopItem.Bounds.Top;
 			foreach (ListViewItem lvi in lvTourBList.Items)
-				if (lvi.Text == CModeTournamentB.book)
+				if (lvi.Text == CModeTournamentB.first)
 				{
 					int c = (lvTourBList.ClientRectangle.Height - del) / lvi.Bounds.Height;
 					int top = lvi.Index - (c >> 1);
@@ -2128,7 +2129,7 @@ namespace RapChessGui
 				}
 				countGames += count;
 			}
-			string rep = book.name == CModeTournamentB.book ? $"{CModeTournamentB.repetition}/{CModeTournamentB.games}" : book.tournament.ToString();
+			string rep = book.name == CModeTournamentB.first ? $"{CModeTournamentB.repetition}/{CModeTournamentB.games}" : book.tournament.ToString();
 			labBook.BackColor = book.hisElo.GetColor();
 			labBook.Text = $"{book.name} games {countGames} opponents {opponents}/{bookList.list.Count} repetitions {rep}";
 			if (top2 != null)
@@ -2161,8 +2162,8 @@ namespace RapChessGui
 			CModeTournamentB.engine = cbTourBEngine.Text;
 			CModeTournamentB.SaveToIni();
 			SetMode(CGameMode.tourB);
-			CBook b1 = CModeTournamentB.SelectBook();
-			CBook b2 = CModeTournamentB.SelectOpponent(b1);
+			CBook b1 = CModeTournamentB.SelectFirst();
+			CBook b2 = CModeTournamentB.SelectSecond(b1);
 			CPlayer p1 = new CPlayer(b1.name);
 			CPlayer p2 = new CPlayer(b2.name);
 			p1.engine = CModeTournamentB.engine;
@@ -2213,7 +2214,7 @@ namespace RapChessGui
 				lvi.BackColor = e.hisElo.GetColor();
 				lvTourEList.Items.Add(lvi);
 			}
-			ListViewItem item = lvTourEList.FindItemWithText(CModeTournamentE.engine);
+			ListViewItem item = lvTourEList.FindItemWithText(CModeTournamentE.first);
 			if (item != null)
 				item.Selected = true;
 		}
@@ -2267,7 +2268,7 @@ namespace RapChessGui
 				}
 				countGames += count;
 			}
-			string rep = engine.name == CModeTournamentE.engine ? $"{CModeTournamentE.repetition}/{CModeTournamentE.games}" : engine.tournament.ToString();
+			string rep = engine.name == CModeTournamentE.first ? $"{CModeTournamentE.repetition}/{CModeTournamentE.games}" : engine.tournament.ToString();
 			labEngine.BackColor = engine.hisElo.GetColor();
 			labEngine.Text = $"{engine.name} games {countGames} opponents {opponents}/{engineList.list.Count} repetitions {rep}";
 			if (top2 != null)
@@ -2289,7 +2290,7 @@ namespace RapChessGui
 		{
 			int del = lvTourEList.TopItem.Bounds.Top;
 			foreach (ListViewItem lvi in lvTourEList.Items)
-				if (lvi.Text == CModeTournamentE.engine)
+				if (lvi.Text == CModeTournamentE.first)
 				{
 					int c = (lvTourEList.ClientRectangle.Height - del) / lvi.Bounds.Height;
 					int top = lvi.Index - (c >> 1);
@@ -2316,8 +2317,8 @@ namespace RapChessGui
 			SetMode(CGameMode.tourE);
 			if (CModeTournamentE.ListUpdate())
 				TournamentEReset();
-			CEngine e1 = CModeTournamentE.SelectEngine();
-			CEngine e2 = CModeTournamentE.SelectOpponent(e1);
+			CEngine e1 = CModeTournamentE.SelectFirst();
+			CEngine e2 = CModeTournamentE.SelectSecond(e1);
 			CPlayer p1 = new CPlayer(e1.name);
 			CPlayer p2 = new CPlayer(e2.name);
 			p1.engine = e1.name;
@@ -2352,15 +2353,16 @@ namespace RapChessGui
 			engList.FillPosition();
 			int eloW = ew.GetElo();
 			int eloL = el.GetElo();
+			bool f = CModeTournamentE.first == pw.engine;
 			CElo.EloRating(eloW, eloL, out int newW, out int newL, ew.hisElo.list.Count, el.hisElo.list.Count, isDraw ? 0 : 1);
 			if (isDraw)
-				CModeTournamentE.tourList.Write(pw.engine, pb.engine, "d");
+				CModeTournamentE.tourList.Write(pw.engine, pb.engine, "d",f);
 			else
 			{
 				if (eloW <= eloL)
 					CModeTournamentE.repetition++;
 				string r = gw.player == pw ? "w" : "b";
-				CModeTournamentE.tourList.Write(pw.engine, pb.engine, r);
+				CModeTournamentE.tourList.Write(pw.engine, pb.engine, r,f);
 			}
 			bool ls = el.name == FormOptions.tourESelected;
 			bool ws = ew.name == FormOptions.tourESelected;
@@ -2390,7 +2392,7 @@ namespace RapChessGui
 				lvi.BackColor = p.hisElo.GetColor();
 				lvTourPList.Items.Add(lvi);
 			}
-			ListViewItem item = lvTourPList.FindItemWithText(CModeTournamentP.player);
+			ListViewItem item = lvTourPList.FindItemWithText(CModeTournamentP.first);
 			if (item != null)
 				item.Selected = true;
 		}
@@ -2444,7 +2446,7 @@ namespace RapChessGui
 					}
 					countGames += count;
 				}
-			string rep = player.name == CModeTournamentP.player ? $"{CModeTournamentP.repetition}/{CModeTournamentP.games}" : player.tournament.ToString();
+			string rep = player.name == CModeTournamentP.first ? $"{CModeTournamentP.repetition}/{CModeTournamentP.games}" : player.tournament.ToString();
 			labPlayer.BackColor = player.hisElo.GetColor();
 			labPlayer.Text = $"{player.name} games {countGames} opponents {opponents}/{playerList.list.Count} repetitions {rep}";
 			if (top2 != null)
@@ -2466,7 +2468,7 @@ namespace RapChessGui
 		{
 			int del = lvTourEList.TopItem.Bounds.Top;
 			foreach (ListViewItem lvi in lvTourPList.Items)
-				if (lvi.Text == CModeTournamentP.player)
+				if (lvi.Text == CModeTournamentP.first)
 				{
 					int c = (lvTourPList.ClientRectangle.Height - del) / lvi.Bounds.Height;
 					int top = lvi.Index - (c >> 1);
@@ -2487,7 +2489,7 @@ namespace RapChessGui
 			TournamentPUpdate(CModeTournamentP.plaWin);
 			TournamentPUpdate(CModeTournamentP.plaLoose);
 			SetMode(CGameMode.tourP);
-			CPlayer p1 = CModeTournamentP.SelectPlayer();
+			CPlayer p1 = CModeTournamentP.SelectFirst();
 			CPlayer p2 = CModeTournamentP.SelectOpponent(p1);
 			CModeTournamentP.SetRepeition(p1, p2);
 			GamerList.gamer[CModeTournamentP.rotate ? 1 : 0].SetPlayer(p1);
@@ -2511,15 +2513,16 @@ namespace RapChessGui
 			plaList.FillPosition();
 			int eloW = pw.GetElo();
 			int eloL = pl.GetElo();
+			bool f = CModeTournamentP.first == plw.name;
 			CElo.EloRating(eloW, eloL, out int newW, out int newL, pw.hisElo.list.Count, pl.hisElo.list.Count, isDraw ? 0 : 1);
 			if (isDraw)
-				CModeTournamentP.tourList.Write(plw.name, plb.name, "d");
+				CModeTournamentP.tourList.Write(plw.name, plb.name, "d",f);
 			else
 			{
 				if (eloW <= eloL)
 					CModeTournamentP.repetition++;
 				string r = pw == plw ? "w" : "b";
-				CModeTournamentP.tourList.Write(plw.name, plb.name, r);
+				CModeTournamentP.tourList.Write(plw.name, plb.name, r,f);
 			}
 			bool ls = pl.name == FormOptions.tourPSelected;
 			bool ws = pw.name == FormOptions.tourPSelected;

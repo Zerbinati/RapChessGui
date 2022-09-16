@@ -11,7 +11,7 @@ namespace RapChessGui
 		public static int records = 10000;
 		public static int maxElo = 3000;
 		public static int minElo = 0;
-		public static string engine = String.Empty;
+		public static string first = String.Empty;
 		public static string opponent = String.Empty;
 		public static string book = "BRU Eco";
 		static CLevel level = CLevel.standard;
@@ -24,7 +24,7 @@ namespace RapChessGui
 		public static void SaveToIni()
 		{
 			FormChess.iniFile.Write("mode>tournamentE>book", book);
-			FormChess.iniFile.Write("mode>tournamentE>engine", engine);
+			FormChess.iniFile.Write("mode>tournamentE>engine", first);
 			FormChess.iniFile.Write("mode>tournamentE>mode", modeValue.GetLevel());
 			FormChess.iniFile.Write("mode>tournamentE>value", modeValue.value);
 			FormChess.iniFile.Write("mode>tournamentE>records", records);
@@ -35,7 +35,7 @@ namespace RapChessGui
 		public static void LoadFromIni()
 		{
 			book = FormChess.iniFile.Read("mode>tournamentE>book", book);
-			engine = FormChess.iniFile.Read("mode>tournamentE>engine", engine);
+			first = FormChess.iniFile.Read("mode>tournamentE>engine", first);
 			modeValue.SetLevel(FormChess.iniFile.Read("mode>tournamentE>mode", modeValue.GetLevel()));
 			modeValue.value = FormChess.iniFile.ReadInt("mode>tournamentE>value", modeValue.value);
 			records = FormChess.iniFile.ReadInt("mode>tournamentE>records", records);
@@ -64,37 +64,21 @@ namespace RapChessGui
 
 		public static bool ListUpdate()
 		{
-			if (level != modeValue.level) {
+			if (level != modeValue.level)
+			{
 				ListFill();
 				return true;
 			}
 			return false;
 		}
 
-		public static CEngine ChooseOpponent(CEngine engine, CEngine engine1, CEngine engine2)
-		{
-			tourList.CountGames(engine.name, engine1.name, out int rw1, out int rl1, out int rd1);
-			tourList.CountGames(engine.name, engine2.name, out int rw2, out int rl2, out int rd2);
-			if ((engine.GetElo() > engine1.GetElo()) != (rw1 > rl1))
-				return engine1;
-			if ((engine.GetElo() > engine2.GetElo()) != (rw2 > rl2))
-				return engine2;
-			int count1 = (rw1 + rl1 + rd1);
-			int count2 = (rw2 + rl2 + rd2);
-			if (count1 * 1.1 <= count2 << 1)
-				return engine1;
-			if (count2 * 1.1 <= count1 >> 1)
-				return engine2;
-			return null;
-		}
-
-		public static CEngine SelectRare()
+		public static CEngine SelectLast()
 		{
 			int count = 0;
 			CEngine result = null;
 			foreach (CEngine e in engineList.list)
 			{
-				int c = tourList.CountGames(e.name);
+				int c = tourList.LastGame(e.name);
 				if (count <= c)
 				{
 					count = c;
@@ -104,23 +88,21 @@ namespace RapChessGui
 			return result;
 		}
 
-		public static CEngine SelectEngine()
+		public static CEngine SelectFirst()
 		{
 			CEngine e = engineList.GetEngineByName(FormOptions.tourESelected);
 			if (e != null)
 				return e;
-			e = engineList.GetEngineByName(engine);
-			if (e == null)
-				e = SelectRare();
-			if ((games >= repetition) && (games > 0))
+			e = engineList.GetEngineByName(first);
+			if ((e == null) || ((games >= repetition) && (games > 0)))
 			{
-				e = engineList.NextTournament(e);
+				e = SelectLast();
 				games = 0;
 			}
 			return e;
 		}
 
-		public static CEngine SelectOpponent(CEngine engine)
+		public static CEngine SelectSecond(CEngine engine)
 		{
 			engineList.SortPosition(engine);
 			List<CEngine> el = new List<CEngine>();
@@ -129,20 +111,45 @@ namespace RapChessGui
 					el.Add(e);
 			if (el.Count == 0)
 				return engine;
+			double bstScore = 0.0;
+			CEngine bstEngine = engine;
 			for (int n = 0; n < el.Count - 1; n++)
 			{
-				CEngine e = ChooseOpponent(engine, el[n], el[n + 1]);
-				if (e != null)
-					return e;
+				CEngine e = el[n];
+				double curScore = EvaluateOpponent(engine, e);
+				if (bstScore < curScore)
+				{
+					bstScore = curScore;
+					bstEngine = e;
+				}
+
 			}
-			return el[0];
+			return bstEngine;
+		}
+
+		public static double EvaluateOpponent(CEngine first, CEngine second)
+		{
+			int fElo = first.GetElo();
+			int sElo = second.GetElo();
+			int delElo = Math.Abs(sElo - fElo);
+			double ratioElo = (3000.0 - delElo) / 3000.0;
+			int sGames = tourList.CountGames(second.name);
+			tourList.CountGames(first.name, second.name, out int rw, out int rl, out int rd);
+			double games = rw + rl + rd + 1.0;
+			double r = (rw * 2.0 + rd) / games - 1.0;
+			double elo = fElo;
+			if ((r > 0) && (fElo < sElo))
+				elo -= (fElo * r);
+			if ((r < 0) && (fElo > sElo))
+				elo -= ((3000.0 - fElo) * r);
+			return (Math.Abs(sElo - elo) / 3000.0 + (sGames - games) / sGames) * ratioElo;
 		}
 
 		public static void SetRepeition(CEngine e, CEngine o)
 		{
-			if ((engine != e.name) || (opponent != o.name))
+			if ((first != e.name) || (opponent != o.name))
 			{
-				engine = e.name;
+				first = e.name;
 				opponent = o.name;
 				SaveToIni();
 				int cg = tourList.CountGames(e.name, o.name, out int rw, out int rl, out _);

@@ -15,7 +15,7 @@ namespace RapChessGui
 		public static int minElo = 0;
 		public static int records = 10000;
 		public static int repetition = 0;
-		public static string book = String.Empty;
+		public static string first = String.Empty;
 		public static string opponent = String.Empty;
 		public static string engine = String.Empty;
 		public static CTourList tourList = new CTourList("Tour-books");
@@ -26,7 +26,7 @@ namespace RapChessGui
 
 		public static void SaveToIni()
 		{
-			FormChess.iniFile.Write("mode>tournamentB>book", book);
+			FormChess.iniFile.Write("mode>tournamentB>book", first);
 			FormChess.iniFile.Write("mode>tournamentB>engine", engine);
 			FormChess.iniFile.Write("mode>tournamentB>mode", modeValue.GetLevel());
 			FormChess.iniFile.Write("mode>tournamentB>value", modeValue.value);
@@ -37,7 +37,7 @@ namespace RapChessGui
 
 		public static void LoadFromIni()
 		{
-			book = FormChess.iniFile.Read("mode>tournamentB>book", book);
+			first = FormChess.iniFile.Read("mode>tournamentB>book", first);
 			engine = FormChess.iniFile.Read("mode>tournamentB>engine", engine);
 			modeValue.SetLevel(FormChess.iniFile.Read("mode>tournamentB>mode", modeValue.GetLevel()));
 			modeValue.value = FormChess.iniFile.ReadInt("mode>tournamentB>value", modeValue.value);
@@ -66,7 +66,7 @@ namespace RapChessGui
 
 		public static int CountGames()
 		{
-			return tourList.CountGames(book, opponent, out _, out _, out _);
+			return tourList.CountGames(first, opponent, out _, out _, out _);
 		}
 
 		public static CBookList FillList()
@@ -87,23 +87,21 @@ namespace RapChessGui
 			opponent = String.Empty;
 		}
 
-		public static CBook SelectBook()
+		public static CBook SelectFirst()
 		{
 			CBook b = bookList.GetBook(FormOptions.tourBSelected);
 			if (b != null)
 				return b;
-			b = bookList.GetBook(book);
-			if (b == null)
-				b = SelectRare();
-			if ((games >= repetition) && (games > 0))
+			b = bookList.GetBook(first);
+			if ((b == null)||((games >= repetition) && (games > 0)))
 			{
-				b = bookList.NextTournament(b);
+				b = SelectLast();
 				games = 0;
 			}
 			return b;
 		}
 
-		public static CBook SelectOpponent(CBook book)
+		public static CBook SelectSecond(CBook book)
 		{
 			bookList.SortPosition(book);
 			List<CBook> bl = new List<CBook>();
@@ -112,22 +110,47 @@ namespace RapChessGui
 					bl.Add(b);
 			if (bl.Count == 0)
 				return book;
+			double bstScore = 0.0;
+			CBook bstBook = book;
 			for (int n = 0; n < bl.Count - 1; n++)
 			{
-				CBook b = ChooseOpponent(book, bl[n], bl[n + 1]);
-				if (b != null)
-					return b;
+				CBook b = bl[n];
+				double curScore = EvaluateOpponent(book, b);
+				if (bstScore < curScore)
+				{
+					bstScore = curScore;
+					bstBook = b;
+				}
+
 			}
-			return bl[0];
+			return bstBook;
 		}
 
-		public static CBook SelectRare()
+		public static double EvaluateOpponent(CBook first, CBook second)
+		{
+			int fElo = first.GetElo();
+			int sElo = second.GetElo();
+			int dElo = Math.Abs(fElo - sElo);
+			double ratioElo = (3000.0 - dElo) / 3000.0;
+			int sGames = tourList.CountGames(second.name);
+			tourList.CountGames(first.name, second.name, out int rw, out int rl, out int rd);
+			double games = rw + rl + rd + 1.0;
+			double r = (rw * 2.0 + rd) / games - 1.0;
+			double elo = fElo;
+			if ((r > 0) && (fElo < sElo))
+				elo -= (fElo * r);
+			if ((r < 0) && (fElo > sElo))
+				elo -= ((3000.0 - fElo) * r);
+			return (Math.Abs(sElo - elo) / 3000.0 + (sGames - games) / sGames) * ratioElo;
+		}
+
+		public static CBook SelectLast()
 		{
 			int count = 0;
 			CBook result = null;
 			foreach (CBook b in bookList.list)
 			{
-				int c = tourList.CountGames(b.name);
+				int c = tourList.LastGame(b.name);
 				if (count <= c)
 				{
 					count = c;
@@ -139,9 +162,9 @@ namespace RapChessGui
 
 		public static void SetRepeition(CBook b, CBook o)
 		{
-			if ((book != b.name) || (opponent != o.name))
+			if ((first != b.name) || (opponent != o.name))
 			{
-				book = b.name;
+				first = b.name;
 				opponent = o.name;
 				SaveToIni();
 				int cg = tourList.CountGames(b.name, o.name, out int rw, out int rl, out _);

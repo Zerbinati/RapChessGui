@@ -43,29 +43,11 @@
 			this.nudSpeed = new System.Windows.Forms.NumericUpDown();
 			this.cbAttack = new System.Windows.Forms.CheckBox();
 			this.cbShowPonder = new System.Windows.Forms.CheckBox();
-			this.gbTournamentP = new System.Windows.Forms.GroupBox();
-			this.label10 = new System.Windows.Forms.Label();
-			this.label9 = new System.Windows.Forms.Label();
-			this.nudTourPMin = new System.Windows.Forms.NumericUpDown();
-			this.nudTourPMax = new System.Windows.Forms.NumericUpDown();
-			this.labTourP = new System.Windows.Forms.Label();
-			this.label2 = new System.Windows.Forms.Label();
-			this.nudTourPRec = new System.Windows.Forms.NumericUpDown();
 			this.gbTimeMargin = new System.Windows.Forms.GroupBox();
 			this.label4 = new System.Windows.Forms.Label();
 			this.label3 = new System.Windows.Forms.Label();
 			this.combModeTime = new System.Windows.Forms.ComboBox();
 			this.combModeStandard = new System.Windows.Forms.ComboBox();
-			this.gbTournamentE = new System.Windows.Forms.GroupBox();
-			this.label18 = new System.Windows.Forms.Label();
-			this.cbTourESelected = new System.Windows.Forms.ComboBox();
-			this.label8 = new System.Windows.Forms.Label();
-			this.label5 = new System.Windows.Forms.Label();
-			this.nudTourEMin = new System.Windows.Forms.NumericUpDown();
-			this.nudTourEMax = new System.Windows.Forms.NumericUpDown();
-			this.labTourE = new System.Windows.Forms.Label();
-			this.label6 = new System.Windows.Forms.Label();
-			this.nudTourERec = new System.Windows.Forms.NumericUpDown();
 			this.gbNotation = new System.Windows.Forms.GroupBox();
 			this.rbUci = new System.Windows.Forms.RadioButton();
 			this.rbSan = new System.Windows.Forms.RadioButton();
@@ -86,11 +68,16 @@
 			this.groupBox2 = new System.Windows.Forms.GroupBox();
 			this.label12 = new System.Windows.Forms.Label();
 			this.nudTraining = new System.Windows.Forms.NumericUpDown();
+			this.gbMatch = new System.Windows.Forms.GroupBox();
+			this.label7 = new System.Windows.Forms.Label();
+			this.nudBreak = new System.Windows.Forms.NumericUpDown();
 			this.gbGame = new System.Windows.Forms.GroupBox();
 			this.cbRotateBoard = new System.Windows.Forms.CheckBox();
 			this.cbGameAutoElo = new System.Windows.Forms.CheckBox();
-			this.tabPageTournaments = new System.Windows.Forms.TabPage();
+			this.tabPageTourB = new System.Windows.Forms.TabPage();
 			this.groupBox3 = new System.Windows.Forms.GroupBox();
+			this.label20 = new System.Windows.Forms.Label();
+			this.cbTourBSelected = new System.Windows.Forms.ComboBox();
 			this.label13 = new System.Windows.Forms.Label();
 			this.label14 = new System.Windows.Forms.Label();
 			this.nudTourBMin = new System.Windows.Forms.NumericUpDown();
@@ -98,26 +85,33 @@
 			this.labTourB = new System.Windows.Forms.Label();
 			this.label16 = new System.Windows.Forms.Label();
 			this.nudTourBRec = new System.Windows.Forms.NumericUpDown();
-			this.gbMatch = new System.Windows.Forms.GroupBox();
-			this.label7 = new System.Windows.Forms.Label();
-			this.nudBreak = new System.Windows.Forms.NumericUpDown();
-			this.cbTourBSelected = new System.Windows.Forms.ComboBox();
-			this.cbTourPSelected = new System.Windows.Forms.ComboBox();
+			this.tabPageTourE = new System.Windows.Forms.TabPage();
+			this.tabPageTourP = new System.Windows.Forms.TabPage();
+			this.gbTournamentE = new System.Windows.Forms.GroupBox();
+			this.label18 = new System.Windows.Forms.Label();
+			this.cbTourESelected = new System.Windows.Forms.ComboBox();
+			this.label8 = new System.Windows.Forms.Label();
+			this.label5 = new System.Windows.Forms.Label();
+			this.nudTourEMin = new System.Windows.Forms.NumericUpDown();
+			this.nudTourEMax = new System.Windows.Forms.NumericUpDown();
+			this.labTourE = new System.Windows.Forms.Label();
+			this.label6 = new System.Windows.Forms.Label();
+			this.nudTourERec = new System.Windows.Forms.NumericUpDown();
+			this.gbTournamentP = new System.Windows.Forms.GroupBox();
 			this.label19 = new System.Windows.Forms.Label();
-			this.label20 = new System.Windows.Forms.Label();
+			this.cbTourPSelected = new System.Windows.Forms.ComboBox();
+			this.label10 = new System.Windows.Forms.Label();
+			this.label9 = new System.Windows.Forms.Label();
+			this.nudTourPMin = new System.Windows.Forms.NumericUpDown();
+			this.nudTourPMax = new System.Windows.Forms.NumericUpDown();
+			this.labTourP = new System.Windows.Forms.Label();
+			this.label2 = new System.Windows.Forms.Label();
+			this.nudTourPRec = new System.Windows.Forms.NumericUpDown();
 			this.gbInterface.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.nudFontSize)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.nudHistory)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.nudSpeed)).BeginInit();
-			this.gbTournamentP.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.nudTourPMin)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.nudTourPMax)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.nudTourPRec)).BeginInit();
 			this.gbTimeMargin.SuspendLayout();
-			this.gbTournamentE.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.nudTourEMin)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.nudTourEMax)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.nudTourERec)).BeginInit();
 			this.gbNotation.SuspendLayout();
 			this.gbPriority.SuspendLayout();
 			this.tabControl1.SuspendLayout();
@@ -127,14 +121,24 @@
 			this.tabPageModes.SuspendLayout();
 			this.groupBox2.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.nudTraining)).BeginInit();
+			this.gbMatch.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.nudBreak)).BeginInit();
 			this.gbGame.SuspendLayout();
-			this.tabPageTournaments.SuspendLayout();
+			this.tabPageTourB.SuspendLayout();
 			this.groupBox3.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.nudTourBMin)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.nudTourBMax)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.nudTourBRec)).BeginInit();
-			this.gbMatch.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.nudBreak)).BeginInit();
+			this.tabPageTourE.SuspendLayout();
+			this.tabPageTourP.SuspendLayout();
+			this.gbTournamentE.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.nudTourEMin)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.nudTourEMax)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.nudTourERec)).BeginInit();
+			this.gbTournamentP.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.nudTourPMin)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.nudTourPMax)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.nudTourPRec)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// butDefault
@@ -348,133 +352,6 @@
 			this.cbShowPonder.UseVisualStyleBackColor = true;
 			this.cbShowPonder.CheckedChanged += new System.EventHandler(this.cbShowPonder_CheckedChanged);
 			// 
-			// gbTournamentP
-			// 
-			this.gbTournamentP.Controls.Add(this.label19);
-			this.gbTournamentP.Controls.Add(this.cbTourPSelected);
-			this.gbTournamentP.Controls.Add(this.label10);
-			this.gbTournamentP.Controls.Add(this.label9);
-			this.gbTournamentP.Controls.Add(this.nudTourPMin);
-			this.gbTournamentP.Controls.Add(this.nudTourPMax);
-			this.gbTournamentP.Controls.Add(this.labTourP);
-			this.gbTournamentP.Controls.Add(this.label2);
-			this.gbTournamentP.Controls.Add(this.nudTourPRec);
-			this.gbTournamentP.Dock = System.Windows.Forms.DockStyle.Top;
-			this.gbTournamentP.Location = new System.Drawing.Point(3, 256);
-			this.gbTournamentP.Name = "gbTournamentP";
-			this.gbTournamentP.Size = new System.Drawing.Size(359, 125);
-			this.gbTournamentP.TabIndex = 7;
-			this.gbTournamentP.TabStop = false;
-			this.gbTournamentP.Text = "Tournament-players";
-			// 
-			// label10
-			// 
-			this.label10.AutoSize = true;
-			this.label10.Location = new System.Drawing.Point(168, 76);
-			this.label10.Name = "label10";
-			this.label10.Size = new System.Drawing.Size(42, 13);
-			this.label10.TabIndex = 15;
-			this.label10.Text = "Min Elo";
-			// 
-			// label9
-			// 
-			this.label9.AutoSize = true;
-			this.label9.Location = new System.Drawing.Point(168, 52);
-			this.label9.Name = "label9";
-			this.label9.Size = new System.Drawing.Size(44, 13);
-			this.label9.TabIndex = 14;
-			this.label9.Text = "Max elo";
-			// 
-			// nudTourPMin
-			// 
-			this.nudTourPMin.Increment = new decimal(new int[] {
-            100,
-            0,
-            0,
-            0});
-			this.nudTourPMin.Location = new System.Drawing.Point(6, 69);
-			this.nudTourPMin.Maximum = new decimal(new int[] {
-            4000,
-            0,
-            0,
-            0});
-			this.nudTourPMin.Name = "nudTourPMin";
-			this.nudTourPMin.Size = new System.Drawing.Size(156, 20);
-			this.nudTourPMin.TabIndex = 13;
-			this.nudTourPMin.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-			this.nudTourPMin.ThousandsSeparator = true;
-			// 
-			// nudTourPMax
-			// 
-			this.nudTourPMax.Increment = new decimal(new int[] {
-            100,
-            0,
-            0,
-            0});
-			this.nudTourPMax.Location = new System.Drawing.Point(6, 45);
-			this.nudTourPMax.Maximum = new decimal(new int[] {
-            4000,
-            0,
-            0,
-            0});
-			this.nudTourPMax.Name = "nudTourPMax";
-			this.nudTourPMax.Size = new System.Drawing.Size(156, 20);
-			this.nudTourPMax.TabIndex = 12;
-			this.nudTourPMax.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-			this.nudTourPMax.ThousandsSeparator = true;
-			this.nudTourPMax.Value = new decimal(new int[] {
-            3000,
-            0,
-            0,
-            0});
-			// 
-			// labTourP
-			// 
-			this.labTourP.AutoSize = true;
-			this.labTourP.Location = new System.Drawing.Point(168, 29);
-			this.labTourP.Name = "labTourP";
-			this.labTourP.Size = new System.Drawing.Size(19, 13);
-			this.labTourP.TabIndex = 11;
-			this.labTourP.Text = "Fill";
-			// 
-			// label2
-			// 
-			this.label2.AutoSize = true;
-			this.label2.Location = new System.Drawing.Point(168, 16);
-			this.label2.Name = "label2";
-			this.label2.Size = new System.Drawing.Size(98, 13);
-			this.label2.TabIndex = 10;
-			this.label2.Text = "Max history records";
-			// 
-			// nudTourPRec
-			// 
-			this.nudTourPRec.Increment = new decimal(new int[] {
-            1000,
-            0,
-            0,
-            0});
-			this.nudTourPRec.Location = new System.Drawing.Point(6, 19);
-			this.nudTourPRec.Maximum = new decimal(new int[] {
-            100000,
-            0,
-            0,
-            0});
-			this.nudTourPRec.Minimum = new decimal(new int[] {
-            1000,
-            0,
-            0,
-            0});
-			this.nudTourPRec.Name = "nudTourPRec";
-			this.nudTourPRec.Size = new System.Drawing.Size(156, 20);
-			this.nudTourPRec.TabIndex = 9;
-			this.nudTourPRec.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-			this.nudTourPRec.ThousandsSeparator = true;
-			this.nudTourPRec.Value = new decimal(new int[] {
-            10000,
-            0,
-            0,
-            0});
-			// 
 			// gbTimeMargin
 			// 
 			this.gbTimeMargin.Controls.Add(this.label4);
@@ -546,153 +423,6 @@
 			this.combModeStandard.Size = new System.Drawing.Size(153, 21);
 			this.combModeStandard.TabIndex = 3;
 			this.combModeStandard.SelectedIndexChanged += new System.EventHandler(this.combModeStandard_SelectedIndexChanged);
-			// 
-			// gbTournamentE
-			// 
-			this.gbTournamentE.Controls.Add(this.label18);
-			this.gbTournamentE.Controls.Add(this.cbTourESelected);
-			this.gbTournamentE.Controls.Add(this.label8);
-			this.gbTournamentE.Controls.Add(this.label5);
-			this.gbTournamentE.Controls.Add(this.nudTourEMin);
-			this.gbTournamentE.Controls.Add(this.nudTourEMax);
-			this.gbTournamentE.Controls.Add(this.labTourE);
-			this.gbTournamentE.Controls.Add(this.label6);
-			this.gbTournamentE.Controls.Add(this.nudTourERec);
-			this.gbTournamentE.Dock = System.Windows.Forms.DockStyle.Top;
-			this.gbTournamentE.Location = new System.Drawing.Point(3, 128);
-			this.gbTournamentE.Name = "gbTournamentE";
-			this.gbTournamentE.Size = new System.Drawing.Size(359, 128);
-			this.gbTournamentE.TabIndex = 9;
-			this.gbTournamentE.TabStop = false;
-			this.gbTournamentE.Text = "Tournament-engines";
-			// 
-			// label18
-			// 
-			this.label18.AutoSize = true;
-			this.label18.Location = new System.Drawing.Point(168, 100);
-			this.label18.Name = "label18";
-			this.label18.Size = new System.Drawing.Size(49, 13);
-			this.label18.TabIndex = 51;
-			this.label18.Text = "Selected";
-			// 
-			// cbTourESelected
-			// 
-			this.cbTourESelected.Cursor = System.Windows.Forms.Cursors.Hand;
-			this.cbTourESelected.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.cbTourESelected.FormattingEnabled = true;
-			this.cbTourESelected.Location = new System.Drawing.Point(6, 97);
-			this.cbTourESelected.Name = "cbTourESelected";
-			this.cbTourESelected.Size = new System.Drawing.Size(156, 21);
-			this.cbTourESelected.TabIndex = 50;
-			this.cbTourESelected.SelectedIndexChanged += new System.EventHandler(this.cbTourESelected_SelectedIndexChanged);
-			// 
-			// label8
-			// 
-			this.label8.AutoSize = true;
-			this.label8.Location = new System.Drawing.Point(168, 78);
-			this.label8.Name = "label8";
-			this.label8.Size = new System.Drawing.Size(41, 13);
-			this.label8.TabIndex = 15;
-			this.label8.Text = "Min elo";
-			// 
-			// label5
-			// 
-			this.label5.AutoSize = true;
-			this.label5.Location = new System.Drawing.Point(168, 52);
-			this.label5.Name = "label5";
-			this.label5.Size = new System.Drawing.Size(44, 13);
-			this.label5.TabIndex = 14;
-			this.label5.Text = "Max elo";
-			// 
-			// nudTourEMin
-			// 
-			this.nudTourEMin.Increment = new decimal(new int[] {
-            100,
-            0,
-            0,
-            0});
-			this.nudTourEMin.Location = new System.Drawing.Point(6, 71);
-			this.nudTourEMin.Maximum = new decimal(new int[] {
-            4000,
-            0,
-            0,
-            0});
-			this.nudTourEMin.Name = "nudTourEMin";
-			this.nudTourEMin.Size = new System.Drawing.Size(156, 20);
-			this.nudTourEMin.TabIndex = 13;
-			this.nudTourEMin.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-			this.nudTourEMin.ThousandsSeparator = true;
-			// 
-			// nudTourEMax
-			// 
-			this.nudTourEMax.Increment = new decimal(new int[] {
-            100,
-            0,
-            0,
-            0});
-			this.nudTourEMax.Location = new System.Drawing.Point(6, 45);
-			this.nudTourEMax.Maximum = new decimal(new int[] {
-            4000,
-            0,
-            0,
-            0});
-			this.nudTourEMax.Name = "nudTourEMax";
-			this.nudTourEMax.Size = new System.Drawing.Size(156, 20);
-			this.nudTourEMax.TabIndex = 12;
-			this.nudTourEMax.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-			this.nudTourEMax.ThousandsSeparator = true;
-			this.nudTourEMax.Value = new decimal(new int[] {
-            3000,
-            0,
-            0,
-            0});
-			// 
-			// labTourE
-			// 
-			this.labTourE.AutoSize = true;
-			this.labTourE.Location = new System.Drawing.Point(168, 29);
-			this.labTourE.Name = "labTourE";
-			this.labTourE.Size = new System.Drawing.Size(19, 13);
-			this.labTourE.TabIndex = 11;
-			this.labTourE.Text = "Fill";
-			// 
-			// label6
-			// 
-			this.label6.AutoSize = true;
-			this.label6.Location = new System.Drawing.Point(168, 16);
-			this.label6.Name = "label6";
-			this.label6.Size = new System.Drawing.Size(98, 13);
-			this.label6.TabIndex = 10;
-			this.label6.Text = "Max history records";
-			// 
-			// nudTourERec
-			// 
-			this.nudTourERec.Increment = new decimal(new int[] {
-            1000,
-            0,
-            0,
-            0});
-			this.nudTourERec.Location = new System.Drawing.Point(6, 19);
-			this.nudTourERec.Maximum = new decimal(new int[] {
-            100000,
-            0,
-            0,
-            0});
-			this.nudTourERec.Minimum = new decimal(new int[] {
-            1000,
-            0,
-            0,
-            0});
-			this.nudTourERec.Name = "nudTourERec";
-			this.nudTourERec.Size = new System.Drawing.Size(156, 20);
-			this.nudTourERec.TabIndex = 9;
-			this.nudTourERec.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-			this.nudTourERec.ThousandsSeparator = true;
-			this.nudTourERec.Value = new decimal(new int[] {
-            10000,
-            0,
-            0,
-            0});
 			// 
 			// gbNotation
 			// 
@@ -791,7 +521,9 @@
             "Books",
             "Interface",
             "Modes",
-            "Tournaments"});
+            "Tournament books",
+            "Tournament engines",
+            "Tournament players"});
 			this.listBox1.Location = new System.Drawing.Point(0, 0);
 			this.listBox1.Name = "listBox1";
 			this.listBox1.Size = new System.Drawing.Size(118, 472);
@@ -804,7 +536,9 @@
 			this.tabControl1.Controls.Add(this.tabPageBooks);
 			this.tabControl1.Controls.Add(this.tabPageInterface);
 			this.tabControl1.Controls.Add(this.tabPageModes);
-			this.tabControl1.Controls.Add(this.tabPageTournaments);
+			this.tabControl1.Controls.Add(this.tabPageTourB);
+			this.tabControl1.Controls.Add(this.tabPageTourE);
+			this.tabControl1.Controls.Add(this.tabPageTourP);
 			this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.tabControl1.ItemSize = new System.Drawing.Size(0, 1);
 			this.tabControl1.Location = new System.Drawing.Point(118, 0);
@@ -943,6 +677,53 @@
             0});
 			this.nudTraining.ValueChanged += new System.EventHandler(this.nudTraining_ValueChanged);
 			// 
+			// gbMatch
+			// 
+			this.gbMatch.Controls.Add(this.label7);
+			this.gbMatch.Controls.Add(this.nudBreak);
+			this.gbMatch.Dock = System.Windows.Forms.DockStyle.Top;
+			this.gbMatch.Location = new System.Drawing.Point(0, 52);
+			this.gbMatch.Name = "gbMatch";
+			this.gbMatch.Size = new System.Drawing.Size(365, 48);
+			this.gbMatch.TabIndex = 15;
+			this.gbMatch.TabStop = false;
+			this.gbMatch.Text = "Match";
+			// 
+			// label7
+			// 
+			this.label7.AutoSize = true;
+			this.label7.Location = new System.Drawing.Point(168, 21);
+			this.label7.Name = "label7";
+			this.label7.Size = new System.Drawing.Size(115, 13);
+			this.label7.TabIndex = 10;
+			this.label7.Text = "Break after each game";
+			// 
+			// nudBreak
+			// 
+			this.nudBreak.Increment = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
+			this.nudBreak.Location = new System.Drawing.Point(6, 19);
+			this.nudBreak.Maximum = new decimal(new int[] {
+            20,
+            0,
+            0,
+            0});
+			this.nudBreak.Name = "nudBreak";
+			this.nudBreak.Size = new System.Drawing.Size(156, 20);
+			this.nudBreak.TabIndex = 9;
+			this.nudBreak.TabStop = false;
+			this.nudBreak.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			this.nudBreak.ThousandsSeparator = true;
+			this.nudBreak.Value = new decimal(new int[] {
+            8,
+            0,
+            0,
+            0});
+			this.nudBreak.ValueChanged += new System.EventHandler(this.nudMatch_ValueChanged);
+			// 
 			// gbGame
 			// 
 			this.gbGame.Controls.Add(this.cbRotateBoard);
@@ -981,19 +762,17 @@
 			this.cbGameAutoElo.UseVisualStyleBackColor = true;
 			this.cbGameAutoElo.CheckedChanged += new System.EventHandler(this.cbGameAutoElo_CheckedChanged);
 			// 
-			// tabPageTournaments
+			// tabPageTourB
 			// 
-			this.tabPageTournaments.Controls.Add(this.gbTournamentP);
-			this.tabPageTournaments.Controls.Add(this.gbTournamentE);
-			this.tabPageTournaments.Controls.Add(this.groupBox3);
-			this.tabPageTournaments.ForeColor = System.Drawing.Color.Black;
-			this.tabPageTournaments.Location = new System.Drawing.Point(4, 5);
-			this.tabPageTournaments.Name = "tabPageTournaments";
-			this.tabPageTournaments.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPageTournaments.Size = new System.Drawing.Size(365, 463);
-			this.tabPageTournaments.TabIndex = 1;
-			this.tabPageTournaments.Text = "Tournaments";
-			this.tabPageTournaments.UseVisualStyleBackColor = true;
+			this.tabPageTourB.Controls.Add(this.groupBox3);
+			this.tabPageTourB.ForeColor = System.Drawing.Color.Black;
+			this.tabPageTourB.Location = new System.Drawing.Point(4, 5);
+			this.tabPageTourB.Name = "tabPageTourB";
+			this.tabPageTourB.Padding = new System.Windows.Forms.Padding(3);
+			this.tabPageTourB.Size = new System.Drawing.Size(365, 463);
+			this.tabPageTourB.TabIndex = 1;
+			this.tabPageTourB.Text = "Tournament books";
+			this.tabPageTourB.UseVisualStyleBackColor = true;
 			// 
 			// groupBox3
 			// 
@@ -1013,6 +792,26 @@
 			this.groupBox3.TabIndex = 14;
 			this.groupBox3.TabStop = false;
 			this.groupBox3.Text = "Tournament-books";
+			// 
+			// label20
+			// 
+			this.label20.AutoSize = true;
+			this.label20.Location = new System.Drawing.Point(168, 98);
+			this.label20.Name = "label20";
+			this.label20.Size = new System.Drawing.Size(49, 13);
+			this.label20.TabIndex = 52;
+			this.label20.Text = "Selected";
+			// 
+			// cbTourBSelected
+			// 
+			this.cbTourBSelected.Cursor = System.Windows.Forms.Cursors.Hand;
+			this.cbTourBSelected.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.cbTourBSelected.FormattingEnabled = true;
+			this.cbTourBSelected.Location = new System.Drawing.Point(6, 95);
+			this.cbTourBSelected.Name = "cbTourBSelected";
+			this.cbTourBSelected.Size = new System.Drawing.Size(156, 21);
+			this.cbTourBSelected.TabIndex = 51;
+			this.cbTourBSelected.SelectedIndexChanged += new System.EventHandler(this.cbTourBSelected_SelectedIndexChanged);
 			// 
 			// label13
 			// 
@@ -1122,63 +921,202 @@
             0,
             0});
 			// 
-			// gbMatch
+			// tabPageTourE
 			// 
-			this.gbMatch.Controls.Add(this.label7);
-			this.gbMatch.Controls.Add(this.nudBreak);
-			this.gbMatch.Dock = System.Windows.Forms.DockStyle.Top;
-			this.gbMatch.Location = new System.Drawing.Point(0, 52);
-			this.gbMatch.Name = "gbMatch";
-			this.gbMatch.Size = new System.Drawing.Size(365, 48);
-			this.gbMatch.TabIndex = 15;
-			this.gbMatch.TabStop = false;
-			this.gbMatch.Text = "Match";
+			this.tabPageTourE.Controls.Add(this.gbTournamentE);
+			this.tabPageTourE.Location = new System.Drawing.Point(4, 5);
+			this.tabPageTourE.Name = "tabPageTourE";
+			this.tabPageTourE.Padding = new System.Windows.Forms.Padding(3);
+			this.tabPageTourE.Size = new System.Drawing.Size(365, 463);
+			this.tabPageTourE.TabIndex = 4;
+			this.tabPageTourE.Text = "Tournament engines";
+			this.tabPageTourE.UseVisualStyleBackColor = true;
 			// 
-			// label7
+			// tabPageTourP
 			// 
-			this.label7.AutoSize = true;
-			this.label7.Location = new System.Drawing.Point(168, 21);
-			this.label7.Name = "label7";
-			this.label7.Size = new System.Drawing.Size(115, 13);
-			this.label7.TabIndex = 10;
-			this.label7.Text = "Break after each game";
+			this.tabPageTourP.Controls.Add(this.gbTournamentP);
+			this.tabPageTourP.Location = new System.Drawing.Point(4, 5);
+			this.tabPageTourP.Name = "tabPageTourP";
+			this.tabPageTourP.Padding = new System.Windows.Forms.Padding(3);
+			this.tabPageTourP.Size = new System.Drawing.Size(365, 463);
+			this.tabPageTourP.TabIndex = 5;
+			this.tabPageTourP.Text = "Tournament players";
+			this.tabPageTourP.UseVisualStyleBackColor = true;
 			// 
-			// nudBreak
+			// gbTournamentE
 			// 
-			this.nudBreak.Increment = new decimal(new int[] {
+			this.gbTournamentE.Controls.Add(this.label18);
+			this.gbTournamentE.Controls.Add(this.cbTourESelected);
+			this.gbTournamentE.Controls.Add(this.label8);
+			this.gbTournamentE.Controls.Add(this.label5);
+			this.gbTournamentE.Controls.Add(this.nudTourEMin);
+			this.gbTournamentE.Controls.Add(this.nudTourEMax);
+			this.gbTournamentE.Controls.Add(this.labTourE);
+			this.gbTournamentE.Controls.Add(this.label6);
+			this.gbTournamentE.Controls.Add(this.nudTourERec);
+			this.gbTournamentE.Dock = System.Windows.Forms.DockStyle.Top;
+			this.gbTournamentE.Location = new System.Drawing.Point(3, 3);
+			this.gbTournamentE.Name = "gbTournamentE";
+			this.gbTournamentE.Size = new System.Drawing.Size(359, 128);
+			this.gbTournamentE.TabIndex = 10;
+			this.gbTournamentE.TabStop = false;
+			this.gbTournamentE.Text = "Tournament-engines";
+			// 
+			// label18
+			// 
+			this.label18.AutoSize = true;
+			this.label18.Location = new System.Drawing.Point(168, 100);
+			this.label18.Name = "label18";
+			this.label18.Size = new System.Drawing.Size(49, 13);
+			this.label18.TabIndex = 51;
+			this.label18.Text = "Selected";
+			// 
+			// cbTourESelected
+			// 
+			this.cbTourESelected.Cursor = System.Windows.Forms.Cursors.Hand;
+			this.cbTourESelected.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.cbTourESelected.FormattingEnabled = true;
+			this.cbTourESelected.Location = new System.Drawing.Point(6, 97);
+			this.cbTourESelected.Name = "cbTourESelected";
+			this.cbTourESelected.Size = new System.Drawing.Size(156, 21);
+			this.cbTourESelected.TabIndex = 50;
+			this.cbTourESelected.SelectedIndexChanged += new System.EventHandler(this.cbTourESelected_SelectedIndexChanged);
+			// 
+			// label8
+			// 
+			this.label8.AutoSize = true;
+			this.label8.Location = new System.Drawing.Point(168, 78);
+			this.label8.Name = "label8";
+			this.label8.Size = new System.Drawing.Size(41, 13);
+			this.label8.TabIndex = 15;
+			this.label8.Text = "Min elo";
+			// 
+			// label5
+			// 
+			this.label5.AutoSize = true;
+			this.label5.Location = new System.Drawing.Point(168, 52);
+			this.label5.Name = "label5";
+			this.label5.Size = new System.Drawing.Size(44, 13);
+			this.label5.TabIndex = 14;
+			this.label5.Text = "Max elo";
+			// 
+			// nudTourEMin
+			// 
+			this.nudTourEMin.Increment = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
+			this.nudTourEMin.Location = new System.Drawing.Point(6, 71);
+			this.nudTourEMin.Maximum = new decimal(new int[] {
+            4000,
+            0,
+            0,
+            0});
+			this.nudTourEMin.Name = "nudTourEMin";
+			this.nudTourEMin.Size = new System.Drawing.Size(156, 20);
+			this.nudTourEMin.TabIndex = 13;
+			this.nudTourEMin.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			this.nudTourEMin.ThousandsSeparator = true;
+			// 
+			// nudTourEMax
+			// 
+			this.nudTourEMax.Increment = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
+			this.nudTourEMax.Location = new System.Drawing.Point(6, 45);
+			this.nudTourEMax.Maximum = new decimal(new int[] {
+            4000,
+            0,
+            0,
+            0});
+			this.nudTourEMax.Name = "nudTourEMax";
+			this.nudTourEMax.Size = new System.Drawing.Size(156, 20);
+			this.nudTourEMax.TabIndex = 12;
+			this.nudTourEMax.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			this.nudTourEMax.ThousandsSeparator = true;
+			this.nudTourEMax.Value = new decimal(new int[] {
+            3000,
+            0,
+            0,
+            0});
+			// 
+			// labTourE
+			// 
+			this.labTourE.AutoSize = true;
+			this.labTourE.Location = new System.Drawing.Point(168, 29);
+			this.labTourE.Name = "labTourE";
+			this.labTourE.Size = new System.Drawing.Size(19, 13);
+			this.labTourE.TabIndex = 11;
+			this.labTourE.Text = "Fill";
+			// 
+			// label6
+			// 
+			this.label6.AutoSize = true;
+			this.label6.Location = new System.Drawing.Point(168, 16);
+			this.label6.Name = "label6";
+			this.label6.Size = new System.Drawing.Size(98, 13);
+			this.label6.TabIndex = 10;
+			this.label6.Text = "Max history records";
+			// 
+			// nudTourERec
+			// 
+			this.nudTourERec.Increment = new decimal(new int[] {
             1000,
             0,
             0,
             0});
-			this.nudBreak.Location = new System.Drawing.Point(6, 19);
-			this.nudBreak.Maximum = new decimal(new int[] {
-            20,
+			this.nudTourERec.Location = new System.Drawing.Point(6, 19);
+			this.nudTourERec.Maximum = new decimal(new int[] {
+            100000,
             0,
             0,
             0});
-			this.nudBreak.Name = "nudBreak";
-			this.nudBreak.Size = new System.Drawing.Size(156, 20);
-			this.nudBreak.TabIndex = 9;
-			this.nudBreak.TabStop = false;
-			this.nudBreak.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-			this.nudBreak.ThousandsSeparator = true;
-			this.nudBreak.Value = new decimal(new int[] {
-            8,
+			this.nudTourERec.Minimum = new decimal(new int[] {
+            1000,
             0,
             0,
             0});
-			this.nudBreak.ValueChanged += new System.EventHandler(this.nudMatch_ValueChanged);
+			this.nudTourERec.Name = "nudTourERec";
+			this.nudTourERec.Size = new System.Drawing.Size(156, 20);
+			this.nudTourERec.TabIndex = 9;
+			this.nudTourERec.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			this.nudTourERec.ThousandsSeparator = true;
+			this.nudTourERec.Value = new decimal(new int[] {
+            10000,
+            0,
+            0,
+            0});
 			// 
-			// cbTourBSelected
+			// gbTournamentP
 			// 
-			this.cbTourBSelected.Cursor = System.Windows.Forms.Cursors.Hand;
-			this.cbTourBSelected.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.cbTourBSelected.FormattingEnabled = true;
-			this.cbTourBSelected.Location = new System.Drawing.Point(6, 95);
-			this.cbTourBSelected.Name = "cbTourBSelected";
-			this.cbTourBSelected.Size = new System.Drawing.Size(156, 21);
-			this.cbTourBSelected.TabIndex = 51;
-			this.cbTourBSelected.SelectedIndexChanged += new System.EventHandler(this.cbTourBSelected_SelectedIndexChanged);
+			this.gbTournamentP.Controls.Add(this.label19);
+			this.gbTournamentP.Controls.Add(this.cbTourPSelected);
+			this.gbTournamentP.Controls.Add(this.label10);
+			this.gbTournamentP.Controls.Add(this.label9);
+			this.gbTournamentP.Controls.Add(this.nudTourPMin);
+			this.gbTournamentP.Controls.Add(this.nudTourPMax);
+			this.gbTournamentP.Controls.Add(this.labTourP);
+			this.gbTournamentP.Controls.Add(this.label2);
+			this.gbTournamentP.Controls.Add(this.nudTourPRec);
+			this.gbTournamentP.Dock = System.Windows.Forms.DockStyle.Top;
+			this.gbTournamentP.Location = new System.Drawing.Point(3, 3);
+			this.gbTournamentP.Name = "gbTournamentP";
+			this.gbTournamentP.Size = new System.Drawing.Size(359, 125);
+			this.gbTournamentP.TabIndex = 8;
+			this.gbTournamentP.TabStop = false;
+			this.gbTournamentP.Text = "Tournament-players";
+			// 
+			// label19
+			// 
+			this.label19.AutoSize = true;
+			this.label19.Location = new System.Drawing.Point(168, 98);
+			this.label19.Name = "label19";
+			this.label19.Size = new System.Drawing.Size(49, 13);
+			this.label19.TabIndex = 52;
+			this.label19.Text = "Selected";
 			// 
 			// cbTourPSelected
 			// 
@@ -1191,23 +1129,113 @@
 			this.cbTourPSelected.TabIndex = 51;
 			this.cbTourPSelected.SelectedIndexChanged += new System.EventHandler(this.cbTourPSelected_SelectedIndexChanged);
 			// 
-			// label19
+			// label10
 			// 
-			this.label19.AutoSize = true;
-			this.label19.Location = new System.Drawing.Point(168, 98);
-			this.label19.Name = "label19";
-			this.label19.Size = new System.Drawing.Size(49, 13);
-			this.label19.TabIndex = 52;
-			this.label19.Text = "Selected";
+			this.label10.AutoSize = true;
+			this.label10.Location = new System.Drawing.Point(168, 76);
+			this.label10.Name = "label10";
+			this.label10.Size = new System.Drawing.Size(42, 13);
+			this.label10.TabIndex = 15;
+			this.label10.Text = "Min Elo";
 			// 
-			// label20
+			// label9
 			// 
-			this.label20.AutoSize = true;
-			this.label20.Location = new System.Drawing.Point(168, 98);
-			this.label20.Name = "label20";
-			this.label20.Size = new System.Drawing.Size(49, 13);
-			this.label20.TabIndex = 52;
-			this.label20.Text = "Selected";
+			this.label9.AutoSize = true;
+			this.label9.Location = new System.Drawing.Point(168, 52);
+			this.label9.Name = "label9";
+			this.label9.Size = new System.Drawing.Size(44, 13);
+			this.label9.TabIndex = 14;
+			this.label9.Text = "Max elo";
+			// 
+			// nudTourPMin
+			// 
+			this.nudTourPMin.Increment = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
+			this.nudTourPMin.Location = new System.Drawing.Point(6, 69);
+			this.nudTourPMin.Maximum = new decimal(new int[] {
+            4000,
+            0,
+            0,
+            0});
+			this.nudTourPMin.Name = "nudTourPMin";
+			this.nudTourPMin.Size = new System.Drawing.Size(156, 20);
+			this.nudTourPMin.TabIndex = 13;
+			this.nudTourPMin.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			this.nudTourPMin.ThousandsSeparator = true;
+			// 
+			// nudTourPMax
+			// 
+			this.nudTourPMax.Increment = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
+			this.nudTourPMax.Location = new System.Drawing.Point(6, 45);
+			this.nudTourPMax.Maximum = new decimal(new int[] {
+            4000,
+            0,
+            0,
+            0});
+			this.nudTourPMax.Name = "nudTourPMax";
+			this.nudTourPMax.Size = new System.Drawing.Size(156, 20);
+			this.nudTourPMax.TabIndex = 12;
+			this.nudTourPMax.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			this.nudTourPMax.ThousandsSeparator = true;
+			this.nudTourPMax.Value = new decimal(new int[] {
+            3000,
+            0,
+            0,
+            0});
+			// 
+			// labTourP
+			// 
+			this.labTourP.AutoSize = true;
+			this.labTourP.Location = new System.Drawing.Point(168, 29);
+			this.labTourP.Name = "labTourP";
+			this.labTourP.Size = new System.Drawing.Size(19, 13);
+			this.labTourP.TabIndex = 11;
+			this.labTourP.Text = "Fill";
+			// 
+			// label2
+			// 
+			this.label2.AutoSize = true;
+			this.label2.Location = new System.Drawing.Point(168, 16);
+			this.label2.Name = "label2";
+			this.label2.Size = new System.Drawing.Size(98, 13);
+			this.label2.TabIndex = 10;
+			this.label2.Text = "Max history records";
+			// 
+			// nudTourPRec
+			// 
+			this.nudTourPRec.Increment = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
+			this.nudTourPRec.Location = new System.Drawing.Point(6, 19);
+			this.nudTourPRec.Maximum = new decimal(new int[] {
+            100000,
+            0,
+            0,
+            0});
+			this.nudTourPRec.Minimum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
+			this.nudTourPRec.Name = "nudTourPRec";
+			this.nudTourPRec.Size = new System.Drawing.Size(156, 20);
+			this.nudTourPRec.TabIndex = 9;
+			this.nudTourPRec.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			this.nudTourPRec.ThousandsSeparator = true;
+			this.nudTourPRec.Value = new decimal(new int[] {
+            10000,
+            0,
+            0,
+            0});
 			// 
 			// FormOptions
 			// 
@@ -1230,18 +1258,8 @@
 			((System.ComponentModel.ISupportInitialize)(this.nudFontSize)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.nudHistory)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.nudSpeed)).EndInit();
-			this.gbTournamentP.ResumeLayout(false);
-			this.gbTournamentP.PerformLayout();
-			((System.ComponentModel.ISupportInitialize)(this.nudTourPMin)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.nudTourPMax)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.nudTourPRec)).EndInit();
 			this.gbTimeMargin.ResumeLayout(false);
 			this.gbTimeMargin.PerformLayout();
-			this.gbTournamentE.ResumeLayout(false);
-			this.gbTournamentE.PerformLayout();
-			((System.ComponentModel.ISupportInitialize)(this.nudTourEMin)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.nudTourEMax)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.nudTourERec)).EndInit();
 			this.gbNotation.ResumeLayout(false);
 			this.gbNotation.PerformLayout();
 			this.gbPriority.ResumeLayout(false);
@@ -1254,17 +1272,29 @@
 			this.groupBox2.ResumeLayout(false);
 			this.groupBox2.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.nudTraining)).EndInit();
+			this.gbMatch.ResumeLayout(false);
+			this.gbMatch.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)(this.nudBreak)).EndInit();
 			this.gbGame.ResumeLayout(false);
 			this.gbGame.PerformLayout();
-			this.tabPageTournaments.ResumeLayout(false);
+			this.tabPageTourB.ResumeLayout(false);
 			this.groupBox3.ResumeLayout(false);
 			this.groupBox3.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.nudTourBMin)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.nudTourBMax)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.nudTourBRec)).EndInit();
-			this.gbMatch.ResumeLayout(false);
-			this.gbMatch.PerformLayout();
-			((System.ComponentModel.ISupportInitialize)(this.nudBreak)).EndInit();
+			this.tabPageTourE.ResumeLayout(false);
+			this.tabPageTourP.ResumeLayout(false);
+			this.gbTournamentE.ResumeLayout(false);
+			this.gbTournamentE.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)(this.nudTourEMin)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.nudTourEMax)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.nudTourERec)).EndInit();
+			this.gbTournamentP.ResumeLayout(false);
+			this.gbTournamentP.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)(this.nudTourPMin)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.nudTourPMax)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.nudTourPRec)).EndInit();
 			this.ResumeLayout(false);
 
 		}
@@ -1278,10 +1308,6 @@
 		public System.Windows.Forms.CheckBox cbAttack;
 		private System.Windows.Forms.Label label1;
 		public System.Windows.Forms.NumericUpDown nudSpeed;
-		private System.Windows.Forms.GroupBox gbTournamentP;
-		private System.Windows.Forms.Label labTourP;
-		private System.Windows.Forms.Label label2;
-		public System.Windows.Forms.NumericUpDown nudTourPRec;
 		public System.Windows.Forms.CheckBox cbArrow;
 		public System.Windows.Forms.CheckBox cbTips;
 		private System.Windows.Forms.GroupBox gbTimeMargin;
@@ -1289,10 +1315,6 @@
 		private System.Windows.Forms.Label label3;
 		private System.Windows.Forms.ComboBox combModeTime;
 		private System.Windows.Forms.ComboBox combModeStandard;
-		private System.Windows.Forms.GroupBox gbTournamentE;
-		private System.Windows.Forms.Label labTourE;
-		private System.Windows.Forms.Label label6;
-		public System.Windows.Forms.NumericUpDown nudTourERec;
 		private System.Windows.Forms.GroupBox gbNotation;
 		private System.Windows.Forms.RadioButton rbUci;
 		public System.Windows.Forms.RadioButton rbSan;
@@ -1302,15 +1324,7 @@
 		private System.Windows.Forms.ListBox listBox1;
 		private System.Windows.Forms.TabControl tabControl1;
 		private System.Windows.Forms.TabPage tabPageInterface;
-		private System.Windows.Forms.TabPage tabPageTournaments;
-		private System.Windows.Forms.Label label10;
-		private System.Windows.Forms.Label label9;
-		public System.Windows.Forms.NumericUpDown nudTourPMin;
-		public System.Windows.Forms.NumericUpDown nudTourPMax;
-		private System.Windows.Forms.Label label8;
-		private System.Windows.Forms.Label label5;
-		public System.Windows.Forms.NumericUpDown nudTourEMin;
-		public System.Windows.Forms.NumericUpDown nudTourEMax;
+		private System.Windows.Forms.TabPage tabPageTourB;
 		private System.Windows.Forms.Label label11;
 		public System.Windows.Forms.NumericUpDown nudHistory;
 		private System.Windows.Forms.TabPage tabPageBooks;
@@ -1331,8 +1345,6 @@
 		public System.Windows.Forms.CheckBox cbSpam;
 		private System.Windows.Forms.Label label17;
 		public System.Windows.Forms.NumericUpDown nudFontSize;
-		private System.Windows.Forms.Label label18;
-		private System.Windows.Forms.ComboBox cbTourESelected;
 		private System.Windows.Forms.TabPage tabPageModes;
 		private System.Windows.Forms.GroupBox gbGame;
 		public System.Windows.Forms.CheckBox cbRotateBoard;
@@ -1343,9 +1355,29 @@
 		private System.Windows.Forms.GroupBox gbMatch;
 		private System.Windows.Forms.Label label7;
 		public System.Windows.Forms.NumericUpDown nudBreak;
-		private System.Windows.Forms.Label label19;
-		private System.Windows.Forms.ComboBox cbTourPSelected;
 		private System.Windows.Forms.Label label20;
 		private System.Windows.Forms.ComboBox cbTourBSelected;
+		private System.Windows.Forms.TabPage tabPageTourE;
+		private System.Windows.Forms.TabPage tabPageTourP;
+		private System.Windows.Forms.GroupBox gbTournamentE;
+		private System.Windows.Forms.Label label18;
+		private System.Windows.Forms.ComboBox cbTourESelected;
+		private System.Windows.Forms.Label label8;
+		private System.Windows.Forms.Label label5;
+		public System.Windows.Forms.NumericUpDown nudTourEMin;
+		public System.Windows.Forms.NumericUpDown nudTourEMax;
+		private System.Windows.Forms.Label labTourE;
+		private System.Windows.Forms.Label label6;
+		public System.Windows.Forms.NumericUpDown nudTourERec;
+		private System.Windows.Forms.GroupBox gbTournamentP;
+		private System.Windows.Forms.Label label19;
+		private System.Windows.Forms.ComboBox cbTourPSelected;
+		private System.Windows.Forms.Label label10;
+		private System.Windows.Forms.Label label9;
+		public System.Windows.Forms.NumericUpDown nudTourPMin;
+		public System.Windows.Forms.NumericUpDown nudTourPMax;
+		private System.Windows.Forms.Label labTourP;
+		private System.Windows.Forms.Label label2;
+		public System.Windows.Forms.NumericUpDown nudTourPRec;
 	}
 }

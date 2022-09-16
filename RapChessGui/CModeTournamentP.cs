@@ -11,8 +11,8 @@ namespace RapChessGui
 		public static int records = 10000;
 		public static int maxElo = 3000;
 		public static int minElo = 0;
-		public static string player = "";
-		public static string opponent = "";
+		public static string first = String.Empty;
+		public static string opponent = String.Empty;
 		public static CTourList tourList = new CTourList("Tour-players");
 		public static CPlayerList playerList = new CPlayerList();
 		public static CPlayer plaWin = null;
@@ -20,7 +20,7 @@ namespace RapChessGui
 
 		public static void SaveToIni()
 		{
-			FormChess.iniFile.Write("mode>tournamentP>player", player);
+			FormChess.iniFile.Write("mode>tournamentP>player", first);
 			FormChess.iniFile.Write("mode>tournamentP>records", records);
 			FormChess.iniFile.Write("mode>tournamentP>rmaxElo", maxElo);
 			FormChess.iniFile.Write("mode>tournamentP>minElo", minElo);
@@ -28,7 +28,7 @@ namespace RapChessGui
 
 		public static void LoadFromIni()
 		{
-			player = FormChess.iniFile.Read("mode>tournamentP>player", player);
+			first = FormChess.iniFile.Read("mode>tournamentP>player", first);
 			records = FormChess.iniFile.ReadInt("mode>tournamentP>records", records);
 			maxElo = FormChess.iniFile.ReadInt("mode>tournamentP>maxElo", maxElo);
 			minElo = FormChess.iniFile.ReadInt("mode>tournamentP>minElo", minElo);
@@ -70,13 +70,14 @@ namespace RapChessGui
 			return playerList;
 		}
 
-		public static CPlayer SelectRare()
+
+		public static CPlayer SelectLast()
 		{
 			int count = 0;
 			CPlayer result = null;
 			foreach (CPlayer p in playerList.list)
 			{
-				int c = tourList.CountGames(p.name);
+				int c = tourList.LastGame(p.name);
 				if (count <= c)
 				{
 					count = c;
@@ -86,17 +87,15 @@ namespace RapChessGui
 			return result;
 		}
 
-		public static CPlayer SelectPlayer()
+		public static CPlayer SelectFirst()
 		{
 			CPlayer p = playerList.GetPlayer(FormOptions.tourPSelected);
 			if (p != null)
 				return p;
-			p = playerList.GetPlayer(player);
-			if (p == null)
-				p = SelectRare();
-			if ((games >= repetition) && (games > 0))
+			p = playerList.GetPlayer(first);
+			if ((p == null) || ((games >= repetition) && (games > 0)))
 			{
-				p = playerList.NextTournament(p);
+				p = SelectLast();
 				games = 0;
 			}
 			return p;
@@ -122,9 +121,9 @@ namespace RapChessGui
 
 		public static void SetRepeition(CPlayer p, CPlayer o)
 		{
-			if ((player != p.name) || (opponent != o.name))
+			if ((first != p.name) || (opponent != o.name))
 			{
-				player = p.name;
+				first = p.name;
 				opponent = o.name;
 				SaveToIni();
 				int cg = tourList.CountGames(p.name, o.name, out int rw, out int rl, out _);

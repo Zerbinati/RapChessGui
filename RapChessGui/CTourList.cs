@@ -6,15 +6,17 @@ namespace RapChessGui
 {
 	class CTour
 	{
-		public string w = "";
-		public string b = "";
-		public string r = "";
+		public string w;
+		public string b;
+		public string r = "d";
+		public bool f;
 
-		public CTour(string tw, string tb, string tr)
+		public CTour(string tw, string tb, string tr, bool tf)
 		{
 			w = tw;
 			b = tb;
 			r = tr;
+			f = tf;
 		}
 
 		public CTour(string s)
@@ -25,17 +27,18 @@ namespace RapChessGui
 		public void LoadFromString(string s)
 		{
 			string[] a = s.Split('#');
-			if (a.Length == 3)
-			{
-				w = a[0];
-				b = a[1];
+			w = a[0];
+			b = a[1];
+			if (a.Length > 2)
 				r = a[2];
-			}
+			if (a.Length > 3)
+				f = a[3] == "f";
 		}
 
 		public string SaveToString()
 		{
-			return $"{w}#{b}#{r}";
+			string sf = f ? "f" : "s";
+			return $"{w}#{b}#{r}#{sf}";
 		}
 
 	}
@@ -58,6 +61,49 @@ namespace RapChessGui
 				if ((t.w == p) || (t.b == p))
 					result++;
 			return result;
+		}
+
+		public int LastGame(string p)
+		{
+			int f = list.Count;
+			int s = list.Count;
+			int c = 0;
+			for (int n = list.Count - 1; n >= 0; n--)
+			{
+				c++;
+				CTour t = list[n];
+				if (t.w == p)
+				{
+					if (t.f)
+					{
+						if (f == list.Count)
+						{
+							f = c;
+							if (s == list.Count)
+								s = c;
+						}
+					}
+					else if (s == list.Count)
+						s = c;
+				}
+				if (t.b == p)
+				{
+					if (t.f)
+					{
+						if (s == list.Count)
+							s = c;
+					}
+					else if (f == list.Count)
+					{
+						f = c;
+						if (s == list.Count)
+							s = c;
+					}
+				}
+				if ((f < list.Count) && (s < list.Count))
+					break;
+			}
+			return f + s >> 1;
 		}
 
 		public int CountGames(string p1, string p2, out int gw, out int gl, out int gd)
@@ -112,8 +158,7 @@ namespace RapChessGui
 					while ((line = file.ReadLine()) != null)
 					{
 						CTour t = new CTour(line);
-						if (t.r != "")
-							list.Add(t);
+						list.Add(t);
 					}
 				}
 		}
@@ -139,7 +184,7 @@ namespace RapChessGui
 
 		public CEngine LastEngine()
 		{
-			string n = "";
+			string n = String.Empty;
 			if (list.Count > 0)
 				n = list[list.Count - 1].w;
 			return FormChess.engineList.GetEngineByName(n);
@@ -147,15 +192,15 @@ namespace RapChessGui
 
 		public CPlayer LastPlayer()
 		{
-			string n = "";
+			string n = String.Empty;
 			if (list.Count > 0)
 				n = list[list.Count - 1].w;
 			return FormChess.playerList.GetPlayer(n);
 		}
 
-		public void Write(string w, string b, string r)
+		public void Write(string w, string b, string r, bool f)
 		{
-			CTour t = new CTour(w, b, r);
+			CTour t = new CTour(w, b, r, f);
 			list.Add(t);
 			using (StreamWriter file = new StreamWriter(path, true))
 				file.WriteLine(t.SaveToString());
