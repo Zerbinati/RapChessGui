@@ -22,9 +22,10 @@ namespace RapChessGui
 		public static int marginStandard = 0;
 		public static int marginTime = 5000;
 		public static int winLimit = 1;
-		public static string tourBSelected = "None";
-		public static string tourESelected = "None";
-		public static string tourPSelected = "None";
+		public static string tourBSelected = CData.none;
+		public static string tourESelected = CData.none;
+		public static string tourEBook = CData.none;
+		public static string tourPSelected = CData.none;
 		public static ProcessPriorityClass priority = ProcessPriorityClass.Normal;
 		public static Color colorBoard;
 
@@ -39,6 +40,7 @@ namespace RapChessGui
 		{
 			tourBSelected = FormChess.iniFile.Read("options>mode>tourB>Selected", tourBSelected);
 			tourESelected = FormChess.iniFile.Read("options>mode>tourE>Selected", tourESelected);
+			tourEBook = FormChess.iniFile.Read("options>mode>tourE>Book", tourEBook);
 			tourPSelected = FormChess.iniFile.Read("options>mode>tourP>Selected", tourPSelected);
 			colorDialog1.Color = FormChess.iniFile.ReadColor("options>interface>color", Color.Yellow);
 			rbSan.Checked = FormChess.iniFile.ReadBool("options>interface>san", rbSan.Checked);
@@ -59,7 +61,7 @@ namespace RapChessGui
 			combModeTime.SelectedIndex = FormChess.iniFile.ReadInt("options>margin>time", 0);
 			combPriority.SelectedIndex = FormChess.iniFile.ReadInt("options>priority", 2);
 			colorBoard = colorDialog1.Color;
-			if(!rbSan.Checked)
+			if (!rbSan.Checked)
 				rbUci.Checked = true;
 		}
 
@@ -67,6 +69,7 @@ namespace RapChessGui
 		{
 			FormChess.iniFile.Write("options>mode>tourB>Selected", tourBSelected);
 			FormChess.iniFile.Write("options>mode>tourE>Selected", tourESelected);
+			FormChess.iniFile.Write("options>mode>tourE>Book", tourEBook);
 			FormChess.iniFile.Write("options>mode>tourP>Selected", tourPSelected);
 			FormChess.iniFile.Write("options>interface>color", colorDialog1.Color);
 			FormChess.iniFile.Write("options>interface>san", rbSan.Checked);
@@ -98,25 +101,33 @@ namespace RapChessGui
 			}
 
 			cbBookReader.Items.Clear();
-			cbBookReader.Items.Add("None");
+			cbBookReader.Items.Add(CData.none);
 			foreach (string book in CData.fileBook)
 				cbBookReader.Items.Add(book);
 			cbBookReader.SelectedIndex = 0;
 
 			cbTourBSelected.Items.Clear();
+			cbTourEBook.Items.Clear();
 			cbTourBSelected.Sorted = true;
+			cbTourEBook.Sorted = true;
 			foreach (CBook b in FormChess.bookList.list)
+			{
 				cbTourBSelected.Items.Add(b.name);
+				cbTourEBook.Items.Add(b.name);
+			}
 			cbTourBSelected.Sorted = false;
-			cbTourBSelected.Items.Insert(0,"None");
+			cbTourEBook.Sorted = false;
+			cbTourBSelected.Items.Insert(0, CData.none);
+			cbTourEBook.Items.Add(CData.none);
 			cbTourBSelected.SelectedIndex = 0;
+			cbTourEBook.SelectedIndex = 0;
 
 			cbTourESelected.Items.Clear();
 			cbTourESelected.Sorted = true;
 			foreach (CEngine e in FormChess.engineList.list)
 				cbTourESelected.Items.Add(e.name);
 			cbTourESelected.Sorted = false;
-			cbTourESelected.Items.Insert(0,"None");
+			cbTourESelected.Items.Insert(0, CData.none);
 			cbTourESelected.SelectedIndex = 0;
 
 			cbTourPSelected.Items.Clear();
@@ -124,13 +135,14 @@ namespace RapChessGui
 			foreach (CPlayer p in FormChess.playerList.list)
 				cbTourPSelected.Items.Add(p.name);
 			cbTourPSelected.Sorted = false;
-			cbTourPSelected.Items.Insert(0,"None");
+			cbTourPSelected.Items.Insert(0, CData.none);
 			cbTourPSelected.SelectedIndex = 0;
 
 			LoadFromIni();
 
-			CData.ComboSelect(cbTourBSelected,tourBSelected);
+			CData.ComboSelect(cbTourBSelected, tourBSelected);
 			CData.ComboSelect(cbTourESelected, tourESelected);
+			CData.ComboSelect(cbTourEBook, tourEBook);
 			CData.ComboSelect(cbTourPSelected, tourPSelected);
 			nudTourBRec.Value = CModeTournamentB.records;
 			nudTourBMax.Value = CModeTournamentB.maxElo;
@@ -175,12 +187,12 @@ namespace RapChessGui
 		public static void SetFontSize(Form form)
 		{
 			foreach (Control ctrl in form.Controls)
-				ctrl.Font = new Font(ctrl.Font.Name,fontSize, ctrl.Font.Style, ctrl.Font.Unit);
+				ctrl.Font = new Font(ctrl.Font.Name, fontSize, ctrl.Font.Style, ctrl.Font.Unit);
 		}
 
 		int CbToMargin(int i)
 		{
-			return new int[] { -1, 0, 1000, 2000, 5000,10000 }[i];
+			return new int[] { -1, 0, 1000, 2000, 5000, 10000 }[i];
 		}
 
 		private void CbRotateBoard_CheckedChanged(object sender, EventArgs e)
@@ -363,6 +375,11 @@ namespace RapChessGui
 		private void cbTourPSelected_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			tourPSelected = cbTourPSelected.Text;
+		}
+
+		private void cbTourEBook_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			tourEBook = cbTourEBook.Text;
 		}
 	}
 }

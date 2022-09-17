@@ -134,8 +134,6 @@
 			this.labEngine = new System.Windows.Forms.Label();
 			this.chartTournamentE = new System.Windows.Forms.DataVisualization.Charting.Chart();
 			this.butTourEStart = new System.Windows.Forms.Button();
-			this.groupBox9 = new System.Windows.Forms.GroupBox();
-			this.cbTourEBook = new System.Windows.Forms.ComboBox();
 			this.groupBox8 = new System.Windows.Forms.GroupBox();
 			this.nudTourE = new System.Windows.Forms.NumericUpDown();
 			this.cbTourEMode = new System.Windows.Forms.ComboBox();
@@ -184,6 +182,19 @@
 			this.cbTrainedBook = new System.Windows.Forms.ComboBox();
 			this.cbTrainedEngine = new System.Windows.Forms.ComboBox();
 			this.tabPageEdit = new System.Windows.Forms.TabPage();
+			this.tlpEdit = new System.Windows.Forms.TableLayoutPanel();
+			this.label31 = new System.Windows.Forms.Label();
+			this.label30 = new System.Windows.Forms.Label();
+			this.label25 = new System.Windows.Forms.Label();
+			this.label24 = new System.Windows.Forms.Label();
+			this.label23 = new System.Windows.Forms.Label();
+			this.label22 = new System.Windows.Forms.Label();
+			this.label21 = new System.Windows.Forms.Label();
+			this.label20 = new System.Windows.Forms.Label();
+			this.label19 = new System.Windows.Forms.Label();
+			this.label18 = new System.Windows.Forms.Label();
+			this.label17 = new System.Windows.Forms.Label();
+			this.label1 = new System.Windows.Forms.Label();
 			this.groupBox12 = new System.Windows.Forms.GroupBox();
 			this.button2 = new System.Windows.Forms.Button();
 			this.tbFen = new System.Windows.Forms.TextBox();
@@ -324,19 +335,6 @@
 			this.tlpBlack = new System.Windows.Forms.TableLayoutPanel();
 			this.timerAnimation = new System.Windows.Forms.Timer(this.components);
 			this.fileSystemWatcher1 = new System.IO.FileSystemWatcher();
-			this.tlpEdit = new System.Windows.Forms.TableLayoutPanel();
-			this.label31 = new System.Windows.Forms.Label();
-			this.label30 = new System.Windows.Forms.Label();
-			this.label25 = new System.Windows.Forms.Label();
-			this.label24 = new System.Windows.Forms.Label();
-			this.label23 = new System.Windows.Forms.Label();
-			this.label22 = new System.Windows.Forms.Label();
-			this.label21 = new System.Windows.Forms.Label();
-			this.label20 = new System.Windows.Forms.Label();
-			this.label19 = new System.Windows.Forms.Label();
-			this.label18 = new System.Windows.Forms.Label();
-			this.label17 = new System.Windows.Forms.Label();
-			this.label1 = new System.Windows.Forms.Label();
 			this.tabControl1.SuspendLayout();
 			this.tabPageGame.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.chartGame)).BeginInit();
@@ -373,7 +371,6 @@
 			this.scTournamentEList.Panel2.SuspendLayout();
 			this.scTournamentEList.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.chartTournamentE)).BeginInit();
-			this.groupBox9.SuspendLayout();
 			this.groupBox8.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.nudTourE)).BeginInit();
 			this.tabPageTourP.SuspendLayout();
@@ -394,6 +391,7 @@
 			this.groupBox3.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.nudTrained)).BeginInit();
 			this.tabPageEdit.SuspendLayout();
+			this.tlpEdit.SuspendLayout();
 			this.groupBox12.SuspendLayout();
 			this.groupBox13.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.nudMove)).BeginInit();
@@ -436,7 +434,6 @@
 			this.tlpWhite.SuspendLayout();
 			this.tlpBlack.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher1)).BeginInit();
-			this.tlpEdit.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// tabControl1
@@ -1460,7 +1457,6 @@
 			// 
 			this.tabPageTourE.Controls.Add(this.splitContainerTourE);
 			this.tabPageTourE.Controls.Add(this.butTourEStart);
-			this.tabPageTourE.Controls.Add(this.groupBox9);
 			this.tabPageTourE.Controls.Add(this.groupBox8);
 			this.tabPageTourE.Location = new System.Drawing.Point(4, 5);
 			this.tabPageTourE.Name = "tabPageTourE";
@@ -1474,7 +1470,7 @@
 			// 
 			this.splitContainerTourE.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
 			this.splitContainerTourE.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.splitContainerTourE.Location = new System.Drawing.Point(3, 131);
+			this.splitContainerTourE.Location = new System.Drawing.Point(3, 87);
 			this.splitContainerTourE.Name = "splitContainerTourE";
 			this.splitContainerTourE.Orientation = System.Windows.Forms.Orientation.Horizontal;
 			// 
@@ -1485,8 +1481,8 @@
 			// splitContainerTourE.Panel2
 			// 
 			this.splitContainerTourE.Panel2.Controls.Add(this.chartTournamentE);
-			this.splitContainerTourE.Size = new System.Drawing.Size(331, 328);
-			this.splitContainerTourE.SplitterDistance = 205;
+			this.splitContainerTourE.Size = new System.Drawing.Size(331, 372);
+			this.splitContainerTourE.SplitterDistance = 232;
 			this.splitContainerTourE.TabIndex = 27;
 			// 
 			// scTournamentEList
@@ -1505,8 +1501,8 @@
 			// 
 			this.scTournamentEList.Panel2.Controls.Add(this.lvTourESel);
 			this.scTournamentEList.Panel2.Controls.Add(this.labEngine);
-			this.scTournamentEList.Size = new System.Drawing.Size(331, 205);
-			this.scTournamentEList.SplitterDistance = 101;
+			this.scTournamentEList.Size = new System.Drawing.Size(331, 232);
+			this.scTournamentEList.SplitterDistance = 114;
 			this.scTournamentEList.TabIndex = 24;
 			// 
 			// lvTourEList
@@ -1523,7 +1519,7 @@
 			this.lvTourEList.MultiSelect = false;
 			this.lvTourEList.Name = "lvTourEList";
 			this.lvTourEList.ShowGroups = false;
-			this.lvTourEList.Size = new System.Drawing.Size(327, 97);
+			this.lvTourEList.Size = new System.Drawing.Size(327, 110);
 			this.lvTourEList.Sorting = System.Windows.Forms.SortOrder.Descending;
 			this.lvTourEList.TabIndex = 24;
 			this.lvTourEList.UseCompatibleStateImageBehavior = false;
@@ -1565,7 +1561,7 @@
 			this.lvTourESel.MultiSelect = false;
 			this.lvTourESel.Name = "lvTourESel";
 			this.lvTourESel.ShowGroups = false;
-			this.lvTourESel.Size = new System.Drawing.Size(327, 83);
+			this.lvTourESel.Size = new System.Drawing.Size(327, 97);
 			this.lvTourESel.TabIndex = 28;
 			this.lvTourESel.UseCompatibleStateImageBehavior = false;
 			this.lvTourESel.View = System.Windows.Forms.View.Details;
@@ -1647,7 +1643,7 @@
 			this.chartTournamentE.Series.Add(series6);
 			this.chartTournamentE.Series.Add(series7);
 			this.chartTournamentE.Series.Add(series8);
-			this.chartTournamentE.Size = new System.Drawing.Size(327, 115);
+			this.chartTournamentE.Size = new System.Drawing.Size(327, 132);
 			this.chartTournamentE.TabIndex = 30;
 			this.toolTip1.SetToolTip(this.chartTournamentE, "Tournament history");
 			// 
@@ -1655,7 +1651,7 @@
 			// 
 			this.butTourEStart.Cursor = System.Windows.Forms.Cursors.Hand;
 			this.butTourEStart.Dock = System.Windows.Forms.DockStyle.Top;
-			this.butTourEStart.Location = new System.Drawing.Point(3, 108);
+			this.butTourEStart.Location = new System.Drawing.Point(3, 64);
 			this.butTourEStart.Name = "butTourEStart";
 			this.butTourEStart.Size = new System.Drawing.Size(331, 23);
 			this.butTourEStart.TabIndex = 22;
@@ -1663,30 +1659,6 @@
 			this.toolTip1.SetToolTip(this.butTourEStart, "Start tournament");
 			this.butTourEStart.UseVisualStyleBackColor = true;
 			this.butTourEStart.Click += new System.EventHandler(this.butStartTournamentE_Click);
-			// 
-			// groupBox9
-			// 
-			this.groupBox9.Controls.Add(this.cbTourEBook);
-			this.groupBox9.Dock = System.Windows.Forms.DockStyle.Top;
-			this.groupBox9.Location = new System.Drawing.Point(3, 64);
-			this.groupBox9.Name = "groupBox9";
-			this.groupBox9.Size = new System.Drawing.Size(331, 44);
-			this.groupBox9.TabIndex = 28;
-			this.groupBox9.TabStop = false;
-			this.groupBox9.Text = "Opening book";
-			// 
-			// cbTourEBook
-			// 
-			this.cbTourEBook.Cursor = System.Windows.Forms.Cursors.Hand;
-			this.cbTourEBook.Dock = System.Windows.Forms.DockStyle.Top;
-			this.cbTourEBook.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.cbTourEBook.FormattingEnabled = true;
-			this.cbTourEBook.Location = new System.Drawing.Point(3, 16);
-			this.cbTourEBook.Name = "cbTourEBook";
-			this.cbTourEBook.Size = new System.Drawing.Size(325, 21);
-			this.cbTourEBook.Sorted = true;
-			this.cbTourEBook.TabIndex = 32;
-			this.toolTip1.SetToolTip(this.cbTourEBook, "Select engine opening book");
 			// 
 			// groupBox8
 			// 
@@ -2383,6 +2355,185 @@
 			this.tabPageEdit.Size = new System.Drawing.Size(337, 462);
 			this.tabPageEdit.TabIndex = 4;
 			this.tabPageEdit.Text = "Edit";
+			// 
+			// tlpEdit
+			// 
+			this.tlpEdit.ColumnCount = 6;
+			this.tlpEdit.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
+			this.tlpEdit.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
+			this.tlpEdit.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
+			this.tlpEdit.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
+			this.tlpEdit.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
+			this.tlpEdit.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
+			this.tlpEdit.Controls.Add(this.label31, 5, 1);
+			this.tlpEdit.Controls.Add(this.label30, 4, 1);
+			this.tlpEdit.Controls.Add(this.label25, 3, 1);
+			this.tlpEdit.Controls.Add(this.label24, 2, 1);
+			this.tlpEdit.Controls.Add(this.label23, 1, 1);
+			this.tlpEdit.Controls.Add(this.label22, 0, 1);
+			this.tlpEdit.Controls.Add(this.label21, 5, 0);
+			this.tlpEdit.Controls.Add(this.label20, 4, 0);
+			this.tlpEdit.Controls.Add(this.label19, 3, 0);
+			this.tlpEdit.Controls.Add(this.label18, 2, 0);
+			this.tlpEdit.Controls.Add(this.label17, 1, 0);
+			this.tlpEdit.Controls.Add(this.label1, 0, 0);
+			this.tlpEdit.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.tlpEdit.Location = new System.Drawing.Point(0, 419);
+			this.tlpEdit.Name = "tlpEdit";
+			this.tlpEdit.RowCount = 2;
+			this.tlpEdit.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+			this.tlpEdit.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+			this.tlpEdit.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+			this.tlpEdit.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+			this.tlpEdit.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+			this.tlpEdit.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+			this.tlpEdit.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+			this.tlpEdit.Size = new System.Drawing.Size(337, 43);
+			this.tlpEdit.TabIndex = 12;
+			// 
+			// label31
+			// 
+			this.label31.AutoSize = true;
+			this.label31.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.label31.Location = new System.Drawing.Point(283, 21);
+			this.label31.Name = "label31";
+			this.label31.Size = new System.Drawing.Size(51, 22);
+			this.label31.TabIndex = 11;
+			this.label31.Text = "k";
+			this.label31.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.label31.Click += new System.EventHandler(this.editLabel_Click);
+			// 
+			// label30
+			// 
+			this.label30.AutoSize = true;
+			this.label30.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.label30.Location = new System.Drawing.Point(227, 21);
+			this.label30.Name = "label30";
+			this.label30.Size = new System.Drawing.Size(50, 22);
+			this.label30.TabIndex = 10;
+			this.label30.Text = "q";
+			this.label30.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.label30.Click += new System.EventHandler(this.editLabel_Click);
+			// 
+			// label25
+			// 
+			this.label25.AutoSize = true;
+			this.label25.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.label25.Location = new System.Drawing.Point(171, 21);
+			this.label25.Name = "label25";
+			this.label25.Size = new System.Drawing.Size(50, 22);
+			this.label25.TabIndex = 9;
+			this.label25.Text = "r";
+			this.label25.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.label25.Click += new System.EventHandler(this.editLabel_Click);
+			// 
+			// label24
+			// 
+			this.label24.AutoSize = true;
+			this.label24.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.label24.Location = new System.Drawing.Point(115, 21);
+			this.label24.Name = "label24";
+			this.label24.Size = new System.Drawing.Size(50, 22);
+			this.label24.TabIndex = 8;
+			this.label24.Text = "b";
+			this.label24.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.label24.Click += new System.EventHandler(this.editLabel_Click);
+			// 
+			// label23
+			// 
+			this.label23.AutoSize = true;
+			this.label23.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.label23.Location = new System.Drawing.Point(59, 21);
+			this.label23.Name = "label23";
+			this.label23.Size = new System.Drawing.Size(50, 22);
+			this.label23.TabIndex = 7;
+			this.label23.Text = "n";
+			this.label23.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.label23.Click += new System.EventHandler(this.editLabel_Click);
+			// 
+			// label22
+			// 
+			this.label22.AutoSize = true;
+			this.label22.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.label22.Location = new System.Drawing.Point(3, 21);
+			this.label22.Name = "label22";
+			this.label22.Size = new System.Drawing.Size(50, 22);
+			this.label22.TabIndex = 6;
+			this.label22.Text = "p";
+			this.label22.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.label22.Click += new System.EventHandler(this.editLabel_Click);
+			// 
+			// label21
+			// 
+			this.label21.AutoSize = true;
+			this.label21.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.label21.Location = new System.Drawing.Point(283, 0);
+			this.label21.Name = "label21";
+			this.label21.Size = new System.Drawing.Size(51, 21);
+			this.label21.TabIndex = 5;
+			this.label21.Text = "K";
+			this.label21.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.label21.Click += new System.EventHandler(this.editLabel_Click);
+			// 
+			// label20
+			// 
+			this.label20.AutoSize = true;
+			this.label20.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.label20.Location = new System.Drawing.Point(227, 0);
+			this.label20.Name = "label20";
+			this.label20.Size = new System.Drawing.Size(50, 21);
+			this.label20.TabIndex = 4;
+			this.label20.Text = "Q";
+			this.label20.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.label20.Click += new System.EventHandler(this.editLabel_Click);
+			// 
+			// label19
+			// 
+			this.label19.AutoSize = true;
+			this.label19.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.label19.Location = new System.Drawing.Point(171, 0);
+			this.label19.Name = "label19";
+			this.label19.Size = new System.Drawing.Size(50, 21);
+			this.label19.TabIndex = 3;
+			this.label19.Text = "R";
+			this.label19.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.label19.Click += new System.EventHandler(this.editLabel_Click);
+			// 
+			// label18
+			// 
+			this.label18.AutoSize = true;
+			this.label18.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.label18.Location = new System.Drawing.Point(115, 0);
+			this.label18.Name = "label18";
+			this.label18.Size = new System.Drawing.Size(50, 21);
+			this.label18.TabIndex = 2;
+			this.label18.Text = "B";
+			this.label18.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.label18.Click += new System.EventHandler(this.editLabel_Click);
+			// 
+			// label17
+			// 
+			this.label17.AutoSize = true;
+			this.label17.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.label17.Location = new System.Drawing.Point(59, 0);
+			this.label17.Name = "label17";
+			this.label17.Size = new System.Drawing.Size(50, 21);
+			this.label17.TabIndex = 1;
+			this.label17.Text = "N";
+			this.label17.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.label17.Click += new System.EventHandler(this.editLabel_Click);
+			// 
+			// label1
+			// 
+			this.label1.AutoSize = true;
+			this.label1.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.label1.Location = new System.Drawing.Point(3, 0);
+			this.label1.Name = "label1";
+			this.label1.Size = new System.Drawing.Size(50, 21);
+			this.label1.TabIndex = 0;
+			this.label1.Text = "P";
+			this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.label1.Click += new System.EventHandler(this.editLabel_Click);
 			// 
 			// groupBox12
 			// 
@@ -4249,185 +4400,6 @@
 			this.fileSystemWatcher1.Deleted += new System.IO.FileSystemEventHandler(this.fileSystemWatcher1_Changed);
 			this.fileSystemWatcher1.Renamed += new System.IO.RenamedEventHandler(this.fileSystemWatcher1_Renamed);
 			// 
-			// tableLayoutPanel2
-			// 
-			this.tlpEdit.ColumnCount = 6;
-			this.tlpEdit.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
-			this.tlpEdit.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
-			this.tlpEdit.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
-			this.tlpEdit.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
-			this.tlpEdit.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
-			this.tlpEdit.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
-			this.tlpEdit.Controls.Add(this.label31, 5, 1);
-			this.tlpEdit.Controls.Add(this.label30, 4, 1);
-			this.tlpEdit.Controls.Add(this.label25, 3, 1);
-			this.tlpEdit.Controls.Add(this.label24, 2, 1);
-			this.tlpEdit.Controls.Add(this.label23, 1, 1);
-			this.tlpEdit.Controls.Add(this.label22, 0, 1);
-			this.tlpEdit.Controls.Add(this.label21, 5, 0);
-			this.tlpEdit.Controls.Add(this.label20, 4, 0);
-			this.tlpEdit.Controls.Add(this.label19, 3, 0);
-			this.tlpEdit.Controls.Add(this.label18, 2, 0);
-			this.tlpEdit.Controls.Add(this.label17, 1, 0);
-			this.tlpEdit.Controls.Add(this.label1, 0, 0);
-			this.tlpEdit.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.tlpEdit.Location = new System.Drawing.Point(0, 419);
-			this.tlpEdit.Name = "tableLayoutPanel2";
-			this.tlpEdit.RowCount = 2;
-			this.tlpEdit.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-			this.tlpEdit.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-			this.tlpEdit.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-			this.tlpEdit.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-			this.tlpEdit.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-			this.tlpEdit.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-			this.tlpEdit.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-			this.tlpEdit.Size = new System.Drawing.Size(337, 43);
-			this.tlpEdit.TabIndex = 12;
-			// 
-			// label31
-			// 
-			this.label31.AutoSize = true;
-			this.label31.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.label31.Location = new System.Drawing.Point(283, 21);
-			this.label31.Name = "label31";
-			this.label31.Size = new System.Drawing.Size(51, 22);
-			this.label31.TabIndex = 11;
-			this.label31.Text = "k";
-			this.label31.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			this.label31.Click += new System.EventHandler(this.editLabel_Click);
-			// 
-			// label30
-			// 
-			this.label30.AutoSize = true;
-			this.label30.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.label30.Location = new System.Drawing.Point(227, 21);
-			this.label30.Name = "label30";
-			this.label30.Size = new System.Drawing.Size(50, 22);
-			this.label30.TabIndex = 10;
-			this.label30.Text = "q";
-			this.label30.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			this.label30.Click += new System.EventHandler(this.editLabel_Click);
-			// 
-			// label25
-			// 
-			this.label25.AutoSize = true;
-			this.label25.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.label25.Location = new System.Drawing.Point(171, 21);
-			this.label25.Name = "label25";
-			this.label25.Size = new System.Drawing.Size(50, 22);
-			this.label25.TabIndex = 9;
-			this.label25.Text = "r";
-			this.label25.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			this.label25.Click += new System.EventHandler(this.editLabel_Click);
-			// 
-			// label24
-			// 
-			this.label24.AutoSize = true;
-			this.label24.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.label24.Location = new System.Drawing.Point(115, 21);
-			this.label24.Name = "label24";
-			this.label24.Size = new System.Drawing.Size(50, 22);
-			this.label24.TabIndex = 8;
-			this.label24.Text = "b";
-			this.label24.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			this.label24.Click += new System.EventHandler(this.editLabel_Click);
-			// 
-			// label23
-			// 
-			this.label23.AutoSize = true;
-			this.label23.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.label23.Location = new System.Drawing.Point(59, 21);
-			this.label23.Name = "label23";
-			this.label23.Size = new System.Drawing.Size(50, 22);
-			this.label23.TabIndex = 7;
-			this.label23.Text = "n";
-			this.label23.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			this.label23.Click += new System.EventHandler(this.editLabel_Click);
-			// 
-			// label22
-			// 
-			this.label22.AutoSize = true;
-			this.label22.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.label22.Location = new System.Drawing.Point(3, 21);
-			this.label22.Name = "label22";
-			this.label22.Size = new System.Drawing.Size(50, 22);
-			this.label22.TabIndex = 6;
-			this.label22.Text = "p";
-			this.label22.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			this.label22.Click += new System.EventHandler(this.editLabel_Click);
-			// 
-			// label21
-			// 
-			this.label21.AutoSize = true;
-			this.label21.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.label21.Location = new System.Drawing.Point(283, 0);
-			this.label21.Name = "label21";
-			this.label21.Size = new System.Drawing.Size(51, 21);
-			this.label21.TabIndex = 5;
-			this.label21.Text = "K";
-			this.label21.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			this.label21.Click += new System.EventHandler(this.editLabel_Click);
-			// 
-			// label20
-			// 
-			this.label20.AutoSize = true;
-			this.label20.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.label20.Location = new System.Drawing.Point(227, 0);
-			this.label20.Name = "label20";
-			this.label20.Size = new System.Drawing.Size(50, 21);
-			this.label20.TabIndex = 4;
-			this.label20.Text = "Q";
-			this.label20.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			this.label20.Click += new System.EventHandler(this.editLabel_Click);
-			// 
-			// label19
-			// 
-			this.label19.AutoSize = true;
-			this.label19.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.label19.Location = new System.Drawing.Point(171, 0);
-			this.label19.Name = "label19";
-			this.label19.Size = new System.Drawing.Size(50, 21);
-			this.label19.TabIndex = 3;
-			this.label19.Text = "R";
-			this.label19.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			this.label19.Click += new System.EventHandler(this.editLabel_Click);
-			// 
-			// label18
-			// 
-			this.label18.AutoSize = true;
-			this.label18.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.label18.Location = new System.Drawing.Point(115, 0);
-			this.label18.Name = "label18";
-			this.label18.Size = new System.Drawing.Size(50, 21);
-			this.label18.TabIndex = 2;
-			this.label18.Text = "B";
-			this.label18.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			this.label18.Click += new System.EventHandler(this.editLabel_Click);
-			// 
-			// label17
-			// 
-			this.label17.AutoSize = true;
-			this.label17.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.label17.Location = new System.Drawing.Point(59, 0);
-			this.label17.Name = "label17";
-			this.label17.Size = new System.Drawing.Size(50, 21);
-			this.label17.TabIndex = 1;
-			this.label17.Text = "N";
-			this.label17.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			this.label17.Click += new System.EventHandler(this.editLabel_Click);
-			// 
-			// label1
-			// 
-			this.label1.AutoSize = true;
-			this.label1.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.label1.Location = new System.Drawing.Point(3, 0);
-			this.label1.Name = "label1";
-			this.label1.Size = new System.Drawing.Size(50, 21);
-			this.label1.TabIndex = 0;
-			this.label1.Text = "P";
-			this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			this.label1.Click += new System.EventHandler(this.editLabel_Click);
-			// 
 			// FormChess
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -4483,7 +4455,6 @@
 			((System.ComponentModel.ISupportInitialize)(this.scTournamentEList)).EndInit();
 			this.scTournamentEList.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.chartTournamentE)).EndInit();
-			this.groupBox9.ResumeLayout(false);
 			this.groupBox8.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.nudTourE)).EndInit();
 			this.tabPageTourP.ResumeLayout(false);
@@ -4504,6 +4475,8 @@
 			this.groupBox3.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.nudTrained)).EndInit();
 			this.tabPageEdit.ResumeLayout(false);
+			this.tlpEdit.ResumeLayout(false);
+			this.tlpEdit.PerformLayout();
 			this.groupBox12.ResumeLayout(false);
 			this.groupBox12.PerformLayout();
 			this.groupBox13.ResumeLayout(false);
@@ -4551,8 +4524,6 @@
 			this.tlpWhite.ResumeLayout(false);
 			this.tlpBlack.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher1)).EndInit();
-			this.tlpEdit.ResumeLayout(false);
-			this.tlpEdit.PerformLayout();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -4725,8 +4696,6 @@
 		private System.Windows.Forms.Label labPromoN;
 		private System.Windows.Forms.Label labPromoQ;
 		private System.Windows.Forms.Label labPromoR;
-		private System.Windows.Forms.GroupBox groupBox9;
-		private System.Windows.Forms.ComboBox cbTourEBook;
 		private System.Windows.Forms.ToolStripMenuItem enginesToolStripMenuItem1;
 		private System.Windows.Forms.ToolStripMenuItem gamesToolStripMenuItem;
 		public System.Windows.Forms.DataVisualization.Charting.Chart chartGame;

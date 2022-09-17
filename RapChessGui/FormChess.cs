@@ -1293,13 +1293,11 @@ namespace RapChessGui
 			cbBook.Items.Clear();
 			cbMatchBook1.Items.Clear();
 			cbMatchBook2.Items.Clear();
-			cbTourEBook.Items.Clear();
 			cbTrainerBook.Items.Clear();
 			cbTrainedBook.Items.Clear();
 			cbBook.Sorted = true;
 			cbMatchBook1.Sorted = true;
 			cbMatchBook2.Sorted = true;
-			cbTourEBook.Sorted = true;
 			cbTrainerBook.Sorted = true;
 			cbTrainedBook.Sorted = true;
 			foreach (CBook b in bookList.list)
@@ -1308,26 +1306,22 @@ namespace RapChessGui
 					cbBook.Items.Add(b.name);
 					cbMatchBook1.Items.Add(b.name);
 					cbMatchBook2.Items.Add(b.name);
-					cbTourEBook.Items.Add(b.name);
 					cbTrainerBook.Items.Add(b.name);
 					cbTrainedBook.Items.Add(b.name);
 				}
 			cbBook.Sorted = false;
 			cbMatchBook1.Sorted = false;
 			cbMatchBook2.Sorted = false;
-			cbTourEBook.Sorted = false;
 			cbTrainerBook.Sorted = false;
 			cbTrainedBook.Sorted = false;
 			cbBook.Items.Insert(0, CData.none);
 			cbMatchBook1.Items.Insert(0, CData.none);
 			cbMatchBook2.Items.Insert(0, CData.none);
-			cbTourEBook.Items.Insert(0, CData.none);
 			cbTrainerBook.Items.Insert(0, CData.none);
 			cbTrainedBook.Items.Insert(0, CData.none);
 			cbBook.Text = CData.none;
 			cbMatchBook1.Text = CData.none;
 			cbMatchBook2.Text = CData.none;
-			cbTourEBook.Text = CData.none;
 			cbTrainerBook.Text = CData.none;
 			cbTrainedBook.Text = CData.none;
 		}
@@ -2200,7 +2194,6 @@ namespace RapChessGui
 			int ei = cbTourEMode.FindStringExact(CModeTournamentE.modeValue.GetLevel());
 			if (ei > 0)
 				cbTourEMode.SelectedIndex = ei;
-			cbTourEBook.SelectedIndex = cbTourEBook.FindStringExact(CModeTournamentE.book);
 			nudTourE.Value = CModeTournamentE.modeValue.GetValue();
 		}
 
@@ -2312,7 +2305,7 @@ namespace RapChessGui
 			TournamentEUpdate(CModeTournamentE.engLoose);
 			CModeTournamentE.modeValue.SetLevel(cbTourEMode.Text);
 			CModeTournamentE.modeValue.SetValue((int)nudTourE.Value);
-			CModeTournamentE.book = cbTourEBook.Text;
+			CModeTournamentE.book = FormOptions.tourEBook;
 			CModeTournamentE.SaveToIni();
 			SetMode(CGameMode.tourE);
 			if (CModeTournamentE.ListUpdate())
