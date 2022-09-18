@@ -62,6 +62,7 @@ namespace RapChessGui
 		public string scoreS;
 		public int depth;
 		public int seldepth;
+		public int hash;
 		public string ponder;
 		public string ponderFormated;
 		public string value;
@@ -160,6 +161,7 @@ namespace RapChessGui
 			isPrepareStarted = false;
 			isPrepareFinished = false;
 			isPositionWb = false;
+			hash = 0;
 			uciPhase = 0;
 			infMs = 0;
 			countMovesBook = 0;

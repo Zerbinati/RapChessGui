@@ -86,9 +86,9 @@
 			this.label16 = new System.Windows.Forms.Label();
 			this.nudTourBRec = new System.Windows.Forms.NumericUpDown();
 			this.tabPageTourE = new System.Windows.Forms.TabPage();
+			this.groupBox9 = new System.Windows.Forms.GroupBox();
+			this.cbTourEBook = new System.Windows.Forms.ComboBox();
 			this.gbTournamentE = new System.Windows.Forms.GroupBox();
-			this.label18 = new System.Windows.Forms.Label();
-			this.cbTourESelected = new System.Windows.Forms.ComboBox();
 			this.label8 = new System.Windows.Forms.Label();
 			this.label5 = new System.Windows.Forms.Label();
 			this.nudTourEMin = new System.Windows.Forms.NumericUpDown();
@@ -107,8 +107,11 @@
 			this.labTourP = new System.Windows.Forms.Label();
 			this.label2 = new System.Windows.Forms.Label();
 			this.nudTourPRec = new System.Windows.Forms.NumericUpDown();
-			this.groupBox9 = new System.Windows.Forms.GroupBox();
-			this.cbTourEBook = new System.Windows.Forms.ComboBox();
+			this.groupBox4 = new System.Windows.Forms.GroupBox();
+			this.cbTourESelected = new System.Windows.Forms.ComboBox();
+			this.groupBox8 = new System.Windows.Forms.GroupBox();
+			this.nudTourE = new System.Windows.Forms.NumericUpDown();
+			this.cbTourEMode = new System.Windows.Forms.ComboBox();
 			this.gbInterface.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.nudFontSize)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.nudHistory)).BeginInit();
@@ -132,6 +135,7 @@
 			((System.ComponentModel.ISupportInitialize)(this.nudTourBMax)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.nudTourBRec)).BeginInit();
 			this.tabPageTourE.SuspendLayout();
+			this.groupBox9.SuspendLayout();
 			this.gbTournamentE.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.nudTourEMin)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.nudTourEMax)).BeginInit();
@@ -141,7 +145,9 @@
 			((System.ComponentModel.ISupportInitialize)(this.nudTourPMin)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.nudTourPMax)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.nudTourPRec)).BeginInit();
-			this.groupBox9.SuspendLayout();
+			this.groupBox4.SuspendLayout();
+			this.groupBox8.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.nudTourE)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// butDefault
@@ -926,7 +932,9 @@
 			// 
 			// tabPageTourE
 			// 
+			this.tabPageTourE.Controls.Add(this.groupBox8);
 			this.tabPageTourE.Controls.Add(this.groupBox9);
+			this.tabPageTourE.Controls.Add(this.groupBox4);
 			this.tabPageTourE.Controls.Add(this.gbTournamentE);
 			this.tabPageTourE.Location = new System.Drawing.Point(4, 5);
 			this.tabPageTourE.Name = "tabPageTourE";
@@ -936,10 +944,32 @@
 			this.tabPageTourE.Text = "Tournament engines";
 			this.tabPageTourE.UseVisualStyleBackColor = true;
 			// 
+			// groupBox9
+			// 
+			this.groupBox9.Controls.Add(this.cbTourEBook);
+			this.groupBox9.Dock = System.Windows.Forms.DockStyle.Top;
+			this.groupBox9.Location = new System.Drawing.Point(3, 146);
+			this.groupBox9.Name = "groupBox9";
+			this.groupBox9.Size = new System.Drawing.Size(359, 44);
+			this.groupBox9.TabIndex = 29;
+			this.groupBox9.TabStop = false;
+			this.groupBox9.Text = "Opening book";
+			// 
+			// cbTourEBook
+			// 
+			this.cbTourEBook.Cursor = System.Windows.Forms.Cursors.Hand;
+			this.cbTourEBook.Dock = System.Windows.Forms.DockStyle.Top;
+			this.cbTourEBook.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.cbTourEBook.FormattingEnabled = true;
+			this.cbTourEBook.Location = new System.Drawing.Point(3, 16);
+			this.cbTourEBook.Name = "cbTourEBook";
+			this.cbTourEBook.Size = new System.Drawing.Size(353, 21);
+			this.cbTourEBook.Sorted = true;
+			this.cbTourEBook.TabIndex = 32;
+			this.cbTourEBook.SelectedIndexChanged += new System.EventHandler(this.cbTourEBook_SelectedIndexChanged);
+			// 
 			// gbTournamentE
 			// 
-			this.gbTournamentE.Controls.Add(this.label18);
-			this.gbTournamentE.Controls.Add(this.cbTourESelected);
 			this.gbTournamentE.Controls.Add(this.label8);
 			this.gbTournamentE.Controls.Add(this.label5);
 			this.gbTournamentE.Controls.Add(this.nudTourEMin);
@@ -950,30 +980,10 @@
 			this.gbTournamentE.Dock = System.Windows.Forms.DockStyle.Top;
 			this.gbTournamentE.Location = new System.Drawing.Point(3, 3);
 			this.gbTournamentE.Name = "gbTournamentE";
-			this.gbTournamentE.Size = new System.Drawing.Size(359, 128);
+			this.gbTournamentE.Size = new System.Drawing.Size(359, 99);
 			this.gbTournamentE.TabIndex = 10;
 			this.gbTournamentE.TabStop = false;
 			this.gbTournamentE.Text = "Tournament-engines";
-			// 
-			// label18
-			// 
-			this.label18.AutoSize = true;
-			this.label18.Location = new System.Drawing.Point(168, 100);
-			this.label18.Name = "label18";
-			this.label18.Size = new System.Drawing.Size(49, 13);
-			this.label18.TabIndex = 51;
-			this.label18.Text = "Selected";
-			// 
-			// cbTourESelected
-			// 
-			this.cbTourESelected.Cursor = System.Windows.Forms.Cursors.Hand;
-			this.cbTourESelected.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.cbTourESelected.FormattingEnabled = true;
-			this.cbTourESelected.Location = new System.Drawing.Point(6, 97);
-			this.cbTourESelected.Name = "cbTourESelected";
-			this.cbTourESelected.Size = new System.Drawing.Size(156, 21);
-			this.cbTourESelected.TabIndex = 50;
-			this.cbTourESelected.SelectedIndexChanged += new System.EventHandler(this.cbTourESelected_SelectedIndexChanged);
 			// 
 			// label8
 			// 
@@ -1241,29 +1251,79 @@
             0,
             0});
 			// 
-			// groupBox9
+			// groupBox4
 			// 
-			this.groupBox9.Controls.Add(this.cbTourEBook);
-			this.groupBox9.Dock = System.Windows.Forms.DockStyle.Top;
-			this.groupBox9.Location = new System.Drawing.Point(3, 131);
-			this.groupBox9.Name = "groupBox9";
-			this.groupBox9.Size = new System.Drawing.Size(359, 44);
-			this.groupBox9.TabIndex = 29;
-			this.groupBox9.TabStop = false;
-			this.groupBox9.Text = "Opening book";
+			this.groupBox4.Controls.Add(this.cbTourESelected);
+			this.groupBox4.Dock = System.Windows.Forms.DockStyle.Top;
+			this.groupBox4.Location = new System.Drawing.Point(3, 102);
+			this.groupBox4.Name = "groupBox4";
+			this.groupBox4.Size = new System.Drawing.Size(359, 44);
+			this.groupBox4.TabIndex = 30;
+			this.groupBox4.TabStop = false;
+			this.groupBox4.Text = "Selected engine";
 			// 
-			// cbTourEBook
+			// cbTourESelected
 			// 
-			this.cbTourEBook.Cursor = System.Windows.Forms.Cursors.Hand;
-			this.cbTourEBook.Dock = System.Windows.Forms.DockStyle.Top;
-			this.cbTourEBook.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.cbTourEBook.FormattingEnabled = true;
-			this.cbTourEBook.Location = new System.Drawing.Point(3, 16);
-			this.cbTourEBook.Name = "cbTourEBook";
-			this.cbTourEBook.Size = new System.Drawing.Size(353, 21);
-			this.cbTourEBook.Sorted = true;
-			this.cbTourEBook.TabIndex = 32;
-			this.cbTourEBook.SelectedIndexChanged += new System.EventHandler(this.cbTourEBook_SelectedIndexChanged);
+			this.cbTourESelected.Cursor = System.Windows.Forms.Cursors.Hand;
+			this.cbTourESelected.Dock = System.Windows.Forms.DockStyle.Top;
+			this.cbTourESelected.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.cbTourESelected.FormattingEnabled = true;
+			this.cbTourESelected.Location = new System.Drawing.Point(3, 16);
+			this.cbTourESelected.Name = "cbTourESelected";
+			this.cbTourESelected.Size = new System.Drawing.Size(353, 21);
+			this.cbTourESelected.TabIndex = 51;
+			this.cbTourESelected.SelectedIndexChanged += new System.EventHandler(this.cbTourESelected_SelectedIndexChanged);
+			// 
+			// groupBox8
+			// 
+			this.groupBox8.Controls.Add(this.nudTourE);
+			this.groupBox8.Controls.Add(this.cbTourEMode);
+			this.groupBox8.Dock = System.Windows.Forms.DockStyle.Top;
+			this.groupBox8.Location = new System.Drawing.Point(3, 190);
+			this.groupBox8.Name = "groupBox8";
+			this.groupBox8.Size = new System.Drawing.Size(359, 61);
+			this.groupBox8.TabIndex = 31;
+			this.groupBox8.TabStop = false;
+			this.groupBox8.Text = "Time control";
+			// 
+			// nudTourE
+			// 
+			this.nudTourE.Dock = System.Windows.Forms.DockStyle.Top;
+			this.nudTourE.Location = new System.Drawing.Point(3, 37);
+			this.nudTourE.Maximum = new decimal(new int[] {
+            1000000000,
+            0,
+            0,
+            0});
+			this.nudTourE.Name = "nudTourE";
+			this.nudTourE.Size = new System.Drawing.Size(353, 20);
+			this.nudTourE.TabIndex = 51;
+			this.nudTourE.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			this.nudTourE.ThousandsSeparator = true;
+			this.nudTourE.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+			this.nudTourE.ValueChanged += new System.EventHandler(this.nudTourE_ValueChanged);
+			// 
+			// cbTourEMode
+			// 
+			this.cbTourEMode.Cursor = System.Windows.Forms.Cursors.Hand;
+			this.cbTourEMode.Dock = System.Windows.Forms.DockStyle.Top;
+			this.cbTourEMode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.cbTourEMode.FormattingEnabled = true;
+			this.cbTourEMode.Items.AddRange(new object[] {
+            "Depth",
+            "Nodes",
+            "Standard",
+            "Time"});
+			this.cbTourEMode.Location = new System.Drawing.Point(3, 16);
+			this.cbTourEMode.Name = "cbTourEMode";
+			this.cbTourEMode.Size = new System.Drawing.Size(353, 21);
+			this.cbTourEMode.Sorted = true;
+			this.cbTourEMode.TabIndex = 29;
+			this.cbTourEMode.SelectedIndexChanged += new System.EventHandler(this.cbTourEMode_SelectedIndexChanged);
 			// 
 			// FormOptions
 			// 
@@ -1312,6 +1372,7 @@
 			((System.ComponentModel.ISupportInitialize)(this.nudTourBMax)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.nudTourBRec)).EndInit();
 			this.tabPageTourE.ResumeLayout(false);
+			this.groupBox9.ResumeLayout(false);
 			this.gbTournamentE.ResumeLayout(false);
 			this.gbTournamentE.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.nudTourEMin)).EndInit();
@@ -1323,7 +1384,9 @@
 			((System.ComponentModel.ISupportInitialize)(this.nudTourPMin)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.nudTourPMax)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.nudTourPRec)).EndInit();
-			this.groupBox9.ResumeLayout(false);
+			this.groupBox4.ResumeLayout(false);
+			this.groupBox8.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this.nudTourE)).EndInit();
 			this.ResumeLayout(false);
 
 		}
@@ -1389,8 +1452,6 @@
 		private System.Windows.Forms.TabPage tabPageTourE;
 		private System.Windows.Forms.TabPage tabPageTourP;
 		private System.Windows.Forms.GroupBox gbTournamentE;
-		private System.Windows.Forms.Label label18;
-		private System.Windows.Forms.ComboBox cbTourESelected;
 		private System.Windows.Forms.Label label8;
 		private System.Windows.Forms.Label label5;
 		public System.Windows.Forms.NumericUpDown nudTourEMin;
@@ -1410,5 +1471,10 @@
 		public System.Windows.Forms.NumericUpDown nudTourPRec;
 		private System.Windows.Forms.GroupBox groupBox9;
 		private System.Windows.Forms.ComboBox cbTourEBook;
+		private System.Windows.Forms.GroupBox groupBox4;
+		private System.Windows.Forms.ComboBox cbTourESelected;
+		private System.Windows.Forms.GroupBox groupBox8;
+		private System.Windows.Forms.NumericUpDown nudTourE;
+		private System.Windows.Forms.ComboBox cbTourEMode;
 	}
 }

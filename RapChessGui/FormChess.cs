@@ -560,8 +560,6 @@ namespace RapChessGui
 			labNpsB.BackColor = CBoard.colorLabelW;
 			labBookCW.BackColor = CBoard.colorLabelW;
 			labBookCB.BackColor = CBoard.colorLabelW;
-			labPonderW.BackColor = CBoard.colorLabelW;
-			labPonderB.BackColor = CBoard.colorLabelW;
 			chartMain.PaletteCustomColors[0] = CBoard.colorChartM;
 			chartMain.PaletteCustomColors[1] = CBoard.colorChartD;
 			chartGame.PaletteCustomColors[0] = CBoard.colorChartD;
@@ -646,20 +644,20 @@ namespace RapChessGui
 				labScoreW.Text = $"Score {g.scoreS}";
 				labNodesW.Text = $"Nodes {g.nodes:N0}";
 				labNpsW.Text = $"Nps {g.GetNps():N0}";
-				labPonderW.Text = $"Ponder {g.ponderFormated}";
 				labBookCW.Text = $"Book {g.countMovesBook}";
 				labDepthW.Text = $"Depth {g.GetDepth()}";
 				labColW.BackColor = g.GetScoreColor();
+				pbHashW.Value = g.hash;
 			}
 			else
 			{
 				labScoreB.Text = $"Score {g.scoreS}";
 				labNodesB.Text = $"Nodes {g.nodes:N0}";
 				labNpsB.Text = $"Nps {g.GetNps():N0}";
-				labPonderB.Text = $"Ponder {g.ponderFormated}";
 				labBookCB.Text = $"Book {g.countMovesBook}";
 				labDepthB.Text = $"Depth {g.GetDepth()}";
 				labColB.BackColor = g.GetScoreColor();
+				pbHashB.Value = g.hash;
 			}
 			if (boardRotate ^ g.isWhite)
 			{
@@ -902,8 +900,11 @@ namespace RapChessGui
 						ShowInfo(uci.GetValue(2, uci.tokens.Length - 1), Color.Gainsboro, 2, g);
 						break;
 					}
+					string s = String.Empty;
 					ulong nps = 0;
-					if (uci.GetValue("cp", out string s))
+					if (uci.GetValue("hashfull", out s))
+						g.hash = Int32.Parse(s);
+					if (uci.GetValue("cp", out s))
 					{
 						g.scoreS = s;
 						g.scoreI = Int32.Parse(s);
@@ -1119,7 +1120,6 @@ namespace RapChessGui
 					TournamentBShow();
 					break;
 				case CGameMode.tourE:
-					TournamentEShow();
 					break;
 				case CGameMode.training:
 					TrainingShow();
@@ -1343,7 +1343,6 @@ namespace RapChessGui
 			lvTourPList.ListViewItemSorter = new ListViewComparer(1, SortOrder.Descending);
 			MatchShow();
 			TournamentBShow();
-			TournamentEShow();
 			TrainingShow();
 		}
 
@@ -2018,13 +2017,13 @@ namespace RapChessGui
 			bool f = CModeTournamentB.first == pw.book;
 			CElo.EloRating(eloW, eloL, out int newW, out int newL, bw.hisElo.list.Count, bl.hisElo.list.Count, isDraw ? 0 : 1);
 			if (isDraw)
-				CModeTournamentB.tourList.Write(pw.book, pb.book, "d",f);
+				CModeTournamentB.tourList.Write(pw.book, pb.book, "d", f);
 			else
 			{
 				if (eloW <= eloL)
 					CModeTournamentB.repetition++;
 				string r = gw.player == pw ? "w" : "b";
-				CModeTournamentB.tourList.Write(pw.book, pb.book, r,f);
+				CModeTournamentB.tourList.Write(pw.book, pb.book, r, f);
 			}
 			bool ls = bl.name == FormOptions.tourBSelected;
 			bool ws = bw.name == FormOptions.tourBSelected;
@@ -2189,14 +2188,6 @@ namespace RapChessGui
 					}
 		}
 
-		void TournamentEShow()
-		{
-			int ei = cbTourEMode.FindStringExact(CModeTournamentE.modeValue.GetLevel());
-			if (ei > 0)
-				cbTourEMode.SelectedIndex = ei;
-			nudTourE.Value = CModeTournamentE.modeValue.GetValue();
-		}
-
 		void TournamentEReset()
 		{
 			lvTourEList.Items.Clear();
@@ -2303,8 +2294,8 @@ namespace RapChessGui
 			ComClear();
 			TournamentEUpdate(CModeTournamentE.engWin);
 			TournamentEUpdate(CModeTournamentE.engLoose);
-			CModeTournamentE.modeValue.SetLevel(cbTourEMode.Text);
-			CModeTournamentE.modeValue.SetValue((int)nudTourE.Value);
+			CModeTournamentE.modeValue.SetLevel(FormOptions.tourEMode);
+			CModeTournamentE.modeValue.SetValue(FormOptions.tourEValue);
 			CModeTournamentE.book = FormOptions.tourEBook;
 			CModeTournamentE.SaveToIni();
 			SetMode(CGameMode.tourE);
@@ -2349,13 +2340,13 @@ namespace RapChessGui
 			bool f = CModeTournamentE.first == pw.engine;
 			CElo.EloRating(eloW, eloL, out int newW, out int newL, ew.hisElo.list.Count, el.hisElo.list.Count, isDraw ? 0 : 1);
 			if (isDraw)
-				CModeTournamentE.tourList.Write(pw.engine, pb.engine, "d",f);
+				CModeTournamentE.tourList.Write(pw.engine, pb.engine, "d", f);
 			else
 			{
 				if (eloW <= eloL)
 					CModeTournamentE.repetition++;
 				string r = gw.player == pw ? "w" : "b";
-				CModeTournamentE.tourList.Write(pw.engine, pb.engine, r,f);
+				CModeTournamentE.tourList.Write(pw.engine, pb.engine, r, f);
 			}
 			bool ls = el.name == FormOptions.tourESelected;
 			bool ws = ew.name == FormOptions.tourESelected;
@@ -2509,13 +2500,13 @@ namespace RapChessGui
 			bool f = CModeTournamentP.first == plw.name;
 			CElo.EloRating(eloW, eloL, out int newW, out int newL, pw.hisElo.list.Count, pl.hisElo.list.Count, isDraw ? 0 : 1);
 			if (isDraw)
-				CModeTournamentP.tourList.Write(plw.name, plb.name, "d",f);
+				CModeTournamentP.tourList.Write(plw.name, plb.name, "d", f);
 			else
 			{
 				if (eloW <= eloL)
 					CModeTournamentP.repetition++;
 				string r = pw == plw ? "w" : "b";
-				CModeTournamentP.tourList.Write(plw.name, plb.name, r,f);
+				CModeTournamentP.tourList.Write(plw.name, plb.name, r, f);
 			}
 			bool ls = pl.name == FormOptions.tourPSelected;
 			bool ws = pw.name == FormOptions.tourPSelected;
@@ -3227,15 +3218,6 @@ namespace RapChessGui
 			TournamentBSelect();
 		}
 
-		private void cbTourEMode_SelectedIndexChanged(object sender, EventArgs e)
-		{
-			CModeTournamentE.modeValue.SetLevel((sender as ComboBox).Text);
-			nudTourE.Increment = CModeTournamentE.modeValue.GetValueIncrement();
-			nudTourE.Minimum = nudTourE.Increment;
-			nudTourE.Value = Math.Max(CModeTournamentE.modeValue.GetValue(), nudTourE.Minimum);
-			toolTip1.SetToolTip(nudTourE, CModeTournamentE.modeValue.GetTip());
-		}
-
 		private void cbTourBMode_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			CModeTournamentB.modeValue.SetLevel((sender as ComboBox).Text);
@@ -3352,6 +3334,7 @@ namespace RapChessGui
 		{
 			EditSelected = (sender as Label).Text;
 		}
+
 	}
 }
 

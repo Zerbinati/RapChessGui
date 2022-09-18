@@ -22,6 +22,8 @@ namespace RapChessGui
 		public static int marginStandard = 0;
 		public static int marginTime = 5000;
 		public static int winLimit = 1;
+		public static int tourEValue = 10;
+		public static string tourEMode = "Time";
 		public static string tourBSelected = CData.none;
 		public static string tourESelected = CData.none;
 		public static string tourEBook = CData.none;
@@ -41,6 +43,8 @@ namespace RapChessGui
 			tourBSelected = FormChess.iniFile.Read("options>mode>tourB>Selected", tourBSelected);
 			tourESelected = FormChess.iniFile.Read("options>mode>tourE>Selected", tourESelected);
 			tourEBook = FormChess.iniFile.Read("options>mode>tourE>Book", tourEBook);
+			tourEMode = FormChess.iniFile.Read("options>mode>tourE>Mode", tourEMode);
+			nudTourE.Value = FormChess.iniFile.ReadDecimal("options>mode>tourE>Value", nudTourE.Value);
 			tourPSelected = FormChess.iniFile.Read("options>mode>tourP>Selected", tourPSelected);
 			colorDialog1.Color = FormChess.iniFile.ReadColor("options>interface>color", Color.Yellow);
 			rbSan.Checked = FormChess.iniFile.ReadBool("options>interface>san", rbSan.Checked);
@@ -70,6 +74,8 @@ namespace RapChessGui
 			FormChess.iniFile.Write("options>mode>tourB>Selected", tourBSelected);
 			FormChess.iniFile.Write("options>mode>tourE>Selected", tourESelected);
 			FormChess.iniFile.Write("options>mode>tourE>Book", tourEBook);
+			FormChess.iniFile.Write("options>mode>tourE>Mode", tourEMode);
+			FormChess.iniFile.Write("options>mode>tourE>Value", nudTourE.Value);
 			FormChess.iniFile.Write("options>mode>tourP>Selected", tourPSelected);
 			FormChess.iniFile.Write("options>interface>color", colorDialog1.Color);
 			FormChess.iniFile.Write("options>interface>san", rbSan.Checked);
@@ -381,5 +387,21 @@ namespace RapChessGui
 		{
 			tourEBook = cbTourEBook.Text;
 		}
+
+		private void cbTourEMode_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			CModeTournamentE.modeValue.SetLevel((sender as ComboBox).Text);
+			nudTourE.Increment = CModeTournamentE.modeValue.GetValueIncrement();
+			nudTourE.Minimum = nudTourE.Increment;
+			nudTourE.Value = Math.Max(CModeTournamentE.modeValue.GetValue(), nudTourE.Minimum);
+			tourEMode = cbTourEMode.Text;
+			tourEValue = (int)nudTourE.Value;
+		}
+
+		private void nudTourE_ValueChanged(object sender, EventArgs e)
+		{
+			tourEValue = (int)nudTourE.Value;
+		}
+
 	}
 }
