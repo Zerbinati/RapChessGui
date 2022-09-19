@@ -105,6 +105,13 @@ namespace RapChessGui
 			}
 		}
 
+		public static string GetTime()
+		{
+			DateTime dt = new DateTime();
+			dt = dt.AddMilliseconds(timer.Elapsed.TotalMilliseconds);
+			return dt.ToString("HH:mm:ss");
+		}
+
 		static string GetTimeElapsed()
 		{
 			DateTime dt = new DateTime();

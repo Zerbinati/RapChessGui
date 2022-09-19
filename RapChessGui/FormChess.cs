@@ -485,6 +485,7 @@ namespace RapChessGui
 
 		void GameLoop()
 		{
+			labGameTime.Text = FormLogEngines.GetTime();
 			CGamer g = GamerList.GamerCur();
 			string msg = g.GetMessage(out int pid);
 			if (!String.IsNullOrEmpty(msg))
@@ -900,7 +901,7 @@ namespace RapChessGui
 						ShowInfo(uci.GetValue(2, uci.tokens.Length - 1), Color.Gainsboro, 2, g);
 						break;
 					}
-					string s = String.Empty;
+					string s;
 					ulong nps = 0;
 					if (uci.GetValue("hashfull", out s))
 						g.hash = Int32.Parse(s);
@@ -1439,8 +1440,6 @@ namespace RapChessGui
 
 		public void RenderBoard(bool forced = false)
 		{
-			Stopwatch stopwatch = new Stopwatch();
-			stopwatch.Start();
 			CGamer gt, gd;
 			if (boardRotate)
 			{
@@ -1485,9 +1484,6 @@ namespace RapChessGui
 			Graphics pg = panBoard.CreateGraphics();
 			Board.RenderArrows(pg);
 			pg.Dispose();
-			stopwatch.Stop();
-			CData.fps = stopwatch.ElapsedMilliseconds > 0 ? CData.fps * 0.9 + 100 / stopwatch.ElapsedMilliseconds : 0;
-			labFPS.Text = $"FPS {Convert.ToInt32(CData.fps)}";
 		}
 
 		void RenderTaken()

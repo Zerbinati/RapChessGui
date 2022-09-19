@@ -241,7 +241,7 @@
 			this.booksToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.enginesToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
 			this.playersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.labFPS = new System.Windows.Forms.Label();
+			this.labGameTime = new System.Windows.Forms.Label();
 			this.panMenu = new System.Windows.Forms.Panel();
 			this.labEco = new System.Windows.Forms.Label();
 			this.labError = new System.Windows.Forms.Label();
@@ -2961,22 +2961,22 @@
 			this.playersToolStripMenuItem.Text = "Players";
 			this.playersToolStripMenuItem.Click += new System.EventHandler(this.playersToolStripMenuItem_Click);
 			// 
-			// labFPS
+			// labGameTime
 			// 
-			this.labFPS.Dock = System.Windows.Forms.DockStyle.Right;
-			this.labFPS.Location = new System.Drawing.Point(1035, 0);
-			this.labFPS.Name = "labFPS";
-			this.labFPS.Size = new System.Drawing.Size(87, 22);
-			this.labFPS.TabIndex = 2;
-			this.labFPS.Text = "FPS";
-			this.labFPS.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.labGameTime.Dock = System.Windows.Forms.DockStyle.Right;
+			this.labGameTime.Location = new System.Drawing.Point(1043, 0);
+			this.labGameTime.Name = "labGameTime";
+			this.labGameTime.Size = new System.Drawing.Size(79, 22);
+			this.labGameTime.TabIndex = 2;
+			this.labGameTime.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.toolTip1.SetToolTip(this.labGameTime, "Game time");
 			// 
 			// panMenu
 			// 
 			this.panMenu.BackColor = System.Drawing.SystemColors.Control;
 			this.panMenu.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
 			this.panMenu.Controls.Add(this.labEco);
-			this.panMenu.Controls.Add(this.labFPS);
+			this.panMenu.Controls.Add(this.labGameTime);
 			this.panMenu.Controls.Add(this.labError);
 			this.panMenu.Controls.Add(this.menuStrip1);
 			this.panMenu.Dock = System.Windows.Forms.DockStyle.Top;
@@ -2994,7 +2994,7 @@
 			this.labEco.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
 			this.labEco.Location = new System.Drawing.Point(299, 4);
 			this.labEco.Name = "labEco";
-			this.labEco.Size = new System.Drawing.Size(823, 22);
+			this.labEco.Size = new System.Drawing.Size(744, 22);
 			this.labEco.TabIndex = 3;
 			this.labEco.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			this.toolTip1.SetToolTip(this.labEco, "Names of chess openings variations");
@@ -4541,7 +4541,7 @@
 		private System.Windows.Forms.ToolStripMenuItem playersToolStripMenuItem1;
 		private System.Windows.Forms.ToolStripMenuItem optionsToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem logToolStripMenuItem;
-		private System.Windows.Forms.Label labFPS;
+		private System.Windows.Forms.Label labGameTime;
 		private System.Windows.Forms.Panel panMenu;
 		private System.Windows.Forms.Label labEco;
 		private System.Windows.Forms.ComboBox cbEngine;

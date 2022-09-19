@@ -57,7 +57,6 @@ namespace RapChessGui
 		public static int gamesDraw = 0;
 		public static int gamesTime = 0;
 		public static int gamesError = 0;
-		public static double fps = 0;
 		public static string eco = String.Empty;
 		public static string none = "None";
 		public static CGameState gameState = CGameState.normal;

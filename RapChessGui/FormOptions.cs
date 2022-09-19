@@ -43,8 +43,8 @@ namespace RapChessGui
 			tourBSelected = FormChess.iniFile.Read("options>mode>tourB>Selected", tourBSelected);
 			tourESelected = FormChess.iniFile.Read("options>mode>tourE>Selected", tourESelected);
 			tourEBook = FormChess.iniFile.Read("options>mode>tourE>Book", tourEBook);
-			tourEMode = FormChess.iniFile.Read("options>mode>tourE>Mode", tourEMode);
 			nudTourE.Value = FormChess.iniFile.ReadDecimal("options>mode>tourE>Value", nudTourE.Value);
+			cbTourEMode.Text = FormChess.iniFile.Read("options>mode>tourE>Mode", tourEMode);
 			tourPSelected = FormChess.iniFile.Read("options>mode>tourP>Selected", tourPSelected);
 			colorDialog1.Color = FormChess.iniFile.ReadColor("options>interface>color", Color.Yellow);
 			rbSan.Checked = FormChess.iniFile.ReadBool("options>interface>san", rbSan.Checked);
