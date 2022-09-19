@@ -86,8 +86,13 @@
 			this.label16 = new System.Windows.Forms.Label();
 			this.nudTourBRec = new System.Windows.Forms.NumericUpDown();
 			this.tabPageTourE = new System.Windows.Forms.TabPage();
+			this.groupBox8 = new System.Windows.Forms.GroupBox();
+			this.nudTourE = new System.Windows.Forms.NumericUpDown();
+			this.cbTourEMode = new System.Windows.Forms.ComboBox();
 			this.groupBox9 = new System.Windows.Forms.GroupBox();
 			this.cbTourEBook = new System.Windows.Forms.ComboBox();
+			this.groupBox4 = new System.Windows.Forms.GroupBox();
+			this.cbTourESelected = new System.Windows.Forms.ComboBox();
 			this.gbTournamentE = new System.Windows.Forms.GroupBox();
 			this.label8 = new System.Windows.Forms.Label();
 			this.label5 = new System.Windows.Forms.Label();
@@ -107,11 +112,6 @@
 			this.labTourP = new System.Windows.Forms.Label();
 			this.label2 = new System.Windows.Forms.Label();
 			this.nudTourPRec = new System.Windows.Forms.NumericUpDown();
-			this.groupBox4 = new System.Windows.Forms.GroupBox();
-			this.cbTourESelected = new System.Windows.Forms.ComboBox();
-			this.groupBox8 = new System.Windows.Forms.GroupBox();
-			this.nudTourE = new System.Windows.Forms.NumericUpDown();
-			this.cbTourEMode = new System.Windows.Forms.ComboBox();
 			this.gbInterface.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.nudFontSize)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.nudHistory)).BeginInit();
@@ -135,7 +135,10 @@
 			((System.ComponentModel.ISupportInitialize)(this.nudTourBMax)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.nudTourBRec)).BeginInit();
 			this.tabPageTourE.SuspendLayout();
+			this.groupBox8.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.nudTourE)).BeginInit();
 			this.groupBox9.SuspendLayout();
+			this.groupBox4.SuspendLayout();
 			this.gbTournamentE.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.nudTourEMin)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.nudTourEMax)).BeginInit();
@@ -145,9 +148,6 @@
 			((System.ComponentModel.ISupportInitialize)(this.nudTourPMin)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.nudTourPMax)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.nudTourPRec)).BeginInit();
-			this.groupBox4.SuspendLayout();
-			this.groupBox8.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.nudTourE)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// butDefault
@@ -944,6 +944,57 @@
 			this.tabPageTourE.Text = "Tournament engines";
 			this.tabPageTourE.UseVisualStyleBackColor = true;
 			// 
+			// groupBox8
+			// 
+			this.groupBox8.Controls.Add(this.nudTourE);
+			this.groupBox8.Controls.Add(this.cbTourEMode);
+			this.groupBox8.Dock = System.Windows.Forms.DockStyle.Top;
+			this.groupBox8.Location = new System.Drawing.Point(3, 190);
+			this.groupBox8.Name = "groupBox8";
+			this.groupBox8.Size = new System.Drawing.Size(359, 61);
+			this.groupBox8.TabIndex = 31;
+			this.groupBox8.TabStop = false;
+			this.groupBox8.Text = "Time control";
+			// 
+			// nudTourE
+			// 
+			this.nudTourE.Dock = System.Windows.Forms.DockStyle.Top;
+			this.nudTourE.Location = new System.Drawing.Point(3, 37);
+			this.nudTourE.Maximum = new decimal(new int[] {
+            1000000000,
+            0,
+            0,
+            0});
+			this.nudTourE.Name = "nudTourE";
+			this.nudTourE.Size = new System.Drawing.Size(353, 20);
+			this.nudTourE.TabIndex = 51;
+			this.nudTourE.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			this.nudTourE.ThousandsSeparator = true;
+			this.nudTourE.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+			this.nudTourE.ValueChanged += new System.EventHandler(this.nudTourE_ValueChanged);
+			// 
+			// cbTourEMode
+			// 
+			this.cbTourEMode.Cursor = System.Windows.Forms.Cursors.Hand;
+			this.cbTourEMode.Dock = System.Windows.Forms.DockStyle.Top;
+			this.cbTourEMode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.cbTourEMode.FormattingEnabled = true;
+			this.cbTourEMode.Items.AddRange(new object[] {
+            "Depth",
+            "Nodes",
+            "Standard",
+            "Time"});
+			this.cbTourEMode.Location = new System.Drawing.Point(3, 16);
+			this.cbTourEMode.Name = "cbTourEMode";
+			this.cbTourEMode.Size = new System.Drawing.Size(353, 21);
+			this.cbTourEMode.Sorted = true;
+			this.cbTourEMode.TabIndex = 29;
+			this.cbTourEMode.SelectedIndexChanged += new System.EventHandler(this.cbTourEMode_SelectedIndexChanged);
+			// 
 			// groupBox9
 			// 
 			this.groupBox9.Controls.Add(this.cbTourEBook);
@@ -967,6 +1018,29 @@
 			this.cbTourEBook.Sorted = true;
 			this.cbTourEBook.TabIndex = 32;
 			this.cbTourEBook.SelectedIndexChanged += new System.EventHandler(this.cbTourEBook_SelectedIndexChanged);
+			// 
+			// groupBox4
+			// 
+			this.groupBox4.Controls.Add(this.cbTourESelected);
+			this.groupBox4.Dock = System.Windows.Forms.DockStyle.Top;
+			this.groupBox4.Location = new System.Drawing.Point(3, 102);
+			this.groupBox4.Name = "groupBox4";
+			this.groupBox4.Size = new System.Drawing.Size(359, 44);
+			this.groupBox4.TabIndex = 30;
+			this.groupBox4.TabStop = false;
+			this.groupBox4.Text = "Selected engine";
+			// 
+			// cbTourESelected
+			// 
+			this.cbTourESelected.Cursor = System.Windows.Forms.Cursors.Hand;
+			this.cbTourESelected.Dock = System.Windows.Forms.DockStyle.Top;
+			this.cbTourESelected.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.cbTourESelected.FormattingEnabled = true;
+			this.cbTourESelected.Location = new System.Drawing.Point(3, 16);
+			this.cbTourESelected.Name = "cbTourESelected";
+			this.cbTourESelected.Size = new System.Drawing.Size(353, 21);
+			this.cbTourESelected.TabIndex = 51;
+			this.cbTourESelected.SelectedIndexChanged += new System.EventHandler(this.cbTourESelected_SelectedIndexChanged);
 			// 
 			// gbTournamentE
 			// 
@@ -1251,80 +1325,6 @@
             0,
             0});
 			// 
-			// groupBox4
-			// 
-			this.groupBox4.Controls.Add(this.cbTourESelected);
-			this.groupBox4.Dock = System.Windows.Forms.DockStyle.Top;
-			this.groupBox4.Location = new System.Drawing.Point(3, 102);
-			this.groupBox4.Name = "groupBox4";
-			this.groupBox4.Size = new System.Drawing.Size(359, 44);
-			this.groupBox4.TabIndex = 30;
-			this.groupBox4.TabStop = false;
-			this.groupBox4.Text = "Selected engine";
-			// 
-			// cbTourESelected
-			// 
-			this.cbTourESelected.Cursor = System.Windows.Forms.Cursors.Hand;
-			this.cbTourESelected.Dock = System.Windows.Forms.DockStyle.Top;
-			this.cbTourESelected.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.cbTourESelected.FormattingEnabled = true;
-			this.cbTourESelected.Location = new System.Drawing.Point(3, 16);
-			this.cbTourESelected.Name = "cbTourESelected";
-			this.cbTourESelected.Size = new System.Drawing.Size(353, 21);
-			this.cbTourESelected.TabIndex = 51;
-			this.cbTourESelected.SelectedIndexChanged += new System.EventHandler(this.cbTourESelected_SelectedIndexChanged);
-			// 
-			// groupBox8
-			// 
-			this.groupBox8.Controls.Add(this.nudTourE);
-			this.groupBox8.Controls.Add(this.cbTourEMode);
-			this.groupBox8.Dock = System.Windows.Forms.DockStyle.Top;
-			this.groupBox8.Location = new System.Drawing.Point(3, 190);
-			this.groupBox8.Name = "groupBox8";
-			this.groupBox8.Size = new System.Drawing.Size(359, 61);
-			this.groupBox8.TabIndex = 31;
-			this.groupBox8.TabStop = false;
-			this.groupBox8.Text = "Time control";
-			// 
-			// nudTourE
-			// 
-			this.nudTourE.Dock = System.Windows.Forms.DockStyle.Top;
-			this.nudTourE.Location = new System.Drawing.Point(3, 37);
-			this.nudTourE.Maximum = new decimal(new int[] {
-            1000000000,
-            0,
-            0,
-            0});
-			this.nudTourE.Name = "nudTourE";
-			this.nudTourE.Size = new System.Drawing.Size(353, 20);
-			this.nudTourE.TabIndex = 51;
-			this.nudTourE.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-			this.nudTourE.ThousandsSeparator = true;
-			this.nudTourE.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-			this.nudTourE.ValueChanged += new System.EventHandler(this.nudTourE_ValueChanged);
-			// 
-			// cbTourEMode
-			// 
-			this.cbTourEMode.Cursor = System.Windows.Forms.Cursors.Hand;
-			this.cbTourEMode.Dock = System.Windows.Forms.DockStyle.Top;
-			this.cbTourEMode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.cbTourEMode.FormattingEnabled = true;
-			this.cbTourEMode.Items.AddRange(new object[] {
-            "Depth",
-            "Nodes",
-            "Standard",
-            "Time"});
-			this.cbTourEMode.Location = new System.Drawing.Point(3, 16);
-			this.cbTourEMode.Name = "cbTourEMode";
-			this.cbTourEMode.Size = new System.Drawing.Size(353, 21);
-			this.cbTourEMode.Sorted = true;
-			this.cbTourEMode.TabIndex = 29;
-			this.cbTourEMode.SelectedIndexChanged += new System.EventHandler(this.cbTourEMode_SelectedIndexChanged);
-			// 
 			// FormOptions
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1372,7 +1372,10 @@
 			((System.ComponentModel.ISupportInitialize)(this.nudTourBMax)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.nudTourBRec)).EndInit();
 			this.tabPageTourE.ResumeLayout(false);
+			this.groupBox8.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this.nudTourE)).EndInit();
 			this.groupBox9.ResumeLayout(false);
+			this.groupBox4.ResumeLayout(false);
 			this.gbTournamentE.ResumeLayout(false);
 			this.gbTournamentE.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.nudTourEMin)).EndInit();
@@ -1384,9 +1387,6 @@
 			((System.ComponentModel.ISupportInitialize)(this.nudTourPMin)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.nudTourPMax)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.nudTourPRec)).EndInit();
-			this.groupBox4.ResumeLayout(false);
-			this.groupBox8.ResumeLayout(false);
-			((System.ComponentModel.ISupportInitialize)(this.nudTourE)).EndInit();
 			this.ResumeLayout(false);
 
 		}
