@@ -16,6 +16,7 @@ namespace RapChessGui
 		int indexFirst = -1;
 		int tournament = -1;
 		static CEngine engine = null;
+		public static string engineName = String.Empty;
 		public static CProcess processTest = null;
 		public static CProcess processOptions = null;
 		readonly static COptionList optionList = new COptionList();
@@ -200,17 +201,14 @@ namespace RapChessGui
 			StartTestOptions();
 		}
 
-		void SelectEngine(CEngine e)
-		{
-			engine = e;
-			SelectEngine();
-		}
-
 		void SelectEngine(string name)
 		{
 			engine = FormChess.engineList.GetEngineByName(name);
-			if (engine != null)
-				SelectEngine(engine);
+			engineName = String.Empty;
+			if (engine == null)
+				return;
+			engineName = engine.name;
+			SelectEngine();
 		}
 
 		void SelectEngines(int first, int last, bool t)
@@ -336,8 +334,7 @@ namespace RapChessGui
 			cbFileList.Items.Insert(0, "None");
 			cbFileList.SelectedIndex = 0;
 			UpdateListBox();
-			if (listBox1.Items.Count > 0)
-				listBox1.SetSelected(0, true);
+			listBox1.SelectedIndex = listBox1.FindString(engineName);
 		}
 
 		private void butClearHistory_Click(object sender, EventArgs e)

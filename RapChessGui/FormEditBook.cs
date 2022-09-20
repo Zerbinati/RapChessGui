@@ -8,8 +8,9 @@ namespace RapChessGui
 {
 	public partial class FormEditBook : Form
 	{
-		public static CBook book = null;
 		readonly FormLogBook formLogBook = new FormLogBook();
+		public static string bookName = String.Empty;
+		public static CBook book = null;
 
 		public FormEditBook()
 		{
@@ -29,8 +30,10 @@ namespace RapChessGui
 		void SelectBook(string name)
 		{
 			book = FormChess.bookList.GetBook(name);
+			bookName = String.Empty;
 			if (book == null)
 				return;
+			bookName = book.name;
 			tbReaderName.Text = book.name;
 			cbBookreaderList.Text = book.file;
 			tbParameters.Text = book.parameters;
@@ -40,16 +43,10 @@ namespace RapChessGui
 
 		void UpdateListBox()
 		{
-			int sl = listBox1.SelectedIndex;
 			listBox1.Items.Clear();
 			foreach (CBook b in FormChess.bookList.list)
 				listBox1.Items.Add(b.name);
 			gbBooks.Text = $"Books {listBox1.Items.Count}";
-			if (listBox1.Items.Count > 0)
-				if ((sl < listBox1.Items.Count) && (sl > 0))
-					listBox1.SelectedIndex = sl;
-				else
-					listBox1.SelectedIndex = 0;
 		}
 
 		private void ListBox1_SelectedValueChanged(object sender, EventArgs e)
@@ -116,6 +113,7 @@ namespace RapChessGui
 			cbBookreaderList.Items.Insert(0, "None");
 			cbBookreaderList.SelectedIndex = 0;
 			UpdateListBox();
+			listBox1.SelectedIndex = listBox1.FindString(bookName);
 		}
 
 		private void listBox1_DrawItem(object sender, DrawItemEventArgs e)

@@ -467,6 +467,20 @@ namespace RapChessGui
 
 		#region main
 
+		void ShowFormEngine(string engineName = "")
+		{
+			FormEditEngine.engineName = engineName;
+			formEngine.ShowDialog(this);
+			Reset();
+		}
+
+		void ShowFormBook(string bookName = "")
+		{
+			FormEditBook.bookName = bookName;
+			formBook.ShowDialog(this);
+			Reset();
+		}
+
 		void MakeBoardSquare()
 		{
 			splitContainerBoard.SplitterDistance = panBoard.Height;
@@ -2739,8 +2753,7 @@ namespace RapChessGui
 
 		private void booksToolStripMenuItem1_Click(object sender, EventArgs e)
 		{
-			formBook.ShowDialog(this);
-			Reset();
+			ShowFormBook();
 		}
 
 		private void playersToolStripMenuItem1_Click(object sender, EventArgs e)
@@ -2751,8 +2764,7 @@ namespace RapChessGui
 
 		private void enginesToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			formEngine.ShowDialog(this);
-			Reset();
+			ShowFormEngine();
 		}
 
 		private void labError_Click(object sender, EventArgs e)
@@ -3331,6 +3343,15 @@ namespace RapChessGui
 			EditSelected = (sender as Label).Text;
 		}
 
+		private void EngineClick(object sender, EventArgs e)
+		{
+			ShowFormEngine((sender as Label).Text);
+		}
+
+		private void BookClick(object sender, EventArgs e)
+		{
+			ShowFormBook((sender as Label).Text);
+		}
 	}
 }
 

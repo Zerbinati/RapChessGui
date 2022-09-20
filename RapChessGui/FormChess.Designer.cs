@@ -320,6 +320,7 @@
 			this.columnHeader15 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeader16 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.tlpWhite = new System.Windows.Forms.TableLayoutPanel();
+			this.pbHashW = new System.Windows.Forms.ProgressBar();
 			this.lvMovesB = new System.Windows.Forms.ListView();
 			this.columnHeader17 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeader18 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -328,10 +329,9 @@
 			this.columnHeader21 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeader22 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.tlpBlack = new System.Windows.Forms.TableLayoutPanel();
+			this.pbHashB = new System.Windows.Forms.ProgressBar();
 			this.timerAnimation = new System.Windows.Forms.Timer(this.components);
 			this.fileSystemWatcher1 = new System.IO.FileSystemWatcher();
-			this.pbHashW = new System.Windows.Forms.ProgressBar();
-			this.pbHashB = new System.Windows.Forms.ProgressBar();
 			this.tabControl1.SuspendLayout();
 			this.tabPageGame.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.chartGame)).BeginInit();
@@ -2806,21 +2806,21 @@
 			// booksToolStripMenuItem1
 			// 
 			this.booksToolStripMenuItem1.Name = "booksToolStripMenuItem1";
-			this.booksToolStripMenuItem1.Size = new System.Drawing.Size(115, 22);
+			this.booksToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
 			this.booksToolStripMenuItem1.Text = "Books";
 			this.booksToolStripMenuItem1.Click += new System.EventHandler(this.booksToolStripMenuItem1_Click);
 			// 
 			// enginesToolStripMenuItem
 			// 
 			this.enginesToolStripMenuItem.Name = "enginesToolStripMenuItem";
-			this.enginesToolStripMenuItem.Size = new System.Drawing.Size(115, 22);
+			this.enginesToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
 			this.enginesToolStripMenuItem.Text = "Engines";
 			this.enginesToolStripMenuItem.Click += new System.EventHandler(this.enginesToolStripMenuItem_Click);
 			// 
 			// playersToolStripMenuItem1
 			// 
 			this.playersToolStripMenuItem1.Name = "playersToolStripMenuItem1";
-			this.playersToolStripMenuItem1.Size = new System.Drawing.Size(115, 22);
+			this.playersToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
 			this.playersToolStripMenuItem1.Text = "Players";
 			this.playersToolStripMenuItem1.Click += new System.EventHandler(this.playersToolStripMenuItem1_Click);
 			// 
@@ -3145,6 +3145,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.labEngineW.BackColor = System.Drawing.Color.Olive;
 			this.labEngineW.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+			this.labEngineW.Cursor = System.Windows.Forms.Cursors.Hand;
 			this.labEngineW.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
 			this.labEngineW.ForeColor = System.Drawing.Color.White;
 			this.labEngineW.Location = new System.Drawing.Point(216, 0);
@@ -3154,6 +3155,7 @@
 			this.labEngineW.TabIndex = 13;
 			this.labEngineW.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			this.toolTip1.SetToolTip(this.labEngineW, "Chess engine name");
+			this.labEngineW.Click += new System.EventHandler(this.EngineClick);
 			// 
 			// labWhite
 			// 
@@ -3179,6 +3181,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.labBookNW.BackColor = System.Drawing.Color.Olive;
 			this.labBookNW.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+			this.labBookNW.Cursor = System.Windows.Forms.Cursors.Hand;
 			this.labBookNW.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
 			this.labBookNW.ForeColor = System.Drawing.Color.White;
 			this.labBookNW.Location = new System.Drawing.Point(792, 0);
@@ -3188,6 +3191,7 @@
 			this.labBookNW.TabIndex = 15;
 			this.labBookNW.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			this.toolTip1.SetToolTip(this.labBookNW, "Chess opening book name");
+			this.labBookNW.Click += new System.EventHandler(this.BookClick);
 			// 
 			// labProtocolW
 			// 
@@ -3349,6 +3353,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.labBookNB.BackColor = System.Drawing.Color.Olive;
 			this.labBookNB.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+			this.labBookNB.Cursor = System.Windows.Forms.Cursors.Hand;
 			this.labBookNB.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
 			this.labBookNB.ForeColor = System.Drawing.Color.White;
 			this.labBookNB.Location = new System.Drawing.Point(792, 0);
@@ -3358,6 +3363,7 @@
 			this.labBookNB.TabIndex = 15;
 			this.labBookNB.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			this.toolTip1.SetToolTip(this.labBookNB, "Chess opening book name");
+			this.labBookNB.Click += new System.EventHandler(this.BookClick);
 			// 
 			// labBlack
 			// 
@@ -3383,6 +3389,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.labEngineB.BackColor = System.Drawing.Color.Olive;
 			this.labEngineB.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+			this.labEngineB.Cursor = System.Windows.Forms.Cursors.Hand;
 			this.labEngineB.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
 			this.labEngineB.ForeColor = System.Drawing.Color.White;
 			this.labEngineB.Location = new System.Drawing.Point(216, 0);
@@ -3392,6 +3399,7 @@
 			this.labEngineB.TabIndex = 13;
 			this.labEngineB.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			this.toolTip1.SetToolTip(this.labEngineB, "Chess engine name");
+			this.labEngineB.Click += new System.EventHandler(this.EngineClick);
 			// 
 			// combMainMode
 			// 
@@ -4202,6 +4210,17 @@
 			this.tlpWhite.Size = new System.Drawing.Size(1180, 40);
 			this.tlpWhite.TabIndex = 34;
 			// 
+			// pbHashW
+			// 
+			this.pbHashW.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.pbHashW.Location = new System.Drawing.Point(987, 23);
+			this.pbHashW.MarqueeAnimationSpeed = 0;
+			this.pbHashW.Maximum = 1000;
+			this.pbHashW.Name = "pbHashW";
+			this.pbHashW.Size = new System.Drawing.Size(190, 14);
+			this.pbHashW.Step = 1;
+			this.pbHashW.TabIndex = 27;
+			// 
 			// lvMovesB
 			// 
 			this.lvMovesB.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
@@ -4294,6 +4313,17 @@
 			this.tlpBlack.Size = new System.Drawing.Size(1180, 40);
 			this.tlpBlack.TabIndex = 35;
 			// 
+			// pbHashB
+			// 
+			this.pbHashB.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.pbHashB.Location = new System.Drawing.Point(987, 23);
+			this.pbHashB.MarqueeAnimationSpeed = 0;
+			this.pbHashB.Maximum = 1000;
+			this.pbHashB.Name = "pbHashB";
+			this.pbHashB.Size = new System.Drawing.Size(190, 14);
+			this.pbHashB.Step = 1;
+			this.pbHashB.TabIndex = 27;
+			// 
 			// timerAnimation
 			// 
 			this.timerAnimation.Interval = 1;
@@ -4308,28 +4338,6 @@
 			this.fileSystemWatcher1.Created += new System.IO.FileSystemEventHandler(this.fileSystemWatcher1_Changed);
 			this.fileSystemWatcher1.Deleted += new System.IO.FileSystemEventHandler(this.fileSystemWatcher1_Changed);
 			this.fileSystemWatcher1.Renamed += new System.IO.RenamedEventHandler(this.fileSystemWatcher1_Renamed);
-			// 
-			// pbHashW
-			// 
-			this.pbHashW.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.pbHashW.Location = new System.Drawing.Point(987, 23);
-			this.pbHashW.MarqueeAnimationSpeed = 0;
-			this.pbHashW.Maximum = 1000;
-			this.pbHashW.Name = "pbHashW";
-			this.pbHashW.Size = new System.Drawing.Size(190, 14);
-			this.pbHashW.Step = 1;
-			this.pbHashW.TabIndex = 27;
-			// 
-			// pbHashB
-			// 
-			this.pbHashB.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.pbHashB.Location = new System.Drawing.Point(987, 23);
-			this.pbHashB.MarqueeAnimationSpeed = 0;
-			this.pbHashB.Maximum = 1000;
-			this.pbHashB.Name = "pbHashB";
-			this.pbHashB.Size = new System.Drawing.Size(190, 14);
-			this.pbHashB.Step = 1;
-			this.pbHashB.TabIndex = 27;
 			// 
 			// FormChess
 			// 
