@@ -104,18 +104,14 @@ namespace RapChessGui
 
 		public static CEngine SelectSecond(CEngine engine)
 		{
-			engineList.SortPosition(engine);
-			List<CEngine> el = new List<CEngine>();
-			foreach (CEngine e in engineList.list)
-				if (e != engine)
-					el.Add(e);
-			if (el.Count == 0)
+			if (engineList.list.Count == 0)
 				return engine;
+			engineList.SetEloDistance(engine);
 			double bstScore = 0.0;
 			CEngine bstEngine = engine;
-			for (int n = 0; n < el.Count - 1; n++)
+			for (int n = 1; n < engineList.list.Count - 1; n++)
 			{
-				CEngine e = el[n];
+				CEngine e = engineList.list[n];
 				double curScore = EvaluateOpponent(engine, e);
 				if (bstScore < curScore)
 				{
@@ -131,18 +127,18 @@ namespace RapChessGui
 		{
 			int fElo = first.GetElo();
 			int sElo = second.GetElo();
-			int delElo = Math.Abs(sElo - fElo);
-			double ratioElo = (3000.0 - delElo) / 3000.0;
-			int sGames = tourList.CountGames(second.name);
+			double ratioDistance = (engineList.list.Count - second.position) / (double)engineList.list.Count;
+			int allGames = tourList.CountGames(second.name);
 			tourList.CountGames(first.name, second.name, out int rw, out int rl, out int rd);
-			double games = rw + rl + rd + 1.0;
-			double r = (rw * 2.0 + rd) / games - 1.0;
-			double elo = fElo;
+			int curGames = rw + rl + rd;
+			double r = ((rw * 2.0 + rd) - curGames) / (curGames + 1.0);
+			double ratioElo = (3000.0 - Math.Abs(sElo - fElo)) / 3000.0;
 			if ((r > 0) && (fElo < sElo))
-				elo -= (fElo * r);
+				ratioElo += r;
 			if ((r < 0) && (fElo > sElo))
-				elo -= ((3000.0 - fElo) * r);
-			return (Math.Abs(sElo - elo) / 3000.0 + (sGames - games) / sGames) * ratioElo;
+				ratioElo -= r;
+			double ratioGames = (allGames - curGames) / (double)allGames;
+			return ratioElo + ratioGames + ratioDistance;
 		}
 
 		public static void SetRepeition(CEngine e, CEngine o)

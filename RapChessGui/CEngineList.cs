@@ -312,17 +312,17 @@ namespace RapChessGui
 			});
 		}
 
-		public void SortPosition(CEngine engine)
+		public void SetEloDistance(CEngine engine)
 		{
 			SortElo();
-			FillPosition();
-			int position = engine.position;
-			foreach (CEngine e in list)
-				e.position = Math.Abs(position - e.position);
+			int elo = engine.GetElo();
+			for (int n = 0; n < list.Count; n++)
+				list[n].position = Math.Abs(elo - list[n].GetElo());
 			list.Sort(delegate (CEngine e1, CEngine e2)
 			{
 				return e1.position - e2.position;
 			});
+			FillPosition();
 		}
 
 		public void FillPosition()
