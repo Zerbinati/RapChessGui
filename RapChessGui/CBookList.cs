@@ -108,20 +108,19 @@ namespace RapChessGui
 
 	}
 
-	public class CBookList
+	public class CBookList: List<CBook>
 	{
 		public static string def = "Eco";
-		public List<CBook> list = new List<CBook>();
 		public static CRapIni iniFile = new CRapIni(@"Ini\books.ini");
 
-		public void Add(CBook b)
+		public void AddBook(CBook b)
 		{
 			b.name = b.GetName();
 			int index = GetIndex(b.name);
 			if (index >= 0)
-				list[index] = b;
+				this[index] = b;
 			else
-				list.Add(b);
+				Add(b);
 		}
 
 		public void DeleteBook(string name)
@@ -129,20 +128,20 @@ namespace RapChessGui
 			iniFile.DeleteKey($"book>{name}");
 			int i = GetIndex(name);
 			if (i >= 0)
-				list.RemoveAt(i);
+				RemoveAt(i);
 		}
 
 		public void FillPosition()
 		{
-			for (int n = 0; n < list.Count; n++)
-				list[n].position = n;
+			for (int n = 0; n < Count; n++)
+				this[n].position = n;
 		}
 
 		public int GetIndex(string name)
 		{
-			for (int n = 0; n < list.Count; n++)
+			for (int n = 0; n < Count; n++)
 			{
-				CBook br = list[n];
+				CBook br = this[n];
 				if (br.name == name)
 					return n;
 			}
@@ -155,29 +154,29 @@ namespace RapChessGui
 			int max = CModeTournamentB.maxElo;
 			if (index < 0)
 				index = 0;
-			if (index >= list.Count)
-				index = list.Count - 1;
+			if (index >= Count)
+				index = Count - 1;
 			int range = max - min;
-			index = list.Count - index;
-			return min + Convert.ToInt32((range * (index + 1)) / (list.Count + 2));
+			index = Count - index;
+			return min + Convert.ToInt32((range * (index + 1)) / (Count + 2));
 		}
 
 		public int LoadFromIni()
 		{
-			list.Clear();
+			Clear();
 			List<string> bl = CBookList.iniFile.ReadKeyList("book");
 			foreach (string name in bl)
 			{
 				CBook br = new CBook(name);
 				br.LoadFromIni();
-				list.Add(br);
+				Add(br);
 			}
 			return bl.Count;
 		}
 
 		public CBook GetBook(string name)
 		{
-			foreach (CBook br in list)
+			foreach (CBook br in this)
 				if (br.name == name)
 					return br;
 			return null;
@@ -186,7 +185,7 @@ namespace RapChessGui
 		public void SaveToIni()
 		{
 			iniFile.DeleteKey("book");
-			foreach (CBook b in list)
+			foreach (CBook b in this)
 				b.SaveToIni();
 		}
 
@@ -194,18 +193,18 @@ namespace RapChessGui
 		{
 			SortElo();
 			int i = GetIndex(b.name);
-			for (int n = 0; n < list.Count - 1; n++)
+			for (int n = 0; n < Count - 1; n++)
 			{
 				if (back)
 					i--;
 				else
 					i++;
 				if (rotate)
-					i = (i + list.Count) % list.Count;
+					i = (i + Count) % Count;
 				else
-					if ((i < 0) || (i >= list.Count))
+					if ((i < 0) || (i >= Count))
 					return null;
-				b = list[i];
+				b = this[i];
 				if (b.tournament > 0)
 					break;
 			}
@@ -214,9 +213,9 @@ namespace RapChessGui
 
 		void TryDel(string dir)
 		{
-			for (int n = list.Count - 1; n >= 0; n--)
+			for (int n = Count - 1; n >= 0; n--)
 			{
-				CBook book = list[n];
+				CBook book = this[n];
 				if (book.parameters.IndexOf(dir) == 0)
 					if (!book.FileExists() || !book.ParametersExists())
 						DeleteBook(book.name);
@@ -225,7 +224,7 @@ namespace RapChessGui
 
 		bool ParametersExists(string p)
 		{
-			foreach (CBook book in list)
+			foreach (CBook book in this)
 				if (book.ParametersExists(p))
 					return true;
 			return false;
@@ -236,9 +235,9 @@ namespace RapChessGui
 			SortElo();
 			FillPosition();
 			int position = book.position;
-			foreach (CBook b in list)
+			foreach (CBook b in this)
 				b.position = Math.Abs(position - b.position);
-			list.Sort(delegate (CBook b1, CBook b2)
+			Sort(delegate (CBook b1, CBook b2)
 			{
 				return b1.position - b2.position;
 			});
@@ -246,7 +245,7 @@ namespace RapChessGui
 
 		public void SortElo()
 		{
-			list.Sort(delegate (CBook b1, CBook b2)
+			Sort(delegate (CBook b1, CBook b2)
 			{
 				int result = b2.GetElo() - b1.GetElo();
 				if (result != 0)
@@ -266,7 +265,7 @@ namespace RapChessGui
 					b.file = bf;
 					b.parameters = bp;
 					b.name = b.GetName();
-					list.Add(b);
+					Add(b);
 			}
 		}
 

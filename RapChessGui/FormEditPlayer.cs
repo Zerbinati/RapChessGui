@@ -167,14 +167,14 @@ namespace RapChessGui
 			FormOptions.SetFontSize(this);
 			cbEngineList.Items.Clear();
 			cbEngineList.Sorted = true;
-			foreach (CEngine engine in FormChess.engineList.list)
+			foreach (CEngine engine in FormChess.engineList)
 				cbEngineList.Items.Add(engine.name);
 			cbEngineList.Sorted = false;
 			cbEngineList.Items.Insert(0, "None");
 			cbEngineList.SelectedIndex = 0;
 			cbBookList.Items.Clear();
 			cbBookList.Sorted = true;
-			foreach (CBook book in FormChess.bookList.list)
+			foreach (CBook book in FormChess.bookList)
 				cbBookList.Items.Add(book.name);
 			cbBookList.Sorted = false;
 			cbBookList.Items.Insert(0, "None");

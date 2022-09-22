@@ -234,7 +234,7 @@ namespace RapChessGui
 		void UpdateListBox()
 		{
 			listBox1.Items.Clear();
-			foreach (CEngine e in FormChess.engineList.list)
+			foreach (CEngine e in FormChess.engineList)
 				listBox1.Items.Add(e.name);
 			gbEngines.Text = $"Engines {listBox1.Items.Count}";
 		}
@@ -297,7 +297,7 @@ namespace RapChessGui
 		{
 			string name = tbEngineName.Text;
 			CEngine engine = new CEngine(name);
-			FormChess.engineList.list.Add(engine);
+			FormChess.engineList.Add(engine);
 			SaveToIni(engine);
 			MessageBox.Show($"Chess {engine.name} has been created");
 			CData.reset = true;

@@ -305,7 +305,7 @@ namespace RapChessGui
 			if (testTask.Status != TaskStatus.Running)
 				testTask = Task.Run(() =>
 				{
-					foreach (CEngine e in FormChess.engineList.list)
+					foreach (CEngine e in engineList)
 						if ((e.FileExists() && e.protocol == CProtocol.auto))
 						{
 							testEngine = e;
@@ -1273,7 +1273,7 @@ namespace RapChessGui
 			cbTourBEngine.Sorted = true;
 			cbTrainerEngine.Sorted = true;
 			cbTrainedEngine.Sorted = true;
-			foreach (CEngine e in engineList.list)
+			foreach (CEngine e in engineList)
 				if (e.FileExists())
 				{
 					cbEngine.Items.Add(e.name);
@@ -1315,7 +1315,7 @@ namespace RapChessGui
 			cbMatchBook2.Sorted = true;
 			cbTrainerBook.Sorted = true;
 			cbTrainedBook.Sorted = true;
-			foreach (CBook b in bookList.list)
+			foreach (CBook b in bookList)
 				if (b.FileExists())
 				{
 					cbBook.Items.Add(b.name);
@@ -2057,7 +2057,7 @@ namespace RapChessGui
 		{
 			lvTourBList.Items.Clear();
 			CBookList bookList = CModeTournamentB.FillList();
-			foreach (CBook b in bookList.list)
+			foreach (CBook b in bookList)
 			{
 				ListViewItem lvi = new ListViewItem(new[] { b.name, b.elo, b.GetDeltaElo().ToString() });
 				lvi.BackColor = b.hisElo.GetColor();
@@ -2109,7 +2109,7 @@ namespace RapChessGui
 			bookList.FillPosition();
 			int countGames = 0;
 			int opponents = 0;
-			foreach (CBook b in bookList.list)
+			foreach (CBook b in bookList)
 			{
 				int count = CModeTournamentB.tourList.CountGames(name, b.name, out int gw, out int gl, out int gd);
 				if (count > 0)
@@ -2134,7 +2134,7 @@ namespace RapChessGui
 			}
 			string rep = book.name == CModeTournamentB.first ? $"{CModeTournamentB.repetition}/{CModeTournamentB.games}" : book.tournament.ToString();
 			labBook.BackColor = book.hisElo.GetColor();
-			labBook.Text = $"{book.name} games {countGames} opponents {opponents}/{bookList.list.Count} repetitions {rep}";
+			labBook.Text = $"{book.name} games {countGames} opponents {opponents}/{bookList.Count} repetitions {rep}";
 			if (top2 != null)
 				lvTourBSel.TopItem = top2;
 			CData.HisToPoints(book.hisElo, chartTournamentB.Series[1].Points);
@@ -2202,7 +2202,7 @@ namespace RapChessGui
 		{
 			lvTourEList.Items.Clear();
 			CModeTournamentE.ListFill();
-			foreach (CEngine e in CModeTournamentE.engineList.list)
+			foreach (CEngine e in CModeTournamentE.engineList)
 			{
 				ListViewItem lvi = new ListViewItem(new[] { e.name, e.elo, e.GetDeltaElo().ToString() });
 				lvi.BackColor = e.hisElo.GetColor();
@@ -2239,7 +2239,7 @@ namespace RapChessGui
 			engineList.FillPosition();
 			int countGames = 0;
 			int opponents = 0;
-			foreach (CEngine e in engineList.list)
+			foreach (CEngine e in engineList)
 			{
 				int count = CModeTournamentE.tourList.CountGames(name, e.name, out int gw, out int gl, out int gd);
 				if (count > 0)
@@ -2264,7 +2264,7 @@ namespace RapChessGui
 			}
 			string rep = engine.name == CModeTournamentE.first ? $"{CModeTournamentE.repetition}/{CModeTournamentE.games}" : engine.tournament.ToString();
 			labEngine.BackColor = engine.hisElo.GetColor();
-			labEngine.Text = $"{engine.name} games {countGames} opponents {opponents}/{engineList.list.Count} repetitions {rep}";
+			labEngine.Text = $"{engine.name} games {countGames} opponents {opponents}/{engineList.Count} repetitions {rep}";
 			if (top2 != null)
 				lvTourESel.TopItem = top2;
 			CData.HisToPoints(engine.hisElo, chartTournamentE.Series[1].Points);
@@ -2799,6 +2799,7 @@ namespace RapChessGui
 
 		private void OptionsToolStripMenuItem_Click(object sender, EventArgs e)
 		{
+			FormOptions.page = Convert.ToInt32(tabControl1.SelectedTab.Tag);
 			formOptions.ShowDialog(this);
 			toolTip1.Active = FormOptions.showTips;
 			CBoard.SetColor();

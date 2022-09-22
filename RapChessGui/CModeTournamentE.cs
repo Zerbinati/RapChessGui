@@ -55,11 +55,11 @@ namespace RapChessGui
 		public static void ListFill()
 		{
 			level = modeValue.level;
-			engineList.list.Clear();
-			foreach (CEngine e in FormChess.engineList.list)
+			engineList.Clear();
+			foreach (CEngine e in FormChess.engineList)
 				if (e.FileExists() && (e.tournament > 0) && e.SupportLevel(level))
 					if ((e.GetElo() >= minElo) && (e.GetElo() <= maxElo))
-						engineList.Add(e);
+						engineList.AddEngine(e);
 		}
 
 		public static bool ListUpdate()
@@ -76,7 +76,7 @@ namespace RapChessGui
 		{
 			int count = 0;
 			CEngine result = null;
-			foreach (CEngine e in engineList.list)
+			foreach (CEngine e in engineList)
 			{
 				int c = tourList.LastGame(e.name);
 				if (count <= c)
@@ -104,14 +104,16 @@ namespace RapChessGui
 
 		public static CEngine SelectSecond(CEngine engine)
 		{
-			if (engineList.list.Count == 0)
+			if (engineList.Count == 0)
 				return engine;
 			engineList.SetEloDistance(engine);
 			double bstScore = 0.0;
 			CEngine bstEngine = engine;
-			for (int n = 1; n < engineList.list.Count - 1; n++)
+			for (int n = 0; n < engineList.Count - 1; n++)
 			{
-				CEngine e = engineList.list[n];
+				CEngine e = engineList[n];
+				if (e == engine)
+					continue;
 				double curScore = EvaluateOpponent(engine, e);
 				if (bstScore < curScore)
 				{
@@ -127,18 +129,31 @@ namespace RapChessGui
 		{
 			int fElo = first.GetElo();
 			int sElo = second.GetElo();
-			double ratioDistance = (engineList.list.Count - second.position) / (double)engineList.list.Count;
+			double ratioDistance = (engineList.Count - second.position) / (double)engineList.Count;
 			int allGames = tourList.CountGames(second.name);
-			tourList.CountGames(first.name, second.name, out int rw, out int rl, out int rd);
+			tourList.CountGames(second.name, first.name, out int rw, out int rl, out int rd);
 			int curGames = rw + rl + rd;
+			double ratioScore = 0;
 			double r = ((rw * 2.0 + rd) - curGames) / (curGames + 1.0);
-			double ratioElo = (3000.0 - Math.Abs(sElo - fElo)) / 3000.0;
-			if ((r > 0) && (fElo < sElo))
-				ratioElo += r;
-			if ((r < 0) && (fElo > sElo))
-				ratioElo -= r;
+			double ar = Math.Abs(r);
+			double nElo = fElo;
+			if (r < 0)
+				nElo -= ar * fElo;
+			if (r > 0)
+				nElo += ar * (3000 - fElo);
+			double ratioElo = (Math.Abs(sElo - nElo) / 3000) * (1.0 - ar);
+			if (curGames == 0)
+				ratioElo = 0;
+			if ((r > 0) && (nElo > sElo))
+				ratioElo = 0;
+			if ((r < 0) && (nElo < sElo))
+				ratioElo = 0;
+			if ((r > 0) && (sElo < fElo))
+				ratioScore = ar + 0.1;
+			if ((r < 0) && (sElo > fElo))
+				ratioScore = ar + 0.1;
 			double ratioGames = (allGames - curGames) / (double)allGames;
-			return ratioElo + ratioGames + ratioDistance;
+			return ratioDistance + ratioGames + ratioElo + ratioScore;
 		}
 
 		public static void SetRepeition(CEngine e, CEngine o)

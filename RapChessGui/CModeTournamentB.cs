@@ -71,11 +71,11 @@ namespace RapChessGui
 
 		public static CBookList FillList()
 		{
-			bookList.list.Clear();
-			foreach (CBook b in FormChess.bookList.list)
+			bookList.Clear();
+			foreach (CBook b in FormChess.bookList)
 				if (b.FileExists() && (b.tournament > 0))
 					if ((b.GetElo() >= minElo) && (b.GetElo() <= maxElo))
-						bookList.Add(b);
+						bookList.AddBook(b);
 			return bookList;
 		}
 
@@ -105,7 +105,7 @@ namespace RapChessGui
 		{
 			bookList.SortPosition(book);
 			List<CBook> bl = new List<CBook>();
-			foreach (CBook b in bookList.list)
+			foreach (CBook b in bookList)
 				if (b != book)
 					bl.Add(b);
 			if (bl.Count == 0)
@@ -148,7 +148,7 @@ namespace RapChessGui
 		{
 			int count = 0;
 			CBook result = null;
-			foreach (CBook b in bookList.list)
+			foreach (CBook b in bookList)
 			{
 				int c = tourList.LastGame(b.name);
 				if (count <= c)

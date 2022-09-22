@@ -28,7 +28,7 @@ namespace RapChessGui
 			{
 				chart1.Series.Clear();
 				CModeTournamentE.engineList.SortElo();
-				foreach (CEngine engine in CModeTournamentE.engineList.list)
+				foreach (CEngine engine in CModeTournamentE.engineList)
 					{
 						string en = engine.name;
 						chart1.Series.Add(en);

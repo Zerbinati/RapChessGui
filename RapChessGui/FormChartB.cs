@@ -28,7 +28,7 @@ namespace RapChessGui
 			{
 				chart1.Series.Clear();
 				CModeTournamentB.bookList.SortElo();
-				foreach (CBook book in CModeTournamentB.bookList.list)
+				foreach (CBook book in CModeTournamentB.bookList)
 				{
 					string bn = book.name;
 					chart1.Series.Add(bn);

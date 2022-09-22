@@ -180,7 +180,7 @@ namespace RapChessGui
 		private void FormLogEngines_Shown(object sender, EventArgs e)
 		{
 			cbEngineList.Items.Clear();
-			foreach (CEngine eng in FormChess.engineList.list)
+			foreach (CEngine eng in FormChess.engineList)
 				cbEngineList.Items.Add(eng.name);
 		}
 

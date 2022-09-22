@@ -28,6 +28,7 @@ namespace RapChessGui
 		public static string tourESelected = CData.none;
 		public static string tourEBook = CData.none;
 		public static string tourPSelected = CData.none;
+		public static int page = 0;
 		public static ProcessPriorityClass priority = ProcessPriorityClass.Normal;
 		public static Color colorBoard;
 
@@ -116,7 +117,7 @@ namespace RapChessGui
 			cbTourEBook.Items.Clear();
 			cbTourBSelected.Sorted = true;
 			cbTourEBook.Sorted = true;
-			foreach (CBook b in FormChess.bookList.list)
+			foreach (CBook b in FormChess.bookList)
 			{
 				cbTourBSelected.Items.Add(b.name);
 				cbTourEBook.Items.Add(b.name);
@@ -130,7 +131,7 @@ namespace RapChessGui
 
 			cbTourESelected.Items.Clear();
 			cbTourESelected.Sorted = true;
-			foreach (CEngine e in FormChess.engineList.list)
+			foreach (CEngine e in FormChess.engineList)
 				cbTourESelected.Items.Add(e.name);
 			cbTourESelected.Sorted = false;
 			cbTourESelected.Items.Insert(0, CData.none);
@@ -244,6 +245,7 @@ namespace RapChessGui
 		private void FormOptions_Shown(object sender, EventArgs e)
 		{
 			FormLoad();
+			listBox1.SelectedIndex = page;
 		}
 
 		private void cbPriority_SelectedIndexChanged(object sender, EventArgs e)

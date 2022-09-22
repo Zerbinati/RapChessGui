@@ -44,7 +44,7 @@ namespace RapChessGui
 		void UpdateListBox()
 		{
 			listBox1.Items.Clear();
-			foreach (CBook b in FormChess.bookList.list)
+			foreach (CBook b in FormChess.bookList)
 				listBox1.Items.Add(b.name);
 			gbBooks.Text = $"Books {listBox1.Items.Count}";
 		}
@@ -83,7 +83,7 @@ namespace RapChessGui
 			string name = tbReaderName.Text;
 			CBook reader = new CBook(name);
 			reader.file = cbBookreaderList.Text;
-			FormChess.bookList.list.Add(reader);
+			FormChess.bookList.Add(reader);
 			SaveToIni(reader);
 			MessageBox.Show($"Book reader {reader.name} has been created");
 			CData.reset = true;

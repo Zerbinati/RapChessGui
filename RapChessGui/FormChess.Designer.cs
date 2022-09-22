@@ -290,6 +290,8 @@
 			this.labNodesB = new System.Windows.Forms.Label();
 			this.labNpsB = new System.Windows.Forms.Label();
 			this.labBookCB = new System.Windows.Forms.Label();
+			this.pbHashW = new System.Windows.Forms.ProgressBar();
+			this.pbHashB = new System.Windows.Forms.ProgressBar();
 			this.statusStrip1 = new System.Windows.Forms.StatusStrip();
 			this.tssMove = new System.Windows.Forms.ToolStripStatusLabel();
 			this.tssInfo = new System.Windows.Forms.ToolStripStatusLabel();
@@ -320,7 +322,6 @@
 			this.columnHeader15 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeader16 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.tlpWhite = new System.Windows.Forms.TableLayoutPanel();
-			this.pbHashW = new System.Windows.Forms.ProgressBar();
 			this.lvMovesB = new System.Windows.Forms.ListView();
 			this.columnHeader17 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeader18 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -329,7 +330,6 @@
 			this.columnHeader21 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeader22 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.tlpBlack = new System.Windows.Forms.TableLayoutPanel();
-			this.pbHashB = new System.Windows.Forms.ProgressBar();
 			this.timerAnimation = new System.Windows.Forms.Timer(this.components);
 			this.fileSystemWatcher1 = new System.IO.FileSystemWatcher();
 			this.tabControl1.SuspendLayout();
@@ -1457,6 +1457,7 @@
 			this.tabPageTourE.Padding = new System.Windows.Forms.Padding(3);
 			this.tabPageTourE.Size = new System.Drawing.Size(337, 462);
 			this.tabPageTourE.TabIndex = 5;
+			this.tabPageTourE.Tag = "4";
 			this.tabPageTourE.Text = "TourE";
 			this.tabPageTourE.UseVisualStyleBackColor = true;
 			// 
@@ -2806,21 +2807,21 @@
 			// booksToolStripMenuItem1
 			// 
 			this.booksToolStripMenuItem1.Name = "booksToolStripMenuItem1";
-			this.booksToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
+			this.booksToolStripMenuItem1.Size = new System.Drawing.Size(115, 22);
 			this.booksToolStripMenuItem1.Text = "Books";
 			this.booksToolStripMenuItem1.Click += new System.EventHandler(this.booksToolStripMenuItem1_Click);
 			// 
 			// enginesToolStripMenuItem
 			// 
 			this.enginesToolStripMenuItem.Name = "enginesToolStripMenuItem";
-			this.enginesToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+			this.enginesToolStripMenuItem.Size = new System.Drawing.Size(115, 22);
 			this.enginesToolStripMenuItem.Text = "Engines";
 			this.enginesToolStripMenuItem.Click += new System.EventHandler(this.enginesToolStripMenuItem_Click);
 			// 
 			// playersToolStripMenuItem1
 			// 
 			this.playersToolStripMenuItem1.Name = "playersToolStripMenuItem1";
-			this.playersToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
+			this.playersToolStripMenuItem1.Size = new System.Drawing.Size(115, 22);
 			this.playersToolStripMenuItem1.Text = "Players";
 			this.playersToolStripMenuItem1.Click += new System.EventHandler(this.playersToolStripMenuItem1_Click);
 			// 
@@ -3796,6 +3797,30 @@
 			this.labBookCB.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			this.toolTip1.SetToolTip(this.labBookCB, "Number of moves read from the opening book");
 			// 
+			// pbHashW
+			// 
+			this.pbHashW.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.pbHashW.Location = new System.Drawing.Point(987, 23);
+			this.pbHashW.MarqueeAnimationSpeed = 0;
+			this.pbHashW.Maximum = 1000;
+			this.pbHashW.Name = "pbHashW";
+			this.pbHashW.Size = new System.Drawing.Size(190, 14);
+			this.pbHashW.Step = 1;
+			this.pbHashW.TabIndex = 27;
+			this.toolTip1.SetToolTip(this.pbHashW, "Use of transposition table");
+			// 
+			// pbHashB
+			// 
+			this.pbHashB.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.pbHashB.Location = new System.Drawing.Point(987, 23);
+			this.pbHashB.MarqueeAnimationSpeed = 0;
+			this.pbHashB.Maximum = 1000;
+			this.pbHashB.Name = "pbHashB";
+			this.pbHashB.Size = new System.Drawing.Size(190, 14);
+			this.pbHashB.Step = 1;
+			this.pbHashB.TabIndex = 27;
+			this.toolTip1.SetToolTip(this.pbHashB, "Use of transposition table");
+			// 
 			// statusStrip1
 			// 
 			this.statusStrip1.BackColor = System.Drawing.Color.Black;
@@ -4210,17 +4235,6 @@
 			this.tlpWhite.Size = new System.Drawing.Size(1180, 40);
 			this.tlpWhite.TabIndex = 34;
 			// 
-			// pbHashW
-			// 
-			this.pbHashW.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.pbHashW.Location = new System.Drawing.Point(987, 23);
-			this.pbHashW.MarqueeAnimationSpeed = 0;
-			this.pbHashW.Maximum = 1000;
-			this.pbHashW.Name = "pbHashW";
-			this.pbHashW.Size = new System.Drawing.Size(190, 14);
-			this.pbHashW.Step = 1;
-			this.pbHashW.TabIndex = 27;
-			// 
 			// lvMovesB
 			// 
 			this.lvMovesB.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
@@ -4312,17 +4326,6 @@
 			this.tlpBlack.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
 			this.tlpBlack.Size = new System.Drawing.Size(1180, 40);
 			this.tlpBlack.TabIndex = 35;
-			// 
-			// pbHashB
-			// 
-			this.pbHashB.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.pbHashB.Location = new System.Drawing.Point(987, 23);
-			this.pbHashB.MarqueeAnimationSpeed = 0;
-			this.pbHashB.Maximum = 1000;
-			this.pbHashB.Name = "pbHashB";
-			this.pbHashB.Size = new System.Drawing.Size(190, 14);
-			this.pbHashB.Step = 1;
-			this.pbHashB.TabIndex = 27;
 			// 
 			// timerAnimation
 			// 

@@ -159,20 +159,19 @@ namespace RapChessGui
 
 	}
 
-	public class CEngineList
+	public class CEngineList: List<CEngine>
 	{
 		public const string def = "RapChessCs";
-		public List<CEngine> list = new List<CEngine>();
 		public static CRapIni iniFile = new CRapIni(@"Ini\engines.ini");
 
-		public void Add(CEngine e)
+		public void AddEngine(CEngine e)
 		{
 			e.name = e.GetName();
 			int index = GetIndex(e.name);
 			if (index >= 0)
-				list[index] = e;
+				this[index] = e;
 			else
-				list.Add(e);
+				Add(e);
 		}
 
 		public void DeleteEngine(string name)
@@ -180,12 +179,12 @@ namespace RapChessGui
 			iniFile.DeleteKey($"engine>{name}");
 			int i = GetIndex(name);
 			if (i >= 0)
-				list.RemoveAt(i);
+				RemoveAt(i);
 		}
 
 		public CEngine GetEngineByName(string name)
 		{
-			foreach (CEngine e in list)
+			foreach (CEngine e in this)
 				if (e.name == name)
 					return e;
 			return null;
@@ -193,7 +192,7 @@ namespace RapChessGui
 
 		public CEngine GetEngineByFile(string file)
 		{
-			foreach (CEngine e in list)
+			foreach (CEngine e in this)
 				if (e.file == file)
 					return e;
 			return null;
@@ -201,16 +200,16 @@ namespace RapChessGui
 
 		public CEngine GetEngineByIndex(int index)
 		{
-			if ((index < 0) || (index >= list.Count))
+			if ((index < 0) || (index >= Count))
 				return null;
-			return list[index];
+			return this[index];
 		}
 
 		public int GetIndex(string name)
 		{
-			for (int n = 0; n < list.Count; n++)
+			for (int n = 0; n < Count; n++)
 			{
-				CEngine engine = list[n];
+				CEngine engine = this[n];
 				if (engine.name == name)
 					return n;
 			}
@@ -223,11 +222,11 @@ namespace RapChessGui
 			int max = CModeTournamentE.maxElo;
 			if (index < 0)
 				index = 0;
-			if (index >= list.Count)
-				index = list.Count - 1;
+			if (index >= Count)
+				index = Count - 1;
 			int range = max - min;
-			index = list.Count - index;
-			return min + Convert.ToInt32((range * index) / (list.Count + 1));
+			index = Count - index;
+			return min + Convert.ToInt32((range * index) / (Count + 1));
 		}
 
 		public void AutoUpdate()
@@ -244,15 +243,15 @@ namespace RapChessGui
 					{
 						engine = new CEngine(name);
 						engine.protocol = CProtocol.auto;
-						list.Add(engine);
+						Add(engine);
 					}
 					engine.file = file;
 					engine.SaveToIni();
 				}
 			}
-			for (int n = list.Count - 1; n >= 0; n--)
+			for (int n =Count - 1; n >= 0; n--)
 			{
-				CEngine e = list[n];
+				CEngine e = this[n];
 				if (e.IsAuto() && !e.FileExists())
 					DeleteEngine(e.name);
 			}
@@ -260,13 +259,13 @@ namespace RapChessGui
 
 		public int LoadFromIni()
 		{
-			list.Clear();
+			Clear();
 			List<string> en = CEngineList.iniFile.ReadKeyList("engine");
 			foreach (string name in en)
 			{
 				CEngine engine = new CEngine(name);
 				engine.LoadFromIni();
-				list.Add(engine);
+				Add(engine);
 			}
 			AutoUpdate();
 			return en.Count;
@@ -276,18 +275,18 @@ namespace RapChessGui
 		{
 			SortElo();
 			int i = GetIndex(e.name);
-			for (int n = 0; n < list.Count - 1; n++)
+			for (int n = 0; n < Count - 1; n++)
 			{
 				if (back)
 					i--;
 				else
 					i++;
 				if (rotate)
-					i = (i + list.Count) % list.Count;
+					i = (i + Count) % Count;
 				else
-					if ((i < 0) || (i >= list.Count))
+					if ((i < 0) || (i >= Count))
 					return null;
-				e = list[i];
+				e = this[i];
 				if (e.tournament > 0)
 					break;
 			}
@@ -297,13 +296,13 @@ namespace RapChessGui
 		public void SaveToIni()
 		{
 			iniFile.DeleteKey("engine");
-			foreach (CEngine e in list)
+			foreach (CEngine e in this)
 				e.SaveToIni();
 		}
 
 		public void SortElo()
 		{
-			list.Sort(delegate (CEngine e1, CEngine e2)
+			Sort(delegate (CEngine e1, CEngine e2)
 			{
 				int result = e2.GetElo() - e1.GetElo();
 				if (result == 0)
@@ -316,9 +315,9 @@ namespace RapChessGui
 		{
 			SortElo();
 			int elo = engine.GetElo();
-			for (int n = 0; n < list.Count; n++)
-				list[n].position = Math.Abs(elo - list[n].GetElo());
-			list.Sort(delegate (CEngine e1, CEngine e2)
+			for (int n = 0; n < Count; n++)
+				this[n].position = Math.Abs(elo - this[n].GetElo());
+			Sort(delegate (CEngine e1, CEngine e2)
 			{
 				return e1.position - e2.position;
 			});
@@ -327,8 +326,8 @@ namespace RapChessGui
 
 		public void FillPosition()
 		{
-			for (int n = 0; n < list.Count; n++)
-				list[n].position = n;
+			for (int n = 0; n < Count; n++)
+				this[n].position = n;
 		}
 
 	}
