@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Diagnostics;
+using System.Threading;
 
 namespace RapChessGui
 {
@@ -9,33 +10,58 @@ namespace RapChessGui
 	public class CProcessBuf
 	{
 		bool spamOff = true;
-		bool timerStop = false;
-		private readonly object locker = new object();
+		int msgStop = 0;
 		public Process process = new Process();
-		private readonly Queue<string> messages = new Queue<string>();
+		private readonly List<string> bufWrite = new List<string>();
+		private readonly List<string> bufRead = new List<string>();
+
+
+		void SetMessage(string msg, bool clear)
+		{
+			try
+			{
+				if (clear)
+					bufWrite.Clear();
+				bufWrite.Add(msg);
+			}
+			catch { }
+		}
 
 		public string GetMessage()
 		{
-			lock (locker)
+			string msg = String.Empty;
+			if (bufRead.Count > 0)
 			{
-				if (timerStop)
-				{
-					timerStop = false;
-					return "timerstop";
-				}
-				return messages.Count > 0 ? messages.Dequeue() : String.Empty;
+				msg = bufRead[0];
+				bufRead.RemoveAt(0);
+				return msg;
 			}
-
+			try
+			{
+				if (bufWrite.Count > 0)
+				{
+					bufRead.AddRange(bufWrite);
+					bufWrite.Clear();
+				}
+			}
+			catch { }
+			if (bufRead.Count > 0)
+			{
+				msg = bufRead[0];
+				bufRead.RemoveAt(0);
+			}
+			return msg;
 		}
 
 		public void Clear()
 		{
-			lock (locker)
+			try
 			{
-				timerStop = false;
-				messages.Clear();
+				bufWrite.Clear();
+				bufRead.Clear();
 				process.StartInfo.FileName = String.Empty;
 			}
+			catch { }
 		}
 
 		public int GetPid()
@@ -51,22 +77,20 @@ namespace RapChessGui
 			{
 				if (!String.IsNullOrEmpty(e.Data))
 				{
-					lock (locker)
+					string msg = e.Data.Trim();
+					bool clear = false;
+					if (msg.Contains("bestmove "))
 					{
-						string msg = e.Data.Trim();
-						if (msg.Contains("bestmove "))
-							if (spamOff)
-								messages.Clear();
-							else if(messages.Count > 0)
-								timerStop = true;
-						messages.Enqueue(msg);
+						clear = spamOff;
+						CWinMessage.Message(msgStop);
 					}
+					SetMessage(msg, clear);
 				}
 			}
 			catch { }
 		}
 
-		public int SetProgram(string path, string param = "",bool so = false)
+		public int SetProgram(string path, string param = "", bool so = false)
 		{
 			Terminate();
 			spamOff = so;
@@ -129,10 +153,12 @@ namespace RapChessGui
 			catch { }
 		}
 
-		public void WriteLine(string c)
+		public void WriteLine(string c, int stop = 0)
 		{
 			if (!process.HasExited)
 			{
+				if (stop != 0)
+					msgStop = stop;
 				process.StandardInput.WriteLine(c);
 				process.StandardInput.Flush();
 			}

@@ -31,14 +31,7 @@
 			this.components = new System.ComponentModel.Container();
 			this.panel1 = new System.Windows.Forms.Panel();
 			this.panOptions = new System.Windows.Forms.Panel();
-			this.bAuto = new System.Windows.Forms.Button();
-			this.butReset = new System.Windows.Forms.Button();
-			this.butClearHistory = new System.Windows.Forms.Button();
-			this.bDelete = new System.Windows.Forms.Button();
-			this.bCreate = new System.Windows.Forms.Button();
-			this.button1 = new System.Windows.Forms.Button();
-			this.bUpdate = new System.Windows.Forms.Button();
-			this.gbTournament = new System.Windows.Forms.GroupBox();
+			this.gbMode = new System.Windows.Forms.GroupBox();
 			this.cbModeDepth = new System.Windows.Forms.CheckBox();
 			this.cbModeTime = new System.Windows.Forms.CheckBox();
 			this.cbModeStandard = new System.Windows.Forms.CheckBox();
@@ -57,9 +50,18 @@
 			this.gbEngines = new System.Windows.Forms.GroupBox();
 			this.listBox1 = new System.Windows.Forms.ListBox();
 			this.timerPhase = new System.Windows.Forms.Timer(this.components);
+			this.panButtons = new System.Windows.Forms.Panel();
+			this.bSave = new System.Windows.Forms.Button();
+			this.bRename = new System.Windows.Forms.Button();
+			this.bCreate = new System.Windows.Forms.Button();
+			this.bDelete = new System.Windows.Forms.Button();
+			this.bHistory = new System.Windows.Forms.Button();
+			this.bReset = new System.Windows.Forms.Button();
+			this.bAuto = new System.Windows.Forms.Button();
 			this.bConsole = new System.Windows.Forms.Button();
+			this.cbModeTournament = new System.Windows.Forms.CheckBox();
 			this.panel1.SuspendLayout();
-			this.gbTournament.SuspendLayout();
+			this.gbMode.SuspendLayout();
 			this.groupBox5.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.nudTournament)).BeginInit();
 			this.gbElo.SuspendLayout();
@@ -69,20 +71,14 @@
 			this.groupBox4.SuspendLayout();
 			this.groupBox1.SuspendLayout();
 			this.gbEngines.SuspendLayout();
+			this.panButtons.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// panel1
 			// 
 			this.panel1.Controls.Add(this.panOptions);
-			this.panel1.Controls.Add(this.bConsole);
-			this.panel1.Controls.Add(this.bAuto);
-			this.panel1.Controls.Add(this.butReset);
-			this.panel1.Controls.Add(this.butClearHistory);
-			this.panel1.Controls.Add(this.bDelete);
-			this.panel1.Controls.Add(this.bCreate);
-			this.panel1.Controls.Add(this.button1);
-			this.panel1.Controls.Add(this.bUpdate);
-			this.panel1.Controls.Add(this.gbTournament);
+			this.panel1.Controls.Add(this.panButtons);
+			this.panel1.Controls.Add(this.gbMode);
 			this.panel1.Controls.Add(this.groupBox5);
 			this.panel1.Controls.Add(this.gbElo);
 			this.panel1.Controls.Add(this.groupBox3);
@@ -98,118 +94,35 @@
 			// panOptions
 			// 
 			this.panOptions.AutoScroll = true;
+			this.panOptions.AutoSize = true;
 			this.panOptions.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
 			this.panOptions.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.panOptions.Location = new System.Drawing.Point(0, 498);
+			this.panOptions.Location = new System.Drawing.Point(0, 497);
 			this.panOptions.Name = "panOptions";
-			this.panOptions.Size = new System.Drawing.Size(311, 306);
+			this.panOptions.Size = new System.Drawing.Size(311, 307);
 			this.panOptions.TabIndex = 36;
 			// 
-			// bAuto
+			// gbMode
 			// 
-			this.bAuto.AutoSize = true;
-			this.bAuto.Dock = System.Windows.Forms.DockStyle.Top;
-			this.bAuto.Location = new System.Drawing.Point(0, 450);
-			this.bAuto.Name = "bAuto";
-			this.bAuto.Size = new System.Drawing.Size(311, 24);
-			this.bAuto.TabIndex = 37;
-			this.bAuto.Text = "Autodetect";
-			this.bAuto.UseVisualStyleBackColor = true;
-			this.bAuto.Click += new System.EventHandler(this.bAuto_Click);
-			// 
-			// butReset
-			// 
-			this.butReset.AutoSize = true;
-			this.butReset.Dock = System.Windows.Forms.DockStyle.Top;
-			this.butReset.Location = new System.Drawing.Point(0, 426);
-			this.butReset.Name = "butReset";
-			this.butReset.Size = new System.Drawing.Size(311, 24);
-			this.butReset.TabIndex = 34;
-			this.butReset.Text = "Reset to defaults";
-			this.butReset.UseVisualStyleBackColor = true;
-			this.butReset.Click += new System.EventHandler(this.butReset_Click);
-			// 
-			// butClearHistory
-			// 
-			this.butClearHistory.AutoSize = true;
-			this.butClearHistory.Dock = System.Windows.Forms.DockStyle.Top;
-			this.butClearHistory.Location = new System.Drawing.Point(0, 402);
-			this.butClearHistory.Name = "butClearHistory";
-			this.butClearHistory.Size = new System.Drawing.Size(311, 24);
-			this.butClearHistory.TabIndex = 32;
-			this.butClearHistory.Text = "Clear tournament history";
-			this.butClearHistory.UseVisualStyleBackColor = true;
-			this.butClearHistory.Click += new System.EventHandler(this.butClearHistory_Click);
-			// 
-			// bDelete
-			// 
-			this.bDelete.AutoSize = true;
-			this.bDelete.Dock = System.Windows.Forms.DockStyle.Top;
-			this.bDelete.Location = new System.Drawing.Point(0, 378);
-			this.bDelete.Name = "bDelete";
-			this.bDelete.Size = new System.Drawing.Size(311, 24);
-			this.bDelete.TabIndex = 27;
-			this.bDelete.Text = "Delete";
-			this.bDelete.UseVisualStyleBackColor = true;
-			this.bDelete.Click += new System.EventHandler(this.ButDelete_Click);
-			// 
-			// bCreate
-			// 
-			this.bCreate.AutoSize = true;
-			this.bCreate.Dock = System.Windows.Forms.DockStyle.Top;
-			this.bCreate.Location = new System.Drawing.Point(0, 354);
-			this.bCreate.Name = "bCreate";
-			this.bCreate.Size = new System.Drawing.Size(311, 24);
-			this.bCreate.TabIndex = 26;
-			this.bCreate.Text = "Create";
-			this.bCreate.UseVisualStyleBackColor = true;
-			this.bCreate.Click += new System.EventHandler(this.ButCreate_Click);
-			// 
-			// button1
-			// 
-			this.button1.AutoSize = true;
-			this.button1.Dock = System.Windows.Forms.DockStyle.Top;
-			this.button1.Location = new System.Drawing.Point(0, 330);
-			this.button1.Name = "button1";
-			this.button1.Size = new System.Drawing.Size(311, 24);
-			this.button1.TabIndex = 35;
-			this.button1.Text = "Rename";
-			this.button1.UseVisualStyleBackColor = true;
-			this.button1.Click += new System.EventHandler(this.bUpdate_Click);
-			// 
-			// bUpdate
-			// 
-			this.bUpdate.AutoSize = true;
-			this.bUpdate.Dock = System.Windows.Forms.DockStyle.Top;
-			this.bUpdate.Location = new System.Drawing.Point(0, 306);
-			this.bUpdate.Name = "bUpdate";
-			this.bUpdate.Size = new System.Drawing.Size(311, 24);
-			this.bUpdate.TabIndex = 25;
-			this.bUpdate.Text = "Save";
-			this.bUpdate.UseVisualStyleBackColor = true;
-			this.bUpdate.Click += new System.EventHandler(this.ButUpdate_Click);
-			// 
-			// gbTournament
-			// 
-			this.gbTournament.AutoSize = true;
-			this.gbTournament.Controls.Add(this.cbModeDepth);
-			this.gbTournament.Controls.Add(this.cbModeTime);
-			this.gbTournament.Controls.Add(this.cbModeStandard);
-			this.gbTournament.Dock = System.Windows.Forms.DockStyle.Top;
-			this.gbTournament.Location = new System.Drawing.Point(0, 236);
-			this.gbTournament.Name = "gbTournament";
-			this.gbTournament.Size = new System.Drawing.Size(311, 70);
-			this.gbTournament.TabIndex = 31;
-			this.gbTournament.TabStop = false;
-			this.gbTournament.Text = "Options";
+			this.gbMode.AutoSize = true;
+			this.gbMode.Controls.Add(this.cbModeTournament);
+			this.gbMode.Controls.Add(this.cbModeDepth);
+			this.gbMode.Controls.Add(this.cbModeTime);
+			this.gbMode.Controls.Add(this.cbModeStandard);
+			this.gbMode.Dock = System.Windows.Forms.DockStyle.Top;
+			this.gbMode.Location = new System.Drawing.Point(0, 236);
+			this.gbMode.Name = "gbMode";
+			this.gbMode.Size = new System.Drawing.Size(311, 69);
+			this.gbMode.TabIndex = 31;
+			this.gbMode.TabStop = false;
+			this.gbMode.Text = "Mode";
 			// 
 			// cbModeDepth
 			// 
 			this.cbModeDepth.AutoSize = true;
-			this.cbModeDepth.Dock = System.Windows.Forms.DockStyle.Top;
-			this.cbModeDepth.Location = new System.Drawing.Point(3, 50);
+			this.cbModeDepth.Location = new System.Drawing.Point(159, 16);
 			this.cbModeDepth.Name = "cbModeDepth";
-			this.cbModeDepth.Size = new System.Drawing.Size(305, 17);
+			this.cbModeDepth.Size = new System.Drawing.Size(83, 17);
 			this.cbModeDepth.TabIndex = 3;
 			this.cbModeDepth.Text = "Mode depth";
 			this.cbModeDepth.UseVisualStyleBackColor = true;
@@ -217,10 +130,9 @@
 			// cbModeTime
 			// 
 			this.cbModeTime.AutoSize = true;
-			this.cbModeTime.Dock = System.Windows.Forms.DockStyle.Top;
 			this.cbModeTime.Location = new System.Drawing.Point(3, 33);
 			this.cbModeTime.Name = "cbModeTime";
-			this.cbModeTime.Size = new System.Drawing.Size(305, 17);
+			this.cbModeTime.Size = new System.Drawing.Size(75, 17);
 			this.cbModeTime.TabIndex = 2;
 			this.cbModeTime.Text = "Mode time";
 			this.cbModeTime.UseVisualStyleBackColor = true;
@@ -228,10 +140,9 @@
 			// cbModeStandard
 			// 
 			this.cbModeStandard.AutoSize = true;
-			this.cbModeStandard.Dock = System.Windows.Forms.DockStyle.Top;
 			this.cbModeStandard.Location = new System.Drawing.Point(3, 16);
 			this.cbModeStandard.Name = "cbModeStandard";
-			this.cbModeStandard.Size = new System.Drawing.Size(305, 17);
+			this.cbModeStandard.Size = new System.Drawing.Size(97, 17);
 			this.cbModeStandard.TabIndex = 1;
 			this.cbModeStandard.Text = "Mode standard";
 			this.cbModeStandard.UseVisualStyleBackColor = true;
@@ -416,17 +327,128 @@
 			this.listBox1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.listBox1_MouseMove);
 			this.listBox1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.listBox1_MouseUp);
 			// 
+			// panButtons
+			// 
+			this.panButtons.AutoSize = true;
+			this.panButtons.Controls.Add(this.bConsole);
+			this.panButtons.Controls.Add(this.bAuto);
+			this.panButtons.Controls.Add(this.bReset);
+			this.panButtons.Controls.Add(this.bHistory);
+			this.panButtons.Controls.Add(this.bDelete);
+			this.panButtons.Controls.Add(this.bCreate);
+			this.panButtons.Controls.Add(this.bRename);
+			this.panButtons.Controls.Add(this.bSave);
+			this.panButtons.Dock = System.Windows.Forms.DockStyle.Top;
+			this.panButtons.Location = new System.Drawing.Point(0, 305);
+			this.panButtons.Name = "panButtons";
+			this.panButtons.Size = new System.Drawing.Size(311, 192);
+			this.panButtons.TabIndex = 39;
+			// 
+			// bSave
+			// 
+			this.bSave.AutoSize = true;
+			this.bSave.Dock = System.Windows.Forms.DockStyle.Top;
+			this.bSave.Location = new System.Drawing.Point(0, 0);
+			this.bSave.Name = "bSave";
+			this.bSave.Size = new System.Drawing.Size(311, 24);
+			this.bSave.TabIndex = 26;
+			this.bSave.Text = "Save";
+			this.bSave.UseVisualStyleBackColor = true;
+			this.bSave.Click += new System.EventHandler(this.bSave_Click);
+			// 
+			// bRename
+			// 
+			this.bRename.AutoSize = true;
+			this.bRename.Dock = System.Windows.Forms.DockStyle.Top;
+			this.bRename.Location = new System.Drawing.Point(0, 24);
+			this.bRename.Name = "bRename";
+			this.bRename.Size = new System.Drawing.Size(311, 24);
+			this.bRename.TabIndex = 36;
+			this.bRename.Text = "Rename";
+			this.bRename.UseVisualStyleBackColor = true;
+			this.bRename.Click += new System.EventHandler(this.bRename_Click);
+			// 
+			// bCreate
+			// 
+			this.bCreate.AutoSize = true;
+			this.bCreate.Dock = System.Windows.Forms.DockStyle.Top;
+			this.bCreate.Location = new System.Drawing.Point(0, 48);
+			this.bCreate.Name = "bCreate";
+			this.bCreate.Size = new System.Drawing.Size(311, 24);
+			this.bCreate.TabIndex = 37;
+			this.bCreate.Text = "Create";
+			this.bCreate.UseVisualStyleBackColor = true;
+			this.bCreate.Click += new System.EventHandler(this.bCreate_Click);
+			// 
+			// bDelete
+			// 
+			this.bDelete.AutoSize = true;
+			this.bDelete.Dock = System.Windows.Forms.DockStyle.Top;
+			this.bDelete.Location = new System.Drawing.Point(0, 72);
+			this.bDelete.Name = "bDelete";
+			this.bDelete.Size = new System.Drawing.Size(311, 24);
+			this.bDelete.TabIndex = 38;
+			this.bDelete.Text = "Delete";
+			this.bDelete.UseVisualStyleBackColor = true;
+			this.bDelete.Click += new System.EventHandler(this.bDelete_Click);
+			// 
+			// bHistory
+			// 
+			this.bHistory.AutoSize = true;
+			this.bHistory.Dock = System.Windows.Forms.DockStyle.Top;
+			this.bHistory.Location = new System.Drawing.Point(0, 96);
+			this.bHistory.Name = "bHistory";
+			this.bHistory.Size = new System.Drawing.Size(311, 24);
+			this.bHistory.TabIndex = 39;
+			this.bHistory.Text = "Clear tournament history";
+			this.bHistory.UseVisualStyleBackColor = true;
+			this.bHistory.Click += new System.EventHandler(this.bHistory_Click);
+			// 
+			// bReset
+			// 
+			this.bReset.AutoSize = true;
+			this.bReset.Dock = System.Windows.Forms.DockStyle.Top;
+			this.bReset.Location = new System.Drawing.Point(0, 120);
+			this.bReset.Name = "bReset";
+			this.bReset.Size = new System.Drawing.Size(311, 24);
+			this.bReset.TabIndex = 40;
+			this.bReset.Text = "Reset to defaults";
+			this.bReset.UseVisualStyleBackColor = true;
+			this.bReset.Click += new System.EventHandler(this.bReset_Click);
+			// 
+			// bAuto
+			// 
+			this.bAuto.AutoSize = true;
+			this.bAuto.Dock = System.Windows.Forms.DockStyle.Top;
+			this.bAuto.Location = new System.Drawing.Point(0, 144);
+			this.bAuto.Name = "bAuto";
+			this.bAuto.Size = new System.Drawing.Size(311, 24);
+			this.bAuto.TabIndex = 41;
+			this.bAuto.Text = "Autodetect";
+			this.bAuto.UseVisualStyleBackColor = true;
+			this.bAuto.Click += new System.EventHandler(this.bAuto_Click);
+			// 
 			// bConsole
 			// 
 			this.bConsole.AutoSize = true;
 			this.bConsole.Dock = System.Windows.Forms.DockStyle.Top;
-			this.bConsole.Location = new System.Drawing.Point(0, 474);
+			this.bConsole.Location = new System.Drawing.Point(0, 168);
 			this.bConsole.Name = "bConsole";
 			this.bConsole.Size = new System.Drawing.Size(311, 24);
-			this.bConsole.TabIndex = 38;
+			this.bConsole.TabIndex = 42;
 			this.bConsole.Text = "Console";
 			this.bConsole.UseVisualStyleBackColor = true;
 			this.bConsole.Click += new System.EventHandler(this.bConsole_Click);
+			// 
+			// cbModeTournament
+			// 
+			this.cbModeTournament.AutoSize = true;
+			this.cbModeTournament.Location = new System.Drawing.Point(159, 33);
+			this.cbModeTournament.Name = "cbModeTournament";
+			this.cbModeTournament.Size = new System.Drawing.Size(109, 17);
+			this.cbModeTournament.TabIndex = 4;
+			this.cbModeTournament.Text = "Mode tournament";
+			this.cbModeTournament.UseVisualStyleBackColor = true;
 			// 
 			// FormEditEngine
 			// 
@@ -446,8 +468,8 @@
 			this.Shown += new System.EventHandler(this.FormEngine_Shown);
 			this.panel1.ResumeLayout(false);
 			this.panel1.PerformLayout();
-			this.gbTournament.ResumeLayout(false);
-			this.gbTournament.PerformLayout();
+			this.gbMode.ResumeLayout(false);
+			this.gbMode.PerformLayout();
 			this.groupBox5.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.nudTournament)).EndInit();
 			this.gbElo.ResumeLayout(false);
@@ -459,6 +481,8 @@
 			this.groupBox1.ResumeLayout(false);
 			this.groupBox1.PerformLayout();
 			this.gbEngines.ResumeLayout(false);
+			this.panButtons.ResumeLayout(false);
+			this.panButtons.PerformLayout();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -475,24 +499,26 @@
 		private System.Windows.Forms.GroupBox groupBox7;
 		private System.Windows.Forms.GroupBox groupBox3;
 		private System.Windows.Forms.TextBox tbParameters;
-		private System.Windows.Forms.Button bDelete;
-		private System.Windows.Forms.Button bCreate;
-		private System.Windows.Forms.Button bUpdate;
 		public System.Windows.Forms.ComboBox cbProtocol;
 		private System.Windows.Forms.GroupBox gbElo;
 		private System.Windows.Forms.NumericUpDown nudElo;
-		private System.Windows.Forms.GroupBox gbTournament;
-		private System.Windows.Forms.Button butClearHistory;
+		private System.Windows.Forms.GroupBox gbMode;
 		private System.Windows.Forms.CheckBox cbModeStandard;
 		private System.Windows.Forms.GroupBox groupBox5;
 		private System.Windows.Forms.NumericUpDown nudTournament;
-		private System.Windows.Forms.Button butReset;
-		private System.Windows.Forms.Button button1;
 		private System.Windows.Forms.CheckBox cbModeDepth;
 		private System.Windows.Forms.CheckBox cbModeTime;
 		private System.Windows.Forms.Panel panOptions;
-		private System.Windows.Forms.Button bAuto;
 		private System.Windows.Forms.Timer timerPhase;
+		private System.Windows.Forms.Panel panButtons;
 		private System.Windows.Forms.Button bConsole;
+		private System.Windows.Forms.Button bAuto;
+		private System.Windows.Forms.Button bReset;
+		private System.Windows.Forms.Button bHistory;
+		private System.Windows.Forms.Button bDelete;
+		private System.Windows.Forms.Button bCreate;
+		private System.Windows.Forms.Button bRename;
+		private System.Windows.Forms.Button bSave;
+		private System.Windows.Forms.CheckBox cbModeTournament;
 	}
 }

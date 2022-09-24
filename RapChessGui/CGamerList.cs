@@ -19,7 +19,7 @@ namespace RapChessGui
 		/// <summary>
 		/// The position of the chess pieces has been sent to the winboard chess engine.
 		/// </summary>
-		public bool isPositionWb = false;
+		public bool isPositionXb = false;
 		/// <summary>
 		/// The book is already started.
 		/// </summary>
@@ -65,10 +65,8 @@ namespace RapChessGui
 		public int hash;
 		public string ponder;
 		public string ponderFormated;
-		public string value;
 		public string pv;
 		public string lastMove;
-		string command;
 		public double timerStart;
 		public Stopwatch timer = new Stopwatch();
 		public CProcessBuf curProcess = null;
@@ -160,7 +158,7 @@ namespace RapChessGui
 			isEngRunning = false;
 			isPrepareStarted = false;
 			isPrepareFinished = false;
-			isPositionWb = false;
+			isPositionXb = false;
 			hash = 0;
 			uciPhase = 0;
 			infMs = 0;
@@ -279,7 +277,7 @@ namespace RapChessGui
 		{
 			if (engine != null)
 				if (engine.protocol == CProtocol.winboard)
-					isPositionWb = false;
+					isPositionXb = false;
 		}
 
 		/// <summary>
@@ -288,62 +286,98 @@ namespace RapChessGui
 		void EngPrepare()
 		{
 			isPrepareStarted = true;
-			lastMove = "";
-			value = player.modeValue.GetUciValue().ToString();
-			if (engine.protocol == CProtocol.uci) {
-				command = player.modeValue.GetUci();
+			lastMove = String.Empty;
+			if (engine.protocol == CProtocol.uci)
 				UciNextPhase();
-			}else
+			else
 			{
 				SendMessageToEngine("xboard");
 				isPrepareFinished = true;
-				switch (player.modeValue.level)
-				{
-					case CLevel.depth:
-						command = "sd";
-						break;
-					case CLevel.time:
-						command = "st";
-						int v = Convert.ToInt32(player.modeValue.GetUciValue()) / 1000;
-						if (v < 1)
-							v = 1;
-						value = v.ToString();
-						break;
-				}
+				XbGo();
 			}
 		}
 
-		public Int64 GetIntTime()
+		public int GetRemainingMs()
 		{
-			Int64 v = Convert.ToInt64(player.modeValue.GetUciValue());
-			Int64 t = Convert.ToInt64(v - timer.Elapsed.TotalMilliseconds);
+			int v = Convert.ToInt32(player.modeValue.GetUciValue());
+			int t = Convert.ToInt32(v - timer.Elapsed.TotalMilliseconds);
 			return t < 1 ? 1 : t;
+		}
+
+		public string GetTimeXB(long ms)
+		{
+			DateTime dt = new DateTime();
+			dt = dt.AddMilliseconds(ms);
+			return dt.ToString("mm:ss");
 		}
 
 		void UciGo()
 		{
 			SendMessageToEngine(CHistory.GetPosition());
+			int msgStop = isWhite ? FormChess.WM_WHITE_STOP : FormChess.WM_BLACK_STOP;
 			if (player.modeValue.level == CLevel.standard)
 			{
 				CGamer gw = CGamerList.This.GamerWhite();
 				CGamer gb = CGamerList.This.GamerBlack();
-				SendMessageToEngine($"go wtime {gw.GetIntTime()} btime {gb.GetIntTime()} winc 0 binc 0");
+				SendMessageToEngine($"go wtime {gw.GetRemainingMs()} btime {gb.GetRemainingMs()} winc 0 binc 0", msgStop);
 			}
 			else
-				SendMessageToEngine($"go {player.modeValue.GetUci()} {player.modeValue.GetUciValue()}");
+				SendMessageToEngine($"go {player.modeValue.GetUci()} {player.modeValue.GetUciValue()}", msgStop);
 			TimerStart();
+		}
+
+		void XbGoTournament()
+		{
+			int ms = GetRemainingMs();
+			SendMessageToEngine($"level 0 {GetTimeXB(ms)} 0");
+		}
+
+		void XbGoStandard()
+		{
+			if (engine.modeStandard)
+			{
+				CGamer gs = CGamerList.This.GamerSec();
+				SendMessageToEngine($"time {GetRemainingMs() / 10}");
+				SendMessageToEngine($"otim {gs.GetRemainingMs() / 10}");
+			}
+			else
+				XbGoTournament();
+		}
+
+		void XbGoTime()
+		{
+			int ms = player.modeValue.GetUciValue();
+			if (engine.modeTime)
+				SendMessageToEngine($"st {ms / 1000}");
+			else if (engine.modeTournament)
+				SendMessageToEngine($"level 0 0 {ms / 1000}");
+			else
+			{
+				SendMessageToEngine($"time {ms / 10}");
+				SendMessageToEngine($"otim {ms / 10}");
+			}
+		}
+
+		void XbGoDepth()
+		{
+			int d = player.modeValue.GetUciValue();
+			SendMessageToEngine($"sd {d}");
 		}
 
 		void XbGo()
 		{
-			if (player.modeValue.level == CLevel.standard)
+			switch (player.modeValue.level)
 			{
-				CGamer gc = CGamerList.This.GamerCur();
-				CGamer gs = CGamerList.This.GamerSec();
-				SendMessageToEngine($"time {gc.GetIntTime() / 10}");
-				SendMessageToEngine($"otim {gs.GetIntTime() / 10}");
+				case CLevel.standard:
+					XbGoStandard();
+					break;
+				case CLevel.depth:
+					XbGoDepth();
+					break;
+				case CLevel.time:
+					XbGoTime();
+					break;
 			}
-			SendMessageToEngine(CHistory.LastUmo());
 		}
 
 		/// <summary>
@@ -358,22 +392,15 @@ namespace RapChessGui
 				UciGo();
 			else
 			{
-				if (isPositionWb)
+				if (isPositionXb)
+				{
 					XbGo();
+					SendMessageToEngine(CHistory.LastUmo());
+				}
 				else
 				{
 					SendMessageToEngine("new");
-					if (player.modeValue.level == CLevel.standard)
-					{
-						int v = Convert.ToInt32(player.modeValue.GetUciValue());
-						int t = Convert.ToInt32(v - timer.Elapsed.TotalMilliseconds);
-						if (t < 1)
-							t = 1;
-						SendMessageToEngine($"time {t / 10}");
-						SendMessageToEngine($"otim {t / 10}");
-					}
-					else
-						SendMessageToEngine($"{command} {value}");
+					XbGo();
 					SendMessageToEngine("post");
 					if (CHistory.fen != CChess.defFen)
 					{
@@ -387,7 +414,7 @@ namespace RapChessGui
 					else
 						SendMessageToEngine("black");
 					SendMessageToEngine("go");
-					isPositionWb = true;
+					isPositionXb = true;
 				}
 				TimerStart();
 			}
@@ -406,14 +433,14 @@ namespace RapChessGui
 			}
 		}
 
-		public void SendMessageToEngine(string msg)
+		public void SendMessageToEngine(string msg, int stop = 0)
 		{
 			if (enginePro.process != null)
 			{
 				Color col = isWhite ? Color.DimGray : Color.Black;
 				FormLogEngines.AppendTimeText($"{player.name}", col);
 				FormLogEngines.AppendText($" < {msg}\n", Color.Brown);
-				enginePro.WriteLine(msg);
+				enginePro.WriteLine(msg, stop);
 				curProcess = enginePro;
 			}
 		}
@@ -596,9 +623,7 @@ namespace RapChessGui
 
 		public void Rotate(int index = 0)
 		{
-			CGamer p = gamer[0];
-			gamer[0] = gamer[1];
-			gamer[1] = p;
+			(gamer[1], gamer[0]) = (gamer[0], gamer[1]);
 			Init(index);
 		}
 

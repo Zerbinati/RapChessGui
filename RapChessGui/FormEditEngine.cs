@@ -189,6 +189,7 @@ namespace RapChessGui
 			cbModeStandard.Checked = engine.modeStandard;
 			cbModeTime.Checked = engine.modeTime;
 			cbModeDepth.Checked = engine.modeDepth;
+			cbModeTournament.Checked = engine.modeTournament;
 			nudElo.Value = Convert.ToInt32(engine.elo);
 			nudTournament.Value = engine.tournament;
 		}
@@ -248,6 +249,7 @@ namespace RapChessGui
 			e.modeStandard = cbModeStandard.Checked;
 			e.modeTime = cbModeTime.Checked;
 			e.modeDepth = cbModeDepth.Checked;
+			e.modeTournament = cbModeTournament.Checked;
 			e.elo = nudElo.Value.ToString();
 			e.tournament = (int)nudTournament.Value;
 			e.options = GetOptions();
@@ -293,7 +295,7 @@ namespace RapChessGui
 			return list;
 		}
 
-		private void ButCreate_Click(object sender, EventArgs e)
+		private void bCreate_Click(object sender, EventArgs e)
 		{
 			string name = tbEngineName.Text;
 			CEngine engine = new CEngine(name);
@@ -303,12 +305,12 @@ namespace RapChessGui
 			CData.reset = true;
 		}
 
-		private void ButUpdate_Click(object sender, EventArgs e)
+		private void bSave_Click(object sender, EventArgs e)
 		{
 			ClickUpdate();
 		}
 
-		private void ButDelete_Click(object sender, EventArgs e)
+		private void bDelete_Click(object sender, EventArgs e)
 		{
 			string name = tbEngineName.Text;
 			var dr = MessageBox.Show($"Are you sure that you would like to delete {name}?","Delete engine",MessageBoxButtons.YesNo,MessageBoxIcon.Question);
@@ -337,7 +339,7 @@ namespace RapChessGui
 			listBox1.SelectedIndex = listBox1.FindString(engineName);
 		}
 
-		private void butClearHistory_Click(object sender, EventArgs e)
+		private void bHistory_Click(object sender, EventArgs e)
 		{
 			if (engine != null)
 			{
@@ -417,7 +419,7 @@ namespace RapChessGui
 			}
 		}
 
-		private void butReset_Click(object sender, EventArgs e)
+		private void bReset_Click(object sender, EventArgs e)
 		{
 			engine.options.Clear();
 			engine.SaveToIni();
@@ -429,7 +431,7 @@ namespace RapChessGui
 			processTest.Terminate();
 		}
 
-		private void bUpdate_Click(object sender, EventArgs e)
+		private void bRename_Click(object sender, EventArgs e)
 		{
 			CEngine eng = new CEngine();
 			UpdateEngine(eng);

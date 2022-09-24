@@ -11,6 +11,7 @@ namespace RapChessGui
 		public bool modeStandard = true;
 		public bool modeTime = true;
 		public bool modeDepth = true;
+		public bool modeTournament = true;
 		public int position = 0;
 		public int tournament = 1;
 		public string name = "";
@@ -37,6 +38,7 @@ namespace RapChessGui
 			modeStandard = CEngineList.iniFile.ReadBool($"engine>{name}>modeStandard", modeStandard);
 			modeTime = CEngineList.iniFile.ReadBool($"engine>{name}>modeTime", modeTime);
 			modeDepth = CEngineList.iniFile.ReadBool($"engine>{name}>modeDepth", modeDepth);
+			modeTournament = CEngineList.iniFile.ReadBool($"engine>{name}>modeTournament", modeTournament);
 			file = CEngineList.iniFile.Read($"engine>{name}>file", "None");
 			protocol = CData.StrToProtocol(CEngineList.iniFile.Read($"engine>{name}>protocol", "Uci"));
 			parameters = CEngineList.iniFile.Read($"engine>{name}>parameters", "");
@@ -58,6 +60,7 @@ namespace RapChessGui
 			CEngineList.iniFile.Write($"engine>{name}>modeStandard",  modeStandard);
 			CEngineList.iniFile.Write($"engine>{name}>modeTime", modeTime);
 			CEngineList.iniFile.Write($"engine>{name}>modeDepth", modeDepth);
+			CEngineList.iniFile.Write($"engine>{name}>modeTournament", modeTournament);
 			CEngineList.iniFile.Write($"engine>{name}>file", file);
 			CEngineList.iniFile.Write($"engine>{name}>protocol", CData.ProtocolToStr(protocol));
 			CEngineList.iniFile.Write($"engine>{name}>parameters", parameters);
@@ -77,7 +80,12 @@ namespace RapChessGui
 				case CLevel.depth:
 					return modeDepth;
 				default:
-					return modeTime;
+					{
+						if (protocol == CProtocol.winboard)
+							if (modeTime || modeTournament || modeStandard)
+								return true;
+						return modeTime;
+					}
 			}
 		}
 

@@ -168,6 +168,10 @@ namespace RapChessGui
 
 	public static class CElo
 	{
+		public static int eloMax = 2950;
+		public static int eloMin = 50;
+		public static int eloRange = eloMax - eloMin;
+
 		static double Probability(double rating1, double rating2)
 		{
 			return 1.0f * 1.0f / (1 + 1.0f * (Math.Pow(10, 1.0f * (rating1 - rating2) / 400)));
@@ -200,14 +204,14 @@ namespace RapChessGui
 				Na = Convert.ToInt32(Ra + Ka * (0.5 - Pa));
 				Nb = Convert.ToInt32(Rb + Kb * (0.5 - Pb));
 			}
-			if (Na > 2950)
-				Na = 2950;
-			if (Nb > 2950)
-				Nb = 2950;
-			if (Na < 50)
-				Na = 50;
-			if (Nb < 50)
-				Nb = 50;
+			if (Na > eloMax)
+				Na = eloMax;
+			if (Nb > eloMax)
+				Nb = eloMax;
+			if (Na < eloMin)
+				Na = eloMin;
+			if (Nb < eloMin)
+				Nb = eloMin;
 		}
 
 	}
@@ -358,6 +362,8 @@ namespace RapChessGui
 		public int GetUciValue()
 		{
 			int result = value * GetValueIncrement();
+			if (result < 0)
+				result = 1;
 			if (level == CLevel.standard)
 				result *= 1000;
 			return result;
