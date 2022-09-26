@@ -28,7 +28,7 @@ namespace RapChessGui
 			FormChess.iniFile.Write("mode>tournamentE>mode", modeValue.GetLevel());
 			FormChess.iniFile.Write("mode>tournamentE>value", modeValue.value);
 			FormChess.iniFile.Write("mode>tournamentE>records", records);
-			FormChess.iniFile.Write("mode>tournamentE>rmaxElo", maxElo);
+			FormChess.iniFile.Write("mode>tournamentE>maxElo", maxElo);
 			FormChess.iniFile.Write("mode>tournamentE>minElo", minElo);
 		}
 
@@ -62,16 +62,6 @@ namespace RapChessGui
 						engineList.AddEngine(e);
 		}
 
-		public static bool ListUpdate()
-		{
-			if (level != modeValue.level)
-			{
-				ListFill();
-				return true;
-			}
-			return false;
-		}
-
 		public static CEngine SelectLast()
 		{
 			int count = 0;
@@ -90,6 +80,7 @@ namespace RapChessGui
 
 		public static CEngine SelectFirst()
 		{
+			ListFill();
 			CEngine e = engineList.GetEngineByName(FormOptions.tourESelected);
 			if (e != null)
 				return e;
@@ -104,24 +95,22 @@ namespace RapChessGui
 
 		public static CEngine SelectSecond(CEngine engine)
 		{
-			if (engineList.Count <2)
+			if (engineList.Count < 2)
 				return engine;
 			engineList.SetEloDistance(engine);
 			double bstScore = 0.0;
 			CEngine bstEngine = engine;
-			for (int n = 0; n < engineList.Count - 1; n++)
-			{
-				CEngine e = engineList[n];
-				if (e == engine)
-					continue;
-				double curScore = EvaluateOpponent(engine, e);
-				if (bstScore < curScore)
+			foreach (CEngine e in engineList)
+				if (e != engine)
 				{
-					bstScore = curScore;
-					bstEngine = e;
-				}
+					double curScore = EvaluateOpponent(engine, e);
+					if (bstScore < curScore)
+					{
+						bstScore = curScore;
+						bstEngine = e;
+					}
 
-			}
+				}
 			return bstEngine;
 		}
 
@@ -154,14 +143,14 @@ namespace RapChessGui
 				ratioScore = 1;
 			double ratioGames = (allGames - curGames + 1.0) / (allGames + 1.0);
 			r = first.GetDeltaElo();
-			first.hisElo.MinMax(out double min,out double max);
+			first.hisElo.MinMax(out double min, out double max);
 			double range = max - min;
 			double ratioTrend = Math.Abs(r / range);
 			if ((r > 0) && (sElo < fElo))
 				ratioTrend = 0;
 			if ((r < 0) && (sElo > fElo))
 				ratioTrend = 0;
-			return ratioDistance + ratioGames + ratioElo + ratioScore + ratioTrend;
+			return ratioDistance + ratioGames + ratioElo + ratioScore + ratioTrend * 0.5;
 		}
 
 		public static void SetRepeition(CEngine e, CEngine o)

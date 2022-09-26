@@ -82,7 +82,7 @@ namespace RapChessGui
 				default:
 					{
 						if (protocol == CProtocol.winboard)
-							if (modeTime || modeTournament || modeStandard)
+							if (modeTime || modeTournament)
 								return true;
 						return modeTime;
 					}

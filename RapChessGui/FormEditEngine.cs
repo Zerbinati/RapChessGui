@@ -17,17 +17,33 @@ namespace RapChessGui
 		int tournament = -1;
 		static CEngine engine = null;
 		public static string engineName = String.Empty;
-		public static CProcess processTest = null;
 		public static CProcess processOptions = null;
 		readonly static COptionList optionList = new COptionList();
+		readonly FormAutodetect formAutodetect = new FormAutodetect();
 
 		public FormEditEngine()
 		{
 			This = this;
 			InitializeComponent();
-			processTest = new CProcess(OnDataReceivedTest);
 			processOptions = new CProcess(OnDataReceivedOptions);
 		}
+
+		delegate void DeleMessageOptions(string message);
+
+		readonly static DeleMessageOptions deleMessageOptions = new DeleMessageOptions(NewMessageOptions);
+
+		private void OnDataReceivedOptions(object sender, DataReceivedEventArgs e)
+		{
+			try
+			{
+				if (!String.IsNullOrEmpty(e.Data))
+				{
+					Invoke(deleMessageOptions, new object[] { e.Data.Trim() });
+				}
+			}
+			catch { }
+		}
+
 
 		void ClickUpdate()
 		{
@@ -80,78 +96,6 @@ namespace RapChessGui
 			}
 		}
 
-		delegate void DeleMessageTest(string message);
-
-		delegate void DeleMessageOptions(string message);
-
-		readonly static DeleMessageTest deleMessageTest = new DeleMessageTest(NewMessageTest);
-
-		readonly static DeleMessageOptions deleMessageOptions = new DeleMessageOptions(NewMessageOptions);
-
-		private void OnDataReceivedTest(object sender, DataReceivedEventArgs e)
-		{
-			try
-			{
-				if (!String.IsNullOrEmpty(e.Data))
-				{
-					Invoke(deleMessageTest, new object[] { e.Data.Trim() });
-				}
-			}
-			catch { }
-		}
-
-		private void OnDataReceivedOptions(object sender, DataReceivedEventArgs e)
-		{
-			try
-			{
-				if (!String.IsNullOrEmpty(e.Data))
-				{
-					Invoke(deleMessageOptions, new object[] { e.Data.Trim() });
-				}
-			}
-			catch { }
-		}
-
-		public static void NewMessageTest(string msg)
-		{
-			bool con = msg.Contains(FormChess.testEngine.protocol == CProtocol.uci ? "bestmove " : "move ");
-			switch (FormChess.testMode)
-			{
-				case 0:
-					if (msg == "uciok")
-					{
-						FormChess.testEngine.protocol = CProtocol.uci;
-						if (FormChess.testEngine == engine)
-							This.cbProtocol.Text = "Uci";
-					}
-					break;
-				case 1:
-					if (con)
-					{
-						FormChess.testEngine.modeTime = FormChess.testResult;
-						if (FormChess.testEngine == engine)
-							This.cbModeTime.Checked = FormChess.testResult;
-					}
-					break;
-				case 2:
-					if (con)
-					{
-						FormChess.testEngine.modeDepth = FormChess.testResult;
-						if (FormChess.testEngine == engine)
-							This.cbModeDepth.Checked = FormChess.testResult;
-					}
-					break;
-				case 3:
-					if (con)
-					{
-						FormChess.testEngine.modeStandard = FormChess.testResult;
-						if (FormChess.testEngine == engine)
-							This.cbModeStandard.Checked = FormChess.testResult;
-					}
-					break;
-			}
-		}
-
 		public static void NewMessageOptions(string msg)
 		{
 			if (msg == "uciok")
@@ -160,11 +104,11 @@ namespace RapChessGui
 				optionList.Add(msg);
 		}
 
-		void ClickAuto()
+		void ClickRename()
 		{
-			MessageBox.Show("Autodetection take about 11 seconds.");
-			engine.protocol = CProtocol.auto;
-			FormChess.StartTestAuto(processTest);
+			CEngine eng = new CEngine();
+			UpdateEngine(eng);
+			tbEngineName.Text = eng.CreateName();
 		}
 
 		void StartTestOptions()
@@ -238,6 +182,12 @@ namespace RapChessGui
 			foreach (CEngine e in FormChess.engineList)
 				listBox1.Items.Add(e.name);
 			gbEngines.Text = $"Engines {listBox1.Items.Count}";
+		}
+
+		void ShowAutodetect(string engineName)
+		{
+			FormAutodetect.engineName = engineName;
+			formAutodetect.ShowDialog(this);
 		}
 
 		void UpdateEngine(CEngine e)
@@ -428,19 +378,19 @@ namespace RapChessGui
 
 		private void FormEngine_FormClosing(object sender, FormClosingEventArgs e)
 		{
-			processTest.Terminate();
+			if (processOptions != null)
+				processOptions.Terminate();
 		}
 
 		private void bRename_Click(object sender, EventArgs e)
 		{
-			CEngine eng = new CEngine();
-			UpdateEngine(eng);
-			tbEngineName.Text = eng.CreateName();
+			ClickRename();
 		}
 
 		private void bAuto_Click(object sender, EventArgs e)
 		{
-			ClickAuto();
+			ShowAutodetect(engineName);
+			ShowEngine();
 		}
 
 		private void ListBox1_SelectedValueChanged(object sender, EventArgs e)
@@ -455,6 +405,11 @@ namespace RapChessGui
 			psi.Arguments = engine.parameters;
 			psi.WorkingDirectory = Path.GetDirectoryName(psi.FileName);
 			Process.Start(psi);
+		}
+
+		private void cbFileList_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			ClickRename();
 		}
 	}
 }

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.IO;
-using System.Diagnostics;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Text;
@@ -9,7 +8,6 @@ using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Linq;
-using System.Threading;
 using RapIni;
 using RapLog;
 using NSUci;
@@ -32,13 +30,8 @@ namespace RapChessGui
 		/// Next game can auto start.
 		/// </summary>
 		bool autoStartNexGame = false;
-		public static bool testResult = false;
-		public static int testMode = 0;
-		public static CEngine testEngine = null;
-		public static Task testTask = new Task(() => { });
 		public const int WM_GAME_NEXT = 1024;
-		public const int WM_BLACK_STOP = 1025;
-		public const int WM_WHITE_STOP = 1026;
+		public const int WM_DETECT_BEST = 1025;
 		public static IntPtr handle;
 		public static FormChess This;
 		public static bool boardRotate;
@@ -54,7 +47,6 @@ namespace RapChessGui
 		readonly SoundPlayer audioMove = new SoundPlayer(Properties.Resources.Move);
 		public static CRapLog log = new CRapLog();
 		public static PrivateFontCollection pfc = new PrivateFontCollection();
-		public static CProcess processTest = null;
 		public static CBookList bookList = new CBookList();
 		public static CEngineList engineList = new CEngineList();
 		public static CPlayerList playerList = new CPlayerList();
@@ -115,11 +107,8 @@ namespace RapChessGui
 					if (autoStartNexGame)
 						NextGame();
 					break;
-				case WM_WHITE_STOP:
-					GamerList.GamerWhite().timer.Stop();
-					break;
-				case WM_BLACK_STOP:
-					GamerList.GamerBlack().timer.Stop();
+				case WM_DETECT_BEST:
+					Global.detectBest = true;
 					break;
 			}
 			base.WndProc(ref m);
@@ -135,7 +124,6 @@ namespace RapChessGui
 			CreateDir("Ini");
 			CData.UpdateFileEngine();
 			CData.UpdateFileBook();
-			processTest = new CProcess(OnDataReceivedTest);
 			int fontLength = Properties.Resources.ChessPiece.Length;
 			byte[] fontData = Properties.Resources.ChessPiece;
 			IntPtr data = Marshal.AllocCoTaskMem(fontLength);
@@ -259,261 +247,6 @@ namespace RapChessGui
 			SplitSaveToIni(splitContainerTourP);
 			SplitSaveToIni(scTournamentEList);
 			SplitSaveToIni(scTournamentPList);
-		}
-
-		#endregion
-
-		#region process
-
-		delegate void DeleMessageTest(string message);
-
-
-		readonly static DeleMessageTest deleMessageTest = new DeleMessageTest(NewMessageTest);
-
-		private void OnDataReceivedTest(object sender, DataReceivedEventArgs e)
-		{
-			try
-			{
-				if (!String.IsNullOrEmpty(e.Data))
-				{
-					Invoke(deleMessageTest, new object[] { e.Data.Trim() });
-				}
-			}
-			catch { }
-		}
-
-		public static void NewMessageTest(string msg)
-		{
-			bool con = msg.Contains(testEngine.protocol == CProtocol.uci ? "bestmove " : "move ");
-			switch (testMode)
-			{
-				case 0:
-					if (msg == "uciok")
-						testEngine.protocol = CProtocol.uci;
-					break;
-				case 1:
-					if (con)
-						testEngine.modeTime = testResult;
-					break;
-				case 2:
-					if (con)
-						testEngine.modeDepth = testResult;
-					break;
-				case 3:
-					if (con)
-						testEngine.modeStandard = testResult;
-					break;
-				case 4:
-					if (con)
-						testEngine.modeTournament = testResult;
-					break;
-			}
-		}
-
-		public static void TestUci()
-		{
-			processTest.WriteLine("uci");
-			processTest.WriteLine("ucinewgame");
-			processTest.WriteLine("position startpos");
-		}
-
-		public static void TestModeTime(CEngine e)
-		{
-			testMode = 1;
-			testEngine.modeTime = false;
-			testResult = true;
-			processTest.SetProgram($@"{AppDomain.CurrentDomain.BaseDirectory}Engines\{e.file}", e.parameters);
-			if (testEngine.protocol == CProtocol.uci)
-			{
-				TestUci();
-				processTest.WriteLine("go movetime 1000");
-			}
-			else
-			{
-				processTest.WriteLine("xboard");
-				processTest.WriteLine("new");
-				processTest.WriteLine("st 1");
-				processTest.WriteLine("post");
-				processTest.WriteLine("white");
-				processTest.WriteLine("go");
-			}
-			Thread.Sleep(2000);
-			processTest.Terminate();
-			if (testEngine.modeTime)
-			{
-				testResult = false;
-				processTest.SetProgram($@"{AppDomain.CurrentDomain.BaseDirectory}Engines\{e.file}", e.parameters);
-				if (testEngine.protocol == CProtocol.uci)
-				{
-					TestUci();
-					processTest.WriteLine("go movetime 10000");
-				}
-				else
-				{
-					processTest.WriteLine("xboard");
-					processTest.WriteLine("new");
-					processTest.WriteLine("st 10");
-					processTest.WriteLine("post");
-					processTest.WriteLine("white");
-					processTest.WriteLine("go");
-				}
-				Thread.Sleep(2000);
-				processTest.Terminate();
-			}
-		}
-
-		static void TestModeDepth(CEngine e)
-		{
-			testMode = 2;
-			testEngine.modeDepth = false;
-			testResult = true;
-			processTest.SetProgram($@"{AppDomain.CurrentDomain.BaseDirectory}Engines\{e.file}", e.parameters);
-			if (testEngine.protocol == CProtocol.uci)
-			{
-				TestUci();
-				processTest.WriteLine("go depth 3");
-			}
-			else
-			{
-				processTest.WriteLine("xboard");
-				processTest.WriteLine("new");
-				processTest.WriteLine("sd 3");
-				processTest.WriteLine("post");
-				processTest.WriteLine("white");
-				processTest.WriteLine("go");
-			}
-			Thread.Sleep(1000);
-			processTest.Terminate();
-			if (testEngine.modeDepth)
-			{
-				testResult = false;
-				processTest.SetProgram($@"{AppDomain.CurrentDomain.BaseDirectory}Engines\{e.file}", e.parameters);
-				if (testEngine.protocol == CProtocol.uci)
-				{
-					TestUci();
-					processTest.WriteLine("go depth 100");
-				}
-				else
-				{
-					processTest.WriteLine("xboard");
-					processTest.WriteLine("new");
-					processTest.WriteLine("sd 100");
-					processTest.WriteLine("post");
-					processTest.WriteLine("white");
-					processTest.WriteLine("go");
-				}
-				Thread.Sleep(2000);
-				processTest.Terminate();
-			}
-		}
-
-		static void TestModeStandard(CEngine e)
-		{
-			testMode = 3;
-			testEngine.modeStandard = false;
-			testResult = true;
-			processTest.SetProgram($@"{AppDomain.CurrentDomain.BaseDirectory}Engines\{e.file}", e.parameters);
-			if (testEngine.protocol == CProtocol.uci)
-			{
-				TestUci();
-				processTest.WriteLine("go wtime 500 btime 500 winc 0 binc 0");
-			}
-			else
-			{
-				processTest.WriteLine("xboard");
-				processTest.WriteLine("new");
-				processTest.WriteLine("time 50");
-				processTest.WriteLine("otim 50");
-				processTest.WriteLine("post");
-				processTest.WriteLine("white");
-				processTest.WriteLine("go");
-			}
-			Thread.Sleep(2000);
-			processTest.Terminate();
-			if (testEngine.modeStandard)
-			{
-				testResult = false;
-				processTest.SetProgram($@"{AppDomain.CurrentDomain.BaseDirectory}Engines\{e.file}", e.parameters);
-				if (testEngine.protocol == CProtocol.uci)
-				{
-					TestUci();
-					processTest.WriteLine("go wtime 1000000 btime 1000000 winc 0 binc 0");
-				}
-				else
-				{
-					processTest.WriteLine("xboard");
-					processTest.WriteLine("new");
-					processTest.WriteLine("time 100000");
-					processTest.WriteLine("otim 100000");
-					processTest.WriteLine("post");
-					processTest.WriteLine("white");
-					processTest.WriteLine("go");
-				}
-				Thread.Sleep(2000);
-				processTest.Terminate();
-			}
-		}
-
-		static void TestModeTournament(CEngine e)
-		{
-			if (testEngine.protocol != CProtocol.winboard)
-				return;
-			testMode = 4;
-			testEngine.modeTournament = false;
-			testResult = true;
-			processTest.SetProgram($@"{AppDomain.CurrentDomain.BaseDirectory}Engines\{e.file}", e.parameters);
-			processTest.WriteLine("xboard");
-			processTest.WriteLine("new");
-			processTest.WriteLine("level 0 0:01 0");
-			processTest.WriteLine("post");
-			processTest.WriteLine("white");
-			processTest.WriteLine("go");
-			Thread.Sleep(2000);
-			processTest.Terminate();
-			if (testEngine.modeTournament)
-			{
-				testResult = false;
-				processTest.SetProgram($@"{AppDomain.CurrentDomain.BaseDirectory}Engines\{e.file}", e.parameters);
-				processTest.WriteLine("xboard");
-				processTest.WriteLine("new");
-				processTest.WriteLine("level 0 60 0");
-				processTest.WriteLine("post");
-				processTest.WriteLine("white");
-				processTest.WriteLine("go");
-				Thread.Sleep(2000);
-				processTest.Terminate();
-			}
-		}
-
-		public static void StartTestAuto(CProcess processTest)
-		{
-			if (testTask.Status != TaskStatus.Running)
-				testTask = Task.Run(() =>
-				{
-					foreach (CEngine e in engineList)
-						if ((e.FileExists() && e.protocol == CProtocol.auto))
-						{
-							testEngine = e;
-							testMode = 0;
-							testEngine.protocol = CProtocol.winboard;
-							processTest.SetProgram($@"{AppDomain.CurrentDomain.BaseDirectory}Engines\{e.file}", e.parameters);
-							processTest.WriteLine("uci");
-							Thread.Sleep(1000);
-							processTest.Terminate();
-							TestModeTime(e);
-							TestModeDepth(e);
-							TestModeStandard(e);
-							TestModeTournament(e);
-							if (!testEngine.modeDepth && !testEngine.modeStandard && !testEngine.modeTime && !testEngine.modeTournament)
-							{
-								testEngine.modeDepth = true;
-								testEngine.modeStandard = true;
-								testEngine.modeTime = true;
-								testEngine.modeTournament = true;
-							}
-							testEngine.SaveToIni();
-						}
-				});
 		}
 
 		#endregion
@@ -1305,7 +1038,6 @@ namespace RapChessGui
 			CData.UpdateFileEngine();
 			engineList.AutoUpdate();
 			playerList.Check(engineList);
-			StartTestAuto(processTest);
 			Reset();
 		}
 
@@ -2106,7 +1838,7 @@ namespace RapChessGui
 		void TournamentBReset()
 		{
 			lvTourBList.Items.Clear();
-			CBookList bookList = CModeTournamentB.FillList();
+			CBookList bookList = CModeTournamentB.ListFill();
 			foreach (CBook b in bookList)
 			{
 				ListViewItem lvi = new ListViewItem(new[] { b.name, b.elo, b.GetDeltaElo().ToString() });
@@ -2359,8 +2091,6 @@ namespace RapChessGui
 			CModeTournamentE.book = FormOptions.tourEBook;
 			CModeTournamentE.SaveToIni();
 			SetMode(CGameMode.tourE);
-			if (CModeTournamentE.ListUpdate())
-				TournamentEReset();
 			CEngine e1 = CModeTournamentE.SelectFirst();
 			CEngine e2 = CModeTournamentE.SelectSecond(e1);
 			CPlayer p1 = new CPlayer(e1.name);
@@ -2831,9 +2561,7 @@ namespace RapChessGui
 		{
 			IniSave();
 			GamerList.Terminate();
-			processTest.Terminate();
 			FormEditEngine.processOptions.Terminate();
-			FormEditEngine.processTest.Terminate();
 			FormLogEngines.process.Terminate();
 		}
 

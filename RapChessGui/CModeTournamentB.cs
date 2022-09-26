@@ -69,7 +69,7 @@ namespace RapChessGui
 			return tourList.CountGames(first, opponent, out _, out _, out _);
 		}
 
-		public static CBookList FillList()
+		public static CBookList ListFill()
 		{
 			bookList.Clear();
 			foreach (CBook b in FormChess.bookList)
@@ -89,6 +89,7 @@ namespace RapChessGui
 
 		public static CBook SelectFirst()
 		{
+			ListFill();
 			CBook b = bookList.GetBook(FormOptions.tourBSelected);
 			if (b != null)
 				return b;

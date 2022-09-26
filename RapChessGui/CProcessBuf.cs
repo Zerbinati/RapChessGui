@@ -10,7 +10,7 @@ namespace RapChessGui
 	public class CProcessBuf
 	{
 		bool spamOff = true;
-		int msgStop = 0;
+		readonly int msgDetectBst = FormChess.WM_DETECT_BEST;
 		public Process process = new Process();
 		private readonly List<string> bufWrite = new List<string>();
 		private readonly List<string> bufRead = new List<string>();
@@ -27,15 +27,9 @@ namespace RapChessGui
 			catch { }
 		}
 
-		public string GetMessage()
+
+		public void CopyBuffers()
 		{
-			string msg = String.Empty;
-			if (bufRead.Count > 0)
-			{
-				msg = bufRead[0];
-				bufRead.RemoveAt(0);
-				return msg;
-			}
 			try
 			{
 				if (bufWrite.Count > 0)
@@ -45,6 +39,28 @@ namespace RapChessGui
 				}
 			}
 			catch { }
+		}
+
+		public bool ContainsBest()
+		{
+			CopyBuffers();
+			foreach (string msg in bufRead)
+				if (msg.Contains("bestmove "))
+					return true;
+			return false;
+		}
+
+		public string GetMessage()
+		{
+			string msg = String.Empty;
+			if (bufRead.Count > 0)
+			{
+
+				msg = bufRead[0];
+				bufRead.RemoveAt(0);
+				return msg;
+			}
+			CopyBuffers();
 			if (bufRead.Count > 0)
 			{
 				msg = bufRead[0];
@@ -82,7 +98,7 @@ namespace RapChessGui
 					if (msg.Contains("bestmove "))
 					{
 						clear = spamOff;
-						CWinMessage.Message(msgStop);
+						CWinMessage.Message(msgDetectBst);
 					}
 					SetMessage(msg, clear);
 				}
@@ -153,12 +169,10 @@ namespace RapChessGui
 			catch { }
 		}
 
-		public void WriteLine(string c, int stop = 0)
+		public void WriteLine(string c)
 		{
 			if (!process.HasExited)
 			{
-				if (stop != 0)
-					msgStop = stop;
 				process.StandardInput.WriteLine(c);
 				process.StandardInput.Flush();
 			}

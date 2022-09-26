@@ -133,6 +133,12 @@
     <Compile Include="CPlayerList.cs" />
     <Compile Include="CTourList.cs" />
     <Compile Include="CUci.cs" />
+    <Compile Include="FormAutodetect.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormAutodetect.Designer.cs">
+      <DependentUpon>FormAutodetect.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormChartB.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -212,6 +218,9 @@
       <DependentUpon>FormEditPlayer.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
+    <EmbeddedResource Include="FormAutodetect.resx">
+      <DependentUpon>FormAutodetect.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormChartB.resx">
       <DependentUpon>FormChartB.cs</DependentUpon>
     </EmbeddedResource>

@@ -49,6 +49,11 @@ namespace RapChessGui
 		public static int mouseIndex = 0;
 	}
 
+	public static class Global
+	{
+		public static bool detectBest = false;
+	}
+
 	public static class CData
 	{
 		public static bool reset = true;

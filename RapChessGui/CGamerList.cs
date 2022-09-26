@@ -86,6 +86,12 @@ namespace RapChessGui
 			if (curProcess == enginePro)
 			{
 				pid = enginePro.process.Id;
+				if (Global.detectBest)
+				{
+					if (enginePro.ContainsBest())
+						timer.Stop();
+					Global.detectBest = false;
+				}
 				return enginePro.GetMessage();
 			}
 			if (curProcess == bookPro)
@@ -314,15 +320,14 @@ namespace RapChessGui
 		void UciGo()
 		{
 			SendMessageToEngine(CHistory.GetPosition());
-			int msgStop = isWhite ? FormChess.WM_WHITE_STOP : FormChess.WM_BLACK_STOP;
 			if (player.modeValue.level == CLevel.standard)
 			{
 				CGamer gw = CGamerList.This.GamerWhite();
 				CGamer gb = CGamerList.This.GamerBlack();
-				SendMessageToEngine($"go wtime {gw.GetRemainingMs()} btime {gb.GetRemainingMs()} winc 0 binc 0", msgStop);
+				SendMessageToEngine($"go wtime {gw.GetRemainingMs()} btime {gb.GetRemainingMs()} winc 0 binc 0");
 			}
 			else
-				SendMessageToEngine($"go {player.modeValue.GetUci()} {player.modeValue.GetUciValue()}", msgStop);
+				SendMessageToEngine($"go {player.modeValue.GetUci()} {player.modeValue.GetUciValue()}");
 			TimerStart();
 		}
 
@@ -349,13 +354,8 @@ namespace RapChessGui
 			int ms = player.modeValue.GetUciValue();
 			if (engine.modeTime)
 				SendMessageToEngine($"st {ms / 1000}");
-			else if (engine.modeTournament)
-				SendMessageToEngine($"level 0 0 {ms / 1000}");
 			else
-			{
-				SendMessageToEngine($"time {ms / 10}");
-				SendMessageToEngine($"otim {ms / 10}");
-			}
+				SendMessageToEngine($"level 0 0 {ms / 1000}");
 		}
 
 		void XbGoDepth()
@@ -433,14 +433,14 @@ namespace RapChessGui
 			}
 		}
 
-		public void SendMessageToEngine(string msg, int stop = 0)
+		public void SendMessageToEngine(string msg)
 		{
 			if (enginePro.process != null)
 			{
 				Color col = isWhite ? Color.DimGray : Color.Black;
 				FormLogEngines.AppendTimeText($"{player.name}", col);
 				FormLogEngines.AppendText($" < {msg}\n", Color.Brown);
-				enginePro.WriteLine(msg, stop);
+				enginePro.WriteLine(msg);
 				curProcess = enginePro;
 			}
 		}
