@@ -44,6 +44,7 @@
 			this.tbConsole.Multiline = true;
 			this.tbConsole.Name = "tbConsole";
 			this.tbConsole.ReadOnly = true;
+			this.tbConsole.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
 			this.tbConsole.Size = new System.Drawing.Size(800, 422);
 			this.tbConsole.TabIndex = 0;
 			// 
@@ -60,6 +61,7 @@
 			// 
 			// testTimer
 			// 
+			this.testTimer.Interval = 2000;
 			this.testTimer.Tick += new System.EventHandler(this.testTimer_Tick);
 			// 
 			// FormAutodetect
