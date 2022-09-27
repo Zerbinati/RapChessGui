@@ -38,7 +38,10 @@ namespace RapChessGui
 					bufWrite.Clear();
 				}
 			}
-			catch { }
+			catch
+			{
+				bufRead.Clear();
+			}
 		}
 
 		public bool ContainsBest()

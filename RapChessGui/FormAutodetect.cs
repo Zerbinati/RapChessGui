@@ -160,24 +160,62 @@ namespace RapChessGui
 			}
 		}
 
+		void ShowProtocol()
+		{
+			if (testEngine.protocol == CProtocol.uci)
+				WriteLine("protocol uci");
+			else
+				WriteLine("protocol xb");
+		}
+
+		void ShowTime()
+		{
+			if (testEngine.modeTime)
+				WriteLine("mode time ok");
+			else
+				WriteLine("mode time fail");
+		}
+
+		void ShowDepth()
+		{
+			if (testEngine.modeDepth)
+				WriteLine("mode depth ok");
+			else
+				WriteLine("mode depth fail");
+		}
+
+		void ShowStandard()
+		{
+			if (testEngine.modeStandard)
+				WriteLine("mode standart ok");
+			else
+				WriteLine("mode standart fail");
+		}
+
+		void ShowTournament()
+		{
+			if ((testEngine.modeTournament) || (testEngine.protocol == CProtocol.uci))
+				WriteLine("mode tournament ok");
+			else
+				WriteLine("mode tournament fail");
+		}
+
 		void NextPhase()
 		{
 			testWatch.Restart();
-			switch (testMode++)
+			testMode++;
+			switch (testMode)
 			{
 				case 1:
-					tbConsole.Clear();
-					WriteLine("test started");
+					WriteLine("start test uci");
 					testProcess.SetProgram($@"{AppDomain.CurrentDomain.BaseDirectory}Engines\{testEngine.file}", testEngine.parameters);
 					testProcess.WriteLine("uci");
 					break;
 				case 2:
-					if (testEngine.protocol == CProtocol.uci)
-						WriteLine("protocol uci");
-					else
-						WriteLine("protocol xb");
+					ShowProtocol();
 					testEngine.modeTime = false;
 					testResult = true;
+					WriteLine("start test time 1");
 					testProcess.SetProgram($@"{AppDomain.CurrentDomain.BaseDirectory}Engines\{testEngine.file}", testEngine.parameters);
 					if (testEngine.protocol == CProtocol.uci)
 					{
@@ -198,6 +236,7 @@ namespace RapChessGui
 					if (testEngine.modeTime)
 					{
 						testResult = false;
+						WriteLine("start test time 2");
 						testProcess.SetProgram($@"{AppDomain.CurrentDomain.BaseDirectory}Engines\{testEngine.file}", testEngine.parameters);
 						if (testEngine.protocol == CProtocol.uci)
 						{
@@ -218,12 +257,10 @@ namespace RapChessGui
 						NextPhase();
 					break;
 				case 4:
-					if (testEngine.modeTime)
-						WriteLine("mode time ok");
-					else
-						WriteLine("mode time fail");
+					ShowTime();
 					testEngine.modeDepth = false;
 					testResult = true;
+					WriteLine("start test depth 1");
 					testProcess.SetProgram($@"{AppDomain.CurrentDomain.BaseDirectory}Engines\{testEngine.file}", testEngine.parameters);
 					if (testEngine.protocol == CProtocol.uci)
 					{
@@ -244,6 +281,7 @@ namespace RapChessGui
 					if (testEngine.modeDepth)
 					{
 						testResult = false;
+						WriteLine("start test depth 2");
 						testProcess.SetProgram($@"{AppDomain.CurrentDomain.BaseDirectory}Engines\{testEngine.file}", testEngine.parameters);
 						if (testEngine.protocol == CProtocol.uci)
 						{
@@ -264,12 +302,10 @@ namespace RapChessGui
 						NextPhase();
 					break;
 				case 6:
-					if (testEngine.modeDepth)
-						WriteLine("mode depth ok");
-					else
-						WriteLine("mode depth fail");
+					ShowDepth();
 					testEngine.modeStandard = false;
 					testResult = true;
+					WriteLine("start test standard 1");
 					testProcess.SetProgram($@"{AppDomain.CurrentDomain.BaseDirectory}Engines\{testEngine.file}", testEngine.parameters);
 					if (testEngine.protocol == CProtocol.uci)
 					{
@@ -291,6 +327,7 @@ namespace RapChessGui
 					if (testEngine.modeStandard)
 					{
 						testResult = false;
+						WriteLine("start test standard 2");
 						testProcess.SetProgram($@"{AppDomain.CurrentDomain.BaseDirectory}Engines\{testEngine.file}", testEngine.parameters);
 						if (testEngine.protocol == CProtocol.uci)
 						{
@@ -311,16 +348,14 @@ namespace RapChessGui
 						NextPhase();
 						break;
 				case 8:
-					if (testEngine.modeStandard)
-						WriteLine("mode standart ok");
-					else
-						WriteLine("mode standart fail");
+					ShowStandard();
 					testEngine.modeTournament = false;
 					testResult = true;
 					if (testEngine.protocol == CProtocol.winboard)
 					{
 						testEngine.modeTournament = false;
 						testResult = true;
+						WriteLine("start test tournament 1");
 						testProcess.SetProgram($@"{AppDomain.CurrentDomain.BaseDirectory}Engines\{testEngine.file}", testEngine.parameters);
 						testProcess.WriteLine("xboard");
 						testProcess.WriteLine("new");
@@ -333,9 +368,10 @@ namespace RapChessGui
 						NextPhase();
 					break;
 				case 9:
-					if ((testEngine.protocol == CProtocol.winboard) && (testEngine.modeTournament))
+					if ((testEngine.protocol == CProtocol.winboard) && testEngine.modeTournament)
 					{
 						testResult = false;
+						WriteLine("start test tournament 2");
 						testProcess.SetProgram($@"{AppDomain.CurrentDomain.BaseDirectory}Engines\{testEngine.file}", testEngine.parameters);
 						testProcess.WriteLine("xboard");
 						testProcess.WriteLine("new");
@@ -348,12 +384,17 @@ namespace RapChessGui
 						NextPhase();
 					break;
 				case 10:
+					testTimer.Stop();
 					testProcess.Terminate();
-					if ((testEngine.modeTournament) || (testEngine.protocol == CProtocol.uci))
-						WriteLine("mode tournament ok");
-					else
-						WriteLine("mode tournament fail");
 					testTimer.Enabled = false;
+					if (testEngine.protocol == CProtocol.uci)
+						testEngine.modeTournament = true;
+					ShowProtocol();
+					ShowTime();
+					ShowDepth();
+					ShowStandard();
+					ShowTournament();
+					WriteLine("test finished");
 					if (!testEngine.modeDepth && !testEngine.modeStandard && !testEngine.modeTime && !testEngine.modeTournament)
 					{
 						testEngine.modeDepth = true;
@@ -361,10 +402,7 @@ namespace RapChessGui
 						testEngine.modeTime = true;
 						testEngine.modeTournament = true;
 					}
-					if (testEngine.protocol == CProtocol.uci)
-						testEngine.modeTournament = true;
 					testEngine.SaveToIni();
-					WriteLine("test finished");
 					break;
 			}
 
@@ -378,7 +416,9 @@ namespace RapChessGui
 		public void StartTestAuto()
 		{
 			testMode = 0;
-			testTimer.Enabled = true;
+			testTimer.Start();
+			tbConsole.Clear();
+			WriteLine("test started");
 		}
 
 		#endregion

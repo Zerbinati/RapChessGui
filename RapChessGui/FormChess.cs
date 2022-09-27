@@ -2616,7 +2616,8 @@ namespace RapChessGui
 
 		private void bStartMatch_Click(object sender, EventArgs e)
 		{
-			CModeMatch.Reset();
+
+			CModeMatch.SaveToIni();
 			MatchStart();
 		}
 
@@ -2742,10 +2743,10 @@ namespace RapChessGui
 			EditGetFen();
 		}
 
-		private void butContinueMatch_Click(object sender, EventArgs e)
+		private void bMatchClear_Click(object sender, EventArgs e)
 		{
-			CModeMatch.SaveToIni();
-			MatchStart();
+			CModeMatch.Reset();
+			MatchShow();
 		}
 
 		private void butDefault_Click(object sender, EventArgs e)

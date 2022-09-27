@@ -996,10 +996,10 @@
 			this.butContinueMatch.Name = "butContinueMatch";
 			this.butContinueMatch.Size = new System.Drawing.Size(337, 23);
 			this.butContinueMatch.TabIndex = 27;
-			this.butContinueMatch.Text = "Continue match";
+			this.butContinueMatch.Text = "Clear results";
 			this.toolTip1.SetToolTip(this.butContinueMatch, "Continue match with old results");
 			this.butContinueMatch.UseVisualStyleBackColor = true;
-			this.butContinueMatch.Click += new System.EventHandler(this.butContinueMatch_Click);
+			this.butContinueMatch.Click += new System.EventHandler(this.bMatchClear_Click);
 			// 
 			// butNewMatch
 			// 
@@ -1008,7 +1008,7 @@
 			this.butNewMatch.Name = "butNewMatch";
 			this.butNewMatch.Size = new System.Drawing.Size(337, 23);
 			this.butNewMatch.TabIndex = 22;
-			this.butNewMatch.Text = "New match";
+			this.butNewMatch.Text = "Start";
 			this.toolTip1.SetToolTip(this.butNewMatch, "Clear old results and start new match");
 			this.butNewMatch.UseVisualStyleBackColor = true;
 			this.butNewMatch.Click += new System.EventHandler(this.bStartMatch_Click);
