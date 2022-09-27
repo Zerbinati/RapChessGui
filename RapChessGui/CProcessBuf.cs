@@ -10,77 +10,52 @@ namespace RapChessGui
 	public class CProcessBuf
 	{
 		bool spamOff = true;
-		readonly int msgDetectBst = FormChess.WM_DETECT_BEST;
 		public Process process = new Process();
-		private readonly List<string> bufWrite = new List<string>();
-		private readonly List<string> bufRead = new List<string>();
+		readonly private object locker = new object();
+		private readonly List<string> list = new List<string>();
 
 
-		void SetMessage(string msg, bool clear)
+		void SetMessage(string msg)
 		{
-			try
+			lock(locker)
 			{
-				if (clear)
-					bufWrite.Clear();
-				bufWrite.Add(msg);
-			}
-			catch { }
-		}
-
-
-		public void CopyBuffers()
-		{
-			try
-			{
-				if (bufWrite.Count > 0)
-				{
-					bufRead.AddRange(bufWrite);
-					bufWrite.Clear();
-				}
-			}
-			catch
-			{
-				bufRead.Clear();
+				list.Add(msg);
 			}
 		}
 
-		public bool ContainsBest()
+		public string GetMessage(out bool stop)
 		{
-			CopyBuffers();
-			foreach (string msg in bufRead)
-				if (msg.Contains("bestmove "))
-					return true;
-			return false;
-		}
-
-		public string GetMessage()
-		{
+			stop = false;
 			string msg = String.Empty;
-			if (bufRead.Count > 0)
+			lock (locker)
 			{
+				foreach (string m in list)
+					if (m.Contains("bestmove"))
+					{
+						stop = true;
+						if (spamOff)
+						{
+							list.Clear();
+							return m;
+						}
+					}
+				if (list.Count > 0)
+				{
 
-				msg = bufRead[0];
-				bufRead.RemoveAt(0);
-				return msg;
-			}
-			CopyBuffers();
-			if (bufRead.Count > 0)
-			{
-				msg = bufRead[0];
-				bufRead.RemoveAt(0);
+					msg = list[0];
+					list.RemoveAt(0);
+				}
 			}
 			return msg;
 		}
 
 		public void Clear()
 		{
-			try
+			lock(locker)
 			{
-				bufWrite.Clear();
-				bufRead.Clear();
-				process.StartInfo.FileName = String.Empty;
+				list.Clear();
 			}
-			catch { }
+			process.StartInfo.FileName = String.Empty;
 		}
 
 		public int GetPid()
@@ -97,13 +72,7 @@ namespace RapChessGui
 				if (!String.IsNullOrEmpty(e.Data))
 				{
 					string msg = e.Data.Trim();
-					bool clear = false;
-					if (msg.Contains("bestmove "))
-					{
-						clear = spamOff;
-						CWinMessage.Message(msgDetectBst);
-					}
-					SetMessage(msg, clear);
+					SetMessage(msg);
 				}
 			}
 			catch { }
@@ -175,10 +144,7 @@ namespace RapChessGui
 		public void WriteLine(string c)
 		{
 			if (!process.HasExited)
-			{
 				process.StandardInput.WriteLine(c);
-				process.StandardInput.Flush();
-			}
 		}
 
 	}

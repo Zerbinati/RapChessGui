@@ -1,17 +1,17 @@
-﻿using System;
-using System.IO;
+﻿using NSChess;
+using NSUci;
+using RapIni;
+using RapLog;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Text;
+using System.IO;
+using System.Linq;
 using System.Media;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Linq;
-using RapIni;
-using RapLog;
-using NSUci;
-using NSChess;
 
 namespace RapChessGui
 {
@@ -31,7 +31,6 @@ namespace RapChessGui
 		/// </summary>
 		bool autoStartNexGame = false;
 		public const int WM_GAME_NEXT = 1024;
-		public const int WM_DETECT_BEST = 1025;
 		public static IntPtr handle;
 		public static FormChess This;
 		public static bool boardRotate;
@@ -106,9 +105,6 @@ namespace RapChessGui
 				case WM_GAME_NEXT:
 					if (autoStartNexGame)
 						NextGame();
-					break;
-				case WM_DETECT_BEST:
-					Global.detectBest = true;
 					break;
 			}
 			base.WndProc(ref m);
@@ -1071,18 +1067,18 @@ namespace RapChessGui
 			cbTourBEngine.Sorted = false;
 			cbTrainerEngine.Sorted = false;
 			cbTrainedEngine.Sorted = false;
-			cbEngine.Items.Insert(0, CData.none);
-			cbMatchEngine1.Items.Insert(0, CData.none);
-			cbMatchEngine2.Items.Insert(0, CData.none);
-			cbTourBEngine.Items.Insert(0, CData.none);
-			cbTrainerEngine.Items.Insert(0, CData.none);
-			cbTrainedEngine.Items.Insert(0, CData.none);
-			cbEngine.Text = CData.none;
-			cbMatchEngine1.Text = CData.none;
-			cbMatchEngine2.Text = CData.none;
-			cbTourBEngine.Text = CData.none;
-			cbTrainerEngine.Text = CData.none;
-			cbTrainedEngine.Text = CData.none;
+			cbEngine.Items.Insert(0, Global.none);
+			cbMatchEngine1.Items.Insert(0, Global.none);
+			cbMatchEngine2.Items.Insert(0, Global.none);
+			cbTourBEngine.Items.Insert(0, Global.none);
+			cbTrainerEngine.Items.Insert(0, Global.none);
+			cbTrainedEngine.Items.Insert(0, Global.none);
+			cbEngine.Text = Global.none;
+			cbMatchEngine1.Text = Global.none;
+			cbMatchEngine2.Text = Global.none;
+			cbTourBEngine.Text = Global.none;
+			cbTrainerEngine.Text = Global.none;
+			cbTrainedEngine.Text = Global.none;
 		}
 
 		void ResetListBook()
@@ -1111,16 +1107,16 @@ namespace RapChessGui
 			cbMatchBook2.Sorted = false;
 			cbTrainerBook.Sorted = false;
 			cbTrainedBook.Sorted = false;
-			cbBook.Items.Insert(0, CData.none);
-			cbMatchBook1.Items.Insert(0, CData.none);
-			cbMatchBook2.Items.Insert(0, CData.none);
-			cbTrainerBook.Items.Insert(0, CData.none);
-			cbTrainedBook.Items.Insert(0, CData.none);
-			cbBook.Text = CData.none;
-			cbMatchBook1.Text = CData.none;
-			cbMatchBook2.Text = CData.none;
-			cbTrainerBook.Text = CData.none;
-			cbTrainedBook.Text = CData.none;
+			cbBook.Items.Insert(0, Global.none);
+			cbMatchBook1.Items.Insert(0, Global.none);
+			cbMatchBook2.Items.Insert(0, Global.none);
+			cbTrainerBook.Items.Insert(0, Global.none);
+			cbTrainedBook.Items.Insert(0, Global.none);
+			cbBook.Text =Global.none;
+			cbMatchBook1.Text = Global.none;
+			cbMatchBook2.Text = Global.none;
+			cbTrainerBook.Text = Global.none;
+			cbTrainedBook.Text = Global.none;
 		}
 
 		void Reset(bool forced = false)
@@ -2197,7 +2193,7 @@ namespace RapChessGui
 			int countGames = 0;
 			int opponents = 0;
 			foreach (CPlayer p in playerList.list)
-				if (p.engine != CData.none)
+				if (p.engine != Global.none)
 				{
 					int count = CModeTournamentP.tourList.CountGames(name, p.name, out int gw, out int gl, out int gd);
 					if (count > 0)
@@ -2599,21 +2595,6 @@ namespace RapChessGui
 			TrainingStart();
 		}
 
-		private void saveToClipboardToolStripMenuItem_Click(object sender, EventArgs e)
-		{
-
-		}
-
-		private void loadFromClipboardToolStripMenuItem_Click(object sender, EventArgs e)
-		{
-
-		}
-
-		private void loadPgnFromClipboard_Click(object sender, EventArgs e)
-		{
-
-		}
-
 		private void bStartMatch_Click(object sender, EventArgs e)
 		{
 
@@ -2716,11 +2697,6 @@ namespace RapChessGui
 			string fen = chess.GetFen();
 			GameSet();
 			LoadFen(fen);
-		}
-
-		private void SaveToClipboardToolStripMenuItem1_Click(object sender, EventArgs e)
-		{
-
 		}
 
 		private void clbCastling_ItemCheck(object sender, ItemCheckEventArgs e)

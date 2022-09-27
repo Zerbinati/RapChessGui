@@ -51,7 +51,7 @@ namespace RapChessGui
 
 	public static class Global
 	{
-		public static bool detectBest = false;
+		public static string none = "None";
 	}
 
 	public static class CData
@@ -63,7 +63,6 @@ namespace RapChessGui
 		public static int gamesTime = 0;
 		public static int gamesError = 0;
 		public static string eco = String.Empty;
-		public static string none = "None";
 		public static CGameState gameState = CGameState.normal;
 		public static CGameMode gameMode = CGameMode.game;
 		public static List<string> fileBook = new List<string>();

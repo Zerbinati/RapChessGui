@@ -83,24 +83,22 @@ namespace RapChessGui
 
 		public string GetMessage(out int pid)
 		{
+			string msg = String.Empty;
 			if (curProcess == enginePro)
 			{
 				pid = enginePro.process.Id;
-				if (Global.detectBest)
-				{
-					if (enginePro.ContainsBest())
-						timer.Stop();
-					Global.detectBest = false;
-				}
-				return enginePro.GetMessage();
+				msg = enginePro.GetMessage(out bool stop);
+				if (stop)
+					timer.Stop();
+				return msg;
 			}
 			if (curProcess == bookPro)
 			{
 				pid = bookPro.process.Id;
-				return bookPro.GetMessage();
+				return bookPro.GetMessage(out _);
 			}
 			pid = 0;
-			return String.Empty;
+			return msg;
 		}
 
 		public void UciNextPhase()
@@ -563,7 +561,7 @@ namespace RapChessGui
 			bookPro.Terminate();
 			enginePro.Terminate();
 			if (book == null)
-				p.book = CData.none;
+				p.book = Global.none;
 			else
 				bookPro.SetProgram($@"{AppDomain.CurrentDomain.BaseDirectory}Books\{book.file}", book.GetParameters(engine));
 			if (engine == null)

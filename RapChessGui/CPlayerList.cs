@@ -10,8 +10,8 @@ namespace RapChessGui
 		public int tournament = 1;
 		public int position = 0;
 		public string name = "";
-		public string engine = CData.none;
-		public string book = CData.none;
+		public string engine = Global.none;
+		public string book = Global.none;
 		public string elo = "1000";
 		public string eloOrg = "1000";
 		public CModeValue modeValue = new CModeValue();

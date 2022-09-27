@@ -24,10 +24,10 @@ namespace RapChessGui
 		public static int winLimit = 1;
 		public static int tourEValue = 100;
 		public static string tourEMode = "Time";
-		public static string tourBSelected = CData.none;
-		public static string tourESelected = CData.none;
-		public static string tourEBook = CData.none;
-		public static string tourPSelected = CData.none;
+		public static string tourBSelected = Global.none;
+		public static string tourESelected = Global.none;
+		public static string tourEBook = Global.none;
+		public static string tourPSelected = Global.none;
 		public static int page = 0;
 		public static ProcessPriorityClass priority = ProcessPriorityClass.Normal;
 		public static Color colorBoard;
@@ -108,7 +108,7 @@ namespace RapChessGui
 			}
 
 			cbBookReader.Items.Clear();
-			cbBookReader.Items.Add(CData.none);
+			cbBookReader.Items.Add(Global.none);
 			foreach (string book in CData.fileBook)
 				cbBookReader.Items.Add(book);
 			cbBookReader.SelectedIndex = 0;
@@ -124,8 +124,8 @@ namespace RapChessGui
 			}
 			cbTourBSelected.Sorted = false;
 			cbTourEBook.Sorted = false;
-			cbTourBSelected.Items.Insert(0, CData.none);
-			cbTourEBook.Items.Add(CData.none);
+			cbTourBSelected.Items.Insert(0, Global.none);
+			cbTourEBook.Items.Add(Global.none);
 			cbTourBSelected.SelectedIndex = 0;
 			cbTourEBook.SelectedIndex = 0;
 
@@ -134,7 +134,7 @@ namespace RapChessGui
 			foreach (CEngine e in FormChess.engineList)
 				cbTourESelected.Items.Add(e.name);
 			cbTourESelected.Sorted = false;
-			cbTourESelected.Items.Insert(0, CData.none);
+			cbTourESelected.Items.Insert(0, Global.none);
 			cbTourESelected.SelectedIndex = 0;
 
 			cbTourPSelected.Items.Clear();
@@ -142,7 +142,7 @@ namespace RapChessGui
 			foreach (CPlayer p in FormChess.playerList.list)
 				cbTourPSelected.Items.Add(p.name);
 			cbTourPSelected.Sorted = false;
-			cbTourPSelected.Items.Insert(0, CData.none);
+			cbTourPSelected.Items.Insert(0, Global.none);
 			cbTourPSelected.SelectedIndex = 0;
 
 			LoadFromIni();
