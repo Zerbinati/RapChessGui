@@ -51,57 +51,13 @@ namespace RapChessGui
 			testProcess.WriteLine("position startpos");
 		}
 
-		public static void TestModeUci()
+		void TestXb()
 		{
-			testProcess.SetProgram($@"{AppDomain.CurrentDomain.BaseDirectory}Engines\{testEngine.file}", testEngine.parameters);
-			testProcess.WriteLine("uci");
-			Thread.Sleep(1000);
-			testProcess.Terminate();
-		}
-
-		public static void TestModeTime()
-		{
-			testEngine.modeTime = false;
-			testResult = true;
-			testProcess.SetProgram($@"{AppDomain.CurrentDomain.BaseDirectory}Engines\{testEngine.file}", testEngine.parameters);
-			if (testEngine.protocol == CProtocol.uci)
-			{
-				TestUci();
-				testProcess.WriteLine("go movetime 1000");
-			}
-			else
-			{
-				testProcess.WriteLine("xboard");
-				testProcess.WriteLine("new");
-				testProcess.WriteLine("st 1");
-				testProcess.WriteLine("post");
-				testProcess.WriteLine("white");
-				testProcess.WriteLine("go");
-			}
-			Thread.Sleep(4000);
-			testWatch.Start();
-			testProcess.Terminate();
-			if (testEngine.modeTime)
-			{
-				testResult = false;
-				testProcess.SetProgram($@"{AppDomain.CurrentDomain.BaseDirectory}Engines\{testEngine.file}", testEngine.parameters);
-				if (testEngine.protocol == CProtocol.uci)
-				{
-					TestUci();
-					testProcess.WriteLine("go movetime 10000");
-				}
-				else
-				{
-					testProcess.WriteLine("xboard");
-					testProcess.WriteLine("new");
-					testProcess.WriteLine("st 10");
-					testProcess.WriteLine("post");
-					testProcess.WriteLine("white");
-					testProcess.WriteLine("go");
-				}
-				Thread.Sleep(2000);
-				testProcess.Terminate();
-			}
+			testProcess.WriteLine("post");
+			testProcess.WriteLine("force");
+			testProcess.WriteLine("g2g4");
+			testProcess.WriteLine("black");
+			testProcess.WriteLine("go");
 		}
 
 		public static void NewMessageTest(string msg)
@@ -227,9 +183,7 @@ namespace RapChessGui
 						testProcess.WriteLine("xboard");
 						testProcess.WriteLine("new");
 						testProcess.WriteLine("st 1");
-						testProcess.WriteLine("post");
-						testProcess.WriteLine("white");
-						testProcess.WriteLine("go");
+						TestXb();
 					}
 					break;
 				case 3:
@@ -248,9 +202,7 @@ namespace RapChessGui
 							testProcess.WriteLine("xboard");
 							testProcess.WriteLine("new");
 							testProcess.WriteLine("st 10");
-							testProcess.WriteLine("post");
-							testProcess.WriteLine("white");
-							testProcess.WriteLine("go");
+							TestXb();
 						}
 					}
 					else
@@ -272,9 +224,7 @@ namespace RapChessGui
 						testProcess.WriteLine("xboard");
 						testProcess.WriteLine("new");
 						testProcess.WriteLine("sd 3");
-						testProcess.WriteLine("post");
-						testProcess.WriteLine("white");
-						testProcess.WriteLine("go");
+						TestXb();
 					}
 					break;
 				case 5:
@@ -293,9 +243,7 @@ namespace RapChessGui
 							testProcess.WriteLine("xboard");
 							testProcess.WriteLine("new");
 							testProcess.WriteLine("sd 100");
-							testProcess.WriteLine("post");
-							testProcess.WriteLine("white");
-							testProcess.WriteLine("go");
+							TestXb();
 						}
 					}
 					else
@@ -318,9 +266,7 @@ namespace RapChessGui
 						testProcess.WriteLine("new");
 						testProcess.WriteLine("time 50");
 						testProcess.WriteLine("otim 50");
-						testProcess.WriteLine("post");
-						testProcess.WriteLine("white");
-						testProcess.WriteLine("go");
+						TestXb();
 					}
 					break;
 				case 7:
@@ -340,13 +286,12 @@ namespace RapChessGui
 							testProcess.WriteLine("new");
 							testProcess.WriteLine("time 100000");
 							testProcess.WriteLine("otim 100000");
-							testProcess.WriteLine("post");
-							testProcess.WriteLine("white");
-							testProcess.WriteLine("go");
+							TestXb();
 						}
-					}else
+					}
+					else
 						NextPhase();
-						break;
+					break;
 				case 8:
 					ShowStandard();
 					testEngine.modeTournament = false;
@@ -360,9 +305,7 @@ namespace RapChessGui
 						testProcess.WriteLine("xboard");
 						testProcess.WriteLine("new");
 						testProcess.WriteLine("level 0 0:01 0");
-						testProcess.WriteLine("post");
-						testProcess.WriteLine("white");
-						testProcess.WriteLine("go");
+						TestXb();
 					}
 					else
 						NextPhase();
@@ -376,9 +319,7 @@ namespace RapChessGui
 						testProcess.WriteLine("xboard");
 						testProcess.WriteLine("new");
 						testProcess.WriteLine("level 0 60 0");
-						testProcess.WriteLine("post");
-						testProcess.WriteLine("white");
-						testProcess.WriteLine("go");
+						TestXb();
 					}
 					else
 						NextPhase();

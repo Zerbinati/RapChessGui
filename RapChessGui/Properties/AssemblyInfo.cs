@@ -5,8 +5,8 @@ using System.Runtime.InteropServices;
 // Ogólne informacje o zestawie są kontrolowane poprzez następujący 
 // zestaw atrybutów. Zmień wartości tych atrybutów, aby zmodyfikować informacje
 // powiązane z zestawem.
-[assembly: AssemblyTitle("RapChessGui")]
-[assembly: AssemblyDescription("Chess program")]
+[assembly: AssemblyTitle("Chess Program RapChessGui")]
+[assembly: AssemblyDescription("RapChessGui")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Thibor")]
 [assembly: AssemblyProduct("RapChessGui")]

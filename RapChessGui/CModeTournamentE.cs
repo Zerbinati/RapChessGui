@@ -98,7 +98,7 @@ namespace RapChessGui
 			if (engineList.Count < 2)
 				return engine;
 			engineList.SetEloDistance(engine);
-			double bstScore = 0.0;
+			double bstScore = double.MinValue;
 			CEngine bstEngine = engine;
 			foreach (CEngine e in engineList)
 				if (e != engine)
@@ -119,7 +119,6 @@ namespace RapChessGui
 			int fElo = first.GetElo();
 			int sElo = second.GetElo();
 			double ratioDistance = (engineList.Count - second.position) / (double)engineList.Count;
-			int allGames = tourList.CountGames(second.name);
 			tourList.CountGames(second.name, first.name, out int rw, out int rl, out int rd);
 			int curGames = rw + rl + rd;
 			double ratioScore = 0;
@@ -141,16 +140,16 @@ namespace RapChessGui
 				ratioScore = 1;
 			if ((r < 0) && (sElo > fElo))
 				ratioScore = 1;
-			double ratioGames = (allGames - curGames + 1.0) / (allGames + 1.0);
+			double ratioGames =  1.0/(curGames + 1.0);
 			r = first.GetDeltaElo();
 			first.hisElo.MinMax(out double min, out double max);
 			double range = max - min;
-			double ratioTrend = Math.Abs(r / range);
+			double ratioTrend = Math.Abs(r / (range+1.0));
 			if ((r > 0) && (sElo < fElo))
 				ratioTrend = 0;
 			if ((r < 0) && (sElo > fElo))
 				ratioTrend = 0;
-			return ratioDistance + ratioGames + ratioElo + ratioScore + ratioTrend * 0.5;
+			return ratioDistance + ratioGames * 0.4 + ratioElo + ratioScore + ratioTrend * 0.5;
 		}
 
 		public static void SetRepeition(CEngine e, CEngine o)

@@ -1602,7 +1602,7 @@ namespace RapChessGui
 
 		#endregion
 
-		#region mode
+		#region mode game
 
 		void GameSet()
 		{
@@ -1786,6 +1786,9 @@ namespace RapChessGui
 			CModeMatch.his.Add(CModeMatch.win - CModeMatch.loose);
 			CModeMatch.SaveToIni();
 		}
+
+		#endregion
+		#region mode torunament B
 
 		void TournamentBEnd(CGamer gw, CGamer gl, bool isDraw)
 		{
@@ -1976,6 +1979,9 @@ namespace RapChessGui
 					}
 		}
 
+		#endregion
+		#region mode tournament E
+
 		void TournamentEReset()
 		{
 			lvTourEList.Items.Clear();
@@ -2151,6 +2157,9 @@ namespace RapChessGui
 			if ((CModeTournamentE.repetition <= CModeTournamentE.games) && (ws || ls))
 				CModeTournamentE.repetition++;
 		}
+
+		#endregion
+		#region mode touurnament P
 
 		void TournamentPReset()
 		{
