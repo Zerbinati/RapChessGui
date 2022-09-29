@@ -61,7 +61,7 @@
 			// 
 			// testTimer
 			// 
-			this.testTimer.Interval = 2000;
+			this.testTimer.Interval = 5000;
 			this.testTimer.Tick += new System.EventHandler(this.testTimer_Tick);
 			// 
 			// FormAutodetect

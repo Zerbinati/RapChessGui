@@ -8,6 +8,7 @@ namespace RapChessGui
 {
 	public partial class FormAutodetect : Form
 	{
+		int timerTick = 0;
 		public static string engineName = String.Empty;
 		public static CProtocol protocol = CProtocol.auto;
 		public static bool testResult = false;
@@ -160,18 +161,17 @@ namespace RapChessGui
 		{
 			testWatch.Restart();
 			testMode++;
+			timerTick++;
 			switch (testMode)
 			{
 				case 1:
-					WriteLine("start test uci");
-					testProcess.SetProgram($@"{AppDomain.CurrentDomain.BaseDirectory}Engines\{testEngine.file}", testEngine.parameters);
-					testProcess.WriteLine("uci");
+					WriteLine("start test uci",true);
 					break;
 				case 2:
 					ShowProtocol();
 					testEngine.modeTime = false;
 					testResult = true;
-					WriteLine("start test time 1");
+					WriteLine("start test time 1",true);
 					testProcess.SetProgram($@"{AppDomain.CurrentDomain.BaseDirectory}Engines\{testEngine.file}", testEngine.parameters);
 					if (testEngine.protocol == CProtocol.uci)
 					{
@@ -190,7 +190,7 @@ namespace RapChessGui
 					if (testEngine.modeTime)
 					{
 						testResult = false;
-						WriteLine("start test time 2");
+						WriteLine("start test time 2",true);
 						testProcess.SetProgram($@"{AppDomain.CurrentDomain.BaseDirectory}Engines\{testEngine.file}", testEngine.parameters);
 						if (testEngine.protocol == CProtocol.uci)
 						{
@@ -212,7 +212,7 @@ namespace RapChessGui
 					ShowTime();
 					testEngine.modeDepth = false;
 					testResult = true;
-					WriteLine("start test depth 1");
+					WriteLine("start test depth 1",true);
 					testProcess.SetProgram($@"{AppDomain.CurrentDomain.BaseDirectory}Engines\{testEngine.file}", testEngine.parameters);
 					if (testEngine.protocol == CProtocol.uci)
 					{
@@ -231,7 +231,7 @@ namespace RapChessGui
 					if (testEngine.modeDepth)
 					{
 						testResult = false;
-						WriteLine("start test depth 2");
+						WriteLine("start test depth 2",true);
 						testProcess.SetProgram($@"{AppDomain.CurrentDomain.BaseDirectory}Engines\{testEngine.file}", testEngine.parameters);
 						if (testEngine.protocol == CProtocol.uci)
 						{
@@ -253,7 +253,7 @@ namespace RapChessGui
 					ShowDepth();
 					testEngine.modeStandard = false;
 					testResult = true;
-					WriteLine("start test standard 1");
+					WriteLine("start test standard 1",true);
 					testProcess.SetProgram($@"{AppDomain.CurrentDomain.BaseDirectory}Engines\{testEngine.file}", testEngine.parameters);
 					if (testEngine.protocol == CProtocol.uci)
 					{
@@ -273,7 +273,7 @@ namespace RapChessGui
 					if (testEngine.modeStandard)
 					{
 						testResult = false;
-						WriteLine("start test standard 2");
+						WriteLine("start test standard 2",true);
 						testProcess.SetProgram($@"{AppDomain.CurrentDomain.BaseDirectory}Engines\{testEngine.file}", testEngine.parameters);
 						if (testEngine.protocol == CProtocol.uci)
 						{
@@ -300,7 +300,7 @@ namespace RapChessGui
 					{
 						testEngine.modeTournament = false;
 						testResult = true;
-						WriteLine("start test tournament 1");
+						WriteLine("start test tournament 1",true);
 						testProcess.SetProgram($@"{AppDomain.CurrentDomain.BaseDirectory}Engines\{testEngine.file}", testEngine.parameters);
 						testProcess.WriteLine("xboard");
 						testProcess.WriteLine("new");
@@ -314,7 +314,7 @@ namespace RapChessGui
 					if ((testEngine.protocol == CProtocol.winboard) && testEngine.modeTournament)
 					{
 						testResult = false;
-						WriteLine("start test tournament 2");
+						WriteLine("start test tournament 2",true);
 						testProcess.SetProgram($@"{AppDomain.CurrentDomain.BaseDirectory}Engines\{testEngine.file}", testEngine.parameters);
 						testProcess.WriteLine("xboard");
 						testProcess.WriteLine("new");
@@ -335,7 +335,7 @@ namespace RapChessGui
 					ShowDepth();
 					ShowStandard();
 					ShowTournament();
-					WriteLine("test finished");
+					WriteLine("test finished",true);
 					if (!testEngine.modeDepth && !testEngine.modeStandard && !testEngine.modeTime && !testEngine.modeTournament)
 					{
 						testEngine.modeDepth = true;
@@ -351,22 +351,27 @@ namespace RapChessGui
 
 		private void testTimer_Tick(object sender, EventArgs e)
 		{
+
 			NextPhase();
 		}
 
 		public void StartTestAuto()
 		{
+			timerTick = 0;
 			testMode = 0;
 			testTimer.Start();
 			tbConsole.Clear();
 			WriteLine("test started");
+			testProcess.SetProgram($@"{AppDomain.CurrentDomain.BaseDirectory}Engines\{testEngine.file}", testEngine.parameters);
+			testProcess.WriteLine("uci");
 		}
 
 		#endregion
 
-		static void WriteLine(string line)
+		static void WriteLine(string line,bool addTime = false)
 		{
-			This.tbConsole.AppendText($"{line}\n");
+			string msg = addTime ? $"{DateTime.Now.ToString("HH:mm: ss tt")} {line}\n" : $"{line}\n";
+			This.tbConsole.AppendText(msg);
 		}
 
 		private void FormAutodetect_Shown(object sender, EventArgs e)
