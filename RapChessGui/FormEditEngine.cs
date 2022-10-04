@@ -26,6 +26,7 @@ namespace RapChessGui
 			This = this;
 			InitializeComponent();
 			processOptions = new CProcess(OnDataReceivedOptions);
+			FormOptions.SetFontSize(this);
 		}
 
 		delegate void DeleMessageOptions(string message);
@@ -274,7 +275,6 @@ namespace RapChessGui
 
 		private void FormEngine_Shown(object sender, EventArgs e)
 		{
-			FormOptions.SetFontSize(this);
 			CData.UpdateFileEngine();
 			cbFileList.Items.Clear();
 			cbFileList.Sorted = true;

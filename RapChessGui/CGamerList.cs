@@ -51,13 +51,16 @@ namespace RapChessGui
 		/// <summary>
 		/// Count moves makes by engine or book.
 		/// </summary>
+		public int depthTotal;
+		public int depthCount;
+		public int depthMax;
 		public int countMoves;
 		public int msgPriority = 0;
 		public int scoreI;
 		public ulong infMs;
 		public ulong nodes;
 		public ulong nps;
-		public ulong npsSum;
+		public ulong npsTotal;
 		public ulong npsCount;
 		public string scoreS;
 		public int depth;
@@ -78,7 +81,7 @@ namespace RapChessGui
 
 		public CGamer()
 		{
-			InitGame(true);
+			InitNextGame(true);
 		}
 
 		public string GetMessage(out int pid)
@@ -153,7 +156,7 @@ namespace RapChessGui
 			SendMessageToEngine("quit");
 		}
 
-		public void InitGame(bool white)
+		public void InitNextGame(bool white)
 		{
 			curProcess = null;
 			isWhite = white;
@@ -171,17 +174,34 @@ namespace RapChessGui
 			countMoves = 0;
 			nodes = 0;
 			nps = 0;
-			npsSum = 0;
+			npsTotal = 0;
 			npsCount = 0;
+			depthTotal = 0;
+			depthCount = 0;
 			timerStart = 0;
 			timer.Reset();
-			InitMove();
+			InitNextMove();
 		}
 
-		void InitMove()
+		void InitNextMove()
 		{
-			msgPriority = 0;
+			if (depth > 0)
+			{
+				depthCount++;
+				depthTotal += depth;
+			}
+			if (nps > 0)
+			{
+				npsCount++;
+				npsTotal += nps;
+				if ((npsTotal > (ulong.MaxValue >> 1)) && ((npsCount & 1) == 0))
+				{
+					npsTotal >>= 1;
+					npsCount >>= 1;
+				}
+			}
 			depth = 0;
+			msgPriority = 0;
 			seldepth = 0;
 			scoreI = 0;
 			lastMove = String.Empty;
@@ -199,16 +219,14 @@ namespace RapChessGui
 				return player.name;
 		}
 
-		public void SetNps(ulong n)
+		public int GetDepthAvg()
 		{
-			nps = n;
-			npsSum += n;
-			npsCount++;
-			if ((npsSum > (ulong.MaxValue >> 1)) && ((npsCount & 1) == 0))
-			{
-				npsSum >>= 1;
-				npsCount >>= 1;
-			}
+			return (depthTotal + depth) / (depthCount + 1);
+		}
+
+		public ulong GetNpsAvg()
+		{
+			return (npsTotal + nps) / (npsCount + 1);
 		}
 
 		public string GetEngineFile()
@@ -222,14 +240,6 @@ namespace RapChessGui
 		public string GetEngineName()
 		{
 			return engine == null ? "None" : engine.name;
-		}
-
-		public ulong GetNps()
-		{
-			if (npsCount > 0)
-				return npsSum / npsCount;
-			else
-				return 0;
 		}
 
 		/// <summary>
@@ -385,7 +395,7 @@ namespace RapChessGui
 		{
 			if (isWhite)
 				FormLogEngines.AddMove(FormChess.chess.MoveNumber);
-			InitMove();
+			InitNextMove();
 			if (engine.protocol == CProtocol.uci)
 				UciGo();
 			else
@@ -447,33 +457,28 @@ namespace RapChessGui
 		{
 			if (player == null)
 				return "Book";
-			else
-				return player.book;
+			return player.book;
 		}
 
 		public string GetMode()
 		{
 			if (player == null)
 				return "Mode";
-			else
-				return player.modeValue.LongName();
+			return player.modeValue.LongName();
 		}
 
 		public string GetProtocol()
 		{
 			if (engine == null)
 				return "Protocol";
-			else
-				return CData.ProtocolToStr(engine.protocol);
+			return CData.ProtocolToStr(engine.protocol);
 		}
 
 		public string GetDepth()
 		{
-			if (seldepth > 0)
-				return $"{depth} / {seldepth}";
-			else if (depth > 0)
-				return $"{depth}";
-			else return "";
+			if (depth > 0)
+				return $"{depth} / {seldepth} / {GetDepthAvg()}";
+			return String.Empty;
 		}
 
 		public Color GetScoreColor()
@@ -614,8 +619,8 @@ namespace RapChessGui
 
 		public void Init(int index = 0)
 		{
-			gamer[0].InitGame(true);
-			gamer[1].InitGame(false);
+			gamer[0].InitNextGame(true);
+			gamer[1].InitNextGame(false);
 			curIndex = index;
 		}
 

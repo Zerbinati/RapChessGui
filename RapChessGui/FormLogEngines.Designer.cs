@@ -48,6 +48,7 @@
 			// richTextBox1
 			// 
 			this.richTextBox1.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.richTextBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
 			this.richTextBox1.Location = new System.Drawing.Point(0, 24);
 			this.richTextBox1.Name = "richTextBox1";
 			this.richTextBox1.Size = new System.Drawing.Size(800, 341);
@@ -69,9 +70,10 @@
 			// 
 			// butClear
 			// 
+			this.butClear.AutoSize = true;
 			this.butClear.Location = new System.Drawing.Point(12, 62);
 			this.butClear.Name = "butClear";
-			this.butClear.Size = new System.Drawing.Size(178, 21);
+			this.butClear.Size = new System.Drawing.Size(178, 23);
 			this.butClear.TabIndex = 7;
 			this.butClear.Text = "Clear";
 			this.butClear.UseVisualStyleBackColor = true;
@@ -90,9 +92,10 @@
 			// 
 			// butSend
 			// 
+			this.butSend.AutoSize = true;
 			this.butSend.Location = new System.Drawing.Point(12, 37);
 			this.butSend.Name = "butSend";
-			this.butSend.Size = new System.Drawing.Size(178, 21);
+			this.butSend.Size = new System.Drawing.Size(178, 23);
 			this.butSend.TabIndex = 5;
 			this.butSend.Text = "Send";
 			this.butSend.UseVisualStyleBackColor = true;
@@ -186,6 +189,7 @@
 			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormLog_FormClosing);
 			this.Shown += new System.EventHandler(this.FormLogEngines_Shown);
 			this.panel1.ResumeLayout(false);
+			this.panel1.PerformLayout();
 			this.menuStrip1.ResumeLayout(false);
 			this.menuStrip1.PerformLayout();
 			this.ResumeLayout(false);

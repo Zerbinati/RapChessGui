@@ -11,6 +11,7 @@ namespace RapChessGui
 		{
 			This = this;
 			InitializeComponent();
+			FormOptions.SetFontSize(this);
 		}
 
 		private void FormPgn_FormClosing(object sender, FormClosingEventArgs e)

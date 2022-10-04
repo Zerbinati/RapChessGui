@@ -15,6 +15,7 @@ namespace RapChessGui
 		public FormEditBook()
 		{
 			InitializeComponent();
+			FormOptions.SetFontSize(this);
 		}
 
 		void ClickUpdate()
@@ -104,7 +105,6 @@ namespace RapChessGui
 
 		private void FormBook_Shown(object sender, EventArgs e)
 		{
-			FormOptions.SetFontSize(this);
 			cbBookreaderList.Items.Clear();
 			cbBookreaderList.Sorted = true;
 			foreach (string book in CData.fileBook)

@@ -284,6 +284,7 @@
 			// 
 			// nudTournament
 			// 
+			this.nudTournament.AutoSize = true;
 			this.nudTournament.Dock = System.Windows.Forms.DockStyle.Top;
 			this.nudTournament.Location = new System.Drawing.Point(3, 16);
 			this.nudTournament.Name = "nudTournament";
@@ -474,6 +475,7 @@
 			this.gbMode.ResumeLayout(false);
 			this.gbMode.PerformLayout();
 			this.groupBox5.ResumeLayout(false);
+			this.groupBox5.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.nudTournament)).EndInit();
 			this.gbElo.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.nudElo)).EndInit();

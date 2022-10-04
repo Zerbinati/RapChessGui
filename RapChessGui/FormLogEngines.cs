@@ -19,6 +19,7 @@ namespace RapChessGui
 			InitializeComponent();
 			richTextBox1.AddContextMenu();
 			process = new CProcess(OnDataReceived);
+			FormOptions.SetFontSize(this);
 		}
 
 		delegate void DeleMessage(string message);

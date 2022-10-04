@@ -440,7 +440,7 @@ namespace RapChessGui
 			{
 				labScoreW.Text = $"Score {g.scoreS}";
 				labNodesW.Text = $"Nodes {g.nodes:N0}";
-				labNpsW.Text = $"Nps {g.GetNps():N0}";
+				labNpsW.Text = $"Nps {g.GetNpsAvg():N0}";
 				labBookCW.Text = $"Book {g.countMovesBook}";
 				labDepthW.Text = $"Depth {g.GetDepth()}";
 				labColW.BackColor = g.GetScoreColor();
@@ -450,7 +450,7 @@ namespace RapChessGui
 			{
 				labScoreB.Text = $"Score {g.scoreS}";
 				labNodesB.Text = $"Nodes {g.nodes:N0}";
-				labNpsB.Text = $"Nps {g.GetNps():N0}";
+				labNpsB.Text = $"Nps {g.GetNpsAvg():N0}";
 				labBookCB.Text = $"Book {g.countMovesBook}";
 				labDepthB.Text = $"Depth {g.GetDepth()}";
 				labColB.BackColor = g.GetScoreColor();
@@ -736,7 +736,7 @@ namespace RapChessGui
 					{
 						try
 						{
-							g.nps = (ulong)Convert.ToInt64(s);
+							g.nps = (ulong)Convert.ToUInt64(s);
 						}
 						catch
 						{
@@ -758,7 +758,7 @@ namespace RapChessGui
 							nps = g.infMs > 0 ? (g.nodes * 1000) / g.infMs : 0;
 					}
 					if (nps > 0)
-						g.SetNps(nps);
+						g.nps=nps;
 					int i = uci.GetIndex("pv", 0);
 					if (i > 0)
 						SetPv(i + 1, g);
@@ -817,6 +817,7 @@ namespace RapChessGui
 						SetGameState(CGameState.resignation, g);
 					else if (g.isPrepareFinished && Char.IsDigit(uci.tokens[0][0]) && (uci.tokens.Length > 4))
 					{
+						ulong nps = 0;
 						try
 						{
 							g.depth = Int32.Parse(uci.tokens[0]);
@@ -824,15 +825,15 @@ namespace RapChessGui
 							g.scoreI = Convert.ToInt32(g.scoreS);
 							g.infMs = (ulong)Convert.ToInt64(uci.tokens[2]) * 10;
 							g.nodes = (ulong)Convert.ToInt64(uci.tokens[3]);
-							g.nps = g.infMs > 0 ? (g.nodes * 1000) / g.infMs : 0;
-							if (g.nps > 0)
-								g.SetNps(g.nps);
+							nps = g.infMs > 0 ? (g.nodes * 1000) / g.infMs : 0;
 							SetPv(4, g);
 						}
 						catch
 						{
 							log.Add($"{g.player.name} ({g.player.engine}) ({msg})");
 						}
+						if (nps > 0)
+							g.nps = nps;
 					}
 					break;
 			}

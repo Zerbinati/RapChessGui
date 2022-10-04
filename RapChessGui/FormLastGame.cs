@@ -6,11 +6,13 @@ namespace RapChessGui
 {
 	public partial class FormLastGame : Form
 	{
-		public static string lastName = "";
+		public static string lastName = String.Empty;
 
 		public FormLastGame()
 		{
 			InitializeComponent();
+			richTextBox1.AddContextMenu();
+			FormOptions.SetFontSize(this);
 		}
 
 		private void FormLogLast_FormClosing(object sender, FormClosingEventArgs e)

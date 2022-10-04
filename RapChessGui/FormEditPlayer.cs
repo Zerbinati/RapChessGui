@@ -15,6 +15,7 @@ namespace RapChessGui
 		public FormEditPlayer()
 		{
 			InitializeComponent();
+			FormOptions.SetFontSize(this);
 		}
 
 		void ClickUpdate()
@@ -164,7 +165,6 @@ namespace RapChessGui
 
 		private void FormPlayer_Shown(object sender, EventArgs e)
 		{
-			FormOptions.SetFontSize(this);
 			cbEngineList.Items.Clear();
 			cbEngineList.Sorted = true;
 			foreach (CEngine engine in FormChess.engineList)
