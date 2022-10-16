@@ -51,10 +51,10 @@ namespace RapChessGui
 		/// <summary>
 		/// Count moves makes by engine or book.
 		/// </summary>
+		public int countMoves;
 		public int depthTotal;
 		public int depthCount;
 		public int depthMax;
-		public int countMoves;
 		public int msgPriority = 0;
 		public int scoreI;
 		public ulong infMs;
@@ -185,7 +185,7 @@ namespace RapChessGui
 
 		void InitNextMove()
 		{
-			if (depth > 0)
+			if (isEngRunning && (depth > 0))
 			{
 				depthCount++;
 				depthTotal += depth;

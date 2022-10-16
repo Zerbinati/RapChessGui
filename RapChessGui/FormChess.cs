@@ -62,31 +62,6 @@ namespace RapChessGui
 		readonly FormEditPlayer formPlayer = new FormEditPlayer();
 		readonly CGamerList GamerList = new CGamerList();
 
-		string EditSelected
-		{
-			get
-			{
-				foreach (Control c in tlpEdit.Controls)
-				{
-					Label l = c as Label;
-					if (l.BackColor == Color.Yellow)
-						return l.Text;
-				}
-				return String.Empty;
-			}
-			set
-			{
-				foreach (Control c in tlpEdit.Controls)
-				{
-					Label l = c as Label;
-					if (l.Text == value)
-						l.BackColor = Color.Yellow;
-					else
-						l.BackColor = Color.Silver;
-				}
-			}
-		}
-
 		#endregion
 
 		#region initiation
@@ -853,18 +828,22 @@ namespace RapChessGui
 			}
 		}
 
+		void CreateRtf(string fn)
+		{
+				FormLogEngines.Save($"History\\{fn}.rtf");
+		}
+
 		void CreateRtf()
 		{
-			string fn = CData.gameState == CGameState.error ? "Error" : combMainMode.Text;
-			fn = $"History\\{fn}.rtf";
-			try
-			{
-				FormLogEngines.Save(fn);
-			}
-			catch
-			{
-				log.Add($"Error save {fn}");
-			}
+			CreateRtf(combMainMode.Text);
+			if (CData.gameState == CGameState.time)
+				CreateRtf("Time");
+			if (CData.gameState == CGameState.error)
+				CreateRtf("Error");
+		}
+		void CreatePgn(string fn)
+		{
+			File.WriteAllText($"History\\{fn}.pgn", formLogGames.textBox1.Text);
 		}
 
 		void CreatePgn()
@@ -891,10 +870,11 @@ namespace RapChessGui
 			foreach (String s in list)
 				formLogGames.textBox1.Text += $"{s}\r\n";
 			formLogGames.textBox1.Select(0, 0);
+			CreatePgn(combMainMode.Text);
+			if (CData.gameState == CGameState.time)
+				CreatePgn("Time");
 			if (CData.gameState == CGameState.error)
-				File.WriteAllLines("History\\Error.pgn", list);
-			else
-				File.WriteAllText($"History\\{combMainMode.Text}.pgn", formLogGames.textBox1.Text);
+				CreatePgn("Error");
 		}
 
 		void SetMode(CGameMode mode)
@@ -1182,11 +1162,11 @@ namespace RapChessGui
 			CEco eco = EcoList.GetEcoFen(chess.GetEpd());
 			if (cg.player.IsRealHuman())
 			{
-				tssInfo.Text = "";
+				tssInfo.Text = String.Empty;
 				Board.ClearArrows();
 				if (eco != null)
 					ShowInfo(eco.name, Color.Lime);
-				else if ((continuations != "") && (!continuations.Contains(umo)))
+				else if ((continuations != String.Empty) && (!continuations.Contains(umo)))
 				{
 					ShowInfo("You missed the opening moves", Color.Pink);
 					Board.arrowEco.AddMoves(continuations);
@@ -1695,6 +1675,10 @@ namespace RapChessGui
 				SetUnranked();
 		}
 
+		#endregion
+
+		#region mode match
+
 		void MatchSet()
 		{
 			CModeMatch.engine1 = cbMatchEngine1.Text;
@@ -1789,6 +1773,7 @@ namespace RapChessGui
 		}
 
 		#endregion
+
 		#region mode torunament B
 
 		void TournamentBEnd(CGamer gw, CGamer gl, bool isDraw)
@@ -1982,6 +1967,7 @@ namespace RapChessGui
 		}
 
 		#endregion
+
 		#region mode tournament E
 
 		void TournamentEReset()
@@ -2325,6 +2311,10 @@ namespace RapChessGui
 				CModeTournamentP.repetition++;
 		}
 
+		#endregion
+
+		#region mode training
+
 		void TrainingShow()
 		{
 			cbTrainerEngine.SelectedIndex = cbTrainerEngine.FindStringExact(CModeTraining.trainer);
@@ -2433,6 +2423,10 @@ namespace RapChessGui
 				nudTrainer.Value += nudTrainer.Increment;
 		}
 
+		#endregion
+
+		#region mode edit
+
 		void EditShow(string fen = CChess.defFen)
 		{
 			PrepareFen(fen);
@@ -2455,6 +2449,32 @@ namespace RapChessGui
 		void EditGetFen()
 		{
 			tbFen.Text = chess.GetFen();
+		}
+
+
+		string EditSelected
+		{
+			get
+			{
+				foreach (Control c in tlpEdit.Controls)
+				{
+					Label l = c as Label;
+					if (l.BackColor == Color.Yellow)
+						return l.Text;
+				}
+				return String.Empty;
+			}
+			set
+			{
+				foreach (Control c in tlpEdit.Controls)
+				{
+					Label l = c as Label;
+					if (l.Text == value)
+						l.BackColor = Color.Yellow;
+					else
+						l.BackColor = Color.Silver;
+				}
+			}
 		}
 
 		#endregion
@@ -2710,6 +2730,7 @@ namespace RapChessGui
 			string fen = chess.GetFen();
 			GameSet();
 			LoadFen(fen);
+			ShowGamers();
 		}
 
 		private void clbCastling_ItemCheck(object sender, ItemCheckEventArgs e)
@@ -2891,6 +2912,7 @@ namespace RapChessGui
 		{
 			SetUnranked();
 			GamerList.Rotate(GamerList.curIndex);
+			ShowGamers();
 		}
 
 		private void labPromoQ_Click(object sender, EventArgs e)
@@ -2979,6 +3001,7 @@ namespace RapChessGui
 		{
 			if (CHistory.Back(1))
 				LoadFromHistory();
+			ShowGamers();
 		}
 
 		private void lvMoves_Click(object sender, EventArgs e)

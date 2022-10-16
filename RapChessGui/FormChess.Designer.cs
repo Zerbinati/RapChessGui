@@ -3003,6 +3003,7 @@
 			// labError
 			// 
 			this.labError.BackColor = System.Drawing.Color.DarkRed;
+			this.labError.Cursor = System.Windows.Forms.Cursors.Hand;
 			this.labError.Dock = System.Windows.Forms.DockStyle.Right;
 			this.labError.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
 			this.labError.ForeColor = System.Drawing.Color.White;

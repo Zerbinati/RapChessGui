@@ -149,7 +149,7 @@ namespace RapChessGui
 				ratioTrend = 0;
 			if ((r < 0) && (sElo > fElo))
 				ratioTrend = 0;
-			return ratioDistance + ratioGames * 0.4 + ratioElo + ratioScore + ratioTrend * 0.4;
+			return ratioDistance + ratioGames * 0.5 + ratioElo + ratioScore + ratioTrend * 0.3;
 		}
 
 		public static void SetRepeition(CEngine e, CEngine o)
