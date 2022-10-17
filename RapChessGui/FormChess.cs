@@ -1869,6 +1869,7 @@ namespace RapChessGui
 				return;
 			ListViewItem top2 = null;
 			string name = lvTourBList.SelectedItems[0].Text;
+			CBookList bookList = CModeTournamentB.bookList;
 			CBook book = bookList.GetBook(name);
 			if (book == null)
 				return;
@@ -2003,6 +2004,7 @@ namespace RapChessGui
 				return;
 			ListViewItem top2 = null;
 			string name = lvTourEList.SelectedItems[0].Text;
+			CEngineList engineList = CModeTournamentE.engineList;
 			CEngine engine = engineList.GetEngineByName(name);
 			if (engine == null)
 				return;
@@ -2183,6 +2185,7 @@ namespace RapChessGui
 				return;
 			ListViewItem top2 = null;
 			string name = lvTourPList.SelectedItems[0].Text;
+			CPlayerList playerList = CModeTournamentP.playerList;
 			CPlayer player = playerList.GetPlayer(name);
 			if (player == null)
 				return;

@@ -185,7 +185,7 @@ namespace RapChessGui
 
 		void InitNextMove()
 		{
-			if (isEngRunning && (depth > 0))
+			if (depth > 0)
 			{
 				depthCount++;
 				depthTotal += depth;

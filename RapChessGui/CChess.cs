@@ -382,7 +382,7 @@ namespace NSChess
 				g_castleRights |= 4;
 			if (chunks[2].IndexOf('q') != -1)
 				g_castleRights |= 8;
-			Passant = chunks[3];
+			Passant = chunks.Length < 4 ? "-" : chunks[3];
 			g_move50 = chunks.Length < 5 ? 0 : Int32.Parse(chunks[4]);
 			MoveNumber = chunks.Length < 6 ? 1 : Int32.Parse(chunks[5]);
 			undoIndex = g_move50;
