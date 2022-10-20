@@ -672,7 +672,7 @@ namespace RapChessGui
 					string s;
 					ulong nps = 0;
 					if (uci.GetValue("hashfull", out s))
-						g.hash = Int32.Parse(s);
+						g.Hash = Int32.Parse(s);
 					if (uci.GetValue("cp", out s))
 					{
 						g.scoreS = s;

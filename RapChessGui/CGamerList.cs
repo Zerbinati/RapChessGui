@@ -79,6 +79,22 @@ namespace RapChessGui
 		public CEngine engine = null;
 		public CPlayer player = new CPlayer();
 
+		public int Hash
+		{
+			get
+			{
+				return hash;
+			}
+			set
+			{
+				if (hash < 0)
+					hash = 0;
+				if (hash > 1000)
+					hash = 1000;
+				hash = value;
+			}
+		}
+
 		public CGamer()
 		{
 			InitNextGame(true);
