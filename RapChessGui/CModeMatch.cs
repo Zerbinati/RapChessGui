@@ -5,8 +5,6 @@ namespace RapChessGui
 {
 	static class CModeMatch
 	{
-		public static bool rotate = false;
-		public static int games = 0;
 		public static int win = 0;
 		public static int draw = 0;
 		public static int loose = 0;
@@ -18,10 +16,18 @@ namespace RapChessGui
 		public static CModeValue modeValue2 = new CModeValue();
 		public static CHisElo his = new CHisElo();
 
+		public static bool Rotate
+		{
+			get { return (Games & 1) > 0; }
+		}
+
+		public static int Games
+		{
+			get { return win + loose + draw; }
+		}
+
 		public static void Reset()
 		{
-			rotate = false;
-			games = 0;
 			win = 0;
 			draw = 0;
 			loose = 0;
@@ -29,9 +35,16 @@ namespace RapChessGui
 			his.Add(0);
 		}
 
-		public static int Total()
+		public static void Start()
 		{
-			return win + draw + loose;
+			if (Games == 0)
+				Reset();
+			SaveToIni();
+		}
+
+		public static void Finish()
+		{
+			SaveToIni();
 		}
 
 		public static double Point(bool rev)
@@ -44,7 +57,7 @@ namespace RapChessGui
 
 		public static double Result(bool rev)
 		{
-			int t = Total();
+			int t = Games;
 			if (t == 0)
 				return 50;
 			if (rev)
@@ -55,8 +68,6 @@ namespace RapChessGui
 
 		public static void LoadFromIni()
 		{
-			rotate = FormChess.iniFile.ReadBool("mode>match>rotate");
-			games = FormChess.iniFile.ReadInt("mode>match>games");
 			win = FormChess.iniFile.ReadInt("mode>match>win");
 			draw = FormChess.iniFile.ReadInt("mode>match>draw");
 			loose = FormChess.iniFile.ReadInt("mode>match>loose");
@@ -73,8 +84,6 @@ namespace RapChessGui
 
 		public static void SaveToIni()
 		{
-			FormChess.iniFile.Write("mode>match>rotate", rotate.ToString());
-			FormChess.iniFile.Write("mode>match>games", games.ToString());
 			FormChess.iniFile.Write("mode>match>win", win.ToString());
 			FormChess.iniFile.Write("mode>match>draw", draw.ToString());
 			FormChess.iniFile.Write("mode>match>loose", loose.ToString());

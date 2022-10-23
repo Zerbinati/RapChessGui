@@ -65,7 +65,7 @@ namespace RapChessGui
 		public string scoreS;
 		public int depth;
 		public int seldepth;
-		public int hash;
+		int hash;
 		public string ponder;
 		public string ponderFormated;
 		public string pv;

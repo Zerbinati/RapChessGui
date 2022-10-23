@@ -419,7 +419,7 @@ namespace RapChessGui
 				labBookCW.Text = $"Book {g.countMovesBook}";
 				labDepthW.Text = $"Depth {g.GetDepth()}";
 				labColW.BackColor = g.GetScoreColor();
-				pbHashW.Value = g.hash;
+				pbHashW.Value = g.Hash;
 			}
 			else
 			{
@@ -429,7 +429,7 @@ namespace RapChessGui
 				labBookCB.Text = $"Book {g.countMovesBook}";
 				labDepthB.Text = $"Depth {g.GetDepth()}";
 				labColB.BackColor = g.GetScoreColor();
-				pbHashB.Value = g.hash;
+				pbHashB.Value = g.Hash;
 			}
 			if (boardRotate ^ g.isWhite)
 			{
@@ -1712,7 +1712,7 @@ namespace RapChessGui
 			MatchGet();
 			CModeMatch.his.MinMax(out double min, out double max);
 			double last = CModeMatch.his.Last();
-			labMatchGames.Text = $"Games {CModeMatch.games} result {last} min {min} max {max}";
+			labMatchGames.Text = $"Games {CModeMatch.Games} result {last} min {min} max {max}";
 			labMatch11.Text = CModeMatch.win.ToString();
 			labMatch12.Text = CModeMatch.loose.ToString();
 			labMatch13.Text = CModeMatch.draw.ToString();
@@ -1748,17 +1748,14 @@ namespace RapChessGui
 			GamerList.gamer[1].SetPlayer(p2);
 			p1.elo = GamerList.gamer[0].engine.elo;
 			p2.elo = GamerList.gamer[1].engine.elo;
-			if (CModeMatch.rotate)
+			if (CModeMatch.Rotate)
 				GamerList.Rotate(0);
-			CModeMatch.rotate = !CModeMatch.rotate;
 			moves = chess.GenerateValidMoves(out _);
-			CModeMatch.SaveToIni();
 			ComShow();
 		}
 
 		void MatchEnd(CPlayer pw, bool isDraw)
 		{
-			CModeMatch.games++;
 			if (!isDraw)
 			{
 				if (pw.name == labMatchPlayer1.Text)
@@ -1769,7 +1766,7 @@ namespace RapChessGui
 			else
 				CModeMatch.draw++;
 			CModeMatch.his.Add(CModeMatch.win - CModeMatch.loose);
-			CModeMatch.SaveToIni();
+			CModeMatch.Finish();
 		}
 
 		#endregion
@@ -2634,7 +2631,7 @@ namespace RapChessGui
 		private void bStartMatch_Click(object sender, EventArgs e)
 		{
 
-			CModeMatch.SaveToIni();
+			CModeMatch.Start();
 			MatchStart();
 		}
 
