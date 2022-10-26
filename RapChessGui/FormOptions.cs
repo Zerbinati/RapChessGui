@@ -155,8 +155,8 @@ namespace RapChessGui
 			nudTourBMax.Value = CModeTournamentB.maxElo;
 			nudTourBMin.Value = CModeTournamentB.minElo;
 			nudTourERec.Value = CModeTournamentE.records;
-			nudTourEMax.Value = CModeTournamentE.maxElo;
-			nudTourEMin.Value = CModeTournamentE.minElo;
+			nudTourEAvg.Value = CModeTournamentE.eloAvg;
+			nudTourERange.Value = CModeTournamentE.eloRange;
 			nudTourPRec.Value = CModeTournamentP.records;
 			nudTourPMax.Value = CModeTournamentP.maxElo;
 			nudTourPMin.Value = CModeTournamentP.minElo;
@@ -180,8 +180,8 @@ namespace RapChessGui
 			CModeTournamentB.maxElo = (int)Math.Max(nudTourBMin.Value, nudTourBMax.Value);
 			CModeTournamentB.minElo = (int)Math.Min(nudTourBMin.Value, nudTourBMax.Value);
 			CModeTournamentE.records = (int)nudTourERec.Value;
-			CModeTournamentE.maxElo = (int)Math.Max(nudTourEMin.Value, nudTourEMax.Value);
-			CModeTournamentE.minElo = (int)Math.Min(nudTourEMin.Value, nudTourEMax.Value);
+			CModeTournamentE.eloAvg = (int)nudTourEAvg.Value;
+			CModeTournamentE.eloRange = (int)nudTourERange.Value;
 			CModeTournamentP.records = (int)nudTourPRec.Value;
 			CModeTournamentP.maxElo = (int)Math.Max(nudTourPMin.Value, nudTourPMax.Value);
 			CModeTournamentP.minElo = (int)Math.Min(nudTourPMin.Value, nudTourPMax.Value);
@@ -232,8 +232,8 @@ namespace RapChessGui
 			nudTourERec.Value = 10000;
 			nudTourPRec.Value = 10000;
 			nudSpeed.Value = 200;
-			nudTourEMax.Value = 3000;
-			nudTourEMin.Value = 0;
+			nudTourEAvg.Value = 3000;
+			nudTourERange.Value = 0;
 			nudTourPMax.Value = 3000;
 			nudTourPMin.Value = 0;
 			nudHistory.Value = 100;

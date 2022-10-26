@@ -224,19 +224,6 @@ namespace RapChessGui
 			return -1;
 		}
 
-		public int GetOptElo(double index)
-		{
-			int min = CModeTournamentE.minElo;
-			int max = CModeTournamentE.maxElo;
-			if (index < 0)
-				index = 0;
-			if (index >= Count)
-				index = Count - 1;
-			int range = max - min;
-			index = Count - index;
-			return min + Convert.ToInt32((range * index) / (Count + 1));
-		}
-
 		public void AutoUpdate()
 		{
 			foreach (string fn in CData.fileEngineAuto)

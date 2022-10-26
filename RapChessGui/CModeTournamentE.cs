@@ -9,8 +9,8 @@ namespace RapChessGui
 		public static int games = 0;
 		public static int repetition = 0;
 		public static int records = 10000;
-		public static int maxElo = 3000;
-		public static int minElo = 0;
+		public static int eloAvg = 0;
+		public static int eloRange = 0;
 		public static string first = String.Empty;
 		public static string opponent = String.Empty;
 		public static string book = "BRU Eco";
@@ -28,8 +28,8 @@ namespace RapChessGui
 			FormChess.iniFile.Write("mode>tournamentE>mode", modeValue.GetLevel());
 			FormChess.iniFile.Write("mode>tournamentE>value", modeValue.value);
 			FormChess.iniFile.Write("mode>tournamentE>records", records);
-			FormChess.iniFile.Write("mode>tournamentE>maxElo", maxElo);
-			FormChess.iniFile.Write("mode>tournamentE>minElo", minElo);
+			FormChess.iniFile.Write("mode>tournamentE>eloAvg", eloAvg);
+			FormChess.iniFile.Write("mode>tournamentE>eloRange", eloRange);
 		}
 
 		public static void LoadFromIni()
@@ -39,8 +39,8 @@ namespace RapChessGui
 			modeValue.SetLevel(FormChess.iniFile.Read("mode>tournamentE>mode", modeValue.GetLevel()));
 			modeValue.value = FormChess.iniFile.ReadInt("mode>tournamentE>value", modeValue.value);
 			records = FormChess.iniFile.ReadInt("mode>tournamentE>records", records);
-			maxElo = FormChess.iniFile.ReadInt("mode>tournamentE>maxElo", maxElo);
-			minElo = FormChess.iniFile.ReadInt("mode>tournamentE>minElo", minElo);
+			eloAvg = FormChess.iniFile.ReadInt("mode>tournamentE>eloAvg", eloAvg);
+			eloRange = FormChess.iniFile.ReadInt("mode>tournamentE>eloRange", eloRange);
 			tourList.SetLimit(records);
 		}
 
@@ -54,11 +54,22 @@ namespace RapChessGui
 
 		public static void ListFill()
 		{
+			int avg = eloAvg;
+			CEngine eng = FormChess.engineList.GetEngineByName(FormOptions.tourESelected);
+			if (eng != null)
+				avg = eng.GetElo();
+			int eloMin = avg - eloRange;
+			int eloMax = avg + eloRange;
+			if ((eloRange == 0) || (avg == 0))
+			{
+				eloMin = 0;
+				eloMax = 3000;
+			}
 			level = modeValue.level;
 			engineList.Clear();
 			foreach (CEngine e in FormChess.engineList)
 				if (e.FileExists() && (e.tournament > 0) && e.SupportLevel(level))
-					if ((e.GetElo() >= minElo) && (e.GetElo() <= maxElo))
+					if ((e.GetElo() >= eloMin) && (e.GetElo() <= eloMax))
 						engineList.AddEngine(e);
 		}
 
@@ -82,7 +93,7 @@ namespace RapChessGui
 		{
 			ListFill();
 			CEngine e = engineList.GetEngineByName(FormOptions.tourESelected);
-			if (e != null)
+			if ((e != null) && (eloRange == 0))
 				return e;
 			e = engineList.GetEngineByName(first);
 			if ((e == null) || ((games >= repetition) && (games > 0)))
@@ -140,11 +151,11 @@ namespace RapChessGui
 				ratioScore = 1;
 			if ((r < 0) && (sElo > fElo))
 				ratioScore = 1;
-			double ratioGames =  1.0/(curGames + 1.0);
+			double ratioGames = 1.0 / (curGames + 1.0);
 			r = first.GetDeltaElo();
 			first.hisElo.MinMax(out double min, out double max);
 			double range = max - min;
-			double ratioTrend = Math.Abs(r / (range+1.0));
+			double ratioTrend = Math.Abs(r / (range + 1.0));
 			if ((r > 0) && (sElo < fElo))
 				ratioTrend = 0;
 			if ((r < 0) && (sElo > fElo))

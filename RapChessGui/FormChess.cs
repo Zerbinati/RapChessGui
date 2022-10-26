@@ -26,10 +26,6 @@ namespace RapChessGui
 		[DllImport("user32")]
 		private static extern bool ShowScrollBar(IntPtr hwnd, int wBar, [MarshalAs(UnmanagedType.Bool)] bool bShow);
 
-		/// <summary>
-		/// Next game can auto start.
-		/// </summary>
-		bool autoStartNexGame = false;
 		public const int WM_GAME_NEXT = 1024;
 		public static IntPtr handle;
 		public static FormChess This;
@@ -78,7 +74,6 @@ namespace RapChessGui
 						SplitSaveToIni();
 					break;
 				case WM_GAME_NEXT:
-					if (autoStartNexGame)
 						NextGame();
 					break;
 			}
@@ -273,7 +268,6 @@ namespace RapChessGui
 
 		void ComClear()
 		{
-			autoStartNexGame = false;
 			continuations = String.Empty;
 			Text = $"RapChessGui Games {CData.gamesPlayed} Draws {CData.gamesDraw} Time out {CData.gamesTime} Errors {CData.gamesError}";
 			CData.eco = String.Empty;
@@ -489,26 +483,26 @@ namespace RapChessGui
 			}
 			CPlayer pw = gw.player;
 			CPlayer pl = gl.player;
-			bool isDraw = false;
+			CColor winColor = gw.isWhite? CColor.white: CColor.black;
 			switch (CData.gameState)
 			{
 				case CGameState.mate:
 					ShowInfo(gw.GetName() + " win", Color.Lime, 2);
 					break;
 				case CGameState.stalemate:
-					isDraw = true;
+					winColor=CColor.none;
 					ShowInfo("Stalemate", Color.Yellow, 2);
 					break;
 				case CGameState.repetition:
-					isDraw = true;
+					winColor = CColor.none;
 					ShowInfo("Threefold repetition", Color.Yellow, 2);
 					break;
 				case CGameState.move50:
-					isDraw = true;
+					winColor = CColor.none;
 					ShowInfo("Fifty-move rule", Color.Yellow, 2);
 					break;
 				case CGameState.material:
-					isDraw = true;
+					winColor = CColor.none;
 					ShowInfo("Insufficient material", Color.Yellow, 2);
 					break;
 				case CGameState.resignation:
@@ -541,27 +535,26 @@ namespace RapChessGui
 			FormLogEngines.AppendTimeText($" Engine: {gBla.GetEngineName()}\n", Color.Black);
 			FormLogEngines.AppendTimeText($" Clock: {gBla.GetTime(out _)} Moves: {gBla.countMoves} ({gBla.countMoves - gBla.countMovesBook}) Book: {gBla.countMovesBook}\n", Color.Black);
 			FormLogEngines.AppendTimeText($" Finish {tssInfo.Text}\n", Color.Olive);
-			if (isDraw)
+			if (winColor == CColor.none)
 				CData.gamesDraw++;
 			CData.gamesPlayed++;
 			CreateRtf();
 			CreatePgn();
 			GamerList.Terminate();
 			if (CData.gameMode == CGameMode.game)
-				GaemEnd(pw, pl, isDraw);
+				GameEnd(pw, pl, winColor == CColor.none);
 			else
 			{
 				if (CData.gameMode == CGameMode.match)
-					MatchEnd(pw, isDraw);
+					CModeMatch.GameEnd(winColor);
 				if (CData.gameMode == CGameMode.tourB)
-					TournamentBEnd(gw, gl, isDraw);
+					TournamentBEnd(gw, gl, winColor == CColor.none);
 				if (CData.gameMode == CGameMode.tourE)
-					TournamentEEnd(gw, gl, isDraw);
+					TournamentEEnd(gw, gl, winColor == CColor.none);
 				if (CData.gameMode == CGameMode.tourP)
-					TournamentPEnd(pw, pl, isDraw);
+					TournamentPEnd(pw, pl, winColor == CColor.none);
 				if (CData.gameMode == CGameMode.training)
-					TrainingEnd(gw, isDraw);
-				autoStartNexGame = true;
+					TrainingEnd(gw, winColor == CColor.none);
 				Task.Delay(FormOptions.gameBreak * 1000).ContinueWith(t => CWinMessage.Message(WM_GAME_NEXT));
 			}
 		}
@@ -1656,7 +1649,7 @@ namespace RapChessGui
 			GameStart();
 		}
 
-		void GaemEnd(CPlayer pw, CPlayer pl, bool isDraw)
+		void GameEnd(CPlayer pw, CPlayer pl, bool isDraw)
 		{
 			if (GetRanked() && CModeGame.ranked)
 			{
@@ -1750,23 +1743,9 @@ namespace RapChessGui
 			p2.elo = GamerList.gamer[1].engine.elo;
 			if (CModeMatch.Rotate)
 				GamerList.Rotate(0);
+			CModeMatch.GameStart();
 			moves = chess.GenerateValidMoves(out _);
 			ComShow();
-		}
-
-		void MatchEnd(CPlayer pw, bool isDraw)
-		{
-			if (!isDraw)
-			{
-				if (pw.name == labMatchPlayer1.Text)
-					CModeMatch.win++;
-				else
-					CModeMatch.loose++;
-			}
-			else
-				CModeMatch.draw++;
-			CModeMatch.his.Add(CModeMatch.win - CModeMatch.loose);
-			CModeMatch.Finish();
 		}
 
 		#endregion
@@ -2142,11 +2121,10 @@ namespace RapChessGui
 				el.elo = newL.ToString();
 				el.SaveToIni();
 			}
-			if ((CModeTournamentE.repetition <= CModeTournamentE.games) && (ws || ls))
-				CModeTournamentE.repetition++;
 		}
 
 		#endregion
+
 		#region mode touurnament P
 
 		void TournamentPReset()
@@ -2631,7 +2609,7 @@ namespace RapChessGui
 		private void bStartMatch_Click(object sender, EventArgs e)
 		{
 
-			CModeMatch.Start();
+			CModeMatch.SaveToIni();
 			MatchStart();
 		}
 

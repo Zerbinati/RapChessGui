@@ -13,6 +13,8 @@ namespace RapChessGui
 	public enum CProtocol { uci, winboard,auto,unknow }
 	public enum CLevel { standard, time, depth,nodes,infinite }
 
+	public enum CColor {none,white,black}
+
 	public static class CWinMessage
 	{
 		[DllImport("user32.dll")]

@@ -15,6 +15,7 @@ namespace RapChessGui
 		public static CModeValue modeValue1 = new CModeValue();
 		public static CModeValue modeValue2 = new CModeValue();
 		public static CHisElo his = new CHisElo();
+		static CColor color;
 
 		public static bool Rotate
 		{
@@ -33,26 +34,24 @@ namespace RapChessGui
 			loose = 0;
 			his.list.Clear();
 			his.Add(0);
-		}
-
-		public static void Start()
-		{
-			if (Games == 0)
-				Reset();
 			SaveToIni();
 		}
 
-		public static void Finish()
+		public static void GameStart()
 		{
-			SaveToIni();
+			color = Rotate ? CColor.black : CColor.white;
 		}
 
-		public static double Point(bool rev)
+		public static void GameEnd(CColor winColor)
 		{
-			if (rev)
-				return loose + draw * .5;
+			if (winColor == CColor.none)
+				draw++;
+			else if (winColor == color)
+				win++;
 			else
-				return win + draw * .5;
+				loose++;
+			his.Add(win - loose);
+			SaveToIni();
 		}
 
 		public static double Result(bool rev)

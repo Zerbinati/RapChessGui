@@ -9,14 +9,14 @@ namespace RapChessGui
 		public string w;
 		public string b;
 		public string r = "d";
-		public bool f;
+		public bool first;
 
 		public CTour(string tw, string tb, string tr, bool tf)
 		{
 			w = tw;
 			b = tb;
 			r = tr;
-			f = tf;
+			first = tf;
 		}
 
 		public CTour(string s)
@@ -32,12 +32,12 @@ namespace RapChessGui
 			if (a.Length > 2)
 				r = a[2];
 			if (a.Length > 3)
-				f = a[3] == "f";
+				first = a[3] == "f";
 		}
 
 		public string SaveToString()
 		{
-			string sf = f ? "f" : "s";
+			string sf = first ? "f" : "s";
 			return $"{w}#{b}#{r}#{sf}";
 		}
 
@@ -74,7 +74,7 @@ namespace RapChessGui
 				CTour t = list[n];
 				if (t.w == p)
 				{
-					if (t.f)
+					if (t.first)
 					{
 						if (f == list.Count)
 						{
@@ -88,7 +88,7 @@ namespace RapChessGui
 				}
 				if (t.b == p)
 				{
-					if (t.f)
+					if (t.first)
 					{
 						if (s == list.Count)
 							s = c;
@@ -200,6 +200,8 @@ namespace RapChessGui
 
 		public void Write(string w, string b, string r, bool f)
 		{
+			if (w == b)
+				return;
 			CTour t = new CTour(w, b, r, f);
 			list.Add(t);
 			using (StreamWriter file = new StreamWriter(path, true))

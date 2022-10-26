@@ -96,8 +96,8 @@
 			this.gbTournamentE = new System.Windows.Forms.GroupBox();
 			this.label8 = new System.Windows.Forms.Label();
 			this.label5 = new System.Windows.Forms.Label();
-			this.nudTourEMin = new System.Windows.Forms.NumericUpDown();
-			this.nudTourEMax = new System.Windows.Forms.NumericUpDown();
+			this.nudTourERange = new System.Windows.Forms.NumericUpDown();
+			this.nudTourEAvg = new System.Windows.Forms.NumericUpDown();
 			this.labTourE = new System.Windows.Forms.Label();
 			this.label6 = new System.Windows.Forms.Label();
 			this.nudTourERec = new System.Windows.Forms.NumericUpDown();
@@ -140,8 +140,8 @@
 			this.groupBox9.SuspendLayout();
 			this.groupBox4.SuspendLayout();
 			this.gbTournamentE.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.nudTourEMin)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.nudTourEMax)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.nudTourERange)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.nudTourEAvg)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.nudTourERec)).BeginInit();
 			this.tabPageTourP.SuspendLayout();
 			this.gbTournamentP.SuspendLayout();
@@ -1046,8 +1046,8 @@
 			// 
 			this.gbTournamentE.Controls.Add(this.label8);
 			this.gbTournamentE.Controls.Add(this.label5);
-			this.gbTournamentE.Controls.Add(this.nudTourEMin);
-			this.gbTournamentE.Controls.Add(this.nudTourEMax);
+			this.gbTournamentE.Controls.Add(this.nudTourERange);
+			this.gbTournamentE.Controls.Add(this.nudTourEAvg);
 			this.gbTournamentE.Controls.Add(this.labTourE);
 			this.gbTournamentE.Controls.Add(this.label6);
 			this.gbTournamentE.Controls.Add(this.nudTourERec);
@@ -1064,61 +1064,56 @@
 			this.label8.AutoSize = true;
 			this.label8.Location = new System.Drawing.Point(168, 78);
 			this.label8.Name = "label8";
-			this.label8.Size = new System.Drawing.Size(41, 13);
+			this.label8.Size = new System.Drawing.Size(39, 13);
 			this.label8.TabIndex = 15;
-			this.label8.Text = "Min elo";
+			this.label8.Text = "Range";
 			// 
 			// label5
 			// 
 			this.label5.AutoSize = true;
 			this.label5.Location = new System.Drawing.Point(168, 52);
 			this.label5.Name = "label5";
-			this.label5.Size = new System.Drawing.Size(44, 13);
+			this.label5.Size = new System.Drawing.Size(64, 13);
 			this.label5.TabIndex = 14;
-			this.label5.Text = "Max elo";
+			this.label5.Text = "Average elo";
 			// 
-			// nudTourEMin
+			// nudTourERange
 			// 
-			this.nudTourEMin.Increment = new decimal(new int[] {
-            100,
+			this.nudTourERange.Increment = new decimal(new int[] {
+            10,
             0,
             0,
             0});
-			this.nudTourEMin.Location = new System.Drawing.Point(6, 71);
-			this.nudTourEMin.Maximum = new decimal(new int[] {
-            4000,
-            0,
-            0,
-            0});
-			this.nudTourEMin.Name = "nudTourEMin";
-			this.nudTourEMin.Size = new System.Drawing.Size(156, 20);
-			this.nudTourEMin.TabIndex = 13;
-			this.nudTourEMin.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-			this.nudTourEMin.ThousandsSeparator = true;
-			// 
-			// nudTourEMax
-			// 
-			this.nudTourEMax.Increment = new decimal(new int[] {
-            100,
-            0,
-            0,
-            0});
-			this.nudTourEMax.Location = new System.Drawing.Point(6, 45);
-			this.nudTourEMax.Maximum = new decimal(new int[] {
-            4000,
-            0,
-            0,
-            0});
-			this.nudTourEMax.Name = "nudTourEMax";
-			this.nudTourEMax.Size = new System.Drawing.Size(156, 20);
-			this.nudTourEMax.TabIndex = 12;
-			this.nudTourEMax.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-			this.nudTourEMax.ThousandsSeparator = true;
-			this.nudTourEMax.Value = new decimal(new int[] {
+			this.nudTourERange.Location = new System.Drawing.Point(6, 71);
+			this.nudTourERange.Maximum = new decimal(new int[] {
             3000,
             0,
             0,
             0});
+			this.nudTourERange.Name = "nudTourERange";
+			this.nudTourERange.Size = new System.Drawing.Size(156, 20);
+			this.nudTourERange.TabIndex = 13;
+			this.nudTourERange.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			this.nudTourERange.ThousandsSeparator = true;
+			// 
+			// nudTourEAvg
+			// 
+			this.nudTourEAvg.Increment = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
+			this.nudTourEAvg.Location = new System.Drawing.Point(6, 45);
+			this.nudTourEAvg.Maximum = new decimal(new int[] {
+            3000,
+            0,
+            0,
+            0});
+			this.nudTourEAvg.Name = "nudTourEAvg";
+			this.nudTourEAvg.Size = new System.Drawing.Size(156, 20);
+			this.nudTourEAvg.TabIndex = 12;
+			this.nudTourEAvg.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			this.nudTourEAvg.ThousandsSeparator = true;
 			// 
 			// labTourE
 			// 
@@ -1378,8 +1373,8 @@
 			this.groupBox4.ResumeLayout(false);
 			this.gbTournamentE.ResumeLayout(false);
 			this.gbTournamentE.PerformLayout();
-			((System.ComponentModel.ISupportInitialize)(this.nudTourEMin)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.nudTourEMax)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.nudTourERange)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.nudTourEAvg)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.nudTourERec)).EndInit();
 			this.tabPageTourP.ResumeLayout(false);
 			this.gbTournamentP.ResumeLayout(false);
@@ -1454,8 +1449,8 @@
 		private System.Windows.Forms.GroupBox gbTournamentE;
 		private System.Windows.Forms.Label label8;
 		private System.Windows.Forms.Label label5;
-		public System.Windows.Forms.NumericUpDown nudTourEMin;
-		public System.Windows.Forms.NumericUpDown nudTourEMax;
+		public System.Windows.Forms.NumericUpDown nudTourERange;
+		public System.Windows.Forms.NumericUpDown nudTourEAvg;
 		private System.Windows.Forms.Label labTourE;
 		private System.Windows.Forms.Label label6;
 		public System.Windows.Forms.NumericUpDown nudTourERec;
