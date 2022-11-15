@@ -18,7 +18,6 @@ namespace NSChess
 
 	public class CChess
 	{
-		public static CChess This;
 		public const string defFen = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
 		public static Random random = new Random();
 		public const int piecePawn = 0x01;
@@ -30,6 +29,7 @@ namespace NSChess
 		public const int colorBlack = 0x08;
 		public const int colorWhite = 0x10;
 		public const int colorEmpty = 0x20;
+		public const int maskRank = 7;
 		const int moveflagPassing = 0x02 << 16;
 		public const int moveflagCastleKing = 0x04 << 16;
 		public const int moveflagCastleQueen = 0x08 << 16;
@@ -43,7 +43,7 @@ namespace NSChess
 		public int g_castleRights = 0xf;
 		ulong g_hash = 0;
 		protected int g_passing = 0;
-		public int g_move50 = 0;
+		public int move50 = 0;
 		public int g_moveNumber = 0;
 		public bool g_inCheck = false;
 		int g_lastCastle = 0;
@@ -104,7 +104,6 @@ namespace NSChess
 
 		public CChess()
 		{
-			This = this;
 			Initialize();
 		}
 
@@ -383,9 +382,9 @@ namespace NSChess
 			if (chunks[2].IndexOf('q') != -1)
 				g_castleRights |= 8;
 			Passant = chunks.Length < 4 ? "-" : chunks[3];
-			g_move50 = chunks.Length < 5 ? 0 : Int32.Parse(chunks[4]);
+			move50 = chunks.Length < 5 ? 0 : Int32.Parse(chunks[4]);
 			MoveNumber = chunks.Length < 6 ? 1 : Int32.Parse(chunks[5]);
-			undoIndex = g_move50;
+			undoIndex = 0;
 			return true;
 		}
 
@@ -401,7 +400,8 @@ namespace NSChess
 				for (int x = 0; x < 8; x++)
 				{
 					int piece = g_board[((y + 4) << 4) + x + 4];
-					if (piece == colorEmpty)
+					int rank = piece & 7;
+					if (rank==0)
 						empty++;
 					else
 					{
@@ -442,7 +442,7 @@ namespace NSChess
 
 		public string GetFen()
 		{
-			return $"{GetEpd()} {g_move50} {MoveNumber}";
+			return $"{GetEpd()} {move50} {MoveNumber}";
 		}
 
 		#endregion
@@ -605,7 +605,7 @@ namespace NSChess
 			CUndo undo = undoStack[--undoIndex];
 			g_passing = undo.passing;
 			g_castleRights = undo.castle;
-			g_move50 = undo.move50;
+			move50 = undo.move50;
 			g_lastCastle = undo.lastCastle;
 			g_hash = undo.hash;
 			int captured = undo.captured;
@@ -641,7 +641,7 @@ namespace NSChess
 			undo.hash = g_hash;
 			undo.passing = g_passing;
 			undo.castle = g_castleRights;
-			undo.move50 = g_move50;
+			undo.move50 = move50;
 			undo.lastCastle = g_lastCastle;
 			int fr = emo & 0xff;
 			int to = (emo >> 8) & 0xff;
@@ -670,15 +670,15 @@ namespace NSChess
 			g_hash ^= g_hashBoard[fr, piece];
 			g_passing = 0;
 			if ((captured & 0xF) > 0)
-				g_move50 = 0;
+				move50 = 0;
 			else if ((piece & 7) == piecePawn)
 			{
 				if (to == (fr + 32)) g_passing = (fr + 16);
 				if (to == (fr - 32)) g_passing = (fr - 16);
-				g_move50 = 0;
+				move50 = 0;
 			}
 			else
-				g_move50++;
+				move50++;
 			if ((flags & moveflagPromotion) > 0)
 			{
 				int newPiece = piecefr & (~0x7);
@@ -811,7 +811,7 @@ namespace NSChess
 			check = g_inCheck;
 			GenerateAllMoves(whiteTurn, false);
 			bool myInsufficient = adjInsufficient;
-			if (g_move50 >= 100)
+			if (move50 >= 100)
 				return CGameState.move50;
 			if (IsRepetition())
 				return CGameState.repetition;
@@ -830,15 +830,19 @@ namespace NSChess
 
 		bool IsRepetition(int count = 3)
 		{
-			int min = undoIndex - g_move50;
-			if (min < 0)
-				min = 0;
-			for (int n = undoIndex - 4; n >= min; n -= 2)
-				if (undoStack[n].hash == g_hash)
+			int pos = undoIndex - 2;
+			while (pos >= 0)
+			{
+				if (undoStack[pos].hash == g_hash)
 					if (--count <= 1)
 						return true;
+				pos -= 2;
+				if (pos < undoIndex - move50)
+					return false;
+			}
 			return false;
 		}
+
 
 		ulong RAND_32()
 		{

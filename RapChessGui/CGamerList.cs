@@ -79,6 +79,7 @@ namespace RapChessGui
 		public CEngine engine = null;
 		public CPlayer player = new CPlayer();
 
+
 		public int Hash
 		{
 			get
@@ -610,14 +611,23 @@ namespace RapChessGui
 		/// Index of current gammer
 		/// </summary>
 		public int curIndex = 0;
-		public CGamer[] gamer = new CGamer[2];
+		public CGamer[] gamers = new CGamer[2];
 		public static CGamerList This;
 
 		public CGamerList()
 		{
 			This = this;
-			gamer[0] = new CGamer();
-			gamer[1] = new CGamer();
+			gamers[0] = new CGamer();
+			gamers[1] = new CGamer();
+		}
+
+		public bool Check(out string msg)
+		{
+			msg = String.Empty;
+			foreach(CGamer g in gamers)
+				if (!g.player.Check(out msg))
+					return false;
+			return true;
 		}
 
 		public void Next()
@@ -635,20 +645,20 @@ namespace RapChessGui
 
 		public void Init(int index = 0)
 		{
-			gamer[0].InitNextGame(true);
-			gamer[1].InitNextGame(false);
+			gamers[0].InitNextGame(true);
+			gamers[1].InitNextGame(false);
 			curIndex = index;
 		}
 
 		public void Rotate(int index = 0)
 		{
-			(gamer[1], gamer[0]) = (gamer[0], gamer[1]);
+			(gamers[1], gamers[0]) = (gamers[0], gamers[1]);
 			Init(index);
 		}
 
 		public CGamer GetGamer(string name)
 		{
-			foreach (CGamer p in gamer)
+			foreach (CGamer p in gamers)
 				if (p.player.name == name)
 					return p;
 			return null;
@@ -656,12 +666,12 @@ namespace RapChessGui
 
 		public int GetMsgPriority()
 		{
-			return gamer[0].msgPriority > gamer[1].msgPriority ? gamer[0].msgPriority : gamer[1].msgPriority;
+			return gamers[0].msgPriority > gamers[1].msgPriority ? gamers[0].msgPriority : gamers[1].msgPriority;
 		}
 
 		public CGamer GetGamerPid(int pid, out string protocol)
 		{
-			foreach (CGamer g in gamer)
+			foreach (CGamer g in gamers)
 			{
 				if (g.bookPro.GetPid() == pid)
 				{
@@ -674,67 +684,67 @@ namespace RapChessGui
 					return g;
 				}
 			}
-			protocol = "";
+			protocol = String.Empty;
 			return null;
 		}
 
 		public CGamer GamerWhite()
 		{
-			return gamer[0];
+			return gamers[0];
 		}
 
 		public CGamer GamerBlack()
 		{
-			return gamer[1];
+			return gamers[1];
 		}
 
 		public CGamer GamerWinner()
 		{
-			return gamer[(FormChess.chess.g_moveNumber & 1) ^ 1];
+			return gamers[(FormChess.chess.g_moveNumber & 1) ^ 1];
 		}
 
 		public CGamer GamerLoser()
 		{
-			return gamer[FormChess.chess.g_moveNumber & 1];
+			return gamers[FormChess.chess.g_moveNumber & 1];
 		}
 
 		public CGamer GamerHuman()
 		{
-			if (gamer[0].player.IsRealHuman())
-				return gamer[0];
-			if (gamer[1].player.IsRealHuman())
-				return gamer[1];
+			if (gamers[0].player.IsRealHuman())
+				return gamers[0];
+			if (gamers[1].player.IsRealHuman())
+				return gamers[1];
 			return null;
 		}
 
 		public CGamer GamerComputer()
 		{
-			if (gamer[0].player.IsComputer())
-				return gamer[0];
-			if (gamer[1].player.IsComputer())
-				return gamer[1];
+			if (gamers[0].player.IsComputer())
+				return gamers[0];
+			if (gamers[1].player.IsComputer())
+				return gamers[1];
 			return null;
 		}
 
 		public CGamer GamerCur()
 		{
-			return gamer[curIndex];
+			return gamers[curIndex];
 		}
 
 		public CGamer GamerSec()
 		{
-			return gamer[curIndex ^ 1];
+			return gamers[curIndex ^ 1];
 		}
 
 		public void Restart()
 		{
-			foreach (CGamer g in gamer)
+			foreach (CGamer g in gamers)
 				g.Restart();
 		}
 
 		public void Terminate()
 		{
-			foreach (CGamer g in gamer)
+			foreach (CGamer g in gamers)
 			{
 				g.timer.Stop();
 				g.bookPro.Close();
@@ -744,7 +754,7 @@ namespace RapChessGui
 
 		public void Undo()
 		{
-			foreach (CGamer g in gamer)
+			foreach (CGamer g in gamers)
 				g.Undo();
 		}
 

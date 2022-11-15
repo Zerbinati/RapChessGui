@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using NSUci;
 using RapIni;
@@ -14,12 +15,12 @@ namespace RapChessGui
 		public bool modeTournament = true;
 		public int position = 0;
 		public int tournament = 1;
-		public string name = "";
-		public string file = "";
-		public string parameters = "";
+		public string name = String.Empty;
+		public string file = String.Empty;
+		public string parameters = String.Empty;
 		public string elo = "1500";
 		public List<string> options = new List<string>();
-		public CProtocol protocol = CProtocol.auto;
+		public CProtocol protocol = CProtocol.uci;
 		public CHisElo hisElo = new CHisElo();
 
 		public CEngine()
@@ -91,7 +92,9 @@ namespace RapChessGui
 
 		public string CreateName()
 		{
-			return Path.GetFileNameWithoutExtension(file);
+			TextInfo ti = new CultureInfo("en-US", false).TextInfo;
+			string p = Path.GetFileNameWithoutExtension(file);
+			return ti.ToTitleCase(p);
 		}
 
 		public string GetOption(string name, string def)
@@ -118,6 +121,8 @@ namespace RapChessGui
 
 		public bool FileExists()
 		{
+			if (file == Global.none)
+				return true;
 			return File.Exists($@"Engines\{file}");
 		}
 

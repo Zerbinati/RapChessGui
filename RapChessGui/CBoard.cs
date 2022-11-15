@@ -83,9 +83,130 @@ namespace RapChessGui
 			Rectangle rec = new Rectangle();
 			rec.X = x;
 			rec.Y = y;
-			rec.Width = CBoard.field;
-			rec.Height = CBoard.field;
+			rec.Width = CBackground.fieldSize;
+			rec.Height = CBackground.fieldSize;
 			return rec;
+		}
+
+	}
+
+	class CBackground
+	{
+		bool rotate = false;
+		int width = 10;
+		int height = 10;
+		public static int fieldSize = 10;
+		public int frameSize = 10;
+		public int bmpX = 0;
+		public int bmpY = 0;
+		Bitmap board = new Bitmap(10,10);
+
+		void RenderBoard(int w, int h, bool r)
+		{
+			width = w;
+			height = h;
+			rotate = r;
+			if (w < 0xf) w = 0xf;
+			if (h < 0xf) h = 0xf;
+			int min = Math.Min(w, h);
+			fieldSize = min / 9;
+			frameSize = fieldSize >> 1;
+			int bmpSize = 8 * fieldSize + 2 * frameSize;
+			bmpX = (w - bmpSize) >> 1;
+			bmpY = (h - bmpSize) >> 1;
+			string abc = "ABCDEFGH";
+			Rectangle rec = new Rectangle();
+			board = new Bitmap(bmpSize, bmpSize);
+			using (Graphics graphics = Graphics.FromImage(board))
+			{
+				SolidBrush brush1 = new SolidBrush(CBoard.colorLabelB);
+				SolidBrush brush2 = new SolidBrush(Color.FromArgb(0x60, 0x00, 0x00, 0x00));
+				SolidBrush brush3 = new SolidBrush(Color.FromArgb(0x60, 0xff, 0xff, 0xff));
+				Font font = new Font(FontFamily.GenericSansSerif, 16, FontStyle.Bold);
+				GraphicsPath gp = new GraphicsPath();
+				StringFormat sf = new StringFormat();
+				Brush foreBrush = new SolidBrush(Color.White);
+				Pen outline = new Pen(Color.Black, 4);
+				sf.Alignment = StringAlignment.Center;
+				sf.LineAlignment = StringAlignment.Center;
+				graphics.SmoothingMode = SmoothingMode.HighQuality;
+				graphics.FillRectangle(brush1, 0, 0, bmpSize, bmpSize);
+				for (int y = 0; y < 8; y++)
+				{
+					int y2 = frameSize + y * fieldSize;
+					for (int x = 0; x < 8; x++)
+					{
+						int x2 = frameSize + x * fieldSize;
+						bool bgColor = ((y ^ x) & 1) == 1;
+						if (bgColor)
+						{
+							graphics.FillRectangle(brush2, x2, y2, fieldSize, fieldSize);
+						}
+						else
+						{
+							graphics.FillRectangle(brush3, x2, y2, fieldSize, fieldSize);
+						}
+					}
+				}
+				for (int n = 0; n < 8; n++)
+				{
+					int xr = rotate ? 7 - n : n;
+					int yr = rotate ? 7 - n : n;
+					int x2 = frameSize + xr * fieldSize;
+					int y2 = frameSize + yr * fieldSize;
+					rec.X = 0;
+					rec.Y = y2;
+					rec.Width = frameSize;
+					rec.Height = fieldSize;
+					string letter = (8 - n).ToString();
+					gp.AddString(letter, font.FontFamily, (int)font.Style, font.Size, rec, sf);
+					rec.X = board.Width - frameSize;
+					gp.AddString(letter, font.FontFamily, (int)font.Style, font.Size, rec, sf);
+					rec.X = x2;
+					rec.Y = 0;
+					rec.Width = fieldSize;
+					rec.Height = frameSize;
+					letter = abc[n].ToString();
+					gp.AddString(letter, font.FontFamily, (int)font.Style, font.Size, rec, sf);
+					rec.Y = board.Height - frameSize;
+					gp.AddString(letter, font.FontFamily, (int)font.Style, font.Size, rec, sf);
+				}
+				graphics.DrawPath(outline, gp);
+				graphics.FillPath(foreBrush, gp);
+				brush1.Dispose();
+				brush2.Dispose();
+				brush3.Dispose();
+				gp.Dispose();
+				sf.Dispose();
+				font.Dispose();
+				foreBrush.Dispose();
+				outline.Dispose();
+			}
+		}
+
+		public void Resize(int w,int h)
+		{
+			if (w < 0xf) w = 0xf;
+			if (h < 0xf) h = 0xf;
+			if ((width == w) && (height == h))
+				return;
+			width = w;
+			height = h;
+			rotate = FormChess.boardRotate;
+			int min = Math.Min(w, h);
+			fieldSize = min / 9;
+			frameSize = fieldSize >> 1;
+			int bmpSize = 8 * fieldSize + 2 * frameSize;
+			bmpX = (w - bmpSize) >> 1;
+			bmpY = (h - bmpSize) >> 1;
+			RenderBoard(width, height, rotate);
+		}
+
+		public Bitmap GetBitmap()
+		{
+			if (rotate != FormChess.boardRotate)
+				RenderBoard(width, height, FormChess.boardRotate);
+			return board;
 		}
 
 	}
@@ -104,14 +225,10 @@ namespace RapChessGui
 		public static bool animated = false;
 		public static bool finished = true;
 		public static CField[] arrField = new CField[64];
-		int bmpX = 0;
-		int bmpY = 0;
-		public static int frame = 32;
-		public static int field = 64;
-		public static Bitmap[] background = new Bitmap[2];
-		public Bitmap bmpBoard;
+		public Bitmap boardBmp;
 		public CArrowList arrowCur = new CArrowList(Color.FromArgb(0x90, 0x10, 0xff, 0x10));
 		public CArrowList arrowEco = new CArrowList(Color.FromArgb(0x90, 0xff, 0x10, 0x10));
+		readonly CBackground background = new CBackground();
 
 		public CBoard()
 		{
@@ -180,15 +297,15 @@ namespace RapChessGui
 		{
 			int xr = FormChess.boardRotate ? 7 - x : x;
 			int yr = FormChess.boardRotate ? 7 - y : y;
-			x = frame + xr * field + (field >> 1);
-			y = frame + yr * field + (field >> 1);
+			x = background.frameSize + xr * CBackground.fieldSize + (CBackground.fieldSize >> 1);
+			y = background.frameSize + yr * CBackground.fieldSize + (CBackground.fieldSize >> 1);
 			return new Point(x, y);
 		}
 
 		public void GetFieldXY(int x, int y, out int ox, out int oy)
 		{
-			ox = (x - frame - bmpX) / field;
-			oy = (y - frame - bmpY) / field;
+			ox = (x - background.frameSize - background.bmpX) / CBackground.fieldSize;
+			oy = (y - background.frameSize - background.bmpY) / CBackground.fieldSize;
 			if (ox < 0)
 				ox = 0;
 			if (oy < 0)
@@ -206,7 +323,7 @@ namespace RapChessGui
 
 		public void RenderArrows(Graphics g)
 		{
-			Bitmap bmp = new Bitmap(bmpBoard);
+			Bitmap bmp = new Bitmap(boardBmp);
 			Graphics gb = Graphics.FromImage(bmp);
 			DrawCircles(gb);
 			if (FormOptions.showArrow)
@@ -215,15 +332,15 @@ namespace RapChessGui
 				DrawArrows(gb, arrowEco);
 
 			}
-			g.DrawImage(bmp, bmpX, bmpY);
+			g.DrawImage(bmp, background.bmpX, background.bmpY);
 		}
 
 
 		public static void UpdateField(int index)
 		{
 			int i = CChess.arrField[index];
-			int f = FormChess.chess.g_board[i];
-			if ((f & CChess.colorEmpty) > 0)
+			int rank = FormChess.chess.g_board[i] &7;
+			if (rank == 0)
 				arrField[index].piece = null;
 			else
 			{
@@ -242,105 +359,22 @@ namespace RapChessGui
 			RenderBoard();
 		}
 
-		public void CreateBackground(int index)
-		{
-			int size = field * 8 + frame * 2;
-			string abc = "ABCDEFGH";
-			Rectangle rec = new Rectangle();
-			Bitmap bmp = new Bitmap(size, size);
-			Graphics g = Graphics.FromImage(bmp);
-			SolidBrush brush1 = new SolidBrush(colorLabelB);
-			SolidBrush brush2 = new SolidBrush(Color.FromArgb(0x60, 0x00, 0x00, 0x00));
-			SolidBrush brush3 = new SolidBrush(Color.FromArgb(0x60, 0xff, 0xff, 0xff));
-			Font font = new Font(FontFamily.GenericSansSerif, 16, FontStyle.Bold);
-			GraphicsPath gp = new GraphicsPath();
-			StringFormat sf = new StringFormat();
-			Brush foreBrush = new SolidBrush(Color.White);
-			Pen outline = new Pen(Color.Black, 4);
-			sf.Alignment = StringAlignment.Center;
-			sf.LineAlignment = StringAlignment.Center;
-			g.SmoothingMode = SmoothingMode.HighQuality;
-			g.FillRectangle(brush1, 0, 0, size, size);
-			for (int y = 0; y < 8; y++)
-			{
-				int y2 = frame + y * field;
-				for (int x = 0; x < 8; x++)
-				{
-					int x2 = frame + x * field;
-					bool bgColor = ((y ^ x) & 1) == 1;
-					if (bgColor)
-					{
-						g.FillRectangle(brush2, x2, y2, field, field);
-					}
-					else
-					{
-						g.FillRectangle(brush3, x2, y2, field, field);
-					}
-				}
-			}
-			for (int n = 0; n < 8; n++)
-			{
-				int xr = index == 1 ? 7 - n : n;
-				int yr = index == 1 ? 7 - n : n;
-				int x2 = frame + xr * field;
-				int y2 = frame + yr * field;
-				rec.X = 0;
-				rec.Y = y2;
-				rec.Width = frame;
-				rec.Height = field;
-				string letter = (8 - n).ToString();
-				gp.AddString(letter, font.FontFamily, (int)font.Style, font.Size, rec, sf);
-				rec.X = bmp.Width - frame;
-				gp.AddString(letter, font.FontFamily, (int)font.Style, font.Size, rec, sf);
-				rec.X = x2;
-				rec.Y = 0;
-				rec.Width = field;
-				rec.Height = frame;
-				letter = abc[n].ToString();
-				gp.AddString(letter, font.FontFamily, (int)font.Style, font.Size, rec, sf);
-				rec.Y = bmp.Height - frame;
-				gp.AddString(letter, font.FontFamily, (int)font.Style, font.Size, rec, sf);
-			}
-			g.DrawPath(outline, gp);
-			g.FillPath(foreBrush, gp);
-			background[index] = new Bitmap(bmp);
-			brush1.Dispose();
-			brush2.Dispose();
-			brush3.Dispose();
-			bmp.Dispose();
-			g.Dispose();
-			gp.Dispose();
-			sf.Dispose();
-			font.Dispose();
-			foreBrush.Dispose();
-			outline.Dispose();
-		}
-
 		public void Resize(int w, int h)
 		{
-			if (w < 0xf) w = 0xf;
-			if (h < 0xf) h = 0xf;
-			int min = Math.Min(w, h);
-			field = min / 9;
-			frame = field >> 1;
-			int bmpSize = 8 * field + 2 * frame;
-			bmpX = (w - bmpSize) >> 1;
-			bmpY = (h - bmpSize) >> 1;
-			CreateBackground(0);
-			CreateBackground(1);
+			background.Resize(w,h);
 			SetPosition();
 			RenderBoard();
 		}
 
 		public void RenderBoard()
 		{
-			bmpBoard = new Bitmap(background[FormChess.boardRotate ? 1 : 0]);
-			Graphics g = Graphics.FromImage(bmpBoard);
+			boardBmp = new Bitmap(background.GetBitmap());
+			Graphics g = Graphics.FromImage(boardBmp);
 			Brush brushRed = new SolidBrush(Color.FromArgb(0x80, 0xff, 0x00, 0x00));
 			Brush brushYellow = new SolidBrush(Color.FromArgb(0xa0, 0xff, 0xff, 0xff));
 			Brush brushWhite = new SolidBrush(Color.White);
 			Brush brushBlack = new SolidBrush(Color.Black);
-			Font fontPiece = new Font(FormChess.pfc.Families[0], field);
+			Font fontPiece = new Font(FormChess.pfc.Families[0], CBackground.fieldSize);
 			Pen penW = new Pen(Color.Black, 4);
 			Pen penB = new Pen(Color.White, 4);
 			GraphicsPath gpW = new GraphicsPath();
@@ -353,16 +387,16 @@ namespace RapChessGui
 			for (int y = 0; y < 8; y++)
 			{
 				int yr = FormChess.boardRotate ? 7 - y : y;
-				int y2 = frame + yr * field;
+				int y2 = background.frameSize + yr * CBackground.fieldSize;
 				for (int x = 0; x < 8; x++)
 				{
 					int i = y * 8 + x;
 					int xr = FormChess.boardRotate ? 7 - x : x;
-					int x2 = frame + xr * field;
+					int x2 = background.frameSize + xr * CBackground.fieldSize;
 					rec.X = x2;
 					rec.Y = y2;
-					rec.Width = field;
-					rec.Height = field;
+					rec.Width = CBackground.fieldSize;
+					rec.Height = CBackground.fieldSize;
 					if ((i == CDrag.lastSou) || (i == CDrag.lastDes) || (arrField[i].color != Color.Empty))
 						g.FillRectangle(brushYellow, rec);
 					else if (arrField[i].attacked && (CData.gameMode != CGameMode.edit))
@@ -384,7 +418,7 @@ namespace RapChessGui
 					arrField[i].y = y2;
 					piece.SetPositionAni(x2, y2);
 					if ((i == CDrag.lastDes) && CDrag.dragged)
-						piece.SetPositionSta(CDrag.mouseX - frame - bmpX, CDrag.mouseY - frame - bmpY);
+						piece.SetPositionSta(CDrag.mouseX - background.frameSize - background.bmpX, CDrag.mouseY - background.frameSize - background.bmpY);
 					rec.X = piece.curXY.X;
 					rec.Y = piece.curXY.Y;
 					gp1 = piece.image > 5 ? gpB : gpW;
@@ -482,12 +516,12 @@ namespace RapChessGui
 			for (int y = 0; y < 8; y++)
 			{
 				int yr = FormChess.boardRotate ? 7 - y : y;
-				int y2 = frame + yr * field;
+				int y2 = background.frameSize + yr * CBackground.fieldSize;
 				for (int x = 0; x < 8; x++)
 				{
 					int i = y * 8 + x;
 					int xr = FormChess.boardRotate ? 7 - x : x;
-					int x2 = frame + xr * field;
+					int x2 = background.frameSize + xr * CBackground.fieldSize;
 					arrField[i].x = x2;
 					arrField[i].y = y2;
 					CPiece piece = arrField[i].piece;
@@ -503,8 +537,8 @@ namespace RapChessGui
 			for (int n = 0; n < 64; n++)
 			{
 				int i = CChess.arrField[n];
-				int f = FormChess.chess.g_board[i];
-				if ((f & CChess.colorEmpty) > 0)
+				int rank = FormChess.chess.g_board[i] &7;
+				if (rank==0)
 					arrField[n].piece = null;
 				else
 					arrField[n].piece.SetImage(n);
@@ -513,7 +547,7 @@ namespace RapChessGui
 
 		public static void ShowAttack(bool show, bool white)
 		{
-			List<int> ml = CChess.This.GenerateAllMoves(white, false);
+			List<int> ml = FormChess.chess.GenerateAllMoves(white, false);
 			foreach (int m in ml)
 			{
 				int d = (m >> 8) & 0xff;

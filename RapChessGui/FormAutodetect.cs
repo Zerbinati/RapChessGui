@@ -8,6 +8,7 @@ namespace RapChessGui
 {
 	public partial class FormAutodetect : Form
 	{
+		int tick = 0;
 		public static string engineName = String.Empty;
 		public static CProtocol protocol = CProtocol.auto;
 		public static bool testResult = false;
@@ -45,6 +46,14 @@ namespace RapChessGui
 			catch { }
 		}
 
+		public static void TestStop()
+		{
+			if (testEngine.protocol == CProtocol.uci)
+				testProcess.WriteLine("stop");
+			else
+				testProcess.WriteLine("?");
+		}
+
 		public static void TestUci(string command)
 		{
 			testProcess.WriteLine("ucinewgame");
@@ -67,7 +76,7 @@ namespace RapChessGui
 		{
 			DateTime dt = new DateTime();
 			dt = dt.AddMilliseconds(testWatch.Elapsed.TotalMilliseconds);
-			string t = dt.ToString("ss.fff ");
+			string t = dt.ToString("ss.fff");
 			bool con = msg.Contains(testEngine.protocol == CProtocol.uci ? "bestmove " : "move ");
 			switch (testMode)
 			{
@@ -88,8 +97,8 @@ namespace RapChessGui
 						WriteLine($"{t} {msg} {testResult}");
 					}
 					break;
-				case 4:
 				case 5:
+				case 6:
 					if (con)
 					{
 						testEngine.modeDepth = testResult;
@@ -97,8 +106,8 @@ namespace RapChessGui
 						WriteLine($"{t} {msg} {testResult}");
 					}
 					break;
-				case 6:
-				case 7:
+				case 8:
+				case 9:
 					if (con)
 					{
 						testEngine.modeStandard = testResult;
@@ -106,8 +115,8 @@ namespace RapChessGui
 						WriteLine($"{t} {msg} {testResult}");
 					}
 					break;
-				case 8:
-				case 9:
+				case 11:
+				case 12:
 					if (con)
 					{
 						testEngine.modeTournament = testResult;
@@ -160,12 +169,13 @@ namespace RapChessGui
 
 		void NextPhase()
 		{
+			tick = 20;
 			testWatch.Restart();
 			testMode++;
 			switch (testMode)
 			{
 				case 1:
-					WriteLine("start test protocol",true);
+					WriteLine("start test protocol");
 					break;
 				case 2:
 					ShowProtocol();
@@ -173,7 +183,7 @@ namespace RapChessGui
 						testProcess.WriteLine("xboard");
 					testEngine.modeTime = false;
 					testResult = true;
-					WriteLine("start test time 1",true);
+					WriteLine("start test time 1");
 					if (testEngine.protocol == CProtocol.uci)
 						TestUci("go movetime 1000");
 					else
@@ -183,7 +193,7 @@ namespace RapChessGui
 					if (testEngine.modeTime)
 					{
 						testResult = false;
-						WriteLine("start test time 2",true);
+						WriteLine("start test time 2");
 						if (testEngine.protocol == CProtocol.uci)
 							TestUci("go movetime 10000");
 						else
@@ -193,20 +203,23 @@ namespace RapChessGui
 						NextPhase();
 					break;
 				case 4:
+					TestStop();
+					break;
+				case 5:
 					ShowTime();
 					testEngine.modeDepth = false;
 					testResult = true;
-					WriteLine("start test depth 1",true);
+					WriteLine("start test depth 1");
 					if (testEngine.protocol == CProtocol.uci)
 						TestUci("go depth 3");
 					else
 						TestXb("sd 3");
 					break;
-				case 5:
+				case 6:
 					if (testEngine.modeDepth)
 					{
 						testResult = false;
-						WriteLine("start test depth 2",true);
+						WriteLine("start test depth 2");
 						if (testEngine.protocol == CProtocol.uci)
 							TestUci("go depth 60");
 						else
@@ -215,21 +228,24 @@ namespace RapChessGui
 					else
 						NextPhase();
 					break;
-				case 6:
+				case 7:
+					TestStop();
+					break;
+				case 8:
 					ShowDepth();
 					testEngine.modeStandard = false;
 					testResult = true;
-					WriteLine("start test standard 1",true);
+					WriteLine("start test standard 1");
 					if (testEngine.protocol == CProtocol.uci)
 						TestUci("go wtime 500 btime 500 winc 0 binc 0");
 					else
 						TestXb("time 50");
 					break;
-				case 7:
+				case 9:
 					if (testEngine.modeStandard)
 					{
 						testResult = false;
-						WriteLine("start test standard 2",true);
+						WriteLine("start test standard 2");
 						if (testEngine.protocol == CProtocol.uci)
 							TestUci("go wtime 1000000 btime 1000000 winc 0 binc 0");
 						else
@@ -238,7 +254,10 @@ namespace RapChessGui
 					else
 						NextPhase();
 					break;
-				case 8:
+				case 10:
+					TestStop();
+					break;
+				case 11:
 					ShowStandard();
 					testEngine.modeTournament = false;
 					testResult = true;
@@ -246,23 +265,23 @@ namespace RapChessGui
 					{
 						testEngine.modeTournament = false;
 						testResult = true;
-						WriteLine("start test tournament 1", true);
+						WriteLine("start test tournament 1");
 						TestXb("level 0 0:01 0");
 					}
 					else
 						NextPhase();
 					break;
-				case 9:
+				case 12:
 					if ((testEngine.protocol == CProtocol.winboard) && testEngine.modeTournament)
 					{
 						testResult = false;
-						WriteLine("start test tournament 2",true);
+						WriteLine("start test tournament 2");
 						TestXb("level 0 40:10 0");
 					}
 					else
 						NextPhase();
 					break;
-				case 10:
+				case 13:
 					testTimer.Stop();
 					testProcess.Terminate();
 					testTimer.Enabled = false;
@@ -273,7 +292,7 @@ namespace RapChessGui
 					ShowDepth();
 					ShowStandard();
 					ShowTournament();
-					WriteLine("test finished",true);
+					WriteLine("test finished");
 					if (!testEngine.modeDepth && !testEngine.modeStandard && !testEngine.modeTime && !testEngine.modeTournament)
 					{
 						testEngine.modeDepth = true;
@@ -284,13 +303,12 @@ namespace RapChessGui
 					testEngine.SaveToIni();
 					break;
 			}
-
 		}
 
 		private void testTimer_Tick(object sender, EventArgs e)
 		{
-
-			NextPhase();
+			if(--tick <=0)
+				NextPhase();
 		}
 
 		public void StartTestAuto()
@@ -301,13 +319,17 @@ namespace RapChessGui
 			WriteLine("test started");
 			testProcess.SetProgram($@"{AppDomain.CurrentDomain.BaseDirectory}Engines\{testEngine.file}", testEngine.parameters);
 			testProcess.WriteLine("uci");
+			tick = 40;
 		}
 
 		#endregion
 
 		static void WriteLine(string line,bool addTime = false)
 		{
-			string msg = addTime ? $"{DateTime.Now:HH:mm: ss tt} {line}\n" : $"{line}\n";
+			DateTime dt = new DateTime();
+			dt = dt.AddMilliseconds(testWatch.Elapsed.TotalMilliseconds);
+			string t = dt.ToString("ss.fff");
+			string msg = addTime ? $"{t} {line}\n" : $"{line}\n";
 			This.tbConsole.AppendText(msg);
 		}
 

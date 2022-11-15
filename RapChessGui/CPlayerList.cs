@@ -26,6 +26,31 @@ namespace RapChessGui
 			name = n;
 		}
 
+		public string Check()
+		{
+			if (engine == Global.none)
+				return $"Please select {name} engine";
+			CEngine e = FormChess.engineList.GetEngineByName(engine);
+			if (e != null)
+			{
+				if (!e.FileExists())
+					return $"{e.file} not exists";
+				if ((e.protocol != CProtocol.uci) && (e.protocol != CProtocol.winboard))
+					return $"Please setup {e.name} protocol";
+			}
+			CBook b = FormChess.bookList.GetBook(book);
+			if (b != null)
+				if (!b.FileExists())
+					return $"{b.file} not exists";
+			return String.Empty;
+		}
+
+		public bool Check(out string msg)
+		{
+			msg = Check();
+			return msg == String.Empty;
+		}
+
 		public void Check(CEngineList el)
 		{
 			CEngine e = el.GetEngineByName(engine);

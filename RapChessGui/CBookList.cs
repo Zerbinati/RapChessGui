@@ -1,6 +1,7 @@
 ﻿
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using RapIni;
 
@@ -28,6 +29,8 @@ namespace RapChessGui
 
 		public bool FileExists()
 		{
+			if (file == Global.none)
+				return true;
 			return File.Exists($@"Books\{file}");
 		}
 
@@ -93,8 +96,9 @@ namespace RapChessGui
 			if (tokens.Length > 0)
 			{
 				string p = tokens[0];
+				TextInfo ti = new CultureInfo("en-US", false).TextInfo;
 				p = Path.GetFileNameWithoutExtension(p);
-				return $"{n} {p}";
+				return $"{n} {ti.ToTitleCase(p)}";
 			}
 			return n;
 		}

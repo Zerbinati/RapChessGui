@@ -4003,6 +4003,7 @@
             this.columnHeader30,
             this.columnHeader5,
             this.columnHeader31});
+			this.lvMoves.Cursor = System.Windows.Forms.Cursors.Hand;
 			this.lvMoves.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
 			this.lvMoves.FullRowSelect = true;
 			this.lvMoves.GridLines = true;
