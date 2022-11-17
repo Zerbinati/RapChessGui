@@ -95,7 +95,7 @@ namespace RapChessGui
 
 		public void SetTournament(int t)
 		{
-			tournament = IsRealHuman() ? 0 : t;
+			tournament = IsHuman() ? 0 : t;
 		}
 
 		public bool SetTournament(bool tb)
@@ -118,7 +118,7 @@ namespace RapChessGui
 			return engine != Global.none;
 		}
 
-		public bool IsRealHuman()
+		public bool IsHuman()
 		{
 			return (engine == Global.none) && (modeValue.level == CLevel.infinite);
 		}
@@ -141,10 +141,10 @@ namespace RapChessGui
 		public void LoadFromIni()
 		{
 			tournament = CPlayerList.iniFile.ReadInt($"player>{name}>tournament", tournament);
-			engine = CPlayerList.iniFile.Read($"player>{name}>engine", "None");
+			engine = CPlayerList.iniFile.Read($"player>{name}>engine", Global.none);
 			modeValue.SetLevel(CPlayerList.iniFile.Read($"player>{name}>mode", modeValue.GetLevel()));
 			modeValue.value = CPlayerList.iniFile.ReadInt($"player>{name}>value", modeValue.value);
-			book = CPlayerList.iniFile.Read($"player>{name}>book", "None");
+			book = CPlayerList.iniFile.Read($"player>{name}>book", Global.none);
 			elo = CPlayerList.iniFile.Read($"player>{name}>elo", elo);
 			eloOrg = CPlayerList.iniFile.Read($"player>{name}>eloOrg", eloOrg);
 			hisElo.LoadFromStr(CPlayerList.iniFile.Read($"player>{name}>history"));

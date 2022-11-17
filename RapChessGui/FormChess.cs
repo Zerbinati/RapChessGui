@@ -298,7 +298,7 @@ namespace RapChessGui
 			ShowInfo(gw);
 			ShowInfo(gb);
 			SetBoardRotate();
-			if (GamerList.GamerCur().player.IsRealHuman())
+			if (GamerList.GamerCur().player.IsHuman())
 				moves = chess.GenerateValidMoves(out _);
 		}
 
@@ -398,8 +398,8 @@ namespace RapChessGui
 			labProtocolB.Text = gb.GetProtocol();
 			labMemoryW.Text = gw.GetMemory();
 			labMemoryB.Text = gb.GetMemory();
-			splitContainerMoves.Panel1Collapsed = gw.player.IsRealHuman();
-			splitContainerMoves.Panel2Collapsed = gb.player.IsRealHuman();
+			splitContainerMoves.Panel1Collapsed = gw.player.IsHuman();
+			splitContainerMoves.Panel2Collapsed = gb.player.IsHuman();
 		}
 
 		void ShowInfo(CGamer g)
@@ -955,12 +955,12 @@ namespace RapChessGui
 			labEloT.ForeColor = Color.Black;
 			if (GetRanked() && CModeGame.ranked)
 			{
-				if (GamerD().player.IsRealHuman())
+				if (GamerD().player.IsHuman())
 				{
 					labEloD.BackColor = CBoard.colorLabelB;
 					labEloD.ForeColor = CBoard.colorMessage;
 				}
-				if (GamerT().player.IsRealHuman())
+				if (GamerT().player.IsHuman())
 				{
 					labEloT.BackColor = CBoard.colorLabelB;
 					labEloT.ForeColor = CBoard.colorMessage;
@@ -1154,7 +1154,7 @@ namespace RapChessGui
 			CHistory.AddMove(piece, gmo, umo, san);
 			MoveToLvMoves(CHistory.moveList.Count - 1, piece, CHistory.LastNotation(), cg.scoreS);
 			CEco eco = EcoList.GetEcoFen(chess.GetEpd());
-			if (cg.player.IsRealHuman())
+			if (cg.player.IsHuman())
 			{
 				tssInfo.Text = String.Empty;
 				Board.ClearArrows();
@@ -1186,7 +1186,7 @@ namespace RapChessGui
 			if (CData.gameState == CGameState.normal)
 			{
 				GamerList.Next();
-				if (GamerList.GamerCur().player.IsRealHuman())
+				if (GamerList.GamerCur().player.IsHuman())
 					moves = chess.GenerateValidMoves(out _);
 				else
 					if (GamerList.GamerCur().isWhite)
@@ -1200,8 +1200,8 @@ namespace RapChessGui
 
 		void SetBoardRotate()
 		{
-			boardRotate = (GamerList.gamers[1].player.IsRealHuman() && GamerList.gamers[0].player.IsComputer()) ^ CData.rotateBoard;
-			if ((GamerList.gamers[1].player.IsRealHuman()) && (GamerList.gamers[0].player.IsRealHuman()))
+			boardRotate = (GamerList.gamers[1].player.IsHuman() && GamerList.gamers[0].player.IsComputer()) ^ CData.rotateBoard;
+			if ((GamerList.gamers[1].player.IsHuman()) && (GamerList.gamers[0].player.IsHuman()))
 				boardRotate = !chess.whiteTurn;
 		}
 
@@ -1659,7 +1659,7 @@ namespace RapChessGui
 				int eloW = pw.GetElo();
 				int eloL = pl.GetElo();
 				CElo.EloRating(eloW, eloL, out int newW, out int newL, pw.hisElo.list.Count, pl.hisElo.list.Count, isDraw ? 0 : 1);
-				if (pw.IsRealHuman())
+				if (pw.IsHuman())
 					pw.elo = newW.ToString();
 				else
 					pl.elo = newL.ToString();

@@ -36,11 +36,11 @@ namespace RapChessGui
 			if (FormChess.engineList.GetIndex(player.engine) >= 0)
 				cbEngineList.Text = player.engine;
 			else
-				cbEngineList.Text = "Human";
+				cbEngineList.Text = Global.none;
 			if (cbBookList.Items.IndexOf(player.book) >= 0)
 				cbBookList.Text = player.book;
 			else
-				cbBookList.Text = "None";
+				cbBookList.Text = Global.none;
 			nudTournament.Value = player.tournament;
 			nudElo.Value = Convert.ToInt32(player.elo);
 			nudValue.Value = player.modeValue.GetValue();

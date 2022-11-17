@@ -639,7 +639,7 @@ namespace RapChessGui
 			cg.isEngRunning = false;
 			curIndex ^= 1;
 			cg = GamerCur();
-			if (cg.player.IsRealHuman())
+			if (cg.player.IsHuman())
 				cg.TimerStart();
 		}
 
@@ -710,9 +710,9 @@ namespace RapChessGui
 
 		public CGamer GamerHuman()
 		{
-			if (gamers[0].player.IsRealHuman())
+			if (gamers[0].player.IsHuman())
 				return gamers[0];
-			if (gamers[1].player.IsRealHuman())
+			if (gamers[1].player.IsHuman())
 				return gamers[1];
 			return null;
 		}
