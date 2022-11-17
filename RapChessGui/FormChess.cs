@@ -41,7 +41,7 @@ namespace RapChessGui
 		readonly CUci uci = new CUci();
 		public static CChess chess = new CChess();
 		readonly SoundPlayer audioMove = new SoundPlayer(Properties.Resources.Move);
-		public static CRapLog log = new CRapLog();
+		public static CRapLog log = new CRapLog(@"History\RapChessGui.log");
 		public static PrivateFontCollection pfc = new PrivateFontCollection();
 		public static CBookList bookList = new CBookList();
 		public static CEngineList engineList = new CEngineList();
@@ -376,7 +376,7 @@ namespace RapChessGui
 			CDrag.lastSou = -1;
 			CDrag.lastDes = -1;
 			chess.SetFen(fen);
-			CHistory.SetFen(chess.GetFen(), chess.g_moveNumber);
+			CHistory.SetFen(chess.GetFen(), chess.halfMove);
 			Board.ClearArrows();
 			Board.ClearColors();
 			Board.Fill();
@@ -902,7 +902,7 @@ namespace RapChessGui
 
 		bool IsGameLong()
 		{
-			return (chess.g_moveNumber >> 1) > 4;
+			return (chess.halfMove >> 1) > 4;
 		}
 
 		bool IsGameProgress()
@@ -920,7 +920,7 @@ namespace RapChessGui
 			if (CModeGame.ranked == true)
 			{
 				CModeGame.ranked = false;
-				CModeGame.player.elo = CModeGame.player.eloOrg;
+				CModeGame.humanPlayer.elo = CModeGame.humanPlayer.eloOrg;
 				CModeGame.SaveToIni();
 			}
 			ShowAutoElo();
@@ -971,7 +971,7 @@ namespace RapChessGui
 		bool ShowLastGame(bool changeProgress = false)
 		{
 			bool result = false;
-			CPlayer hu = CModeGame.player;
+			CPlayer hu = CModeGame.humanPlayer;
 			int eloCur = Convert.ToInt32(hu.elo);
 			int eloOld = Convert.ToInt32(hu.eloOrg);
 			int eloDel = eloCur - eloOld;
@@ -1134,7 +1134,7 @@ namespace RapChessGui
 			cg.timer.Stop();
 			double m = GamerList.curIndex == 0 ? 0.01 : -0.01;
 			chartMain.Series[GamerList.curIndex].Points.Add(cg.scoreI * m);
-			if (GetRanked() && CModeGame.ranked && (cg.engine == null) && ((chess.g_moveNumber >> 1) == 4))
+			if (GetRanked() && CModeGame.ranked && (cg.engine == null) && ((chess.halfMove >> 1) == 4))
 			{
 				cg.player.eloOrg = cg.player.elo;
 				cg.player.elo = cg.player.GetEloLess().ToString();
@@ -1262,7 +1262,7 @@ namespace RapChessGui
 			{
 				for (int x = 0; x < 8; x++)
 				{
-					int piece = chess.g_board[((y + 4) << 4) + x + 4];
+					int piece = chess.board[((y + 4) << 4) + x + 4];
 					int rank = piece & 7;
 					if ((piece & CChess.colorWhite) > 0)
 					{
@@ -1316,14 +1316,14 @@ namespace RapChessGui
 				MessageBox.Show("Wrong fen");
 				return;
 			}
-			CHistory.SetFen(chess.GetFen(), chess.g_moveNumber);
+			CHistory.SetFen(chess.GetFen(), chess.halfMove);
 
 			CChess.UmoToSD(CHistory.LastUmo(), out CDrag.lastSou, out CDrag.lastDes);
 			Board.ClearArrows();
 			Board.Fill();
 			HistoryToLvMoves();
 			SetingsToGamers();
-			int curColor = chess.g_moveNumber & 1;
+			int curColor = chess.halfMove & 1;
 			GamerList.curIndex = curColor;
 			if (GamerList.GamerCur().player.IsComputer())
 				GamerList.Rotate(curColor);
@@ -1360,7 +1360,7 @@ namespace RapChessGui
 			Board.Fill();
 			HistoryToLvMoves();
 			SetingsToGamers();
-			int curColor = chess.g_moveNumber & 1;
+			int curColor = chess.halfMove & 1;
 			GamerList.curIndex = curColor;
 			if (GamerList.GamerCur().player.IsComputer())
 				GamerList.Rotate(curColor);
@@ -1395,7 +1395,7 @@ namespace RapChessGui
 			Board.Fill();
 			HistoryToLvMoves();
 			SetingsToGamers();
-			int curColor = chess.g_moveNumber & 1;
+			int curColor = chess.halfMove & 1;
 			GamerList.curIndex = curColor;
 			if (GamerList.GamerCur().player.IsComputer())
 				GamerList.Rotate(curColor);
@@ -1605,10 +1605,10 @@ namespace RapChessGui
 		void SetingsToGamers()
 		{
 			GamerList.Init();
-			GamerList.gamers[0].SetPlayer(CModeGame.player);
+			GamerList.gamers[0].SetPlayer(CModeGame.humanPlayer);
 			CPlayer pc = new CPlayer();
 			if (cbComputer.Text == "Human")
-				pc = CModeGame.player;
+				pc = CModeGame.humanPlayer;
 			else if (cbComputer.Text == "Custom")
 			{
 				pc.engine = cbEngine.Text;
@@ -1617,23 +1617,23 @@ namespace RapChessGui
 				pc.modeValue.value = CModeGame.modeValue.value;
 			}
 			else
-				pc = playerList.GetPlayerByElo(CModeGame.player.GetElo());
+				pc = playerList.GetPlayerByElo(CModeGame.humanPlayer.GetElo());
 			GamerList.gamers[1].SetPlayer(pc);
 		}
 
 		void GameStart()
 		{
-			if ((cbEngine.SelectedIndex == 0) && (cbComputer.SelectedIndex == 1))
-			{
-				MessageBox.Show("Please select engine");
-				return;
-			}
 			ComClear();
-			CPlayer hu = CModeGame.player;
+			CPlayer hu = CModeGame.humanPlayer;
 			CData.HisToPoints(hu.hisElo, chartGame.Series[0].Points);
 			CModeGame.ranked = GetRanked();
 			GameSet();
 			SetingsToGamers();
+			if (!GamerList.Check(out string msg))
+			{
+				MessageBox.Show(msg);
+				return;
+			}
 			if (ShowLastGame())
 				CModeGame.rotate = !CModeGame.rotate;
 			if ((CModeGame.rotate && (cbColor.Text == "Auto")) || (cbColor.Text == "Black"))
@@ -1756,8 +1756,8 @@ namespace RapChessGui
 		void TournamentBEnd(CGamer gw, CGamer gl, bool isDraw)
 		{
 			CBookList bookList = CModeTournamentB.bookList;
-			CBook bw = bookList.GetBook(gw.book.name);
-			CBook bl = bookList.GetBook(gl.book.name);
+			CBook bw = bookList.GetBookByName(gw.book.name);
+			CBook bl = bookList.GetBookByName(gl.book.name);
 			if ((bw == null) || (bl == null))
 				return;
 			CPlayer pw = GamerList.gamers[0].player;
@@ -1847,7 +1847,7 @@ namespace RapChessGui
 			ListViewItem top2 = null;
 			string name = lvTourBList.SelectedItems[0].Text;
 			CBookList bookList = CModeTournamentB.bookList;
-			CBook book = bookList.GetBook(name);
+			CBook book = bookList.GetBookByName(name);
 			if (book == null)
 				return;
 			lvTourBSel.Items.Clear();
@@ -2163,7 +2163,7 @@ namespace RapChessGui
 			ListViewItem top2 = null;
 			string name = lvTourPList.SelectedItems[0].Text;
 			CPlayerList playerList = CModeTournamentP.playerList;
-			CPlayer player = playerList.GetPlayer(name);
+			CPlayer player = playerList.GetPlayerByName(name);
 			if (player == null)
 				return;
 			lvTourPSel.Items.Clear();
@@ -2250,8 +2250,8 @@ namespace RapChessGui
 		void TournamentPEnd(CPlayer pw, CPlayer pl, bool isDraw)
 		{
 			CPlayerList plaList = CModeTournamentP.playerList;
-			pw = plaList.GetPlayer(pw.name);
-			pl = plaList.GetPlayer(pl.name);
+			pw = plaList.GetPlayerByName(pw.name);
+			pl = plaList.GetPlayerByName(pl.name);
 			if ((pw == null) || (pl == null))
 				return;
 			CPlayer plw = GamerList.gamers[0].player;
@@ -2413,12 +2413,12 @@ namespace RapChessGui
 			List<RadioButton> list = gbToMove.Controls.OfType<RadioButton>().ToList();
 			int i = chess.whiteTurn ? 1 : 0;
 			list[i].Select();
-			int cr = chess.g_castleRights;
-			clbCastling.SetItemChecked(0, (chess.g_castleRights & 1) > 0);
-			clbCastling.SetItemChecked(1, (chess.g_castleRights & 2) > 0);
-			clbCastling.SetItemChecked(2, (chess.g_castleRights & 4) > 0);
-			clbCastling.SetItemChecked(3, (chess.g_castleRights & 8) > 0);
-			chess.g_castleRights = cr;
+			int cr = chess.castleRighs;
+			clbCastling.SetItemChecked(0, (chess.castleRighs & 1) > 0);
+			clbCastling.SetItemChecked(1, (chess.castleRighs & 2) > 0);
+			clbCastling.SetItemChecked(2, (chess.castleRighs & 4) > 0);
+			clbCastling.SetItemChecked(3, (chess.castleRighs & 8) > 0);
+			chess.castleRighs = cr;
 			cbPassant.Text = chess.Passant;
 			nudMove.Value = chess.MoveNumber;
 			nudReversible.Value = chess.move50;
@@ -2636,9 +2636,9 @@ namespace RapChessGui
 			{
 				int i = CChess.arrField[CDrag.mouseIndex];
 				if (e.Button == MouseButtons.Left)
-					chess.g_board[i] = chess.CharToPiece(EditSelected[0]);
+					chess.board[i] = chess.CharToPiece(EditSelected[0]);
 				else
-					chess.g_board[i] = CChess.colorEmpty;
+					chess.board[i] = CChess.colorEmpty;
 				Board.Fill();
 				RenderBoard(true);
 				EditGetFen();
@@ -2687,7 +2687,7 @@ namespace RapChessGui
 			for (int n = 0; n < 64; n++)
 			{
 				int i = CChess.arrField[n];
-				chess.g_board[i] = CChess.colorEmpty;
+				chess.board[i] = CChess.colorEmpty;
 				CBoard.UpdateField(n);
 			}
 			RenderBoard(true);
@@ -2718,16 +2718,16 @@ namespace RapChessGui
 			switch (e.Index)
 			{
 				case 0:
-					chess.g_castleRights ^= 1;
+					chess.castleRighs ^= 1;
 					break;
 				case 1:
-					chess.g_castleRights ^= 2;
+					chess.castleRighs ^= 2;
 					break;
 				case 2:
-					chess.g_castleRights ^= 4;
+					chess.castleRighs ^= 4;
 					break;
 				case 3:
-					chess.g_castleRights ^= 8;
+					chess.castleRighs ^= 8;
 					break;
 			}
 			EditGetFen();
@@ -2852,7 +2852,7 @@ namespace RapChessGui
 		{
 			if (GetRanked() && IsGameLong() && IsGameProgress())
 			{
-				CPlayer hu = CModeGame.player;
+				CPlayer hu = CModeGame.humanPlayer;
 				hu.elo = hu.GetEloLess().ToString();
 			}
 			SetGameState(CGameState.resignation);

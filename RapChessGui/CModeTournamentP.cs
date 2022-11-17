@@ -89,10 +89,10 @@ namespace RapChessGui
 
 		public static CPlayer SelectFirst()
 		{
-			CPlayer p = playerList.GetPlayer(FormOptions.tourPSelected);
+			CPlayer p = playerList.GetPlayerByName(FormOptions.tourPSelected);
 			if (p != null)
 				return p;
-			p = playerList.GetPlayer(first);
+			p = playerList.GetPlayerByName(first);
 			if ((p == null) || ((games >= repetition) && (games > 0)))
 			{
 				p = SelectLast();

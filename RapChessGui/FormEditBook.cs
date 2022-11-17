@@ -30,7 +30,7 @@ namespace RapChessGui
 
 		void SelectBook(string name)
 		{
-			book = FormChess.bookList.GetBook(name);
+			book = FormChess.bookList.GetBookByName(name);
 			bookName = String.Empty;
 			if (book == null)
 				return;
@@ -82,6 +82,11 @@ namespace RapChessGui
 		private void ButCreate_Click(object sender, EventArgs e)
 		{
 			string name = tbReaderName.Text;
+			if (FormChess.bookList.GetBookByName(name) != null)
+			{
+				MessageBox.Show("This name already exists");
+				return;
+			}
 			CBook reader = new CBook(name);
 			reader.file = cbBookreaderList.Text;
 			FormChess.bookList.Add(reader);
@@ -121,7 +126,7 @@ namespace RapChessGui
 			if (e.Index < 0)
 				return;
 			string name = listBox1.Items[e.Index].ToString();
-			CBook book = FormChess.bookList.GetBook(name);
+			CBook book = FormChess.bookList.GetBookByName(name);
 			bool selected = (e.State & DrawItemState.Selected) == DrawItemState.Selected;
 			Brush b = Brushes.Black;
 			if (selected)

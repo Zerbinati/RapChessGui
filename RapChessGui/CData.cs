@@ -54,6 +54,7 @@ namespace RapChessGui
 	public static class Global
 	{
 		public static string none = "None";
+		public static string human = "Human";
 	}
 
 	public static class CData

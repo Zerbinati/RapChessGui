@@ -9,7 +9,7 @@ namespace RapChessGui
 	{
 		public int tournament = 1;
 		public int position = 0;
-		public string name = "";
+		public string name = String.Empty;
 		public string engine = Global.none;
 		public string book = Global.none;
 		public string elo = "1000";
@@ -28,20 +28,22 @@ namespace RapChessGui
 
 		public string Check()
 		{
+			if (name == Global.human)
+				return String.Empty;
 			if (engine == Global.none)
 				return $"Please select {name} engine";
 			CEngine e = FormChess.engineList.GetEngineByName(engine);
 			if (e != null)
 			{
 				if (!e.FileExists())
-					return $"{e.file} not exists";
+					return $"Engine file {e.file} not exists";
 				if ((e.protocol != CProtocol.uci) && (e.protocol != CProtocol.winboard))
-					return $"Please setup {e.name} protocol";
+					return $"Please setup engine {e.name} protocol";
 			}
-			CBook b = FormChess.bookList.GetBook(book);
+			CBook b = FormChess.bookList.GetBookByName(book);
 			if (b != null)
 				if (!b.FileExists())
-					return $"{b.file} not exists";
+					return $"Book file {b.file} not exists";
 			return String.Empty;
 		}
 
@@ -56,7 +58,7 @@ namespace RapChessGui
 			CEngine e = el.GetEngineByName(engine);
 			if (e == null)
 			{
-				engine = "None";
+				engine = Global.none;
 				SaveToIni();
 			}
 		}
@@ -113,17 +115,17 @@ namespace RapChessGui
 
 		public bool IsComputer()
 		{
-			return engine != "None";
+			return engine != Global.none;
 		}
 
 		public bool IsRealHuman()
 		{
-			return (engine == "None") && (modeValue.level == CLevel.infinite);
+			return (engine == Global.none) && (modeValue.level == CLevel.infinite);
 		}
 
 		public void SetPlayer(string name)
 		{
-			CPlayer p = FormChess.playerList.GetPlayer(name);
+			CPlayer p = FormChess.playerList.GetPlayerByName(name);
 			if (p != null)
 			{
 				tournament = p.tournament;
@@ -169,15 +171,15 @@ namespace RapChessGui
 
 		public string CreateName()
 		{
-			string n = "Human";
+			string n = Global.human;
 			string b = String.Empty;
 			string m = String.Empty;
-			if (engine != "None")
+			if (engine != Global.none)
 			{
 				n = engine;
 				m = modeValue.ShortName();
 			}
-			if (book != "None")
+			if (book != Global.none)
 				b = $" {CData.MakeShort(book)}";
 			return $"{n}{b}{m}";
 		}
@@ -223,7 +225,7 @@ namespace RapChessGui
 			return -1;
 		}
 
-		public CPlayer GetPlayer(string name)
+		public CPlayer GetPlayerByName(string name)
 		{
 			foreach (CPlayer p in list)
 				if (p.name == name)
@@ -242,7 +244,7 @@ namespace RapChessGui
 
 		public CPlayer GetPlayerByElo(int elo)
 		{
-			CPlayer p = CModeGame.player;
+			CPlayer p = CModeGame.humanPlayer;
 			int bstDel = 10000;
 			foreach (CPlayer cp in list)
 			{

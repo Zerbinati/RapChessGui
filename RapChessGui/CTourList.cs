@@ -195,7 +195,7 @@ namespace RapChessGui
 			string n = String.Empty;
 			if (list.Count > 0)
 				n = list[list.Count - 1].w;
-			return FormChess.playerList.GetPlayer(n);
+			return FormChess.playerList.GetPlayerByName(n);
 		}
 
 		public void Write(string w, string b, string r, bool f)

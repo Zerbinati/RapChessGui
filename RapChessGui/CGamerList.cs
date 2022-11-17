@@ -578,7 +578,7 @@ namespace RapChessGui
 		public void SetPlayer(CPlayer p)
 		{
 			player = p;
-			book = FormChess.bookList.GetBook(p.book);
+			book = FormChess.bookList.GetBookByName(p.book);
 			engine = FormChess.engineList.GetEngineByName(p.engine);
 			bookPro.Terminate();
 			enginePro.Terminate();
@@ -599,7 +599,7 @@ namespace RapChessGui
 
 		public void SetPlayer(string name)
 		{
-			CPlayer p = FormChess.playerList.GetPlayer(name);
+			CPlayer p = FormChess.playerList.GetPlayerByName(name);
 			SetPlayer(p);
 		}
 
@@ -700,12 +700,12 @@ namespace RapChessGui
 
 		public CGamer GamerWinner()
 		{
-			return gamers[(FormChess.chess.g_moveNumber & 1) ^ 1];
+			return gamers[(FormChess.chess.halfMove & 1) ^ 1];
 		}
 
 		public CGamer GamerLoser()
 		{
-			return gamers[FormChess.chess.g_moveNumber & 1];
+			return gamers[FormChess.chess.halfMove & 1];
 		}
 
 		public CGamer GamerHuman()

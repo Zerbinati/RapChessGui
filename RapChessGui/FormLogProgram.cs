@@ -30,8 +30,7 @@ namespace RapChessGui
 		{
 			if (Visible == true)
 			{
-				string name = Assembly.GetExecutingAssembly().GetName().Name;
-				string path = new FileInfo(name + ".log").FullName.ToString();
+				string path = FormChess.log.path;
 				if (File.Exists(path))
 				{
 					textBox1.Text = File.ReadAllText(path);

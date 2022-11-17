@@ -57,7 +57,7 @@ namespace RapChessGui
 
 		void SelectPlayer(string name)
 		{
-			player = FormChess.playerList.GetPlayer(name);
+			player = FormChess.playerList.GetPlayerByName(name);
 			if (player != null)
 				SelectPlayer(player);
 		}
@@ -71,7 +71,7 @@ namespace RapChessGui
 			{
 				var item = listBox1.Items[n];
 				string name = item.ToString();
-				CPlayer pla = FormChess.playerList.GetPlayer(name);
+				CPlayer pla = FormChess.playerList.GetPlayerByName(name);
 				if (pla.SetTournament(t))
 					r = true;
 			}
@@ -125,19 +125,19 @@ namespace RapChessGui
 		private void ButCreate_Click(object sender, EventArgs e)
 		{
 			string name = tbPlayerName.Text;
-			if (FormChess.playerList.GetPlayer(name) == null)
+			if (FormChess.playerList.GetPlayerByName(name) != null)
 			{
-				modeValue.SetLevel(combMode.Text);
-				modeValue.SetValue((int)nudValue.Value);
-				CPlayer player = new CPlayer(name);
-				player.engine = cbEngineList.Text;
-				FormChess.playerList.list.Add(player);
-				SaveToIni(player);
-				MessageBox.Show($"Player {player.name} has been created");
-				CData.reset = true;
+				MessageBox.Show("This name already exists");
+				return;
 			}
-			else
-				MessageBox.Show($"Player {name} already exists");
+			modeValue.SetLevel(combMode.Text);
+			modeValue.SetValue((int)nudValue.Value);
+			CPlayer player = new CPlayer(name);
+			player.engine = cbEngineList.Text;
+			FormChess.playerList.list.Add(player);
+			SaveToIni(player);
+			MessageBox.Show($"Player {player.name} has been created");
+			CData.reset = true;
 		}
 
 		private void ButDelete_Click(object sender, EventArgs e)
@@ -197,7 +197,7 @@ namespace RapChessGui
 			if (e.Index < 0)
 				return;
 			string name = listBox1.Items[e.Index].ToString();
-			CPlayer pla = FormChess.playerList.GetPlayer(name);
+			CPlayer pla = FormChess.playerList.GetPlayerByName(name);
 			bool selected = (e.State & DrawItemState.Selected) == DrawItemState.Selected;
 			Brush b = Brushes.Black;
 			if (selected)
@@ -237,7 +237,7 @@ namespace RapChessGui
 				{
 					var item = listBox1.Items[index];
 					string name = item.ToString();
-					CPlayer pla = FormChess.playerList.GetPlayer(name);
+					CPlayer pla = FormChess.playerList.GetPlayerByName(name);
 					indexFirst = index;
 					tournament = pla.tournament > 0 ? 0 : 1;
 					if (pla.SetTournament(tournament == 1))

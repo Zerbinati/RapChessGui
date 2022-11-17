@@ -1,25 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using RapIni;
 
 namespace RapChessGui
 {
 	public class CDirBook
 	{
-		public string dir = "";
-		public string book = "None";
+		public string dir = String.Empty;
+		public string book = Global.none;
 	}
 
 	public class CDirBookList : List<CDirBook>
 	{
-
-		public CDirBookList()
-		{
-		}
 
 		public void LoadFromIni()
 		{

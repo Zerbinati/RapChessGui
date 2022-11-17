@@ -249,6 +249,11 @@ namespace RapChessGui
 		private void bCreate_Click(object sender, EventArgs e)
 		{
 			string name = tbEngineName.Text;
+			if (FormChess.engineList.GetEngineByName(name) != null)
+			{
+				MessageBox.Show("This name already exists");
+				return;
+			}
 			CEngine engine = new CEngine(name);
 			FormChess.engineList.Add(engine);
 			SaveToIni(engine);

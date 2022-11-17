@@ -90,10 +90,10 @@ namespace RapChessGui
 		public static CBook SelectFirst()
 		{
 			ListFill();
-			CBook b = bookList.GetBook(FormOptions.tourBSelected);
+			CBook b = bookList.GetBookByName(FormOptions.tourBSelected);
 			if (b != null)
 				return b;
-			b = bookList.GetBook(first);
+			b = bookList.GetBookByName(first);
 			if ((b == null)||((games >= repetition) && (games > 0)))
 			{
 				b = SelectLast();

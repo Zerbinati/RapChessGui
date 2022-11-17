@@ -40,7 +40,7 @@ namespace RapChessGui
 		{
 			desImage = -1;
 			int i = CChess.arrField[index];
-			int f = FormChess.chess.g_board[i];
+			int f = FormChess.chess.board[i];
 			image = (f & 7) - 1;
 			if ((f & CChess.colorBlack) > 0)
 				image += 6;
@@ -339,7 +339,7 @@ namespace RapChessGui
 		public static void UpdateField(int index)
 		{
 			int i = CChess.arrField[index];
-			int rank = FormChess.chess.g_board[i] &7;
+			int rank = FormChess.chess.board[i] &7;
 			if (rank == 0)
 				arrField[index].piece = null;
 			else
@@ -537,7 +537,7 @@ namespace RapChessGui
 			for (int n = 0; n < 64; n++)
 			{
 				int i = CChess.arrField[n];
-				int rank = FormChess.chess.g_board[i] &7;
+				int rank = FormChess.chess.board[i] &7;
 				if (rank==0)
 					arrField[n].piece = null;
 				else
@@ -551,7 +551,7 @@ namespace RapChessGui
 			foreach (int m in ml)
 			{
 				int d = (m >> 8) & 0xff;
-				int r = FormChess.chess.g_board[d] & 7;
+				int r = FormChess.chess.board[d] & 7;
 				if (r > 0)
 					if (show || (r == CChess.pieceKing))
 					{

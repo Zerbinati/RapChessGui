@@ -12,9 +12,9 @@ namespace RapChessGui
 	{
 		public int position = 0;
 		public int tournament = 1;
-		public string name = "";
-		public string file = "";
-		public string parameters = "";
+		public string name = String.Empty;
+		public string file = String.Empty;
+		public string parameters = String.Empty;
 		public string elo = "1500";
 		public CHisElo hisElo = new CHisElo();
 
@@ -36,7 +36,8 @@ namespace RapChessGui
 
 		public bool ParametersExists()
 		{
-			return File.Exists($@"Books\{parameters}");
+			string[] tokens = parameters.Split(' ');
+			return File.Exists($@"Books\{tokens[0]}");
 		}
 
 		public bool ParametersExists(string p)
@@ -60,8 +61,8 @@ namespace RapChessGui
 
 		public void LoadFromIni()
 		{
-			file = CBookList.iniFile.Read($"book>{name}>exe", "");
-			parameters = CBookList.iniFile.Read($"book>{name}>parameters", "");
+			file = CBookList.iniFile.Read($"book>{name}>exe");
+			parameters = CBookList.iniFile.Read($"book>{name}>parameters");
 			elo = CBookList.iniFile.Read($"book>{name}>elo", elo);
 			hisElo.LoadFromStr(CBookList.iniFile.Read($"book>{name}>history"));
 			tournament = CBookList.iniFile.ReadInt($"book>{name}>tournament", tournament);
@@ -112,7 +113,7 @@ namespace RapChessGui
 
 	}
 
-	public class CBookList: List<CBook>
+	public class CBookList : List<CBook>
 	{
 		public static string def = "Eco";
 		public static CRapIni iniFile = new CRapIni(@"Ini\books.ini");
@@ -178,7 +179,7 @@ namespace RapChessGui
 			return bl.Count;
 		}
 
-		public CBook GetBook(string name)
+		public CBook GetBookByName(string name)
 		{
 			foreach (CBook br in this)
 				if (br.name == name)
@@ -213,17 +214,6 @@ namespace RapChessGui
 					break;
 			}
 			return b;
-		}
-
-		void TryDel(string dir)
-		{
-			for (int n = Count - 1; n >= 0; n--)
-			{
-				CBook book = this[n];
-				if (book.parameters.IndexOf(dir) == 0)
-					if (!book.FileExists() || !book.ParametersExists())
-						DeleteBook(book.name);
-			}
 		}
 
 		bool ParametersExists(string p)
@@ -263,13 +253,25 @@ namespace RapChessGui
 
 		void TryAdd(string bf, string bp)
 		{
-			if ((bf != "None") && !ParametersExists(bp))
+			if ((bf != Global.none) && !ParametersExists(bp))
 			{
-					CBook b = new CBook();
-					b.file = bf;
-					b.parameters = bp;
-					b.name = b.GetName();
-					Add(b);
+				CBook b = new CBook();
+				b.file = bf;
+				b.parameters = bp;
+				b.name = b.GetName();
+				DeleteBook(b.name);
+				Add(b);
+			}
+		}
+
+		void TryDel(string dir)
+		{
+			for (int n = Count - 1; n >= 0; n--)
+			{
+				CBook book = this[n];
+				if (book.parameters.IndexOf(dir) == 0)
+					if (!book.FileExists() || !book.ParametersExists())
+						RemoveAt(n);
 			}
 		}
 

@@ -10,7 +10,7 @@ namespace RapLog
 	{
 		readonly bool addDate;
 		readonly int max;
-		readonly string path;
+		public string path;
 
 		public CRapLog(string path = "",int max = 100,bool addDate = true)
 		{
