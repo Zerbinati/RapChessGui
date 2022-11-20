@@ -570,7 +570,7 @@ namespace RapChessGui
 		public string GetPlayerName()
 		{
 			if (player == null)
-				return "Human";
+				return Global.human;
 			else
 				return player.GetName();
 		}
@@ -587,7 +587,7 @@ namespace RapChessGui
 			else
 				bookPro.SetProgram($@"{AppDomain.CurrentDomain.BaseDirectory}Books\{book.file}", book.GetParameters(engine));
 			if (engine == null)
-				p.engine = "None";
+				p.engine = Global.none;
 			else
 				enginePro.SetProgram($@"{AppDomain.CurrentDomain.BaseDirectory}Engines\{engine.file}", engine.parameters, FormOptions.spamOff);
 		}

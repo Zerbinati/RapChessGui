@@ -170,14 +170,14 @@ namespace RapChessGui
 			foreach (CEngine engine in FormChess.engineList)
 				cbEngineList.Items.Add(engine.name);
 			cbEngineList.Sorted = false;
-			cbEngineList.Items.Insert(0, "None");
+			cbEngineList.Items.Insert(0, Global.none);
 			cbEngineList.SelectedIndex = 0;
 			cbBookList.Items.Clear();
 			cbBookList.Sorted = true;
 			foreach (CBook book in FormChess.bookList)
 				cbBookList.Items.Add(book.name);
 			cbBookList.Sorted = false;
-			cbBookList.Items.Insert(0, "None");
+			cbBookList.Items.Insert(0, Global.none);
 			cbBookList.SelectedIndex = 0;
 			UpdateListBox();
 			if (listBox1.Items.Count > 0)
