@@ -228,7 +228,7 @@ namespace RapChessGui
 		public CPlayer GetPlayerByName(string name)
 		{
 			foreach (CPlayer p in list)
-				if (p.name == name)
+				if (p.name.ToLower() == name.ToLower())
 					return p;
 			return null;
 		}

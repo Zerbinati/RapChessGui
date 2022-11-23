@@ -198,7 +198,7 @@ namespace RapChessGui
 		public CEngine GetEngineByName(string name)
 		{
 			foreach (CEngine e in this)
-				if (e.name == name)
+				if (e.name.ToLower() == name.ToLower())
 					return e;
 			return null;
 		}
@@ -206,7 +206,7 @@ namespace RapChessGui
 		public CEngine GetEngineByFile(string file)
 		{
 			foreach (CEngine e in this)
-				if (e.file == file)
+				if (e.file.ToLower() == file.ToLower())
 					return e;
 			return null;
 		}

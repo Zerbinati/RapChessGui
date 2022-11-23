@@ -52,7 +52,6 @@ namespace NSChess
 		readonly ulong[,] g_hashBoard = new ulong[256, 16];
 		readonly int[] boardCheck = new int[256];
 		readonly int[] boardCastle = new int[256];
-		public bool whiteTurn = true;
 		int usColor = 0;
 		int enColor = 0;
 		public static int[] arrField = new int[64];
@@ -63,20 +62,19 @@ namespace NSChess
 		readonly int[] arrDirQueen = { 1, -1, 15, -15, 16, -16, 17, -17 };
 		readonly CUndo[] undoStack = new CUndo[0xfff];
 
+		public bool WhiteTurn
+		{
+			get
+			{
+				return (halfMove & 1) == 0;
+			}
+		}
+
 		public int MoveNumber
 		{
 			get
 			{
 				return ((halfMove >> 1) + 1);
-			}
-			set
-			{
-				halfMove = value;
-				if (halfMove > 0)
-					halfMove--;
-				halfMove <<= 1;
-				if (!whiteTurn)
-					halfMove++;
 			}
 		}
 
@@ -84,12 +82,12 @@ namespace NSChess
 		{
 			get
 			{
-				int myPiece = whiteTurn ? piecePawn | colorWhite : piecePawn | colorBlack;
-				int yb = whiteTurn ? 6 : 3;
+				int myPiece = WhiteTurn ? piecePawn | colorWhite : piecePawn | colorBlack;
+				int yb = WhiteTurn ? 6 : 3;
 				int yc = 12 - (passing >> 4);
 				if (yc != yb)
 					return "-";
-				int del = whiteTurn ? 1 : -1;
+				int del = WhiteTurn ? 1 : -1;
 				if ((board[passing + 15 * del] == myPiece) || (board[passing + 17 * del] == myPiece))
 							return SquareToUmo(passing);
 				return "-";
@@ -167,7 +165,7 @@ namespace NSChess
 
 		public int UmoToEmo(string umo)
 		{
-			List<int> moves = GenerateAllMoves(whiteTurn, false);
+			List<int> moves = GenerateAllMoves(WhiteTurn, false);
 			foreach (int m in moves)
 				if (EmoToUmo(m) == umo)
 					return m;
@@ -366,12 +364,10 @@ namespace NSChess
 					col++;
 				}
 			}
-			if (chunks[1] == "w")
-				whiteTurn = true;
-			else if (chunks[1] == "b")
-				whiteTurn = false;
-			else
+			string s1 = chunks[1];
+			if ((s1 != "w")&&(s1 != "b"))
 				return false;
+			int wt = s1 == "w" ? 0 : 1;
 			castleRighs = 0;
 			if (chunks[2].IndexOf('K') != -1)
 				castleRighs |= 1;
@@ -383,7 +379,8 @@ namespace NSChess
 				castleRighs |= 8;
 			Passant = chunks.Length < 4 ? "-" : chunks[3];
 			move50 = chunks.Length < 5 ? 0 : Int32.Parse(chunks[4]);
-			MoveNumber = chunks.Length < 6 ? 1 : Int32.Parse(chunks[5]);
+			int mn = chunks.Length < 6 ? 1 : Int32.Parse(chunks[5]);
+			halfMove = ((mn-1)<<1) + wt;
 			undoIndex = 0;
 			return true;
 		}
@@ -423,7 +420,7 @@ namespace NSChess
 		public string GetEpd()
 		{
 			string result = GetFenBase();
-			result += whiteTurn ? " w " : " b ";
+			result += WhiteTurn ? " w " : " b ";
 			if (castleRighs == 0)
 				result += "-";
 			else
@@ -462,12 +459,12 @@ namespace NSChess
 			mate = false;
 			int count = 0;
 			List<int> moves = new List<int>(64);
-			List<int> am = GenerateAllMoves(whiteTurn, false);
+			List<int> am = GenerateAllMoves(WhiteTurn, false);
 			if (!inCheck)
 				foreach (int m in am)
 				{
 					MakeMove(m);
-					GenerateAllMoves(whiteTurn, true);
+					GenerateAllMoves(WhiteTurn, true);
 					if (!inCheck)
 					{
 						count++;
@@ -478,7 +475,7 @@ namespace NSChess
 				}
 			if (count == 0)
 			{
-				GenerateAllMoves(!whiteTurn, true);
+				GenerateAllMoves(!WhiteTurn, true);
 				mate = inCheck;
 			}
 			return moves;
@@ -627,11 +624,10 @@ namespace NSChess
 			else board[fr] = board[to];
 			if ((flags & moveflagPassing) > 0)
 			{
-				capi = whiteTurn ? to - 16 : to + 16;
+				capi = WhiteTurn ? to - 16 : to + 16;
 				board[to] = colorEmpty;
 			}
 			board[capi] = captured;
-			whiteTurn ^= true;
 			halfMove--;
 		}
 
@@ -662,7 +658,7 @@ namespace NSChess
 			}
 			else if ((flags & moveflagPassing) > 0)
 			{
-				int capi = whiteTurn ? to + 16 : to - 16;
+				int capi = WhiteTurn ? to + 16 : to - 16;
 				captured = board[capi];
 				board[capi] = colorEmpty;
 			}
@@ -700,7 +696,6 @@ namespace NSChess
 			}
 			board[fr] = colorEmpty;
 			castleRighs &= boardCastle[fr] & boardCastle[to];
-			whiteTurn ^= true;
 			halfMove++;
 		}
 
@@ -806,10 +801,10 @@ namespace NSChess
 
 		public CGameState GetGameState(out bool check)
 		{
-			GenerateAllMoves(!whiteTurn, true);
+			GenerateAllMoves(!WhiteTurn, true);
 			bool enInsufficient = adjInsufficient;
 			check = inCheck;
-			GenerateAllMoves(whiteTurn, false);
+			GenerateAllMoves(WhiteTurn, false);
 			bool myInsufficient = adjInsufficient;
 			if (move50 >= 100)
 				return CGameState.move50;

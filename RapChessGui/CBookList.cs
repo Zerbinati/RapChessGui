@@ -182,7 +182,7 @@ namespace RapChessGui
 		public CBook GetBookByName(string name)
 		{
 			foreach (CBook br in this)
-				if (br.name == name)
+				if (br.name.ToLower() == name.ToLower())
 					return br;
 			return null;
 		}

@@ -410,8 +410,6 @@ namespace RapChessGui
 		/// </summary>
 		public void EngMakeMove()
 		{
-			if (isWhite)
-				FormLogEngines.AddMove(FormChess.chess.MoveNumber);
 			InitNextMove();
 			if (engine.protocol == CProtocol.uci)
 				UciGo();
@@ -641,6 +639,8 @@ namespace RapChessGui
 			cg = GamerCur();
 			if (cg.player.IsHuman())
 				cg.TimerStart();
+			if (FormChess.chess.WhiteTurn)
+				FormLogEngines.AddMove(FormChess.chess.MoveNumber);
 		}
 
 		public void Init(int index = 0)

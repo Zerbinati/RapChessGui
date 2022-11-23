@@ -426,7 +426,7 @@ namespace RapChessGui
 					gp1.AddString("pnbrqk"[image].ToString(), fontPiece.FontFamily, (int)fontPiece.Style, fontPiece.Size, rec, sf);
 				}
 			}
-			if (FormChess.chess.whiteTurn)
+			if (FormChess.chess.WhiteTurn)
 			{
 				g.DrawPath(penB, gpB);
 				g.FillPath(brushBlack, gpB);
@@ -565,8 +565,8 @@ namespace RapChessGui
 		{
 			ClearAttack();
 			if (show)
-				ShowAttack(show, FormChess.chess.whiteTurn);
-			ShowAttack(show, !FormChess.chess.whiteTurn);
+				ShowAttack(show, FormChess.chess.WhiteTurn);
+			ShowAttack(show, !FormChess.chess.WhiteTurn);
 		}
 
 	}

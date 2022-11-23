@@ -75,7 +75,7 @@ namespace RapChessGui
 						SplitSaveToIni();
 					break;
 				case WM_GAME_NEXT:
-						NextGame();
+					NextGame();
 					break;
 			}
 			base.WndProc(ref m);
@@ -484,14 +484,14 @@ namespace RapChessGui
 			}
 			CPlayer pw = gw.player;
 			CPlayer pl = gl.player;
-			CColor winColor = gw.isWhite? CColor.white: CColor.black;
+			CColor winColor = gw.isWhite ? CColor.white : CColor.black;
 			switch (CData.gameState)
 			{
 				case CGameState.mate:
 					ShowInfo(gw.GetName() + " win", Color.Lime, 2);
 					break;
 				case CGameState.stalemate:
-					winColor=CColor.none;
+					winColor = CColor.none;
 					ShowInfo("Stalemate", Color.Yellow, 2);
 					break;
 				case CGameState.repetition:
@@ -727,7 +727,7 @@ namespace RapChessGui
 							nps = g.infMs > 0 ? (g.nodes * 1000) / g.infMs : 0;
 					}
 					if (nps > 0)
-						g.nps=nps;
+						g.nps = nps;
 					int i = uci.GetIndex("pv", 0);
 					if (i > 0)
 						SetPv(i + 1, g);
@@ -739,9 +739,9 @@ namespace RapChessGui
 		{
 			umo = xmo = new string(xmo.Where(c => !char.IsControl(c)).ToArray()).ToLower();
 			if ((xmo == "o-o") || (xmo == "0-0"))
-				umo = chess.whiteTurn ? "e1g1" : "e8g8";
+				umo = chess.WhiteTurn ? "e1g1" : "e8g8";
 			if ((xmo == "o-o-o") || (xmo == "0-0-0"))
-				umo = chess.whiteTurn ? "e1c1" : "e8c8";
+				umo = chess.WhiteTurn ? "e1c1" : "e8c8";
 			if (chess.IsValidMove(umo, out _))
 				return true;
 			if (umo.Length > 4)
@@ -824,7 +824,7 @@ namespace RapChessGui
 
 		void CreateRtf(string fn)
 		{
-				FormLogEngines.Save($"History\\{fn}.rtf");
+			FormLogEngines.Save($"History\\{fn}.rtf");
 		}
 
 		void CreateRtf()
@@ -1087,7 +1087,7 @@ namespace RapChessGui
 			cbMatchBook2.Items.Insert(0, Global.none);
 			cbTrainerBook.Items.Insert(0, Global.none);
 			cbTrainedBook.Items.Insert(0, Global.none);
-			cbBook.Text =Global.none;
+			cbBook.Text = Global.none;
 			cbMatchBook1.Text = Global.none;
 			cbMatchBook2.Text = Global.none;
 			cbTrainerBook.Text = Global.none;
@@ -1152,7 +1152,7 @@ namespace RapChessGui
 			Board.MakeMove(gmo);
 			chess.MakeMove(umo, out _, out int piece);
 			CHistory.AddMove(piece, gmo, umo, san);
-			MoveToLvMoves(CHistory.moveList.Count - 1, piece, CHistory.LastNotation(), cg.scoreS);
+			MoveToLvMoves(chess.halfMove - 1, piece, CHistory.LastNotation(), cg.scoreS);
 			CEco eco = EcoList.GetEcoFen(chess.GetEpd());
 			if (cg.player.IsHuman())
 			{
@@ -1202,7 +1202,7 @@ namespace RapChessGui
 		{
 			boardRotate = (GamerList.gamers[1].player.IsHuman() && GamerList.gamers[0].player.IsComputer()) ^ CData.rotateBoard;
 			if ((GamerList.gamers[1].player.IsHuman()) && (GamerList.gamers[0].player.IsHuman()))
-				boardRotate = !chess.whiteTurn;
+				boardRotate = !chess.WhiteTurn;
 		}
 
 		public void RenderBoard(bool forced = false)
@@ -1416,16 +1416,16 @@ namespace RapChessGui
 			RenderBoard(true);
 		}
 
-		private void MoveToLvMoves(int count, int piece, string umo, string score)
+		private void MoveToLvMoves(int halfMove, int piece, string umo, string score)
 		{
 			string[] p = { "", "\u2659", "\u2658", "\u2657", "\u2656", "\u2655", "\u2654", "", "", "\u265F", "\u265E", "\u265D", "\u265C", "\u265B", "\u265A", "" };
 			string m = $"{p[piece]} {umo}";
-			bool white = (count & 1) == 0;
+			bool white = (halfMove & 1) == 0;
 			if (white || (lvMoves.Items.Count == 0))
 			{
 				var items = lvMoves.Items;
 				bool last = items.Count <= 0 || items[items.Count - 1].Selected;
-				int moveNumber = (count >> 1) + 1;
+				int moveNumber = (halfMove >> 1) + 1;
 				string wm = "";
 				string ws = "";
 				string bm = "";
@@ -1485,9 +1485,9 @@ namespace RapChessGui
 				CBoard.MakeMove(s, d);
 				Board.RenderBoard();
 				RenderBoard();
-				tlpPromotion.Dock = boardRotate ^ chess.whiteTurn ? DockStyle.Bottom : DockStyle.Top;
-				tlpPromotion.BackColor = chess.whiteTurn ? Color.Black : Color.White;
-				Color color = chess.whiteTurn ? Color.White : Color.Black;
+				tlpPromotion.Dock = boardRotate ^ chess.WhiteTurn ? DockStyle.Bottom : DockStyle.Top;
+				tlpPromotion.BackColor = chess.WhiteTurn ? Color.Black : Color.White;
+				Color color = chess.WhiteTurn ? Color.White : Color.Black;
 				foreach (Control ctl in tlpPromotion.Controls)
 					ctl.ForeColor = color;
 				tlpPromotion.Show();
@@ -1735,7 +1735,7 @@ namespace RapChessGui
 			p2.modeValue.value = CModeMatch.modeValue2.value;
 			GamerList.gamers[0].SetPlayer(p1);
 			GamerList.gamers[1].SetPlayer(p2);
-			if(!GamerList.Check(out string msg))
+			if (!GamerList.Check(out string msg))
 			{
 				MessageBox.Show(msg);
 				return;
@@ -2411,7 +2411,7 @@ namespace RapChessGui
 		{
 			PrepareFen(fen);
 			List<RadioButton> list = gbToMove.Controls.OfType<RadioButton>().ToList();
-			int i = chess.whiteTurn ? 1 : 0;
+			int i = chess.WhiteTurn ? 1 : 0;
 			list[i].Select();
 			int cr = chess.castleRighs;
 			clbCastling.SetItemChecked(0, (chess.castleRighs & 1) > 0);
@@ -2697,9 +2697,9 @@ namespace RapChessGui
 		{
 			var checkedButton = gbToMove.Controls.OfType<RadioButton>().FirstOrDefault(r => r.Checked);
 			List<RadioButton> list = gbToMove.Controls.OfType<RadioButton>().ToList();
-			int i = list.IndexOf(checkedButton);
-			chess.whiteTurn = i == 1;
-			boardRotate = !chess.whiteTurn;
+			int wt = list.IndexOf(checkedButton) == 1 ? 0 : 1;
+			chess.halfMove = ((chess.MoveNumber - 1) << 1) + wt;
+			boardRotate = !chess.WhiteTurn;
 			Board.Fill();
 			RenderBoard(true);
 			EditGetFen();
@@ -3094,7 +3094,8 @@ namespace RapChessGui
 
 		private void nudMove_ValueChanged(object sender, EventArgs e)
 		{
-			chess.MoveNumber = (int)nudMove.Value;
+			int wt = chess.WhiteTurn ? 0 : 1;
+			chess.halfMove = ((int)nudMove.Value << 1) + wt;
 			EditGetFen();
 		}
 

@@ -25,7 +25,7 @@ namespace RapChessGui
 
 		private void FormLogGames_VisibleChanged(object sender, System.EventArgs e)
 		{
-			if ((Visible == true) && (textBox1.Text == ""))
+			if ((Visible == true) && (textBox1.Text == string.Empty))
 			{
 				string name = FormChess.mode;
 				string path = $@"History/{name}.pgn";
