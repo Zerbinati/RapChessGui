@@ -49,7 +49,7 @@ namespace NSChess
 		int lastCastle = 0;
 		bool adjInsufficient = false;
 		int undoIndex = 0;
-		readonly ulong[,] g_hashBoard = new ulong[256, 16];
+		readonly ulong[,] hashBoard = new ulong[256, 16];
 		readonly int[] boardCheck = new int[256];
 		readonly int[] boardCastle = new int[256];
 		int usColor = 0;
@@ -119,7 +119,7 @@ namespace NSChess
 				boardCastle[n] = 15;
 				board[n] = 0;
 				for (int p = 0; p < 16; p++)
-					g_hashBoard[n, p] = RAND_32();
+					hashBoard[n, p] = RAND_32();
 			}
 			int[] arrCastleI = { 68, 72, 75, 180, 184, 187 };
 			int[] arrCasteleV = { 7, 3, 11, 13, 12, 14 };
@@ -132,6 +132,29 @@ namespace NSChess
 			}
 		}
 		#endregion
+
+		#region info
+
+		public bool IsCapture(int emo)
+		{
+			int to = (emo >> 8) & 0xff;
+			return (board[to] & 0xf) >0;
+		}
+
+		public bool IsCastling(int emo)
+		{
+			return (emo & maskCastle) > 0;
+		}
+
+		public bool IsCheck(int emo)
+		{
+			MakeMove(emo);
+			GenerateAllMoves(!WhiteTurn, true);
+			UnmakeMove(emo);
+			return inCheck;
+		}
+
+		#endregion info
 
 		#region conversion
 
@@ -663,9 +686,9 @@ namespace NSChess
 				board[capi] = colorEmpty;
 			}
 			undo.captured = captured;
-			hash ^= g_hashBoard[fr, piece];
+			hash ^= hashBoard[fr, piece];
 			passing = 0;
-			if ((captured & 0xF) > 0)
+			if ((captured & 0xf) > 0)
 				move50 = 0;
 			else if ((piece & 7) == piecePawn)
 			{
@@ -687,12 +710,12 @@ namespace NSChess
 				else
 					newPiece |= pieceRook;
 				board[to] = newPiece;
-				hash ^= g_hashBoard[to, newPiece & 0xf];
+				hash ^= hashBoard[to, newPiece & 0xf];
 			}
 			else
 			{
 				board[to] = board[fr];
-				hash ^= g_hashBoard[to, piece];
+				hash ^= hashBoard[to, piece];
 			}
 			board[fr] = colorEmpty;
 			castleRighs &= boardCastle[fr] & boardCastle[to];

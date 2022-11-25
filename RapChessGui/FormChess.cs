@@ -41,6 +41,9 @@ namespace RapChessGui
 		readonly CUci uci = new CUci();
 		public static CChess chess = new CChess();
 		readonly SoundPlayer audioMove = new SoundPlayer(Properties.Resources.Move);
+		readonly SoundPlayer audioCapture = new SoundPlayer(Properties.Resources.Capture);
+		readonly SoundPlayer audioCastling = new SoundPlayer(Properties.Resources.Castling);
+		readonly SoundPlayer audioCheck = new SoundPlayer(Properties.Resources.Check);
 		public static CRapLog log = new CRapLog(@"History\RapChessGui.log");
 		public static PrivateFontCollection pfc = new PrivateFontCollection();
 		public static CBookList bookList = new CBookList();
@@ -239,10 +242,17 @@ namespace RapChessGui
 			splitContainerBoard.SplitterDistance = panBoard.Height;
 		}
 
-		void PlaySound()
+		void PlaySound(bool capture, bool castling, bool check)
 		{
 			if (FormOptions.soundOn)
-				audioMove.Play();
+				if (capture)
+					audioCapture.Play();
+				else if (castling)
+					audioCastling.Play();
+				else if (check)
+					audioCheck.Play();
+				else
+					audioMove.Play();
 		}
 
 		void SquareBoard()
@@ -1140,18 +1150,18 @@ namespace RapChessGui
 				cg.player.elo = cg.player.GetEloLess().ToString();
 				cg.player.SaveToIni();
 			}
-			if (!chess.IsValidMove(umo, out umo, out int gmo))
+			if (!chess.IsValidMove(umo, out umo, out int emo))
 			{
 				SetGameState(CGameState.error, cg, umo);
 				return false;
 			}
-			PlaySound();
+			PlaySound(chess.IsCapture(emo),chess.IsCastling(emo),chess.IsCheck(emo));
 			cg.countMoves++;
 			string san = chess.UmoToSan(umo);
 			CChess.UmoToSD(umo, out CDrag.lastSou, out CDrag.lastDes);
-			Board.MakeMove(gmo);
+			Board.MakeMove(emo);
 			chess.MakeMove(umo, out _, out int piece);
-			CHistory.AddMove(piece, gmo, umo, san);
+			CHistory.AddMove(piece, emo, umo, san);
 			MoveToLvMoves(chess.halfMove - 1, piece, CHistory.LastNotation(), cg.scoreS);
 			CEco eco = EcoList.GetEcoFen(chess.GetEpd());
 			if (cg.player.IsHuman())

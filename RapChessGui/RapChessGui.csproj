@@ -285,8 +285,11 @@
     <None Include="Resources\ChessPiece.ttf" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Resources\Move.wav" />
     <Content Include="Resources\q.ico" />
+    <Content Include="Resources\Sounds\Capture.wav" />
+    <Content Include="Resources\Sounds\Castling.wav" />
+    <Content Include="Resources\Sounds\Check.wav" />
+    <Content Include="Resources\Sounds\Move.wav" />
   </ItemGroup>
   <ItemGroup>
     <PublishFile Include="RapChessGui.exe.manifest">
