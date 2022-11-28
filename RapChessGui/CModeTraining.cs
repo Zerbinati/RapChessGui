@@ -16,6 +16,7 @@ namespace RapChessGui
 		public static string trainedBook = CBookList.def;
 		public static CModeValue modeValueTrainer = new CModeValue();
 		public static CModeValue modeValueTrained = new CModeValue();
+		public static CHisElo his = new CHisElo();
 
 		public static void Reset()
 		{
@@ -25,6 +26,8 @@ namespace RapChessGui
 			winInRow = 0;
 			draw = 0;
 			loose = 0;
+			his.list.Clear();
+			SaveToIni();
 		}
 
 		public static int Total()
@@ -53,6 +56,7 @@ namespace RapChessGui
 			FormChess.iniFile.Write("mode>training>trainedValue", modeValueTrained.value);
 			FormChess.iniFile.Write("mode>training>trainerMode", modeValueTrainer.GetLevel());
 			FormChess.iniFile.Write("mode>training>trainedMode", modeValueTrained.GetLevel());
+			FormChess.iniFile.Write("mode>training>his", his.SaveToStr());
 		}
 
 		public static void LoadFromIni()
@@ -65,6 +69,7 @@ namespace RapChessGui
 			modeValueTrained.value = FormChess.iniFile.ReadInt("mode>training>trainedValue", modeValueTrained.value);
 			modeValueTrainer.SetLevel(FormChess.iniFile.Read("mode>training>trainerMode", modeValueTrainer.GetLevel()));
 			modeValueTrained.SetLevel(FormChess.iniFile.Read("mode>training>trainedMode", modeValueTrained.GetLevel()));
+			his.LoadFromStr(FormChess.iniFile.Read("mode>training>his", string.Empty));
 		}
 
 	}

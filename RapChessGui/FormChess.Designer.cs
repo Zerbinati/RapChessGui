@@ -87,7 +87,6 @@
 			this.labMatchPlayer = new System.Windows.Forms.Label();
 			this.labMatchPlayer1 = new System.Windows.Forms.Label();
 			this.labMatchGames = new System.Windows.Forms.Label();
-			this.butContinueMatch = new System.Windows.Forms.Button();
 			this.butNewMatch = new System.Windows.Forms.Button();
 			this.groupBox6 = new System.Windows.Forms.GroupBox();
 			this.nudValue2 = new System.Windows.Forms.NumericUpDown();
@@ -715,7 +714,6 @@
 			this.tabPageMatch.Controls.Add(this.chartMatch);
 			this.tabPageMatch.Controls.Add(this.tlpMatch);
 			this.tabPageMatch.Controls.Add(this.labMatchGames);
-			this.tabPageMatch.Controls.Add(this.butContinueMatch);
 			this.tabPageMatch.Controls.Add(this.butNewMatch);
 			this.tabPageMatch.Controls.Add(this.groupBox6);
 			this.tabPageMatch.Controls.Add(this.groupBox5);
@@ -739,8 +737,9 @@
 			chartArea2.BorderDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Solid;
 			chartArea2.Name = "ChartArea1";
 			this.chartMatch.ChartAreas.Add(chartArea2);
+			this.chartMatch.Cursor = System.Windows.Forms.Cursors.Hand;
 			this.chartMatch.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.chartMatch.Location = new System.Drawing.Point(0, 344);
+			this.chartMatch.Location = new System.Drawing.Point(0, 321);
 			this.chartMatch.Name = "chartMatch";
 			this.chartMatch.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.None;
 			this.chartMatch.PaletteCustomColors = new System.Drawing.Color[] {
@@ -751,10 +750,11 @@
 			series2.IsVisibleInLegend = false;
 			series2.Name = "Series1";
 			this.chartMatch.Series.Add(series2);
-			this.chartMatch.Size = new System.Drawing.Size(337, 118);
+			this.chartMatch.Size = new System.Drawing.Size(337, 141);
 			this.chartMatch.TabIndex = 29;
 			this.chartMatch.Text = "chart1";
 			this.toolTip1.SetToolTip(this.chartMatch, "User progress history");
+			this.chartMatch.Click += new System.EventHandler(this.chartMatch_Click);
 			// 
 			// tlpMatch
 			// 
@@ -782,7 +782,7 @@
 			this.tlpMatch.Controls.Add(this.labMatchPlayer, 0, 0);
 			this.tlpMatch.Controls.Add(this.labMatchPlayer1, 0, 1);
 			this.tlpMatch.Dock = System.Windows.Forms.DockStyle.Top;
-			this.tlpMatch.Location = new System.Drawing.Point(0, 284);
+			this.tlpMatch.Location = new System.Drawing.Point(0, 261);
 			this.tlpMatch.Name = "tlpMatch";
 			this.tlpMatch.RowCount = 3;
 			this.tlpMatch.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
@@ -982,24 +982,12 @@
 			// 
 			this.labMatchGames.BackColor = System.Drawing.Color.Transparent;
 			this.labMatchGames.Dock = System.Windows.Forms.DockStyle.Top;
-			this.labMatchGames.Location = new System.Drawing.Point(0, 262);
+			this.labMatchGames.Location = new System.Drawing.Point(0, 239);
 			this.labMatchGames.Name = "labMatchGames";
 			this.labMatchGames.Size = new System.Drawing.Size(337, 22);
 			this.labMatchGames.TabIndex = 23;
 			this.labMatchGames.Text = "Games 0";
 			this.labMatchGames.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			// 
-			// butContinueMatch
-			// 
-			this.butContinueMatch.Dock = System.Windows.Forms.DockStyle.Top;
-			this.butContinueMatch.Location = new System.Drawing.Point(0, 239);
-			this.butContinueMatch.Name = "butContinueMatch";
-			this.butContinueMatch.Size = new System.Drawing.Size(337, 23);
-			this.butContinueMatch.TabIndex = 27;
-			this.butContinueMatch.Text = "Clear results";
-			this.toolTip1.SetToolTip(this.butContinueMatch, "Continue match with old results");
-			this.butContinueMatch.UseVisualStyleBackColor = true;
-			this.butContinueMatch.Click += new System.EventHandler(this.bMatchClear_Click);
 			// 
 			// butNewMatch
 			// 
@@ -1888,6 +1876,7 @@
 			chartArea6.BorderDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Solid;
 			chartArea6.Name = "ChartArea1";
 			this.chartTraining.ChartAreas.Add(chartArea6);
+			this.chartTraining.Cursor = System.Windows.Forms.Cursors.Hand;
 			this.chartTraining.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.chartTraining.Location = new System.Drawing.Point(3, 296);
 			this.chartTraining.Name = "chartTraining";
@@ -1904,6 +1893,7 @@
 			this.chartTraining.TabIndex = 29;
 			this.chartTraining.Text = "chart1";
 			this.toolTip1.SetToolTip(this.chartTraining, "Training history");
+			this.chartTraining.Click += new System.EventHandler(this.chartTraining_Click);
 			// 
 			// tlpTraining
 			// 
@@ -4536,7 +4526,6 @@
 		private System.Windows.Forms.Button butContinueGame;
 		private System.Windows.Forms.GroupBox groupBox7;
 		private System.Windows.Forms.CheckedListBox clbCastling;
-		private System.Windows.Forms.Button butContinueMatch;
 		private System.Windows.Forms.Button butDefault;
 		private System.Windows.Forms.ComboBox cbMatchBook1;
 		private System.Windows.Forms.ComboBox cbMode1;

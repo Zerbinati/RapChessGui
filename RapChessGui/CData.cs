@@ -263,7 +263,7 @@ namespace RapChessGui
 
 		public string SaveToStr()
 		{
-			string elo = "";
+			string elo = String.Empty;
 			foreach (double e in list)
 				elo += $" {e}";
 			return elo.Trim(' ');

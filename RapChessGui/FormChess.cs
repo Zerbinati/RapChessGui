@@ -1683,6 +1683,12 @@ namespace RapChessGui
 
 		#region mode match
 
+		void MatchClear()
+		{
+			CModeMatch.Reset();
+			MatchShow();
+		}
+
 		void MatchSet()
 		{
 			CModeMatch.engine1 = cbMatchEngine1.Text;
@@ -1726,6 +1732,7 @@ namespace RapChessGui
 			labMatch23.Text = CModeMatch.draw.ToString();
 			labMatch24.Text = $"{Math.Round(CModeMatch.Result(true))}%";
 			CData.HisToPoints(CModeMatch.his, chartMatch.Series[0].Points);
+			chartMatch.ChartAreas[0].RecalculateAxesScale();
 		}
 
 		void MatchStart()
@@ -2305,6 +2312,12 @@ namespace RapChessGui
 
 		#region mode training
 
+		void TrainingClear()
+		{
+			CModeTraining.Reset();
+			TrainingShow();
+		}
+
 		void TrainingShow()
 		{
 			cbTrainerEngine.SelectedIndex = cbTrainerEngine.FindStringExact(CModeTraining.trainer);
@@ -2318,6 +2331,8 @@ namespace RapChessGui
 			nudTrainer.Value = CModeTraining.modeValueTrainer.GetValue();
 			nudTrainer.Increment = CModeTraining.modeValueTrainer.GetValueIncrement();
 			TrainingUpdate();
+			CData.HisToPoints(CModeTraining.his, chartTraining.Series[0].Points);
+			chartTraining.ChartAreas[0].RecalculateAxesScale();
 		}
 
 		void TrainingUpdate()
@@ -2367,11 +2382,6 @@ namespace RapChessGui
 			if (CModeTraining.rotate)
 				GamerList.Rotate(0);
 			CModeTraining.rotate = !CModeTraining.rotate;
-			chartTraining.Series[0].Points.Add((double)nudTrainer.Value);
-			if (chartTraining.Series[0].Points.Count > FormOptions.historyLength)
-				chartTraining.Series[0].Points.RemoveAt(0);
-			chartTraining.ChartAreas[0].RecalculateAxesScale();
-			CModeTraining.SaveToIni();
 			ComShow();
 		}
 
@@ -2411,9 +2421,13 @@ namespace RapChessGui
 			}
 			if (up)
 				nudTrainer.Value += nudTrainer.Increment;
+			CModeTraining.his.Add((double)nudTrainer.Value);
+			if (CModeTraining.his.list.Count == 1)
+				CModeTraining.his.Add((double)nudTrainer.Value);
+			CModeTraining.SaveToIni();
 		}
 
-		#endregion
+		#endregion training
 
 		#region mode edit
 
@@ -2741,12 +2755,6 @@ namespace RapChessGui
 					break;
 			}
 			EditGetFen();
-		}
-
-		private void bMatchClear_Click(object sender, EventArgs e)
-		{
-			CModeMatch.Reset();
-			MatchShow();
 		}
 
 		private void butDefault_Click(object sender, EventArgs e)
@@ -3134,6 +3142,16 @@ namespace RapChessGui
 		private void BookClick(object sender, EventArgs e)
 		{
 			ShowFormBook((sender as Label).Text);
+		}
+
+		private void chartMatch_Click(object sender, EventArgs e)
+		{
+			MatchClear();
+		}
+
+		private void chartTraining_Click(object sender, EventArgs e)
+		{
+			TrainingClear();
 		}
 	}
 }

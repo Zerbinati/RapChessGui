@@ -33,7 +33,6 @@ namespace RapChessGui
 			draw = 0;
 			loose = 0;
 			his.list.Clear();
-			his.Add(0);
 			SaveToIni();
 		}
 
@@ -51,6 +50,8 @@ namespace RapChessGui
 			else
 				loose++;
 			his.Add(win - loose);
+			if(his.list.Count==1)
+				his.Add(win - loose);
 			SaveToIni();
 		}
 
@@ -78,7 +79,7 @@ namespace RapChessGui
 			modeValue2.SetLevel(FormChess.iniFile.Read("mode>match>mode2", modeValue2.GetLevel()));
 			modeValue1.value = FormChess.iniFile.ReadInt("mode>match>value1", modeValue1.value);
 			modeValue2.value = FormChess.iniFile.ReadInt("mode>match>value2", modeValue2.value);
-			his.LoadFromStr(FormChess.iniFile.Read("mode>match>his", ""));
+			his.LoadFromStr(FormChess.iniFile.Read("mode>match>his", string.Empty));
 		}
 
 		public static void SaveToIni()
