@@ -2337,14 +2337,14 @@ namespace RapChessGui
 
 		void TrainingUpdate()
 		{
-			label12.Text = CModeTraining.win.ToString();
-			label13.Text = CModeTraining.loose.ToString();
-			label14.Text = CModeTraining.draw.ToString();
-			label15.Text = $"{CModeTraining.Result(false)}%";
-			label7.Text = CModeTraining.loose.ToString();
-			label8.Text = CModeTraining.win.ToString();
-			label9.Text = CModeTraining.draw.ToString();
-			label10.Text = $"{CModeTraining.Result(true)}%";
+			labTrainingWin2.Text = CModeTraining.win.ToString();
+			labTrainingLoose2.Text = CModeTraining.loose.ToString();
+			labTrainingDraw2.Text = CModeTraining.draw.ToString();
+			labTrainingPro2.Text = $"{CModeTraining.Result(false)}%";
+			labTrainingWin1.Text = CModeTraining.loose.ToString();
+			labTrainingLoose1.Text = CModeTraining.win.ToString();
+			labTrainingDraw1.Text = CModeTraining.draw.ToString();
+			labTrainingPro1.Text = $"{CModeTraining.Result(true)}%";
 		}
 
 		void TrainingStart()
@@ -2625,7 +2625,7 @@ namespace RapChessGui
 			RenderBoard();
 		}
 
-		private void ButTraining_Click(object sender, EventArgs e)
+		private void bStartTraining_Click(object sender, EventArgs e)
 		{
 			CModeTraining.SaveToIni();
 			TrainingStart();

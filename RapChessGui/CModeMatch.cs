@@ -84,9 +84,9 @@ namespace RapChessGui
 
 		public static void SaveToIni()
 		{
-			FormChess.iniFile.Write("mode>match>win", win.ToString());
-			FormChess.iniFile.Write("mode>match>draw", draw.ToString());
-			FormChess.iniFile.Write("mode>match>loose", loose.ToString());
+			FormChess.iniFile.Write("mode>match>win", win);
+			FormChess.iniFile.Write("mode>match>draw", draw);
+			FormChess.iniFile.Write("mode>match>loose", loose);
 			FormChess.iniFile.Write("mode>match>book1", book1);
 			FormChess.iniFile.Write("mode>match>book2", book2);
 			FormChess.iniFile.Write("mode>match>engine1", engine1);

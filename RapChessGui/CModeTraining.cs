@@ -7,9 +7,9 @@ namespace RapChessGui
 		public static bool rotate = false;
 		public static int games;
 		public static int win;
-		public static int winInRow = 0;
 		public static int draw;
 		public static int loose;
+		public static int winInRow = 0;
 		public static string trainer = String.Empty;
 		public static string trained = String.Empty;
 		public static string trainerBook = CBookList.def;
@@ -23,9 +23,9 @@ namespace RapChessGui
 			rotate = false;
 			games = 0;
 			win = 0;
-			winInRow = 0;
 			draw = 0;
 			loose = 0;
+			winInRow = 0;
 			his.Clear();
 			SaveToIni();
 		}
@@ -48,6 +48,9 @@ namespace RapChessGui
 
 		public static void SaveToIni()
 		{
+			FormChess.iniFile.Write("mode>training>win", win);
+			FormChess.iniFile.Write("mode>training>draw", draw);
+			FormChess.iniFile.Write("mode>training>loose", loose);
 			FormChess.iniFile.Write("mode>training>trainer", trainer);
 			FormChess.iniFile.Write("mode>training>trained", trained);
 			FormChess.iniFile.Write("mode>training>trainerBook", trainerBook);
@@ -61,6 +64,9 @@ namespace RapChessGui
 
 		public static void LoadFromIni()
 		{
+			win = FormChess.iniFile.ReadInt("mode>training>win");
+			draw = FormChess.iniFile.ReadInt("mode>training>draw");
+			loose = FormChess.iniFile.ReadInt("mode>training>loose");
 			trainer = FormChess.iniFile.Read("mode>training>trainer", CEngineList.def);
 			trained = FormChess.iniFile.Read("mode>training>trained", CEngineList.def);
 			trainerBook = FormChess.iniFile.Read("mode>training>trainerBook", trainerBook);

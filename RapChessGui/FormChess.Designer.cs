@@ -151,15 +151,15 @@
 			this.tabPageTraining = new System.Windows.Forms.TabPage();
 			this.chartTraining = new System.Windows.Forms.DataVisualization.Charting.Chart();
 			this.tlpTraining = new System.Windows.Forms.TableLayoutPanel();
-			this.label15 = new System.Windows.Forms.Label();
-			this.label14 = new System.Windows.Forms.Label();
-			this.label13 = new System.Windows.Forms.Label();
-			this.label12 = new System.Windows.Forms.Label();
+			this.labTrainingPro2 = new System.Windows.Forms.Label();
+			this.labTrainingDraw2 = new System.Windows.Forms.Label();
+			this.labTrainingLoose2 = new System.Windows.Forms.Label();
+			this.labTrainingWin2 = new System.Windows.Forms.Label();
 			this.label11 = new System.Windows.Forms.Label();
-			this.label10 = new System.Windows.Forms.Label();
-			this.label9 = new System.Windows.Forms.Label();
-			this.label8 = new System.Windows.Forms.Label();
-			this.label7 = new System.Windows.Forms.Label();
+			this.labTrainingPro1 = new System.Windows.Forms.Label();
+			this.labTrainingDraw1 = new System.Windows.Forms.Label();
+			this.labTrainingLoose1 = new System.Windows.Forms.Label();
+			this.labTrainingWin1 = new System.Windows.Forms.Label();
 			this.label5 = new System.Windows.Forms.Label();
 			this.label4 = new System.Windows.Forms.Label();
 			this.label3 = new System.Windows.Forms.Label();
@@ -1905,15 +1905,15 @@
 			this.tlpTraining.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
 			this.tlpTraining.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
 			this.tlpTraining.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
-			this.tlpTraining.Controls.Add(this.label15, 4, 2);
-			this.tlpTraining.Controls.Add(this.label14, 3, 2);
-			this.tlpTraining.Controls.Add(this.label13, 2, 2);
-			this.tlpTraining.Controls.Add(this.label12, 1, 2);
+			this.tlpTraining.Controls.Add(this.labTrainingPro2, 4, 2);
+			this.tlpTraining.Controls.Add(this.labTrainingDraw2, 3, 2);
+			this.tlpTraining.Controls.Add(this.labTrainingLoose2, 2, 2);
+			this.tlpTraining.Controls.Add(this.labTrainingWin2, 1, 2);
 			this.tlpTraining.Controls.Add(this.label11, 0, 2);
-			this.tlpTraining.Controls.Add(this.label10, 4, 1);
-			this.tlpTraining.Controls.Add(this.label9, 3, 1);
-			this.tlpTraining.Controls.Add(this.label8, 2, 1);
-			this.tlpTraining.Controls.Add(this.label7, 1, 1);
+			this.tlpTraining.Controls.Add(this.labTrainingPro1, 4, 1);
+			this.tlpTraining.Controls.Add(this.labTrainingDraw1, 3, 1);
+			this.tlpTraining.Controls.Add(this.labTrainingLoose1, 2, 1);
+			this.tlpTraining.Controls.Add(this.labTrainingWin1, 1, 1);
 			this.tlpTraining.Controls.Add(this.label5, 4, 0);
 			this.tlpTraining.Controls.Add(this.label4, 3, 0);
 			this.tlpTraining.Controls.Add(this.label3, 2, 0);
@@ -1932,47 +1932,47 @@
 			// 
 			// label15
 			// 
-			this.label15.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+			this.labTrainingPro2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.label15.Location = new System.Drawing.Point(268, 39);
-			this.label15.Name = "label15";
-			this.label15.Size = new System.Drawing.Size(59, 20);
-			this.label15.TabIndex = 14;
-			this.label15.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.labTrainingPro2.Location = new System.Drawing.Point(268, 39);
+			this.labTrainingPro2.Name = "label15";
+			this.labTrainingPro2.Size = new System.Drawing.Size(59, 20);
+			this.labTrainingPro2.TabIndex = 14;
+			this.labTrainingPro2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
 			// label14
 			// 
-			this.label14.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+			this.labTrainingDraw2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.label14.Location = new System.Drawing.Point(202, 39);
-			this.label14.Name = "label14";
-			this.label14.Size = new System.Drawing.Size(59, 20);
-			this.label14.TabIndex = 13;
-			this.label14.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.labTrainingDraw2.Location = new System.Drawing.Point(202, 39);
+			this.labTrainingDraw2.Name = "label14";
+			this.labTrainingDraw2.Size = new System.Drawing.Size(59, 20);
+			this.labTrainingDraw2.TabIndex = 13;
+			this.labTrainingDraw2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
 			// label13
 			// 
-			this.label13.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+			this.labTrainingLoose2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.label13.Location = new System.Drawing.Point(136, 39);
-			this.label13.Name = "label13";
-			this.label13.Size = new System.Drawing.Size(59, 20);
-			this.label13.TabIndex = 12;
-			this.label13.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.labTrainingLoose2.Location = new System.Drawing.Point(136, 39);
+			this.labTrainingLoose2.Name = "label13";
+			this.labTrainingLoose2.Size = new System.Drawing.Size(59, 20);
+			this.labTrainingLoose2.TabIndex = 12;
+			this.labTrainingLoose2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
 			// label12
 			// 
-			this.label12.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+			this.labTrainingWin2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.label12.Location = new System.Drawing.Point(70, 39);
-			this.label12.Name = "label12";
-			this.label12.Size = new System.Drawing.Size(59, 20);
-			this.label12.TabIndex = 11;
-			this.label12.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.labTrainingWin2.Location = new System.Drawing.Point(70, 39);
+			this.labTrainingWin2.Name = "label12";
+			this.labTrainingWin2.Size = new System.Drawing.Size(59, 20);
+			this.labTrainingWin2.TabIndex = 11;
+			this.labTrainingWin2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
 			// label11
 			// 
@@ -1988,47 +1988,47 @@
 			// 
 			// label10
 			// 
-			this.label10.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+			this.labTrainingPro1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.label10.Location = new System.Drawing.Point(268, 20);
-			this.label10.Name = "label10";
-			this.label10.Size = new System.Drawing.Size(59, 18);
-			this.label10.TabIndex = 9;
-			this.label10.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.labTrainingPro1.Location = new System.Drawing.Point(268, 20);
+			this.labTrainingPro1.Name = "label10";
+			this.labTrainingPro1.Size = new System.Drawing.Size(59, 18);
+			this.labTrainingPro1.TabIndex = 9;
+			this.labTrainingPro1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
 			// label9
 			// 
-			this.label9.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+			this.labTrainingDraw1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.label9.Location = new System.Drawing.Point(202, 20);
-			this.label9.Name = "label9";
-			this.label9.Size = new System.Drawing.Size(59, 18);
-			this.label9.TabIndex = 8;
-			this.label9.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.labTrainingDraw1.Location = new System.Drawing.Point(202, 20);
+			this.labTrainingDraw1.Name = "label9";
+			this.labTrainingDraw1.Size = new System.Drawing.Size(59, 18);
+			this.labTrainingDraw1.TabIndex = 8;
+			this.labTrainingDraw1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
 			// label8
 			// 
-			this.label8.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+			this.labTrainingLoose1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.label8.Location = new System.Drawing.Point(136, 20);
-			this.label8.Name = "label8";
-			this.label8.Size = new System.Drawing.Size(59, 18);
-			this.label8.TabIndex = 7;
-			this.label8.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.labTrainingLoose1.Location = new System.Drawing.Point(136, 20);
+			this.labTrainingLoose1.Name = "label8";
+			this.labTrainingLoose1.Size = new System.Drawing.Size(59, 18);
+			this.labTrainingLoose1.TabIndex = 7;
+			this.labTrainingLoose1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
 			// label7
 			// 
-			this.label7.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+			this.labTrainingWin1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.label7.Location = new System.Drawing.Point(70, 20);
-			this.label7.Name = "label7";
-			this.label7.Size = new System.Drawing.Size(59, 18);
-			this.label7.TabIndex = 6;
-			this.label7.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.labTrainingWin1.Location = new System.Drawing.Point(70, 20);
+			this.labTrainingWin1.Name = "label7";
+			this.labTrainingWin1.Size = new System.Drawing.Size(59, 18);
+			this.labTrainingWin1.TabIndex = 6;
+			this.labTrainingWin1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
 			// label5
 			// 
@@ -2113,7 +2113,7 @@
 			this.butTraining.Text = "Start";
 			this.toolTip1.SetToolTip(this.butTraining, "Start training");
 			this.butTraining.UseVisualStyleBackColor = true;
-			this.butTraining.Click += new System.EventHandler(this.ButTraining_Click);
+			this.butTraining.Click += new System.EventHandler(this.bStartTraining_Click);
 			// 
 			// groupBox4
 			// 
@@ -4476,15 +4476,15 @@
 		private System.Windows.Forms.GroupBox groupBox3;
 		private System.Windows.Forms.ComboBox cbTrainedEngine;
 		private System.Windows.Forms.TableLayoutPanel tlpTraining;
-		private System.Windows.Forms.Label label15;
-		private System.Windows.Forms.Label label14;
-		private System.Windows.Forms.Label label13;
-		private System.Windows.Forms.Label label12;
+		private System.Windows.Forms.Label labTrainingPro2;
+		private System.Windows.Forms.Label labTrainingDraw2;
+		private System.Windows.Forms.Label labTrainingLoose2;
+		private System.Windows.Forms.Label labTrainingWin2;
 		private System.Windows.Forms.Label label11;
-		private System.Windows.Forms.Label label10;
-		private System.Windows.Forms.Label label9;
-		private System.Windows.Forms.Label label8;
-		private System.Windows.Forms.Label label7;
+		private System.Windows.Forms.Label labTrainingPro1;
+		private System.Windows.Forms.Label labTrainingDraw1;
+		private System.Windows.Forms.Label labTrainingLoose1;
+		private System.Windows.Forms.Label labTrainingWin1;
 		private System.Windows.Forms.Label label5;
 		private System.Windows.Forms.Label label4;
 		private System.Windows.Forms.Label label3;
