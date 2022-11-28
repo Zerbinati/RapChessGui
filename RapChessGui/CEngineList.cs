@@ -51,11 +51,11 @@ namespace RapChessGui
 		public void SaveToIni()
 		{
 			name = GetName();
-			if (hisElo.list.Count == 0)
+			if (hisElo.Count == 0)
 			{
 				int e = GetElo();
-				hisElo.Add(e);
-				hisElo.Add(e);
+				hisElo.AddValue(e);
+				hisElo.AddValue(e);
 			}
 			CEngineList.iniFile.Write($"engine>{name}>tournament", tournament);
 			CEngineList.iniFile.Write($"engine>{name}>modeStandard",  modeStandard);

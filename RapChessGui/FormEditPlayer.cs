@@ -156,7 +156,7 @@ namespace RapChessGui
 		{
 			if (player != null)
 			{
-				player.hisElo.list.Clear();
+				player.hisElo.Clear();
 				player.SaveToIni();
 				int count = CModeTournamentP.tourList.DeletePlayer(player.name);
 				MessageBox.Show($"{count} records have been deleted");

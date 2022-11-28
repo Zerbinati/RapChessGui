@@ -997,7 +997,7 @@ namespace RapChessGui
 			}
 			if (result || changeProgress)
 			{
-				hu.hisElo.Add(Convert.ToDouble(hu.elo));
+				hu.hisElo.AddValue(Convert.ToDouble(hu.elo));
 				CData.HisToPoints(hu.hisElo, chartGame.Series[0].Points);
 			}
 			hu.eloOrg = hu.elo;
@@ -1668,7 +1668,7 @@ namespace RapChessGui
 				pl.elo = pl.eloOrg;
 				int eloW = pw.GetElo();
 				int eloL = pl.GetElo();
-				CElo.EloRating(eloW, eloL, out int newW, out int newL, pw.hisElo.list.Count, pl.hisElo.list.Count, isDraw ? 0 : 1);
+				CElo.EloRating(eloW, eloL, out int newW, out int newL, pw.hisElo.Count, pl.hisElo.Count, isDraw ? 0 : 1);
 				if (pw.IsHuman())
 					pw.elo = newW.ToString();
 				else
@@ -1786,7 +1786,7 @@ namespace RapChessGui
 			int eloW = bw.GetElo();
 			int eloL = bl.GetElo();
 			bool f = CModeTournamentB.first == pw.book;
-			CElo.EloRating(eloW, eloL, out int newW, out int newL, bw.hisElo.list.Count, bl.hisElo.list.Count, isDraw ? 0 : 1);
+			CElo.EloRating(eloW, eloL, out int newW, out int newL, bw.hisElo.Count, bl.hisElo.Count, isDraw ? 0 : 1);
 			if (isDraw)
 				CModeTournamentB.tourList.Write(pw.book, pb.book, "d", f);
 			else
@@ -1800,13 +1800,13 @@ namespace RapChessGui
 			bool ws = bw.name == FormOptions.tourBSelected;
 			if (!ls)
 			{
-				bw.hisElo.Add(newW);
+				bw.hisElo.AddValue(newW);
 				bw.elo = newW.ToString();
 				bw.SaveToIni();
 			}
 			if (!ws)
 			{
-				bl.hisElo.Add(newL);
+				bl.hisElo.AddValue(newL);
 				bl.elo = newL.ToString();
 				bl.SaveToIni();
 			}
@@ -2116,7 +2116,7 @@ namespace RapChessGui
 			int eloW = ew.GetElo();
 			int eloL = el.GetElo();
 			bool f = CModeTournamentE.first == pw.engine;
-			CElo.EloRating(eloW, eloL, out int newW, out int newL, ew.hisElo.list.Count, el.hisElo.list.Count, isDraw ? 0 : 1);
+			CElo.EloRating(eloW, eloL, out int newW, out int newL, ew.hisElo.Count, el.hisElo.Count, isDraw ? 0 : 1);
 			if (isDraw)
 				CModeTournamentE.tourList.Write(pw.engine, pb.engine, "d", f);
 			else
@@ -2130,13 +2130,13 @@ namespace RapChessGui
 			bool ws = ew.name == FormOptions.tourESelected;
 			if (!ls)
 			{
-				ew.hisElo.Add(newW);
+				ew.hisElo.AddValue(newW);
 				ew.elo = newW.ToString();
 				ew.SaveToIni();
 			}
 			if (!ws)
 			{
-				el.hisElo.Add(newL);
+				el.hisElo.AddValue(newL);
 				el.elo = newL.ToString();
 				el.SaveToIni();
 			}
@@ -2280,7 +2280,7 @@ namespace RapChessGui
 			int eloW = pw.GetElo();
 			int eloL = pl.GetElo();
 			bool f = CModeTournamentP.first == plw.name;
-			CElo.EloRating(eloW, eloL, out int newW, out int newL, pw.hisElo.list.Count, pl.hisElo.list.Count, isDraw ? 0 : 1);
+			CElo.EloRating(eloW, eloL, out int newW, out int newL, pw.hisElo.Count, pl.hisElo.Count, isDraw ? 0 : 1);
 			if (isDraw)
 				CModeTournamentP.tourList.Write(plw.name, plb.name, "d", f);
 			else
@@ -2294,13 +2294,13 @@ namespace RapChessGui
 			bool ws = pw.name == FormOptions.tourPSelected;
 			if (!ls)
 			{
-				pw.hisElo.Add(newW);
+				pw.hisElo.AddValue(newW);
 				pw.elo = newW.ToString();
 				pw.SaveToIni();
 			}
 			if (!ws)
 			{
-				pl.hisElo.Add(newL);
+				pl.hisElo.AddValue(newL);
 				pl.elo = newL.ToString();
 				pl.SaveToIni();
 			}
@@ -2421,9 +2421,9 @@ namespace RapChessGui
 			}
 			if (up)
 				nudTrainer.Value += nudTrainer.Increment;
-			CModeTraining.his.Add((double)nudTrainer.Value);
-			if (CModeTraining.his.list.Count == 1)
-				CModeTraining.his.Add((double)nudTrainer.Value);
+			CModeTraining.his.AddValue((double)nudTrainer.Value);
+			if (CModeTraining.his.Count == 1)
+				CModeTraining.his.AddValue((double)nudTrainer.Value);
 			CModeTraining.SaveToIni();
 		}
 
@@ -2627,8 +2627,7 @@ namespace RapChessGui
 
 		private void ButTraining_Click(object sender, EventArgs e)
 		{
-			CModeTraining.Reset();
-			chartTraining.Series[0].Points.Clear();
+			CModeTraining.SaveToIni();
 			TrainingStart();
 		}
 

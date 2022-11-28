@@ -123,8 +123,8 @@ namespace RapChessGui
 		public static void HisToPoints(CHisElo he, DataPointCollection po)
 		{
 			po.Clear();
-			int x = 100 - he.list.Count;
-			foreach (double v in he.list)
+			int x = 100 - he.Count;
+			foreach (double v in he)
 				po.AddXY(x++, v);
 		}
 
@@ -223,22 +223,22 @@ namespace RapChessGui
 
 	}
 
-	public class CHisElo
+	public class CHisElo : List<double>
 	{
-
-		public List<double> list = new List<double>();
 
 		public void Assign(CHisElo he)
 		{
-			list = new List<double>(he.list);
+			Clear();
+			foreach (double d in he)
+				Add(d);
 		}
 
 		public int EloAvg(int def = 0)
 		{
-			int sum = 0;
-			foreach (int i in list)
-				sum += i;
-			return list.Count == 0 ? def : sum / list.Count;
+			double sum = 0;
+			foreach (double d in this)
+				sum += d;
+			return Count == 0 ? def : Convert.ToInt32(sum / Count);
 		}
 
 		public Color GetColor()
@@ -255,41 +255,41 @@ namespace RapChessGui
 
 		public void LoadFromStr(string elo)
 		{
-			list.Clear();
+			Clear();
 			string[] his = elo.Split(new[] { ' ', '\t' }, StringSplitOptions.RemoveEmptyEntries);
 			foreach (string e in his)
-				Add(Convert.ToDouble(e));
+				AddValue(Convert.ToDouble(e));
 		}
 
 		public string SaveToStr()
 		{
 			string elo = String.Empty;
-			foreach (double e in list)
-				elo += $" {e}";
+			foreach (double d in this)
+				elo += $" {d}";
 			return elo.Trim(' ');
 		}
 
-		public void Add(double value)
+		public void AddValue(double value)
 		{
-			list.Add(value);
-			int c = list.Count - FormOptions.historyLength;
+			Add(value);
+			int c = Count - FormOptions.historyLength;
 			if (c > 0)
-				list.RemoveRange(0, c);
+				RemoveRange(0, c);
 		}
 
 		public double Last()
 		{
-			if (list.Count > 0)
-				return list[list.Count - 1];
+			if (Count > 0)
+				return this[Count - 1];
 			else
 				return 0;
 		}
 
 		public void MinMax(out double min, out double max)
 		{
-			min = list.Count > 0 ? list[0] : 0;
+			min = Count > 0 ? this[0] : 0;
 			max = min;
-			foreach (double d in list)
+			foreach (double d in this)
 			{
 				if (min > d)
 					min = d;

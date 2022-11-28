@@ -15,11 +15,11 @@ namespace RapChessGui
 
 		public static void SaveToIni()
 		{
-			if (humanPlayer.hisElo.list.Count == 0)
+			if (humanPlayer.hisElo.Count == 0)
 			{
 				int e = humanPlayer.GetElo();
-				humanPlayer.hisElo.Add(e);
-				humanPlayer.hisElo.Add(e);
+				humanPlayer.hisElo.AddValue(e);
+				humanPlayer.hisElo.AddValue(e);
 			}
 			FormChess.iniFile.Write("mode>game>rotate", rotate.ToString());
 			FormChess.iniFile.Write("mode>game>color", color);

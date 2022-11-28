@@ -26,7 +26,7 @@ namespace RapChessGui
 			winInRow = 0;
 			draw = 0;
 			loose = 0;
-			his.list.Clear();
+			his.Clear();
 			SaveToIni();
 		}
 

@@ -298,7 +298,7 @@ namespace RapChessGui
 		{
 			if (engine != null)
 			{
-				engine.hisElo.list.Clear();
+				engine.hisElo.Clear();
 				engine.SaveToIni();
 				int count = CModeTournamentE.tourList.DeletePlayer(engine.name);
 				MessageBox.Show($"{count} records have been deleted");

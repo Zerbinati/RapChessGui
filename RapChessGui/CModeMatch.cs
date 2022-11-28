@@ -32,7 +32,7 @@ namespace RapChessGui
 			win = 0;
 			draw = 0;
 			loose = 0;
-			his.list.Clear();
+			his.Clear();
 			SaveToIni();
 		}
 
@@ -49,9 +49,9 @@ namespace RapChessGui
 				win++;
 			else
 				loose++;
-			his.Add(win - loose);
-			if(his.list.Count==1)
-				his.Add(win - loose);
+			his.AddValue(win - loose);
+			if(his.Count==1)
+				his.AddValue(win - loose);
 			SaveToIni();
 		}
 
