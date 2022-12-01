@@ -115,6 +115,7 @@
     <Compile Include="CEcoList.cs" />
     <Compile Include="CEngineList.cs" />
     <Compile Include="CExtensions.cs" />
+    <Compile Include="CHisElo.cs" />
     <Compile Include="CHistory.cs" />
     <Compile Include="CModeGame.cs" />
     <Compile Include="CModeTournamentB.cs" />
@@ -174,6 +175,12 @@
     </Compile>
     <Compile Include="FormLastGame.Designer.cs">
       <DependentUpon>FormLastGame.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormListE.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormListE.Designer.cs">
+      <DependentUpon>FormListE.cs</DependentUpon>
     </Compile>
     <Compile Include="FormLogBook.cs">
       <SubType>Form</SubType>
@@ -239,6 +246,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormLastGame.resx">
       <DependentUpon>FormLastGame.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormListE.resx">
+      <DependentUpon>FormListE.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormLogBook.resx">
       <DependentUpon>FormLogBook.cs</DependentUpon>

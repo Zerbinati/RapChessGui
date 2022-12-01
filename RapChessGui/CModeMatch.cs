@@ -43,6 +43,8 @@ namespace RapChessGui
 
 		public static void GameEnd(CColor winColor)
 		{
+			if (his.Count == 0)
+				his.AddValue(0);
 			if (winColor == CColor.none)
 				draw++;
 			else if (winColor == color)
@@ -50,8 +52,6 @@ namespace RapChessGui
 			else
 				loose++;
 			his.AddValue(win - loose);
-			if(his.Count==1)
-				his.AddValue(win - loose);
 			SaveToIni();
 		}
 

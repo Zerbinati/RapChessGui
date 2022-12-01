@@ -57,6 +57,7 @@ namespace RapChessGui
 		readonly FormChartB formHisB = new FormChartB();
 		readonly FormChartP formHisP = new FormChartP();
 		readonly FormChartE formHisE = new FormChartE();
+		readonly FormListE formListE = new FormListE();
 		readonly FormEditEngine formEngine = new FormEditEngine();
 		readonly FormEditBook formBook = new FormEditBook();
 		readonly FormEditPlayer formPlayer = new FormEditPlayer();
@@ -997,7 +998,7 @@ namespace RapChessGui
 			}
 			if (result || changeProgress)
 			{
-				hu.hisElo.AddValue(Convert.ToDouble(hu.elo));
+				hu.hisElo.AddValue(Convert.ToInt32(hu.elo));
 				CData.HisToPoints(hu.hisElo, chartGame.Series[0].Points);
 			}
 			hu.eloOrg = hu.elo;
@@ -1720,7 +1721,7 @@ namespace RapChessGui
 		void MatchShow()
 		{
 			MatchGet();
-			CModeMatch.his.MinMax(out double min, out double max);
+			CModeMatch.his.MinMax(out int min, out int max);
 			double last = CModeMatch.his.Last();
 			labMatchGames.Text = $"Games {CModeMatch.Games} result {last} min {min} max {max}";
 			labMatch11.Text = CModeMatch.win.ToString();
@@ -2387,6 +2388,8 @@ namespace RapChessGui
 
 		void TrainingEnd(CGamer gw, bool isDraw)
 		{
+			if (CModeTraining.his.Count == 0)
+				CModeTraining.his.AddValue((int)nudTrainer.Value);
 			bool up = true;
 			CModeTraining.games++;
 			if (!isDraw)
@@ -2421,9 +2424,7 @@ namespace RapChessGui
 			}
 			if (up)
 				nudTrainer.Value += nudTrainer.Increment;
-			CModeTraining.his.AddValue((double)nudTrainer.Value);
-			if (CModeTraining.his.Count == 1)
-				CModeTraining.his.AddValue((double)nudTrainer.Value);
+			CModeTraining.his.AddValue(Convert.ToInt32(nudTrainer.Value));
 			CModeTraining.SaveToIni();
 		}
 
@@ -3151,6 +3152,11 @@ namespace RapChessGui
 		private void chartTraining_Click(object sender, EventArgs e)
 		{
 			TrainingClear();
+		}
+
+		private void enginesToolStripMenuItem3_Click(object sender, EventArgs e)
+		{
+			formListE.ShowDialog(this);
 		}
 	}
 }

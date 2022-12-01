@@ -153,7 +153,7 @@ namespace RapChessGui
 				ratioScore = 1;
 			double ratioGames = 1.0 / (curGames + 1.0);
 			r = first.GetDeltaElo();
-			first.hisElo.MinMax(out double min, out double max);
+			first.hisElo.MinMax(out int min, out int max);
 			double range = max - min;
 			double ratioTrend = Math.Abs(r / (range + 1.0));
 			if ((r > 0) && (sElo < fElo))

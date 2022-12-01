@@ -240,6 +240,8 @@
 			this.booksToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.enginesToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
 			this.playersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.listsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.enginesToolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
 			this.labGameTime = new System.Windows.Forms.Label();
 			this.panMenu = new System.Windows.Forms.Panel();
 			this.labEco = new System.Windows.Forms.Label();
@@ -1930,46 +1932,46 @@
 			this.tlpTraining.Size = new System.Drawing.Size(331, 60);
 			this.tlpTraining.TabIndex = 25;
 			// 
-			// label15
+			// labTrainingPro2
 			// 
 			this.labTrainingPro2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.labTrainingPro2.Location = new System.Drawing.Point(268, 39);
-			this.labTrainingPro2.Name = "label15";
+			this.labTrainingPro2.Name = "labTrainingPro2";
 			this.labTrainingPro2.Size = new System.Drawing.Size(59, 20);
 			this.labTrainingPro2.TabIndex = 14;
 			this.labTrainingPro2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
-			// label14
+			// labTrainingDraw2
 			// 
 			this.labTrainingDraw2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.labTrainingDraw2.Location = new System.Drawing.Point(202, 39);
-			this.labTrainingDraw2.Name = "label14";
+			this.labTrainingDraw2.Name = "labTrainingDraw2";
 			this.labTrainingDraw2.Size = new System.Drawing.Size(59, 20);
 			this.labTrainingDraw2.TabIndex = 13;
 			this.labTrainingDraw2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
-			// label13
+			// labTrainingLoose2
 			// 
 			this.labTrainingLoose2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.labTrainingLoose2.Location = new System.Drawing.Point(136, 39);
-			this.labTrainingLoose2.Name = "label13";
+			this.labTrainingLoose2.Name = "labTrainingLoose2";
 			this.labTrainingLoose2.Size = new System.Drawing.Size(59, 20);
 			this.labTrainingLoose2.TabIndex = 12;
 			this.labTrainingLoose2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
-			// label12
+			// labTrainingWin2
 			// 
 			this.labTrainingWin2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.labTrainingWin2.Location = new System.Drawing.Point(70, 39);
-			this.labTrainingWin2.Name = "label12";
+			this.labTrainingWin2.Name = "labTrainingWin2";
 			this.labTrainingWin2.Size = new System.Drawing.Size(59, 20);
 			this.labTrainingWin2.TabIndex = 11;
 			this.labTrainingWin2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -1986,46 +1988,46 @@
 			this.label11.Text = "Teacher";
 			this.label11.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
-			// label10
+			// labTrainingPro1
 			// 
 			this.labTrainingPro1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.labTrainingPro1.Location = new System.Drawing.Point(268, 20);
-			this.labTrainingPro1.Name = "label10";
+			this.labTrainingPro1.Name = "labTrainingPro1";
 			this.labTrainingPro1.Size = new System.Drawing.Size(59, 18);
 			this.labTrainingPro1.TabIndex = 9;
 			this.labTrainingPro1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
-			// label9
+			// labTrainingDraw1
 			// 
 			this.labTrainingDraw1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.labTrainingDraw1.Location = new System.Drawing.Point(202, 20);
-			this.labTrainingDraw1.Name = "label9";
+			this.labTrainingDraw1.Name = "labTrainingDraw1";
 			this.labTrainingDraw1.Size = new System.Drawing.Size(59, 18);
 			this.labTrainingDraw1.TabIndex = 8;
 			this.labTrainingDraw1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
-			// label8
+			// labTrainingLoose1
 			// 
 			this.labTrainingLoose1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.labTrainingLoose1.Location = new System.Drawing.Point(136, 20);
-			this.labTrainingLoose1.Name = "label8";
+			this.labTrainingLoose1.Name = "labTrainingLoose1";
 			this.labTrainingLoose1.Size = new System.Drawing.Size(59, 18);
 			this.labTrainingLoose1.TabIndex = 7;
 			this.labTrainingLoose1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
-			// label7
+			// labTrainingWin1
 			// 
 			this.labTrainingWin1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.labTrainingWin1.Location = new System.Drawing.Point(70, 20);
-			this.labTrainingWin1.Name = "label7";
+			this.labTrainingWin1.Name = "labTrainingWin1";
 			this.labTrainingWin1.Size = new System.Drawing.Size(59, 18);
 			this.labTrainingWin1.TabIndex = 6;
 			this.labTrainingWin1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -2705,11 +2707,12 @@
             this.manageToolStripMenuItem,
             this.optionsToolStripMenuItem,
             this.logToolStripMenuItem,
-            this.historyToolStripMenuItem});
+            this.historyToolStripMenuItem,
+            this.listsToolStripMenuItem});
 			this.menuStrip1.Location = new System.Drawing.Point(0, 2);
 			this.menuStrip1.Name = "menuStrip1";
 			this.menuStrip1.ShowItemToolTips = true;
-			this.menuStrip1.Size = new System.Drawing.Size(303, 24);
+			this.menuStrip1.Size = new System.Drawing.Size(465, 24);
 			this.menuStrip1.TabIndex = 1;
 			this.menuStrip1.Text = "menuStrip1";
 			// 
@@ -2952,6 +2955,21 @@
 			this.playersToolStripMenuItem.Text = "Players";
 			this.playersToolStripMenuItem.Click += new System.EventHandler(this.playersToolStripMenuItem_Click);
 			// 
+			// listsToolStripMenuItem
+			// 
+			this.listsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.enginesToolStripMenuItem3});
+			this.listsToolStripMenuItem.Name = "listsToolStripMenuItem";
+			this.listsToolStripMenuItem.Size = new System.Drawing.Size(42, 20);
+			this.listsToolStripMenuItem.Text = "Lists";
+			// 
+			// enginesToolStripMenuItem3
+			// 
+			this.enginesToolStripMenuItem3.Name = "enginesToolStripMenuItem3";
+			this.enginesToolStripMenuItem3.Size = new System.Drawing.Size(180, 22);
+			this.enginesToolStripMenuItem3.Text = "Engines";
+			this.enginesToolStripMenuItem3.Click += new System.EventHandler(this.enginesToolStripMenuItem3_Click);
+			// 
 			// labGameTime
 			// 
 			this.labGameTime.Dock = System.Windows.Forms.DockStyle.Right;
@@ -2983,9 +3001,9 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.labEco.Cursor = System.Windows.Forms.Cursors.Default;
 			this.labEco.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-			this.labEco.Location = new System.Drawing.Point(299, 4);
+			this.labEco.Location = new System.Drawing.Point(348, 4);
 			this.labEco.Name = "labEco";
-			this.labEco.Size = new System.Drawing.Size(744, 22);
+			this.labEco.Size = new System.Drawing.Size(695, 22);
 			this.labEco.TabIndex = 3;
 			this.labEco.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			this.toolTip1.SetToolTip(this.labEco, "Names of chess openings variations");
@@ -4742,6 +4760,8 @@
 		private System.Windows.Forms.Label label1;
 		private System.Windows.Forms.ProgressBar pbHashW;
 		private System.Windows.Forms.ProgressBar pbHashB;
+		private System.Windows.Forms.ToolStripMenuItem listsToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem enginesToolStripMenuItem3;
 	}
 }
 
