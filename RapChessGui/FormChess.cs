@@ -632,6 +632,7 @@ namespace RapChessGui
 			if (pv != String.Empty)
 				g.pv = pv;
 			g.seldepth = selfdepth;
+			g.strDepth = g.GetDepth();
 			ShowInfo(pv, Color.Gainsboro, 0, g);
 			AddLines(g);
 		}
@@ -740,7 +741,6 @@ namespace RapChessGui
 					int i = uci.GetIndex("pv", 0);
 					if (i > 0)
 						SetPv(i + 1, g);
-					g.strDepth = g.GetDepth();
 					break;
 			}
 		}
@@ -804,7 +804,6 @@ namespace RapChessGui
 							g.nodes = (ulong)Convert.ToInt64(uci.tokens[3]);
 							nps = g.infMs > 0 ? (g.nodes * 1000) / g.infMs : 0;
 							SetPv(4, g);
-							g.strDepth = g.GetDepth();
 						}
 						catch
 						{
