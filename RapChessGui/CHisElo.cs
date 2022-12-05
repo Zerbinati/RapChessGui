@@ -25,7 +25,7 @@ namespace RapChessGui
 
 		public int Change()
 		{
-			return EloAvg() - Last();
+			return Last() - EloAvg();
 		}
 
 		public Color GetColor()
@@ -81,6 +81,26 @@ namespace RapChessGui
 				if (min > d)
 					min = d;
 				if (max < d)
+					max = d;
+			}
+		}
+
+		public void MinMaxDel(out int min, out int max)
+		{
+			int curMin = Count > 0 ? this[0] : 0;
+			int curMax = curMin;
+			min = 0;
+			max = 0;
+			for(int n=1;n<Count;n++)
+			{
+				int d = this[n];
+				if (curMin > d)
+					curMin = d;
+				if (curMax < d)
+					curMax = d;
+				if (min < curMax -d)
+					min = d;
+				if (max < d - curMin)
 					max = d;
 			}
 		}

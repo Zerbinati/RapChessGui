@@ -48,10 +48,6 @@ namespace RapChessGui
 		/// Count moves maked by engine.
 		/// </summary>
 		public int countMovesEngine;
-		/// <summary>
-		/// Count moves makes by engine or book.
-		/// </summary>
-		public int countMoves;
 		public int depthTotal;
 		public int depthCount;
 		public int depthMax;
@@ -62,12 +58,12 @@ namespace RapChessGui
 		public ulong nps;
 		public ulong npsTotal;
 		public ulong npsCount;
-		public string scoreS;
+		public string strScore;
+		public string strDepth;
 		public int depth;
 		public int seldepth;
 		int hash;
 		public string ponder;
-		public string ponderFormated;
 		public string pv;
 		public string lastMove;
 		public double timerStart;
@@ -188,7 +184,6 @@ namespace RapChessGui
 			infMs = 0;
 			countMovesBook = 0;
 			countMovesEngine = 0;
-			countMoves = 0;
 			nodes = 0;
 			nps = 0;
 			npsTotal = 0;
@@ -196,36 +191,46 @@ namespace RapChessGui
 			depthTotal = 0;
 			depthCount = 0;
 			timerStart = 0;
+			strScore = String.Empty;
+			strDepth = String.Empty;
 			timer.Reset();
 			InitNextMove();
 		}
 
-		void InitNextMove()
+		public void InitNextMove()
 		{
-			if (depth > 0)
-			{
-				depthCount++;
-				depthTotal += depth;
-			}
-			if (nps > 0)
-			{
-				npsCount++;
-				npsTotal += nps;
-				if ((npsTotal > (ulong.MaxValue >> 1)) && ((npsCount & 1) == 0))
-				{
-					npsTotal >>= 1;
-					npsCount >>= 1;
-				}
-			}
 			depth = 0;
 			msgPriority = 0;
 			seldepth = 0;
 			scoreI = 0;
 			lastMove = String.Empty;
 			ponder = String.Empty;
-			ponderFormated = String.Empty;
 			pv = String.Empty;
-			scoreS = String.Empty;
+		}
+
+		public void MoveDone()
+		{
+			if (isBookStarted && !isBookFail)
+				countMovesBook++;
+			else
+			{
+				countMovesEngine++;
+				if (depth > 0)
+				{
+					depthCount++;
+					depthTotal += depth;
+				}
+				if (nps > 0)
+				{
+					npsCount++;
+					npsTotal += nps;
+					if ((npsTotal > (ulong.MaxValue >> 1)) && ((npsCount & 1) == 0))
+					{
+						npsTotal >>= 1;
+						npsCount >>= 1;
+					}
+				}
+			}
 		}
 
 		public string GetName()
@@ -410,7 +415,6 @@ namespace RapChessGui
 		/// </summary>
 		public void EngMakeMove()
 		{
-			InitNextMove();
 			if (engine.protocol == CProtocol.uci)
 				UciGo();
 			else
@@ -622,7 +626,7 @@ namespace RapChessGui
 		public bool Check(out string msg)
 		{
 			msg = String.Empty;
-			foreach(CGamer g in gamers)
+			foreach (CGamer g in gamers)
 				if (!g.player.Check(out msg))
 					return false;
 			return true;
@@ -632,6 +636,7 @@ namespace RapChessGui
 		{
 			CGamer cg = GamerCur();
 			cg.timer.Stop();
+			cg.InitNextMove();
 			cg.isBookStarted = false;
 			cg.isBookFail = false;
 			cg.isEngRunning = false;

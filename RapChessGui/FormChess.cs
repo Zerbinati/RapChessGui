@@ -415,25 +415,23 @@ namespace RapChessGui
 
 		void ShowInfo(CGamer g)
 		{
-			if (!FormOptions.showPonder)
-				g.ponderFormated = String.Empty;
 			if (g.isWhite)
 			{
-				labScoreW.Text = $"Score {g.scoreS}";
+				labScoreW.Text = $"Score {g.strScore}";
+				labDepthW.Text = $"Depth {g.strDepth}";
 				labNodesW.Text = $"Nodes {g.nodes:N0}";
 				labNpsW.Text = $"Nps {g.GetNpsAvg():N0}";
 				labBookCW.Text = $"Book {g.countMovesBook}";
-				labDepthW.Text = $"Depth {g.GetDepth()}";
 				labColW.BackColor = g.GetScoreColor();
 				pbHashW.Value = g.Hash;
 			}
 			else
 			{
-				labScoreB.Text = $"Score {g.scoreS}";
+				labScoreB.Text = $"Score {g.strScore}";
+				labDepthB.Text = $"Depth {g.strDepth}";
 				labNodesB.Text = $"Nodes {g.nodes:N0}";
 				labNpsB.Text = $"Nps {g.GetNpsAvg():N0}";
 				labBookCB.Text = $"Book {g.countMovesBook}";
-				labDepthB.Text = $"Depth {g.GetDepth()}";
 				labColB.BackColor = g.GetScoreColor();
 				pbHashB.Value = g.Hash;
 			}
@@ -542,10 +540,10 @@ namespace RapChessGui
 			CGamer gBla = GamerList.GamerBlack();
 			FormLogEngines.AppendTimeText($" White: {gWhi.player.name}\n", Color.DimGray);
 			FormLogEngines.AppendTimeText($" Engine: {gWhi.GetEngineName()}\n", Color.DimGray);
-			FormLogEngines.AppendTimeText($" Clock: {gWhi.GetTime(out _)} Moves: {gWhi.countMoves} ({gWhi.countMoves - gWhi.countMovesBook}) Book: {gWhi.countMovesBook}\n", Color.DimGray);
+			FormLogEngines.AppendTimeText($" Clock: {gWhi.GetTime(out _)} Book: {gWhi.countMovesBook} Engine: {gWhi.countMovesEngine}\n", Color.DimGray);
 			FormLogEngines.AppendTimeText($" Black: {gBla.player.name}\n", Color.Black);
 			FormLogEngines.AppendTimeText($" Engine: {gBla.GetEngineName()}\n", Color.Black);
-			FormLogEngines.AppendTimeText($" Clock: {gBla.GetTime(out _)} Moves: {gBla.countMoves} ({gBla.countMoves - gBla.countMovesBook}) Book: {gBla.countMovesBook}\n", Color.Black);
+			FormLogEngines.AppendTimeText($" Clock: {gBla.GetTime(out _)} Book: {gBla.countMovesBook} Engine: {gBla.countMovesEngine}\n", Color.Black);
 			FormLogEngines.AppendTimeText($" Finish {tssInfo.Text}\n", Color.Olive);
 			if (winColor == CColor.none)
 				CData.gamesDraw++;
@@ -590,7 +588,7 @@ namespace RapChessGui
 			{
 				log.Add($"milliseconds {g.engine.name} {g.infMs}");
 			}
-			ListViewItem lvi = new ListViewItem(new[] { dt.ToString("mm:ss.ff"), g.scoreS, g.GetDepth(), g.nodes.ToString("N0"), g.nps.ToString("N0"), g.pv });
+			ListViewItem lvi = new ListViewItem(new[] { dt.ToString("mm:ss.ff"), g.strScore, g.strDepth, g.nodes.ToString("N0"), g.nps.ToString("N0"), g.pv });
 			ListView lv = g.isWhite ? lvMovesW : lvMovesB;
 			if ((lv.Items.Count & 1) > 0)
 				lvi.BackColor = CBoard.colorMessage;
@@ -651,18 +649,13 @@ namespace RapChessGui
 						uci.GetValue("ponder", out g.ponder);
 						if (g.isBookStarted && !g.isBookFail)
 						{
-							g.countMovesBook++;
-							if (g.scoreS == String.Empty)
-								g.scoreS = "book";
+							if (g.strScore == String.Empty)
+								g.strScore = "book";
 							ShowInfo($"book {umo}", Color.Aquamarine, 0, g);
 							if ((g.engine != null) && (g.engine.protocol == CProtocol.winboard))
 								g.isPositionXb = false;
 						}
-						else
-							g.countMovesEngine++;
 						MakeMove(umo);
-						if (g.ponder != String.Empty)
-							g.ponderFormated = FormOptions.isSan ? chess.UmoToSan(g.ponder) : g.ponder;
 					}
 					break;
 				case "log":
@@ -680,7 +673,7 @@ namespace RapChessGui
 						g.Hash = Int32.Parse(s);
 					if (uci.GetValue("cp", out s))
 					{
-						g.scoreS = s;
+						g.strScore = s;
 						g.scoreI = Int32.Parse(s);
 					}
 					if (uci.GetValue("mate", out s))
@@ -688,19 +681,17 @@ namespace RapChessGui
 						int ip = Int32.Parse(s);
 						if (ip > 0)
 						{
-							g.scoreS = $"+{s}M";
+							g.strScore = $"+{s}M";
 							g.scoreI = 0xffff - ip;
 						}
 						else
 						{
-							g.scoreS = $"{s}M";
+							g.strScore = $"{s}M";
 							g.scoreI = -0xffff + ip;
 						}
 					}
 					if (uci.GetValue("depth", out s))
 						g.depth = Int32.Parse(s);
-					if (uci.GetValue("seldepth", out s))
-						g.seldepth = Int32.Parse(s);
 					if (uci.GetValue("nodes", out s))
 					{
 						try
@@ -742,6 +733,7 @@ namespace RapChessGui
 					int i = uci.GetIndex("pv", 0);
 					if (i > 0)
 						SetPv(i + 1, g);
+					g.strDepth = g.GetDepth();
 					break;
 			}
 		}
@@ -783,8 +775,6 @@ namespace RapChessGui
 					uci.GetValue("ponder", out g.ponder);
 					GetMoveXb(uci.tokens[1], out umo);
 					MakeMove(umo);
-					if (g.ponder != String.Empty)
-						g.ponderFormated = FormOptions.isSan ? chess.UmoToSan(g.ponder) : g.ponder;
 					break;
 				default:
 					string s = msg.ToLower();
@@ -801,12 +791,13 @@ namespace RapChessGui
 						try
 						{
 							g.depth = Int32.Parse(uci.tokens[0]);
-							g.scoreS = uci.tokens[1];
-							g.scoreI = Convert.ToInt32(g.scoreS);
+							g.strScore = uci.tokens[1];
+							g.scoreI = Convert.ToInt32(g.strScore);
 							g.infMs = (ulong)Convert.ToInt64(uci.tokens[2]) * 10;
 							g.nodes = (ulong)Convert.ToInt64(uci.tokens[3]);
 							nps = g.infMs > 0 ? (g.nodes * 1000) / g.infMs : 0;
 							SetPv(4, g);
+							g.strDepth = g.GetDepth();
 						}
 						catch
 						{
@@ -1157,13 +1148,13 @@ namespace RapChessGui
 				return false;
 			}
 			PlaySound(chess.IsCapture(emo),chess.IsCastling(emo),chess.IsCheck(emo));
-			cg.countMoves++;
+			cg.MoveDone();
 			string san = chess.UmoToSan(umo);
 			CChess.UmoToSD(umo, out CDrag.lastSou, out CDrag.lastDes);
 			Board.MakeMove(emo);
 			chess.MakeMove(umo, out _, out int piece);
 			CHistory.AddMove(piece, emo, umo, san);
-			MoveToLvMoves(chess.halfMove - 1, piece, CHistory.LastNotation(), cg.scoreS);
+			MoveToLvMoves(chess.halfMove - 1, piece, CHistory.LastNotation(), cg.strScore);
 			CEco eco = EcoList.GetEcoFen(chess.GetEpd());
 			if (cg.player.IsHuman())
 			{
@@ -1721,9 +1712,9 @@ namespace RapChessGui
 		void MatchShow()
 		{
 			MatchGet();
-			CModeMatch.his.MinMax(out int min, out int max);
+			CModeMatch.his.MinMaxDel(out int min, out int max);
 			double last = CModeMatch.his.Last();
-			labMatchGames.Text = $"Games {CModeMatch.Games} result {last} min {min} max {max}";
+			labMatchGames.Text = $"Games {CModeMatch.Games} result {last} max +{max} min -{min}";
 			labMatch11.Text = CModeMatch.win.ToString();
 			labMatch12.Text = CModeMatch.loose.ToString();
 			labMatch13.Text = CModeMatch.draw.ToString();

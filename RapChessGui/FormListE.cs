@@ -23,7 +23,7 @@ namespace RapChessGui
 			FormChess.engineList.SortElo();
 			foreach (CEngine engine in FormChess.engineList)
 			{
-				ListViewItem lvi = new ListViewItem(new[] { engine.name, engine.elo});
+				ListViewItem lvi = new ListViewItem(new[] { engine.name, engine.elo,engine.hisElo.Change().ToString()});
 				lvEngines.Items.Add(lvi);
 			}
 		}
