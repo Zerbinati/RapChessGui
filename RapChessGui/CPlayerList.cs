@@ -26,6 +26,13 @@ namespace RapChessGui
 			name = n;
 		}
 
+		public void NewElo(int e)
+		{
+			hisElo.AddValue(e);
+			elo = e.ToString();
+			SaveToIni();
+		}
+
 		public string Check()
 		{
 			if (name == Global.human)

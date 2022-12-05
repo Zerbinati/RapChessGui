@@ -2712,7 +2712,7 @@
 			this.menuStrip1.Location = new System.Drawing.Point(0, 2);
 			this.menuStrip1.Name = "menuStrip1";
 			this.menuStrip1.ShowItemToolTips = true;
-			this.menuStrip1.Size = new System.Drawing.Size(465, 24);
+			this.menuStrip1.Size = new System.Drawing.Size(345, 24);
 			this.menuStrip1.TabIndex = 1;
 			this.menuStrip1.Text = "menuStrip1";
 			// 
@@ -2966,7 +2966,7 @@
 			// enginesToolStripMenuItem3
 			// 
 			this.enginesToolStripMenuItem3.Name = "enginesToolStripMenuItem3";
-			this.enginesToolStripMenuItem3.Size = new System.Drawing.Size(180, 22);
+			this.enginesToolStripMenuItem3.Size = new System.Drawing.Size(115, 22);
 			this.enginesToolStripMenuItem3.Text = "Engines";
 			this.enginesToolStripMenuItem3.Click += new System.EventHandler(this.enginesToolStripMenuItem3_Click);
 			// 
@@ -3477,6 +3477,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.labPlayerW.BackColor = System.Drawing.Color.Olive;
 			this.labPlayerW.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+			this.labPlayerW.Cursor = System.Windows.Forms.Cursors.Hand;
 			this.labPlayerW.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
 			this.labPlayerW.ForeColor = System.Drawing.Color.White;
 			this.labPlayerW.Location = new System.Drawing.Point(24, 0);
@@ -3486,6 +3487,7 @@
 			this.labPlayerW.TabIndex = 18;
 			this.labPlayerW.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			this.toolTip1.SetToolTip(this.labPlayerW, "Player name");
+			this.labPlayerW.Click += new System.EventHandler(this.PlayerClick);
 			// 
 			// labPlayerB
 			// 
@@ -3494,6 +3496,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.labPlayerB.BackColor = System.Drawing.Color.Olive;
 			this.labPlayerB.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+			this.labPlayerB.Cursor = System.Windows.Forms.Cursors.Hand;
 			this.labPlayerB.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
 			this.labPlayerB.ForeColor = System.Drawing.Color.White;
 			this.labPlayerB.Location = new System.Drawing.Point(24, 0);
@@ -3503,6 +3506,7 @@
 			this.labPlayerB.TabIndex = 18;
 			this.labPlayerB.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			this.toolTip1.SetToolTip(this.labPlayerB, "Player name");
+			this.labPlayerB.Click += new System.EventHandler(this.PlayerClick);
 			// 
 			// labPromoB
 			// 

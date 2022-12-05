@@ -70,6 +70,13 @@ namespace RapChessGui
 			CEngineList.iniFile.Write($"engine>{name}>history", hisElo.SaveToStr());
 		}
 
+		public void NewElo(int e)
+		{
+			hisElo.AddValue(e);
+			elo = e.ToString();
+			SaveToIni();
+		}
+
 		public bool SupportLevel(CLevel l)
 		{
 			if ((protocol != CProtocol.uci) && (protocol != CProtocol.winboard))

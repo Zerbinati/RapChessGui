@@ -10,6 +10,7 @@ namespace RapChessGui
 		int indexFirst = -1;
 		int tournament = -1;
 		CPlayer player = null;
+		public static string playerName = String.Empty;
 		readonly CModeValue modeValue = new CModeValue();
 
 		public FormEditPlayer()
@@ -30,7 +31,7 @@ namespace RapChessGui
 			CData.reset = true;
 		}
 
-		void SelectPlayer()
+		void ShowPlayer()
 		{
 			tbPlayerName.Text = player.name;
 			if (FormChess.engineList.GetIndex(player.engine) >= 0)
@@ -52,14 +53,17 @@ namespace RapChessGui
 		void SelectPlayer(CPlayer p)
 		{
 			player = p;
-			SelectPlayer();
+			ShowPlayer();
 		}
 
 		void SelectPlayer(string name)
 		{
 			player = FormChess.playerList.GetPlayerByName(name);
+			playerName = String.Empty;
 			if (player != null)
-				SelectPlayer(player);
+				return;
+			playerName = player.name;
+			SelectPlayer(player);
 		}
 
 		void SelectPlayers(int first, int last, bool t)
@@ -78,7 +82,7 @@ namespace RapChessGui
 			if (r)
 			{
 				listBox1.Refresh();
-				SelectPlayer();
+				ShowPlayer();
 			}
 		}
 
@@ -180,8 +184,7 @@ namespace RapChessGui
 			cbBookList.Items.Insert(0, Global.none);
 			cbBookList.SelectedIndex = 0;
 			UpdateListBox();
-			if (listBox1.Items.Count > 0)
-				listBox1.SetSelected(0, true);
+			listBox1.SelectedIndex = listBox1.FindString(playerName);
 		}
 
 		private void combMode_SelectedIndexChanged(object sender, EventArgs e)
@@ -244,7 +247,7 @@ namespace RapChessGui
 					{
 						listBox1.Refresh();
 						if (player == pla)
-							SelectPlayer();
+							ShowPlayer();
 					}
 
 				}

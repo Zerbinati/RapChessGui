@@ -224,6 +224,13 @@ namespace RapChessGui
 
 		#region main
 
+		void ShowFormBook(string bookName = "")
+		{
+			FormEditBook.bookName = bookName;
+			formBook.ShowDialog(this);
+			Reset();
+		}
+
 		void ShowFormEngine(string engineName = "")
 		{
 			FormEditEngine.engineName = engineName;
@@ -231,10 +238,10 @@ namespace RapChessGui
 			Reset();
 		}
 
-		void ShowFormBook(string bookName = "")
+		void ShowFormPlayer(string playerName = "")
 		{
-			FormEditBook.bookName = bookName;
-			formBook.ShowDialog(this);
+			FormEditPlayer.playerName = playerName;
+			formPlayer.ShowDialog(this);
 			Reset();
 		}
 
@@ -1660,11 +1667,11 @@ namespace RapChessGui
 				pl.elo = pl.eloOrg;
 				int eloW = pw.GetElo();
 				int eloL = pl.GetElo();
-				CElo.EloRating(eloW, eloL, out int newW, out int newL, pw.hisElo.Count, pl.hisElo.Count, isDraw ? 0 : 1);
-				if (pw.IsHuman())
-					pw.elo = newW.ToString();
-				else
-					pl.elo = newL.ToString();
+				CElo.EloRating(eloW, eloL, out int newW, out int newL, pw.hisElo.Count, pl.hisElo.Count, isDraw);
+				if (pw.IsComputer())
+					pw.NewElo(newW);
+				if (pl.IsComputer())
+					pl.NewElo(newL);
 				ShowLastGame(true);
 			}
 			else
@@ -1778,7 +1785,7 @@ namespace RapChessGui
 			int eloW = bw.GetElo();
 			int eloL = bl.GetElo();
 			bool f = CModeTournamentB.first == pw.book;
-			CElo.EloRating(eloW, eloL, out int newW, out int newL, bw.hisElo.Count, bl.hisElo.Count, isDraw ? 0 : 1);
+			CElo.EloRating(eloW, eloL, out int newW, out int newL, bw.hisElo.Count, bl.hisElo.Count, isDraw);
 			if (isDraw)
 				CModeTournamentB.tourList.Write(pw.book, pb.book, "d", f);
 			else
@@ -1791,17 +1798,9 @@ namespace RapChessGui
 			bool ls = bl.name == FormOptions.tourBSelected;
 			bool ws = bw.name == FormOptions.tourBSelected;
 			if (!ls)
-			{
-				bw.hisElo.AddValue(newW);
-				bw.elo = newW.ToString();
-				bw.SaveToIni();
-			}
+				bw.NewElo(newW);
 			if (!ws)
-			{
-				bl.hisElo.AddValue(newL);
-				bl.elo = newL.ToString();
-				bl.SaveToIni();
-			}
+				bl.NewElo(newL);
 			if ((CModeTournamentB.repetition <= CModeTournamentB.games) && (ws || ls))
 				CModeTournamentB.repetition++;
 		}
@@ -1953,7 +1952,7 @@ namespace RapChessGui
 					}
 		}
 
-		#endregion
+		#endregion mode tournament B
 
 		#region mode tournament E
 
@@ -2108,7 +2107,7 @@ namespace RapChessGui
 			int eloW = ew.GetElo();
 			int eloL = el.GetElo();
 			bool f = CModeTournamentE.first == pw.engine;
-			CElo.EloRating(eloW, eloL, out int newW, out int newL, ew.hisElo.Count, el.hisElo.Count, isDraw ? 0 : 1);
+			CElo.EloRating(eloW, eloL, out int newW, out int newL, ew.hisElo.Count, el.hisElo.Count, isDraw);
 			if (isDraw)
 				CModeTournamentE.tourList.Write(pw.engine, pb.engine, "d", f);
 			else
@@ -2121,17 +2120,9 @@ namespace RapChessGui
 			bool ls = el.name == FormOptions.tourESelected;
 			bool ws = ew.name == FormOptions.tourESelected;
 			if (!ls)
-			{
-				ew.hisElo.AddValue(newW);
-				ew.elo = newW.ToString();
-				ew.SaveToIni();
-			}
+				ew.NewElo(newW);
 			if (!ws)
-			{
-				el.hisElo.AddValue(newL);
-				el.elo = newL.ToString();
-				el.SaveToIni();
-			}
+				el.NewElo(newL);
 		}
 
 		#endregion
@@ -2272,7 +2263,7 @@ namespace RapChessGui
 			int eloW = pw.GetElo();
 			int eloL = pl.GetElo();
 			bool f = CModeTournamentP.first == plw.name;
-			CElo.EloRating(eloW, eloL, out int newW, out int newL, pw.hisElo.Count, pl.hisElo.Count, isDraw ? 0 : 1);
+			CElo.EloRating(eloW, eloL, out int newW, out int newL, pw.hisElo.Count, pl.hisElo.Count, isDraw);
 			if (isDraw)
 				CModeTournamentP.tourList.Write(plw.name, plb.name, "d", f);
 			else
@@ -2285,17 +2276,9 @@ namespace RapChessGui
 			bool ls = pl.name == FormOptions.tourPSelected;
 			bool ws = pw.name == FormOptions.tourPSelected;
 			if (!ls)
-			{
-				pw.hisElo.AddValue(newW);
-				pw.elo = newW.ToString();
-				pw.SaveToIni();
-			}
+				pw.NewElo(newW);
 			if (!ws)
-			{
-				pl.hisElo.AddValue(newL);
-				pl.elo = newL.ToString();
-				pl.SaveToIni();
-			}
+				pl.NewElo(newL);
 			if ((CModeTournamentP.repetition <= CModeTournamentP.games) && (ws || ls))
 				CModeTournamentP.repetition++;
 		}
@@ -3124,15 +3107,19 @@ namespace RapChessGui
 		{
 			EditSelected = (sender as Label).Text;
 		}
+		private void BookClick(object sender, EventArgs e)
+		{
+			ShowFormBook((sender as Label).Text);
+		}
 
 		private void EngineClick(object sender, EventArgs e)
 		{
 			ShowFormEngine((sender as Label).Text);
 		}
 
-		private void BookClick(object sender, EventArgs e)
+		private void PlayerClick(object sender, EventArgs e)
 		{
-			ShowFormBook((sender as Label).Text);
+			ShowFormPlayer((sender as Label).Text);
 		}
 
 		private void chartMatch_Click(object sender, EventArgs e)

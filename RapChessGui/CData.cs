@@ -1,19 +1,18 @@
-﻿using System;
-using System.Drawing;
-using System.IO;
+﻿using NSChess;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
-using NSChess;
 
 namespace RapChessGui
 {
 	public enum CGameMode { game, match, tourB, tourE, tourP, training, edit }
-	public enum CProtocol { uci, winboard,auto,unknow }
-	public enum CLevel { standard, time, depth,nodes,infinite }
+	public enum CProtocol { uci, winboard, auto, unknow }
+	public enum CLevel { standard, time, depth, nodes, infinite }
 
-	public enum CColor {none,white,black}
+	public enum CColor { none, white, black }
 
 	public static class CWinMessage
 	{
@@ -184,7 +183,7 @@ namespace RapChessGui
 			return 1.0f * 1.0f / (1 + 1.0f * (Math.Pow(10, 1.0f * (rating1 - rating2) / 400)));
 		}
 
-		public static void EloRating(double Ra, double Rb, out int Na, out int Nb, int Ga, int Gb, int d)
+		public static void EloRating(double oldEloWin, double oldEloLoose, out double newEloWin, out double newEloLoose, int Ga, int Gb, bool draw)
 		{
 			double Kmin = 0xf;
 			double Kmax = 0x3f;
@@ -192,33 +191,45 @@ namespace RapChessGui
 			double Kb = Gb / FormOptions.historyLength;
 			Ka = (Ka * Kmin) + ((1 - Ka) * Kmax);
 			Kb = (Kb * Kmin) + ((1 - Kb) * Kmax);
-			Na = 0;
-			Nb = 0;
-			double Pb = Probability(Ra, Rb);
-			double Pa = Probability(Rb, Ra);
-			if (d > 0)
+			double Pb = Probability(oldEloWin, oldEloLoose);
+			double Pa = Probability(oldEloLoose, oldEloWin);
+			if (draw)
 			{
-				Na = Convert.ToInt32(Ra + Ka * (1 - Pa));
-				Nb = Convert.ToInt32(Rb + Kb * (0 - Pb));
+				newEloWin = oldEloWin + Ka * (0.5 - Pa);
+				newEloLoose = oldEloLoose + Kb * (0.5 - Pb);
 			}
-			if (d < 0)
+			else
 			{
-				Na = Convert.ToInt32(Ra + Ka * (0 - Pa));
-				Nb = Convert.ToInt32(Rb + Kb * (1 - Pb));
+				newEloWin = oldEloWin + Ka * (1 - Pa);
+				newEloLoose = oldEloLoose + Kb * (0 - Pb);
+				double dif = oldEloWin - oldEloLoose;
+				if (oldEloWin > oldEloLoose)
+					if (dif > 300)
+					{
+						newEloWin = oldEloWin;
+						newEloLoose = oldEloLoose;
+					}
+					else
+					{
+						newEloWin = oldEloWin + ((newEloWin - oldEloWin) * (300 - dif)) / 300;
+						newEloLoose = oldEloLoose + ((newEloLoose - oldEloLoose) * (300 - dif)) / 300;
+					}
 			}
-			if (d == 0)
-			{
-				Na = Convert.ToInt32(Ra + Ka * (0.5 - Pa));
-				Nb = Convert.ToInt32(Rb + Kb * (0.5 - Pb));
-			}
-			if (Na > eloMax)
-				Na = eloMax;
-			if (Nb > eloMax)
-				Nb = eloMax;
-			if (Na < eloMin)
-				Na = eloMin;
-			if (Nb < eloMin)
-				Nb = eloMin;
+			if (newEloWin > eloMax)
+				newEloWin = eloMax;
+			if (newEloLoose > eloMax)
+				newEloLoose = eloMax;
+			if (newEloWin < eloMin)
+				newEloWin = eloMin;
+			if (newEloLoose < eloMin)
+				newEloLoose = eloMin;
+		}
+
+		public static void EloRating(double oldEloWin, double oldEloLoose, out int newEloWin, out int newEloLoose, int Ga, int Gb, bool draw)
+		{
+			EloRating(oldEloWin, oldEloLoose, out double dNewEloA, out double dNewEloB, Ga, Gb, draw);
+			newEloWin = Convert.ToInt32(dNewEloA);
+			newEloLoose = Convert.ToInt32(dNewEloB);
 		}
 
 	}
@@ -407,7 +418,7 @@ namespace RapChessGui
 			string string_x;
 			if (item_x.SubItems.Count <= ColumnNumber)
 			{
-				string_x = "";
+				string_x = String.Empty;
 			}
 			else
 			{
@@ -417,7 +428,7 @@ namespace RapChessGui
 			string string_y;
 			if (item_y.SubItems.Count <= ColumnNumber)
 			{
-				string_y = "";
+				string_y = String.Empty;
 			}
 			else
 			{

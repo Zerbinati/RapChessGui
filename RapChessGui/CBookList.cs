@@ -90,6 +90,13 @@ namespace RapChessGui
 			return Convert.ToInt32(elo);
 		}
 
+		public void NewElo(int e)
+		{
+			hisElo.AddValue(e);
+			elo = e.ToString();
+			SaveToIni();
+		}
+
 		public string CreateName()
 		{
 			string n = CData.MakeShort(Path.GetFileNameWithoutExtension(file));
