@@ -763,5 +763,14 @@ namespace RapChessGui
 				g.Undo();
 		}
 
+		public CPlayer GetHuman()
+		{
+			foreach (CGamer g in gamers)
+				if (g.player.IsHuman())
+					return g.player;
+			return null;
+		}
+
+
 	}
 }

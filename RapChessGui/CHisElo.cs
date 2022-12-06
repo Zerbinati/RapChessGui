@@ -28,6 +28,13 @@ namespace RapChessGui
 			return Last() - EloAvg();
 		}
 
+		public int LastChange()
+		{
+			if (Count < 3)
+				return 0;
+			return Last() - Penultimate();
+		}
+
 		public Color GetColor()
 		{
 			double elo = Last();
@@ -66,10 +73,16 @@ namespace RapChessGui
 
 		public int Last()
 		{
-			if (Count > 0)
-				return this[Count - 1];
-			else
+			if (Count < 1)
 				return 0;
+			return this[Count - 1];
+		}
+
+		public int Penultimate()
+		{
+			if (Count < 2)
+				return 0;
+			return this[Count - 2];
 		}
 
 		public void MinMax(out int min, out int max)

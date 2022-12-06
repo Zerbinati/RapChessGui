@@ -501,48 +501,57 @@ namespace RapChessGui
 			CPlayer pw = gw.player;
 			CPlayer pl = gl.player;
 			CColor winColor = gw.isWhite ? CColor.white : CColor.black;
+			string infoMsg = String.Empty;
+			Color infoCol = Color.Silver;
 			switch (CData.gameState)
 			{
 				case CGameState.mate:
-					ShowInfo(gw.GetName() + " win", Color.Lime, 2);
+					infoMsg = $"{pw.name} win";
+					infoCol = Color.Lime;
 					break;
 				case CGameState.stalemate:
 					winColor = CColor.none;
-					ShowInfo("Stalemate", Color.Yellow, 2);
+					infoMsg = "Stalemate";
+					infoCol = Color.Yellow;
 					break;
 				case CGameState.repetition:
 					winColor = CColor.none;
-					ShowInfo("Threefold repetition", Color.Yellow, 2);
+					infoMsg = "Threefold repetition";
+					infoCol = Color.Yellow;
 					break;
 				case CGameState.move50:
 					winColor = CColor.none;
+					infoMsg = "Fifty-move rule";
+					infoCol = Color.Yellow;
 					ShowInfo("Fifty-move rule", Color.Yellow, 2);
 					break;
 				case CGameState.material:
 					winColor = CColor.none;
+					infoMsg = "Fifty-move rule";
+					infoCol = Color.Yellow;
 					ShowInfo("Insufficient material", Color.Yellow, 2);
 					break;
 				case CGameState.resignation:
-					ShowInfo($"{pl.name} resign", Color.Red, 2);
+					infoMsg = $"{pl.name} resign";
+					infoCol = Color.Red;
 					break;
 				case CGameState.time:
 					CData.gamesTime++;
-					ShowInfo($"{pl.name} time out", Color.Red, 2);
+					infoMsg = $"{pl.name} time out";
+					infoCol = Color.Yellow;
 					log.Add($"Time out {pl.name} {chess.GetFen()}");
 					FormLogEngines.AppendText($"Time out {pl.name}\n", Color.Red);
 					break;
 				case CGameState.error:
 					CData.gamesError++;
 					labError.Show();
-					ShowInfo($"{pl.name} make wrong move", Color.Red, 2);
+					infoMsg = $"{pl.name} make wrong move";
+					infoCol = Color.Red;
 					log.Add($"Wrong move {pl.name} ({umo}) {chess.GetFen()}");
 					FormLogEngines.AppendText($"Wrong move: ({umo})\n", Color.Red);
 					FormLogEngines.AppendText($"Fen: {chess.GetFen()}\n", Color.Black);
 					break;
 			}
-			labResult.Text = tssInfo.Text;
-			labResult.ForeColor = tssInfo.ForeColor;
-			labResult.Show();
 			CGamer gWhi = GamerList.GamerWhite();
 			CGamer gBla = GamerList.GamerBlack();
 			FormLogEngines.AppendTimeText($" White: {gWhi.player.name}\n", Color.DimGray);
@@ -574,6 +583,13 @@ namespace RapChessGui
 					TrainingEnd(gw, winColor == CColor.none);
 				Task.Delay(FormOptions.gameBreak * 1000).ContinueWith(t => CWinMessage.Message(WM_GAME_NEXT));
 			}
+			CPlayer human = GamerList.GetHuman();
+			if(human!=null)
+				infoMsg = $"{infoMsg} elo {human.elo} ({human.hisElo.LastChange():+#;-#;0})";
+			ShowInfo(infoMsg, infoCol, 2);
+			labResult.Text = tssInfo.Text;
+			labResult.ForeColor = tssInfo.ForeColor;
+			labResult.Show();
 		}
 
 		public void BoardPrepare()
@@ -794,7 +810,6 @@ namespace RapChessGui
 						SetGameState(CGameState.resignation, g);
 					else if (g.isPrepareFinished && Char.IsDigit(uci.tokens[0][0]) && (uci.tokens.Length > 4))
 					{
-						ulong nps = 0;
 						try
 						{
 							g.depth = Int32.Parse(uci.tokens[0]);
@@ -802,15 +817,15 @@ namespace RapChessGui
 							g.scoreI = Convert.ToInt32(g.strScore);
 							g.infMs = (ulong)Convert.ToInt64(uci.tokens[2]) * 10;
 							g.nodes = (ulong)Convert.ToInt64(uci.tokens[3]);
-							nps = g.infMs > 0 ? (g.nodes * 1000) / g.infMs : 0;
+							ulong nps = g.infMs > 0 ? (g.nodes * 1000) / g.infMs : 0;
+							if (nps > 0)
+								g.nps = nps;
 							SetPv(4, g);
 						}
 						catch
 						{
 							log.Add($"{g.player.name} ({g.player.engine}) ({msg})");
 						}
-						if (nps > 0)
-							g.nps = nps;
 					}
 					break;
 			}
@@ -1667,14 +1682,14 @@ namespace RapChessGui
 				int eloW = pw.GetElo();
 				int eloL = pl.GetElo();
 				CElo.EloRating(eloW, eloL, out int newW, out int newL, pw.hisElo.Count, pl.hisElo.Count, isDraw);
-				if (pw.IsComputer())
-					pw.NewElo(newW);
-				if (pl.IsComputer())
-					pl.NewElo(newL);
+				pw.NewElo(newW);
+				pl.NewElo(newL);
+				if (pw.IsHuman())
+					pw.elo = newW.ToString();
+				else
+					pl.elo = newL.ToString();
 				ShowLastGame(true);
 			}
-			else
-				SetUnranked();
 		}
 
 		#endregion

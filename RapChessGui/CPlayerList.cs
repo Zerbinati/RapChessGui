@@ -28,9 +28,12 @@ namespace RapChessGui
 
 		public void NewElo(int e)
 		{
-			hisElo.AddValue(e);
-			elo = e.ToString();
-			SaveToIni();
+			if (IsComputer())
+			{
+				hisElo.AddValue(e);
+				elo = e.ToString();
+				SaveToIni();
+			}
 		}
 
 		public string Check()
