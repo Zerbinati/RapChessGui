@@ -583,9 +583,20 @@ namespace RapChessGui
 					TrainingEnd(gw, winColor == CColor.none);
 				Task.Delay(FormOptions.gameBreak * 1000).ContinueWith(t => CWinMessage.Message(WM_GAME_NEXT));
 			}
-			CPlayer human = GamerList.GetHuman();
-			if(human!=null)
-				infoMsg = $"{infoMsg} elo {human.elo} ({human.hisElo.LastChange():+#;-#;0})";
+			CPlayer hu = GamerList.GetHuman();
+			if ((hu != null) && (CModeGame.ranked))
+			{
+				string elo = hu.hisElo.LastChange().ToString("+#;-#;0");
+				elo = $"elo {hu.elo} ({elo})";
+				if (winColor == CColor.none)
+					infoMsg = $"{infoMsg} {elo}";
+				else if(hu == pl) 
+				{
+					infoMsg = $"You lost new {elo}";
+					infoCol = Color.Red;
+				}else
+					infoMsg = $"You win new {elo}";
+			}
 			ShowInfo(infoMsg, infoCol, 2);
 			labResult.Text = tssInfo.Text;
 			labResult.ForeColor = tssInfo.ForeColor;
@@ -943,7 +954,7 @@ namespace RapChessGui
 			if (CModeGame.ranked == true)
 			{
 				CModeGame.ranked = false;
-				CModeGame.humanPlayer.elo = CModeGame.humanPlayer.eloOrg;
+				CModeGame.humanPlayer.elo = CModeGame.humanPlayer.hisElo.Last().ToString();
 				CModeGame.SaveToIni();
 			}
 			ShowAutoElo();
@@ -991,31 +1002,17 @@ namespace RapChessGui
 			}
 		}
 
-		bool ShowLastGame(bool changeProgress = false)
+		bool ShowLastGame()
 		{
-			bool result = false;
+			if (CModeGame.Finished)
+				return false;
 			CPlayer hu = CModeGame.humanPlayer;
-			int eloCur = Convert.ToInt32(hu.elo);
-			int eloOld = Convert.ToInt32(hu.eloOrg);
-			int eloDel = eloCur - eloOld;
-			if (eloDel > 0)
-			{
-				result = true;
-				ShowInfo($"Yours new elo is {hu.elo} (+{eloDel})", Color.FromArgb(0, 0xff, 0));
-			}
-			if (eloDel < 0)
-			{
-				result = true;
-				ShowInfo($"Yours new elo is {hu.elo} ({eloDel})", Color.FromArgb(0xff, 0, 0));
-			}
-			if (result || changeProgress)
-			{
-				hu.hisElo.AddValue(Convert.ToInt32(hu.elo));
-				CData.HisToPoints(hu.hisElo, chartGame.Series[0].Points);
-			}
-			hu.eloOrg = hu.elo;
-			CModeGame.SaveToIni();
-			return result;
+			hu.NewElo(hu.GetEloLess());
+			int oe = hu.hisElo.Penultimate();
+			int ne = hu.hisElo.Last();
+			ShowInfo($"Yours new elo is {ne} ({ne - oe})", Color.Red);
+			CModeGame.Finished = true;
+			return true;
 		}
 
 		void ShowFormLastGame(string name)
@@ -1158,17 +1155,13 @@ namespace RapChessGui
 			double m = GamerList.curIndex == 0 ? 0.01 : -0.01;
 			chartMain.Series[GamerList.curIndex].Points.Add(cg.scoreI * m);
 			if (GetRanked() && CModeGame.ranked && (cg.engine == null) && ((chess.halfMove >> 1) == 4))
-			{
-				cg.player.eloOrg = cg.player.elo;
-				cg.player.elo = cg.player.GetEloLess().ToString();
-				cg.player.SaveToIni();
-			}
+				CModeGame.Finished = false;
 			if (!chess.IsValidMove(umo, out umo, out int emo))
 			{
 				SetGameState(CGameState.error, cg, umo);
 				return false;
 			}
-			PlaySound(chess.IsCapture(emo),chess.IsCastling(emo),chess.IsCheck(emo));
+			PlaySound(chess.IsCapture(emo), chess.IsCastling(emo), chess.IsCheck(emo));
 			cg.MoveDone();
 			string san = chess.UmoToSan(umo);
 			CChess.UmoToSD(umo, out CDrag.lastSou, out CDrag.lastDes);
@@ -1675,20 +1668,14 @@ namespace RapChessGui
 
 		void GameEnd(CPlayer pw, CPlayer pl, bool isDraw)
 		{
-			if (GetRanked() && CModeGame.ranked)
+			if (CModeGame.ranked && GetRanked())
 			{
-				pw.elo = pw.eloOrg;
-				pl.elo = pl.eloOrg;
 				int eloW = pw.GetElo();
 				int eloL = pl.GetElo();
-				CElo.EloRating(eloW, eloL, out int newW, out int newL, pw.hisElo.Count, pl.hisElo.Count, isDraw);
+				CElo.EloRating(eloW,eloL, out int newW, out int newL, pw.hisElo.Count, pl.hisElo.Count, isDraw);
 				pw.NewElo(newW);
 				pl.NewElo(newL);
-				if (pw.IsHuman())
-					pw.elo = newW.ToString();
-				else
-					pl.elo = newL.ToString();
-				ShowLastGame(true);
+				CModeGame.Finished = true;
 			}
 		}
 
@@ -2856,11 +2843,8 @@ namespace RapChessGui
 
 		private void butResignation_Click(object sender, EventArgs e)
 		{
-			if (GetRanked() && IsGameLong() && IsGameProgress())
-			{
-				CPlayer hu = CModeGame.humanPlayer;
-				hu.elo = hu.GetEloLess().ToString();
-			}
+			if (!GetRanked() || !IsGameLong() || !IsGameProgress())
+				CModeGame.ranked = false;
 			SetGameState(CGameState.resignation);
 		}
 

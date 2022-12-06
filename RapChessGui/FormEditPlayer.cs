@@ -106,7 +106,6 @@ namespace RapChessGui
 			p.book = cbBookList.Text;
 			p.SetTournament((int)nudTournament.Value);
 			p.elo = nudElo.Value.ToString();
-			p.eloOrg = p.elo;
 			p.modeValue.level = modeValue.level;
 			p.modeValue.value = modeValue.value;
 		}

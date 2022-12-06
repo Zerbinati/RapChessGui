@@ -13,7 +13,6 @@ namespace RapChessGui
 		public string engine = Global.none;
 		public string book = Global.none;
 		public string elo = "1000";
-		public string eloOrg = "1000";
 		public CModeValue modeValue = new CModeValue();
 		public CHisElo hisElo = new CHisElo();
 
@@ -28,12 +27,10 @@ namespace RapChessGui
 
 		public void NewElo(int e)
 		{
+			hisElo.AddValue(e);
+			elo = e.ToString();
 			if (IsComputer())
-			{
-				hisElo.AddValue(e);
-				elo = e.ToString();
 				SaveToIni();
-			}
 		}
 
 		public string Check()
@@ -78,9 +75,9 @@ namespace RapChessGui
 			int levelDif = 2000 / FormChess.playerList.list.Count;
 			if (levelDif < 10)
 				levelDif = 10;
-			int result = Convert.ToInt32(eloOrg) - levelDif;
-			if (result < 0)
-				result = 0;
+			int result = Convert.ToInt32(elo) - levelDif;
+			if (result < CElo.eloMin)
+				result = CElo.eloMin;
 			return result;
 		}
 
@@ -89,7 +86,10 @@ namespace RapChessGui
 			int levelDif = 2000 / FormChess.playerList.list.Count;
 			if (levelDif < 10)
 				levelDif = 10;
-			return Convert.ToInt32(eloOrg) + levelDif;
+			int result = Convert.ToInt32(elo) + levelDif;
+			if (result > CElo.eloMax)
+				result = CElo.eloMax;
+			return result;
 		}
 
 		public int GetElo()
@@ -156,7 +156,6 @@ namespace RapChessGui
 			modeValue.value = CPlayerList.iniFile.ReadInt($"player>{name}>value", modeValue.value);
 			book = CPlayerList.iniFile.Read($"player>{name}>book", Global.none);
 			elo = CPlayerList.iniFile.Read($"player>{name}>elo", elo);
-			eloOrg = CPlayerList.iniFile.Read($"player>{name}>eloOrg", eloOrg);
 			hisElo.LoadFromStr(CPlayerList.iniFile.Read($"player>{name}>history"));
 		}
 
@@ -175,7 +174,6 @@ namespace RapChessGui
 			CPlayerList.iniFile.Write($"player>{name}>value", modeValue.value);
 			CPlayerList.iniFile.Write($"player>{name}>book", book);
 			CPlayerList.iniFile.Write($"player>{name}>elo", elo);
-			CPlayerList.iniFile.Write($"player>{name}>eloOrg", eloOrg);
 			CPlayerList.iniFile.Write($"player>{name}>history", hisElo.SaveToStr());
 		}
 
