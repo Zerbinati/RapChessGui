@@ -23,6 +23,7 @@ namespace RapChessGui
 		public static int marginTime = 5000;
 		public static int winLimit = 1;
 		public static int tourEValue = 100;
+		public static string gameBook = Global.none;
 		public static string tourEMode = "Time";
 		public static string tourBSelected = Global.none;
 		public static string tourESelected = Global.none;
@@ -41,9 +42,11 @@ namespace RapChessGui
 
 		public void LoadFromIni()
 		{
+			gameBook = FormChess.iniFile.Read("options>mode>game>book", tourEBook);
+			nudBreak.Value = FormChess.iniFile.ReadDecimal("options>mode>game>break", nudBreak.Value);
 			tourBSelected = FormChess.iniFile.Read("options>mode>tourB>Selected", tourBSelected);
 			tourESelected = FormChess.iniFile.Read("options>mode>tourE>Selected", tourESelected);
-			tourEBook = FormChess.iniFile.Read("options>mode>tourE>Book", tourEBook);
+			tourEBook = FormChess.iniFile.Read("options>mode>tourE>book", tourEBook);
 			nudTourE.Value = FormChess.iniFile.ReadDecimal("options>mode>tourE>Value", tourEValue);
 			cbTourEMode.Text = FormChess.iniFile.Read("options>mode>tourE>Mode", tourEMode);
 			tourPSelected = FormChess.iniFile.Read("options>mode>tourP>Selected", tourPSelected);
@@ -56,7 +59,6 @@ namespace RapChessGui
 			cbTips.Checked = FormChess.iniFile.ReadBool("options>interface>tips", cbTips.Checked);
 			cbSound.Checked = FormChess.iniFile.ReadBool("options>interface>sound", cbSound.Checked);
 			cbSpam.Checked = FormChess.iniFile.ReadBool("options>interface>spam", cbSpam.Checked);
-			nudBreak.Value = FormChess.iniFile.ReadDecimal("options>mode>game>brak", nudBreak.Value);
 			nudTraining.Value = FormChess.iniFile.ReadDecimal("options>mode>training>strength", nudTraining.Value);
 			nudHistory.Value = FormChess.iniFile.ReadDecimal("options>interface>history", nudHistory.Value);
 			nudSpeed.Value = FormChess.iniFile.ReadDecimal("options>interface>speed", nudSpeed.Value);
@@ -72,6 +74,8 @@ namespace RapChessGui
 
 		public void SaveToIni()
 		{
+			FormChess.iniFile.Write("options>mode>game>book", gameBook);
+			FormChess.iniFile.Write("options>mode>game>break", nudBreak.Value);
 			FormChess.iniFile.Write("options>mode>tourB>Selected", tourBSelected);
 			FormChess.iniFile.Write("options>mode>tourE>Selected", tourESelected);
 			FormChess.iniFile.Write("options>mode>tourE>Book", tourEBook);
@@ -87,7 +91,6 @@ namespace RapChessGui
 			FormChess.iniFile.Write("options>interface>tips", cbTips.Checked);
 			FormChess.iniFile.Write("options>interface>sound", cbSound.Checked);
 			FormChess.iniFile.Write("options>interface>spam", cbSpam.Checked);
-			FormChess.iniFile.Write("options>mode>game>brak", nudBreak.Value);
 			FormChess.iniFile.Write("options>mode>training>strength", nudTraining.Value);
 			FormChess.iniFile.Write("options>interface>history", nudHistory.Value);
 			FormChess.iniFile.Write("options>interface>speed", nudSpeed.Value);
@@ -106,26 +109,30 @@ namespace RapChessGui
 				ListViewItem lvi = new ListViewItem(new[] { db.dir, db.book });
 				lvBooks.Items.Add(lvi);
 			}
-
 			cbBookReader.Items.Clear();
 			cbBookReader.Items.Add(Global.none);
 			foreach (string book in CData.fileBook)
 				cbBookReader.Items.Add(book);
 			cbBookReader.SelectedIndex = 0;
-
+			cbGameBook.Items.Clear();
 			cbTourBSelected.Items.Clear();
 			cbTourEBook.Items.Clear();
+			cbGameBook.Sorted = true;
 			cbTourBSelected.Sorted = true;
 			cbTourEBook.Sorted = true;
 			foreach (CBook b in FormChess.bookList)
 			{
+				cbGameBook.Items.Add(b.name);
 				cbTourBSelected.Items.Add(b.name);
 				cbTourEBook.Items.Add(b.name);
 			}
+			cbGameBook.Sorted = false;
 			cbTourBSelected.Sorted = false;
 			cbTourEBook.Sorted = false;
+			cbGameBook.Items.Insert(0,Global.none);
 			cbTourBSelected.Items.Insert(0, Global.none);
 			cbTourEBook.Items.Add(Global.none);
+			cbGameBook.SelectedIndex = 0;
 			cbTourBSelected.SelectedIndex = 0;
 			cbTourEBook.SelectedIndex = 0;
 
@@ -147,6 +154,7 @@ namespace RapChessGui
 
 			LoadFromIni();
 
+			CData.ComboSelect(cbGameBook, gameBook);
 			CData.ComboSelect(cbTourBSelected, tourBSelected);
 			CData.ComboSelect(cbTourESelected, tourESelected);
 			CData.ComboSelect(cbTourEBook, tourEBook);
@@ -404,5 +412,9 @@ namespace RapChessGui
 			tourEValue = (int)nudTourE.Value;
 		}
 
+		private void cbGameBook_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			gameBook = cbGameBook.Text;
+		}
 	}
 }

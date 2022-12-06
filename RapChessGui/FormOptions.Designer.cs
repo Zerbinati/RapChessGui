@@ -112,6 +112,8 @@
 			this.labTourP = new System.Windows.Forms.Label();
 			this.label2 = new System.Windows.Forms.Label();
 			this.nudTourPRec = new System.Windows.Forms.NumericUpDown();
+			this.groupBox5 = new System.Windows.Forms.GroupBox();
+			this.cbGameBook = new System.Windows.Forms.ComboBox();
 			this.gbInterface.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.nudFontSize)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.nudHistory)).BeginInit();
@@ -148,6 +150,7 @@
 			((System.ComponentModel.ISupportInitialize)(this.nudTourPMin)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.nudTourPMax)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.nudTourPRec)).BeginInit();
+			this.groupBox5.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// butDefault
@@ -649,7 +652,7 @@
 			this.groupBox2.Controls.Add(this.label12);
 			this.groupBox2.Controls.Add(this.nudTraining);
 			this.groupBox2.Dock = System.Windows.Forms.DockStyle.Top;
-			this.groupBox2.Location = new System.Drawing.Point(0, 100);
+			this.groupBox2.Location = new System.Drawing.Point(0, 146);
 			this.groupBox2.Name = "groupBox2";
 			this.groupBox2.Size = new System.Drawing.Size(365, 48);
 			this.groupBox2.TabIndex = 14;
@@ -691,7 +694,7 @@
 			this.gbMatch.Controls.Add(this.label7);
 			this.gbMatch.Controls.Add(this.nudBreak);
 			this.gbMatch.Dock = System.Windows.Forms.DockStyle.Top;
-			this.gbMatch.Location = new System.Drawing.Point(0, 52);
+			this.gbMatch.Location = new System.Drawing.Point(0, 98);
 			this.gbMatch.Name = "gbMatch";
 			this.gbMatch.Size = new System.Drawing.Size(365, 48);
 			this.gbMatch.TabIndex = 15;
@@ -735,12 +738,13 @@
 			// 
 			// gbGame
 			// 
+			this.gbGame.Controls.Add(this.groupBox5);
 			this.gbGame.Controls.Add(this.cbRotateBoard);
 			this.gbGame.Controls.Add(this.cbGameAutoElo);
 			this.gbGame.Dock = System.Windows.Forms.DockStyle.Top;
 			this.gbGame.Location = new System.Drawing.Point(0, 0);
 			this.gbGame.Name = "gbGame";
-			this.gbGame.Size = new System.Drawing.Size(365, 52);
+			this.gbGame.Size = new System.Drawing.Size(365, 98);
 			this.gbGame.TabIndex = 7;
 			this.gbGame.TabStop = false;
 			this.gbGame.Text = "Game";
@@ -1320,6 +1324,29 @@
             0,
             0});
 			// 
+			// groupBox5
+			// 
+			this.groupBox5.Controls.Add(this.cbGameBook);
+			this.groupBox5.Dock = System.Windows.Forms.DockStyle.Top;
+			this.groupBox5.Location = new System.Drawing.Point(3, 50);
+			this.groupBox5.Name = "groupBox5";
+			this.groupBox5.Size = new System.Drawing.Size(359, 44);
+			this.groupBox5.TabIndex = 31;
+			this.groupBox5.TabStop = false;
+			this.groupBox5.Text = "Book";
+			// 
+			// cbGameBook
+			// 
+			this.cbGameBook.Cursor = System.Windows.Forms.Cursors.Hand;
+			this.cbGameBook.Dock = System.Windows.Forms.DockStyle.Top;
+			this.cbGameBook.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.cbGameBook.FormattingEnabled = true;
+			this.cbGameBook.Location = new System.Drawing.Point(3, 16);
+			this.cbGameBook.Name = "cbGameBook";
+			this.cbGameBook.Size = new System.Drawing.Size(353, 21);
+			this.cbGameBook.TabIndex = 51;
+			this.cbGameBook.SelectedIndexChanged += new System.EventHandler(this.cbGameBook_SelectedIndexChanged);
+			// 
 			// FormOptions
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1382,6 +1409,7 @@
 			((System.ComponentModel.ISupportInitialize)(this.nudTourPMin)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.nudTourPMax)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.nudTourPRec)).EndInit();
+			this.groupBox5.ResumeLayout(false);
 			this.ResumeLayout(false);
 
 		}
@@ -1471,5 +1499,7 @@
 		private System.Windows.Forms.GroupBox groupBox8;
 		private System.Windows.Forms.NumericUpDown nudTourE;
 		private System.Windows.Forms.ComboBox cbTourEMode;
+		private System.Windows.Forms.GroupBox groupBox5;
+		private System.Windows.Forms.ComboBox cbGameBook;
 	}
 }

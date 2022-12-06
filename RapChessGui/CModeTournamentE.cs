@@ -142,15 +142,12 @@ namespace RapChessGui
 			double ratioElo = (Math.Abs(sElo - nElo) / CElo.eloRange) * (1.0 - ar);
 			if (curGames == 0)
 				ratioElo = 0;
-			if ((r > 0) && (nElo > sElo))
-				ratioElo = 0;
-			if ((r < 0) && (nElo < sElo))
-				ratioElo = 0;
 			if ((r > 0) && (sElo < fElo))
 				ratioScore = 1;
 			if ((r < 0) && (sElo > fElo))
 				ratioScore = 1;
-			double maxCount = Math.Sqrt(allGames * 2 + 1);
+			double avgCount = allGames / engineList.Count;
+			double maxCount = avgCount * 2 + 1;
 			double optCount = (maxCount * (engineList.Count - second.position)) / engineList.Count;
 			double ratioDistance = (optCount - curGames) / maxCount;
 			return ratioDistance + ratioElo + ratioScore;

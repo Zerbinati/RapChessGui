@@ -1633,8 +1633,9 @@ namespace RapChessGui
 				pc.modeValue.value = CModeGame.modeValue.value;
 			}
 			else
-				pc = playerList.GetPlayerByElo(CModeGame.humanPlayer.GetElo());
-			GamerList.gamers[1].SetPlayer(pc);
+			pc = playerList.GetPlayerByElo(CModeGame.humanPlayer.GetElo());
+			CGamer g = GamerList.gamers[1];
+			g.SetPlayer(pc,FormOptions.gameBook==Global.none?pc.book:FormOptions.gameBook);
 		}
 
 		void GameStart()

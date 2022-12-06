@@ -235,7 +235,7 @@ namespace RapChessGui
 
 		public string GetName()
 		{
-			if (player.name == "")
+			if (player.name == String.Empty)
 				return isWhite ? "White" : "Black";
 			else
 				return player.name;
@@ -261,7 +261,7 @@ namespace RapChessGui
 
 		public string GetEngineName()
 		{
-			return engine == null ? "None" : engine.name;
+			return engine == null ? Global.none : engine.name;
 		}
 
 		/// <summary>
@@ -474,9 +474,9 @@ namespace RapChessGui
 
 		public string GetBook()
 		{
-			if (player == null)
+			if (book == null)
 				return "Book";
-			return player.book;
+			return book.name;
 		}
 
 		public string GetMode()
@@ -579,18 +579,19 @@ namespace RapChessGui
 
 		public void SetPlayer(CPlayer p)
 		{
+			SetPlayer(p,p.book);
+		}
+
+		public void SetPlayer(CPlayer p,string b)
+		{
 			player = p;
-			book = FormChess.bookList.GetBookByName(p.book);
+			book = FormChess.bookList.GetBookByName(b);
 			engine = FormChess.engineList.GetEngineByName(p.engine);
 			bookPro.Terminate();
 			enginePro.Terminate();
-			if (book == null)
-				p.book = Global.none;
-			else
+			if (book != null)
 				bookPro.SetProgram($@"{AppDomain.CurrentDomain.BaseDirectory}Books\{book.file}", book.GetParameters(engine));
-			if (engine == null)
-				p.engine = Global.none;
-			else
+			if (engine != null)
 				enginePro.SetProgram($@"{AppDomain.CurrentDomain.BaseDirectory}Engines\{engine.file}", engine.parameters, FormOptions.spamOff);
 		}
 
