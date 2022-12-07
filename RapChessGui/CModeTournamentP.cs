@@ -62,11 +62,11 @@ namespace RapChessGui
 
 		public static CPlayerList FillList()
 		{
-			playerList.list.Clear();
-			foreach (CPlayer p in FormChess.playerList.list)
+			playerList.Clear();
+			foreach (CPlayer p in FormChess.playerList)
 				if ((p.tournament > 0) && p.IsComputer())
 					if ((p.GetElo() >= minElo) && (p.GetElo() <= maxElo))
-						playerList.Add(p);
+						playerList.AddPlayer(p);
 			return playerList;
 		}
 
@@ -75,7 +75,7 @@ namespace RapChessGui
 		{
 			int count = 0;
 			CPlayer result = null;
-			foreach (CPlayer p in playerList.list)
+			foreach (CPlayer p in playerList)
 			{
 				int c = tourList.LastGame(p.name);
 				if (count <= c)
@@ -105,7 +105,7 @@ namespace RapChessGui
 		{
 			playerList.SortPosition(player);
 			List<CPlayer> pl = new List<CPlayer>();
-			foreach (CPlayer p in playerList.list)
+			foreach (CPlayer p in playerList)
 				if ((p != player) && (p.engine != "Human"))
 					pl.Add(p);
 			if (pl.Count == 0)

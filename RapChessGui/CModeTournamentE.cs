@@ -60,11 +60,17 @@ namespace RapChessGui
 				avg = eng.GetElo();
 			int eloMin = avg - eloRange;
 			int eloMax = avg + eloRange;
-			if ((eloRange == 0) || (avg == 0))
-			{
-				eloMin = 0;
-				eloMax = 3000;
-			}
+			if ((eloRange == 0) || (eloAvg == 0))
+				if (eloAvg > 0)
+				{
+					eloMin = avg - eloAvg;
+					eloMax = avg + eloAvg;
+				}
+				else
+				{
+					eloMin = 0;
+					eloMax = 3000;
+				}
 			level = modeValue.level;
 			engineList.Clear();
 			foreach (CEngine e in FormChess.engineList)

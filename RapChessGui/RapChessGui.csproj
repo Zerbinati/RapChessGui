@@ -111,7 +111,7 @@
     <Compile Include="CBookList.cs" />
     <Compile Include="CData.cs" />
     <Compile Include="CChess.cs" />
-    <Compile Include="CDirBookList.cs" />
+    <Compile Include="CReaderList.cs" />
     <Compile Include="CEcoList.cs" />
     <Compile Include="CEngineList.cs" />
     <Compile Include="CExtensions.cs" />

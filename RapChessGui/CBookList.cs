@@ -122,7 +122,7 @@ namespace RapChessGui
 
 	public class CBookList : List<CBook>
 	{
-		public static string def = "Eco";
+		public static string def = "BRE Bigest";
 		public static CRapIni iniFile = new CRapIni(@"Ini\books.ini");
 
 		public void AddBook(CBook b)
@@ -260,7 +260,7 @@ namespace RapChessGui
 
 		void TryAdd(string bf, string bp)
 		{
-			if ((bf != Global.none) && !ParametersExists(bp))
+			if ((bf != String.Empty) && !ParametersExists(bp))
 			{
 				CBook b = new CBook();
 				b.file = bf;
@@ -296,8 +296,8 @@ namespace RapChessGui
 
 		public void Update()
 		{
-			foreach (CDirBook db in FormChess.dirBookList)
-				Update(db.dir, db.book);
+			foreach (CReader db in FormChess.readerList)
+				Update(db.dir, db.bookReader);
 			SaveToIni();
 		}
 

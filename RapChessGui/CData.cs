@@ -11,7 +11,6 @@ namespace RapChessGui
 	public enum CGameMode { game, match, tourB, tourE, tourP, training, edit }
 	public enum CProtocol { uci, winboard, auto, unknow }
 	public enum CLevel { standard, time, depth, nodes, infinite }
-
 	public enum CColor { none, white, black }
 
 	public static class CWinMessage
@@ -67,10 +66,9 @@ namespace RapChessGui
 		public static string eco = String.Empty;
 		public static CGameState gameState = CGameState.normal;
 		public static CGameMode gameMode = CGameMode.game;
-		public static List<string> fileBook = new List<string>();
+		public static List<string> bookReader = new List<string>();
 		public static List<string> fileEngine = new List<string>();
 		public static List<string> fileEngineAuto = new List<string>();
-
 		public static void Clear()
 		{
 			gamesPlayed = 0;
@@ -139,14 +137,14 @@ namespace RapChessGui
 			return result;
 		}
 
-		public static void UpdateFileBook()
+		public static void UpdateBookReader()
 		{
-			fileBook.Clear();
+			bookReader.Clear();
 			string[] arrBooks = Directory.GetFiles("Books", "*.exe");
 			for (int n = 0; n < arrBooks.Length; n++)
 			{
 				string fn = Path.GetFileName(arrBooks[n]);
-				fileBook.Add(fn);
+				bookReader.Add(fn);
 			}
 		}
 

@@ -112,7 +112,7 @@ namespace RapChessGui
 		{
 			cbBookreaderList.Items.Clear();
 			cbBookreaderList.Sorted = true;
-			foreach (string book in CData.fileBook)
+			foreach (string book in CData.bookReader)
 				cbBookreaderList.Items.Add(book);
 			cbBookreaderList.Sorted = false;
 			cbBookreaderList.Items.Insert(0, "None");

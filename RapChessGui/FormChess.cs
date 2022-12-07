@@ -35,7 +35,7 @@ namespace RapChessGui
 		string continuations = String.Empty;
 		List<int> moves = new List<int>();
 		public static CRapIni iniFile = new CRapIni(@"Ini\options.ini");
-		public static CDirBookList dirBookList = new CDirBookList();
+		public static CReaderList readerList = new CReaderList();
 		readonly CBoard Board = new CBoard();
 		readonly CEcoList EcoList = new CEcoList();
 		readonly CUci uci = new CUci();
@@ -94,7 +94,7 @@ namespace RapChessGui
 			CreateDir("History");
 			CreateDir("Ini");
 			CData.UpdateFileEngine();
-			CData.UpdateFileBook();
+			CData.UpdateBookReader();
 			int fontLength = Properties.Resources.ChessPiece.Length;
 			byte[] fontData = Properties.Resources.ChessPiece;
 			IntPtr data = Marshal.AllocCoTaskMem(fontLength);
@@ -146,10 +146,10 @@ namespace RapChessGui
 			Location = new Point(x, y);
 			if (iniFile.ReadBool("position>maximized", false))
 				WindowState = FormWindowState.Maximized;
+			readerList.LoadFromIni();
 			bookList.LoadFromIni();
 			engineList.LoadFromIni();
 			playerList.LoadFromIni();
-			dirBookList.LoadFromIni();
 			CModeGame.LoadFromIni();
 			CModeMatch.LoadFromIni();
 			CModeTournamentB.LoadFromIni();
@@ -2135,7 +2135,7 @@ namespace RapChessGui
 		{
 			lvTourPList.Items.Clear();
 			CPlayerList plaList = CModeTournamentP.FillList();
-			foreach (CPlayer p in plaList.list)
+			foreach (CPlayer p in plaList)
 			{
 				ListViewItem lvi = new ListViewItem(new[] { p.name, p.elo, p.GetDeltaElo().ToString() });
 				lvi.BackColor = p.hisElo.GetColor();
@@ -2173,7 +2173,7 @@ namespace RapChessGui
 			playerList.FillPosition();
 			int countGames = 0;
 			int opponents = 0;
-			foreach (CPlayer p in playerList.list)
+			foreach (CPlayer p in playerList)
 				if (p.engine != Global.none)
 				{
 					int count = CModeTournamentP.tourList.CountGames(name, p.name, out int gw, out int gl, out int gd);
@@ -2199,7 +2199,7 @@ namespace RapChessGui
 				}
 			string rep = player.name == CModeTournamentP.first ? $"{CModeTournamentP.repetition}/{CModeTournamentP.games}" : player.tournament.ToString();
 			labPlayer.BackColor = player.hisElo.GetColor();
-			labPlayer.Text = $"{player.name} games {countGames} opponents {opponents}/{playerList.list.Count} repetitions {rep}";
+			labPlayer.Text = $"{player.name} games {countGames} opponents {opponents}/{playerList.Count} repetitions {rep}";
 			if (top2 != null)
 				lvTourPSel.TopItem = top2;
 			CData.HisToPoints(player.hisElo, chartTournamentP.Series[1].Points);

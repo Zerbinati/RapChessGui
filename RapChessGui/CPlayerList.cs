@@ -72,7 +72,9 @@ namespace RapChessGui
 
 		public int GetEloLess()
 		{
-			int levelDif = 2000 / FormChess.playerList.list.Count;
+			if (FormChess.playerList.Count == 0)
+				return 0;
+			int levelDif = 2000 / FormChess.playerList.Count;
 			if (levelDif < 10)
 				levelDif = 10;
 			int result = Convert.ToInt32(elo) - levelDif;
@@ -83,7 +85,7 @@ namespace RapChessGui
 
 		public int GetEloMore()
 		{
-			int levelDif = 2000 / FormChess.playerList.list.Count;
+			int levelDif = 2000 / FormChess.playerList.Count;
 			if (levelDif < 10)
 				levelDif = 10;
 			int result = Convert.ToInt32(elo) + levelDif;
@@ -201,32 +203,31 @@ namespace RapChessGui
 
 	}
 
-	public class CPlayerList
+	public class CPlayerList: List<CPlayer>
 	{
-		public List<CPlayer> list = new List<CPlayer>();
 		public static CRapIni iniFile = new CRapIni(@"Ini\players.ini");
 
-		public void Add(CPlayer p)
+		public void AddPlayer(CPlayer p)
 		{
 			p.name = p.GetName();
 			int index = GetIndex(p.name);
 			if (index >= 0)
-				list[index] = p;
+				this[index] = p;
 			else
-				list.Add(p);
+				Add(p);
 		}
 
 		public void Check(CEngineList el)
 		{
-			foreach (CPlayer p in list)
+			foreach (CPlayer p in this)
 				p.Check(el);
 		}
 
 		public int GetIndex(string name)
 		{
-			for (int n = 0; n < list.Count; n++)
+			for (int n = 0; n < Count; n++)
 			{
-				CPlayer user = list[n];
+				CPlayer user = this[n];
 				if (user.name == name)
 					return n;
 			}
@@ -235,7 +236,7 @@ namespace RapChessGui
 
 		public CPlayer GetPlayerByName(string name)
 		{
-			foreach (CPlayer p in list)
+			foreach (CPlayer p in this)
 				if (p.name.ToLower() == name.ToLower())
 					return p;
 			return null;
@@ -244,7 +245,7 @@ namespace RapChessGui
 		public CPlayer GetPlayerComputer()
 		{
 			SortElo();
-			foreach (CPlayer p in list)
+			foreach (CPlayer p in this)
 				if (p.IsComputer())
 					return p;
 			return null;
@@ -254,9 +255,9 @@ namespace RapChessGui
 		{
 			CPlayer p = CModeGame.humanPlayer;
 			int bstDel = 10000;
-			foreach (CPlayer cp in list)
+			foreach (CPlayer cp in this)
 			{
-				if (cp.engine == "None")
+				if (cp.engine == Global.none)
 					continue;
 				int curE = cp.GetElo();
 				int curDel = Math.Abs(elo - curE);
@@ -271,7 +272,7 @@ namespace RapChessGui
 
 		public void SortElo()
 		{
-			list.Sort(delegate (CPlayer p1, CPlayer p2)
+			Sort(delegate (CPlayer p1, CPlayer p2)
 			{
 				int result = p2.GetElo() - p1.GetElo();
 				if (result == 0)
@@ -285,25 +286,40 @@ namespace RapChessGui
 			SortElo();
 			FillPosition();
 			int position = player.position;
-			foreach (CPlayer p in list)
+			foreach (CPlayer p in this)
 				p.position = Math.Abs(position - p.position);
-			list.Sort(delegate (CPlayer p1, CPlayer p2)
+			Sort(delegate (CPlayer p1, CPlayer p2)
 			{
 				return p1.position - p2.position;
 			});
 		}
 
+		void CreateIni()
+		{
+			foreach (CEngine e in FormChess.engineList)
+			{
+				CPlayer p = new CPlayer();
+				p.engine = e.name;
+				p.elo = e.elo;
+				p.book = CBookList.def;
+				AddPlayer(p);
+			}
+			SaveToIni();
+		}
+
 		public int LoadFromIni()
 		{
-			list.Clear();
+			Clear();
 			List<string> pl = iniFile.ReadKeyList("player");
 			foreach (string name in pl)
 			{
-				var p = new CPlayer(name);
+				CPlayer p = new CPlayer(name);
 				p.LoadFromIni();
-				list.Add(p);
+				Add(p);
 			}
-			return pl.Count;
+			if (Count == 0)
+				CreateIni();
+			return Count;
 		}
 
 		public void DeletePlayer(string name)
@@ -311,13 +327,13 @@ namespace RapChessGui
 			iniFile.DeleteKey($"player>{name}");
 			int i = GetIndex(name);
 			if (i >= 0)
-				list.RemoveAt(i);
+				RemoveAt(i);
 		}
 
 		public void SaveToIni()
 		{
 			iniFile.DeleteKey("player");
-			foreach (CPlayer p in list)
+			foreach (CPlayer p in this)
 				p.SaveToIni();
 		}
 
@@ -327,29 +343,29 @@ namespace RapChessGui
 			int max = CModeTournamentP.maxElo;
 			if (index < 0)
 				index = 0;
-			if (index >= list.Count)
-				index = list.Count - 1;
+			if (index >= Count)
+				index = Count - 1;
 			int range = max - min;
-			index = list.Count - index;
-			return min + Convert.ToInt32((range * index) / (list.Count + 1));
+			index = Count - index;
+			return min + Convert.ToInt32((range * index) / (Count + 1));
 		}
 
 		public CPlayer NextTournament(CPlayer p, bool rotate = true, bool back = false)
 		{
 			SortElo();
 			int i = GetIndex(p.name);
-			for (int n = 0; n < list.Count - 1; n++)
+			for (int n = 0; n < Count - 1; n++)
 			{
 				if (back)
 					i--;
 				else
 					i++;
 				if (rotate)
-					i = (i + list.Count) % list.Count;
+					i = (i + Count) % Count;
 				else
-					if ((i < 0) || (i >= list.Count))
+					if ((i < 0) || (i >= Count))
 					return null;
-				p = list[i];
+				p = this[i];
 				if (p.tournament > 0)
 					break;
 			}
@@ -358,8 +374,8 @@ namespace RapChessGui
 
 		public void FillPosition()
 		{
-			for (int n = 0; n < list.Count; n++)
-				list[n].position = n;
+			for (int n = 0; n < Count; n++)
+				this[n].position = n;
 		}
 
 

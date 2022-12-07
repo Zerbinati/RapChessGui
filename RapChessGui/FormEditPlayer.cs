@@ -60,7 +60,7 @@ namespace RapChessGui
 		{
 			player = FormChess.playerList.GetPlayerByName(name);
 			playerName = String.Empty;
-			if (player != null)
+			if (player == null)
 				return;
 			playerName = player.name;
 			SelectPlayer(player);
@@ -89,7 +89,7 @@ namespace RapChessGui
 		void UpdateListBox()
 		{
 			listBox1.Items.Clear();
-			foreach (CPlayer u in FormChess.playerList.list)
+			foreach (CPlayer u in FormChess.playerList)
 				listBox1.Items.Add(u.name);
 			gbPlayers.Text = $"Players {listBox1.Items.Count}";
 		}
@@ -137,7 +137,7 @@ namespace RapChessGui
 			modeValue.SetValue((int)nudValue.Value);
 			CPlayer player = new CPlayer(name);
 			player.engine = cbEngineList.Text;
-			FormChess.playerList.list.Add(player);
+			FormChess.playerList.Add(player);
 			SaveToIni(player);
 			MessageBox.Show($"Player {player.name} has been created");
 			CData.reset = true;

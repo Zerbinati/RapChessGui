@@ -40,7 +40,7 @@ namespace RapChessGui
 			modeTime = CEngineList.iniFile.ReadBool($"engine>{name}>modeTime", modeTime);
 			modeDepth = CEngineList.iniFile.ReadBool($"engine>{name}>modeDepth", modeDepth);
 			modeTournament = CEngineList.iniFile.ReadBool($"engine>{name}>modeTournament", modeTournament);
-			file = CEngineList.iniFile.Read($"engine>{name}>file", "None");
+			file = CEngineList.iniFile.Read($"engine>{name}>file", Global.none);
 			protocol = CData.StrToProtocol(CEngineList.iniFile.Read($"engine>{name}>protocol", "Uci"));
 			parameters = CEngineList.iniFile.Read($"engine>{name}>parameters", "");
 			options = CEngineList.iniFile.ReadList($"engine>{name}>options");
@@ -58,7 +58,7 @@ namespace RapChessGui
 				hisElo.AddValue(e);
 			}
 			CEngineList.iniFile.Write($"engine>{name}>tournament", tournament);
-			CEngineList.iniFile.Write($"engine>{name}>modeStandard",  modeStandard);
+			CEngineList.iniFile.Write($"engine>{name}>modeStandard", modeStandard);
 			CEngineList.iniFile.Write($"engine>{name}>modeTime", modeTime);
 			CEngineList.iniFile.Write($"engine>{name}>modeDepth", modeDepth);
 			CEngineList.iniFile.Write($"engine>{name}>modeTournament", modeTournament);
@@ -179,7 +179,7 @@ namespace RapChessGui
 
 	}
 
-	public class CEngineList: List<CEngine>
+	public class CEngineList : List<CEngine>
 	{
 		public const string def = "RapChessCs";
 		public static CRapIni iniFile = new CRapIni(@"Ini\engines.ini");
@@ -238,6 +238,7 @@ namespace RapChessGui
 
 		public void AutoUpdate()
 		{
+			bool reset = Count == 0;
 			foreach (string fn in CData.fileEngineAuto)
 			{
 				string name = Path.GetFileNameWithoutExtension(fn);
@@ -256,18 +257,35 @@ namespace RapChessGui
 					engine.SaveToIni();
 				}
 			}
-			for (int n =Count - 1; n >= 0; n--)
+			for (int n = Count - 1; n >= 0; n--)
 			{
 				CEngine e = this[n];
 				if (e.IsAuto() && !e.FileExists())
 					DeleteEngine(e.name);
+			}
+			if (reset)
+			{
+				CEngine e = GetEngineByName(CEngineList.def);
+				e.elo = "2000";
+				e.SaveToIni();
+				if (e != null)
+					for (int i = 1; i < 10; i++)
+					{
+						int n = i * 10;
+						CEngine engine = new CEngine($"{CEngineList.def} {n}");
+						engine.file = e.file;
+						engine.elo = (n * 20).ToString();
+						engine.options.Add($"name SkillLevel value {n}");
+						engine.SaveToIni();
+						Add(engine);
+					}
 			}
 		}
 
 		public int LoadFromIni()
 		{
 			Clear();
-			List<string> en = CEngineList.iniFile.ReadKeyList("engine");
+			List<string> en = iniFile.ReadKeyList("engine");
 			foreach (string name in en)
 			{
 				CEngine engine = new CEngine(name);

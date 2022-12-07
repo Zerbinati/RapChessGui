@@ -206,6 +206,8 @@ namespace RapIni
 		bool Load()
 		{
 			Clear();
+			if (!File.Exists(path))
+				return true;
 			try
 			{
 				using (FileStream fs = File.Open(path, FileMode.Open, FileAccess.Read, FileShare.Read))

@@ -104,14 +104,14 @@ namespace RapChessGui
 		void FormLoad()
 		{
 			lvBooks.Items.Clear();
-			foreach (CDirBook db in FormChess.dirBookList)
+			foreach (CReader db in FormChess.readerList)
 			{
-				ListViewItem lvi = new ListViewItem(new[] { db.dir, db.book });
+				ListViewItem lvi = new ListViewItem(new[] { db.dir, db.bookReader });
 				lvBooks.Items.Add(lvi);
 			}
 			cbBookReader.Items.Clear();
 			cbBookReader.Items.Add(Global.none);
-			foreach (string book in CData.fileBook)
+			foreach (string book in CData.bookReader)
 				cbBookReader.Items.Add(book);
 			cbBookReader.SelectedIndex = 0;
 			cbGameBook.Items.Clear();
@@ -146,7 +146,7 @@ namespace RapChessGui
 
 			cbTourPSelected.Items.Clear();
 			cbTourPSelected.Sorted = true;
-			foreach (CPlayer p in FormChess.playerList.list)
+			foreach (CPlayer p in FormChess.playerList)
 				cbTourPSelected.Items.Add(p.name);
 			cbTourPSelected.Sorted = false;
 			cbTourPSelected.Items.Insert(0, Global.none);
@@ -175,15 +175,15 @@ namespace RapChessGui
 
 		void FormSave()
 		{
-			FormChess.dirBookList.Clear();
+			FormChess.readerList.Clear();
 			foreach (ListViewItem lvi in lvBooks.Items)
 			{
-				CDirBook db = new CDirBook();
+				CReader db = new CReader();
 				db.dir = lvi.SubItems[0].Text;
-				db.book = lvi.SubItems[1].Text;
-				FormChess.dirBookList.Add(db);
+				db.bookReader = lvi.SubItems[1].Text;
+				FormChess.readerList.Add(db);
 			}
-			FormChess.dirBookList.SaveToIni();
+			FormChess.readerList.SaveToIni();
 			CModeTournamentB.records = (int)nudTourBRec.Value;
 			CModeTournamentB.maxElo = (int)Math.Max(nudTourBMin.Value, nudTourBMax.Value);
 			CModeTournamentB.minElo = (int)Math.Min(nudTourBMin.Value, nudTourBMax.Value);
