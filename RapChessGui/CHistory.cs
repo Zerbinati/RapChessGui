@@ -26,6 +26,12 @@ namespace RapChessGui
 				return umo;
 		}
 
+		public string GetPiece()
+		{
+			string[] p = { "", "\u2659", "\u2658", "\u2657", "\u2656", "\u2655", "\u2654", "", "", "\u265F", "\u265E", "\u265D", "\u265C", "\u265B", "\u265A", "" };
+				return p[piece] + GetNotation();
+		}
+
 	}
 
 	public static class CHistory
@@ -49,7 +55,7 @@ namespace RapChessGui
 			return false;
 		}
 
-		public static bool BackTo(int mn,bool white)
+		public static bool BackTo(int mn, bool white)
 		{
 			int c = moveList.Count - (mn << 1) - 1;
 			if (white)
@@ -64,11 +70,11 @@ namespace RapChessGui
 			return moveList[moveList.Count - 1];
 		}
 
-		public static string LastNotation()
+		public static string LastPiece()
 		{
 			if (moveList.Count == 0)
-				return "";
-			return moveList[moveList.Count - 1].GetNotation();
+				return string.Empty;
+			return moveList[moveList.Count - 1].GetPiece();
 		}
 
 		public static string LastUmo()
@@ -84,7 +90,7 @@ namespace RapChessGui
 		}
 
 
-		public static void SetFen(string f = CChess.defFen,int mn = 0)
+		public static void SetFen(string f = CChess.defFen, int mn = 0)
 		{
 			fen = f;
 			moveNumber = mn;

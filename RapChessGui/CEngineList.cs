@@ -266,19 +266,22 @@ namespace RapChessGui
 			if (reset)
 			{
 				CEngine e = GetEngineByName(CEngineList.def);
-				e.elo = "2000";
-				e.SaveToIni();
 				if (e != null)
-					for (int i = 1; i < 10; i++)
-					{
-						int n = i * 10;
-						CEngine engine = new CEngine($"{CEngineList.def} {n}");
-						engine.file = e.file;
-						engine.elo = (n * 20).ToString();
-						engine.options.Add($"name SkillLevel value {n}");
-						engine.SaveToIni();
-						Add(engine);
-					}
+				{
+					e.elo = "2000";
+					e.SaveToIni();
+					if (e != null)
+						for (int i = 1; i < 10; i++)
+						{
+							int n = i * 10;
+							CEngine engine = new CEngine($"{CEngineList.def} {n}");
+							engine.file = e.file;
+							engine.elo = (n * 20).ToString();
+							engine.options.Add($"name SkillLevel value {n}");
+							engine.SaveToIni();
+							Add(engine);
+						}
+				}
 			}
 		}
 

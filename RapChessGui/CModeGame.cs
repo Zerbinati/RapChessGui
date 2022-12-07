@@ -6,7 +6,7 @@ namespace RapChessGui
 	{
 		public static bool ranked = false;
 		public static bool rotate = false;
-		static bool finished = true;
+		public static bool finished = true;
 		public static string color = "Auto";
 		public static string computer = "Auto";
 		public static string engine = CEngineList.def;
@@ -14,17 +14,10 @@ namespace RapChessGui
 		public static CModeValue modeValue = new CModeValue();
 		public static CPlayer humanPlayer = new CPlayer();
 
-		public static bool Finished
+		public static void SetFinished(bool f)
 		{
-			get
-			{
-				return finished;
-			}
-			set
-			{
-				finished = value;
-				SaveToIni();
-			}
+			finished = f;
+			SaveToIni();
 		}
 
 		public static void SaveToIni()
@@ -49,7 +42,7 @@ namespace RapChessGui
 
 		public static void LoadFromIni()
 		{
-			finished = FormChess.iniFile.ReadBool("mode>game>finished");
+			finished = FormChess.iniFile.ReadBool("mode>game>finished",finished);
 			rotate = FormChess.iniFile.ReadBool("mode>game>rotate");
 			color = FormChess.iniFile.Read("mode>game>color", color);
 			computer = FormChess.iniFile.Read("mode>game>computer", computer);
