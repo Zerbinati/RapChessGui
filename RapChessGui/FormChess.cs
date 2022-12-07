@@ -2899,6 +2899,7 @@ namespace RapChessGui
 			LinesResize(lvMovesW);
 			LinesResize(lvMovesB);
 			SplitLoadFromIni();
+			MakeBoardSquare();
 		}
 
 		private void lvEngine_Resize(object sender, EventArgs e)
@@ -3013,21 +3014,12 @@ namespace RapChessGui
 			ShowFormLastGame("tournament-books");
 		}
 
-		private void panBoard_Validated(object sender, EventArgs e)
-		{
-			MakeBoardSquare();
-		}
-
 		private void splitContainerMain_SplitterMoved(object sender, SplitterEventArgs e)
 		{
 			MakeBoardSquare();
 		}
 
-		private void FormChess_Shown(object sender, EventArgs e)
-		{
-		}
-
-		private void FormChess_Shown_1(object sender, EventArgs e)
+		private void FormChes_Shown(object sender, EventArgs e)
 		{
 			UpdateEngineList();
 		}

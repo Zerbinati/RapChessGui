@@ -203,7 +203,7 @@ namespace RapChessGui
 
 	}
 
-	public class CPlayerList: List<CPlayer>
+	public class CPlayerList : List<CPlayer>
 	{
 		public static CRapIni iniFile = new CRapIni(@"Ini\players.ini");
 
@@ -315,7 +315,8 @@ namespace RapChessGui
 			{
 				CPlayer p = new CPlayer(name);
 				p.LoadFromIni();
-				Add(p);
+				if (FormChess.engineList.GetEngineByName(p.engine) != null)
+					Add(p);
 			}
 			if (Count == 0)
 				CreateIni();
