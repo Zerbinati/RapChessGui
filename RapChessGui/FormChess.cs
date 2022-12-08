@@ -2614,7 +2614,6 @@ namespace RapChessGui
 			Board.arrowEco.Clear();
 			ShowAutoElo();
 			ShowEco();
-			HistoryToLvMoves();
 			LvMovesUpdateNotation();
 			BoardPrepare();
 			RenderBoard();

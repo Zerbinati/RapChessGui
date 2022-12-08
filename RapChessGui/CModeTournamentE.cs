@@ -152,10 +152,11 @@ namespace RapChessGui
 				ratioScore = 1;
 			if ((r < 0) && (sElo > fElo))
 				ratioScore = 1;
-			double avgCount = allGames / engineList.Count;
-			double maxCount = avgCount * 2 + 1;
-			double optCount = (maxCount * (engineList.Count - second.position)) / engineList.Count;
+			double maxCount = Math.Sqrt(allGames * 2) + 1;
+			double optCount = maxCount - second.position;
 			double ratioDistance = (optCount - curGames) / maxCount;
+			if (ratioDistance < 0)
+				ratioDistance = 0;
 			return ratioDistance + ratioElo + ratioScore;
 		}
 

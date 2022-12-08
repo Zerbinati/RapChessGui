@@ -44,12 +44,12 @@ namespace RapChessGui
 		{
 			gameBook = FormChess.iniFile.Read("options>mode>game>book", tourEBook);
 			nudBreak.Value = FormChess.iniFile.ReadDecimal("options>mode>game>break", nudBreak.Value);
-			tourBSelected = FormChess.iniFile.Read("options>mode>tourB>Selected", tourBSelected);
-			tourESelected = FormChess.iniFile.Read("options>mode>tourE>Selected", tourESelected);
+			tourBSelected = FormChess.iniFile.Read("options>mode>tourB>selected", tourBSelected);
+			tourESelected = FormChess.iniFile.Read("options>mode>tourE>selected", tourESelected);
 			tourEBook = FormChess.iniFile.Read("options>mode>tourE>book", tourEBook);
 			nudTourE.Value = FormChess.iniFile.ReadDecimal("options>mode>tourE>Value", tourEValue);
-			cbTourEMode.Text = FormChess.iniFile.Read("options>mode>tourE>Mode", tourEMode);
-			tourPSelected = FormChess.iniFile.Read("options>mode>tourP>Selected", tourPSelected);
+			cbTourEMode.Text = FormChess.iniFile.Read("options>mode>tourE>mode", tourEMode);
+			tourPSelected = FormChess.iniFile.Read("options>mode>tourP>selected", tourPSelected);
 			colorDialog1.Color = FormChess.iniFile.ReadColor("options>interface>color", Color.Yellow);
 			rbSan.Checked = FormChess.iniFile.ReadBool("options>interface>san", rbSan.Checked);
 			cbShowPonder.Checked = FormChess.iniFile.ReadBool("options>interface>showponder", cbShowPonder.Checked);
@@ -76,12 +76,12 @@ namespace RapChessGui
 		{
 			FormChess.iniFile.Write("options>mode>game>book", gameBook);
 			FormChess.iniFile.Write("options>mode>game>break", nudBreak.Value);
-			FormChess.iniFile.Write("options>mode>tourB>Selected", tourBSelected);
-			FormChess.iniFile.Write("options>mode>tourE>Selected", tourESelected);
-			FormChess.iniFile.Write("options>mode>tourE>Book", tourEBook);
-			FormChess.iniFile.Write("options>mode>tourE>Value", nudTourE.Value);
-			FormChess.iniFile.Write("options>mode>tourE>Mode", cbTourEMode.Text);
-			FormChess.iniFile.Write("options>mode>tourP>Selected", tourPSelected);
+			FormChess.iniFile.Write("options>mode>tourB>selected", tourBSelected);
+			FormChess.iniFile.Write("options>mode>tourE>selected", tourESelected);
+			FormChess.iniFile.Write("options>mode>tourE>book", tourEBook);
+			FormChess.iniFile.Write("options>mode>tourE>value", nudTourE.Value);
+			FormChess.iniFile.Write("options>mode>tourE>mode", cbTourEMode.Text);
+			FormChess.iniFile.Write("options>mode>tourP>selected", tourPSelected);
 			FormChess.iniFile.Write("options>interface>color", colorDialog1.Color);
 			FormChess.iniFile.Write("options>interface>san", rbSan.Checked);
 			FormChess.iniFile.Write("options>interface>showponder", cbShowPonder.Checked);
@@ -129,9 +129,9 @@ namespace RapChessGui
 			cbGameBook.Sorted = false;
 			cbTourBSelected.Sorted = false;
 			cbTourEBook.Sorted = false;
-			cbGameBook.Items.Insert(0,Global.none);
+			cbGameBook.Items.Insert(0, Global.none);
 			cbTourBSelected.Items.Insert(0, Global.none);
-			cbTourEBook.Items.Add(Global.none);
+			cbTourEBook.Items.Insert(0,Global.none);
 			cbGameBook.SelectedIndex = 0;
 			cbTourBSelected.SelectedIndex = 0;
 			cbTourEBook.SelectedIndex = 0;
