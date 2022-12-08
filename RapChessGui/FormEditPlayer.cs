@@ -19,7 +19,7 @@ namespace RapChessGui
 			FormOptions.SetFontSize(this);
 		}
 
-		void ClickUpdate()
+		void ClickSave()
 		{
 			modeValue.SetLevel(combMode.Text);
 			modeValue.SetValue((int)nudValue.Value);
@@ -122,7 +122,7 @@ namespace RapChessGui
 
 		private void ButUpdate_Click(object sender, EventArgs e)
 		{
-			ClickUpdate();
+			ClickSave();
 		}
 
 		private void ButCreate_Click(object sender, EventArgs e)
@@ -268,6 +268,7 @@ namespace RapChessGui
 			CPlayer p = new CPlayer();
 			UpdatePlayer(p);
 			tbPlayerName.Text = p.CreateName();
+			ClickSave();
 		}
 	}
 }

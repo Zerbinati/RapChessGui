@@ -120,7 +120,7 @@ namespace RapChessGui
 			foreach (CEngine e in engineList)
 				if (e != engine)
 				{
-					double curScore = EvaluateOpponent(engine, e);
+					double curScore = EvaluateOpponent(engineList.Count,engine, e);
 					if (bstScore < curScore)
 					{
 						bstScore = curScore;
@@ -131,13 +131,12 @@ namespace RapChessGui
 			return bstEngine;
 		}
 
-		public static double EvaluateOpponent(CEngine first, CEngine second)
+		public static double EvaluateOpponent(int listCount,CEngine first, CEngine second)
 		{
 			int fElo = first.GetElo();
 			int sElo = second.GetElo();
 			int allGames = tourList.CountGames(first.name);
 			int curGames = tourList.CountGames(second.name, first.name, out int rw, out _, out int rd);
-			double ratioScore = 0;
 			double r = ((rw * 2.0 + rd) - curGames) / (curGames + 1.0);
 			double ar = Math.Abs(r);
 			double nElo = fElo;
@@ -149,15 +148,17 @@ namespace RapChessGui
 			if (curGames == 0)
 				ratioElo = 0;
 			if ((r > 0) && (sElo < fElo))
-				ratioScore = 1;
+				ratioElo = 1;
 			if ((r < 0) && (sElo > fElo))
-				ratioScore = 1;
+				ratioElo = 1;
+			double avgCount = allGames / listCount;
+			double delCount = (avgCount * 2) / listCount + 1;
 			double maxCount = Math.Sqrt(allGames * 2) + 1;
-			double optCount = maxCount - second.position;
-			double ratioDistance = (optCount - curGames) / maxCount;
+			double optCount = maxCount - second.position * delCount;
+			double ratioDistance = (optCount - curGames) / maxCount + 1;
 			if (ratioDistance < 0)
 				ratioDistance = 0;
-			return ratioDistance + ratioElo + ratioScore;
+			return ratioDistance + ratioElo;
 		}
 
 		public static void SetRepeition(CEngine e, CEngine o)

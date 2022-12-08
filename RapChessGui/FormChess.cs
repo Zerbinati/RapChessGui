@@ -2258,7 +2258,7 @@ namespace RapChessGui
 			TournamentPUpdate(CModeTournamentP.plaLoose);
 			SetMode(CGameMode.tourP);
 			CPlayer p1 = CModeTournamentP.SelectFirst();
-			CPlayer p2 = CModeTournamentP.SelectOpponent(p1);
+			CPlayer p2 = CModeTournamentP.SelectSecond(p1);
 			CModeTournamentP.SetRepeition(p1, p2);
 			GamerList.gamers[CModeTournamentP.rotate ? 1 : 0].SetPlayer(p1);
 			GamerList.gamers[CModeTournamentP.rotate ? 0 : 1].SetPlayer(p2);

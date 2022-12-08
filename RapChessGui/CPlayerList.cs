@@ -182,8 +182,8 @@ namespace RapChessGui
 		public string CreateName()
 		{
 			string n = Global.human;
-			string b = String.Empty;
-			string m = String.Empty;
+			string b = string.Empty;
+			string m = string.Empty;
 			if (engine != Global.none)
 			{
 				n = engine;
@@ -196,7 +196,7 @@ namespace RapChessGui
 
 		public string GetName()
 		{
-			if (name == String.Empty)
+			if (name == string.Empty)
 				return CreateName();
 			return name;
 		}
@@ -371,6 +371,19 @@ namespace RapChessGui
 					break;
 			}
 			return p;
+		}
+
+		public void SetEloDistance(CPlayer player)
+		{
+			SortElo();
+			int elo = player.GetElo();
+			for (int n = 0; n < Count; n++)
+				this[n].position = Math.Abs(elo - this[n].GetElo());
+			Sort(delegate (CPlayer p1, CPlayer p2)
+			{
+				return p1.position - p2.position;
+			});
+			FillPosition();
 		}
 
 		public void FillPosition()

@@ -127,12 +127,16 @@ namespace RapChessGui
 
 		public static string MakeShort(string name)
 		{
-			string result = "";
+			int f = 0;
+			string result = string.Empty;
 			for (int n = 0; n < name.Length; n++)
 			{
 				char c = name[n];
-				if ((n == 0) || Char.IsUpper(c) || Char.IsNumber(c))
+				if ((f == 0) || Char.IsUpper(c) || Char.IsNumber(c))
 					result += Char.ToUpper(c);
+				f++;
+				if (c == ' ')
+					f = 0;
 			}
 			return result;
 		}

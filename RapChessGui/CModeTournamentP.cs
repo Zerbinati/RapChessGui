@@ -101,22 +101,55 @@ namespace RapChessGui
 			return p;
 		}
 
-		public static CPlayer SelectOpponent(CPlayer player)
+		public static CPlayer SelectSecond(CPlayer player)
 		{
-			playerList.SortPosition(player);
-			List<CPlayer> pl = new List<CPlayer>();
-			foreach (CPlayer p in playerList)
-				if ((p != player) && (p.engine != "Human"))
-					pl.Add(p);
-			if (pl.Count == 0)
+			if (playerList.Count < 2)
 				return player;
-			for (int n = 0; n < pl.Count - 1; n++)
-			{
-				CPlayer p = ChooseOpponent(player, pl[n], pl[n + 1]);
-				if (p != null)
-					return p;
-			}
-			return pl[0];
+			playerList.SetEloDistance(player);
+			double bstScore = double.MinValue;
+			CPlayer bstPlayer = player;
+			foreach (CPlayer p in playerList)
+				if (p != player)
+				{
+					double curScore = EvaluateOpponent(playerList.Count, player, p);
+					if (bstScore < curScore)
+					{
+						bstScore = curScore;
+						bstPlayer = p;
+					}
+
+				}
+			return bstPlayer;
+		}
+
+		public static double EvaluateOpponent(int listCount, CPlayer first, CPlayer second)
+		{
+			int fElo = first.GetElo();
+			int sElo = second.GetElo();
+			int allGames = tourList.CountGames(first.name);
+			int curGames = tourList.CountGames(second.name, first.name, out int rw, out _, out int rd);
+			double r = ((rw * 2.0 + rd) - curGames) / (curGames + 1.0);
+			double ar = Math.Abs(r);
+			double nElo = fElo;
+			if (r < 0)
+				nElo -= ar * fElo;
+			if (r > 0)
+				nElo += ar * (CElo.eloMax - fElo);
+			double ratioElo = (Math.Abs(sElo - nElo) / CElo.eloRange) * (1.0 - ar);
+			if (curGames == 0)
+				ratioElo = 0;
+			if ((r > 0) && (sElo < fElo))
+				ratioElo = 1;
+			if ((r < 0) && (sElo > fElo))
+				ratioElo = 1;
+			double avgCount = allGames / listCount;
+			double delCount = (avgCount * 2) / listCount + 1;
+			double maxCount = Math.Sqrt(allGames * 2) + 1;
+			double optCount = maxCount - second.position * delCount;
+			double ratioDistance = (optCount - curGames) / maxCount + 1;
+			if (ratioDistance < 0)
+				ratioDistance = 0;
+			return ratioDistance + ratioElo;
 		}
 
 		public static void SetRepeition(CPlayer p, CPlayer o)
