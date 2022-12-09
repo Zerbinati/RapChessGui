@@ -7,14 +7,42 @@ namespace RapChessGui
 
 	public class CPlayer
 	{
+		public CBook book = null;
+		public CEngine engine = null;
 		public int tournament = 1;
 		public int position = 0;
 		public string name = String.Empty;
-		public string engine = Global.none;
-		public string book = Global.none;
 		public string elo = "1000";
 		public CModeValue modeValue = new CModeValue();
 		public CHisElo hisElo = new CHisElo();
+
+		public string Book
+		{
+			get
+			{
+				if (book == null)
+					return Global.none;
+				return book.name;
+			}
+			set
+			{
+				book = FormChess.bookList.GetBookByName(value);
+			}
+		}
+
+		public string Engine
+		{
+			get
+			{
+				if (engine == null)
+					return Global.none;
+				return engine.name;
+			}
+			set
+			{
+				engine = FormChess.engineList.GetEngineByName(value);
+			}
+		}
 
 		public CPlayer()
 		{
@@ -36,38 +64,24 @@ namespace RapChessGui
 		public string Check()
 		{
 			if (name == Global.human)
-				return String.Empty;
-			if (engine == Global.none)
+				return string.Empty;
+			if (engine == null)
 				return $"Please select {name} engine";
-			CEngine e = FormChess.engineList.GetEngineByName(engine);
-			if (e != null)
-			{
-				if (!e.FileExists())
-					return $"Engine file {e.file} not exists";
-				if ((e.protocol != CProtocol.uci) && (e.protocol != CProtocol.winboard))
-					return $"Please setup engine {e.name} protocol";
-			}
-			CBook b = FormChess.bookList.GetBookByName(book);
-			if (b != null)
-				if (!b.FileExists())
-					return $"Book file {b.file} not exists";
-			return String.Empty;
+			if (!engine.FileExists())
+				return $"Engine file {engine.file} not exists";
+			if (!engine.SupportProtocol())
+				return $"Please setup engine {engine.name} protocol";
+			if (book == null)
+				return String.Empty;
+			if (!book.FileExists())
+				return $"Book file {book.file} not exists";
+			return string.Empty;
 		}
 
 		public bool Check(out string msg)
 		{
 			msg = Check();
 			return msg == String.Empty;
-		}
-
-		public void Check(CEngineList el)
-		{
-			CEngine e = el.GetEngineByName(engine);
-			if (e == null)
-			{
-				engine = Global.none;
-				SaveToIni();
-			}
 		}
 
 		public int GetEloLess()
@@ -127,12 +141,21 @@ namespace RapChessGui
 
 		public bool IsComputer()
 		{
-			return engine != Global.none;
+			return engine != null;
 		}
 
 		public bool IsHuman()
 		{
-			return (engine == Global.none) && (modeValue.level == CLevel.infinite);
+			return (engine == null) && (modeValue.level == CLevel.infinite);
+		}
+
+		public bool IsPlayable()
+		{
+			if (engine == null)
+				return false;
+			if (!engine.SupportProtocol())
+				return false;
+			return true;
 		}
 
 		public void SetPlayer(string name)
@@ -141,8 +164,8 @@ namespace RapChessGui
 			if (p != null)
 			{
 				tournament = p.tournament;
-				engine = p.engine;
-				book = p.book;
+				Engine = p.Engine;
+				Book = p.Book;
 				elo = p.elo;
 				modeValue.level = p.modeValue.level;
 				modeValue.value = p.modeValue.value;
@@ -153,10 +176,10 @@ namespace RapChessGui
 		public void LoadFromIni()
 		{
 			tournament = CPlayerList.iniFile.ReadInt($"player>{name}>tournament", tournament);
-			engine = CPlayerList.iniFile.Read($"player>{name}>engine", Global.none);
+			Engine = CPlayerList.iniFile.Read($"player>{name}>engine", Global.none);
 			modeValue.SetLevel(CPlayerList.iniFile.Read($"player>{name}>mode", modeValue.GetLevel()));
 			modeValue.value = CPlayerList.iniFile.ReadInt($"player>{name}>value", modeValue.value);
-			book = CPlayerList.iniFile.Read($"player>{name}>book", Global.none);
+			Book = CPlayerList.iniFile.Read($"player>{name}>book", Global.none);
 			elo = CPlayerList.iniFile.Read($"player>{name}>elo", elo);
 			hisElo.LoadFromStr(CPlayerList.iniFile.Read($"player>{name}>history"));
 		}
@@ -171,10 +194,10 @@ namespace RapChessGui
 				hisElo.AddValue(e);
 			}
 			CPlayerList.iniFile.Write($"player>{name}>tournament", tournament);
-			CPlayerList.iniFile.Write($"player>{name}>engine", engine);
+			CPlayerList.iniFile.Write($"player>{name}>engine", Engine);
 			CPlayerList.iniFile.Write($"player>{name}>mode", modeValue.GetLevel());
 			CPlayerList.iniFile.Write($"player>{name}>value", modeValue.value);
-			CPlayerList.iniFile.Write($"player>{name}>book", book);
+			CPlayerList.iniFile.Write($"player>{name}>book", Book);
 			CPlayerList.iniFile.Write($"player>{name}>elo", elo);
 			CPlayerList.iniFile.Write($"player>{name}>history", hisElo.SaveToStr());
 		}
@@ -184,13 +207,13 @@ namespace RapChessGui
 			string n = Global.human;
 			string b = string.Empty;
 			string m = string.Empty;
-			if (engine != Global.none)
+			if (engine != null)
 			{
-				n = engine;
+				n = Engine;
 				m = modeValue.ShortName();
 			}
-			if (book != Global.none)
-				b = $" {CData.MakeShort(book)}";
+			if (book != null)
+				b = $" {CData.MakeShort(Book)}";
 			return $"{n}{b}{m}";
 		}
 
@@ -215,12 +238,6 @@ namespace RapChessGui
 				this[index] = p;
 			else
 				Add(p);
-		}
-
-		public void Check(CEngineList el)
-		{
-			foreach (CPlayer p in this)
-				p.Check(el);
 		}
 
 		public int GetIndex(string name)
@@ -257,7 +274,7 @@ namespace RapChessGui
 			int bstDel = 10000;
 			foreach (CPlayer cp in this)
 			{
-				if (cp.engine == Global.none)
+				if (cp.Engine == Global.none)
 					continue;
 				int curE = cp.GetElo();
 				int curDel = Math.Abs(elo - curE);
@@ -299,9 +316,9 @@ namespace RapChessGui
 			foreach (CEngine e in FormChess.engineList)
 			{
 				CPlayer p = new CPlayer();
-				p.engine = e.name;
+				p.Engine = e.name;
 				p.elo = e.elo;
-				p.book = CBookList.def;
+				p.Book = CBookList.def;
 				AddPlayer(p);
 			}
 			SaveToIni();
@@ -315,7 +332,7 @@ namespace RapChessGui
 			{
 				CPlayer p = new CPlayer(name);
 				p.LoadFromIni();
-				if (FormChess.engineList.GetEngineByName(p.engine) != null)
+				if (p.Engine != Global.none)
 					Add(p);
 			}
 			if (Count == 0)
@@ -334,8 +351,28 @@ namespace RapChessGui
 		public void SaveToIni()
 		{
 			iniFile.DeleteKey("player");
+			for (int n = Count - 1; n >= 0; n--)
+			{
+				CPlayer p = this[n];
+				if ((p.engine == null)||!p.engine.Exists())
+					RemoveAt(n);
+				else
+					p.SaveToIni();
+			}
+		}
+
+		public void SaveToIni(CBook book)
+		{
 			foreach (CPlayer p in this)
-				p.SaveToIni();
+				if (p.book == book)
+					p.SaveToIni();
+		}
+
+		public void SaveToIni(CEngine engine)
+		{
+			foreach (CPlayer p in this)
+				if (p.engine == engine)
+					p.SaveToIni();
 		}
 
 		public int GetOptElo(double index)

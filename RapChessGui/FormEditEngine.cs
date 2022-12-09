@@ -50,7 +50,7 @@ namespace RapChessGui
 		{
 			if (engine == null)
 				return;
-			FormChess.iniFile.DeleteKey($"engine>{engine.name}");
+			CEngineList.iniFile.DeleteKey($"engine>{engine.name}");
 			SaveToIni(engine);
 			MessageBox.Show($"Chess {engine.name} has been modified");
 			CData.reset = true;
@@ -301,6 +301,8 @@ namespace RapChessGui
 			cbFileList.SelectedIndex = 0;
 			UpdateListBox();
 			listBox1.SelectedIndex = listBox1.FindString(engineName);
+			if ((listBox1.SelectedIndex < 0) && (listBox1.Items.Count > 0))
+				listBox1.SelectedIndex = 0;
 		}
 
 		private void bHistory_Click(object sender, EventArgs e)

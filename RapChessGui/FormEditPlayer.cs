@@ -50,14 +50,8 @@ namespace RapChessGui
 		void SelectPlayer()
 		{
 			tbPlayerName.Text = player.name;
-			if (FormChess.engineList.GetIndex(player.engine) >= 0)
-				cbEngineList.Text = player.engine;
-			else
-				cbEngineList.Text = Global.none;
-			if (cbBookList.Items.IndexOf(player.book) >= 0)
-				cbBookList.Text = player.book;
-			else
-				cbBookList.Text = Global.none;
+			cbEngineList.Text = player.Engine;
+			cbBookList.Text = player.Book;
 			nudTournament.Value = player.tournament;
 			nudElo.Value = Convert.ToInt32(player.elo);
 			nudValue.Value = player.modeValue.GetValue();
@@ -102,8 +96,8 @@ namespace RapChessGui
 		void UpdatePlayer(CPlayer p)
 		{
 			p.name = tbPlayerName.Text;
-			p.engine = cbEngineList.Text;
-			p.book = cbBookList.Text;
+			p.Engine = cbEngineList.Text;
+			p.Book = cbBookList.Text;
 			p.SetTournament((int)nudTournament.Value);
 			p.elo = nudElo.Value.ToString();
 			p.modeValue.level = modeValue.level;
@@ -136,7 +130,6 @@ namespace RapChessGui
 			modeValue.SetLevel(combMode.Text);
 			modeValue.SetValue((int)nudValue.Value);
 			CPlayer player = new CPlayer(name);
-			player.engine = cbEngineList.Text;
 			FormChess.playerList.Add(player);
 			SaveToIni(player);
 			MessageBox.Show($"Player {player.name} has been created");
@@ -184,6 +177,8 @@ namespace RapChessGui
 			cbBookList.SelectedIndex = 0;
 			UpdateListBox();
 			listBox1.SelectedIndex = listBox1.FindString(playerName);
+			if ((listBox1.SelectedIndex < 0) && (listBox1.Items.Count > 0))
+				listBox1.SelectedIndex = 0;
 		}
 
 		private void combMode_SelectedIndexChanged(object sender, EventArgs e)
@@ -207,7 +202,7 @@ namespace RapChessGui
 				e = new DrawItemEventArgs(e.Graphics, e.Font, e.Bounds, e.Index, e.State ^ DrawItemState.Selected, CBoard.colorMessage, CBoard.colorChartD);
 				b = Brushes.White;
 			}
-			else if (FormChess.engineList.GetEngineByName(pla.engine) == null)
+			else if (pla.Engine == Global.none)
 			{
 				e = new DrawItemEventArgs(e.Graphics, e.Font, e.Bounds, e.Index, e.State, Color.White, CBoard.colorRed);
 				b = Brushes.White;

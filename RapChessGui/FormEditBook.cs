@@ -126,10 +126,12 @@ namespace RapChessGui
 			foreach (string book in CData.bookReader)
 				cbBookreaderList.Items.Add(book);
 			cbBookreaderList.Sorted = false;
-			cbBookreaderList.Items.Insert(0, "None");
+			cbBookreaderList.Items.Insert(0, Global.none);
 			cbBookreaderList.SelectedIndex = 0;
 			UpdateListBox();
 			listBox1.SelectedIndex = listBox1.FindString(bookName);
+			if ((listBox1.SelectedIndex < 0) && (listBox1.Items.Count > 0))
+				listBox1.SelectedIndex = 0;
 		}
 
 		private void listBox1_DrawItem(object sender, DrawItemEventArgs e)
@@ -149,6 +151,9 @@ namespace RapChessGui
 			{
 				e = new DrawItemEventArgs(e.Graphics, e.Font, e.Bounds, e.Index, e.State, Color.White, CBoard.colorRed);
 				b = Brushes.White;
+			}else if (book.tournament > 0)
+			{
+				e = new DrawItemEventArgs(e.Graphics, e.Font, e.Bounds, e.Index, e.State, Color.Black, CBoard.colorMessage);
 			}
 			e.DrawBackground();
 			e.Graphics.DrawString(name, e.Font, b, e.Bounds, StringFormat.GenericDefault);

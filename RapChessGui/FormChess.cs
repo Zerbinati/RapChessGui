@@ -835,7 +835,7 @@ namespace RapChessGui
 						}
 						catch
 						{
-							log.Add($"{g.player.name} ({g.player.engine}) ({msg})");
+							log.Add($"{g.player.name} ({g.player.Engine}) ({msg})");
 						}
 					}
 					break;
@@ -1034,7 +1034,6 @@ namespace RapChessGui
 		{
 			CData.UpdateFileEngine();
 			engineList.AutoUpdate();
-			playerList.Check(engineList);
 			Reset();
 		}
 
@@ -1127,6 +1126,7 @@ namespace RapChessGui
 			if (!forced && !CData.reset)
 				return;
 			CData.reset = false;
+			playerList.SaveToIni();
 			ResetListEngine();
 			ResetListBook();
 			TournamentBReset();
@@ -1644,15 +1644,15 @@ namespace RapChessGui
 				pc = CModeGame.humanPlayer;
 			else if (cbComputer.Text == "Custom")
 			{
-				pc.engine = cbEngine.Text;
-				pc.book = cbBook.Text;
+				pc.Engine = cbEngine.Text;
+				pc.Book = cbBook.Text;
 				pc.modeValue.level = CModeGame.modeValue.level;
 				pc.modeValue.value = CModeGame.modeValue.value;
 			}
 			else
 			pc = playerList.GetPlayerByElo(CModeGame.humanPlayer.GetElo());
 			CGamer g = GamerList.gamers[1];
-			g.SetPlayer(pc,FormOptions.gameBook==Global.none?pc.book:FormOptions.gameBook);
+			g.SetPlayer(pc,FormOptions.gameBook==Global.none?pc.Book:FormOptions.gameBook);
 		}
 
 		void GameStart()
@@ -1759,13 +1759,13 @@ namespace RapChessGui
 			MatchSet();
 			SetMode(CGameMode.match);
 			CPlayer p1 = new CPlayer("Player 1");
-			p1.engine = CModeMatch.engine1;
-			p1.book = CModeMatch.book1;
+			p1.Engine = CModeMatch.engine1;
+			p1.Book = CModeMatch.book1;
 			p1.modeValue.level = CModeMatch.modeValue1.level;
 			p1.modeValue.value = CModeMatch.modeValue1.value;
 			CPlayer p2 = new CPlayer("Player 2");
-			p2.engine = CModeMatch.engine2;
-			p2.book = CModeMatch.book2;
+			p2.Engine = CModeMatch.engine2;
+			p2.Book = CModeMatch.book2;
 			p2.modeValue.level = CModeMatch.modeValue2.level;
 			p2.modeValue.value = CModeMatch.modeValue2.value;
 			GamerList.gamers[0].SetPlayer(p1);
@@ -1803,16 +1803,16 @@ namespace RapChessGui
 			bookList.FillPosition();
 			int eloW = bw.GetElo();
 			int eloL = bl.GetElo();
-			bool f = CModeTournamentB.first == pw.book;
+			bool f = CModeTournamentB.first == pw.Book;
 			CElo.EloRating(eloW, eloL, out int newW, out int newL, bw.hisElo.Count, bl.hisElo.Count, isDraw);
 			if (isDraw)
-				CModeTournamentB.tourList.Write(pw.book, pb.book, "d", f);
+				CModeTournamentB.tourList.Write(pw.Book, pb.Book, "d", f);
 			else
 			{
 				if (eloW <= eloL)
 					CModeTournamentB.repetition++;
 				string r = gw.player == pw ? "w" : "b";
-				CModeTournamentB.tourList.Write(pw.book, pb.book, r, f);
+				CModeTournamentB.tourList.Write(pw.Book, pb.Book, r, f);
 			}
 			bool ls = bl.name == FormOptions.tourBSelected;
 			bool ws = bw.name == FormOptions.tourBSelected;
@@ -1942,12 +1942,12 @@ namespace RapChessGui
 			CBook b2 = CModeTournamentB.SelectSecond(b1);
 			CPlayer p1 = new CPlayer(b1.name);
 			CPlayer p2 = new CPlayer(b2.name);
-			p1.engine = CModeTournamentB.engine;
-			p2.engine = CModeTournamentB.engine;
+			p1.Engine = CModeTournamentB.engine;
+			p2.Engine = CModeTournamentB.engine;
 			p1.elo = b1.elo;
 			p2.elo = b2.elo;
-			p1.book = b1.name;
-			p2.book = b2.name;
+			p1.Book = b1.name;
+			p2.Book = b2.name;
 			p1.modeValue.level = CModeTournamentB.modeValue.level;
 			p1.modeValue.value = CModeTournamentB.modeValue.value;
 			p2.modeValue.level = CModeTournamentB.modeValue.level;
@@ -2092,14 +2092,14 @@ namespace RapChessGui
 			CEngine e2 = CModeTournamentE.SelectSecond(e1);
 			CPlayer p1 = new CPlayer(e1.name);
 			CPlayer p2 = new CPlayer(e2.name);
-			p1.engine = e1.name;
-			p2.engine = e2.name;
+			p1.Engine = e1.name;
+			p2.Engine = e2.name;
 			p1.elo = e1.elo;
 			p2.elo = e2.elo;
-			p1.book = CModeTournamentE.book;
+			p1.Book = CModeTournamentE.book;
 			p1.modeValue.level = CModeTournamentE.modeValue.level;
 			p1.modeValue.value = CModeTournamentE.modeValue.value;
-			p2.book = CModeTournamentE.book;
+			p2.Book = CModeTournamentE.book;
 			p2.modeValue.level = CModeTournamentE.modeValue.level;
 			p2.modeValue.value = CModeTournamentE.modeValue.value;
 			CModeTournamentE.SetRepeition(e1, e2);
@@ -2125,16 +2125,16 @@ namespace RapChessGui
 			engList.FillPosition();
 			int eloW = ew.GetElo();
 			int eloL = el.GetElo();
-			bool f = CModeTournamentE.first == pw.engine;
+			bool f = CModeTournamentE.first == pw.Engine;
 			CElo.EloRating(eloW, eloL, out int newW, out int newL, ew.hisElo.Count, el.hisElo.Count, isDraw);
 			if (isDraw)
-				CModeTournamentE.tourList.Write(pw.engine, pb.engine, "d", f);
+				CModeTournamentE.tourList.Write(pw.Engine, pb.Engine, "d", f);
 			else
 			{
 				if (eloW <= eloL)
 					CModeTournamentE.repetition++;
 				string r = gw.player == pw ? "w" : "b";
-				CModeTournamentE.tourList.Write(pw.engine, pb.engine, r, f);
+				CModeTournamentE.tourList.Write(pw.Engine, pb.Engine, r, f);
 			}
 			bool ls = el.name == FormOptions.tourESelected;
 			bool ws = ew.name == FormOptions.tourESelected;
@@ -2191,7 +2191,7 @@ namespace RapChessGui
 			int countGames = 0;
 			int opponents = 0;
 			foreach (CPlayer p in playerList)
-				if (p.engine != Global.none)
+				if (p.Engine != Global.none)
 				{
 					int count = CModeTournamentP.tourList.CountGames(name, p.name, out int gw, out int gl, out int gd);
 					if (count > 0)
@@ -2360,13 +2360,13 @@ namespace RapChessGui
 			CModeTraining.modeValueTrained.SetValue((int)nudTrained.Value);
 			SetMode(CGameMode.training);
 			CPlayer pw = new CPlayer("Trained");
-			pw.engine = CModeTraining.trained;
-			pw.book = CModeTraining.trainedBook;
+			pw.Engine = CModeTraining.trained;
+			pw.Book = CModeTraining.trainedBook;
 			pw.modeValue.level = CModeTraining.modeValueTrained.level;
 			pw.modeValue.value = CModeTraining.modeValueTrained.value;
 			CPlayer pb = new CPlayer("Trainer");
-			pb.engine = CModeTraining.trainer;
-			pb.book = CModeTraining.trainerBook;
+			pb.Engine = CModeTraining.trainer;
+			pb.Book = CModeTraining.trainerBook;
 			pb.modeValue.level = CModeTraining.modeValueTrainer.level;
 			pb.modeValue.value = CModeTraining.modeValueTrainer.value;
 			GamerList.gamers[0].SetPlayer(pw);

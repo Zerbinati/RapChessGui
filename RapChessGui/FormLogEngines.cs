@@ -87,7 +87,7 @@ namespace RapChessGui
 			AppendTimeText($"{colorS}: {g.player.GetName()}\n", color);
 			if (g.engine == null)
 				return;
-			AppendTimeText($"Engine: {g.player.engine}\n", color);
+			AppendTimeText($"Engine: {g.player.Engine}\n", color);
 			AppendTimeText($"File: {g.engine.file}\n", color);
 			string parameters = g.engine.parameters;
 			if (parameters != "")

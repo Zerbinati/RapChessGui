@@ -579,14 +579,14 @@ namespace RapChessGui
 
 		public void SetPlayer(CPlayer p)
 		{
-			SetPlayer(p,p.book);
+			SetPlayer(p,p.Book);
 		}
 
 		public void SetPlayer(CPlayer p,string b)
 		{
 			player = p;
 			book = FormChess.bookList.GetBookByName(b);
-			engine = FormChess.engineList.GetEngineByName(p.engine);
+			engine = FormChess.engineList.GetEngineByName(p.Engine);
 			bookPro.Terminate();
 			enginePro.Terminate();
 			if (book != null)

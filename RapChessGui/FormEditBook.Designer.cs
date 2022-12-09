@@ -30,6 +30,7 @@
 		{
 			this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
 			this.panel1 = new System.Windows.Forms.Panel();
+			this.bLog = new System.Windows.Forms.Button();
 			this.bConsole = new System.Windows.Forms.Button();
 			this.bDelete = new System.Windows.Forms.Button();
 			this.bCreate = new System.Windows.Forms.Button();
@@ -47,7 +48,6 @@
 			this.tbReaderName = new System.Windows.Forms.TextBox();
 			this.gbBooks = new System.Windows.Forms.GroupBox();
 			this.listBox1 = new System.Windows.Forms.ListBox();
-			this.bLog = new System.Windows.Forms.Button();
 			this.panel1.SuspendLayout();
 			this.groupBox5.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.nudTournament)).BeginInit();
@@ -81,6 +81,18 @@
 			this.panel1.Name = "panel1";
 			this.panel1.Size = new System.Drawing.Size(311, 591);
 			this.panel1.TabIndex = 0;
+			// 
+			// bLog
+			// 
+			this.bLog.AutoSize = true;
+			this.bLog.Dock = System.Windows.Forms.DockStyle.Top;
+			this.bLog.Location = new System.Drawing.Point(0, 316);
+			this.bLog.Name = "bLog";
+			this.bLog.Size = new System.Drawing.Size(311, 24);
+			this.bLog.TabIndex = 37;
+			this.bLog.Text = "Log";
+			this.bLog.UseVisualStyleBackColor = true;
+			this.bLog.Click += new System.EventHandler(this.bLog_Click);
 			// 
 			// bConsole
 			// 
@@ -278,6 +290,7 @@
 			// 
 			// listBox1
 			// 
+			this.listBox1.Cursor = System.Windows.Forms.Cursors.Hand;
 			this.listBox1.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.listBox1.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
 			this.listBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
@@ -289,18 +302,6 @@
 			this.listBox1.TabIndex = 1;
 			this.listBox1.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.listBox1_DrawItem);
 			this.listBox1.SelectedValueChanged += new System.EventHandler(this.ListBox1_SelectedValueChanged);
-			// 
-			// bLog
-			// 
-			this.bLog.AutoSize = true;
-			this.bLog.Dock = System.Windows.Forms.DockStyle.Top;
-			this.bLog.Location = new System.Drawing.Point(0, 316);
-			this.bLog.Name = "bLog";
-			this.bLog.Size = new System.Drawing.Size(311, 24);
-			this.bLog.TabIndex = 37;
-			this.bLog.Text = "Log";
-			this.bLog.UseVisualStyleBackColor = true;
-			this.bLog.Click += new System.EventHandler(this.bLog_Click);
 			// 
 			// FormEditBook
 			// 

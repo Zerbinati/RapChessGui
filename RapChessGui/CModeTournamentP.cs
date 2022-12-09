@@ -66,7 +66,8 @@ namespace RapChessGui
 			foreach (CPlayer p in FormChess.playerList)
 				if ((p.tournament > 0) && p.IsComputer())
 					if ((p.GetElo() >= minElo) && (p.GetElo() <= maxElo))
-						playerList.AddPlayer(p);
+						if (p.IsPlayable())
+							playerList.AddPlayer(p);
 			return playerList;
 		}
 

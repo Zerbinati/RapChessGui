@@ -97,6 +97,13 @@ namespace RapChessGui
 			}
 		}
 
+		public bool SupportProtocol()
+		{
+			if ((protocol != CProtocol.uci) && (protocol != CProtocol.winboard))
+				return false;
+			return true;
+		}
+
 		public string CreateName()
 		{
 			TextInfo ti = new CultureInfo("en-US", false).TextInfo;
@@ -126,6 +133,11 @@ namespace RapChessGui
 			return file.Contains(@"\");
 		}
 
+		public bool Exists()
+		{
+			return FormChess.engineList.GetEngineByName(name) != null;
+		}
+
 		public bool FileExists()
 		{
 			if (file == Global.none)
@@ -148,7 +160,7 @@ namespace RapChessGui
 		{
 			if (FileExists())
 				return file;
-			return "None";
+			return Global.none;
 		}
 
 		public string GetFileName()
