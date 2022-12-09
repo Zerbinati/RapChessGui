@@ -401,7 +401,6 @@
 			this.cbFileList.Name = "cbFileList";
 			this.cbFileList.Size = new System.Drawing.Size(305, 21);
 			this.cbFileList.TabIndex = 2;
-			this.cbFileList.SelectedIndexChanged += new System.EventHandler(this.cbFileList_SelectedIndexChanged);
 			// 
 			// groupBox1
 			// 

@@ -18,7 +18,7 @@ namespace RapChessGui
 			FormOptions.SetFontSize(this);
 		}
 
-		void ClickUpdate()
+		void ClickSave()
 		{
 			if (book == null)
 				return;
@@ -34,7 +34,18 @@ namespace RapChessGui
 			bookName = String.Empty;
 			if (book == null)
 				return;
+			SelectBook(book);
+		}
+
+		void SelectBook(CBook b)
+		{
+			book = b;
 			bookName = book.name;
+			SelectBook();
+		}
+
+		void SelectBook()
+		{
 			tbReaderName.Text = book.name;
 			cbBookreaderList.Text = book.file;
 			tbParameters.Text = book.parameters;
@@ -76,7 +87,7 @@ namespace RapChessGui
 
 		private void ButUpdate_Click(object sender, EventArgs e)
 		{
-			ClickUpdate();
+			ClickSave();
 		}
 
 		private void ButCreate_Click(object sender, EventArgs e)
@@ -144,11 +155,12 @@ namespace RapChessGui
 			e.DrawFocusRectangle();
 		}
 
-		private void button1_Click(object sender, EventArgs e)
+		private void ButReaname_Click(object sender, EventArgs e)
 		{
 			CBook b = new CBook();
 			UpdateBook(b);
 			tbReaderName.Text = b.CreateName();
+			ClickSave();
 		}
 
 		private void bConsole_Click(object sender, EventArgs e)

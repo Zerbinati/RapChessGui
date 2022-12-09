@@ -31,7 +31,23 @@ namespace RapChessGui
 			CData.reset = true;
 		}
 
-		void ShowPlayer()
+		void SelectPlayer(string name)
+		{
+			player = FormChess.playerList.GetPlayerByName(name);
+			playerName = String.Empty;
+			if (player == null)
+				return;
+			SelectPlayer(player);
+		}
+
+		void SelectPlayer(CPlayer p)
+		{
+			player = p;
+			playerName = p.name;
+			SelectPlayer();
+		}
+
+		void SelectPlayer()
 		{
 			tbPlayerName.Text = player.name;
 			if (FormChess.engineList.GetIndex(player.engine) >= 0)
@@ -50,22 +66,6 @@ namespace RapChessGui
 			combMode.SelectedIndex = combMode.FindStringExact(modeValue.GetLevel());
 		}
 
-		void SelectPlayer(CPlayer p)
-		{
-			player = p;
-			ShowPlayer();
-		}
-
-		void SelectPlayer(string name)
-		{
-			player = FormChess.playerList.GetPlayerByName(name);
-			playerName = String.Empty;
-			if (player == null)
-				return;
-			playerName = player.name;
-			SelectPlayer(player);
-		}
-
 		void SelectPlayers(int first, int last, bool t)
 		{
 			int f = first < last ? first : last;
@@ -82,7 +82,7 @@ namespace RapChessGui
 			if (r)
 			{
 				listBox1.Refresh();
-				ShowPlayer();
+				SelectPlayer();
 			}
 		}
 
@@ -246,7 +246,7 @@ namespace RapChessGui
 					{
 						listBox1.Refresh();
 						if (player == pla)
-							ShowPlayer();
+							SelectPlayer();
 					}
 
 				}

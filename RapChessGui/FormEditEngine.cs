@@ -46,7 +46,7 @@ namespace RapChessGui
 		}
 
 
-		void ClickUpdate()
+		void ClickSave()
 		{
 			if (engine == null)
 				return;
@@ -107,9 +107,10 @@ namespace RapChessGui
 
 		void ClickRename()
 		{
-			CEngine eng = new CEngine();
-			UpdateEngine(eng);
-			tbEngineName.Text = eng.CreateName();
+			CEngine e = new CEngine();
+			UpdateEngine(e);
+			tbEngineName.Text = e.CreateName();
+			ClickSave();
 		}
 
 		void StartTestOptions()
@@ -139,13 +140,7 @@ namespace RapChessGui
 			nudTournament.Value = engine.tournament;
 		}
 
-		void SelectEngine()
-		{
-			optionList.list.Clear();
-			Uciok();
-			ShowEngine();
-			StartTestOptions();
-		}
+
 
 		void SelectEngine(string name)
 		{
@@ -153,8 +148,22 @@ namespace RapChessGui
 			engineName = String.Empty;
 			if (engine == null)
 				return;
-			engineName = engine.name;
+			SelectEngine(engine);
+		}
+
+		void SelectEngine(CEngine e)
+		{
+			engine = e;
+			engineName = e.name;
 			SelectEngine();
+		}
+
+		void SelectEngine()
+		{
+			optionList.list.Clear();
+			Uciok();
+			ShowEngine();
+			StartTestOptions();
 		}
 
 		void SelectEngines(int first, int last, bool t)
@@ -263,7 +272,7 @@ namespace RapChessGui
 
 		private void bSave_Click(object sender, EventArgs e)
 		{
-			ClickUpdate();
+			ClickSave();
 		}
 
 		private void bDelete_Click(object sender, EventArgs e)
@@ -412,9 +421,5 @@ namespace RapChessGui
 			Process.Start(psi);
 		}
 
-		private void cbFileList_SelectedIndexChanged(object sender, EventArgs e)
-		{
-			ClickRename();
-		}
 	}
 }
