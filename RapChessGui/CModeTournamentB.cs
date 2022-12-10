@@ -116,7 +116,7 @@ namespace RapChessGui
 			for (int n = 0; n < bl.Count - 1; n++)
 			{
 				CBook b = bl[n];
-				double curScore = EvaluateOpponent(book, b);
+				double curScore = EvaluateOpponent(FormChess.bookList.Count,book, b);
 				if (bstScore < curScore)
 				{
 					bstScore = curScore;
@@ -127,22 +127,28 @@ namespace RapChessGui
 			return bstBook;
 		}
 
-		public static double EvaluateOpponent(CBook first, CBook second)
+		public static double EvaluateOpponent(int listCount, CBook first, CBook second)
 		{
 			int fElo = first.GetElo();
 			int sElo = second.GetElo();
-			int dElo = Math.Abs(fElo - sElo);
-			double ratioElo = (3000.0 - dElo) / 3000.0;
-			int sGames = tourList.CountGames(second.name);
-			tourList.CountGames(first.name, second.name, out int rw, out int rl, out int rd);
-			double games = rw + rl + rd + 1.0;
-			double r = (rw * 2.0 + rd) / games - 1.0;
-			double elo = fElo;
-			if ((r > 0) && (fElo < sElo))
-				elo -= (fElo * r);
-			if ((r < 0) && (fElo > sElo))
-				elo -= ((3000.0 - fElo) * r);
-			return (Math.Abs(sElo - elo) / 3000.0 + (sGames - games) / sGames) * ratioElo;
+			int allGames = tourList.CountGames(first.name);
+			int curGames = tourList.CountGames(second.name, first.name, out int rw, out _, out int rd);
+			double r = ((rw * 2.0 + rd) - curGames) / (curGames + 1.0);
+			double ar = Math.Abs(r);
+			double nElo = fElo;
+			if (r < 0)
+				nElo -= ar * fElo;
+			if (r > 0)
+				nElo += ar * (CElo.eloMax - fElo);
+			double ratioElo = curGames == 0? 0:(Math.Abs(sElo - nElo) / CElo.eloRange) * (1.0 - ar);
+			double avgCount = allGames / listCount;
+			double delCount = (avgCount * 2) / listCount + 1;
+			double maxCount = Math.Sqrt(allGames * 2) + 1;
+			double optCount = maxCount - second.position * delCount;
+			double ratioDistance = (optCount - curGames) / maxCount + 1;
+			double ratioTrend = (first.hisElo.Last() >= first.hisElo.Penultimate()) == (second.GetElo() >= first.GetElo()) ? 1 : 0;
+			double ratioOrder = (r > 0) == (sElo < fElo) ? 1 : 0;
+			return ratioDistance + ratioElo + ratioTrend+ratioOrder;
 		}
 
 		public static CBook SelectLast()

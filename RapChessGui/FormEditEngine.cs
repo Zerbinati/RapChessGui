@@ -109,7 +109,10 @@ namespace RapChessGui
 		{
 			CEngine e = new CEngine();
 			UpdateEngine(e);
-			tbEngineName.Text = e.CreateName();
+			string name = e.CreateName();
+			if (name != e.name)
+				name = FormChess.engineList.GetName(name);
+			tbEngineName.Text = name;
 			ClickSave();
 		}
 

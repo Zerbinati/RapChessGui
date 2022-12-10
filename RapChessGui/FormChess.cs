@@ -590,11 +590,12 @@ namespace RapChessGui
 				elo = $"elo {hu.elo} ({elo})";
 				if (winColor == CColor.none)
 					infoMsg = $"{infoMsg} {elo}";
-				else if(hu == pl) 
+				else if (hu == pl)
 				{
 					infoMsg = $"You lost new {elo}";
 					infoCol = Color.Red;
-				}else
+				}
+				else
 					infoMsg = $"You win new {elo}";
 			}
 			ShowInfo(infoMsg, infoCol, 2);
@@ -1493,7 +1494,7 @@ namespace RapChessGui
 			for (int n = 0; n < CHistory.moveList.Count; n++)
 			{
 				CHisMove m = CHistory.moveList[n];
-				if((n & 1)==0)
+				if ((n & 1) == 0)
 					lvMoves.Items[line].SubItems[1].Text = m.GetPiece();
 				else
 					lvMoves.Items[line++].SubItems[3].Text = m.GetPiece();
@@ -1650,9 +1651,9 @@ namespace RapChessGui
 				pc.modeValue.value = CModeGame.modeValue.value;
 			}
 			else
-			pc = playerList.GetPlayerByElo(CModeGame.humanPlayer.GetElo());
+				pc = playerList.GetPlayerByElo(CModeGame.humanPlayer.GetElo());
 			CGamer g = GamerList.gamers[1];
-			g.SetPlayer(pc,FormOptions.gameBook==Global.none?pc.Book:FormOptions.gameBook);
+			g.SetPlayer(pc, FormOptions.gameBook == Global.none ? pc.Book : FormOptions.gameBook);
 		}
 
 		void GameStart()
@@ -1690,7 +1691,7 @@ namespace RapChessGui
 			{
 				int eloW = pw.GetElo();
 				int eloL = pl.GetElo();
-				CElo.EloRating(eloW,eloL, out int newW, out int newL, pw.hisElo.Count, pl.hisElo.Count, isDraw);
+				CElo.EloRating(eloW, eloL, out int newW, out int newL, pw.hisElo.Count, pl.hisElo.Count, isDraw);
 				pw.NewElo(newW);
 				pl.NewElo(newL);
 				CModeGame.SetFinished(true);
@@ -1814,14 +1815,8 @@ namespace RapChessGui
 				string r = gw.player == pw ? "w" : "b";
 				CModeTournamentB.tourList.Write(pw.Book, pb.Book, r, f);
 			}
-			bool ls = bl.name == FormOptions.tourBSelected;
-			bool ws = bw.name == FormOptions.tourBSelected;
-			if (!ls)
-				bw.NewElo(newW);
-			if (!ws)
-				bl.NewElo(newL);
-			if ((CModeTournamentB.repetition <= CModeTournamentB.games) && (ws || ls))
-				CModeTournamentB.repetition++;
+			bw.NewElo(newW);
+			bl.NewElo(newL);
 		}
 
 		void TournamentBReset()
@@ -2136,12 +2131,8 @@ namespace RapChessGui
 				string r = gw.player == pw ? "w" : "b";
 				CModeTournamentE.tourList.Write(pw.Engine, pb.Engine, r, f);
 			}
-			bool ls = el.name == FormOptions.tourESelected;
-			bool ws = ew.name == FormOptions.tourESelected;
-			if (!ls)
-				ew.NewElo(newW);
-			if (!ws)
-				el.NewElo(newL);
+			ew.NewElo(newW);
+			el.NewElo(newL);
 		}
 
 		#endregion
@@ -2292,14 +2283,8 @@ namespace RapChessGui
 				string r = pw == plw ? "w" : "b";
 				CModeTournamentP.tourList.Write(plw.name, plb.name, r, f);
 			}
-			bool ls = pl.name == FormOptions.tourPSelected;
-			bool ws = pw.name == FormOptions.tourPSelected;
-			if (!ls)
-				pw.NewElo(newW);
-			if (!ws)
-				pl.NewElo(newL);
-			if ((CModeTournamentP.repetition <= CModeTournamentP.games) && (ws || ls))
-				CModeTournamentP.repetition++;
+			pw.NewElo(newW);
+			pl.NewElo(newL);
 		}
 
 		#endregion
@@ -2861,7 +2846,7 @@ namespace RapChessGui
 
 		private void butResignation_Click(object sender, EventArgs e)
 		{
-			if (!IsGameRanked() || !IsGameLong() || !IsGameProgress()||!IsGameComputer())
+			if (!IsGameRanked() || !IsGameLong() || !IsGameProgress() || !IsGameComputer())
 				CModeGame.ranked = false;
 			SetGameState(CGameState.resignation);
 		}

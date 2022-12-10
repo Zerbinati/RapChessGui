@@ -45,7 +45,7 @@
 			this.groupBox4 = new System.Windows.Forms.GroupBox();
 			this.cbBookreaderList = new System.Windows.Forms.ComboBox();
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
-			this.tbReaderName = new System.Windows.Forms.TextBox();
+			this.tbBookName = new System.Windows.Forms.TextBox();
 			this.gbBooks = new System.Windows.Forms.GroupBox();
 			this.listBox1 = new System.Windows.Forms.ListBox();
 			this.panel1.SuspendLayout();
@@ -259,7 +259,7 @@
 			// groupBox1
 			// 
 			this.groupBox1.AutoSize = true;
-			this.groupBox1.Controls.Add(this.tbReaderName);
+			this.groupBox1.Controls.Add(this.tbBookName);
 			this.groupBox1.Dock = System.Windows.Forms.DockStyle.Top;
 			this.groupBox1.Location = new System.Drawing.Point(0, 0);
 			this.groupBox1.Name = "groupBox1";
@@ -270,11 +270,11 @@
 			// 
 			// tbReaderName
 			// 
-			this.tbReaderName.Dock = System.Windows.Forms.DockStyle.Top;
-			this.tbReaderName.Location = new System.Drawing.Point(3, 16);
-			this.tbReaderName.Name = "tbReaderName";
-			this.tbReaderName.Size = new System.Drawing.Size(305, 20);
-			this.tbReaderName.TabIndex = 0;
+			this.tbBookName.Dock = System.Windows.Forms.DockStyle.Top;
+			this.tbBookName.Location = new System.Drawing.Point(3, 16);
+			this.tbBookName.Name = "tbReaderName";
+			this.tbBookName.Size = new System.Drawing.Size(305, 20);
+			this.tbBookName.TabIndex = 0;
 			// 
 			// gbBooks
 			// 
@@ -339,7 +339,7 @@
 		private System.Windows.Forms.OpenFileDialog openFileDialog1;
 		private System.Windows.Forms.Panel panel1;
 		private System.Windows.Forms.GroupBox groupBox1;
-		private System.Windows.Forms.TextBox tbReaderName;
+		private System.Windows.Forms.TextBox tbBookName;
 		private System.Windows.Forms.GroupBox gbBooks;
 		public System.Windows.Forms.ListBox listBox1;
 		private System.Windows.Forms.GroupBox groupBox4;

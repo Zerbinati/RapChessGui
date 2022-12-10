@@ -301,6 +301,19 @@ namespace RapChessGui
 			SaveToIni();
 		}
 
+		public string GetName(string name)
+		{
+			if (GetBookByName(name) == null)
+				return name;
+			int i = 1;
+			while (true)
+			{
+				string name2 = $"{name} ({++i})";
+				if (GetBookByName(name2) == null)
+					return name2;
+			}
+		}
+
 	}
 
 }

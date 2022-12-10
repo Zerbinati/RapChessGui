@@ -46,7 +46,7 @@ namespace RapChessGui
 
 		void SelectBook()
 		{
-			tbReaderName.Text = book.name;
+			tbBookName.Text = book.name;
 			cbBookreaderList.Text = book.file;
 			tbParameters.Text = book.parameters;
 			nudElo.Value = Convert.ToInt32(book.elo);
@@ -68,7 +68,7 @@ namespace RapChessGui
 
 		void UpdateBook(CBook b)
 		{
-			b.name = tbReaderName.Text;
+			b.name = tbBookName.Text;
 			b.file = cbBookreaderList.Text;
 			b.parameters = tbParameters.Text;
 			b.elo = nudElo.Value.ToString();
@@ -92,7 +92,7 @@ namespace RapChessGui
 
 		private void ButCreate_Click(object sender, EventArgs e)
 		{
-			string name = tbReaderName.Text;
+			string name = tbBookName.Text;
 			if (FormChess.bookList.GetBookByName(name) != null)
 			{
 				MessageBox.Show("This name already exists");
@@ -108,7 +108,7 @@ namespace RapChessGui
 
 		private void ButDelete_Click(object sender, EventArgs e)
 		{
-			string name = tbReaderName.Text;
+			string name = tbBookName.Text;
 			var dr = MessageBox.Show($"Are you sure that you would like to delete {name}?", "Delete engine", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 			if (dr == DialogResult.Yes)
 			{
@@ -164,7 +164,10 @@ namespace RapChessGui
 		{
 			CBook b = new CBook();
 			UpdateBook(b);
-			tbReaderName.Text = b.CreateName();
+			string name = b.CreateName();
+			if (name != b.name)
+				name = FormChess.bookList.GetName(name);
+			tbBookName.Text = name;
 			ClickSave();
 		}
 

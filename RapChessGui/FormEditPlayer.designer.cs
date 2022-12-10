@@ -129,7 +129,7 @@
 			this.butRename.TabIndex = 35;
 			this.butRename.Text = "Rename";
 			this.butRename.UseVisualStyleBackColor = true;
-			this.butRename.Click += new System.EventHandler(this.butRename_Click);
+			this.butRename.Click += new System.EventHandler(this.ButRename_Click);
 			// 
 			// bUpdate
 			// 

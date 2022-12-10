@@ -136,21 +136,15 @@ namespace RapChessGui
 				nElo -= ar * fElo;
 			if (r > 0)
 				nElo += ar * (CElo.eloMax - fElo);
-			double ratioElo = (Math.Abs(sElo - nElo) / CElo.eloRange) * (1.0 - ar);
-			if (curGames == 0)
-				ratioElo = 0;
-			if ((r > 0) && (sElo < fElo))
-				ratioElo = 1;
-			if ((r < 0) && (sElo > fElo))
-				ratioElo = 1;
+			double ratioElo = curGames == 0 ? 0 : (Math.Abs(sElo - nElo) / CElo.eloRange) * (1.0 - ar);
 			double avgCount = allGames / listCount;
 			double delCount = (avgCount * 2) / listCount + 1;
 			double maxCount = Math.Sqrt(allGames * 2) + 1;
 			double optCount = maxCount - second.position * delCount;
 			double ratioDistance = (optCount - curGames) / maxCount + 1;
-			if (ratioDistance < 0)
-				ratioDistance = 0;
-			return ratioDistance + ratioElo;
+			double ratioTrend = (first.hisElo.Last() >= first.hisElo.Penultimate()) == (second.GetElo() >= first.GetElo()) ? 1 : 0;
+			double ratioOrder = (r > 0) == (sElo < fElo) ? 1 : 0;
+			return ratioDistance + ratioElo + ratioTrend + ratioOrder;
 		}
 
 		public static void SetRepeition(CPlayer p, CPlayer o)

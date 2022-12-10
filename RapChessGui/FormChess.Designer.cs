@@ -1166,6 +1166,7 @@
 			this.tabPageTourB.Padding = new System.Windows.Forms.Padding(3);
 			this.tabPageTourB.Size = new System.Drawing.Size(337, 462);
 			this.tabPageTourB.TabIndex = 7;
+			this.tabPageTourB.Tag = "3";
 			this.tabPageTourB.Text = "TourB";
 			this.tabPageTourB.UseVisualStyleBackColor = true;
 			// 
@@ -1653,6 +1654,7 @@
 			this.tabPageTourP.Name = "tabPageTourP";
 			this.tabPageTourP.Size = new System.Drawing.Size(337, 462);
 			this.tabPageTourP.TabIndex = 3;
+			this.tabPageTourP.Tag = "5";
 			this.tabPageTourP.Text = "TourP";
 			this.tabPageTourP.UseVisualStyleBackColor = true;
 			// 

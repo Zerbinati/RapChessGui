@@ -258,12 +258,16 @@ namespace RapChessGui
 			}
 		}
 
-		private void butRename_Click(object sender, EventArgs e)
+		private void ButRename_Click(object sender, EventArgs e)
 		{
 			CPlayer p = new CPlayer();
 			UpdatePlayer(p);
-			tbPlayerName.Text = p.CreateName();
+			string name = p.CreateName();
+			if(name != p.name)
+				name = FormChess.playerList.GetName(name);
+			tbPlayerName.Text = name;
 			ClickSave();
 		}
+
 	}
 }

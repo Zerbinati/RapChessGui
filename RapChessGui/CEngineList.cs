@@ -214,6 +214,19 @@ namespace RapChessGui
 				RemoveAt(i);
 		}
 
+		public string GetName(string name)
+		{
+			if (GetEngineByName(name)==null)
+				return name;
+			int i = 1;
+			while (true)
+			{
+				string name2 = $"{name} ({++i})";
+				if (GetEngineByName(name2) == null)
+					return name2;
+			}
+		}
+
 		public CEngine GetEngineByName(string name)
 		{
 			foreach (CEngine e in this)

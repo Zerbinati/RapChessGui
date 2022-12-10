@@ -429,6 +429,18 @@ namespace RapChessGui
 				this[n].position = n;
 		}
 
+		public string GetName(string name)
+		{
+			if (GetPlayerByName(name) == null)
+				return name;
+			int i = 1;
+			while (true)
+			{
+				string name2 = $"{name} ({++i})";
+				if (GetPlayerByName(name2) == null)
+					return name2;
+			}
+		}
 
 	}
 }

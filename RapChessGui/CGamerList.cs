@@ -254,7 +254,7 @@ namespace RapChessGui
 		public string GetEngineFile()
 		{
 			if (engine == null)
-				return "";
+				return string.Empty;
 			else
 				return engine.file;
 		}
