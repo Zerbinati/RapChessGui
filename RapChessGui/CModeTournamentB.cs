@@ -94,7 +94,7 @@ namespace RapChessGui
 			if (b != null)
 				return b;
 			b = bookList.GetBookByName(first);
-			if ((b == null)||((games >= repetition) && (games > 0)))
+			if ((b == null) || ((games >= repetition) && (games > 0)))
 			{
 				b = SelectLast();
 				games = 0;
@@ -116,7 +116,7 @@ namespace RapChessGui
 			for (int n = 0; n < bl.Count - 1; n++)
 			{
 				CBook b = bl[n];
-				double curScore = EvaluateOpponent(FormChess.bookList.Count,book, b);
+				double curScore = EvaluateOpponent(FormChess.bookList.Count, book, b);
 				if (bstScore < curScore)
 				{
 					bstScore = curScore;
@@ -127,28 +127,29 @@ namespace RapChessGui
 			return bstBook;
 		}
 
-		public static double EvaluateOpponent(int listCount, CBook first, CBook second)
+		public static double EvaluateOpponent(double listCount, CBook first, CBook second)
 		{
 			int fElo = first.GetElo();
 			int sElo = second.GetElo();
 			int allGames = tourList.CountGames(first.name);
-			int curGames = tourList.CountGames(second.name, first.name, out int rw, out _, out int rd);
-			double r = ((rw * 2.0 + rd) - curGames) / (curGames + 1.0);
+			int curGames = tourList.CountGames(second.name, first.name, out int rw, out int rl, out int rd);
+			double r = (rw * 2.0 + rd - curGames) / (curGames + 1.0);
 			double ar = Math.Abs(r);
 			double nElo = fElo;
-			if (r < 0)
+			if (rw < rl)
 				nElo -= ar * fElo;
-			if (r > 0)
+			if (rw > rl)
 				nElo += ar * (CElo.eloMax - fElo);
-			double ratioElo = curGames == 0? 0:(Math.Abs(sElo - nElo) / CElo.eloRange) * (1.0 - ar);
+			double ratioElo = curGames == 0 ? 0 : (Math.Abs(sElo - nElo) / CElo.eloRange) * (1.0 - ar);
 			double avgCount = allGames / listCount;
 			double delCount = (avgCount * 2) / listCount + 1;
 			double maxCount = Math.Sqrt(allGames * 2) + 1;
-			double optCount = maxCount - second.position * delCount;
-			double ratioDistance = (optCount - curGames) / maxCount + 1;
+			double optCount = maxCount - second.position * delCount + 1;
+			double ratioCount = (optCount - curGames) / maxCount + 1;
+			double ratioDistance = (listCount - second.position) / listCount;
 			double ratioTrend = (first.hisElo.Last() >= first.hisElo.Penultimate()) == (second.GetElo() >= first.GetElo()) ? 1 : 0;
-			double ratioOrder = (r > 0) == (sElo < fElo) ? 1 : 0;
-			return ratioDistance + ratioElo + ratioTrend+ratioOrder;
+			double ratioOrder = ((rw > rl) == (sElo < fElo)) || (sElo == fElo) ? 1 : 0;
+			return ratioCount + ratioDistance + ratioElo + ratioTrend + ratioOrder;
 		}
 
 		public static CBook SelectLast()
