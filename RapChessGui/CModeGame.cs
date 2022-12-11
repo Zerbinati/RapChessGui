@@ -24,9 +24,8 @@ namespace RapChessGui
 		{
 			if (humanPlayer.hisElo.Count == 0)
 			{
-				int e = humanPlayer.GetElo();
-				humanPlayer.hisElo.AddValue(e);
-				humanPlayer.hisElo.AddValue(e);
+				humanPlayer.hisElo.AddValue(humanPlayer.Elo);
+				humanPlayer.hisElo.AddValue(humanPlayer.Elo);
 			}
 			FormChess.iniFile.Write("mode>game>finished", finished);
 			FormChess.iniFile.Write("mode>game>rotate", rotate);

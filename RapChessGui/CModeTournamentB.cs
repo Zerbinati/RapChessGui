@@ -51,9 +51,9 @@ namespace RapChessGui
 		{
 			tourList.CountGames(book.name, book1.name, out int rw1, out int rl1, out int rd1);
 			tourList.CountGames(book.name, book2.name, out int rw2, out int rl2, out int rd2);
-			if ((book.GetElo() > book1.GetElo()) != (rw1 > rl1))
+			if ((book.Elo > book1.Elo) != (rw1 > rl1))
 				return book1;
-			if ((book.GetElo() > book2.GetElo()) != (rw2 > rl2))
+			if ((book.Elo > book2.Elo) != (rw2 > rl2))
 				return book2;
 			int count1 = (rw1 + rl1 + rd1);
 			int count2 = (rw2 + rl2 + rd2);
@@ -74,7 +74,7 @@ namespace RapChessGui
 			bookList.Clear();
 			foreach (CBook b in FormChess.bookList)
 				if (b.FileExists() && (b.tournament > 0))
-					if ((b.GetElo() >= minElo) && (b.GetElo() <= maxElo))
+					if ((b.Elo >= minElo) && (b.Elo <= maxElo))
 						bookList.AddBook(b);
 			return bookList;
 		}
@@ -129,8 +129,8 @@ namespace RapChessGui
 
 		public static double EvaluateOpponent(double listCount, CBook first, CBook second)
 		{
-			int fElo = first.GetElo();
-			int sElo = second.GetElo();
+			int fElo = first.Elo;
+			int sElo = second.Elo;
 			int allGames = tourList.CountGames(first.name);
 			int curGames = tourList.CountGames(second.name, first.name, out int rw, out int rl, out int rd);
 			double r = (rw * 2.0 + rd - curGames) / (curGames + 1.0);
@@ -147,7 +147,7 @@ namespace RapChessGui
 			double optCount = maxCount - second.position * delCount + 1;
 			double ratioCount = (optCount - curGames) / maxCount + 1;
 			double ratioDistance = (listCount - second.position) / listCount;
-			double ratioTrend = (first.hisElo.Last() >= first.hisElo.Penultimate()) == (second.GetElo() >= first.GetElo()) ? 1 : 0;
+			double ratioTrend = (first.hisElo.Last() >= first.hisElo.Penultimate()) == (second.Elo >= first.Elo) ? 1 : 0;
 			double ratioOrder = ((rw > rl) == (sElo < fElo)) || (sElo == fElo) ? 1 : 0;
 			return ratioCount + ratioDistance + ratioElo + ratioTrend + ratioOrder;
 		}
@@ -181,7 +181,7 @@ namespace RapChessGui
 					repetition = b.tournament;
 					if (cg == 0)
 						repetition++;
-					if ((b.GetElo() > o.GetElo()) != (rw > rl))
+					if ((b.Elo > o.Elo) != (rw > rl))
 						repetition++;
 					if (b.hisElo.Count < o.hisElo.Count)
 						repetition += 2;

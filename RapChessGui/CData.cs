@@ -53,6 +53,7 @@ namespace RapChessGui
 	{
 		public static string none = "None";
 		public static string human = "Human";
+		public static string elo = "1500";
 	}
 
 	public static class CData
@@ -399,6 +400,23 @@ namespace RapChessGui
 			return mode;
 		}
 
+	}
+
+	public class CElement
+	{
+		public string elo = Global.elo;
+
+		public int Elo
+		{
+			get
+			{
+				return Convert.ToInt32(elo);
+			}
+			set
+			{
+				elo = value.ToString();
+			}
+		}
 	}
 
 	public class ListViewComparer : System.Collections.IComparer

@@ -5,14 +5,13 @@ using RapIni;
 namespace RapChessGui
 {
 
-	public class CPlayer
+	public class CPlayer:CElement
 	{
 		public CBook book = null;
 		public CEngine engine = null;
 		public int tournament = 1;
 		public int position = 0;
 		public string name = String.Empty;
-		public string elo = "1000";
 		public CModeValue modeValue = new CModeValue();
 		public CHisElo hisElo = new CHisElo();
 
@@ -108,15 +107,9 @@ namespace RapChessGui
 			return result;
 		}
 
-		public int GetElo()
-		{
-			return Convert.ToInt32(elo);
-		}
-
 		public int GetDeltaElo()
 		{
-			int e = GetElo();
-			return e - hisElo.EloAvg(e);
+			return Elo - hisElo.EloAvg(Elo);
 		}
 
 		public void SetTournament(int t)
@@ -189,9 +182,8 @@ namespace RapChessGui
 			name = GetName();
 			if (hisElo.Count == 0)
 			{
-				int e = GetElo();
-				hisElo.AddValue(e);
-				hisElo.AddValue(e);
+				hisElo.AddValue(Elo);
+				hisElo.AddValue(Elo);
 			}
 			CPlayerList.iniFile.Write($"player>{name}>tournament", tournament);
 			CPlayerList.iniFile.Write($"player>{name}>engine", Engine);
@@ -276,7 +268,7 @@ namespace RapChessGui
 			{
 				if (cp.Engine == Global.none)
 					continue;
-				int curE = cp.GetElo();
+				int curE = cp.Elo;
 				int curDel = Math.Abs(elo - curE);
 				if (bstDel > curDel)
 				{
@@ -291,7 +283,7 @@ namespace RapChessGui
 		{
 			Sort(delegate (CPlayer p1, CPlayer p2)
 			{
-				int result = p2.GetElo() - p1.GetElo();
+				int result = p2.Elo - p1.Elo;
 				if (result == 0)
 					result = p2.hisElo.EloAvg() - p1.hisElo.EloAvg();
 				return result;
@@ -413,9 +405,9 @@ namespace RapChessGui
 		public void SetEloDistance(CPlayer player)
 		{
 			SortElo();
-			int elo = player.GetElo();
+			int elo = player.Elo;
 			for (int n = 0; n < Count; n++)
-				this[n].position = Math.Abs(elo - this[n].GetElo());
+				this[n].position = Math.Abs(elo - this[n].Elo);
 			Sort(delegate (CPlayer p1, CPlayer p2)
 			{
 				return p1.position - p2.position;

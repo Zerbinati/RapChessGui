@@ -57,7 +57,7 @@ namespace RapChessGui
 			int avg = eloAvg;
 			CEngine eng = FormChess.engineList.GetEngineByName(FormOptions.tourESelected);
 			if (eng != null)
-				avg = eng.GetElo();
+				avg = eng.Elo;
 			int eloMin = avg - eloRange;
 			int eloMax = avg + eloRange;
 			if ((eloRange == 0) || (eloAvg == 0))
@@ -75,7 +75,7 @@ namespace RapChessGui
 			engineList.Clear();
 			foreach (CEngine e in FormChess.engineList)
 				if (e.FileExists() && (e.tournament > 0) && e.SupportLevel(level))
-					if ((e.GetElo() >= eloMin) && (e.GetElo() <= eloMax))
+					if ((e.Elo >= eloMin) && (e.Elo <= eloMax))
 						engineList.AddEngine(e);
 		}
 
@@ -133,8 +133,8 @@ namespace RapChessGui
 
 		public static double EvaluateOpponent(int listCount,CEngine first, CEngine second)
 		{
-			int fElo = first.GetElo();
-			int sElo = second.GetElo();
+			int fElo = first.Elo;
+			int sElo = second.Elo;
 			int allGames = tourList.CountGames(first.name);
 			int curGames = tourList.CountGames(second.name, first.name, out int rw, out int rl, out int rd);
 			double r = (rw * 2.0 + rd - curGames) / (curGames + 1.0);
@@ -151,7 +151,7 @@ namespace RapChessGui
 			double optCount = maxCount - second.position * delCount + 1;
 			double ratioCount = (optCount - curGames) / maxCount + 1;
 			double ratioDistance = (listCount - second.position) / listCount;
-			double ratioTrend = (first.hisElo.Last() >= first.hisElo.Penultimate()) == (second.GetElo() >= first.GetElo()) ? 1 : 0;
+			double ratioTrend = (first.hisElo.Last() >= first.hisElo.Penultimate()) == (second.Elo >= first.Elo) ? 1 : 0;
 			double ratioOrder = ((rw > rl) == (sElo < fElo)) || (sElo == fElo) ? 1 : 0;
 			return ratioCount + ratioDistance + ratioElo + ratioTrend + ratioOrder;
 		}
@@ -169,7 +169,7 @@ namespace RapChessGui
 					repetition = e.tournament;
 					if (cg == 0)
 						repetition++;
-					if ((e.GetElo() > o.GetElo()) != (rw > rl))
+					if ((e.Elo > o.Elo) != (rw > rl))
 						repetition++;
 					if (e.hisElo.Count < o.hisElo.Count)
 						repetition += 2;

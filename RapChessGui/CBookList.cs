@@ -8,14 +8,13 @@ using RapIni;
 namespace RapChessGui
 {
 
-	public class CBook
+	public class CBook:CElement
 	{
 		public int position = 0;
 		public int tournament = 1;
 		public string name = String.Empty;
 		public string file = String.Empty;
 		public string parameters = String.Empty;
-		public string elo = "1500";
 		public CHisElo hisElo = new CHisElo();
 
 		public CBook()
@@ -81,13 +80,7 @@ namespace RapChessGui
 
 		public int GetDeltaElo()
 		{
-			int e = GetElo();
-			return e - hisElo.EloAvg(e);
-		}
-
-		public int GetElo()
-		{
-			return Convert.ToInt32(elo);
+			return Elo - hisElo.EloAvg(Elo);
 		}
 
 		public void NewElo(int e)
@@ -248,7 +241,7 @@ namespace RapChessGui
 		{
 			Sort(delegate (CBook b1, CBook b2)
 			{
-				int result = b2.GetElo() - b1.GetElo();
+				int result = b2.Elo - b1.Elo;
 				if (result != 0)
 					return result;
 				result = b2.hisElo.EloAvg() - b1.hisElo.EloAvg();

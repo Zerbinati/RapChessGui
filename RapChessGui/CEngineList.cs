@@ -7,7 +7,7 @@ using RapIni;
 
 namespace RapChessGui
 {
-	public class CEngine
+	public class CEngine:CElement
 	{
 		public bool modeStandard = true;
 		public bool modeTime = true;
@@ -18,7 +18,6 @@ namespace RapChessGui
 		public string name = String.Empty;
 		public string file = String.Empty;
 		public string parameters = String.Empty;
-		public string elo = "1500";
 		public List<string> options = new List<string>();
 		public CProtocol protocol = CProtocol.uci;
 		public CHisElo hisElo = new CHisElo();
@@ -53,9 +52,8 @@ namespace RapChessGui
 			name = GetName();
 			if (hisElo.Count == 0)
 			{
-				int e = GetElo();
-				hisElo.AddValue(e);
-				hisElo.AddValue(e);
+				hisElo.AddValue(Elo);
+				hisElo.AddValue(Elo);
 			}
 			CEngineList.iniFile.Write($"engine>{name}>tournament", tournament);
 			CEngineList.iniFile.Write($"engine>{name}>modeStandard", modeStandard);
@@ -123,11 +121,6 @@ namespace RapChessGui
 			return def;
 		}
 
-		public void SetElo(int e)
-		{
-			elo = e.ToString();
-		}
-
 		public bool IsAuto()
 		{
 			return file.Contains(@"\");
@@ -147,13 +140,7 @@ namespace RapChessGui
 
 		public int GetDeltaElo()
 		{
-			int e = GetElo();
-			return e - hisElo.EloAvg(e);
-		}
-
-		public int GetElo()
-		{
-			return Convert.ToInt32(elo);
+			return Elo - hisElo.EloAvg(Elo);
 		}
 
 		public string GetFile()
@@ -357,7 +344,7 @@ namespace RapChessGui
 		{
 			Sort(delegate (CEngine e1, CEngine e2)
 			{
-				int result = e2.GetElo() - e1.GetElo();
+				int result = e2.Elo - e1.Elo;
 				if (result == 0)
 					result = e2.hisElo.EloAvg() - e1.hisElo.EloAvg();
 				return result;
@@ -367,9 +354,8 @@ namespace RapChessGui
 		public void SetEloDistance(CEngine engine)
 		{
 			SortElo();
-			int elo = engine.GetElo();
 			for (int n = 0; n < Count; n++)
-				this[n].position = Math.Abs(elo - this[n].GetElo());
+				this[n].position = Math.Abs(engine.Elo - this[n].Elo);
 			Sort(delegate (CEngine e1, CEngine e2)
 			{
 				return e1.position - e2.position;

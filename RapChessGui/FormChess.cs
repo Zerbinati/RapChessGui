@@ -1613,7 +1613,7 @@ namespace RapChessGui
 
 		#region mode game
 
-		void GameSet()
+		void GameFromInter()
 		{
 			CModeGame.color = cbColor.Text;
 			CModeGame.computer = cbComputer.Text;
@@ -1624,7 +1624,7 @@ namespace RapChessGui
 			CModeGame.SaveToIni();
 		}
 
-		void GameGet()
+		void GameToInter()
 		{
 			cbColor.Text = CModeGame.color;
 			cbComputer.Text = CModeGame.computer;
@@ -1632,6 +1632,7 @@ namespace RapChessGui
 			cbBook.Text = CModeGame.book;
 			cbMode.Text = CModeGame.modeValue.GetLevel();
 			nudValue.Value = CModeGame.modeValue.GetValue();
+			CData.HisToPoints(CModeGame.humanPlayer.hisElo, chartGame.Series[0].Points);
 			if (cbEngine.SelectedIndex < 0)
 				cbEngine.SelectedIndex = 0;
 		}
@@ -1641,7 +1642,7 @@ namespace RapChessGui
 			GamerList.Init();
 			GamerList.gamers[0].SetPlayer(CModeGame.humanPlayer);
 			CPlayer pc = new CPlayer();
-			if (cbComputer.Text == "Human")
+			if (cbComputer.Text == Global.human)
 				pc = CModeGame.humanPlayer;
 			else if (cbComputer.Text == "Custom")
 			{
@@ -1651,7 +1652,7 @@ namespace RapChessGui
 				pc.modeValue.value = CModeGame.modeValue.value;
 			}
 			else
-				pc = playerList.GetPlayerByElo(CModeGame.humanPlayer.GetElo());
+				pc = playerList.GetPlayerByElo(CModeGame.humanPlayer.Elo);
 			CGamer g = GamerList.gamers[1];
 			g.SetPlayer(pc, FormOptions.gameBook == Global.none ? pc.Book : FormOptions.gameBook);
 		}
@@ -1659,10 +1660,8 @@ namespace RapChessGui
 		void GameStart()
 		{
 			ComClear();
-			CPlayer hu = CModeGame.humanPlayer;
-			CData.HisToPoints(hu.hisElo, chartGame.Series[0].Points);
 			CModeGame.ranked = IsGameRanked();
-			GameSet();
+			GameFromInter();
 			SetingsToGamers();
 			if (!GamerList.Check(out string msg))
 			{
@@ -1681,7 +1680,7 @@ namespace RapChessGui
 
 		void GameShow()
 		{
-			GameGet();
+			GameToInter();
 			GameStart();
 		}
 
@@ -1689,13 +1688,14 @@ namespace RapChessGui
 		{
 			if (CModeGame.ranked && IsGameRanked())
 			{
-				int eloW = pw.GetElo();
-				int eloL = pl.GetElo();
+				int eloW = pw.Elo;
+				int eloL = pl.Elo;
 				CElo.EloRating(eloW, eloL, out int newW, out int newL, pw.hisElo.Count, pl.hisElo.Count, isDraw);
 				pw.NewElo(newW);
 				pl.NewElo(newL);
 				CModeGame.SetFinished(true);
 			}
+			GameToInter();
 		}
 
 		#endregion
@@ -1802,8 +1802,8 @@ namespace RapChessGui
 			CModeTournamentB.bookLoose = bl;
 			bookList.SortElo();
 			bookList.FillPosition();
-			int eloW = bw.GetElo();
-			int eloL = bl.GetElo();
+			int eloW = bw.Elo;
+			int eloL = bl.Elo;
 			bool f = CModeTournamentB.first == pw.Book;
 			CElo.EloRating(eloW, eloL, out int newW, out int newL, bw.hisElo.Count, bl.hisElo.Count, isDraw);
 			if (isDraw)
@@ -1884,7 +1884,7 @@ namespace RapChessGui
 				{
 					opponents++;
 					int pro = (gw * 200 + gd * 100) / count - 100;
-					int del = book.GetElo() - b.GetElo();
+					int del = book.Elo - b.Elo;
 					ListViewItem lvi = new ListViewItem(new[] { b.name, del.ToString(), count.ToString(), pro.ToString() });
 					if (del > 0)
 						lvi.BackColor = CBoard.colorListW;
@@ -2007,7 +2007,6 @@ namespace RapChessGui
 			CEngine engine = engineList.GetEngineByName(name);
 			if (engine == null)
 				return;
-			int elo = engine.GetElo();
 			lvTourESel.Items.Clear();
 			engineList.SortElo();
 			engineList.FillPosition();
@@ -2020,7 +2019,7 @@ namespace RapChessGui
 				{
 					opponents++;
 					int pro = (gw * 200 + gd * 100) / count - 100;
-					int del = elo - e.GetElo();
+					int del = engine.Elo - e.Elo;
 					ListViewItem lvi = new ListViewItem(new[] { e.name, del.ToString(), count.ToString(), pro.ToString() });
 					if (del > 0)
 						lvi.BackColor = CBoard.colorListW;
@@ -2118,8 +2117,8 @@ namespace RapChessGui
 			CModeTournamentE.engLoose = el;
 			engList.SortElo();
 			engList.FillPosition();
-			int eloW = ew.GetElo();
-			int eloL = el.GetElo();
+			int eloW = ew.Elo;
+			int eloL = el.Elo;
 			bool f = CModeTournamentE.first == pw.Engine;
 			CElo.EloRating(eloW, eloL, out int newW, out int newL, ew.hisElo.Count, el.hisElo.Count, isDraw);
 			if (isDraw)
@@ -2270,8 +2269,8 @@ namespace RapChessGui
 			CModeTournamentP.plaLoose = pl;
 			plaList.SortElo();
 			plaList.FillPosition();
-			int eloW = pw.GetElo();
-			int eloL = pl.GetElo();
+			int eloW = pw.Elo;
+			int eloL = pl.Elo;
 			bool f = CModeTournamentP.first == plw.name;
 			CElo.EloRating(eloW, eloL, out int newW, out int newL, pw.hisElo.Count, pl.hisElo.Count, isDraw);
 			if (isDraw)
@@ -2710,7 +2709,7 @@ namespace RapChessGui
 		private void butContinueGame_Click(object sender, EventArgs e)
 		{
 			string fen = chess.GetFen();
-			GameSet();
+			GameFromInter();
 			LoadFen(fen);
 			ShowGamers();
 		}

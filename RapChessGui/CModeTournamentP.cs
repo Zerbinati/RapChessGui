@@ -47,9 +47,9 @@ namespace RapChessGui
 		{
 			tourList.CountGames(player.name, player1.name, out int rw1, out int rl1, out int rd1);
 			tourList.CountGames(player.name, player2.name, out int rw2, out int rl2, out int rd2);
-			if ((player.GetElo() > player1.GetElo()) != (rw1 > rl1))
+			if ((player.Elo > player1.Elo) != (rw1 > rl1))
 				return player1;
-			if ((player.GetElo() > player2.GetElo()) != (rw2 > rl2))
+			if ((player.Elo > player2.Elo) != (rw2 > rl2))
 				return player2;
 			int count1 = (rw1 + rl1 + rd1);
 			int count2 = (rw2 + rl2 + rd2);
@@ -65,7 +65,7 @@ namespace RapChessGui
 			playerList.Clear();
 			foreach (CPlayer p in FormChess.playerList)
 				if ((p.tournament > 0) && p.IsComputer())
-					if ((p.GetElo() >= minElo) && (p.GetElo() <= maxElo))
+					if ((p.Elo >= minElo) && (p.Elo <= maxElo))
 						if (p.IsPlayable())
 							playerList.AddPlayer(p);
 			return playerList;
@@ -125,8 +125,8 @@ namespace RapChessGui
 
 		public static double EvaluateOpponent(int listCount, CPlayer first, CPlayer second)
 		{
-			int fElo = first.GetElo();
-			int sElo = second.GetElo();
+			int fElo = first.Elo;
+			int sElo = second.Elo;
 			int allGames = tourList.CountGames(first.name);
 			int curGames = tourList.CountGames(second.name, first.name, out int rw, out int rl, out int rd);
 			double r = (rw * 2.0 + rd - curGames) / (curGames + 1.0);
@@ -143,7 +143,7 @@ namespace RapChessGui
 			double optCount = maxCount - second.position * delCount +1;
 			double ratioCount = (optCount - curGames) / maxCount + 1;
 			double ratioDistance = (listCount - second.position) / listCount;
-			double ratioTrend = (first.hisElo.Last() >= first.hisElo.Penultimate()) == (second.GetElo() >= first.GetElo()) ? 1 : 0;
+			double ratioTrend = (first.hisElo.Last() >= first.hisElo.Penultimate()) == (second.Elo >= first.Elo) ? 1 : 0;
 			double ratioOrder = ((rw > rl) == (sElo < fElo))||(sElo==fElo) ? 1 : 0;
 			return ratioCount + ratioDistance + ratioElo + ratioTrend + ratioOrder;
 		}
@@ -161,7 +161,7 @@ namespace RapChessGui
 					repetition = p.tournament;
 					if (cg == 0)
 						repetition++;
-					if ((p.GetElo() > o.GetElo()) != (rw > rl))
+					if ((p.Elo > o.Elo) != (rw > rl))
 						repetition++;
 					if (p.hisElo.Count < o.hisElo.Count)
 						repetition += 2;
