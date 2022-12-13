@@ -33,6 +33,11 @@ namespace RapChessGui
 			return File.Exists($@"Books\{file}");
 		}
 
+		public bool IsPlayable()
+		{
+			return FileExists();
+		}
+
 		public bool ParametersExists()
 		{
 			string[] tokens = parameters.Split(' ');
@@ -155,8 +160,8 @@ namespace RapChessGui
 
 		public int GetOptElo(double index)
 		{
-			int min = CModeTournamentB.minElo;
-			int max = CModeTournamentB.maxElo;
+			int min = CModeTournamentB.eloRange;
+			int max = CModeTournamentB.eloAvg;
 			if (index < 0)
 				index = 0;
 			if (index >= Count)

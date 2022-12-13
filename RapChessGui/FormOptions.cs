@@ -22,13 +22,16 @@ namespace RapChessGui
 		public static int marginStandard = 0;
 		public static int marginTime = 5000;
 		public static int winLimit = 1;
+		public static int tourBValue = 100;
 		public static int tourEValue = 100;
 		public static string gameBook = Global.none;
-		public static string tourEMode = "Time";
+		public static string tourBEngine = Global.none;
+		public static string tourBMode = "Time";
 		public static string tourBSelected = Global.none;
 		public static string tourESelected = Global.none;
-		public static string tourEBook = Global.none;
 		public static string tourPSelected = Global.none;
+		public static string tourEBook = Global.none;
+		public static string tourEMode = "Time";
 		public static int page = 0;
 		public static ProcessPriorityClass priority = ProcessPriorityClass.Normal;
 		public static Color colorBoard;
@@ -45,9 +48,12 @@ namespace RapChessGui
 			gameBook = FormChess.iniFile.Read("options>mode>game>book", tourEBook);
 			nudBreak.Value = FormChess.iniFile.ReadDecimal("options>mode>game>break", nudBreak.Value);
 			tourBSelected = FormChess.iniFile.Read("options>mode>tourB>selected", tourBSelected);
+			tourBEngine = FormChess.iniFile.Read("options>mode>tourB>engine", tourBEngine);
+			cbTourBMode.Text = FormChess.iniFile.Read("options>mode>tourB>mode", tourBMode);
+			nudTourB.Value = FormChess.iniFile.ReadDecimal("options>mode>tourB>value", tourBValue);
 			tourESelected = FormChess.iniFile.Read("options>mode>tourE>selected", tourESelected);
 			tourEBook = FormChess.iniFile.Read("options>mode>tourE>book", tourEBook);
-			nudTourE.Value = FormChess.iniFile.ReadDecimal("options>mode>tourE>Value", tourEValue);
+			nudTourE.Value = FormChess.iniFile.ReadDecimal("options>mode>tourE>value", tourEValue);
 			cbTourEMode.Text = FormChess.iniFile.Read("options>mode>tourE>mode", tourEMode);
 			tourPSelected = FormChess.iniFile.Read("options>mode>tourP>selected", tourPSelected);
 			colorDialog1.Color = FormChess.iniFile.ReadColor("options>interface>color", Color.Yellow);
@@ -77,6 +83,9 @@ namespace RapChessGui
 			FormChess.iniFile.Write("options>mode>game>book", gameBook);
 			FormChess.iniFile.Write("options>mode>game>break", nudBreak.Value);
 			FormChess.iniFile.Write("options>mode>tourB>selected", tourBSelected);
+			FormChess.iniFile.Write("options>mode>tourB>engine", tourBEngine);
+			FormChess.iniFile.Write("options>mode>tourB>mode", cbTourBMode.Text);
+			FormChess.iniFile.Write("options>mode>tourB>value", nudTourB.Value);
 			FormChess.iniFile.Write("options>mode>tourE>selected", tourESelected);
 			FormChess.iniFile.Write("options>mode>tourE>book", tourEBook);
 			FormChess.iniFile.Write("options>mode>tourE>value", nudTourE.Value);
@@ -136,12 +145,20 @@ namespace RapChessGui
 			cbTourBSelected.SelectedIndex = 0;
 			cbTourEBook.SelectedIndex = 0;
 
+			cbTourBEngine.Items.Clear();
 			cbTourESelected.Items.Clear();
+			cbTourBEngine.Sorted = true;
 			cbTourESelected.Sorted = true;
 			foreach (CEngine e in FormChess.engineList)
+			{
+				cbTourBEngine.Items.Add(e.name);
 				cbTourESelected.Items.Add(e.name);
+			}
+			cbTourBEngine.Sorted = false;
 			cbTourESelected.Sorted = false;
+			cbTourBEngine.Items.Insert(0, Global.none);
 			cbTourESelected.Items.Insert(0, Global.none);
+			cbTourBEngine.SelectedIndex = 0;
 			cbTourESelected.SelectedIndex = 0;
 
 			cbTourPSelected.Items.Clear();
@@ -157,17 +174,18 @@ namespace RapChessGui
 			CData.ComboSelect(cbGameBook, gameBook);
 			CData.ComboSelect(cbTourBSelected, tourBSelected);
 			CData.ComboSelect(cbTourESelected, tourESelected);
+			CData.ComboSelect(cbTourBEngine, tourBEngine);
 			CData.ComboSelect(cbTourEBook, tourEBook);
 			CData.ComboSelect(cbTourPSelected, tourPSelected);
 			nudTourBRec.Value = CModeTournamentB.records;
-			nudTourBMax.Value = CModeTournamentB.maxElo;
-			nudTourBMin.Value = CModeTournamentB.minElo;
+			nudTourBAvg.Value = CModeTournamentB.eloAvg;
+			nudTourBRange.Value = CModeTournamentB.eloRange;
 			nudTourERec.Value = CModeTournamentE.records;
 			nudTourEAvg.Value = CModeTournamentE.eloAvg;
 			nudTourERange.Value = CModeTournamentE.eloRange;
 			nudTourPRec.Value = CModeTournamentP.records;
-			nudTourPMax.Value = CModeTournamentP.maxElo;
-			nudTourPMin.Value = CModeTournamentP.minElo;
+			nudTourPAvg.Value = CModeTournamentP.eloAvg;
+			nudTourPRange.Value = CModeTournamentP.eloRange;
 			labTourB.Text = $"Fill {(CModeTournamentB.tourList.list.Count * 100) / CModeTournamentB.records}%";
 			labTourE.Text = $"Fill {(CModeTournamentE.tourList.list.Count * 100) / CModeTournamentE.records}%";
 			labTourP.Text = $"Fill {(CModeTournamentP.tourList.list.Count * 100) / CModeTournamentP.records}%";
@@ -185,14 +203,14 @@ namespace RapChessGui
 			}
 			FormChess.readerList.SaveToIni();
 			CModeTournamentB.records = (int)nudTourBRec.Value;
-			CModeTournamentB.maxElo = (int)Math.Max(nudTourBMin.Value, nudTourBMax.Value);
-			CModeTournamentB.minElo = (int)Math.Min(nudTourBMin.Value, nudTourBMax.Value);
+			CModeTournamentB.eloAvg = (int)nudTourBAvg.Value;
+			CModeTournamentB.eloRange = (int)nudTourBRange.Value;
 			CModeTournamentE.records = (int)nudTourERec.Value;
 			CModeTournamentE.eloAvg = (int)nudTourEAvg.Value;
 			CModeTournamentE.eloRange = (int)nudTourERange.Value;
 			CModeTournamentP.records = (int)nudTourPRec.Value;
-			CModeTournamentP.maxElo = (int)Math.Max(nudTourPMin.Value, nudTourPMax.Value);
-			CModeTournamentP.minElo = (int)Math.Min(nudTourPMin.Value, nudTourPMax.Value);
+			CModeTournamentP.eloAvg = (int)nudTourPAvg.Value;
+			CModeTournamentP.eloRange = (int)nudTourPRange.Value;
 			CModeTournamentB.SaveToIni();
 			CModeTournamentE.SaveToIni();
 			CModeTournamentP.SaveToIni();
@@ -242,8 +260,8 @@ namespace RapChessGui
 			nudSpeed.Value = 200;
 			nudTourEAvg.Value = 3000;
 			nudTourERange.Value = 0;
-			nudTourPMax.Value = 3000;
-			nudTourPMin.Value = 0;
+			nudTourPAvg.Value = 3000;
+			nudTourPRange.Value = 0;
 			nudHistory.Value = 100;
 			colorDialog1.Color = Color.Yellow;
 			colorBoard = colorDialog1.Color;
@@ -415,6 +433,25 @@ namespace RapChessGui
 		private void cbGameBook_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			gameBook = cbGameBook.Text;
+		}
+
+		private void cbTourBMode_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			CModeTournamentB.modeValue.SetLevel((sender as ComboBox).Text);
+			nudTourB.Increment = CModeTournamentB.modeValue.GetValueIncrement();
+			nudTourB.Minimum = nudTourB.Increment;
+			nudTourB.Value = Math.Max(CModeTournamentB.modeValue.GetValue(), nudTourB.Minimum);
+			tourBMode = cbTourBMode.Text;
+		}
+
+		private void cbTourBEngine_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			tourBEngine = cbTourBEngine.Text;
+		}
+
+		private void nudTourB_ValueChanged(object sender, EventArgs e)
+		{
+			tourBValue = (int)nudTourB.Value;
 		}
 	}
 }

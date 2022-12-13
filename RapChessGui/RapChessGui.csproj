@@ -176,11 +176,23 @@
     <Compile Include="FormLastGame.Designer.cs">
       <DependentUpon>FormLastGame.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormListB.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormListB.Designer.cs">
+      <DependentUpon>FormListB.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormListE.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="FormListE.Designer.cs">
       <DependentUpon>FormListE.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormListP.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormListP.Designer.cs">
+      <DependentUpon>FormListP.cs</DependentUpon>
     </Compile>
     <Compile Include="FormLogBook.cs">
       <SubType>Form</SubType>
@@ -247,8 +259,14 @@
     <EmbeddedResource Include="FormLastGame.resx">
       <DependentUpon>FormLastGame.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FormListB.resx">
+      <DependentUpon>FormListB.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormListE.resx">
       <DependentUpon>FormListE.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormListP.resx">
+      <DependentUpon>FormListP.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormLogBook.resx">
       <DependentUpon>FormLogBook.cs</DependentUpon>

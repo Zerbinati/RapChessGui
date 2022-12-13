@@ -11,8 +11,8 @@ namespace RapChessGui
 	{
 		public static bool rotate = true;
 		public static int games = 0;
-		public static int maxElo = 3000;
-		public static int minElo = 0;
+		public static int eloAvg = 3000;
+		public static int eloRange = 0;
 		public static int records = 10000;
 		public static int repetition = 0;
 		public static string first = String.Empty;
@@ -31,8 +31,8 @@ namespace RapChessGui
 			FormChess.iniFile.Write("mode>tournamentB>mode", modeValue.GetLevel());
 			FormChess.iniFile.Write("mode>tournamentB>value", modeValue.value);
 			FormChess.iniFile.Write("mode>tournamentB>records", records);
-			FormChess.iniFile.Write("mode>tournamentB>rmaxElo", maxElo);
-			FormChess.iniFile.Write("mode>tournamentB>minElo", minElo);
+			FormChess.iniFile.Write("mode>tournamentB>eloAvg", eloAvg);
+			FormChess.iniFile.Write("mode>tournamentB>eloRange", eloRange);
 		}
 
 		public static void LoadFromIni()
@@ -42,8 +42,8 @@ namespace RapChessGui
 			modeValue.SetLevel(FormChess.iniFile.Read("mode>tournamentB>mode", modeValue.GetLevel()));
 			modeValue.value = FormChess.iniFile.ReadInt("mode>tournamentB>value", modeValue.value);
 			records = FormChess.iniFile.ReadInt("mode>tournamentB>records", records);
-			maxElo = FormChess.iniFile.ReadInt("mode>tournamentB>maxElo", maxElo);
-			minElo = FormChess.iniFile.ReadInt("mode>tournamentB>minElo", minElo);
+			eloAvg = FormChess.iniFile.ReadInt("mode>tournamentB>eloAvg", eloAvg);
+			eloRange = FormChess.iniFile.ReadInt("mode>tournamentB>eloRange", eloRange);
 			tourList.SetLimit(records);
 		}
 
@@ -69,14 +69,31 @@ namespace RapChessGui
 			return tourList.CountGames(first, opponent, out _, out _, out _);
 		}
 
-		public static CBookList ListFill()
+
+		public static void ListFill()
 		{
+			int avg = eloAvg;
+			CBook book = FormChess.bookList.GetBookByName(FormOptions.tourBSelected);
+			if (book != null)
+				avg = book.Elo;
+			int eloMin = avg - eloRange;
+			int eloMax = avg + eloRange;
+			if ((eloRange == 0) || (eloAvg == 0))
+				if (eloAvg > 0)
+				{
+					eloMin = avg - eloAvg;
+					eloMax = avg + eloAvg;
+				}
+				else
+				{
+					eloMin = 0;
+					eloMax = 3000;
+				}
 			bookList.Clear();
 			foreach (CBook b in FormChess.bookList)
-				if (b.FileExists() && (b.tournament > 0))
-					if ((b.Elo >= minElo) && (b.Elo <= maxElo))
+				if (b.IsPlayable() && (b.tournament > 0))
+					if ((b.Elo >= eloMin) && (b.Elo <= eloMax))
 						bookList.AddBook(b);
-			return bookList;
 		}
 
 		public static void NewGame()
@@ -91,7 +108,7 @@ namespace RapChessGui
 		{
 			ListFill();
 			CBook b = bookList.GetBookByName(FormOptions.tourBSelected);
-			if (b != null)
+			if ((b != null) && (eloRange == 0))
 				return b;
 			b = bookList.GetBookByName(first);
 			if ((b == null) || ((games >= repetition) && (games > 0)))

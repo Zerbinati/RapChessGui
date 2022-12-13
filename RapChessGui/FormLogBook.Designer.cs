@@ -52,7 +52,7 @@
 			this.Name = "FormLogBook";
 			this.ShowIcon = false;
 			this.ShowInTaskbar = false;
-			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
 			this.Text = "Log book";
 			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormLogBook_FormClosing);
 			this.VisibleChanged += new System.EventHandler(this.FormLogBook_VisibleChanged);

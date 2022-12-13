@@ -113,11 +113,6 @@
 			this.labBook = new System.Windows.Forms.Label();
 			this.chartTournamentB = new System.Windows.Forms.DataVisualization.Charting.Chart();
 			this.button1 = new System.Windows.Forms.Button();
-			this.groupBox11 = new System.Windows.Forms.GroupBox();
-			this.nudTourB = new System.Windows.Forms.NumericUpDown();
-			this.cbTourBMode = new System.Windows.Forms.ComboBox();
-			this.groupBox10 = new System.Windows.Forms.GroupBox();
-			this.cbTourBEngine = new System.Windows.Forms.ComboBox();
 			this.tabPageTourE = new System.Windows.Forms.TabPage();
 			this.splitContainerTourE = new System.Windows.Forms.SplitContainer();
 			this.scTournamentEList = new System.Windows.Forms.SplitContainer();
@@ -333,6 +328,8 @@
 			this.tlpBlack = new System.Windows.Forms.TableLayoutPanel();
 			this.timerAnimation = new System.Windows.Forms.Timer(this.components);
 			this.fileSystemWatcher1 = new System.IO.FileSystemWatcher();
+			this.booksToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
+			this.playersToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
 			this.tabControl1.SuspendLayout();
 			this.tabPageGame.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.chartGame)).BeginInit();
@@ -356,9 +353,6 @@
 			this.splitContainer2.Panel2.SuspendLayout();
 			this.splitContainer2.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.chartTournamentB)).BeginInit();
-			this.groupBox11.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.nudTourB)).BeginInit();
-			this.groupBox10.SuspendLayout();
 			this.tabPageTourE.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainerTourE)).BeginInit();
 			this.splitContainerTourE.Panel1.SuspendLayout();
@@ -1159,8 +1153,6 @@
 			// 
 			this.tabPageTourB.Controls.Add(this.splitContainerTourB);
 			this.tabPageTourB.Controls.Add(this.button1);
-			this.tabPageTourB.Controls.Add(this.groupBox11);
-			this.tabPageTourB.Controls.Add(this.groupBox10);
 			this.tabPageTourB.Location = new System.Drawing.Point(4, 5);
 			this.tabPageTourB.Name = "tabPageTourB";
 			this.tabPageTourB.Padding = new System.Windows.Forms.Padding(3);
@@ -1174,7 +1166,7 @@
 			// 
 			this.splitContainerTourB.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
 			this.splitContainerTourB.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.splitContainerTourB.Location = new System.Drawing.Point(3, 131);
+			this.splitContainerTourB.Location = new System.Drawing.Point(3, 26);
 			this.splitContainerTourB.Name = "splitContainerTourB";
 			this.splitContainerTourB.Orientation = System.Windows.Forms.Orientation.Horizontal;
 			// 
@@ -1185,8 +1177,8 @@
 			// splitContainerTourB.Panel2
 			// 
 			this.splitContainerTourB.Panel2.Controls.Add(this.chartTournamentB);
-			this.splitContainerTourB.Size = new System.Drawing.Size(331, 328);
-			this.splitContainerTourB.SplitterDistance = 205;
+			this.splitContainerTourB.Size = new System.Drawing.Size(331, 433);
+			this.splitContainerTourB.SplitterDistance = 270;
 			this.splitContainerTourB.TabIndex = 27;
 			// 
 			// splitContainer2
@@ -1205,8 +1197,8 @@
 			// 
 			this.splitContainer2.Panel2.Controls.Add(this.lvTourBSel);
 			this.splitContainer2.Panel2.Controls.Add(this.labBook);
-			this.splitContainer2.Size = new System.Drawing.Size(331, 205);
-			this.splitContainer2.SplitterDistance = 101;
+			this.splitContainer2.Size = new System.Drawing.Size(331, 270);
+			this.splitContainer2.SplitterDistance = 132;
 			this.splitContainer2.TabIndex = 24;
 			// 
 			// lvTourBList
@@ -1223,7 +1215,7 @@
 			this.lvTourBList.MultiSelect = false;
 			this.lvTourBList.Name = "lvTourBList";
 			this.lvTourBList.ShowGroups = false;
-			this.lvTourBList.Size = new System.Drawing.Size(327, 97);
+			this.lvTourBList.Size = new System.Drawing.Size(327, 128);
 			this.lvTourBList.Sorting = System.Windows.Forms.SortOrder.Descending;
 			this.lvTourBList.TabIndex = 24;
 			this.lvTourBList.UseCompatibleStateImageBehavior = false;
@@ -1265,7 +1257,7 @@
 			this.lvTourBSel.MultiSelect = false;
 			this.lvTourBSel.Name = "lvTourBSel";
 			this.lvTourBSel.ShowGroups = false;
-			this.lvTourBSel.Size = new System.Drawing.Size(327, 83);
+			this.lvTourBSel.Size = new System.Drawing.Size(327, 117);
 			this.lvTourBSel.TabIndex = 28;
 			this.lvTourBSel.UseCompatibleStateImageBehavior = false;
 			this.lvTourBSel.View = System.Windows.Forms.View.Details;
@@ -1347,7 +1339,7 @@
 			this.chartTournamentB.Series.Add(series3);
 			this.chartTournamentB.Series.Add(series4);
 			this.chartTournamentB.Series.Add(series5);
-			this.chartTournamentB.Size = new System.Drawing.Size(327, 115);
+			this.chartTournamentB.Size = new System.Drawing.Size(327, 155);
 			this.chartTournamentB.TabIndex = 30;
 			this.toolTip1.SetToolTip(this.chartTournamentB, "Tournament history");
 			// 
@@ -1355,7 +1347,7 @@
 			// 
 			this.button1.Cursor = System.Windows.Forms.Cursors.Hand;
 			this.button1.Dock = System.Windows.Forms.DockStyle.Top;
-			this.button1.Location = new System.Drawing.Point(3, 108);
+			this.button1.Location = new System.Drawing.Point(3, 3);
 			this.button1.Name = "button1";
 			this.button1.Size = new System.Drawing.Size(331, 23);
 			this.button1.TabIndex = 22;
@@ -1363,81 +1355,6 @@
 			this.toolTip1.SetToolTip(this.button1, "Start tournament");
 			this.button1.UseVisualStyleBackColor = true;
 			this.button1.Click += new System.EventHandler(this.butStartTournamentB_Click);
-			// 
-			// groupBox11
-			// 
-			this.groupBox11.Controls.Add(this.nudTourB);
-			this.groupBox11.Controls.Add(this.cbTourBMode);
-			this.groupBox11.Dock = System.Windows.Forms.DockStyle.Top;
-			this.groupBox11.Location = new System.Drawing.Point(3, 47);
-			this.groupBox11.Name = "groupBox11";
-			this.groupBox11.Size = new System.Drawing.Size(331, 61);
-			this.groupBox11.TabIndex = 23;
-			this.groupBox11.TabStop = false;
-			this.groupBox11.Text = "Time control";
-			// 
-			// nudTourB
-			// 
-			this.nudTourB.Dock = System.Windows.Forms.DockStyle.Top;
-			this.nudTourB.Location = new System.Drawing.Point(3, 37);
-			this.nudTourB.Maximum = new decimal(new int[] {
-            1000000000,
-            0,
-            0,
-            0});
-			this.nudTourB.Name = "nudTourB";
-			this.nudTourB.Size = new System.Drawing.Size(325, 20);
-			this.nudTourB.TabIndex = 51;
-			this.nudTourB.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-			this.nudTourB.ThousandsSeparator = true;
-			this.nudTourB.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-			// 
-			// cbTourBMode
-			// 
-			this.cbTourBMode.Cursor = System.Windows.Forms.Cursors.Hand;
-			this.cbTourBMode.Dock = System.Windows.Forms.DockStyle.Top;
-			this.cbTourBMode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.cbTourBMode.FormattingEnabled = true;
-			this.cbTourBMode.Items.AddRange(new object[] {
-            "Depth",
-            "Nodes",
-            "Standard",
-            "Time"});
-			this.cbTourBMode.Location = new System.Drawing.Point(3, 16);
-			this.cbTourBMode.Name = "cbTourBMode";
-			this.cbTourBMode.Size = new System.Drawing.Size(325, 21);
-			this.cbTourBMode.Sorted = true;
-			this.cbTourBMode.TabIndex = 29;
-			this.toolTip1.SetToolTip(this.cbTourBMode, "Select engine mode");
-			this.cbTourBMode.SelectedIndexChanged += new System.EventHandler(this.cbTourBMode_SelectedIndexChanged);
-			// 
-			// groupBox10
-			// 
-			this.groupBox10.Controls.Add(this.cbTourBEngine);
-			this.groupBox10.Dock = System.Windows.Forms.DockStyle.Top;
-			this.groupBox10.Location = new System.Drawing.Point(3, 3);
-			this.groupBox10.Name = "groupBox10";
-			this.groupBox10.Size = new System.Drawing.Size(331, 44);
-			this.groupBox10.TabIndex = 28;
-			this.groupBox10.TabStop = false;
-			this.groupBox10.Text = "Engine";
-			// 
-			// cbTourBEngine
-			// 
-			this.cbTourBEngine.Cursor = System.Windows.Forms.Cursors.Hand;
-			this.cbTourBEngine.Dock = System.Windows.Forms.DockStyle.Top;
-			this.cbTourBEngine.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.cbTourBEngine.FormattingEnabled = true;
-			this.cbTourBEngine.Location = new System.Drawing.Point(3, 16);
-			this.cbTourBEngine.Name = "cbTourBEngine";
-			this.cbTourBEngine.Size = new System.Drawing.Size(325, 21);
-			this.cbTourBEngine.Sorted = true;
-			this.cbTourBEngine.TabIndex = 32;
-			this.toolTip1.SetToolTip(this.cbTourBEngine, "Select engine opening book");
 			// 
 			// tabPageTourE
 			// 
@@ -2714,7 +2631,7 @@
 			this.menuStrip1.Location = new System.Drawing.Point(0, 2);
 			this.menuStrip1.Name = "menuStrip1";
 			this.menuStrip1.ShowItemToolTips = true;
-			this.menuStrip1.Size = new System.Drawing.Size(345, 24);
+			this.menuStrip1.Size = new System.Drawing.Size(465, 24);
 			this.menuStrip1.TabIndex = 1;
 			this.menuStrip1.Text = "menuStrip1";
 			// 
@@ -2960,7 +2877,9 @@
 			// listsToolStripMenuItem
 			// 
 			this.listsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.enginesToolStripMenuItem3});
+            this.booksToolStripMenuItem2,
+            this.enginesToolStripMenuItem3,
+            this.playersToolStripMenuItem2});
 			this.listsToolStripMenuItem.Name = "listsToolStripMenuItem";
 			this.listsToolStripMenuItem.Size = new System.Drawing.Size(42, 20);
 			this.listsToolStripMenuItem.Text = "Lists";
@@ -2968,7 +2887,7 @@
 			// enginesToolStripMenuItem3
 			// 
 			this.enginesToolStripMenuItem3.Name = "enginesToolStripMenuItem3";
-			this.enginesToolStripMenuItem3.Size = new System.Drawing.Size(115, 22);
+			this.enginesToolStripMenuItem3.Size = new System.Drawing.Size(180, 22);
 			this.enginesToolStripMenuItem3.Text = "Engines";
 			this.enginesToolStripMenuItem3.Click += new System.EventHandler(this.enginesToolStripMenuItem3_Click);
 			// 
@@ -4357,6 +4276,20 @@
 			this.fileSystemWatcher1.Deleted += new System.IO.FileSystemEventHandler(this.fileSystemWatcher1_Changed);
 			this.fileSystemWatcher1.Renamed += new System.IO.RenamedEventHandler(this.fileSystemWatcher1_Renamed);
 			// 
+			// booksToolStripMenuItem2
+			// 
+			this.booksToolStripMenuItem2.Name = "booksToolStripMenuItem2";
+			this.booksToolStripMenuItem2.Size = new System.Drawing.Size(180, 22);
+			this.booksToolStripMenuItem2.Text = "Books";
+			this.booksToolStripMenuItem2.Click += new System.EventHandler(this.booksToolStripMenuItem2_Click_1);
+			// 
+			// playersToolStripMenuItem2
+			// 
+			this.playersToolStripMenuItem2.Name = "playersToolStripMenuItem2";
+			this.playersToolStripMenuItem2.Size = new System.Drawing.Size(180, 22);
+			this.playersToolStripMenuItem2.Text = "Players";
+			this.playersToolStripMenuItem2.Click += new System.EventHandler(this.playersToolStripMenuItem2_Click);
+			// 
 			// FormChess
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -4399,9 +4332,6 @@
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
 			this.splitContainer2.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.chartTournamentB)).EndInit();
-			this.groupBox11.ResumeLayout(false);
-			((System.ComponentModel.ISupportInitialize)(this.nudTourB)).EndInit();
-			this.groupBox10.ResumeLayout(false);
 			this.tabPageTourE.ResumeLayout(false);
 			this.splitContainerTourE.Panel1.ResumeLayout(false);
 			this.splitContainerTourE.Panel2.ResumeLayout(false);
@@ -4724,11 +4654,6 @@
 		private System.Windows.Forms.Label labBook;
 		public System.Windows.Forms.DataVisualization.Charting.Chart chartTournamentB;
 		private System.Windows.Forms.Button button1;
-		private System.Windows.Forms.GroupBox groupBox10;
-		private System.Windows.Forms.ComboBox cbTourBEngine;
-		private System.Windows.Forms.GroupBox groupBox11;
-		private System.Windows.Forms.NumericUpDown nudTourB;
-		private System.Windows.Forms.ComboBox cbTourBMode;
 		private System.Windows.Forms.ToolStripMenuItem lastTournamentbooksToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem booksToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem clipboardToolStripMenuItem;
@@ -4767,6 +4692,8 @@
 		private System.Windows.Forms.ProgressBar pbHashB;
 		private System.Windows.Forms.ToolStripMenuItem listsToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem enginesToolStripMenuItem3;
+		private System.Windows.Forms.ToolStripMenuItem booksToolStripMenuItem2;
+		private System.Windows.Forms.ToolStripMenuItem playersToolStripMenuItem2;
 	}
 }
 

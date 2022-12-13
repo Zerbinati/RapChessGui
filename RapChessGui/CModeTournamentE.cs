@@ -74,7 +74,7 @@ namespace RapChessGui
 			level = modeValue.level;
 			engineList.Clear();
 			foreach (CEngine e in FormChess.engineList)
-				if (e.FileExists() && (e.tournament > 0) && e.SupportLevel(level))
+				if (e.IsPlayable(level) && (e.tournament > 0))
 					if ((e.Elo >= eloMin) && (e.Elo <= eloMax))
 						engineList.AddEngine(e);
 		}

@@ -11,7 +11,7 @@ namespace RapChessGui
 		public CEngine engine = null;
 		public int tournament = 1;
 		public int position = 0;
-		public string name = String.Empty;
+		public string name = string.Empty;
 		public CModeValue modeValue = new CModeValue();
 		public CHisElo hisElo = new CHisElo();
 
@@ -146,7 +146,9 @@ namespace RapChessGui
 		{
 			if (engine == null)
 				return false;
-			if (!engine.SupportProtocol())
+			if (!engine.IsPlayable(modeValue.level))
+				return false;
+			if ((book != null) && !book.IsPlayable())
 				return false;
 			return true;
 		}
@@ -221,6 +223,7 @@ namespace RapChessGui
 	public class CPlayerList : List<CPlayer>
 	{
 		public static CRapIni iniFile = new CRapIni(@"Ini\players.ini");
+		public static CPlayer humanPlayer = new CPlayer();
 
 		public void AddPlayer(CPlayer p)
 		{
@@ -262,7 +265,7 @@ namespace RapChessGui
 
 		public CPlayer GetPlayerByElo(int elo)
 		{
-			CPlayer p = CModeGame.humanPlayer;
+			CPlayer p = humanPlayer;
 			int bstDel = 10000;
 			foreach (CPlayer cp in this)
 			{
@@ -369,8 +372,8 @@ namespace RapChessGui
 
 		public int GetOptElo(double index)
 		{
-			int min = CModeTournamentP.minElo;
-			int max = CModeTournamentP.maxElo;
+			int min = CModeTournamentP.eloRange;
+			int max = CModeTournamentP.eloAvg;
 			if (index < 0)
 				index = 0;
 			if (index >= Count)

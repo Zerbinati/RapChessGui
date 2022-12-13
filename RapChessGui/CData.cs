@@ -183,13 +183,13 @@ namespace RapChessGui
 
 		static double Probability(double rating1, double rating2)
 		{
-			return 1.0f * 1.0f / (1 + 1.0f * (Math.Pow(10, 1.0f * (rating1 - rating2) / 400)));
+			return 1.0 / (1.0 + Math.Pow(10.0,(rating1 - rating2) / 400.0));
 		}
 
 		public static void EloRating(double oldEloWin, double oldEloLoose, out double newEloWin, out double newEloLoose, int Ga, int Gb, bool draw)
 		{
 			double Kmin = 0xf;
-			double Kmax = 0x3f;
+			double Kmax = 0x80;
 			double Ka = Ga / FormOptions.historyLength;
 			double Kb = Gb / FormOptions.historyLength;
 			Ka = (Ka * Kmin) + ((1 - Ka) * Kmax);
@@ -205,18 +205,6 @@ namespace RapChessGui
 			{
 				newEloWin = oldEloWin + Ka * (1 - Pa);
 				newEloLoose = oldEloLoose + Kb * (0 - Pb);
-				double dif = oldEloWin - oldEloLoose;
-				if (oldEloWin > oldEloLoose)
-					if (dif > 300)
-					{
-						newEloWin = oldEloWin;
-						newEloLoose = oldEloLoose;
-					}
-					else
-					{
-						newEloWin = oldEloWin + ((newEloWin - oldEloWin) * (300 - dif)) / 300;
-						newEloLoose = oldEloLoose + ((newEloLoose - oldEloLoose) * (300 - dif)) / 300;
-					}
 			}
 			if (newEloWin > eloMax)
 				newEloWin = eloMax;

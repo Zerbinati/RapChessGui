@@ -7,7 +7,7 @@ using RapIni;
 
 namespace RapChessGui
 {
-	public class CEngine:CElement
+	public class CEngine : CElement
 	{
 		public bool modeStandard = true;
 		public bool modeTime = true;
@@ -93,6 +93,20 @@ namespace RapChessGui
 						return modeTime;
 					}
 			}
+		}
+
+		public bool IsPlayable()
+		{
+			if (!FileExists())
+				return false;
+			return SupportProtocol();
+		}
+
+		public bool IsPlayable(CLevel l)
+		{
+			if (!IsPlayable())
+				return false;
+			return SupportLevel(l);
 		}
 
 		public bool SupportProtocol()
@@ -203,7 +217,7 @@ namespace RapChessGui
 
 		public string GetName(string name)
 		{
-			if (GetEngineByName(name)==null)
+			if (GetEngineByName(name) == null)
 				return name;
 			int i = 1;
 			while (true)
@@ -212,6 +226,17 @@ namespace RapChessGui
 				if (GetEngineByName(name2) == null)
 					return name2;
 			}
+		}
+
+		public string GetEngineName()
+		{
+			CEngine engine = GetEngineByName(def);
+			if (engine == null)
+			{
+				SortElo();
+				engine = GetEngineByIndex(0);
+			}
+			return engine == null ? Global.none:engine.name;
 		}
 
 		public CEngine GetEngineByName(string name)

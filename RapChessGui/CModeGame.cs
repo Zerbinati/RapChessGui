@@ -12,7 +12,6 @@ namespace RapChessGui
 		public static string engine = CEngineList.def;
 		public static string book = CBookList.def;
 		public static CModeValue modeValue = new CModeValue();
-		public static CPlayer humanPlayer = new CPlayer();
 
 		public static void SetFinished(bool f)
 		{
@@ -22,6 +21,7 @@ namespace RapChessGui
 
 		public static void SaveToIni()
 		{
+			CPlayer humanPlayer = CPlayerList.humanPlayer;
 			if (humanPlayer.hisElo.Count == 0)
 			{
 				humanPlayer.hisElo.AddValue(humanPlayer.Elo);
@@ -41,6 +41,7 @@ namespace RapChessGui
 
 		public static void LoadFromIni()
 		{
+			CPlayer humanPlayer = CPlayerList.humanPlayer;
 			finished = FormChess.iniFile.ReadBool("mode>game>finished",finished);
 			rotate = FormChess.iniFile.ReadBool("mode>game>rotate");
 			color = FormChess.iniFile.Read("mode>game>color", color);

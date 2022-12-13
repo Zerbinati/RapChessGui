@@ -10,31 +10,31 @@ using System.Windows.Forms;
 
 namespace RapChessGui
 {
-	public partial class FormListE : Form
+	public partial class FormListP : Form
 	{
-		public FormListE()
+		public FormListP()
 		{
 			InitializeComponent();
 		}
 
-		private void FormListE_VisibleChanged(object sender, EventArgs e)
+		private void FormListP_VisibleChanged(object sender, EventArgs e)
 		{
-			lvEngines.Items.Clear();
-			FormChess.engineList.SortElo();
+			lvPlayers.Items.Clear();
+			FormChess.playerList.SortElo();
 			int index = 0;
-			foreach (CEngine engine in FormChess.engineList)
+			foreach (CPlayer player in FormChess.playerList)
 			{
-				ListViewItem lvi = new ListViewItem(new[] { (++index).ToString(),engine.name, engine.elo,engine.hisElo.Trend().ToString(), engine.hisElo.Change().ToString() });
-				lvEngines.Items.Add(lvi);
+				ListViewItem lvi = new ListViewItem(new[] { (++index).ToString(), player.name, player.elo, player.hisElo.Trend().ToString(), player.hisElo.Change().ToString() });
+				lvPlayers.Items.Add(lvi);
 			}
 		}
 
-		private void lvEngines_ColumnClick(object sender, ColumnClickEventArgs e)
+		private void lvPlayers_ColumnClick(object sender, ColumnClickEventArgs e)
 		{
 			ListView lv = sender as ListView;
 			lv.Tag = lv.Tag == null ? new Object() : null;
 			(sender as ListView).ListViewItemSorter = new ListViewComparer(e.Column, lv.Tag == null ? SortOrder.Ascending : SortOrder.Descending);
-			for (int n = 0; n < lv.Items.Count; n ++)
+			for (int n = 0; n < lv.Items.Count; n++)
 				lv.Items[n].SubItems[0].Text = (n + 1).ToString();
 		}
 	}

@@ -57,7 +57,9 @@ namespace RapChessGui
 		readonly FormChartB formHisB = new FormChartB();
 		readonly FormChartP formHisP = new FormChartP();
 		readonly FormChartE formHisE = new FormChartE();
+		readonly FormListB formListB = new FormListB();
 		readonly FormListE formListE = new FormListE();
+		readonly FormListP formListP = new FormListP();
 		readonly FormEditEngine formEngine = new FormEditEngine();
 		readonly FormEditBook formBook = new FormEditBook();
 		readonly FormEditPlayer formPlayer = new FormEditPlayer();
@@ -224,7 +226,7 @@ namespace RapChessGui
 
 		#region main
 
-		void ShowFormBook(string bookName = "")
+	void ShowFormBook(string bookName = "")
 		{
 			FormEditBook.bookName = bookName;
 			formBook.ShowDialog(this);
@@ -586,7 +588,7 @@ namespace RapChessGui
 			CPlayer hu = GamerList.GetHuman();
 			if ((hu != null) && (CModeGame.ranked))
 			{
-				string elo = hu.hisElo.LastChange().ToString("+#;-#;0");
+				string elo = hu.hisElo.Change().ToString("+#;-#;0");
 				elo = $"elo {hu.elo} ({elo})";
 				if (winColor == CColor.none)
 					infoMsg = $"{infoMsg} {elo}";
@@ -921,7 +923,6 @@ namespace RapChessGui
 					MatchShow();
 					break;
 				case CGameMode.tourB:
-					TournamentBShow();
 					break;
 				case CGameMode.tourE:
 					break;
@@ -960,7 +961,7 @@ namespace RapChessGui
 			if (CModeGame.ranked == true)
 			{
 				CModeGame.ranked = false;
-				CModeGame.humanPlayer.elo = CModeGame.humanPlayer.hisElo.Last().ToString();
+				CPlayerList.humanPlayer.elo = CPlayerList.humanPlayer.hisElo.Last().ToString();
 				CModeGame.SaveToIni();
 			}
 			ShowAutoElo();
@@ -1012,7 +1013,7 @@ namespace RapChessGui
 		{
 			if (CModeGame.finished)
 				return false;
-			CPlayer hu = CModeGame.humanPlayer;
+			CPlayer hu = CPlayerList.humanPlayer;
 			hu.NewElo(hu.GetEloLess());
 			int oe = hu.hisElo.Penultimate();
 			int ne = hu.hisElo.Last();
@@ -1043,13 +1044,11 @@ namespace RapChessGui
 			cbEngine.Items.Clear();
 			cbMatchEngine1.Items.Clear();
 			cbMatchEngine2.Items.Clear();
-			cbTourBEngine.Items.Clear();
 			cbTrainerEngine.Items.Clear();
 			cbTrainedEngine.Items.Clear();
 			cbEngine.Sorted = true;
 			cbMatchEngine1.Sorted = true;
 			cbMatchEngine2.Sorted = true;
-			cbTourBEngine.Sorted = true;
 			cbTrainerEngine.Sorted = true;
 			cbTrainedEngine.Sorted = true;
 			foreach (CEngine e in engineList)
@@ -1058,26 +1057,22 @@ namespace RapChessGui
 					cbEngine.Items.Add(e.name);
 					cbMatchEngine1.Items.Add(e.name);
 					cbMatchEngine2.Items.Add(e.name);
-					cbTourBEngine.Items.Add(e.name);
 					cbTrainerEngine.Items.Add(e.name);
 					cbTrainedEngine.Items.Add(e.name);
 				}
 			cbEngine.Sorted = false;
 			cbMatchEngine1.Sorted = false;
 			cbMatchEngine2.Sorted = false;
-			cbTourBEngine.Sorted = false;
 			cbTrainerEngine.Sorted = false;
 			cbTrainedEngine.Sorted = false;
 			cbEngine.Items.Insert(0, Global.none);
 			cbMatchEngine1.Items.Insert(0, Global.none);
 			cbMatchEngine2.Items.Insert(0, Global.none);
-			cbTourBEngine.Items.Insert(0, Global.none);
 			cbTrainerEngine.Items.Insert(0, Global.none);
 			cbTrainedEngine.Items.Insert(0, Global.none);
 			cbEngine.Text = Global.none;
 			cbMatchEngine1.Text = Global.none;
 			cbMatchEngine2.Text = Global.none;
-			cbTourBEngine.Text = Global.none;
 			cbTrainerEngine.Text = Global.none;
 			cbTrainedEngine.Text = Global.none;
 		}
@@ -1137,7 +1132,6 @@ namespace RapChessGui
 			lvTourEList.ListViewItemSorter = new ListViewComparer(1, SortOrder.Descending);
 			lvTourPList.ListViewItemSorter = new ListViewComparer(1, SortOrder.Descending);
 			MatchShow();
-			TournamentBShow();
 			TrainingShow();
 		}
 
@@ -1632,7 +1626,7 @@ namespace RapChessGui
 			cbBook.Text = CModeGame.book;
 			cbMode.Text = CModeGame.modeValue.GetLevel();
 			nudValue.Value = CModeGame.modeValue.GetValue();
-			CData.HisToPoints(CModeGame.humanPlayer.hisElo, chartGame.Series[0].Points);
+			CData.HisToPoints(CPlayerList.humanPlayer.hisElo, chartGame.Series[0].Points);
 			if (cbEngine.SelectedIndex < 0)
 				cbEngine.SelectedIndex = 0;
 		}
@@ -1640,10 +1634,10 @@ namespace RapChessGui
 		void SetingsToGamers()
 		{
 			GamerList.Init();
-			GamerList.gamers[0].SetPlayer(CModeGame.humanPlayer);
+			GamerList.gamers[0].SetPlayer(CPlayerList.humanPlayer);
 			CPlayer pc = new CPlayer();
 			if (cbComputer.Text == Global.human)
-				pc = CModeGame.humanPlayer;
+				pc = CPlayerList.humanPlayer;
 			else if (cbComputer.Text == "Custom")
 			{
 				pc.Engine = cbEngine.Text;
@@ -1652,7 +1646,7 @@ namespace RapChessGui
 				pc.modeValue.value = CModeGame.modeValue.value;
 			}
 			else
-				pc = playerList.GetPlayerByElo(CModeGame.humanPlayer.Elo);
+				pc = playerList.GetPlayerByElo(CPlayerList.humanPlayer.Elo);
 			CGamer g = GamerList.gamers[1];
 			g.SetPlayer(pc, FormOptions.gameBook == Global.none ? pc.Book : FormOptions.gameBook);
 		}
@@ -1822,8 +1816,8 @@ namespace RapChessGui
 		void TournamentBReset()
 		{
 			lvTourBList.Items.Clear();
-			CBookList bookList = CModeTournamentB.ListFill();
-			foreach (CBook b in bookList)
+			CModeTournamentB.ListFill();
+			foreach (CBook b in CModeTournamentB.bookList)
 			{
 				ListViewItem lvi = new ListViewItem(new[] { b.name, b.elo, b.GetDeltaElo().ToString() });
 				lvi.BackColor = b.hisElo.GetColor();
@@ -1851,15 +1845,6 @@ namespace RapChessGui
 					TournamentBShowHistory();
 					break;
 				}
-		}
-
-		void TournamentBShow()
-		{
-			int bi = cbTourBEngine.FindStringExact(CModeTournamentB.engine);
-			if (bi > 0)
-				cbTourBEngine.SelectedIndex = bi;
-			cbTourBMode.SelectedIndex = cbTourBMode.FindStringExact(CModeTournamentB.modeValue.GetLevel());
-			nudTourB.Value = CModeTournamentB.modeValue.GetValue();
 		}
 
 		void TournamentBShowHistory()
@@ -1920,17 +1905,22 @@ namespace RapChessGui
 
 		void TournamentBStart()
 		{
-			if (cbTourBEngine.SelectedIndex == 0)
+			if (engineList.Count == 0)
 			{
-				MessageBox.Show("Please select engine");
+				MessageBox.Show("No engines");
+				return;
+			}
+			if (bookList.Count == 0)
+			{
+				MessageBox.Show("No books");
 				return;
 			}
 			ComClear();
 			TournamentBUpdate(CModeTournamentB.bookWin);
 			TournamentBUpdate(CModeTournamentB.bookLoose);
-			CModeTournamentB.modeValue.SetLevel(cbTourBMode.Text);
-			CModeTournamentB.modeValue.SetValue((int)nudTourB.Value);
-			CModeTournamentB.engine = cbTourBEngine.Text;
+			CModeTournamentB.modeValue.SetLevel(FormOptions.tourBMode);
+			CModeTournamentB.modeValue.SetValue(FormOptions.tourBValue);
+			CModeTournamentB.engine = FormOptions.tourBEngine == Global.none ? engineList.GetEngineName() : FormOptions.tourBEngine;
 			CModeTournamentB.SaveToIni();
 			SetMode(CGameMode.tourB);
 			CBook b1 = CModeTournamentB.SelectFirst();
@@ -2074,6 +2064,11 @@ namespace RapChessGui
 
 		void TournamentEStart()
 		{
+			if (engineList.Count == 0)
+			{
+				MessageBox.Show("No engines");
+				return;
+			}
 			ComClear();
 			TournamentEUpdate(CModeTournamentE.engWin);
 			TournamentEUpdate(CModeTournamentE.engLoose);
@@ -2141,8 +2136,8 @@ namespace RapChessGui
 		void TournamentPReset()
 		{
 			lvTourPList.Items.Clear();
-			CPlayerList plaList = CModeTournamentP.FillList();
-			foreach (CPlayer p in plaList)
+			CModeTournamentP.ListFill();
+			foreach (CPlayer p in CModeTournamentP.playerList)
 			{
 				ListViewItem lvi = new ListViewItem(new[] { p.name, p.elo, p.GetDeltaElo().ToString() });
 				lvi.BackColor = p.hisElo.GetColor();
@@ -2243,6 +2238,11 @@ namespace RapChessGui
 
 		void TournamentPStart()
 		{
+			if (engineList.Count == 0)
+			{
+				MessageBox.Show("No engines");
+				return;
+			}
 			ComClear();
 			TournamentPUpdate(CModeTournamentP.plaWin);
 			TournamentPUpdate(CModeTournamentP.plaLoose);
@@ -2993,11 +2993,6 @@ namespace RapChessGui
 
 		private void cbTourBMode_SelectedIndexChanged(object sender, EventArgs e)
 		{
-			CModeTournamentB.modeValue.SetLevel((sender as ComboBox).Text);
-			nudTourB.Increment = CModeTournamentB.modeValue.GetValueIncrement();
-			nudTourB.Minimum = nudTourB.Increment;
-			nudTourB.Value = Math.Max(CModeTournamentB.modeValue.GetValue(), nudTourB.Minimum);
-			toolTip1.SetToolTip(nudTourB, CModeTournamentB.modeValue.GetTip());
 		}
 
 		private void lvEngine_SelectedIndexChanged(object sender, EventArgs e)
@@ -3127,6 +3122,16 @@ namespace RapChessGui
 		private void enginesToolStripMenuItem3_Click(object sender, EventArgs e)
 		{
 			formListE.ShowDialog(this);
+		}
+
+		private void booksToolStripMenuItem2_Click_1(object sender, EventArgs e)
+		{
+			formListB.ShowDialog(this);
+		}
+
+		private void playersToolStripMenuItem2_Click(object sender, EventArgs e)
+		{
+			formListP.ShowDialog(this);
 		}
 	}
 }

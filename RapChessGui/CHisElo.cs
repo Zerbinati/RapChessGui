@@ -23,12 +23,12 @@ namespace RapChessGui
 			return Count == 0 ? def : sum / Count;
 		}
 
-		public int Change()
+		public int Trend()
 		{
 			return Last() - EloAvg();
 		}
 
-		public int LastChange()
+		public int Change()
 		{
 			if (Count < 3)
 				return 0;
