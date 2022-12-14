@@ -540,7 +540,7 @@ namespace RapChessGui
 				case CGameState.time:
 					CData.gamesTime++;
 					infoMsg = $"{pl.name} time out";
-					infoCol = Color.Yellow;
+					infoCol = Color.Red;
 					log.Add($"Time out {pl.name} {chess.GetFen()}");
 					FormLogEngines.AppendText($"Time out {pl.name}\n", Color.Red);
 					break;
