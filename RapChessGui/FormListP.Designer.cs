@@ -67,7 +67,7 @@
 			// 
 			// columnHeader3
 			// 
-			this.columnHeader3.Text = "Engine";
+			this.columnHeader3.Text = "Player";
 			this.columnHeader3.Width = 200;
 			// 
 			// columnHeader4
