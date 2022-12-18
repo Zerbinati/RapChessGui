@@ -930,7 +930,7 @@ namespace RapChessGui
 					TrainingShow();
 					break;
 				case CGameMode.edit:
-					EditShow(fen);
+					FenToInter(fen);
 					break;
 			}
 			ComShow();
@@ -2409,7 +2409,7 @@ namespace RapChessGui
 
 		#region mode edit
 
-		void EditShow(string fen = CChess.defFen)
+		void FenToInter(string fen = CChess.defFen)
 		{
 			PrepareFen(fen);
 			List<RadioButton> list = gbToMove.Controls.OfType<RadioButton>().ToList();
@@ -2736,9 +2736,10 @@ namespace RapChessGui
 
 		private void butDefault_Click(object sender, EventArgs e)
 		{
-			chess.SetFen();
+			FenToInter();
+			/*chess.SetFen();
 			Board.Fill();
-			RenderBoard(true);
+			RenderBoard(true);*/
 		}
 
 		private void cbComputer_SelectedValueChanged(object sender, EventArgs e)
@@ -3068,13 +3069,13 @@ namespace RapChessGui
 
 		private void button2_Click(object sender, EventArgs e)
 		{
-			EditShow(tbFen.Text);
+			FenToInter(tbFen.Text);
 		}
 
 		private void nudMove_ValueChanged(object sender, EventArgs e)
 		{
 			int wt = chess.WhiteTurn ? 0 : 1;
-			chess.halfMove = ((int)nudMove.Value << 1) + wt;
+			chess.halfMove = (((int)nudMove.Value-1) << 1) + wt;
 			EditGetFen();
 		}
 
