@@ -205,7 +205,20 @@ namespace RapChessGui
 			{
 				newEloWin = oldEloWin + Ka * (1 - Pa);
 				newEloLoose = oldEloLoose + Kb * (0 - Pb);
+				double dif = oldEloWin - oldEloLoose;
+				if (oldEloWin > oldEloLoose)
+					if (dif > 300)
+					{
+						newEloWin = oldEloWin;
+						newEloLoose = oldEloLoose;
+					}
+					else
+					{
+						newEloWin = oldEloWin + ((newEloWin - oldEloWin) * (300 - dif)) / 300;
+						newEloLoose = oldEloLoose + ((newEloLoose - oldEloLoose) * (300 - dif)) / 300;
+					}
 			}
+
 			if (newEloWin > eloMax)
 				newEloWin = eloMax;
 			if (newEloLoose > eloMax)
