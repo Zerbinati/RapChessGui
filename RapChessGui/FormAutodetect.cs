@@ -256,7 +256,7 @@ namespace RapChessGui
 					if(testEngine.protocol == CProtocol.uci)
 						TestUci("go wtime 20000 btime 20000 winc 0 binc 0 movestogo 80");
 					else
-						TestXb("level 0 0:01 0");
+						TestXb("level 80 0:20 0");
 					break;
 				case 12:
 					if (testEngine.modeTournament)
@@ -266,7 +266,7 @@ namespace RapChessGui
 						if (testEngine.protocol == CProtocol.uci)
 							TestUci("go wtime 20000 btime 20000 winc 0 binc 0 movestogo 1");
 						else
-							TestXb("level 0 40:10 0");
+							TestXb("level 1 0:20 0");
 					}
 					else
 						NextPhase();
@@ -303,6 +303,7 @@ namespace RapChessGui
 
 		public void StartTestAuto()
 		{
+			tick = 0;
 			testMode = 0;
 			tbConsole.Clear();
 			testProcess.SetProgram($@"{AppDomain.CurrentDomain.BaseDirectory}Engines\{testEngine.file}", testEngine.parameters);

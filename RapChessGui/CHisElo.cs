@@ -100,21 +100,23 @@ namespace RapChessGui
 
 		public void MinMaxDel(out int min, out int max)
 		{
-			int curMin = Count > 0 ? this[0] : 0;
-			int curMax = curMin;
+			int totMin = Count > 0 ? this[0] : 0;
+			int totMax = totMin;
 			min = 0;
 			max = 0;
 			for(int n=1;n<Count;n++)
 			{
 				int d = this[n];
-				if (curMin > d)
-					curMin = d;
-				if (curMax < d)
-					curMax = d;
-				if (min < curMax -d)
-					min = d;
-				if (max < d - curMin)
-					max = d;
+				if (totMin > d)
+					totMin = d;
+				if (totMax < d)
+					totMax = d;
+				int curMin = totMax - d;
+				int curMax = d - totMin;
+				if (min < curMin)
+					min = curMin;
+				if (max < curMax)
+					max = curMax;
 			}
 		}
 

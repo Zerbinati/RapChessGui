@@ -191,8 +191,6 @@ namespace RapChessGui
 			depthTotal = 0;
 			depthCount = 0;
 			timerStart = 0;
-			strScore = String.Empty;
-			strDepth = String.Empty;
 			timer.Reset();
 			InitNextMove();
 		}
@@ -206,6 +204,8 @@ namespace RapChessGui
 			lastMove = String.Empty;
 			ponder = String.Empty;
 			pv = String.Empty;
+			strScore = String.Empty;
+			strDepth = String.Empty;
 		}
 
 		public void MoveDone()
@@ -637,12 +637,12 @@ namespace RapChessGui
 		{
 			CGamer cg = GamerCur();
 			cg.timer.Stop();
-			cg.InitNextMove();
 			cg.isBookStarted = false;
 			cg.isBookFail = false;
 			cg.isEngRunning = false;
 			curIndex ^= 1;
 			cg = GamerCur();
+			cg.InitNextMove();
 			if (cg.player.IsHuman())
 				cg.TimerStart();
 			if (FormChess.chess.WhiteTurn)
