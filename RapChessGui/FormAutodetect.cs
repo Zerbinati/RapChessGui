@@ -63,34 +63,22 @@ namespace RapChessGui
 				case 2:
 				case 3:
 					if (con)
-					{
 						testEngine.modeTime = testResult;
-						WriteLine("test time");
-					}
 					break;
 				case 5:
 				case 6:
 					if (con)
-					{
 						testEngine.modeDepth = testResult;
-						WriteLine("test depth");
-					}
 					break;
 				case 8:
 				case 9:
 					if (con)
-					{
 						testEngine.modeStandard = testResult;
-						WriteLine("test standard");
-					}
 					break;
 				case 11:
 				case 12:
 					if (con)
-					{
 						testEngine.modeTournament = testResult;
-						WriteLine("test tournament");
-					}
 					break;
 			}
 		}
