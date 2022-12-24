@@ -258,7 +258,7 @@ namespace RapChessGui
 						NextPhase();
 					break;
 				case 10:
-					TestStop();
+					TestRestart();
 					break;
 				case 11:
 					ShowStandard();
