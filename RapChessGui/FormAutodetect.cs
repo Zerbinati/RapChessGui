@@ -8,7 +8,7 @@ namespace RapChessGui
 {
 	public partial class FormAutodetect : Form
 	{
-		int tick = 0;
+		static int tick = 0;
 		public static string engineName = String.Empty;
 		public static CProtocol protocol = CProtocol.auto;
 		public static bool testResult = false;
@@ -46,6 +46,55 @@ namespace RapChessGui
 			catch { }
 		}
 
+		public static void NewMessageTest(string msg)
+		{
+			DateTime dt = new DateTime();
+			dt = dt.AddMilliseconds(testWatch.Elapsed.TotalMilliseconds);
+			string t = dt.ToString("ss.fff");
+			bool con = msg.Contains(testEngine.protocol == CProtocol.uci ? "bestmove " : "move ");
+			WriteLine($"{t} {msg}");
+			switch (testMode)
+			{
+				case 0:
+				case 1:
+					if (msg == "uciok")
+						testEngine.protocol = CProtocol.uci;
+					break;
+				case 2:
+				case 3:
+					if (con)
+					{
+						testEngine.modeTime = testResult;
+						WriteLine("test time");
+					}
+					break;
+				case 5:
+				case 6:
+					if (con)
+					{
+						testEngine.modeDepth = testResult;
+						WriteLine("test depth");
+					}
+					break;
+				case 8:
+				case 9:
+					if (con)
+					{
+						testEngine.modeStandard = testResult;
+						WriteLine("test standard");
+					}
+					break;
+				case 11:
+				case 12:
+					if (con)
+					{
+						testEngine.modeTournament = testResult;
+						WriteLine("test tournament");
+					}
+					break;
+			}
+		}
+
 		public static void TestStop()
 		{
 			if (testEngine.protocol == CProtocol.uci)
@@ -54,8 +103,15 @@ namespace RapChessGui
 				testProcess.WriteLine("?");
 		}
 
+		public static void TestRestart()
+		{
+			tick = 40;
+			testProcess.Restart();
+		}
+
 		public static void TestUci(string command)
 		{
+			testProcess.WriteLine("uci");
 			testProcess.WriteLine("ucinewgame");
 			testProcess.WriteLine("position startpos");
 			testProcess.WriteLine(command);
@@ -70,61 +126,6 @@ namespace RapChessGui
 			testProcess.WriteLine("g2g4");
 			testProcess.WriteLine("black");
 			testProcess.WriteLine("go");
-		}
-
-		public static void NewMessageTest(string msg)
-		{
-			DateTime dt = new DateTime();
-			dt = dt.AddMilliseconds(testWatch.Elapsed.TotalMilliseconds);
-			string t = dt.ToString("ss.fff");
-			bool con = msg.Contains(testEngine.protocol == CProtocol.uci ? "bestmove " : "move ");
-			switch (testMode)
-			{
-				case 0:
-				case 1:
-					if (msg == "uciok")
-					{
-						testEngine.protocol = CProtocol.uci;
-						WriteLine($"{t} {msg}");
-					}
-					break;
-				case 2:
-				case 3:
-					if (con)
-					{
-						testEngine.modeTime = testResult;
-						WriteLine("test time");
-						WriteLine($"{t} {msg} {testResult}");
-					}
-					break;
-				case 5:
-				case 6:
-					if (con)
-					{
-						testEngine.modeDepth = testResult;
-						WriteLine("test depth");
-						WriteLine($"{t} {msg} {testResult}");
-					}
-					break;
-				case 8:
-				case 9:
-					if (con)
-					{
-						testEngine.modeStandard = testResult;
-						WriteLine("test standard");
-						WriteLine($"{t} {msg} {testResult}");
-					}
-					break;
-				case 11:
-				case 12:
-					if (con)
-					{
-						testEngine.modeTournament = testResult;
-						WriteLine("test tournament");
-						WriteLine($"{t} {msg} {testResult}");
-					}
-					break;
-			}
 		}
 
 		void ShowProtocol()
@@ -175,7 +176,9 @@ namespace RapChessGui
 			switch (testMode)
 			{
 				case 1:
+					tick = 40;
 					WriteLine("start test protocol");
+					testProcess.WriteLine("uci");
 					break;
 				case 2:
 					ShowProtocol();
@@ -203,7 +206,7 @@ namespace RapChessGui
 						NextPhase();
 					break;
 				case 4:
-					TestStop();
+					TestRestart();
 					break;
 				case 5:
 					ShowTime();
@@ -229,7 +232,7 @@ namespace RapChessGui
 						NextPhase();
 					break;
 				case 7:
-					TestStop();
+					TestRestart();
 					break;
 				case 8:
 					ShowDepth();
@@ -261,22 +264,21 @@ namespace RapChessGui
 					ShowStandard();
 					testEngine.modeTournament = false;
 					testResult = true;
-					if (testEngine.protocol == CProtocol.winboard)
-					{
-						testEngine.modeTournament = false;
-						testResult = true;
-						WriteLine("start test tournament 1");
-						TestXb("level 0 0:01 0");
-					}
+					WriteLine("start test tournament 1");
+					if(testEngine.protocol == CProtocol.uci)
+						TestUci("go wtime 20000 btime 20000 winc 0 binc 0 movestogo 80");
 					else
-						NextPhase();
+						TestXb("level 0 0:01 0");
 					break;
 				case 12:
-					if ((testEngine.protocol == CProtocol.winboard) && testEngine.modeTournament)
+					if (testEngine.modeTournament)
 					{
 						testResult = false;
 						WriteLine("start test tournament 2");
-						TestXb("level 0 40:10 0");
+						if (testEngine.protocol == CProtocol.uci)
+							TestUci("go wtime 20000 btime 20000 winc 0 binc 0 movestogo 1");
+						else
+							TestXb("level 0 40:10 0");
 					}
 					else
 						NextPhase();
@@ -292,7 +294,7 @@ namespace RapChessGui
 					ShowDepth();
 					ShowStandard();
 					ShowTournament();
-					WriteLine("test finished");
+					WriteLine("finish");
 					if (!testEngine.modeDepth && !testEngine.modeStandard && !testEngine.modeTime && !testEngine.modeTournament)
 					{
 						testEngine.modeDepth = true;
@@ -307,24 +309,21 @@ namespace RapChessGui
 
 		private void testTimer_Tick(object sender, EventArgs e)
 		{
-			if(--tick <=0)
+			if (--tick <= 0)
 				NextPhase();
 		}
 
 		public void StartTestAuto()
 		{
 			testMode = 0;
-			testTimer.Start();
 			tbConsole.Clear();
-			WriteLine("test started");
 			testProcess.SetProgram($@"{AppDomain.CurrentDomain.BaseDirectory}Engines\{testEngine.file}", testEngine.parameters);
-			testProcess.WriteLine("uci");
-			tick = 40;
+			testTimer.Start();
 		}
 
 		#endregion
 
-		static void WriteLine(string line,bool addTime = false)
+		static void WriteLine(string line, bool addTime = false)
 		{
 			DateTime dt = new DateTime();
 			dt = dt.AddMilliseconds(testWatch.Elapsed.TotalMilliseconds);
@@ -336,7 +335,13 @@ namespace RapChessGui
 		private void FormAutodetect_Shown(object sender, EventArgs e)
 		{
 			tbConsole.Clear();
-			WriteLine($"engine {engineName}");
+			testEngine = FormChess.engineList.GetEngineByName(engineName);
+			if (testEngine == null)
+				WriteLine($"engine {engineName} not exist");
+			else if (!testEngine.FileExists())
+				WriteLine($"engine {engineName} file not exist");
+			else
+				WriteLine($"engine {engineName} ready");
 		}
 
 		private void FormAutodetect_FormClosing(object sender, FormClosingEventArgs e)
@@ -347,17 +352,6 @@ namespace RapChessGui
 
 		private void bStart_Click(object sender, EventArgs e)
 		{
-			testEngine = FormChess.engineList.GetEngineByName(engineName);
-			if (testEngine == null)
-			{
-				WriteLine("engine not exist");
-				return;
-			}
-			if (!testEngine.FileExists())
-			{
-				WriteLine("engine file not exist");
-				return;
-			}
 			StartTestAuto();
 		}
 

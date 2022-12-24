@@ -1607,7 +1607,7 @@ namespace RapChessGui
 
 		#region mode game
 
-		void GameFromInter()
+		void SetingsToMode()
 		{
 			CModeGame.color = cbColor.Text;
 			CModeGame.computer = cbComputer.Text;
@@ -1618,7 +1618,7 @@ namespace RapChessGui
 			CModeGame.SaveToIni();
 		}
 
-		void GameToInter()
+		void ModeToSetings()
 		{
 			cbColor.Text = CModeGame.color;
 			cbComputer.Text = CModeGame.computer;
@@ -1646,16 +1646,19 @@ namespace RapChessGui
 				pc.modeValue.value = CModeGame.modeValue.value;
 			}
 			else
+			{
 				pc = playerList.GetPlayerByElo(CPlayerList.humanPlayer.Elo);
-			CGamer g = GamerList.gamers[1];
-			g.SetPlayer(pc, FormOptions.gameBook == Global.none ? pc.Book : FormOptions.gameBook);
+				if (FormOptions.gameBook != Global.none)
+					pc.Book = FormOptions.gameBook;
+			}
+			GamerList.gamers[1].SetPlayer(pc);
 		}
 
 		void GameStart()
 		{
 			ComClear();
 			CModeGame.ranked = IsGameRanked();
-			GameFromInter();
+			SetingsToMode();
 			SetingsToGamers();
 			if (!GamerList.Check(out string msg))
 			{
@@ -1674,7 +1677,7 @@ namespace RapChessGui
 
 		void GameShow()
 		{
-			GameToInter();
+			ModeToSetings();
 			GameStart();
 		}
 
@@ -1689,7 +1692,7 @@ namespace RapChessGui
 				pl.NewElo(newL);
 				CModeGame.SetFinished(true);
 			}
-			GameToInter();
+			ModeToSetings();
 		}
 
 		#endregion
@@ -2709,7 +2712,7 @@ namespace RapChessGui
 		private void butContinueGame_Click(object sender, EventArgs e)
 		{
 			string fen = chess.GetFen();
-			GameFromInter();
+			SetingsToMode();
 			LoadFen(fen);
 			ShowGamers();
 		}
@@ -2737,9 +2740,6 @@ namespace RapChessGui
 		private void butDefault_Click(object sender, EventArgs e)
 		{
 			FenToInter();
-			/*chess.SetFen();
-			Board.Fill();
-			RenderBoard(true);*/
 		}
 
 		private void cbComputer_SelectedValueChanged(object sender, EventArgs e)

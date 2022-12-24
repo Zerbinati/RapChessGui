@@ -236,7 +236,9 @@
 			this.enginesToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
 			this.playersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.listsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.booksToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
 			this.enginesToolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
+			this.playersToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
 			this.labGameTime = new System.Windows.Forms.Label();
 			this.panMenu = new System.Windows.Forms.Panel();
 			this.labEco = new System.Windows.Forms.Label();
@@ -328,8 +330,6 @@
 			this.tlpBlack = new System.Windows.Forms.TableLayoutPanel();
 			this.timerAnimation = new System.Windows.Forms.Timer(this.components);
 			this.fileSystemWatcher1 = new System.IO.FileSystemWatcher();
-			this.booksToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
-			this.playersToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
 			this.tabControl1.SuspendLayout();
 			this.tabPageGame.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.chartGame)).BeginInit();
@@ -2631,7 +2631,7 @@
 			this.menuStrip1.Location = new System.Drawing.Point(0, 2);
 			this.menuStrip1.Name = "menuStrip1";
 			this.menuStrip1.ShowItemToolTips = true;
-			this.menuStrip1.Size = new System.Drawing.Size(465, 24);
+			this.menuStrip1.Size = new System.Drawing.Size(345, 24);
 			this.menuStrip1.TabIndex = 1;
 			this.menuStrip1.Text = "menuStrip1";
 			// 
@@ -2884,12 +2884,26 @@
 			this.listsToolStripMenuItem.Size = new System.Drawing.Size(42, 20);
 			this.listsToolStripMenuItem.Text = "Lists";
 			// 
+			// booksToolStripMenuItem2
+			// 
+			this.booksToolStripMenuItem2.Name = "booksToolStripMenuItem2";
+			this.booksToolStripMenuItem2.Size = new System.Drawing.Size(115, 22);
+			this.booksToolStripMenuItem2.Text = "Books";
+			this.booksToolStripMenuItem2.Click += new System.EventHandler(this.booksToolStripMenuItem2_Click_1);
+			// 
 			// enginesToolStripMenuItem3
 			// 
 			this.enginesToolStripMenuItem3.Name = "enginesToolStripMenuItem3";
-			this.enginesToolStripMenuItem3.Size = new System.Drawing.Size(180, 22);
+			this.enginesToolStripMenuItem3.Size = new System.Drawing.Size(115, 22);
 			this.enginesToolStripMenuItem3.Text = "Engines";
 			this.enginesToolStripMenuItem3.Click += new System.EventHandler(this.enginesToolStripMenuItem3_Click);
+			// 
+			// playersToolStripMenuItem2
+			// 
+			this.playersToolStripMenuItem2.Name = "playersToolStripMenuItem2";
+			this.playersToolStripMenuItem2.Size = new System.Drawing.Size(115, 22);
+			this.playersToolStripMenuItem2.Text = "Players";
+			this.playersToolStripMenuItem2.Click += new System.EventHandler(this.playersToolStripMenuItem2_Click);
 			// 
 			// labGameTime
 			// 
@@ -3733,6 +3747,7 @@
 			// 
 			// pbHashW
 			// 
+			this.pbHashW.BackColor = System.Drawing.SystemColors.Control;
 			this.pbHashW.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.pbHashW.Location = new System.Drawing.Point(987, 23);
 			this.pbHashW.MarqueeAnimationSpeed = 0;
@@ -4275,20 +4290,6 @@
 			this.fileSystemWatcher1.Created += new System.IO.FileSystemEventHandler(this.fileSystemWatcher1_Changed);
 			this.fileSystemWatcher1.Deleted += new System.IO.FileSystemEventHandler(this.fileSystemWatcher1_Changed);
 			this.fileSystemWatcher1.Renamed += new System.IO.RenamedEventHandler(this.fileSystemWatcher1_Renamed);
-			// 
-			// booksToolStripMenuItem2
-			// 
-			this.booksToolStripMenuItem2.Name = "booksToolStripMenuItem2";
-			this.booksToolStripMenuItem2.Size = new System.Drawing.Size(180, 22);
-			this.booksToolStripMenuItem2.Text = "Books";
-			this.booksToolStripMenuItem2.Click += new System.EventHandler(this.booksToolStripMenuItem2_Click_1);
-			// 
-			// playersToolStripMenuItem2
-			// 
-			this.playersToolStripMenuItem2.Name = "playersToolStripMenuItem2";
-			this.playersToolStripMenuItem2.Size = new System.Drawing.Size(180, 22);
-			this.playersToolStripMenuItem2.Text = "Players";
-			this.playersToolStripMenuItem2.Click += new System.EventHandler(this.playersToolStripMenuItem2_Click);
 			// 
 			// FormChess
 			// 

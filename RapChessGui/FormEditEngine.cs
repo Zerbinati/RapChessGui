@@ -129,7 +129,7 @@ namespace RapChessGui
 			}
 		}
 
-		void ShowEngine()
+		void EngineToSetings()
 		{
 			tbEngineName.Text = engine.name;
 			tbParameters.Text = engine.parameters;
@@ -165,7 +165,7 @@ namespace RapChessGui
 		{
 			optionList.list.Clear();
 			Uciok();
-			ShowEngine();
+			EngineToSetings();
 			StartTestOptions();
 		}
 
@@ -409,7 +409,7 @@ namespace RapChessGui
 		private void bAuto_Click(object sender, EventArgs e)
 		{
 			ShowAutodetect(engineName);
-			ShowEngine();
+			EngineToSetings();
 		}
 
 		private void ListBox1_SelectedValueChanged(object sender, EventArgs e)

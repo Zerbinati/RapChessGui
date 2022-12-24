@@ -74,7 +74,7 @@ namespace RapChessGui
 
 		public static void SetMessage(CGamer gamer, string protocol, string msg)
 		{
-			string book = protocol == "Book" ? "book " : "";
+			string book = protocol == "Book" ? "book " : String.Empty;
 			Color col = gamer.isWhite ? Color.DimGray : Color.Black;
 			AppendTimeText($"{book}{gamer.player.name}", col);
 			AppendText($" > {msg}\n", Color.DarkBlue);
