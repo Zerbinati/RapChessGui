@@ -525,13 +525,11 @@ namespace RapChessGui
 					winColor = CColor.none;
 					infoMsg = "Fifty-move rule";
 					infoCol = Color.Yellow;
-					ShowInfo("Fifty-move rule", Color.Yellow, 2);
 					break;
 				case CGameState.material:
 					winColor = CColor.none;
-					infoMsg = "Fifty-move rule";
+					infoMsg = "Insufficient material";
 					infoCol = Color.Yellow;
-					ShowInfo("Insufficient material", Color.Yellow, 2);
 					break;
 				case CGameState.resignation:
 					infoMsg = $"{pl.name} resign";
@@ -1738,7 +1736,7 @@ namespace RapChessGui
 			MatchGet();
 			CModeMatch.his.MinMaxDel(out int min, out int max);
 			double last = CModeMatch.his.Last();
-			labMatchGames.Text = $"Games {CModeMatch.Games} result {last} max +{max} min -{min}";
+			labMatchGames.Text = $"Games {CModeMatch.Games} result {last} ( max +{max} ) ( min -{min} )";
 			labMatch11.Text = CModeMatch.win.ToString();
 			labMatch12.Text = CModeMatch.loose.ToString();
 			labMatch13.Text = CModeMatch.draw.ToString();
