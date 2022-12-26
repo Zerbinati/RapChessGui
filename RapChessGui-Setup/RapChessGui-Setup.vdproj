@@ -21,115 +21,73 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_08B5F58D72324F859BB56F655D6D72DC"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_0B4AF7E376E94169AFD4FE58C9E34015"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_0F7DD1A0B40C46969523A5EFBF877319"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_171B8EE7480A4777A8CB89BE12FE1C67"
+        "MsmKey" = "8:_10E66C61448F4F9D8438CBB47C9C536F"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_1DAB8E9B76864E81A2AE7904D96325C2"
+        "MsmKey" = "8:_1B9DCC7B781444DA9CAF49E0000F35DE"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_288625C1107A4181AEB636EFA5305902"
+        "MsmKey" = "8:_22AB25EA5D8945DFAAE443CB2306F620"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_2BAECB4B12BC448EABC85AF86CB15F7F"
+        "MsmKey" = "8:_29B73977F0ED45FC8D2E7EB57616736A"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_38AB531172E5454A95800565F36E1BA4"
+        "MsmKey" = "8:_3150E9A75F97413597B8936AB7C773D2"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_3AC7203BD2D24A9FAE6521A52841AE3F"
+        "MsmKey" = "8:_38FC6B4765F34ABEBF88339AFEC6F43D"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_4061666D107342E0BC0D4CABC5B3CB4F"
+        "MsmKey" = "8:_393085E42B6448BBA8756F1C49384834"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_452CC5D72B4549A183B00F45191610F2"
+        "MsmKey" = "8:_439F0754FF674AA293EF62C00542D86E"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_4B4E7A79136F4563BF5B9A076EDE43C3"
+        "MsmKey" = "8:_52A0754BA35C4230AC756E070DBBB268"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_4F03CCF4B48E4DC4B5D13691261A2349"
+        "MsmKey" = "8:_5EE449CCEE1F483FA327D11028E349B7"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_545A729076A04E26A59AE9303CAEA97A"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_54852D53A91D4AD89BA822855A872136"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_5957ADA7A2554C0181EF8CE1728C4BFC"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_59F725EDD10D465789C6021321124134"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_5DA4FDF340F44333AFC903A6652D23AC"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_6C892395D08E4C649490783A8F820845"
+        "MsmKey" = "8:_6526981FD2874833A4B4564669ECA046"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -141,37 +99,43 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_6DE1848B81B447428E3DB4A3A297D5FE"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_6F9D38991F34488281D09635F5DDEF14"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_701B65657C8846EBA63B40F8A97F89B3"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_7215141EFBA940DFA0097CF68F788814"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_87C4B016FAA24CEDACBB9D793A024C40"
+        "MsmKey" = "8:_7564BC49D6C54BC0810F4D9ACA9B24EA"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_8AE1C487C21248FD990460383B0F8A99"
+        "MsmKey" = "8:_768238A4E4B44ECFB6CC647CB9008085"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_788D5999C51F442EA173DFBEF79B281D"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_7CEC961C86244C19A1966DA29EF1971E"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_867776575B144CD8B318E52F7668F516"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_89C8F28299654357B6C098C560D75E70"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -183,19 +147,31 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_943E6DC6EDEE4273B3B5381381D7512B"
+        "MsmKey" = "8:_8C6D3F02F04A4F7E90A0B54DB819A3B6"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_9C70FF660ED044C6A4399012A21CB104"
+        "MsmKey" = "8:_93BA27BBCD3043DF946010E3567FCCE2"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_A9A8CA20521347A4B38D770723EAE98C"
+        "MsmKey" = "8:_9D9721F130EF4F84877A9A2F5A31817B"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_A76D4601946E4016841AF1E8712F7818"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_ACF6A330D65E4306AB405FA1CD28B951"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -207,13 +183,7 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_B4B01D5462C144A88E2515BD05935499"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_B785F710209F485A836C7816496A877E"
+        "MsmKey" = "8:_B66E52303D9F469EA62CF90DE665F206"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -225,25 +195,19 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_BAC13DFCC0124FD18A79B719B4A1E84F"
+        "MsmKey" = "8:_BB9859875CEF44818ACD7E865AE17B5D"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_BB558EBDF18C4CF1B283E807D4F5F27F"
+        "MsmKey" = "8:_C1341D77B1B34AAFAA1997F17BE6817C"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_BE6E45F603C3457B9449B2E6A241599A"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_C4B5374A7366412B8980AD6F29666583"
+        "MsmKey" = "8:_C4C584AA329942A6ACD9C47F8DD0A2D1"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -255,31 +219,13 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_C8DFE1ACDA554A6EB74854CB40B0575F"
+        "MsmKey" = "8:_CBB256CA0B5C4A7AA0795C53E53B3969"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_CB0B3C9EFBEB4FA49054F8776E757C3E"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_CE14EAC69CE24B6083EA8F4DA20176A6"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_D80B17C0CDD343D79CF6D536EFA152E5"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_D8447EFB8B1C4278ABF7E9CADCDBA369"
+        "MsmKey" = "8:_D2556274E22F4DA5991963447C7C0F88"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -291,7 +237,7 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_D9A31E2B24DD40D28225A4857A2E2415"
+        "MsmKey" = "8:_D94084EABBD74EFB88891538EAAC36CF"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -303,7 +249,19 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_E00556C348F248C4B817B9CFA2D15AA1"
+        "MsmKey" = "8:_DCDE2EA0FCF14FCA833895235E5A10DF"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_E806FE34375B4A30BA0C60904E6A0065"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_F0633BC9F46B46828DF7F6E4CABC0ACB"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -315,13 +273,7 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_F4475C23E7184CA4A1FFFDB7242B4642"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_FDC61292B3C44073B5FDD5EFE3F936AB"
+        "MsmKey" = "8:_FF01158AE16D413BA080E112652C0FC8"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -334,67 +286,73 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_F4475C23E7184CA4A1FFFDB7242B4642"
+        "OwnerKey" = "8:_DCDE2EA0FCF14FCA833895235E5A10DF"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_D9A31E2B24DD40D28225A4857A2E2415"
+        "OwnerKey" = "8:_52A0754BA35C4230AC756E070DBBB268"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_D80B17C0CDD343D79CF6D536EFA152E5"
+        "OwnerKey" = "8:_89C8F28299654357B6C098C560D75E70"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_BAC13DFCC0124FD18A79B719B4A1E84F"
+        "OwnerKey" = "8:_38FC6B4765F34ABEBF88339AFEC6F43D"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_87C4B016FAA24CEDACBB9D793A024C40"
+        "OwnerKey" = "8:_29B73977F0ED45FC8D2E7EB57616736A"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_6F9D38991F34488281D09635F5DDEF14"
+        "OwnerKey" = "8:_393085E42B6448BBA8756F1C49384834"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_59F725EDD10D465789C6021321124134"
+        "OwnerKey" = "8:_8C6D3F02F04A4F7E90A0B54DB819A3B6"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_5957ADA7A2554C0181EF8CE1728C4BFC"
+        "OwnerKey" = "8:_3150E9A75F97413597B8936AB7C773D2"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_452CC5D72B4549A183B00F45191610F2"
+        "OwnerKey" = "8:_5EE449CCEE1F483FA327D11028E349B7"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_3AC7203BD2D24A9FAE6521A52841AE3F"
+        "OwnerKey" = "8:_6526981FD2874833A4B4564669ECA046"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_171B8EE7480A4777A8CB89BE12FE1C67"
+        "OwnerKey" = "8:_D94084EABBD74EFB88891538EAAC36CF"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_439F0754FF674AA293EF62C00542D86E"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -512,46 +470,6 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_08B5F58D72324F859BB56F655D6D72DC"
-            {
-            "SourcePath" = "8:..\\RapChessGui\\Release\\Books\\Mem\\Eco.mem"
-            "TargetName" = "8:Eco.mem"
-            "Tag" = "8:"
-            "Folder" = "8:_21D604D4D6C44188824A9B82361D0394"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_0B4AF7E376E94169AFD4FE58C9E34015"
-            {
-            "SourcePath" = "8:..\\RapChessGui\\Release\\Books\\Bin\\Tal.bin"
-            "TargetName" = "8:Tal.bin"
-            "Tag" = "8:"
-            "Folder" = "8:_A2EA34A862FE4AEF9591DE019574D3DA"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_0F7DD1A0B40C46969523A5EFBF877319"
             {
             "AssemblyRegister" = "3:1"
@@ -583,61 +501,10 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_171B8EE7480A4777A8CB89BE12FE1C67"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_10E66C61448F4F9D8438CBB47C9C536F"
             {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:BookReaderSrv, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_171B8EE7480A4777A8CB89BE12FE1C67"
-                    {
-                    "Name" = "8:BookReaderSrv.exe"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:D:\\Games\\Chess\\RapChessGui\\Books\\BookReaderSrv.exe"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_A520FF4183B04AF48BE9DD8F810F64A5"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_1DAB8E9B76864E81A2AE7904D96325C2"
-            {
-            "SourcePath" = "8:..\\RapChessGui\\Release\\Books\\Eco.tsv"
-            "TargetName" = "8:Eco.tsv"
-            "Tag" = "8:"
-            "Folder" = "8:_A520FF4183B04AF48BE9DD8F810F64A5"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_288625C1107A4181AEB636EFA5305902"
-            {
-            "SourcePath" = "8:..\\RapChessGui\\Release\\Books\\Bin\\Gm2000.bin"
-            "TargetName" = "8:Gm2000.bin"
+            "SourcePath" = "8:D:\\Games\\Chess\\RapChessGui\\Books\\Bin\\GMOpenings.bin"
+            "TargetName" = "8:GMOpenings.bin"
             "Tag" = "8:"
             "Folder" = "8:_A2EA34A862FE4AEF9591DE019574D3DA"
             "Condition" = "8:"
@@ -654,80 +521,9 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_2BAECB4B12BC448EABC85AF86CB15F7F"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_1B9DCC7B781444DA9CAF49E0000F35DE"
             {
-            "SourcePath" = "8:D:\\Games\\Chess\\RapChessGui\\Books\\BigEst.est"
-            "TargetName" = "8:BigEst.est"
-            "Tag" = "8:"
-            "Folder" = "8:_8246E27FEDCA47F2921951D4FF0C855C"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_38AB531172E5454A95800565F36E1BA4"
-            {
-            "SourcePath" = "8:..\\RapChessGui\\Release\\Books\\Bin\\Kramnik.bin"
-            "TargetName" = "8:Kramnik.bin"
-            "Tag" = "8:"
-            "Folder" = "8:_A2EA34A862FE4AEF9591DE019574D3DA"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_3AC7203BD2D24A9FAE6521A52841AE3F"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:RapShortCs, Version=0.0.0.0, Culture=neutral, processorArchitecture=AMD64"
-                "ScatterAssemblies"
-                {
-                    "_3AC7203BD2D24A9FAE6521A52841AE3F"
-                    {
-                    "Name" = "8:RapShortCs.exe"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:..\\RapChessGui\\Release\\Engines\\Auto\\RapShortCs.exe"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_E1163522B72945D4A5EAE116EFB339EC"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_4061666D107342E0BC0D4CABC5B3CB4F"
-            {
-            "SourcePath" = "8:..\\RapChessGui\\Release\\Books\\Bin\\Spassky.bin"
+            "SourcePath" = "8:D:\\Games\\Chess\\RapChessGui\\Books\\Bin\\Spassky.bin"
             "TargetName" = "8:Spassky.bin"
             "Tag" = "8:"
             "Folder" = "8:_A2EA34A862FE4AEF9591DE019574D3DA"
@@ -745,14 +541,34 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_452CC5D72B4549A183B00F45191610F2"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_22AB25EA5D8945DFAAE443CB2306F620"
+            {
+            "SourcePath" = "8:D:\\Games\\Chess\\RapChessGui\\Books\\Bin\\Karpov.bin"
+            "TargetName" = "8:Karpov.bin"
+            "Tag" = "8:"
+            "Folder" = "8:_A2EA34A862FE4AEF9591DE019574D3DA"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_29B73977F0ED45FC8D2E7EB57616736A"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
             "AssemblyAsmDisplayName" = "8:BookReaderMem, Version=1.0.0.0, Culture=neutral, processorArchitecture=AMD64"
                 "ScatterAssemblies"
                 {
-                    "_452CC5D72B4549A183B00F45191610F2"
+                    "_29B73977F0ED45FC8D2E7EB57616736A"
                     {
                     "Name" = "8:BookReaderMem.exe"
                     "Attributes" = "3:512"
@@ -776,12 +592,23 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_4B4E7A79136F4563BF5B9A076EDE43C3"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_3150E9A75F97413597B8936AB7C773D2"
             {
-            "SourcePath" = "8:..\\RapChessGui\\Release\\Ini\\books.ini"
-            "TargetName" = "8:books.ini"
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:BookReaderBin, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_3150E9A75F97413597B8936AB7C773D2"
+                    {
+                    "Name" = "8:BookReaderBin.exe"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:D:\\Games\\Chess\\RapChessGui\\Books\\BookReaderBin.exe"
+            "TargetName" = "8:"
             "Tag" = "8:"
-            "Folder" = "8:_254B6FE27E704CB09F45759DFA381338"
+            "Folder" = "8:_A520FF4183B04AF48BE9DD8F810F64A5"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -796,12 +623,23 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_4F03CCF4B48E4DC4B5D13691261A2349"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_38FC6B4765F34ABEBF88339AFEC6F43D"
             {
-            "SourcePath" = "8:..\\RapChessGui\\Release\\Books\\Bin\\Carlsen.bin"
-            "TargetName" = "8:Carlsen.bin"
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:BookReaderRnd, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_38FC6B4765F34ABEBF88339AFEC6F43D"
+                    {
+                    "Name" = "8:BookReaderRnd.exe"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:D:\\Games\\Chess\\RapChessGui\\Books\\BookReaderRnd.exe"
+            "TargetName" = "8:"
             "Tag" = "8:"
-            "Folder" = "8:_A2EA34A862FE4AEF9591DE019574D3DA"
+            "Folder" = "8:_A520FF4183B04AF48BE9DD8F810F64A5"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -816,54 +654,14 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_545A729076A04E26A59AE9303CAEA97A"
-            {
-            "SourcePath" = "8:..\\RapChessGui\\Release\\Ini\\engines.ini"
-            "TargetName" = "8:engines.ini"
-            "Tag" = "8:"
-            "Folder" = "8:_254B6FE27E704CB09F45759DFA381338"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_54852D53A91D4AD89BA822855A872136"
-            {
-            "SourcePath" = "8:..\\RapChessGui\\Release\\Books\\Bin\\Fischer.bin"
-            "TargetName" = "8:Fischer.bin"
-            "Tag" = "8:"
-            "Folder" = "8:_A2EA34A862FE4AEF9591DE019574D3DA"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_5957ADA7A2554C0181EF8CE1728C4BFC"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_393085E42B6448BBA8756F1C49384834"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
             "AssemblyAsmDisplayName" = "8:BookReaderEst, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_5957ADA7A2554C0181EF8CE1728C4BFC"
+                    "_393085E42B6448BBA8756F1C49384834"
                     {
                     "Name" = "8:BookReaderEst.exe"
                     "Attributes" = "3:512"
@@ -887,20 +685,20 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_59F725EDD10D465789C6021321124134"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_439F0754FF674AA293EF62C00542D86E"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:RapChessCs, Version=0.0.0.0, Culture=neutral, processorArchitecture=AMD64"
+            "AssemblyAsmDisplayName" = "8:RapSimpleCs, Version=0.0.0.0, Culture=neutral, processorArchitecture=AMD64"
                 "ScatterAssemblies"
                 {
-                    "_59F725EDD10D465789C6021321124134"
+                    "_439F0754FF674AA293EF62C00542D86E"
                     {
-                    "Name" = "8:RapChessCs.exe"
+                    "Name" = "8:RapSimpleCs.exe"
                     "Attributes" = "3:512"
                     }
                 }
-            "SourcePath" = "8:..\\RapChessGui\\Release\\Engines\\Auto\\RapChessCs.exe"
+            "SourcePath" = "8:D:\\Games\\Chess\\RapChessGui\\Engines\\Auto\\RapSimpleCs.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_E1163522B72945D4A5EAE116EFB339EC"
@@ -918,12 +716,23 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_5DA4FDF340F44333AFC903A6652D23AC"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_52A0754BA35C4230AC756E070DBBB268"
             {
-            "SourcePath" = "8:..\\RapChessGui\\Release\\Books\\Bin\\Lasker.bin"
-            "TargetName" = "8:Lasker.bin"
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:BookReaderTnt, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_52A0754BA35C4230AC756E070DBBB268"
+                    {
+                    "Name" = "8:BookReaderTnt.exe"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:D:\\Games\\Chess\\RapChessGui\\Books\\BookReaderTnt.exe"
+            "TargetName" = "8:"
             "Tag" = "8:"
-            "Folder" = "8:_A2EA34A862FE4AEF9591DE019574D3DA"
+            "Folder" = "8:_A520FF4183B04AF48BE9DD8F810F64A5"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -938,12 +747,54 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_6C892395D08E4C649490783A8F820845"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_5EE449CCEE1F483FA327D11028E349B7"
             {
-            "SourcePath" = "8:..\\RapChessGui\\Release\\Books\\Bin\\Anand.bin"
-            "TargetName" = "8:Anand.bin"
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:BookReaderAbk, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_5EE449CCEE1F483FA327D11028E349B7"
+                    {
+                    "Name" = "8:BookReaderAbk.exe"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:D:\\Games\\Chess\\RapChessGui\\Books\\BookReaderAbk.exe"
+            "TargetName" = "8:"
             "Tag" = "8:"
-            "Folder" = "8:_A2EA34A862FE4AEF9591DE019574D3DA"
+            "Folder" = "8:_A520FF4183B04AF48BE9DD8F810F64A5"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_6526981FD2874833A4B4564669ECA046"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:RapChessCs, Version=1.0.0.0, Culture=neutral, processorArchitecture=AMD64"
+                "ScatterAssemblies"
+                {
+                    "_6526981FD2874833A4B4564669ECA046"
+                    {
+                    "Name" = "8:RapChessCs.exe"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:D:\\Games\\Chess\\RapChessGui\\Engines\\Auto\\RapChessCs.exe"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_E1163522B72945D4A5EAE116EFB339EC"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -978,77 +829,6 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_6DE1848B81B447428E3DB4A3A297D5FE"
-            {
-            "SourcePath" = "8:D:\\Games\\Chess\\RapChessGui\\Books\\BigMem.mem"
-            "TargetName" = "8:BigMem.mem"
-            "Tag" = "8:"
-            "Folder" = "8:_21D604D4D6C44188824A9B82361D0394"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_6F9D38991F34488281D09635F5DDEF14"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:BookReaderUci, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_6F9D38991F34488281D09635F5DDEF14"
-                    {
-                    "Name" = "8:BookReaderUci.exe"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:D:\\Games\\Chess\\RapChessGui\\Books\\BookReaderUci.exe"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_A520FF4183B04AF48BE9DD8F810F64A5"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_701B65657C8846EBA63B40F8A97F89B3"
-            {
-            "SourcePath" = "8:..\\RapChessGui\\Release\\Books\\Bin\\Capablanca.bin"
-            "TargetName" = "8:Capablanca.bin"
-            "Tag" = "8:"
-            "Folder" = "8:_A2EA34A862FE4AEF9591DE019574D3DA"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_7215141EFBA940DFA0097CF68F788814"
             {
             "SourcePath" = "8:..\\RapChessGui\\Release\\Books\\Pgn\\Tal.pgn"
@@ -1069,21 +849,90 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_87C4B016FAA24CEDACBB9D793A024C40"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_7564BC49D6C54BC0810F4D9ACA9B24EA"
             {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:BookReaderRnd, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_87C4B016FAA24CEDACBB9D793A024C40"
-                    {
-                    "Name" = "8:BookReaderRnd.exe"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:D:\\Games\\Chess\\RapChessGui\\Books\\BookReaderRnd.exe"
-            "TargetName" = "8:"
+            "SourcePath" = "8:D:\\Games\\Chess\\RapChessGui\\Books\\Bin\\Alekhine.bin"
+            "TargetName" = "8:Alekhine.bin"
+            "Tag" = "8:"
+            "Folder" = "8:_A2EA34A862FE4AEF9591DE019574D3DA"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_768238A4E4B44ECFB6CC647CB9008085"
+            {
+            "SourcePath" = "8:D:\\Games\\Chess\\RapChessGui\\Books\\Bin\\Fics15.bin"
+            "TargetName" = "8:Fics15.bin"
+            "Tag" = "8:"
+            "Folder" = "8:_A2EA34A862FE4AEF9591DE019574D3DA"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_788D5999C51F442EA173DFBEF79B281D"
+            {
+            "SourcePath" = "8:D:\\Games\\Chess\\RapChessGui\\Books\\Bin\\Smyslov.bin"
+            "TargetName" = "8:Smyslov.bin"
+            "Tag" = "8:"
+            "Folder" = "8:_A2EA34A862FE4AEF9591DE019574D3DA"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_7CEC961C86244C19A1966DA29EF1971E"
+            {
+            "SourcePath" = "8:D:\\Games\\Chess\\RapChessGui\\Books\\Bin\\Gm2600.bin"
+            "TargetName" = "8:Gm2600.bin"
+            "Tag" = "8:"
+            "Folder" = "8:_A2EA34A862FE4AEF9591DE019574D3DA"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_867776575B144CD8B318E52F7668F516"
+            {
+            "SourcePath" = "8:D:\\Games\\Chess\\RapChessGui\\Books\\Eco.tsv"
+            "TargetName" = "8:Eco.tsv"
             "Tag" = "8:"
             "Folder" = "8:_A520FF4183B04AF48BE9DD8F810F64A5"
             "Condition" = "8:"
@@ -1100,12 +949,23 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_8AE1C487C21248FD990460383B0F8A99"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_89C8F28299654357B6C098C560D75E70"
             {
-            "SourcePath" = "8:..\\RapChessGui\\Release\\Ini\\options.ini"
-            "TargetName" = "8:options.ini"
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:BookReaderSrv, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_89C8F28299654357B6C098C560D75E70"
+                    {
+                    "Name" = "8:BookReaderSrv.exe"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:D:\\Games\\Chess\\RapChessGui\\Books\\BookReaderSrv.exe"
+            "TargetName" = "8:"
             "Tag" = "8:"
-            "Folder" = "8:_254B6FE27E704CB09F45759DFA381338"
+            "Folder" = "8:_A520FF4183B04AF48BE9DD8F810F64A5"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -1140,10 +1000,61 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_943E6DC6EDEE4273B3B5381381D7512B"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_8C6D3F02F04A4F7E90A0B54DB819A3B6"
             {
-            "SourcePath" = "8:..\\RapChessGui\\Release\\Books\\Bin\\Steinitz.bin"
-            "TargetName" = "8:Steinitz.bin"
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:BookReaderCdb, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_8C6D3F02F04A4F7E90A0B54DB819A3B6"
+                    {
+                    "Name" = "8:BookReaderCdb.exe"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:D:\\Games\\Chess\\RapChessGui\\Books\\BookReaderCdb.exe"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_A520FF4183B04AF48BE9DD8F810F64A5"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_93BA27BBCD3043DF946010E3567FCCE2"
+            {
+            "SourcePath" = "8:D:\\Games\\Chess\\RapChessGui\\Books\\Mem\\BigMem.mem"
+            "TargetName" = "8:BigMem.mem"
+            "Tag" = "8:"
+            "Folder" = "8:_21D604D4D6C44188824A9B82361D0394"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_9D9721F130EF4F84877A9A2F5A31817B"
+            {
+            "SourcePath" = "8:D:\\Games\\Chess\\RapChessGui\\Books\\Bin\\Kramnik.bin"
+            "TargetName" = "8:Kramnik.bin"
             "Tag" = "8:"
             "Folder" = "8:_A2EA34A862FE4AEF9591DE019574D3DA"
             "Condition" = "8:"
@@ -1160,10 +1071,10 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_9C70FF660ED044C6A4399012A21CB104"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_A76D4601946E4016841AF1E8712F7818"
             {
-            "SourcePath" = "8:..\\RapChessGui\\Release\\Books\\Bin\\Botvinnik.bin"
-            "TargetName" = "8:Botvinnik.bin"
+            "SourcePath" = "8:D:\\Games\\Chess\\RapChessGui\\Books\\Bin\\Carlsen.bin"
+            "TargetName" = "8:Carlsen.bin"
             "Tag" = "8:"
             "Folder" = "8:_A2EA34A862FE4AEF9591DE019574D3DA"
             "Condition" = "8:"
@@ -1180,10 +1091,10 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_A9A8CA20521347A4B38D770723EAE98C"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_ACF6A330D65E4306AB405FA1CD28B951"
             {
-            "SourcePath" = "8:..\\RapChessGui\\Release\\Books\\Bin\\Gm2600.bin"
-            "TargetName" = "8:Gm2600.bin"
+            "SourcePath" = "8:D:\\Games\\Chess\\RapChessGui\\Books\\Bin\\Fischer.bin"
+            "TargetName" = "8:Fischer.bin"
             "Tag" = "8:"
             "Folder" = "8:_A2EA34A862FE4AEF9591DE019574D3DA"
             "Condition" = "8:"
@@ -1220,30 +1131,10 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_B4B01D5462C144A88E2515BD05935499"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_B66E52303D9F469EA62CF90DE665F206"
             {
-            "SourcePath" = "8:..\\RapChessGui\\Release\\Books\\Bin\\Kasparov.bin"
+            "SourcePath" = "8:D:\\Games\\Chess\\RapChessGui\\Books\\Bin\\Kasparov.bin"
             "TargetName" = "8:Kasparov.bin"
-            "Tag" = "8:"
-            "Folder" = "8:_A2EA34A862FE4AEF9591DE019574D3DA"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_B785F710209F485A836C7816496A877E"
-            {
-            "SourcePath" = "8:..\\RapChessGui\\Release\\Books\\Bin\\Irina.bin"
-            "TargetName" = "8:Irina.bin"
             "Tag" = "8:"
             "Folder" = "8:_A2EA34A862FE4AEF9591DE019574D3DA"
             "Condition" = "8:"
@@ -1280,23 +1171,12 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_BAC13DFCC0124FD18A79B719B4A1E84F"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_BB9859875CEF44818ACD7E865AE17B5D"
             {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:BookReaderBin, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_BAC13DFCC0124FD18A79B719B4A1E84F"
-                    {
-                    "Name" = "8:BookReaderBin.exe"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:D:\\Games\\Chess\\RapChessGui\\Books\\BookReaderBin.exe"
-            "TargetName" = "8:"
+            "SourcePath" = "8:D:\\Games\\Chess\\RapChessGui\\Books\\Est\\light.est"
+            "TargetName" = "8:light.est"
             "Tag" = "8:"
-            "Folder" = "8:_A520FF4183B04AF48BE9DD8F810F64A5"
+            "Folder" = "8:_8246E27FEDCA47F2921951D4FF0C855C"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -1311,12 +1191,12 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_BB558EBDF18C4CF1B283E807D4F5F27F"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_C1341D77B1B34AAFAA1997F17BE6817C"
             {
-            "SourcePath" = "8:..\\RapChessGui\\Release\\Books\\Bin\\Karpov.bin"
-            "TargetName" = "8:Karpov.bin"
+            "SourcePath" = "8:D:\\Games\\Chess\\RapChessGui\\Books\\Abk\\bigabk.abk"
+            "TargetName" = "8:bigabk.abk"
             "Tag" = "8:"
-            "Folder" = "8:_A2EA34A862FE4AEF9591DE019574D3DA"
+            "Folder" = "8:_FAA1218893B648EB91834E92D170D48E"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -1331,30 +1211,10 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_BE6E45F603C3457B9449B2E6A241599A"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_C4C584AA329942A6ACD9C47F8DD0A2D1"
             {
-            "SourcePath" = "8:..\\RapChessGui\\Release\\Books\\Bin\\Fics15.bin"
-            "TargetName" = "8:Fics15.bin"
-            "Tag" = "8:"
-            "Folder" = "8:_A2EA34A862FE4AEF9591DE019574D3DA"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_C4B5374A7366412B8980AD6F29666583"
-            {
-            "SourcePath" = "8:D:\\Games\\Chess\\RapChessGui\\Books\\BigBin.bin"
-            "TargetName" = "8:BigBin.bin"
+            "SourcePath" = "8:D:\\Games\\Chess\\RapChessGui\\Books\\Bin\\Tal.bin"
+            "TargetName" = "8:Tal.bin"
             "Tag" = "8:"
             "Folder" = "8:_A2EA34A862FE4AEF9591DE019574D3DA"
             "Condition" = "8:"
@@ -1391,12 +1251,12 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_C8DFE1ACDA554A6EB74854CB40B0575F"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_CBB256CA0B5C4A7AA0795C53E53B3969"
             {
-            "SourcePath" = "8:..\\RapChessGui\\Release\\Books\\Bin\\Alekhine.bin"
-            "TargetName" = "8:Alekhine.bin"
+            "SourcePath" = "8:D:\\Games\\Chess\\RapChessGui\\Books\\Est\\bigest.est"
+            "TargetName" = "8:bigest.est"
             "Tag" = "8:"
-            "Folder" = "8:_A2EA34A862FE4AEF9591DE019574D3DA"
+            "Folder" = "8:_8246E27FEDCA47F2921951D4FF0C855C"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -1411,81 +1271,10 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_CB0B3C9EFBEB4FA49054F8776E757C3E"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_D2556274E22F4DA5991963447C7C0F88"
             {
-            "SourcePath" = "8:..\\RapChessGui\\Release\\Books\\Bin\\GMOpenings.bin"
-            "TargetName" = "8:GMOpenings.bin"
-            "Tag" = "8:"
-            "Folder" = "8:_A2EA34A862FE4AEF9591DE019574D3DA"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_CE14EAC69CE24B6083EA8F4DA20176A6"
-            {
-            "SourcePath" = "8:..\\RapChessGui\\Release\\Books\\Bin\\Petrosian.bin"
-            "TargetName" = "8:Petrosian.bin"
-            "Tag" = "8:"
-            "Folder" = "8:_A2EA34A862FE4AEF9591DE019574D3DA"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_D80B17C0CDD343D79CF6D536EFA152E5"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:BookReaderTnt, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_D80B17C0CDD343D79CF6D536EFA152E5"
-                    {
-                    "Name" = "8:BookReaderTnt.exe"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:D:\\Games\\Chess\\RapChessGui\\Books\\BookReaderTnt.exe"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_A520FF4183B04AF48BE9DD8F810F64A5"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_D8447EFB8B1C4278ABF7E9CADCDBA369"
-            {
-            "SourcePath" = "8:..\\RapChessGui\\Release\\Books\\Bin\\Smyslov.bin"
-            "TargetName" = "8:Smyslov.bin"
+            "SourcePath" = "8:D:\\Games\\Chess\\RapChessGui\\Books\\Bin\\Irina.bin"
+            "TargetName" = "8:Irina.bin"
             "Tag" = "8:"
             "Folder" = "8:_A2EA34A862FE4AEF9591DE019574D3DA"
             "Condition" = "8:"
@@ -1522,20 +1311,20 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_D9A31E2B24DD40D28225A4857A2E2415"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_D94084EABBD74EFB88891538EAAC36CF"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:RapSimpleCs, Version=0.0.0.0, Culture=neutral, processorArchitecture=AMD64"
+            "AssemblyAsmDisplayName" = "8:RapShortCs, Version=0.0.0.0, Culture=neutral, processorArchitecture=AMD64"
                 "ScatterAssemblies"
                 {
-                    "_D9A31E2B24DD40D28225A4857A2E2415"
+                    "_D94084EABBD74EFB88891538EAAC36CF"
                     {
-                    "Name" = "8:RapSimpleCs.exe"
+                    "Name" = "8:RapShortCs.exe"
                     "Attributes" = "3:512"
                     }
                 }
-            "SourcePath" = "8:..\\RapChessGui\\Release\\Engines\\Auto\\RapSimpleCs.exe"
+            "SourcePath" = "8:D:\\Games\\Chess\\RapChessGui\\Engines\\Auto\\RapShortCs.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_E1163522B72945D4A5EAE116EFB339EC"
@@ -1573,12 +1362,63 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_E00556C348F248C4B817B9CFA2D15AA1"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_DCDE2EA0FCF14FCA833895235E5A10DF"
             {
-            "SourcePath" = "8:..\\RapChessGui\\Release\\Ini\\players.ini"
-            "TargetName" = "8:players.ini"
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:BookReaderUci, Version=1.0.0.0, Culture=neutral, processorArchitecture=AMD64"
+                "ScatterAssemblies"
+                {
+                    "_DCDE2EA0FCF14FCA833895235E5A10DF"
+                    {
+                    "Name" = "8:BookReaderUci.exe"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:D:\\Games\\Chess\\RapChessGui\\Books\\BookReaderUci.exe"
+            "TargetName" = "8:"
             "Tag" = "8:"
-            "Folder" = "8:_254B6FE27E704CB09F45759DFA381338"
+            "Folder" = "8:_A520FF4183B04AF48BE9DD8F810F64A5"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_E806FE34375B4A30BA0C60904E6A0065"
+            {
+            "SourcePath" = "8:D:\\Games\\Chess\\RapChessGui\\Books\\Bin\\Gm2000.bin"
+            "TargetName" = "8:Gm2000.bin"
+            "Tag" = "8:"
+            "Folder" = "8:_A2EA34A862FE4AEF9591DE019574D3DA"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_F0633BC9F46B46828DF7F6E4CABC0ACB"
+            {
+            "SourcePath" = "8:D:\\Games\\Chess\\RapChessGui\\Books\\Bin\\BigBin.bin"
+            "TargetName" = "8:BigBin.bin"
+            "Tag" = "8:"
+            "Folder" = "8:_A2EA34A862FE4AEF9591DE019574D3DA"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -1613,43 +1453,12 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_F4475C23E7184CA4A1FFFDB7242B4642"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_FF01158AE16D413BA080E112652C0FC8"
             {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:BookReaderCdb, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_F4475C23E7184CA4A1FFFDB7242B4642"
-                    {
-                    "Name" = "8:BookReaderCdb.exe"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:D:\\Games\\Chess\\RapChessGui\\Books\\BookReaderCdb.exe"
-            "TargetName" = "8:"
+            "SourcePath" = "8:D:\\Games\\Chess\\RapChessGui\\Books\\Tnt\\BigTnt.tnt"
+            "TargetName" = "8:BigTnt.tnt"
             "Tag" = "8:"
-            "Folder" = "8:_A520FF4183B04AF48BE9DD8F810F64A5"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_FDC61292B3C44073B5FDD5EFE3F936AB"
-            {
-            "SourcePath" = "8:..\\RapChessGui\\Release\\Books\\Bin\\Euwe.bin"
-            "TargetName" = "8:Euwe.bin"
-            "Tag" = "8:"
-            "Folder" = "8:_A2EA34A862FE4AEF9591DE019574D3DA"
+            "Folder" = "8:_4F2A070B7481460E9FDD08A18172A770"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -1714,7 +1523,7 @@
                             "{9EF0B969-E518-4E46-987F-47570745A589}:_254B6FE27E704CB09F45759DFA381338"
                             {
                             "Name" = "8:Ini"
-                            "AlwaysCreate" = "11:FALSE"
+                            "AlwaysCreate" = "11:TRUE"
                             "Condition" = "8:"
                             "Transitive" = "11:FALSE"
                             "Property" = "8:_B4972D5D9B3149BEAC803AF9E7EBE650"
@@ -1734,7 +1543,7 @@
                                     "{9EF0B969-E518-4E46-987F-47570745A589}:_21D604D4D6C44188824A9B82361D0394"
                                     {
                                     "Name" = "8:Mem"
-                                    "AlwaysCreate" = "11:FALSE"
+                                    "AlwaysCreate" = "11:TRUE"
                                     "Condition" = "8:"
                                     "Transitive" = "11:FALSE"
                                     "Property" = "8:_AE881B9BE32C497F83C5C44C9888F21D"
@@ -1745,7 +1554,7 @@
                                     "{9EF0B969-E518-4E46-987F-47570745A589}:_48F4554D6EE44FA2812F7452ECE164F5"
                                     {
                                     "Name" = "8:Pgn"
-                                    "AlwaysCreate" = "11:FALSE"
+                                    "AlwaysCreate" = "11:TRUE"
                                     "Condition" = "8:"
                                     "Transitive" = "11:FALSE"
                                     "Property" = "8:_0E5A526A112D44779684FE55DF3EC8E4"
@@ -1753,10 +1562,21 @@
                                         {
                                         }
                                     }
+                                    "{9EF0B969-E518-4E46-987F-47570745A589}:_4F2A070B7481460E9FDD08A18172A770"
+                                    {
+                                    "Name" = "8:Tnt"
+                                    "AlwaysCreate" = "11:TRUE"
+                                    "Condition" = "8:"
+                                    "Transitive" = "11:FALSE"
+                                    "Property" = "8:_73DF824E0B374420ACF344B5D1ACA86A"
+                                        "Folders"
+                                        {
+                                        }
+                                    }
                                     "{9EF0B969-E518-4E46-987F-47570745A589}:_7AAE6574DDBC4DBEA9D3D15843E90E6B"
                                     {
                                     "Name" = "8:Uci"
-                                    "AlwaysCreate" = "11:FALSE"
+                                    "AlwaysCreate" = "11:TRUE"
                                     "Condition" = "8:"
                                     "Transitive" = "11:FALSE"
                                     "Property" = "8:_703A129AC4034A39B90944EBDBC08AFF"
@@ -1767,7 +1587,7 @@
                                     "{9EF0B969-E518-4E46-987F-47570745A589}:_8246E27FEDCA47F2921951D4FF0C855C"
                                     {
                                     "Name" = "8:Est"
-                                    "AlwaysCreate" = "11:FALSE"
+                                    "AlwaysCreate" = "11:TRUE"
                                     "Condition" = "8:"
                                     "Transitive" = "11:FALSE"
                                     "Property" = "8:_E9726221129246608B353947CCD7FE38"
@@ -1778,10 +1598,21 @@
                                     "{9EF0B969-E518-4E46-987F-47570745A589}:_A2EA34A862FE4AEF9591DE019574D3DA"
                                     {
                                     "Name" = "8:Bin"
-                                    "AlwaysCreate" = "11:FALSE"
+                                    "AlwaysCreate" = "11:TRUE"
                                     "Condition" = "8:"
                                     "Transitive" = "11:FALSE"
                                     "Property" = "8:_F65B77377BA34FEEA461389C7033559A"
+                                        "Folders"
+                                        {
+                                        }
+                                    }
+                                    "{9EF0B969-E518-4E46-987F-47570745A589}:_FAA1218893B648EB91834E92D170D48E"
+                                    {
+                                    "Name" = "8:Abk"
+                                    "AlwaysCreate" = "11:TRUE"
+                                    "Condition" = "8:"
+                                    "Transitive" = "11:FALSE"
+                                    "Property" = "8:_F023637468DA40569B39243C904D9686"
                                         "Folders"
                                         {
                                         }
@@ -1831,7 +1662,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:RapChessGui"
         "ProductCode" = "8:{6425323E-2E35-4673-840F-114EA0AF9A31}"
-        "PackageCode" = "8:{93C790E0-6449-466A-AFDC-688F01C27C19}"
+        "PackageCode" = "8:{BBEE855D-25C9-403A-B6BE-7F860CD58BB8}"
         "UpgradeCode" = "8:{D5376D45-FD03-4B79-B4C3-D74BBDB925C3}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"

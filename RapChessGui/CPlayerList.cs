@@ -5,7 +5,7 @@ using RapIni;
 namespace RapChessGui
 {
 
-	public class CPlayer:CElement
+	public class CPlayer : CElement
 	{
 		public CBook book = null;
 		public CEngine engine = null;
@@ -214,7 +214,7 @@ namespace RapChessGui
 		public string GetName()
 		{
 			if (name == string.Empty)
-				return CreateName();
+				name = CreateName();
 			return name;
 		}
 
@@ -349,7 +349,7 @@ namespace RapChessGui
 			for (int n = Count - 1; n >= 0; n--)
 			{
 				CPlayer p = this[n];
-				if ((p.engine == null)||!p.engine.Exists())
+				if ((p.engine == null) || !p.engine.Exists())
 					RemoveAt(n);
 				else
 					p.SaveToIni();

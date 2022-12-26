@@ -17,7 +17,7 @@ namespace RapChessGui
 
 		void SetMessage(string msg)
 		{
-			lock(locker)
+			lock (locker)
 			{
 				list.Add(msg);
 			}
@@ -51,7 +51,7 @@ namespace RapChessGui
 
 		public void Clear()
 		{
-			lock(locker)
+			lock (locker)
 			{
 				list.Clear();
 			}
@@ -144,7 +144,9 @@ namespace RapChessGui
 		public void WriteLine(string c)
 		{
 			if (!process.HasExited)
+			{
 				process.StandardInput.WriteLine(c);
+			}
 		}
 
 	}

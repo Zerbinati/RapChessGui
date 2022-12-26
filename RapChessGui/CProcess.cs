@@ -40,6 +40,7 @@ namespace RapChessGui
 				process.Start();
 				process.BeginOutputReadLine();
 				process.PriorityClass = FormOptions.priority;
+				//process.StandardInput.AutoFlush = true;
 				return process.Id;
 			}
 			return 0;
@@ -84,12 +85,28 @@ namespace RapChessGui
 			catch { }
 		}
 
+
+		public async void WriteLineAsync(string c)
+		{
+			if (process.StartInfo.FileName != String.Empty)
+			{
+				await process.StandardInput.WriteLineAsync(c);
+			}
+		}
+
 		public void WriteLine(string c)
 		{
 			if (process.StartInfo.FileName != String.Empty)
 			{
+				//process.StandardInput.WriteLine(c);
+				//process.StandardInput.WriteLineAsync();
+				//await process.StandardInput.WriteLineAsync(c);
+				//process.StandardInput.FlushAsync();
+				//process.StandardInput.
 				process.StandardInput.WriteLine(c);
-				process.StandardInput.Flush();
+				//process.StandardInput.WriteLine();
+				//process.StandardInput.Flush();
+				System.Threading.Thread.Sleep(8);
 			}
 		}
 

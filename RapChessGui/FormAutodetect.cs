@@ -80,6 +80,11 @@ namespace RapChessGui
 					if (con)
 						testEngine.modeTournament = testResult;
 					break;
+				case 14:
+				case 15:
+					if (con)
+						testEngine.modeNodes = testResult;
+					break;
 			}
 		}
 
@@ -101,6 +106,7 @@ namespace RapChessGui
 		{
 			testProcess.WriteLine("uci");
 			testProcess.WriteLine("ucinewgame");
+			testProcess.WriteLine("isready");
 			testProcess.WriteLine("position startpos");
 			testProcess.WriteLine(command);
 		}
@@ -108,11 +114,11 @@ namespace RapChessGui
 		void TestXb(string command)
 		{
 			testProcess.WriteLine("new");
-			testProcess.WriteLine(command);
 			testProcess.WriteLine("post");
 			testProcess.WriteLine("force");
 			testProcess.WriteLine("g2g4");
 			testProcess.WriteLine("black");
+			testProcess.WriteLine(command);
 			testProcess.WriteLine("go");
 		}
 
@@ -150,10 +156,18 @@ namespace RapChessGui
 
 		void ShowTournament()
 		{
-			if ((testEngine.modeTournament) || (testEngine.protocol == CProtocol.uci))
+			if (testEngine.modeTournament)
 				WriteLine("mode tournament ok");
 			else
 				WriteLine("mode tournament fail");
+		}
+
+		void ShowNodes()
+		{
+			if (testEngine.modeNodes)
+				WriteLine("mode nodes ok");
+			else
+				WriteLine("mode nodes fail");
 		}
 
 		void NextPhase()
@@ -272,16 +286,39 @@ namespace RapChessGui
 						NextPhase();
 					break;
 				case 13:
+					TestRestart();
+					break;
+				case 14:
+					ShowStandard();
+					testEngine.modeNodes = false;
+					testResult = true;
+					WriteLine("start test nodes 1");
+					if (testEngine.protocol == CProtocol.uci)
+						TestUci("go nodes 1000");
+					else
+						NextPhase();
+					break;
+				case 15:
+					if (testEngine.modeNodes)
+					{
+						testResult = false;
+						WriteLine("start test nodes 2");
+						TestUci("go nodes 100000000");
+					}
+					else
+						NextPhase();
+					break;
+				case 16:
 					testTimer.Stop();
 					testProcess.Terminate();
 					testTimer.Enabled = false;
-					if (testEngine.protocol == CProtocol.uci)
-						testEngine.modeTournament = true;
+					WriteLine($"engine {engineName}");
 					ShowProtocol();
 					ShowTime();
 					ShowDepth();
 					ShowStandard();
 					ShowTournament();
+					ShowNodes();
 					WriteLine("finish");
 					if (!testEngine.modeDepth && !testEngine.modeStandard && !testEngine.modeTime && !testEngine.modeTournament)
 					{
@@ -306,6 +343,7 @@ namespace RapChessGui
 			tick = 0;
 			testMode = 0;
 			tbConsole.Clear();
+			WriteLine($"engine {engineName}");
 			testProcess.SetProgram($@"{AppDomain.CurrentDomain.BaseDirectory}Engines\{testEngine.file}", testEngine.parameters);
 			testTimer.Start();
 		}

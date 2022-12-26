@@ -108,7 +108,7 @@ namespace RapChessGui
 		void ClickRename()
 		{
 			CEngine e = new CEngine();
-			UpdateEngine(e);
+			SetingsToEngine(e);
 			string name = e.CreateName();
 			if (name != e.name)
 				name = FormChess.engineList.GetName(name);
@@ -139,6 +139,7 @@ namespace RapChessGui
 			cbModeTime.Checked = engine.modeTime;
 			cbModeDepth.Checked = engine.modeDepth;
 			cbModeTournament.Checked = engine.modeTournament;
+			cbModeNodes.Checked = engine.modeNodes;
 			nudElo.Value = Convert.ToInt32(engine.elo);
 			nudTournament.Value = engine.tournament;
 		}
@@ -203,7 +204,7 @@ namespace RapChessGui
 			formAutodetect.ShowDialog(this);
 		}
 
-		void UpdateEngine(CEngine e)
+		void SetingsToEngine(CEngine e)
 		{
 			e.name = tbEngineName.Text;
 			e.file = cbFileList.Text;
@@ -213,6 +214,7 @@ namespace RapChessGui
 			e.modeTime = cbModeTime.Checked;
 			e.modeDepth = cbModeDepth.Checked;
 			e.modeTournament = cbModeTournament.Checked;
+			e.modeNodes = cbModeNodes.Checked;
 			e.elo = nudElo.Value.ToString();
 			e.tournament = (int)nudTournament.Value;
 			e.options = GetOptions();
@@ -220,7 +222,7 @@ namespace RapChessGui
 
 		void SaveToIni(CEngine e)
 		{
-			UpdateEngine(e);
+			SetingsToEngine(e);
 			e.SaveToIni();
 			UpdateListBox();
 			int index = listBox1.FindString(e.name);
@@ -308,17 +310,6 @@ namespace RapChessGui
 				listBox1.SelectedIndex = 0;
 		}
 
-		private void bHistory_Click(object sender, EventArgs e)
-		{
-			if (engine != null)
-			{
-				engine.hisElo.Clear();
-				engine.SaveToIni();
-				int count = CModeTournamentE.tourList.DeletePlayer(engine.name);
-				MessageBox.Show($"{count} records have been deleted");
-			}
-		}
-
 		private void listBox1_DrawItem(object sender, DrawItemEventArgs e)
 		{
 			if (e.Index < 0)
@@ -388,13 +379,6 @@ namespace RapChessGui
 			}
 		}
 
-		private void bReset_Click(object sender, EventArgs e)
-		{
-			engine.options.Clear();
-			engine.SaveToIni();
-			Uciok();
-		}
-
 		private void FormEngine_FormClosing(object sender, FormClosingEventArgs e)
 		{
 			if (processOptions != null)
@@ -406,18 +390,12 @@ namespace RapChessGui
 			ClickRename();
 		}
 
-		private void bAuto_Click(object sender, EventArgs e)
-		{
-			ShowAutodetect(engineName);
-			EngineToSetings();
-		}
-
 		private void ListBox1_SelectedValueChanged(object sender, EventArgs e)
 		{
 			SelectEngine(listBox1.SelectedItem.ToString());
 		}
 
-		private void bConsole_Click(object sender, EventArgs e)
+		private void consoleToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			ProcessStartInfo psi = new ProcessStartInfo();
 			psi.FileName = engine.GetFileName();
@@ -426,5 +404,28 @@ namespace RapChessGui
 			Process.Start(psi);
 		}
 
+		private void autodetectEngineProtocolToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			ShowAutodetect(engineName);
+			EngineToSetings();
+		}
+
+		private void resetEngineOptionsToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			engine.options.Clear();
+			engine.SaveToIni();
+			Uciok();
+		}
+
+		private void clearTournamentHistoryToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			if (engine != null)
+			{
+				engine.hisElo.Clear();
+				engine.SaveToIni();
+				int count = CModeTournamentE.tourList.DeletePlayer(engine.name);
+				MessageBox.Show($"{count} records have been deleted");
+			}
+		}
 	}
 }

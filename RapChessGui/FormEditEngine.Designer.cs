@@ -32,10 +32,6 @@
 			this.panel1 = new System.Windows.Forms.Panel();
 			this.panOptions = new System.Windows.Forms.Panel();
 			this.panButtons = new System.Windows.Forms.Panel();
-			this.bConsole = new System.Windows.Forms.Button();
-			this.bAuto = new System.Windows.Forms.Button();
-			this.bReset = new System.Windows.Forms.Button();
-			this.bHistory = new System.Windows.Forms.Button();
 			this.bDelete = new System.Windows.Forms.Button();
 			this.bCreate = new System.Windows.Forms.Button();
 			this.bRename = new System.Windows.Forms.Button();
@@ -60,6 +56,13 @@
 			this.gbEngines = new System.Windows.Forms.GroupBox();
 			this.listBox1 = new System.Windows.Forms.ListBox();
 			this.timerPhase = new System.Windows.Forms.Timer(this.components);
+			this.cbModeNodes = new System.Windows.Forms.CheckBox();
+			this.menuStrip2 = new System.Windows.Forms.MenuStrip();
+			this.consoleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.actionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.autodetectEngineProtocolToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.resetEngineOptionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.clearTournamentHistoryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.panel1.SuspendLayout();
 			this.panButtons.SuspendLayout();
 			this.gbMode.SuspendLayout();
@@ -72,6 +75,7 @@
 			this.groupBox4.SuspendLayout();
 			this.groupBox1.SuspendLayout();
 			this.gbEngines.SuspendLayout();
+			this.menuStrip2.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// panel1
@@ -86,9 +90,9 @@
 			this.panel1.Controls.Add(this.groupBox4);
 			this.panel1.Controls.Add(this.groupBox1);
 			this.panel1.Dock = System.Windows.Forms.DockStyle.Right;
-			this.panel1.Location = new System.Drawing.Point(489, 0);
+			this.panel1.Location = new System.Drawing.Point(489, 24);
 			this.panel1.Name = "panel1";
-			this.panel1.Size = new System.Drawing.Size(311, 804);
+			this.panel1.Size = new System.Drawing.Size(311, 780);
 			this.panel1.TabIndex = 0;
 			// 
 			// panOptions
@@ -97,75 +101,23 @@
 			this.panOptions.AutoSize = true;
 			this.panOptions.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
 			this.panOptions.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.panOptions.Location = new System.Drawing.Point(0, 497);
+			this.panOptions.Location = new System.Drawing.Point(0, 420);
 			this.panOptions.Name = "panOptions";
-			this.panOptions.Size = new System.Drawing.Size(311, 307);
+			this.panOptions.Size = new System.Drawing.Size(311, 360);
 			this.panOptions.TabIndex = 36;
 			// 
 			// panButtons
 			// 
 			this.panButtons.AutoSize = true;
-			this.panButtons.Controls.Add(this.bConsole);
-			this.panButtons.Controls.Add(this.bAuto);
-			this.panButtons.Controls.Add(this.bReset);
-			this.panButtons.Controls.Add(this.bHistory);
 			this.panButtons.Controls.Add(this.bDelete);
 			this.panButtons.Controls.Add(this.bCreate);
 			this.panButtons.Controls.Add(this.bRename);
 			this.panButtons.Controls.Add(this.bSave);
 			this.panButtons.Dock = System.Windows.Forms.DockStyle.Top;
-			this.panButtons.Location = new System.Drawing.Point(0, 305);
+			this.panButtons.Location = new System.Drawing.Point(0, 324);
 			this.panButtons.Name = "panButtons";
-			this.panButtons.Size = new System.Drawing.Size(311, 192);
+			this.panButtons.Size = new System.Drawing.Size(311, 96);
 			this.panButtons.TabIndex = 39;
-			// 
-			// bConsole
-			// 
-			this.bConsole.AutoSize = true;
-			this.bConsole.Dock = System.Windows.Forms.DockStyle.Top;
-			this.bConsole.Location = new System.Drawing.Point(0, 168);
-			this.bConsole.Name = "bConsole";
-			this.bConsole.Size = new System.Drawing.Size(311, 24);
-			this.bConsole.TabIndex = 42;
-			this.bConsole.Text = "Console";
-			this.bConsole.UseVisualStyleBackColor = true;
-			this.bConsole.Click += new System.EventHandler(this.bConsole_Click);
-			// 
-			// bAuto
-			// 
-			this.bAuto.AutoSize = true;
-			this.bAuto.Dock = System.Windows.Forms.DockStyle.Top;
-			this.bAuto.Location = new System.Drawing.Point(0, 144);
-			this.bAuto.Name = "bAuto";
-			this.bAuto.Size = new System.Drawing.Size(311, 24);
-			this.bAuto.TabIndex = 41;
-			this.bAuto.Text = "Autodetect";
-			this.bAuto.UseVisualStyleBackColor = true;
-			this.bAuto.Click += new System.EventHandler(this.bAuto_Click);
-			// 
-			// bReset
-			// 
-			this.bReset.AutoSize = true;
-			this.bReset.Dock = System.Windows.Forms.DockStyle.Top;
-			this.bReset.Location = new System.Drawing.Point(0, 120);
-			this.bReset.Name = "bReset";
-			this.bReset.Size = new System.Drawing.Size(311, 24);
-			this.bReset.TabIndex = 40;
-			this.bReset.Text = "Reset to defaults";
-			this.bReset.UseVisualStyleBackColor = true;
-			this.bReset.Click += new System.EventHandler(this.bReset_Click);
-			// 
-			// bHistory
-			// 
-			this.bHistory.AutoSize = true;
-			this.bHistory.Dock = System.Windows.Forms.DockStyle.Top;
-			this.bHistory.Location = new System.Drawing.Point(0, 96);
-			this.bHistory.Name = "bHistory";
-			this.bHistory.Size = new System.Drawing.Size(311, 24);
-			this.bHistory.TabIndex = 39;
-			this.bHistory.Text = "Clear tournament history";
-			this.bHistory.UseVisualStyleBackColor = true;
-			this.bHistory.Click += new System.EventHandler(this.bHistory_Click);
 			// 
 			// bDelete
 			// 
@@ -218,6 +170,7 @@
 			// gbMode
 			// 
 			this.gbMode.AutoSize = true;
+			this.gbMode.Controls.Add(this.cbModeNodes);
 			this.gbMode.Controls.Add(this.cbModeTournament);
 			this.gbMode.Controls.Add(this.cbModeDepth);
 			this.gbMode.Controls.Add(this.cbModeTime);
@@ -225,7 +178,7 @@
 			this.gbMode.Dock = System.Windows.Forms.DockStyle.Top;
 			this.gbMode.Location = new System.Drawing.Point(0, 236);
 			this.gbMode.Name = "gbMode";
-			this.gbMode.Size = new System.Drawing.Size(311, 69);
+			this.gbMode.Size = new System.Drawing.Size(311, 88);
 			this.gbMode.TabIndex = 31;
 			this.gbMode.TabStop = false;
 			this.gbMode.Text = "Mode";
@@ -427,9 +380,9 @@
 			this.gbEngines.AutoSize = true;
 			this.gbEngines.Controls.Add(this.listBox1);
 			this.gbEngines.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.gbEngines.Location = new System.Drawing.Point(0, 0);
+			this.gbEngines.Location = new System.Drawing.Point(0, 24);
 			this.gbEngines.Name = "gbEngines";
-			this.gbEngines.Size = new System.Drawing.Size(489, 804);
+			this.gbEngines.Size = new System.Drawing.Size(489, 780);
 			this.gbEngines.TabIndex = 5;
 			this.gbEngines.TabStop = false;
 			this.gbEngines.Text = "Engines List";
@@ -443,7 +396,7 @@
 			this.listBox1.FormattingEnabled = true;
 			this.listBox1.Location = new System.Drawing.Point(3, 16);
 			this.listBox1.Name = "listBox1";
-			this.listBox1.Size = new System.Drawing.Size(483, 785);
+			this.listBox1.Size = new System.Drawing.Size(483, 761);
 			this.listBox1.Sorted = true;
 			this.listBox1.TabIndex = 1;
 			this.listBox1.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.listBox1_DrawItem);
@@ -451,6 +404,65 @@
 			this.listBox1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.listBox1_MouseDown);
 			this.listBox1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.listBox1_MouseMove);
 			this.listBox1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.listBox1_MouseUp);
+			// 
+			// cbModeNodes
+			// 
+			this.cbModeNodes.AutoSize = true;
+			this.cbModeNodes.Location = new System.Drawing.Point(3, 52);
+			this.cbModeNodes.Name = "cbModeNodes";
+			this.cbModeNodes.Size = new System.Drawing.Size(85, 17);
+			this.cbModeNodes.TabIndex = 5;
+			this.cbModeNodes.Text = "Mode nodes";
+			this.cbModeNodes.UseVisualStyleBackColor = true;
+			// 
+			// menuStrip2
+			// 
+			this.menuStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.consoleToolStripMenuItem,
+            this.actionToolStripMenuItem});
+			this.menuStrip2.Location = new System.Drawing.Point(0, 0);
+			this.menuStrip2.Name = "menuStrip2";
+			this.menuStrip2.Size = new System.Drawing.Size(800, 24);
+			this.menuStrip2.TabIndex = 2;
+			this.menuStrip2.Text = "menuStrip1";
+			// 
+			// consoleToolStripMenuItem
+			// 
+			this.consoleToolStripMenuItem.Name = "consoleToolStripMenuItem";
+			this.consoleToolStripMenuItem.Size = new System.Drawing.Size(62, 20);
+			this.consoleToolStripMenuItem.Text = "Console";
+			this.consoleToolStripMenuItem.Click += new System.EventHandler(this.consoleToolStripMenuItem_Click);
+			// 
+			// actionToolStripMenuItem
+			// 
+			this.actionToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.autodetectEngineProtocolToolStripMenuItem,
+            this.resetEngineOptionsToolStripMenuItem,
+            this.clearTournamentHistoryToolStripMenuItem});
+			this.actionToolStripMenuItem.Name = "actionToolStripMenuItem";
+			this.actionToolStripMenuItem.Size = new System.Drawing.Size(54, 20);
+			this.actionToolStripMenuItem.Text = "Action";
+			// 
+			// autodetectEngineProtocolToolStripMenuItem
+			// 
+			this.autodetectEngineProtocolToolStripMenuItem.Name = "autodetectEngineProtocolToolStripMenuItem";
+			this.autodetectEngineProtocolToolStripMenuItem.Size = new System.Drawing.Size(220, 22);
+			this.autodetectEngineProtocolToolStripMenuItem.Text = "Autodetect engine protocol";
+			this.autodetectEngineProtocolToolStripMenuItem.Click += new System.EventHandler(this.autodetectEngineProtocolToolStripMenuItem_Click);
+			// 
+			// resetEngineOptionsToolStripMenuItem
+			// 
+			this.resetEngineOptionsToolStripMenuItem.Name = "resetEngineOptionsToolStripMenuItem";
+			this.resetEngineOptionsToolStripMenuItem.Size = new System.Drawing.Size(220, 22);
+			this.resetEngineOptionsToolStripMenuItem.Text = "Reset engine options";
+			this.resetEngineOptionsToolStripMenuItem.Click += new System.EventHandler(this.resetEngineOptionsToolStripMenuItem_Click);
+			// 
+			// clearTournamentHistoryToolStripMenuItem
+			// 
+			this.clearTournamentHistoryToolStripMenuItem.Name = "clearTournamentHistoryToolStripMenuItem";
+			this.clearTournamentHistoryToolStripMenuItem.Size = new System.Drawing.Size(220, 22);
+			this.clearTournamentHistoryToolStripMenuItem.Text = "Clear tournament history";
+			this.clearTournamentHistoryToolStripMenuItem.Click += new System.EventHandler(this.clearTournamentHistoryToolStripMenuItem_Click);
 			// 
 			// FormEditEngine
 			// 
@@ -460,6 +472,7 @@
 			this.ClientSize = new System.Drawing.Size(800, 804);
 			this.Controls.Add(this.gbEngines);
 			this.Controls.Add(this.panel1);
+			this.Controls.Add(this.menuStrip2);
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
 			this.MinimizeBox = false;
 			this.Name = "FormEditEngine";
@@ -486,6 +499,8 @@
 			this.groupBox1.ResumeLayout(false);
 			this.groupBox1.PerformLayout();
 			this.gbEngines.ResumeLayout(false);
+			this.menuStrip2.ResumeLayout(false);
+			this.menuStrip2.PerformLayout();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -514,14 +529,17 @@
 		private System.Windows.Forms.Panel panOptions;
 		private System.Windows.Forms.Timer timerPhase;
 		private System.Windows.Forms.Panel panButtons;
-		private System.Windows.Forms.Button bConsole;
-		private System.Windows.Forms.Button bAuto;
-		private System.Windows.Forms.Button bReset;
-		private System.Windows.Forms.Button bHistory;
 		private System.Windows.Forms.Button bDelete;
 		private System.Windows.Forms.Button bCreate;
 		private System.Windows.Forms.Button bRename;
 		private System.Windows.Forms.Button bSave;
 		private System.Windows.Forms.CheckBox cbModeTournament;
+		private System.Windows.Forms.CheckBox cbModeNodes;
+		private System.Windows.Forms.MenuStrip menuStrip2;
+		private System.Windows.Forms.ToolStripMenuItem consoleToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem actionToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem autodetectEngineProtocolToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem resetEngineOptionsToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem clearTournamentHistoryToolStripMenuItem;
 	}
 }
